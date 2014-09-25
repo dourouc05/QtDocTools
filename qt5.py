@@ -3,6 +3,7 @@ __author__ = 'Thibaut Cuvelier'
 import os
 import os.path
 import subprocess
+import json
 
 # Command-line configuration.
 sources = "C:/Qt/5.3/Src/"
@@ -10,6 +11,9 @@ qdoc = "C:/Qt/5.3/mingw482_32/bin/qdoc.exe"
 output = "C:/Qt/_script/dita/"
 indexFolder = output
 version = [5, 3, 1]
+
+configsFile = output + "configs.json"
+outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
 prepare = True
 generate = False  # If prepare is not True when generate is, need an indexFolder.
@@ -35,7 +39,7 @@ def getFolders():
             if os.path.isdir(sources + folder) and folder.startswith('q') and folder not in ignored]
 
 # In order to create the indexes, retrieve the list of configuration files.
-def getConfigurationFiles():
+def getConfigurationFiles(configsOutput=False, configsFile=None):
     # Generate potential places to find the configuration file for the given module.
     def getPotentialFileNames(docPath, module):
         # qtwebkit-examples is the name of the folder, but the file is named qtwebkitexamples.qdoc!
@@ -57,79 +61,96 @@ def getConfigurationFiles():
                     found = True
         return found
 
-    configs = {}  # Accumulator for configuration files.
-    for folder in getFolders():
-        path = sources + folder + "/"
+    # Start the loop to retrieve the configuration files from the file system (Qt sources).
+    def retrieveFromSources():
+        configs = {}  # Accumulator for configuration files.
+        for folder in getFolders():
+            path = sources + folder + "/"
 
-        # Handle Qt Base modules, as they are all in the same folder.
-        if folder == "qtbase":
-            print("Handling preparation of Qt Base; path: " + path)
+            # Handle Qt Base modules, as they are all in the same folder.
+            if folder == "qtbase":
+                print("Handling preparation of Qt Base; path: " + path)
 
-            # Handle QMake, as it does not live inside src/.
-            configs["qmake"] = path + "qmake/doc/qmake.qdocconf"
-            if not os.path.isfile(configs["qmake"]):
-                print("ERROR: QMake's qdocconf not found!")
+                # Handle QMake, as it does not live inside src/.
+                configs["qmake"] = path + "qmake/doc/qmake.qdocconf"
+                if not os.path.isfile(configs["qmake"]):
+                    print("ERROR: QMake's qdocconf not found!")
 
-            # Then deal with the modules in Qt Base. Don't do a brute force search on *.qdocconf as it takes a while as
-            # long as possible.
-            dirs = os.listdir(path + "src/")
-            dirs = [x for x in dirs if x not in qtbaseignore and x != "tools"]  # Folders to ignore.
-            dirs = [x for x in dirs if os.path.isdir(path + "src/" + x)]  # Get rid of files.
+                # Then deal with the modules in Qt Base. Don't do a brute force search on *.qdocconf as it takes a while as
+                # long as possible.
+                dirs = os.listdir(path + "src/")
+                dirs = [x for x in dirs if x not in qtbaseignore and x != "tools"]  # Folders to ignore.
+                dirs = [x for x in dirs if os.path.isdir(path + "src/" + x)]  # Get rid of files.
 
-            # For each Qt Base module, look for documentation configuration files.
-            for module in dirs:
-                prefixedModule = "qt" + module if module != "corelib" else "qtcore"
+                # For each Qt Base module, look for documentation configuration files.
+                for module in dirs:
+                    prefixedModule = "qt" + module if module != "corelib" else "qtcore"
 
-                modulePath = path + "src/" + module + "/"
-                docFile = modulePath + "doc/" + prefixedModule + ".qdocconf"
+                    modulePath = path + "src/" + module + "/"
+                    docFile = modulePath + "doc/" + prefixedModule + ".qdocconf"
 
-                if not os.path.isfile(docFile):
-                    print("ERROR: Qt Base " + module + "'s qdocconf not found!")
-                else:
-                    configs[prefixedModule] = docFile
-
-            # Finally play with the tools.
-            for tool in os.listdir(path + "src/tools/"):
-                toolPath = path + "src/tools/" + tool + "/"
-                docPath = toolPath + "doc/"
-                if os.path.isdir(docPath):
-                    for docFile in getPotentialFileNames(docPath, tool):
-                        if os.path.isfile(docFile):
-                            configs[tool] = docFile; break
+                    if not os.path.isfile(docFile):
+                        print("ERROR: Qt Base " + module + "'s qdocconf not found!")
                     else:
-                        print("ERROR: Qt Base tool " + tool + "'s qdocconf not found!")
-        # Other modules are directly inside the folder variable.
+                        configs[prefixedModule] = docFile
+
+                # Finally play with the tools.
+                for tool in os.listdir(path + "src/tools/"):
+                    toolPath = path + "src/tools/" + tool + "/"
+                    docPath = toolPath + "doc/"
+                    if os.path.isdir(docPath):
+                        for docFile in getPotentialFileNames(docPath, tool):
+                            if os.path.isfile(docFile):
+                                configs[tool] = docFile; break
+                        else:
+                            print("ERROR: Qt Base tool " + tool + "'s qdocconf not found!")
+            # Other modules are directly inside the folder variable.
+            else:
+                print("Handling preparation of: " + folder + "; path: " + path)
+                hasSomething = False
+
+                # If the folder has a doc/ subfolder, it may contain a qdocconf file. Qt Sensors 5.3 has such a file, but
+                # it should not be used (prefer the one in src/). This case is mainly for documentation-only modules,
+                # such as qtdoc and qtwebkit-examples.
+                # Qt Sensors has a configuration files in both doc/ and src/sensors/doc/, but the first one is outdated
+                # (plus the doc/ folder has many other .qdocconf files which are just useless for this script).
+                # @TODO: Enginio seems to have other idiosyncrasies... (documentation both in src/ and doc/).
+                if os.path.isdir(path + "doc/") and folder != "qtsensors":
+                    for docFile in getPotentialFileNames(path + "doc/", folder):
+                        if os.path.isfile(docFile):
+                            configs[folder] = docFile
+                            hasSomething = True
+                            break
+                            # @TODO: May it happen there is more than one file?
+
+                # Second try: the sources folder (src/ for most, Source/ for WebKit). This case is not exclusive: some
+                # documentation could get lost, as the folder doc/ may exist (Enginio, Quick 1).
+                if os.path.isdir(path + "src/"):
+                    hasSomething = findConfigurationFile(path + "src/", configs)
+                elif os.path.isdir(path + "Source/"):
+                    hasSomething = findConfigurationFile(path + "Source/", configs)
+
+                # Final check: there should be something in this directory (otherwise, if there is no bug, add it manually
+                # in the ignore list).
+                if not hasSomething:
+                    print("ERROR: module " + folder + "'s qdocconf not found!")
+
+        return configs
+
+    # Not asking to handle a file: return directly.
+    if not configsOutput or configsFile is None:
+        return retrieveFromSources()
+    else:
+        if os.path.isfile(configsFile):
+            # The target file exists: read it and return it.
+            with open(configsFile) as jsonFile:
+                return json.load(jsonFile)
         else:
-            print("Handling preparation of: " + folder + "; path: " + path)
-            hasSomething = False
-
-            # If the folder has a doc/ subfolder, it may contain a qdocconf file. Qt Sensors 5.3 has such a file, but
-            # it should not be used (prefer the one in src/). This case is mainly for documentation-only modules,
-            # such as qtdoc and qtwebkit-examples.
-            # Qt Sensors has a configuration files in both doc/ and src/sensors/doc/, but the first one is outdated
-            # (plus the doc/ folder has many other .qdocconf files which are just useless for this script).
-            # @TODO: Enginio seems to have other idiosyncrasies... (documentation both in src/ and doc/).
-            if os.path.isdir(path + "doc/") and folder != "qtsensors":
-                for docFile in getPotentialFileNames(path + "doc/", folder):
-                    if os.path.isfile(docFile):
-                        configs[folder] = docFile
-                        hasSomething = True
-                        break
-                        # @TODO: May it happen there is more than one file?
-
-            # Second try: the sources folder (src/ for most, Source/ for WebKit). This case is not exclusive: some
-            # documentation could get lost, as the folder doc/ may exist (Enginio, Quick 1).
-            if os.path.isdir(path + "src/"):
-                hasSomething = findConfigurationFile(path + "src/", configs)
-            elif os.path.isdir(path + "Source/"):
-                hasSomething = findConfigurationFile(path + "Source/", configs)
-
-            # Final check: there should be something in this directory (otherwise, if there is no bug, add it manually
-            # in the ignore list).
-            if not hasSomething:
-                print("ERROR: module " + folder + "'s qdocconf not found!")
-
-    return configs
+            # It does not exist: retrieve the information and write the file.
+            configs = retrieveFromSources()
+            with open(configsFile, 'w') as jsonFile:
+                json.dump(configs, jsonFile)
+            return configs
 
 # Generates the set of parameters to give to QDoc depending on the action.
 def parameters(configurationFile, moduleName, prepare=True):
@@ -159,7 +180,7 @@ def generateModule(moduleName, configurationFile):
 # - create the indexes by going through all source directories
 # - rewrite the configuration files if needed.
 # - start building things
-configs = getConfigurationFiles()
+configs = getConfigurationFiles(outputConfigs, configsFile)
 
 # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
 if prepare:
