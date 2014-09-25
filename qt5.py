@@ -4,6 +4,8 @@ import os
 import os.path
 import subprocess
 import json
+import logging
+import sys
 
 # Command-line configuration.
 sources = "C:/Qt/5.3/Src/"
@@ -15,9 +17,11 @@ version = [5, 3, 1]
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = True
+prepare = False
 generate = False  # If prepare is not True when generate is, need an indexFolder.
-outputFormat = "html"  # "html" or "dita"; read only if generate is True.
+outputFormat = "dita"  # "html" or "dita"; read only if generate is True.
+
+logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
 # Off-line configuration, should be altered only infrequently.
 # Modules to ignore (outside Qt Base). They have no documentation for them.
@@ -69,12 +73,12 @@ def getConfigurationFiles(configsOutput=False, configsFile=None):
 
             # Handle Qt Base modules, as they are all in the same folder.
             if folder == "qtbase":
-                print("Handling preparation of Qt Base; path: " + path)
+                logging.debug("Handling preparation of Qt Base; path: " + path)
 
                 # Handle QMake, as it does not live inside src/.
                 configs["qmake"] = path + "qmake/doc/qmake.qdocconf"
                 if not os.path.isfile(configs["qmake"]):
-                    print("ERROR: QMake's qdocconf not found!")
+                    logging.error("QMake's qdocconf not found!")
 
                 # Then deal with the modules in Qt Base. Don't do a brute force search on *.qdocconf as it takes a while as
                 # long as possible.
@@ -90,7 +94,7 @@ def getConfigurationFiles(configsOutput=False, configsFile=None):
                     docFile = modulePath + "doc/" + prefixedModule + ".qdocconf"
 
                     if not os.path.isfile(docFile):
-                        print("ERROR: Qt Base " + module + "'s qdocconf not found!")
+                        logging.error("Qt Base " + module + "'s qdocconf not found!")
                     else:
                         configs[prefixedModule] = docFile
 
@@ -103,10 +107,10 @@ def getConfigurationFiles(configsOutput=False, configsFile=None):
                             if os.path.isfile(docFile):
                                 configs[tool] = docFile; break
                         else:
-                            print("ERROR: Qt Base tool " + tool + "'s qdocconf not found!")
+                            logging.error("Qt Base tool " + tool + "'s qdocconf not found!")
             # Other modules are directly inside the folder variable.
             else:
-                print("Handling preparation of: " + folder + "; path: " + path)
+                logging.debug("Handling preparation of: " + folder + "; path: " + path)
                 hasSomething = False
 
                 # If the folder has a doc/ subfolder, it may contain a qdocconf file. Qt Sensors 5.3 has such a file, but
@@ -133,19 +137,22 @@ def getConfigurationFiles(configsOutput=False, configsFile=None):
                 # Final check: there should be something in this directory (otherwise, if there is no bug, add it manually
                 # in the ignore list).
                 if not hasSomething:
-                    print("ERROR: module " + folder + "'s qdocconf not found!")
+                    logging.error("Module " + folder + "'s qdocconf not found!")
 
         return configs
 
     # Not asking to handle a file: return directly.
     if not configsOutput or configsFile is None:
+        logging.info("Looking for configuration files...")
         return retrieveFromSources()
     else:
         if os.path.isfile(configsFile):
+            logging.info("Reading existing list of configuration files...")
             # The target file exists: read it and return it.
             with open(configsFile) as jsonFile:
                 return json.load(jsonFile)
         else:
+            logging.info("Looking for configuration files and building a list...")
             # It does not exist: retrieve the information and write the file.
             configs = retrieveFromSources()
             with open(configsFile, 'w') as jsonFile:
@@ -166,13 +173,13 @@ def parameters(configurationFile, moduleName, prepare=True):
 # Prepare a module, meaning creating sub-folders for assets and (most importantly) the indexes.
 def prepareModule(moduleName, configurationFile):
     params = parameters(configurationFile, moduleName, prepare=True)
-    print(params)
+    logging.debug(params)
     subprocess.call(params, env=environment)
 
 # Build the documentation for the given module.
 def generateModule(moduleName, configurationFile):
     params = parameters(configurationFile, moduleName, prepare=False)
-    print(params)
+    logging.debug(params)
     subprocess.call(params, env=environment)
 
 # Algorithm:
@@ -180,18 +187,23 @@ def generateModule(moduleName, configurationFile):
 # - create the indexes by going through all source directories
 # - rewrite the configuration files if needed.
 # - start building things
-configs = getConfigurationFiles(outputConfigs, configsFile)
+if __name__ == '__main__':
+    configs = getConfigurationFiles(outputConfigs, configsFile)
 
-# @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
-if prepare:
-    for moduleName, conf in configs.items():
-        prepareModule(moduleName=moduleName, configurationFile=conf)
+    # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
+    if prepare:
+        for moduleName, conf in configs.items():
+            prepareModule(moduleName=moduleName, configurationFile=conf)
 
-# @TODO: Parallel too.
-if outputFormat != "html":
-    print("Rewriting...")
+    # @TODO: Parallel too.
+    if outputFormat != "html":
+        if outputFormat == "dita":
+            logging.info("Rewriting configurations files from HTML to DITA...")
+            sys.exit(0)
+        else:
+            logging.error("Asked to generate " + outputFormat + "files, but unrecognised format")
 
-# @TODO: This one should be embarrassingly parallel too.
-if generate:
-    for moduleName, conf in configs.items():
-        generateModule(moduleName=moduleName, configurationFile=conf)
+    # @TODO: This one should be embarrassingly parallel too.
+    if generate:
+        for moduleName, conf in configs.items():
+            generateModule(moduleName=moduleName, configurationFile=conf)
