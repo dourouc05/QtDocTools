@@ -17,9 +17,9 @@ indexFolder = output
 version = [5, 3, 1]
 
 configsFile = output + "configs.json"
-outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
+outputConfigs = False  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = False
+prepare = True
 generate = True  # If prepare is not True when generate is, need an indexFolder.
 outputFormat = "dita"  # "html" or "dita"; read only if generate is True.
 
@@ -165,14 +165,19 @@ def getConfigurationFiles(configsOutput=False, configsFile=None):
 
 # Generates the set of parameters to give to QDoc depending on the action.
 def parameters(configurationFile, moduleName, prepare=True):
-    return [qdoc,
+    params = [qdoc,
             "-outputdir", output + moduleName + "/",
             "-installdir", output,
-            "-indexdir", indexFolder,
             "-log-progress",
             configurationFile,
-            "-prepare" if prepare else "-generate",
-            "-no-link-errors" if prepare else ""]
+            "-prepare" if prepare else "-generate"]
+
+    if prepare:
+        params.extend(["-no-link-errors"])
+    else:
+        params.extend(["-indexdir", indexFolder])
+
+    return params
 
 # Prepare a module, meaning creating sub-folders for assets and (most importantly) the indexes.
 def prepareModule(moduleName, configurationFile):
@@ -192,6 +197,7 @@ def htmlToDita(configs):
     for moduleName, conf in configs.items():
         with open(conf, "r") as file: confFile = file.read()
 
+        # Rewrite the output format line.
         if "outputformats" in confFile: # Qt Enginio (C++ and QML APIs).
             logging.debug(moduleName + " has outputformats; replacing existing")
             # @TODO
@@ -199,24 +205,36 @@ def htmlToDita(configs):
             logging.debug(moduleName + " has no outputformats; adding one")
             confFile = confFile + "\noutputformats = DITAXML"
 
+        # Work around QDoc's bugs: cannot have links to other modules, otherwise it simply crashes. Eliminate any
+        # depends line in the configuration; it can be split on multiple lines using \. See QTBUG-41626. 
+        patchedFile = ""
+        metDepends = False
+        for i, line in enumerate(confFile.split("\n")):
+            line = line.strip()
+            if not metDepends:
+                if line.startswith("depends"):
+                    metDepends = line.endswith("\\")
+                else:
+                    patchedFile += line + "\n"
+            else:
+                if line.endswith("\\"):
+                    pass
+                else:
+                    metDepends = False
+
         newFileName = conf + ".qdoc-wrapper.new-dita.qdocconf"
-        with open(newFileName, "w") as file: file.write(confFile)
+        with open(newFileName, "w") as file: file.write(patchedFile)
         newConfigs[moduleName] = newFileName
     return newConfigs
 
 # Algorithm:
 # - retrieve the configuration files (*.qdocconf)
+# - rewrite the configuration files if needed
 # - create the indexes by going through all source directories
-# - rewrite the configuration files if needed.
 # - start building things
 # - delete the new configuration files if any were created
 if __name__ == '__main__':
     configs = getConfigurationFiles(outputConfigs, configsFile)
-
-    # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
-    if prepare:
-        for moduleName, conf in configs.items():
-            prepareModule(moduleName=moduleName, configurationFile=conf)
 
     # @TODO: Parallel too.
     if outputFormat != "html":
@@ -226,6 +244,11 @@ if __name__ == '__main__':
             print(configs)
         else:
             logging.error("Asked to generate " + outputFormat + "files, but unrecognised format")
+
+    # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
+    if prepare:
+        for moduleName, conf in configs.items():
+            prepareModule(moduleName=moduleName, configurationFile=conf)
 
     # @TODO: This one should be embarrassingly parallel too.
     if generate:
