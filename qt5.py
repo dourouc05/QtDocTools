@@ -1,5 +1,3 @@
-from _ast import mod
-
 __author__ = 'Thibaut Cuvelier'
 
 import os
@@ -11,7 +9,7 @@ import logging
 # Command-line configuration.
 sources = "C:/Qt/5.4/Src/"
 qdoc = "C:/Qt/5.4/mingw491_32/bin/qdoc.exe"
-output = "C:/Qt/_script/dita/"
+output = "C:/Qt/_script/html/"
 indexFolder = output
 version = [5, 4, 0]
 
@@ -20,7 +18,6 @@ outputConfigs = False  # Read the file if it exists (and skip this phase), write
 
 prepare = True
 generate = True  # If prepare is not True when generate is, need an indexFolder.
-outputFormat = "dita"  # "html" or "dita"; read only if generate is True.
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
@@ -58,13 +55,11 @@ def get_configuration_files(configs_output=False, configs_file=None):
     def find_configuration_file(src_path, configs):
         # This loop is quite slow, but there is too much variety in those modules (such as a folder containing
         # multiple modules: the loop cannot be stopped at the first file!).
-        # One more strange thing with Qt Multimedia: a qtmultimedia-dita.qdocconf file.
-        # Don't forget to forget the files created by this tool: they have a ".qdoc-wrapper.new-" in their name.
+        # One more strange thing with Qt Multimedia: a qtmultimedia-dita.qdocconf file, at least for Qt 5.3.
         found = False  # Is (at least) one file found?
         for root, dirs, files in os.walk(src_path):
             for file in files:
-                if file.endswith(".qdocconf") and "global" not in root and "-dita" not in file \
-                        and ".qdoc-wrapper.new-" not in file:
+                if file.endswith(".qdocconf") and "global" not in root and "-dita" not in file:
                     configs[file.replace(".qdocconf", "")] = root.replace("\\", "/") + "/" + file
                     found = True
         return found
@@ -196,61 +191,12 @@ def generate_module(module_name, configuration_file):
     subprocess.call(params, env=environment)
 
 
-# Transforms all given configuration files to generate DITA files instead of HTML; answers with a new list of files.
-def html2dita(configs):
-    new_configs = {}
-    for module_name, config in configs.items():
-        with open(config, "r") as file:
-            conf_file = file.read()
-
-        # Rewrite the output format line.
-        if "outputformats" in conf_file:  # Qt Enginio (C++ and QML APIs).
-            logging.debug(module_name + " has outputformats; replacing existing")
-            # @TODO
-        else:
-            logging.debug(module_name + " has no outputformats; adding one")
-            conf_file = conf_file + "\noutputformats = DITAXML"
-
-        # Work around QDoc's bugs: cannot have links to other modules, otherwise it simply crashes. Eliminate any
-        # depends line in the configuration; it can be split on multiple lines using \. See QTBUG-41626. 
-        patched_file = ""
-        met_depends = False
-        for i, line in enumerate(conf_file.split("\n")):
-            line = line.strip()
-            if not met_depends:
-                if line.startswith("depends"):
-                    met_depends = line.endswith("\\")
-                else:
-                    patched_file += line + "\n"
-            else:
-                if line.endswith("\\"):
-                    pass
-                else:
-                    met_depends = False
-
-        new_file_name = config + ".qdoc-wrapper.new-dita.qdocconf"
-        with open(new_file_name, "w") as file:
-            file.write(patched_file)
-        new_configs[module_name] = new_file_name
-    return new_configs
-
 # Algorithm:
 # - retrieve the configuration files (*.qdocconf)
-# - rewrite the configuration files if needed
 # - create the indexes by going through all source directories
 # - start building things
-# - delete the new configuration files if any were created
 if __name__ == '__main__':
     configs = get_configuration_files(outputConfigs, configsFile)
-
-    # @TODO: Parallel too.
-    if outputFormat != "html":
-        if outputFormat == "dita":
-            logging.info("Rewriting configurations files from HTML to DITA...")
-            configs = html2dita(configs)
-            print(configs)
-        else:
-            logging.error("Asked to generate " + outputFormat + "files, but unrecognised format")
 
     # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
     if prepare:
@@ -261,8 +207,3 @@ if __name__ == '__main__':
     if generate:
         for moduleName, conf in configs.items():
             generate_module(module_name=moduleName, configuration_file=conf)
-
-    # @TODO: Parallel too.
-    if outputFormat != "html":
-        for file in configs.values():
-            os.remove(file)
