@@ -2,6 +2,7 @@ __author__ = 'Thibaut Cuvelier'
 
 import os
 import os.path
+import time
 import subprocess
 import json
 import logging
@@ -25,8 +26,8 @@ version = [5, 4, 0]
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = False
-generate = False  # If prepare is not True when generate is, need an indexFolder.
+prepare = True
+generate = True  # If prepare is not True when generate is, need an indexFolder.
 generate_xml = True and not no_html5
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
@@ -224,7 +225,9 @@ def generate_module_xml(module_name, configuration_file):
 # - create the indexes by going through all source directories
 # - start building things
 if __name__ == '__main__':
+    time_beginning = time.perf_counter()
     configs = get_configuration_files(outputConfigs, configsFile)
+    time_configs = time.perf_counter()
 
     # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck).
     # Dependencies: first prepare all modules to get the indexes, then can start conversion in parallel. Once one module
@@ -232,11 +235,20 @@ if __name__ == '__main__':
     if prepare:
         for moduleName, conf in configs.items():
             prepare_module(module_name=moduleName, configuration_file=conf)
+    time_prepare = time.perf_counter()
 
     if generate:
         for moduleName, conf in configs.items():
             generate_module(module_name=moduleName, configuration_file=conf)
+    time_generate = time.perf_counter()
 
     if generate_xml:
         for moduleName, conf in configs.items():
             generate_module_xml(module_name=moduleName, configuration_file=conf)
+
+    time_end = time.perf_counter()
+    print("Total time: %f" % (time_end - time_beginning))
+    print("Time to read configuration files: %f" % (time_configs - time_beginning))
+    print("Time to create indexes: %f" % (time_prepare - time_configs))
+    print("Time to generate HTML files: %f" % (time_generate - time_prepare))
+    print("Time to generate XML files: %f" % (time_end - time_generate))
