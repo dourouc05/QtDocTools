@@ -6,6 +6,13 @@ import subprocess
 import json
 import logging
 
+try:
+    import html5lib
+    import xml.etree.ElementTree as ET
+    no_html5 = False
+except ImportError:
+    no_html5 = True
+
 # Command-line configuration.
 sources = "C:/Qt/5.4/Src/"
 qdoc = "C:/Qt/5.4/mingw491_32/bin/qdoc.exe"
@@ -14,10 +21,11 @@ indexFolder = output
 version = [5, 4, 0]
 
 configsFile = output + "configs.json"
-outputConfigs = False  # Read the file if it exists (and skip this phase), write it otherwise.
+outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = True
-generate = True  # If prepare is not True when generate is, need an indexFolder.
+prepare = False
+generate = False  # If prepare is not True when generate is, need an indexFolder.
+generate_xml = True and not no_html5
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
@@ -191,6 +199,21 @@ def generate_module(module_name, configuration_file):
     subprocess.call(params, env=environment)
 
 
+# Convert the documentation HTML files as XML for the given module.
+def generate_module_xml(module_name, configuration_file):
+    for root, subdirs, files in os.walk(output + module_name + "/"):
+        for file in files:
+            if file.endswith('.html'):
+                base_file_name = root + file[:-5]
+                in_file_name = base_file_name + '.html'
+                out_file_name = base_file_name + '.xml'
+                with open(in_file_name, "rb") as f:
+                    tree = html5lib.parse(f)
+                with open(out_file_name, 'wb') as f:
+                    f.write(ET.tostring(tree))
+    logging.info('Done with module %s' % module_name)
+
+
 # Algorithm:
 # - retrieve the configuration files (*.qdocconf)
 # - create the indexes by going through all source directories
@@ -198,12 +221,17 @@ def generate_module(module_name, configuration_file):
 if __name__ == '__main__':
     configs = get_configuration_files(outputConfigs, configsFile)
 
-    # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck)
+    # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck).
+    # Dependencies: first prepare all modules to get the indexes, then can start conversion in parallel. Once one module
+    # is converted (or even started, as long as one file is out), the conversion to XML can start.
     if prepare:
         for moduleName, conf in configs.items():
             prepare_module(module_name=moduleName, configuration_file=conf)
 
-    # @TODO: This one should be embarrassingly parallel too.
     if generate:
         for moduleName, conf in configs.items():
             generate_module(module_name=moduleName, configuration_file=conf)
+
+    if generate_xml:
+        for moduleName, conf in configs.items():
+            generate_module_xml(module_name=moduleName, configuration_file=conf)
