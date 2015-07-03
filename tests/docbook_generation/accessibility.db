@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+   <db:info>
+      <db:title>Accessibility Classes</db:title>
+   </db:info>
+   <db:informaltable>
+      <db:tbody>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtquick/qml-qtquick-accessible.html">Accessible</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables accessibility of QML items</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessible.html">QAccessible</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enums and static functions related to accessibility</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleactioninterface.html">QAccessibleActionInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for invocable actions in the interface</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleeditabletextinterface.html">QAccessibleEditableTextInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for objects with editable text</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleevent.html">QAccessibleEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>The base class for accessibility notifications</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleimageinterface.html">QAccessibleImageInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for the IAccessibleImage interface</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleinterface.html">QAccessibleInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Defines an interface that exposes information about accessible objects</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleobject.html">QAccessibleObject</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements parts of the QAccessibleInterface for QObjects</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibleplugin.html">QAccessiblePlugin</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Abstract base class for plugins provinding accessibility information for user interface elements</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessiblestatechangeevent.html">QAccessibleStateChangeEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Notfies the accessibility framework that the state of an object has changed</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletablecellinterface.html">QAccessibleTableCellInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for the IAccessibleTable2 Cell interface</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletableinterface.html">QAccessibleTableInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for the IAccessibleTable2 interface</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletablemodelchangeevent.html">QAccessibleTableModelChangeEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Signifies a change in a table, list, or tree where cells are added or removed. If the change affected a number of rows, firstColumn and lastColumn will return -1. Likewise for columns, the row functions may return -1</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletextcursorevent.html">QAccessibleTextCursorEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Notifies of cursor movements</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletextinsertevent.html">QAccessibleTextInsertEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Notifies of text being inserted</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletextinterface.html">QAccessibleTextInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for text handling</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletextremoveevent.html">QAccessibleTextRemoveEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Notifies of text being deleted</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletextselectionevent.html">QAccessibleTextSelectionEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Signals a change in the text selection of an object</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessibletextupdateevent.html">QAccessibleTextUpdateEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Notifies about text changes. This is for accessibles that support editable text such as line edits. This event occurs for example when a portion of selected text gets replaced by pasting a new text or in override mode of editors</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessiblevaluechangeevent.html">QAccessibleValueChangeEvent</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Describes a change in value for an accessible object</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qaccessiblevalueinterface.html">QAccessibleValueInterface</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements support for objects that manipulate a value</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtwidgets/qaccessiblewidget.html">QAccessibleWidget</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Implements the QAccessibleInterface for QWidgets</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qtgui/qplatformaccessibility.html">QPlatformAccessibility</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>The base class for integrating accessibility backends</db:para>
+            </db:td>
+         </db:tr>
+      </db:tbody>
+   </db:informaltable>
+</db:article>

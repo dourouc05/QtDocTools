@@ -8,10 +8,12 @@ import logging
 
 try:
     import html5lib
-    import xml.etree.ElementTree as ET
+    import xml.etree.ElementTree as ETree
     no_html5 = False
 except ImportError:
     no_html5 = True
+    html5lib = None
+    ETree = None
 
 # Command-line configuration.
 sources = "C:/Qt/5.4/Src/"
@@ -202,15 +204,18 @@ def generate_module(module_name, configuration_file):
 # Convert the documentation HTML files as XML for the given module.
 def generate_module_xml(module_name, configuration_file):
     for root, subdirs, files in os.walk(output + module_name + "/"):
+        if root.endswith('/style'):
+            continue
+
         for file in files:
             if file.endswith('.html'):
-                base_file_name = root + file[:-5]
+                base_file_name = os.path.join(root, file[:-5])
                 in_file_name = base_file_name + '.html'
                 out_file_name = base_file_name + '.xml'
                 with open(in_file_name, "rb") as f:
                     tree = html5lib.parse(f)
                 with open(out_file_name, 'wb') as f:
-                    f.write(ET.tostring(tree))
+                    f.write(ETree.tostring(tree))
     logging.info('Done with module %s' % module_name)
 
 

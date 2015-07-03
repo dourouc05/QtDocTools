@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:db="http://docbook.org/ns/docbook" exclude-result-prefixes="xsl xs html" version="2.0">
+  xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+  exclude-result-prefixes="xsl xs html" version="2.0">
   <xsl:output method="xml" indent="yes"/>
   <xsl:strip-space elements="*"/>
+  
+  <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/>
 
   <!-- Output document class. -->
   <xsl:template match="html:html">
@@ -23,7 +26,8 @@
       <xsl:apply-templates select="$description" mode="description"/>
 
       <!-- If there is a paragraph just after the description, it's a See also paragraph. -->
-      <xsl:variable name="hasSeeAlso" select="boolean($siblingAfterDescription[self::html:p])" as="xs:boolean"/>
+      <xsl:variable name="hasSeeAlso" select="boolean($siblingAfterDescription[self::html:p])"
+        as="xs:boolean"/>
       <xsl:if test="$hasSeeAlso">
         <xsl:message terminate="no">WARNING: To do. Implement See also. </xsl:message>
       </xsl:if>
@@ -38,7 +42,8 @@
       <xsl:variable name="hasIndex"
         select="boolean($siblingAfterSeeAlso[self::html:div][@class = 'table'])" as="xs:boolean"/>
       <xsl:if test="$hasIndex">
-        <xsl:message terminate="no">WARNING: To do. Implement index pages. </xsl:message>
+        <xsl:apply-templates mode="indexTable"
+          select="$siblingAfterSeeAlso[self::html:div][@class = 'table']"/>
       </xsl:if>
       <xsl:variable name="siblingAfterIndex"
         select="
@@ -75,10 +80,57 @@
       <!-- Catch missing elements. -->
       <xsl:variable name="hasAfterFuncs" select="boolean($siblingAfterFuncs)" as="xs:boolean"/>
       <xsl:if test="$hasAfterFuncs">
-        <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name($siblingAfterFuncs)"/>
+        <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
+            select="name($siblingAfterFuncs)"/>
         </xsl:message>
       </xsl:if>
     </db:article>
+  </xsl:template>
+
+  <!-- Handle index tables. -->
+  <xsl:template match="html:table[@class = 'annotated']" mode="indexTable">
+    <xsl:apply-templates select="." mode="content"/>
+  </xsl:template>
+
+  <!-- 
+    Handle HTML content and transform it into DocBook. 
+    Tables are implemented with HTML model, not CALS. 
+  -->
+  <xsl:template mode="content" match="html:table">
+    <db:informaltable>
+      <xsl:apply-templates select="*" mode="content_table"/>
+    </db:informaltable>
+  </xsl:template>
+
+  <xsl:template mode="content_table" match="html:tbody">
+    <db:tbody>
+      <xsl:apply-templates select="*" mode="content_table"/>
+    </db:tbody>
+  </xsl:template>
+  <xsl:template mode="content_table" match="html:tr">
+    <db:tr>
+      <xsl:apply-templates select="*" mode="content_table"/>
+    </db:tr>
+  </xsl:template>
+  <xsl:template mode="content_table" match="html:td">
+    <db:td>
+      <xsl:apply-templates select="*" mode="content_paragraph"/>
+    </db:td>
+  </xsl:template>
+
+  <xsl:template mode="content_paragraph" match="html:p">
+    <db:para>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:para>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:a">
+    <db:link>
+      <xsl:attribute name="xlink:href" select="@href"/>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:link>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="text()">
+    <xsl:value-of select="normalize-space(.)"/>
   </xsl:template>
 
   <!-- Catch-all for style sheet errors. -->
