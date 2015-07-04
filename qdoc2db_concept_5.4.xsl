@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Converts QDoc 5.4's HTML5 (first converted to XML) into DocBook. 
+  Hypothesis: tables have <tbody> tags in the input (ensured automatically by Python's html5lib). 
+-->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   exclude-result-prefixes="xsl xs html" version="2.0">
   <xsl:output method="xml" indent="yes"/>
   <xsl:strip-space elements="*"/>
-  
-  <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/>
+
+  <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
+  <xsl:import-schema schema-location="./schemas/docbook.xsd"/>
 
   <!-- Output document class. -->
   <xsl:template match="html:html">
