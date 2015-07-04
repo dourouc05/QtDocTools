@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<db:article xmlns:db="http://docbook.org/ns/docbook"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
+<db:article xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.0">
    <db:info>
       <db:title>Accessibility Classes</db:title>
    </db:info>
@@ -29,7 +29,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibleactioninterface.html">QAccessibleActionInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibleactioninterface.html"
+                     >QAccessibleActionInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -39,7 +40,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibleeditabletextinterface.html">QAccessibleEditableTextInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibleeditabletextinterface.html"
+                     >QAccessibleEditableTextInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -59,7 +61,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibleimageinterface.html">QAccessibleImageInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibleimageinterface.html"
+                     >QAccessibleImageInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -69,11 +72,13 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibleinterface.html">QAccessibleInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibleinterface.html"
+                     >QAccessibleInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
-               <db:para>Defines an interface that exposes information about accessible objects</db:para>
+               <db:para>Defines an interface that exposes information about accessible
+                  objects</db:para>
             </db:td>
          </db:tr>
          <db:tr>
@@ -93,23 +98,27 @@
                </db:para>
             </db:td>
             <db:td>
-               <db:para>Abstract base class for plugins provinding accessibility information for user interface elements</db:para>
+               <db:para>Abstract base class for plugins provinding accessibility information for
+                  user interface elements</db:para>
             </db:td>
          </db:tr>
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessiblestatechangeevent.html">QAccessibleStateChangeEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessiblestatechangeevent.html"
+                     >QAccessibleStateChangeEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
-               <db:para>Notfies the accessibility framework that the state of an object has changed</db:para>
+               <db:para>Notfies the accessibility framework that the state of an object has
+                  changed</db:para>
             </db:td>
          </db:tr>
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletablecellinterface.html">QAccessibleTableCellInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletablecellinterface.html"
+                     >QAccessibleTableCellInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -119,7 +128,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletableinterface.html">QAccessibleTableInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletableinterface.html"
+                     >QAccessibleTableInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -129,17 +139,21 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletablemodelchangeevent.html">QAccessibleTableModelChangeEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletablemodelchangeevent.html"
+                     >QAccessibleTableModelChangeEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
-               <db:para>Signifies a change in a table, list, or tree where cells are added or removed. If the change affected a number of rows, firstColumn and lastColumn will return -1. Likewise for columns, the row functions may return -1</db:para>
+               <db:para>Signifies a change in a table, list, or tree where cells are added or
+                  removed. If the change affected a number of rows, firstColumn and lastColumn will
+                  return -1. Likewise for columns, the row functions may return -1</db:para>
             </db:td>
          </db:tr>
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletextcursorevent.html">QAccessibleTextCursorEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletextcursorevent.html"
+                     >QAccessibleTextCursorEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -149,7 +163,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletextinsertevent.html">QAccessibleTextInsertEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletextinsertevent.html"
+                     >QAccessibleTextInsertEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -159,7 +174,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletextinterface.html">QAccessibleTextInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletextinterface.html"
+                     >QAccessibleTextInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -169,7 +185,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletextremoveevent.html">QAccessibleTextRemoveEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletextremoveevent.html"
+                     >QAccessibleTextRemoveEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -179,7 +196,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletextselectionevent.html">QAccessibleTextSelectionEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletextselectionevent.html"
+                     >QAccessibleTextSelectionEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -189,17 +207,21 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessibletextupdateevent.html">QAccessibleTextUpdateEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessibletextupdateevent.html"
+                     >QAccessibleTextUpdateEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
-               <db:para>Notifies about text changes. This is for accessibles that support editable text such as line edits. This event occurs for example when a portion of selected text gets replaced by pasting a new text or in override mode of editors</db:para>
+               <db:para>Notifies about text changes. This is for accessibles that support editable
+                  text such as line edits. This event occurs for example when a portion of selected
+                  text gets replaced by pasting a new text or in override mode of editors</db:para>
             </db:td>
          </db:tr>
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessiblevaluechangeevent.html">QAccessibleValueChangeEvent</db:link>
+                  <db:link xlink:href="qtgui/qaccessiblevaluechangeevent.html"
+                     >QAccessibleValueChangeEvent</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -209,7 +231,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qaccessiblevalueinterface.html">QAccessibleValueInterface</db:link>
+                  <db:link xlink:href="qtgui/qaccessiblevalueinterface.html"
+                     >QAccessibleValueInterface</db:link>
                </db:para>
             </db:td>
             <db:td>
@@ -229,7 +252,8 @@
          <db:tr>
             <db:td>
                <db:para>
-                  <db:link xlink:href="qtgui/qplatformaccessibility.html">QPlatformAccessibility</db:link>
+                  <db:link xlink:href="qtgui/qplatformaccessibility.html"
+                     >QPlatformAccessibility</db:link>
                </db:para>
             </db:td>
             <db:td>

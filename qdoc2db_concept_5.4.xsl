@@ -17,7 +17,7 @@
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
-    <db:article>
+    <db:article version="5.0">
       <!-- Extract the metadata. -->
       <db:info>
         <db:title>
