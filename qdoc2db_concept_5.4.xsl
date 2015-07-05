@@ -131,15 +131,29 @@
       <xsl:value-of select="."/>
     </db:programlisting>
   </xsl:template>
+  <xsl:template mode="content" match="html:ul">
+    <db:itemizedlist>
+      <xsl:apply-templates mode="content_list"/>
+    </db:itemizedlist>
+  </xsl:template>
+  <xsl:template mode="content" match="html:ol">
+    <db:orderedlist>
+      <xsl:apply-templates mode="content_list"/>
+    </db:orderedlist>
+  </xsl:template>
 
   <!-- Handle sections. Based on http://www.ibm.com/developerworks/library/x-addstructurexslt/. -->
   <xsl:template name="content_withTitles_before">
     <xsl:param name="data"/>
-
     <xsl:for-each select="$data/*">
       <xsl:choose>
         <xsl:when
-          test="not(.[self::html:h2] or ./preceding-sibling::html:h2 or .[self::html:h3] or ./preceding-sibling::html:h3)">
+          test="
+            not(.[self::html:h2] or ./preceding-sibling::html:h2
+            or .[self::html:h3] or ./preceding-sibling::html:h3
+            or .[self::html:h4] or ./preceding-sibling::html:h4
+            or .[self::html:h5] or ./preceding-sibling::html:h5
+            or .[self::html:h6] or ./preceding-sibling::html:h6)">
           <xsl:apply-templates mode="content" select="."/>
         </xsl:when>
       </xsl:choose>
@@ -170,7 +184,7 @@
                 <db:title>
                   <xsl:copy-of select="./text()"/>
                 </db:title>
-                
+
                 <xsl:for-each-group select="current-group()" group-starting-with="html:h4">
                   <xsl:choose>
                     <xsl:when test="current-group()[self::html:h4]">
@@ -179,7 +193,7 @@
                           <xsl:copy-of select="./text()"/>
                         </db:title>
                       </db:section>
-                      
+
                       <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
                         <xsl:choose>
                           <xsl:when test="current-group()[self::html:h5]">
@@ -187,15 +201,16 @@
                               <db:title>
                                 <xsl:copy-of select="./text()"/>
                               </db:title>
-                              
-                              <xsl:for-each-group select="current-group()" group-starting-with="html:h6">
+
+                              <xsl:for-each-group select="current-group()"
+                                group-starting-with="html:h6">
                                 <xsl:choose>
                                   <xsl:when test="current-group()[self::html:h6]">
                                     <db:section>
                                       <db:title>
                                         <xsl:copy-of select="./text()"/>
                                       </db:title>
-                                      
+
                                       <xsl:apply-templates select="current-group()" mode="content"/>
                                     </db:section>
                                   </xsl:when>
@@ -244,8 +259,26 @@
       <xsl:apply-templates select="*" mode="content"/>
     </db:td>
   </xsl:template>
+  
+  <!-- Handle lists. -->
+  <xsl:template mode="content_list" match="html:li">
+    <db:listitem>
+      <xsl:choose>
+        <!-- Has it a paragraph child? DocBook needs one! -->
+        <xsl:when test="*[1][self::html:p]">
+          <xsl:apply-templates select="*" mode="content_paragraph"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:para>
+            <!-- Add it if it is not there. Don't forget to handle text (. instead of *). -->
+            <xsl:apply-templates select="." mode="content_paragraph"/>
+          </db:para>
+        </xsl:otherwise>
+      </xsl:choose>
+    </db:listitem>
+  </xsl:template>
 
-  <!-- Handle inline elements, inside paragraphs. -->
+  <!-- Handle inline elements, inside paragraphs. DocBook happily allows lists inside paragraphs. -->
   <xsl:template mode="content_paragraph" match="html:a">
     <db:link>
       <xsl:attribute name="xlink:href" select="@href"/>
@@ -255,5 +288,15 @@
   <xsl:template mode="content_paragraph" match="text()">
     <!-- <xsl:value-of select="normalize-space(.)"/> -->
     <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:ul">
+    <db:itemizedlist>
+      <xsl:apply-templates mode="content_list"/>
+    </db:itemizedlist>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:ol">
+    <db:orderedlist>
+      <xsl:apply-templates mode="content_list"/>
+    </db:orderedlist>
   </xsl:template>
 </xsl:stylesheet>
