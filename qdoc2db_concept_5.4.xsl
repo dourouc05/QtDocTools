@@ -100,6 +100,14 @@
     <xsl:apply-templates select="." mode="content"/>
   </xsl:template>
 
+  <!-- Catch-all for style sheet errors. -->
+  <xsl:template match="*">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/>
+    </xsl:message>
+
+    <xsl:apply-templates/>
+  </xsl:template>
+
   <!-- 
     Handle HTML content and transform it into DocBook. 
     Tables are implemented with HTML model, not CALS. 
@@ -115,13 +123,23 @@
     </db:para>
   </xsl:template>
   <xsl:template mode="content" match="html:h2 | html:h3"/>
-  
+  <xsl:template mode="content" match="html:pre">
+    <db:programlisting>
+      <xsl:if test=".[@class]">
+        <xsl:attribute name="language" select="@class"/>
+      </xsl:if>
+      <xsl:value-of select="."/>
+    </db:programlisting>
+  </xsl:template>
+
+  <!-- Handle sections. Based on http://www.ibm.com/developerworks/library/x-addstructurexslt/. -->
   <xsl:template name="content_withTitles_before">
     <xsl:param name="data"/>
-    
+
     <xsl:for-each select="$data/*">
       <xsl:choose>
-        <xsl:when test="not(.[self::html:h2] or ./preceding-sibling::html:h2 or .[self::html:h3] or ./preceding-sibling::html:h3)">
+        <xsl:when
+          test="not(.[self::html:h2] or ./preceding-sibling::html:h2 or .[self::html:h3] or ./preceding-sibling::html:h3)">
           <xsl:apply-templates mode="content" select="."/>
         </xsl:when>
       </xsl:choose>
@@ -129,22 +147,76 @@
   </xsl:template>
   <xsl:template name="content_withTitles">
     <xsl:param name="data"/>
-    
+
     <xsl:call-template name="content_withTitles_before">
       <xsl:with-param name="data" select="$data"/>
     </xsl:call-template>
-    <xsl:variable name="firstTitle" select="$data/html:h2[1]"></xsl:variable>
-    <xsl:variable name="afterFirstTitleIncluded" select="($firstTitle, $firstTitle/following-sibling::*)"/>
-    
+    <xsl:variable name="firstTitle" select="$data/html:h2[1]"/>
+    <xsl:variable name="afterFirstTitleIncluded"
+      select="
+        ($firstTitle,
+        $firstTitle/following-sibling::*)"/>
+
     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
       <db:section>
-        <db:title><xsl:copy-of select="./text()"></xsl:copy-of></db:title>
-        
+        <db:title>
+          <xsl:copy-of select="./text()"/>
+        </db:title>
+
         <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
               <db:section>
-                <db:title><xsl:copy-of select="./text()"></xsl:copy-of></db:title>
+                <db:title>
+                  <xsl:copy-of select="./text()"/>
+                </db:title>
+                
+                <xsl:for-each-group select="current-group()" group-starting-with="html:h4">
+                  <xsl:choose>
+                    <xsl:when test="current-group()[self::html:h4]">
+                      <db:section>
+                        <db:title>
+                          <xsl:copy-of select="./text()"/>
+                        </db:title>
+                      </db:section>
+                      
+                      <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
+                        <xsl:choose>
+                          <xsl:when test="current-group()[self::html:h5]">
+                            <db:section>
+                              <db:title>
+                                <xsl:copy-of select="./text()"/>
+                              </db:title>
+                              
+                              <xsl:for-each-group select="current-group()" group-starting-with="html:h6">
+                                <xsl:choose>
+                                  <xsl:when test="current-group()[self::html:h6]">
+                                    <db:section>
+                                      <db:title>
+                                        <xsl:copy-of select="./text()"/>
+                                      </db:title>
+                                      
+                                      <xsl:apply-templates select="current-group()" mode="content"/>
+                                    </db:section>
+                                  </xsl:when>
+                                  <xsl:otherwise>
+                                    <xsl:apply-templates select="current-group()" mode="content"/>
+                                  </xsl:otherwise>
+                                </xsl:choose>
+                              </xsl:for-each-group>
+                            </db:section>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <xsl:apply-templates select="current-group()" mode="content"/>
+                          </xsl:otherwise>
+                        </xsl:choose>
+                      </xsl:for-each-group>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:apply-templates select="current-group()" mode="content"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each-group>
               </db:section>
             </xsl:when>
             <xsl:otherwise>
@@ -156,6 +228,7 @@
     </xsl:for-each-group>
   </xsl:template>
 
+  <!-- Handle tables. -->
   <xsl:template mode="content_table" match="html:tbody">
     <db:tbody>
       <xsl:apply-templates select="*" mode="content_table"/>
@@ -172,6 +245,7 @@
     </db:td>
   </xsl:template>
 
+  <!-- Handle inline elements, inside paragraphs. -->
   <xsl:template mode="content_paragraph" match="html:a">
     <db:link>
       <xsl:attribute name="xlink:href" select="@href"/>
@@ -182,13 +256,4 @@
     <!-- <xsl:value-of select="normalize-space(.)"/> -->
     <xsl:value-of select="."/>
   </xsl:template>
-
-  <!-- Catch-all for style sheet errors. -->
-  <xsl:template match="*">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/>
-    </xsl:message>
-
-    <xsl:apply-templates/>
-  </xsl:template>
-
 </xsl:stylesheet>
