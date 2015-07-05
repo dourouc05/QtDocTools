@@ -28,7 +28,10 @@
       <!-- Extract the description, i.e. the long text. -->
       <xsl:variable name="description" select="$content/html:div[@class = 'descr']"/>
       <xsl:variable name="siblingAfterDescription" select="$description/following-sibling::*[1]"/>
-      <xsl:apply-templates select="$description" mode="description"/>
+      <!--<xsl:apply-templates mode="content" select="$description"/>-->
+      <xsl:call-template name="content_withTitles">
+        <xsl:with-param name="data" select="$description"/>
+      </xsl:call-template>
 
       <!-- If there is a paragraph just after the description, it's a See also paragraph. -->
       <xsl:variable name="hasSeeAlso" select="boolean($siblingAfterDescription[self::html:p])"
@@ -92,7 +95,7 @@
     </db:article>
   </xsl:template>
 
-  <!-- Handle index tables. -->
+  <!-- Handle main content sections. -->
   <xsl:template match="html:table[@class = 'annotated']" mode="indexTable">
     <xsl:apply-templates select="." mode="content"/>
   </xsl:template>
@@ -105,6 +108,52 @@
     <db:informaltable>
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:informaltable>
+  </xsl:template>
+  <xsl:template mode="content" match="html:p">
+    <db:para>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:para>
+  </xsl:template>
+  <xsl:template mode="content" match="html:h2 | html:h3"/>
+  
+  <xsl:template name="content_withTitles_before">
+    <xsl:param name="data"/>
+    
+    <xsl:for-each select="$data/*">
+      <xsl:choose>
+        <xsl:when test="not(.[self::html:h2] or ./preceding-sibling::html:h2 or .[self::html:h3] or ./preceding-sibling::html:h3)">
+          <xsl:apply-templates mode="content" select="."/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+  <xsl:template name="content_withTitles">
+    <xsl:param name="data"/>
+    
+    <xsl:call-template name="content_withTitles_before">
+      <xsl:with-param name="data" select="$data"/>
+    </xsl:call-template>
+    <xsl:variable name="firstTitle" select="$data/html:h2[1]"></xsl:variable>
+    <xsl:variable name="afterFirstTitleIncluded" select="($firstTitle, $firstTitle/following-sibling::*)"/>
+    
+    <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
+      <db:section>
+        <db:title><xsl:copy-of select="./text()"></xsl:copy-of></db:title>
+        
+        <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
+          <xsl:choose>
+            <xsl:when test="current-group()[self::html:h3]">
+              <db:section>
+                <db:title><xsl:copy-of select="./text()"></xsl:copy-of></db:title>
+              </db:section>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates select="current-group()" mode="content"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:for-each-group>
+      </db:section>
+    </xsl:for-each-group>
   </xsl:template>
 
   <xsl:template mode="content_table" match="html:tbody">
@@ -119,15 +168,10 @@
   </xsl:template>
   <xsl:template mode="content_table" match="html:td">
     <db:td>
-      <xsl:apply-templates select="*" mode="content_paragraph"/>
+      <xsl:apply-templates select="*" mode="content"/>
     </db:td>
   </xsl:template>
 
-  <xsl:template mode="content_paragraph" match="html:p">
-    <db:para>
-      <xsl:apply-templates mode="content_paragraph"/>
-    </db:para>
-  </xsl:template>
   <xsl:template mode="content_paragraph" match="html:a">
     <db:link>
       <xsl:attribute name="xlink:href" select="@href"/>
@@ -135,7 +179,8 @@
     </db:link>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="text()">
-    <xsl:value-of select="normalize-space(.)"/>
+    <!-- <xsl:value-of select="normalize-space(.)"/> -->
+    <xsl:value-of select="."/>
   </xsl:template>
 
   <!-- Catch-all for style sheet errors. -->
