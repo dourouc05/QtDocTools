@@ -102,10 +102,22 @@
 
   <!-- Catch-all for style sheet errors. -->
   <xsl:template match="*">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/>
-    </xsl:message>
-
-    <xsl:apply-templates/>
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content_list">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content_paragraph">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content_table">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="indexTable">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
   </xsl:template>
 
   <!-- 
@@ -118,9 +130,30 @@
     </db:informaltable>
   </xsl:template>
   <xsl:template mode="content" match="html:p">
-    <db:para>
-      <xsl:apply-templates mode="content_paragraph"/>
-    </db:para>
+    <xsl:choose>
+      <xsl:when test="count(child::*)=1 and child::html:img and @class='centerAlign'">
+        <xsl:if test="not(./html:img[@alt] = '')">
+          <xsl:message terminate="no">WARNING: Unmatched attribute alt: <xsl:value-of select="@alt"/></xsl:message>
+        </xsl:if>
+        
+        <db:figure>
+          <!--<db:title>docbook.xsd</db:title>-->
+          <db:mediaobject>
+            <db:imageobject>
+              <db:imagedata>
+                <xsl:attribute name="fileref">
+                  <xsl:copy-of select="./html:img/@src"></xsl:copy-of>
+                </xsl:attribute>
+              </db:imagedata>
+            </db:imageobject>
+          </db:mediaobject>
+        </db:figure>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:para>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:para></xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="html:h2 | html:h3"/>
   <xsl:template mode="content" match="html:pre">
@@ -259,19 +292,19 @@
       <xsl:apply-templates select="*" mode="content"/>
     </db:td>
   </xsl:template>
-  
+
   <!-- Handle lists. -->
   <xsl:template mode="content_list" match="html:li">
     <db:listitem>
       <xsl:choose>
         <!-- Has it a paragraph child? DocBook needs one! -->
         <xsl:when test="*[1][self::html:p]">
-          <xsl:apply-templates select="*" mode="content_paragraph"/>
+          <xsl:apply-templates mode="content_paragraph"/>
         </xsl:when>
         <xsl:otherwise>
           <db:para>
             <!-- Add it if it is not there. Don't forget to handle text (. instead of *). -->
-            <xsl:apply-templates select="." mode="content_paragraph"/>
+            <xsl:apply-templates mode="content_paragraph"/>
           </db:para>
         </xsl:otherwise>
       </xsl:choose>
