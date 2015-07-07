@@ -1,0 +1,167 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- heartlistener.qdoc -->
+        <html:title>Bluetooth Low Energy Heart Listener Example | Qt Bluetooth 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtbluetooth-index.html">Qt
+                                Bluetooth</html:a></html:li>
+                            <html:li>Bluetooth Low Energy Heart Listener Example</html:li>
+                            <html:li id="buildversion">Qt 5.4.0 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#running-the-example"
+                                                >Running the Example</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#visual-tour">Visual
+                                                Tour</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">Bluetooth Low Energy Heart Listener
+                                Example</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$heartlistener-description -->
+                            <html:div class="descr">
+                                <html:a name="details"></html:a>
+                                <html:p>The Bluetooth Low Energy Heart Listener Example shows how to
+                                    develop a Bluetooth Low Energy application using the Qt
+                                    Bluetooth API. The application covers the scanning for Bluetooth
+                                    Low Energy devices, connecting to a Heart Rate service on the
+                                    device, writing characteristics and descriptors and receiving
+                                    updates from device once the heart rate has changed.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/heartratemonitor.png" /></html:p><html:p>The
+                                    example introduces the following Qt classes:</html:p>
+                                <html:ul>
+                                    <html:li><html:a href="qlowenergycontroller.html"
+                                            >QLowEnergyController</html:a></html:li>
+                                    <html:li><html:a href="qlowenergyservice.html"
+                                            >QLowEnergyService</html:a></html:li>
+                                    <html:li><html:a href="qlowenergycharacteristic.html"
+                                            >QLowEnergyCharacteristic</html:a></html:li>
+                                    <html:li><html:a href="qlowenergydescriptor.html"
+                                            >QLowEnergyDescriptor</html:a></html:li>
+                                </html:ul>
+                                <html:p>A Bluetooth Low Energy device with a Heart Rate service is
+                                    required for this application to work. An alternative might be a
+                                    programmable Bluetooth Low Energy device which might simulate
+                                    the service. If no such device can be found, the example uses a
+                                    demo mode which creates and displays random values.</html:p>
+                                <html:p>The <html:a href="qtbluetooth-lowenergyscanner-example.html"
+                                        >Bluetooth Low Energy Scanner</html:a> example might be more
+                                    suitable if a heart rate device is not available. The scanner
+                                    example works with any type of Bluetooth Low Energy peripheral
+                                    device.</html:p>
+                                <html:a name="running-the-example"></html:a>
+                                <html:h2 id="running-the-example">Running the Example</html:h2>
+                                <html:p>To run the example from <html:a
+                                        href="http://doc.qt.io/qtcreator/index.html">Qt
+                                        Creator</html:a>, open the <html:b>Welcome</html:b> mode and
+                                    select the example from <html:b>Examples</html:b>. For more
+                                    information, visit <html:a
+                                        href="http://doc.qt.io/qtcreator/creator-build-example-application.html"
+                                        >Building and Running an Example</html:a>.</html:p>
+                                <html:a name="visual-tour"></html:a>
+                                <html:h2 id="visual-tour">Visual Tour</html:h2>
+                                <html:p>The application searches for all Bluetooth Low Energy
+                                    peripheral devices in the vicinity. It is assumed that the
+                                    remote devices advertise their presence. The found devices are
+                                    presented in a list. Note that it shows all Bluetooth Low Energy
+                                    devices even those which do not offer a Heart Rate
+                                    service.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/heartratefound.png" /></html:p><html:p>After the
+                                    user has selected a target device, the example connects to its
+                                    Heart Rate service if one is available. It automatically enables
+                                    notification updates for the Heart Rate value and presents the
+                                    current value on the screen.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/heartratemonitor.png" /></html:p><html:p>Once
+                                    the monitoring process is canceled, a small graph presents a
+                                    summary of the received values.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/heartrateresults.png"
+                                     /></html:p><html:p>Files:</html:p>
+                                <html:ul>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-deviceinfo-cpp.html"
+                                            >heartlistener/deviceinfo.cpp</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-deviceinfo-h.html"
+                                            >heartlistener/deviceinfo.h</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-heartrate-cpp.html"
+                                            >heartlistener/heartrate.cpp</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-heartrate-h.html"
+                                            >heartlistener/heartrate.h</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-button-qml.html"
+                                            >heartlistener/assets/Button.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-point-qml.html"
+                                            >heartlistener/assets/Point.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-dialog-qml.html"
+                                            >heartlistener/assets/dialog.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-draw-js.html"
+                                            >heartlistener/assets/draw.js</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-home-qml.html"
+                                            >heartlistener/assets/home.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-main-qml.html"
+                                            >heartlistener/assets/main.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-monitor-qml.html"
+                                            >heartlistener/assets/monitor.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-assets-results-qml.html"
+                                            >heartlistener/assets/results.qml</html:a></html:li>
+                                    <html:li><html:a href="qtbluetooth-heartlistener-main-cpp.html"
+                                            >heartlistener/main.cpp</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-heartlistener-pro.html"
+                                            >heartlistener/heartlistener.pro</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtbluetooth-heartlistener-resources-qrc.html"
+                                            >heartlistener/resources.qrc</html:a></html:li>
+                                </html:ul>
+                            </html:div>
+                            <!-- @@@heartlistener -->
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2014 Digia Plc and/or its
+                subsidiaries. Documentation contributions included herein are the copyrights of
+                their respective owners.<html:br /> The documentation provided herein is licensed
+                under the terms of the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free
+                    Documentation License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Digia, Qt and their respective logos are trademarks of Digia
+                Plc in Finland and/or other countries worldwide. All other trademarks are property
+                of their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

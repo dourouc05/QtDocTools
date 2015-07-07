@@ -51,7 +51,7 @@
         select="boolean($siblingAfterSeeAlso[self::html:div][@class = 'table'])" as="xs:boolean"/>
       <xsl:if test="$hasIndex">
         <xsl:apply-templates mode="indexTable"
-          select="$siblingAfterSeeAlso[self::html:div][@class = 'table']"/>
+          select="$siblingAfterSeeAlso[self::html:div][@class = 'table']/html:table"/>
       </xsl:if>
       <xsl:variable name="siblingAfterIndex"
         select="
@@ -96,28 +96,17 @@
   </xsl:template>
 
   <!-- Handle main content sections. -->
-  <xsl:template match="html:table[@class = 'annotated']" mode="indexTable">
+  <xsl:template match="html:div" mode="indexTable">
+    <xsl:apply-templates mode="indexTable"/>
+  </xsl:template>
+  <xsl:template match="html:table" mode="indexTable">
     <xsl:apply-templates select="." mode="content"/>
   </xsl:template>
 
   <!-- Catch-all for style sheet errors. -->
-  <xsl:template match="*">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
-  </xsl:template>
-  <xsl:template match="*" mode="content">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
-  </xsl:template>
-  <xsl:template match="*" mode="content_list">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
-  </xsl:template>
-  <xsl:template match="*" mode="content_paragraph">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
-  </xsl:template>
-  <xsl:template match="*" mode="content_table">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
-  </xsl:template>
-  <xsl:template match="*" mode="indexTable">
-    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"/></xsl:message>
+  <xsl:template match="*" mode="#all">
+    <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"
+      /></xsl:message>
   </xsl:template>
 
   <!-- 
@@ -129,30 +118,41 @@
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:informaltable>
   </xsl:template>
+  <xsl:template mode="content" match="html:a">
+    <db:anchor>
+      <xsl:attribute name="xml:id" select="@name"/>
+    </db:anchor>
+  </xsl:template>
   <xsl:template mode="content" match="html:p">
+    <!-- A paragraph may hold a single image (treat it accordingly), or be a real paragraph. -->
     <xsl:choose>
-      <xsl:when test="count(child::*)=1 and child::html:img and @class='centerAlign'">
+      <xsl:when test="count(child::*) = 1 and child::html:img and @class = 'centerAlign'">
         <xsl:if test="not(./html:img[@alt] = '')">
-          <xsl:message terminate="no">WARNING: Unmatched attribute alt: <xsl:value-of select="@alt"/></xsl:message>
+          <xsl:message terminate="no">WARNING: Unmatched attribute alt: <xsl:value-of select="@alt"
+            /></xsl:message>
         </xsl:if>
-        
-        <db:figure>
+
+        <db:informalfigure>
           <!--<db:title>docbook.xsd</db:title>-->
+          <!-- If title: <figure>. Otherwise: <informalfigure>. -->
           <db:mediaobject>
             <db:imageobject>
               <db:imagedata>
                 <xsl:attribute name="fileref">
-                  <xsl:copy-of select="./html:img/@src"></xsl:copy-of>
+                  <xsl:copy-of select="./html:img/@src"/>
                 </xsl:attribute>
               </db:imagedata>
             </db:imageobject>
           </db:mediaobject>
-        </db:figure>
+        </db:informalfigure>
       </xsl:when>
       <xsl:otherwise>
-        <db:para>
-          <xsl:apply-templates mode="content_paragraph"/>
-        </db:para></xsl:otherwise>
+        <xsl:if test="not(. = '')">
+          <db:para>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:para>
+        </xsl:if>
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="html:h2 | html:h3"/>
@@ -312,15 +312,26 @@
   </xsl:template>
 
   <!-- Handle inline elements, inside paragraphs. DocBook happily allows lists inside paragraphs. -->
+  <xsl:template mode="content_paragraph" match="text()">
+    <!-- <xsl:value-of select="normalize-space(.)"/> -->
+    <xsl:value-of select="."/>
+  </xsl:template>
   <xsl:template mode="content_paragraph" match="html:a">
     <db:link>
       <xsl:attribute name="xlink:href" select="@href"/>
       <xsl:apply-templates mode="content_paragraph"/>
     </db:link>
   </xsl:template>
-  <xsl:template mode="content_paragraph" match="text()">
-    <!-- <xsl:value-of select="normalize-space(.)"/> -->
-    <xsl:value-of select="."/>
+  <xsl:template mode="content_paragraph" match="html:b | html:strong">
+    <db:emphasis role="strong">
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:emphasis>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:i | html:em">
+    <!-- Need to distinguish them? -->
+    <db:emphasis>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:emphasis>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:ul">
     <db:itemizedlist>
