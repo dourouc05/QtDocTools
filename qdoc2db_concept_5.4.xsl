@@ -21,7 +21,17 @@
       <!-- Extract the metadata. -->
       <db:info>
         <db:title>
-          <xsl:value-of select="$content/html:h1/text()"/>
+          <xsl:variable name="title" select="$content/html:h1/text()"/>
+          <xsl:choose>
+            <xsl:when test="starts-with($title, 'Q') 
+              and ends-with($title, ' Class')
+              and count(contains($title, ' ')) = 1">
+              <xsl:value-of select="substring-before($title, ' Class')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$title"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </db:title>
       </db:info>
 
@@ -100,7 +110,15 @@
     <xsl:apply-templates mode="indexTable"/>
   </xsl:template>
   <xsl:template match="html:table" mode="indexTable">
-    <xsl:apply-templates select="." mode="content"/>
+    <xsl:choose>
+      <xsl:when test="./@class = 'annotated'"> <!-- Like index pages. -->
+        <xsl:apply-templates select="." mode="content"/>
+      </xsl:when>
+      <xsl:when test="./@class = 'alignedsummary'"/> <!-- Like class pages: just redundant. -->
+      <xsl:otherwise>
+        <xsl:message terminate="no">WARNING: Unknown table: <xsl:value-of select="./@class"/></xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Catch-all for style sheet errors. -->
