@@ -23,9 +23,11 @@
         <db:title>
           <xsl:variable name="title" select="$content/html:h1/text()"/>
           <xsl:choose>
-            <xsl:when test="starts-with($title, 'Q') 
-              and ends-with($title, ' Class')
-              and count(contains($title, ' ')) = 1">
+            <xsl:when
+              test="
+                starts-with($title, 'Q')
+                and ends-with($title, ' Class')
+                and count(contains($title, ' ')) = 1">
               <xsl:value-of select="substring-before($title, ' Class')"/>
             </xsl:when>
             <xsl:otherwise>
@@ -35,19 +37,13 @@
         </db:title>
       </db:info>
 
-      <!-- Extract the description, i.e. the long text. -->
+      <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description). -->
       <xsl:variable name="description" select="$content/html:div[@class = 'descr']"/>
       <xsl:variable name="siblingAfterDescription" select="$description/following-sibling::*[1]"/>
-      <!--<xsl:apply-templates mode="content" select="$description"/>-->
-      <xsl:call-template name="content_withTitles">
-        <xsl:with-param name="data" select="$description"/>
-      </xsl:call-template>
-
-      <!-- If there is a paragraph just after the description, it's a See also paragraph. -->
       <xsl:variable name="hasSeeAlso" select="boolean($siblingAfterDescription[self::html:p])"
         as="xs:boolean"/>
       <xsl:if test="$hasSeeAlso">
-        <xsl:message terminate="no">WARNING: To do. Implement See also. </xsl:message>
+        <xsl:apply-templates mode="content" select="$siblingAfterDescription[self::html:p]"/>
       </xsl:if>
       <xsl:variable name="siblingAfterSeeAlso"
         select="
@@ -55,6 +51,17 @@
             $siblingAfterDescription/following-sibling::*[1]
           else
             $siblingAfterDescription"/>
+      <xsl:call-template name="content_withTitles">
+        <xsl:with-param name="data" select="$description"/>
+        <xsl:with-param name="hasSeeAlso" select="$hasSeeAlso"/>
+        <xsl:with-param name="seeAlso"
+          select="
+            if ($hasSeeAlso) then
+              $siblingAfterDescription[self::html:p]
+            else
+              @empty-node-set"
+        />
+      </xsl:call-template>
 
       <!-- There may be a table for generated index pages. -->
       <xsl:variable name="hasIndex"
@@ -84,7 +91,7 @@
             $siblingAfterIndex"/>
 
       <xsl:variable name="hasFuncs"
-        select="boolean($siblingAfterTypes[self::html:div][@class = 'funcs'])" as="xs:boolean"/>
+        select="boolean($siblingAfterTypes[self::html:div][@class = 'func'])" as="xs:boolean"/>
       <xsl:if test="$hasFuncs">
         <xsl:message terminate="no">WARNING: To do. Implement functions. </xsl:message>
       </xsl:if>
@@ -111,12 +118,15 @@
   </xsl:template>
   <xsl:template match="html:table" mode="indexTable">
     <xsl:choose>
-      <xsl:when test="./@class = 'annotated'"> <!-- Like index pages. -->
+      <xsl:when test="./@class = 'annotated'">
+        <!-- Like index pages. -->
         <xsl:apply-templates select="." mode="content"/>
       </xsl:when>
-      <xsl:when test="./@class = 'alignedsummary'"/> <!-- Like class pages: just redundant. -->
+      <xsl:when test="./@class = 'alignedsummary'"/>
+      <!-- Like class pages: just redundant. -->
       <xsl:otherwise>
-        <xsl:message terminate="no">WARNING: Unknown table: <xsl:value-of select="./@class"/></xsl:message>
+        <xsl:message terminate="no">WARNING: Unknown table: <xsl:value-of select="./@class"
+          /></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -142,7 +152,7 @@
     </db:anchor>
   </xsl:template>
   <xsl:template mode="content" match="html:p">
-    <!-- A paragraph may hold a single image (treat it accordingly), or be a real paragraph. -->
+    <!-- A paragraph may hold a single image (treat it accordingly), or be an admonition, or be a real paragraph. -->
     <xsl:choose>
       <xsl:when test="count(child::*) = 1 and child::html:img and @class = 'centerAlign'">
         <xsl:if test="not(./html:img[@alt] = '')">
@@ -163,6 +173,15 @@
             </db:imageobject>
           </db:mediaobject>
         </db:informalfigure>
+      </xsl:when>
+      <xsl:when test="./html:b and starts-with(./html:b/text(), 'Note')">
+        <db:note>
+          <db:para>
+            <xsl:apply-templates mode="content_paragraph">
+              <xsl:with-param name="forgetNotes" select="true()"/>
+            </xsl:apply-templates>
+          </db:para>
+        </db:note>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="not(. = '')">
@@ -212,6 +231,8 @@
   </xsl:template>
   <xsl:template name="content_withTitles">
     <xsl:param name="data"/>
+    <xsl:param name="hasSeeAlso"/>
+    <xsl:param name="seeAlso"/>
 
     <xsl:call-template name="content_withTitles_before">
       <xsl:with-param name="data" select="$data"/>
@@ -290,6 +311,10 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each-group>
+        
+        <xsl:if test="$hasSeeAlso">
+          <xsl:apply-templates mode="content" select="$seeAlso"/>
+        </xsl:if>
       </db:section>
     </xsl:for-each-group>
   </xsl:template>
@@ -341,9 +366,12 @@
     </db:link>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:b | html:strong">
-    <db:emphasis role="strong">
-      <xsl:apply-templates mode="content_paragraph"/>
-    </db:emphasis>
+    <xsl:param name="forgetNotes" select="false()"/>
+    <xsl:if test="not($forgetNotes and starts-with(text(), 'Note'))">
+      <db:emphasis role="strong">
+        <xsl:apply-templates mode="content_paragraph"/>
+      </db:emphasis>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:i | html:em">
     <!-- Need to distinguish them? -->
