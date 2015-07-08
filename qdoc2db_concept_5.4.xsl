@@ -17,25 +17,81 @@
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
-    <xsl:variable name="rawTitle" select="$content/html:h1/text()"/>
+    <!-- Extract the metadata. -->
+    <xsl:variable name="title" select="$content/html:h1/text()"/>
     <xsl:variable name="isClass"
       select="
-        starts-with($rawTitle, 'Q')
-        and ends-with($rawTitle, ' Class')
-        and count(contains($rawTitle, ' ')) = 1"/>
-    <xsl:variable name="title">
-      <xsl:choose>
-        <xsl:when test="$isClass">
-          <xsl:value-of select="substring-before($rawTitle, ' Class')"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$rawTitle"/>
-        </xsl:otherwise>
-      </xsl:choose>
+        starts-with($title, 'Q')
+        and ends-with($title, ' Class')
+        and count(contains($title, ' ')) = 1"/>
+    <xsl:variable name="className">
+      <xsl:if test="$isClass">
+        <xsl:value-of select="substring-before($title, ' Class')"/>
+      </xsl:if>
     </xsl:variable>
 
+    <!-- Extract the various parts of the main structure. -->
+    <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
+    <xsl:variable name="siblingAfterDescription" as="element()"
+      select="$description/following-sibling::*[1]"/>
+
+    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
+    <xsl:variable name="hasSeeAlso" select="boolean($seeAlso)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterSeeAlso" as="element()"
+      select="
+        if ($hasSeeAlso) then
+          $siblingAfterDescription/following-sibling::*[1]
+        else
+          $siblingAfterDescription"/>
+
+    <xsl:variable name="index" as="element()?"
+      select="$siblingAfterSeeAlso[self::html:div][@class = 'table']"/>
+    <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterIndex"
+      select="
+        if ($hasIndex) then
+          $siblingAfterSeeAlso/following-sibling::*[1]
+        else
+          $siblingAfterSeeAlso"/>
+
+    <xsl:variable name="types" as="element()?"
+      select="$siblingAfterIndex[self::html:div][@class = 'types']"/>
+    <xsl:variable name="hasTypes" select="boolean($types)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterTypes"
+      select="
+        if ($hasTypes) then
+          $siblingAfterIndex/following-sibling::*[1]
+        else
+          $siblingAfterIndex"/>
+
+    <xsl:variable name="funcs" as="element(html:div)?"
+      select="$siblingAfterTypes[self::html:div][@class = 'func']"/>
+    <xsl:variable name="hasFuncs" select="boolean($funcs)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterFuncs"
+      select="
+        if ($hasFuncs) then
+          $siblingAfterTypes/following-sibling::*[1]
+        else
+        $siblingAfterTypes"/>
+    
+    <!-- Error checks. --> 
+    <xsl:if test="boolean($siblingAfterFuncs)">
+      <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
+        select="name($siblingAfterFuncs)"/>
+      </xsl:message>
+    </xsl:if>
+    <xsl:if test="$isClass and not(boolean($funcs))">
+      <xsl:message terminate="no">WARNING: A class has no functions.</xsl:message>
+    </xsl:if>
+    <xsl:if test="not($isClass) and boolean($types)">
+      <xsl:message terminate="no">WARNING: A concept has types.</xsl:message>
+    </xsl:if>
+    <xsl:if test="not($isClass) and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A concept has functions.</xsl:message>
+    </xsl:if>
+
+    <!-- Actually output something. -->
     <db:article version="5.0">
-      <!-- Extract the metadata. -->
       <db:info>
         <db:title>
           <xsl:value-of select="$title"/>
@@ -43,80 +99,30 @@
       </db:info>
 
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description). -->
-      <xsl:variable name="description" select="$content/html:div[@class = 'descr']"/>
-      <xsl:variable name="siblingAfterDescription" select="$description/following-sibling::*[1]"/>
-      <xsl:variable name="hasSeeAlso" select="boolean($siblingAfterDescription[self::html:p])"
-        as="xs:boolean"/>
       <xsl:if test="$hasSeeAlso">
         <xsl:apply-templates mode="content" select="$siblingAfterDescription[self::html:p]"/>
       </xsl:if>
-      <xsl:variable name="siblingAfterSeeAlso"
-        select="
-          if ($hasSeeAlso) then
-            $siblingAfterDescription/following-sibling::*[1]
-          else
-            $siblingAfterDescription"/>
       <xsl:call-template name="content_withTitles">
         <xsl:with-param name="data" select="$description"/>
         <xsl:with-param name="hasSeeAlso" select="$hasSeeAlso"/>
-        <xsl:with-param name="seeAlso"
-          select="
-            if ($hasSeeAlso) then
-              $siblingAfterDescription[self::html:p]
-            else
-              @empty-node-set"
-        />
+        <xsl:with-param name="seeAlso" select="$seeAlso"/>
       </xsl:call-template>
 
       <!-- There may be a table for generated index pages. -->
-      <xsl:variable name="hasIndex"
-        select="boolean($siblingAfterSeeAlso[self::html:div][@class = 'table'])" as="xs:boolean"/>
       <xsl:if test="$hasIndex">
-        <xsl:apply-templates mode="indexTable"
-          select="$siblingAfterSeeAlso[self::html:div][@class = 'table']/html:table"/>
+        <xsl:apply-templates mode="indexTable" select="$index"/>
       </xsl:if>
-      <xsl:variable name="siblingAfterIndex"
-        select="
-          if ($hasIndex) then
-            $siblingAfterSeeAlso/following-sibling::*[1]
-          else
-            $siblingAfterSeeAlso"/>
 
       <!-- There may be types and functions for classes. -->
-      <xsl:variable name="hasTypes"
-        select="boolean($siblingAfterIndex[self::html:div][@class = 'types'])" as="xs:boolean"/>
       <xsl:if test="$hasTypes">
         <xsl:message terminate="no">WARNING: To do. Implement types. </xsl:message>
       </xsl:if>
-      <xsl:variable name="siblingAfterTypes"
-        select="
-          if ($hasTypes) then
-            $siblingAfterIndex/following-sibling::*[1]
-          else
-            $siblingAfterIndex"/>
 
-      <xsl:variable name="funcs" select="$siblingAfterTypes[self::html:div][@class = 'func']"
-        as="element(html:div)"/>
-      <xsl:variable name="hasFuncs" select="boolean($funcs)" as="xs:boolean"/>
       <xsl:if test="$hasFuncs">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$funcs"/>
-          <xsl:with-param name="className" select="$title"/>
+          <xsl:with-param name="className" select="$className"/>
         </xsl:call-template>
-      </xsl:if>
-      <xsl:variable name="siblingAfterFuncs"
-        select="
-          if ($hasFuncs) then
-            $siblingAfterTypes/following-sibling::*[1]
-          else
-            $siblingAfterTypes"/>
-
-      <!-- Catch missing elements. -->
-      <xsl:variable name="hasAfterFuncs" select="boolean($siblingAfterFuncs)" as="xs:boolean"/>
-      <xsl:if test="$hasAfterFuncs">
-        <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
-            select="name($siblingAfterFuncs)"/>
-        </xsl:message>
       </xsl:if>
     </db:article>
   </xsl:template>
@@ -163,13 +169,15 @@
     <xsl:param name="className" as="xs:string"/>
 
     <xsl:variable name="functionAnchor" select="./@id"/>
-    <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/> <!-- Class, Class-2 -->
-    <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/> <!-- dtor.Class -->
+    <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/>
+    <!-- Class, Class-2 -->
+    <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/>
+    <!-- dtor.Class -->
     <xsl:variable name="isFct" select="not($isCtor or $isDtor)"/>
-    
+
     <xsl:choose>
       <xsl:when test="$isCtor">
-        <db:
+        <!-- TODO -->
       </xsl:when>
     </xsl:choose>
   </xsl:template>
