@@ -11,7 +11,7 @@
   <xsl:strip-space elements="*"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
-  <xsl:import-schema schema-location="./schemas/docbook.xsd"/>
+  <!-- <xsl:import-schema schema-location="./schemas/docbook.xsd"/> -->
 
   <!-- Output document class. -->
   <xsl:template match="html:html">
@@ -72,12 +72,12 @@
         if ($hasFuncs) then
           $siblingAfterTypes/following-sibling::*[1]
         else
-        $siblingAfterTypes"/>
-    
-    <!-- Error checks. --> 
+          $siblingAfterTypes"/>
+
+    <!-- Error checks. -->
     <xsl:if test="boolean($siblingAfterFuncs)">
       <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
-        select="name($siblingAfterFuncs)"/>
+          select="name($siblingAfterFuncs)"/>
       </xsl:message>
     </xsl:if>
     <xsl:if test="$isClass and not(boolean($funcs))">
@@ -92,16 +92,25 @@
 
     <!-- Actually output something. -->
     <db:article version="5.0">
+      <!-- xsl:validation="strict" -->
       <db:info>
         <db:title>
           <xsl:value-of select="$title"/>
         </db:title>
       </db:info>
 
-      <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description). -->
-      <xsl:if test="$hasSeeAlso">
-        <xsl:apply-templates mode="content" select="$siblingAfterDescription[self::html:p]"/>
+      <!-- Output the list of methods of the class if any. -->
+      <xsl:if test="$isClass">
+        <xsl:call-template name="classListing">
+          <xsl:with-param name="data" select="$funcs"/>
+          <xsl:with-param name="className" select="$className"/>
+        </xsl:call-template>
       </xsl:if>
+
+      <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
+      <!--<xsl:if test="$hasSeeAlso">
+        <xsl:apply-templates mode="content" select="$siblingAfterDescription[self::html:p]"/>
+      </xsl:if>-->
       <xsl:call-template name="content_withTitles">
         <xsl:with-param name="data" select="$description"/>
         <xsl:with-param name="hasSeeAlso" select="$hasSeeAlso"/>
@@ -146,23 +155,165 @@
     </xsl:choose>
   </xsl:template>
 
-  <!-- Handle classes. -->
+  <!-- Handle classes: class structure. -->
+  <xsl:template name="classListing">
+    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="className" as="xs:string"/>
+
+    <db:classsynopsis>
+      <db:ooclass>
+        <db:classname>
+          <xsl:value-of select="$className"/>
+        </db:classname>
+      </db:ooclass>
+      <xsl:apply-templates mode="classListing" select="$data/*">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
+    </db:classsynopsis>
+  </xsl:template>
+  <xsl:template mode="classListing" match="text()"/>
+  <xsl:template mode="classListing" match="html:h3[@class = 'fn']">
+    <xsl:param name="className" as="xs:string"/>
+
+    <!-- Possible anchors: for constructors, Class, Class-2; for destructors, dtor.Class -->
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/>
+    <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/>
+    <xsl:variable name="isFct" select="not($isCtor or $isDtor)"/>
+
+    <xsl:choose>
+      <xsl:when test="$isCtor">
+        <db:constructorsynopsis>
+          <xsl:call-template name="classListing_methodBody"/>
+        </db:constructorsynopsis>
+      </xsl:when>
+      <xsl:when test="$isDtor">
+        <db:destructorsynopsis>
+          <xsl:call-template name="classListing_methodBody"/>
+        </db:destructorsynopsis>
+      </xsl:when>
+      <xsl:when test="$isFct">
+        <db:methodsynopsis>
+          <xsl:call-template name="classListing_methodBody"/>
+        </db:methodsynopsis>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template name="classListing_methodBody">
+    <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
+    <xsl:variable name="returnTypes"
+      select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
+    <xsl:variable name="returnType"
+      select="$functionName/preceding-sibling::html:span[@class = 'type'][1]"/>
+
+    <xsl:if test="$returnType">
+      <xsl:call-template name="classListing_methodBody_analyseType">
+        <xsl:with-param name="node" select="$returnType"/>
+      </xsl:call-template>
+    </xsl:if>
+
+    <db:methodname>
+      <xsl:value-of select="$functionName"/>
+    </db:methodname>
+
+    <!-- Handle parameters list. -->
+    <xsl:variable name="textAfterName" select="$functionName/following-sibling::text()[1]"/>
+    <xsl:choose>
+      <xsl:when test="$textAfterName = '()'">
+        <db:void/>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:methodparam>
+          <xsl:variable name="type"
+            select="$functionName/following-sibling::html:span[@class = 'type']"/>
+          <xsl:variable name="textAfterType"
+            select="normalize-space($type/following-sibling::text()[1])"/>
+
+          <!-- Maybe this parameter is const. -->
+          <xsl:if test="normalize-space($textAfterName) = '(const'">
+            <db:modifier>const</db:modifier>
+          </xsl:if>
+
+          <!-- Output the type. -->
+          <db:type>
+            <xsl:value-of select="$type/html:a"/>
+
+            <!-- Maybe it's a pointer or a reference. -->
+            <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
+              <xsl:value-of select="$textAfterType"/>
+            </xsl:if>
+          </db:type>
+
+          <!-- Eventually the name. -->
+          <db:parameter>
+            <xsl:value-of select="normalize-space($type/following-sibling::html:i)"/>
+          </db:parameter>
+        </db:methodparam>
+      </xsl:otherwise>
+    </xsl:choose>
+
+    <!-- Handle function const. -->
+  </xsl:template>
+  <xsl:template name="classListing_methodBody_analyseType">
+    <xsl:param name="node" as="element()"/>
+
+    <xsl:choose>
+      <xsl:when test="$node/html:a">
+        <db:type>
+          <xsl:call-template name="classListing_methodBody_analyseType_sub">
+            <xsl:with-param name="node" select="$node"/>
+          </xsl:call-template>
+          <xsl:value-of select="$node/html:a/text()"/>
+        </db:type>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="type" select="$node/text()"/>
+        <xsl:choose>
+          <xsl:when test="$type = 'void'">
+            <db:void/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message terminate="no">WARNING: Untested code. </xsl:message>
+            <db:type>
+              <xsl:value-of select="$type"/>
+            </db:type>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template name="classListing_methodBody_analyseType_sub">
+    <!-- Deal more specifically with templates, that can be recurring. -->
+    <xsl:param name="node" as="element()"/>
+
+    <xsl:choose>
+      <xsl:when test="$node/html:a">
+        <xsl:value-of select="$node/html:a/text()"/>
+        
+        <xsl:if test="contains(normalize-space($node/following-sibling::text()[1]), '&lt;')">
+          &lt;
+          <xsl:call-template name="classListing_methodBody_analyseType_sub">
+            <xsl:with-param name="node" select="$node/following-sibling::text()/following-sibling::*[1]"/>
+          </xsl:call-template>
+          &gt;
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="type" select="$node/text()"/>
+        <xsl:value-of select="$type"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!-- Handle classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
 
     <db:section>
       <db:title>Member Function Documentation</db:title>
-      <db:classsynopsis>
-        <db:ooclass>
-          <db:classname>
-            <xsl:value-of select="$className"/>
-          </db:classname>
-        </db:ooclass>
-        <xsl:apply-templates select="$data/child::html:h3" mode="content_class">
-          <xsl:with-param name="className" select="$className"/>
-        </xsl:apply-templates>
-      </db:classsynopsis>
+      <db:para>TODO</db:para>
+      <xsl:message terminate="no">WARNING: to do. </xsl:message>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_class" match="html:h3[@class = 'fn']">
@@ -183,10 +334,10 @@
   </xsl:template>
 
   <!-- Catch-all for style sheet errors. -->
-  <xsl:template match="*" mode="#all">
+  <!--<xsl:template match="*" mode="#all">
     <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"
       /></xsl:message>
-  </xsl:template>
+  </xsl:template>-->
 
   <!-- 
     Handle HTML content and transform it into DocBook. 
