@@ -121,13 +121,14 @@
 
       <!-- There may be types and functions for classes. -->
       <xsl:if test="$hasTypes">
-        <xsl:message terminate="no">WARNING: To do. Implement types. </xsl:message>
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$types"/>
+        </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$hasFuncs">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$funcs"/>
-          <xsl:with-param name="className" select="$className"/>
         </xsl:call-template>
       </xsl:if>
     </db:article>
@@ -311,22 +312,94 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- Handle types: detailed description. -->
+  <xsl:template name="content_types">
+    <xsl:param name="data" as="element(html:div)"/>
+
+    <db:section>
+      <db:title>Member Type Documentation</db:title>
+      <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+    </db:section>
+  </xsl:template>
+  <!-- 
+    Two types of types: either class="fn", just an enum; or class="flags". 
+    In the latter case, the title mentions both an enum and a flags, separated with a <br/>. 
+  -->
+  <xsl:template mode="content_types" match="html:h3[@class = 'fn']">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+
+      <db:info>
+        <db:title>
+          <xsl:call-template name="content_types_title_enum">
+            <xsl:with-param name="node" select="./child::*[1]"/>
+          </xsl:call-template>
+        </db:title>
+      </db:info>
+    </db:section>
+  </xsl:template>
+  <xsl:template name="content_types_title_enum">
+    <xsl:param name="node" as="element()?"/>
+    <xsl:apply-templates mode="content_types_title_enum" select="$node"/>
+  </xsl:template>
+  <xsl:template mode="content_types_title_enum" match="text()">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template mode="content_types_title_enum" match="html:a[@name]"/>
+  <xsl:template mode="content_types_title_enum" match="html:a[@href]">
+    <xsl:value-of select="./text()"/>
+  </xsl:template>
+  <xsl:template mode="content_types_title_enum" match="html:span">
+    <xsl:apply-templates mode="content_class_title"/>
+  </xsl:template>
+  <xsl:template mode="content_types_title_enum" match="html:i">
+    <xsl:apply-templates mode="content_class_title"/>
+  </xsl:template>
+  <xsl:template mode="content_types_title_enum" match="html:br">
+    <xsl:message terminate="yes">ERROR: Found a new line in a title</xsl:message>
+  </xsl:template>
+  <xsl:template mode="content_types" match="html:h3[@class = 'flags']">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+
+      <db:info>
+        <db:title>
+          <xsl:variable name="test" select="./child::*[1]"/>
+          <xsl:call-template name="content_types_title_flags">
+            <xsl:with-param name="node" select="./child::*[1]"/>
+          </xsl:call-template>
+        </db:title>
+      </db:info>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  <xsl:template name="content_types_title_flags">
+    <xsl:param name="node" as="node()?"/>
+    <xsl:if test="not($node[self::html:br])">
+      <xsl:apply-templates mode="content_types_title_enum" select="$node"/>
+      <xsl:call-template name="content_types_title_flags">
+        <xsl:with-param name="node" select="$node/following-sibling::node()[1]"/>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
   <!-- Handle classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="className" as="xs:string"/>
 
     <db:section>
       <db:title>Member Function Documentation</db:title>
-      <xsl:apply-templates mode="content_class" select="$data/html:h3">
-        <xsl:with-param name="className" select="$className"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
     </db:section>
   </xsl:template>
-  <xsl:template mode="content_class" match="html:h2"/>
   <xsl:template mode="content_class" match="html:h3[@class = 'fn']">
-    <xsl:param name="className" as="xs:string"/>
-
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
@@ -376,12 +449,15 @@
     Handle HTML content and transform it into DocBook. 
     Tables are implemented with HTML model, not CALS. 
   -->
+  <xsl:template mode="content" match="html:div[@class='table']">
+    <xsl:apply-templates select="*" mode="content"/>
+  </xsl:template>
   <xsl:template mode="content" match="html:table">
     <db:informaltable>
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:informaltable>
   </xsl:template>
-  <xsl:template mode="content" match="html:a">
+  <xsl:template mode="content" match="html:a[@name]">
     <db:anchor>
       <xsl:attribute name="xml:id" select="@name"/>
     </db:anchor>
@@ -565,9 +641,32 @@
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:tr>
   </xsl:template>
+  <xsl:template mode="content_table" match="html:th">
+    <db:th>
+      <xsl:choose>
+        <xsl:when test="./child::html:p">
+          <xsl:apply-templates select="*" mode="content"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:para>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:para>
+        </xsl:otherwise>
+      </xsl:choose>
+    </db:th>
+  </xsl:template>
   <xsl:template mode="content_table" match="html:td">
     <db:td>
-      <xsl:apply-templates select="*" mode="content"/>
+      <xsl:choose>
+        <xsl:when test="./child::html:p">
+          <xsl:apply-templates select="*" mode="content"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:para>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:para>
+        </xsl:otherwise>
+      </xsl:choose>
     </db:td>
   </xsl:template>
 
