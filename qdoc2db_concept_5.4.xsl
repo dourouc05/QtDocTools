@@ -203,12 +203,10 @@
     <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
     <xsl:variable name="returnTypes"
       select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
-    <xsl:variable name="returnType"
-      select="$functionName/preceding-sibling::html:span[@class = 'type'][1]"/>
 
-    <xsl:if test="$returnType">
+    <xsl:if test="$returnTypes">
       <xsl:call-template name="classListing_methodBody_analyseType">
-        <xsl:with-param name="node" select="$returnType"/>
+        <xsl:with-param name="typeNodes" select="$returnTypes"/>
       </xsl:call-template>
     </xsl:if>
 
@@ -219,7 +217,7 @@
     <!-- Handle parameters list. -->
     <xsl:variable name="textAfterName" select="$functionName/following-sibling::text()[1]"/>
     <xsl:choose>
-      <xsl:when test="$textAfterName = '()'">
+      <xsl:when test="starts-with($textAfterName, '()')">
         <db:void/>
       </xsl:when>
       <xsl:otherwise>
@@ -251,59 +249,67 @@
         </db:methodparam>
       </xsl:otherwise>
     </xsl:choose>
-
+    
     <!-- Handle function const. -->
+    <xsl:variable name="textAfterArguments" select="normalize-space(substring-after($textAfterName, ')'))"/>
+    <xsl:if test="string-length($textAfterArguments) > 0">
+      <db:modifier>
+        <xsl:value-of select="replace($textAfterArguments, ' \)', '')"/>
+      </db:modifier>
+    </xsl:if>
   </xsl:template>
   <xsl:template name="classListing_methodBody_analyseType">
-    <xsl:param name="node" as="element()"/>
+    <xsl:param name="typeNodes" as="element()+"/>
 
     <xsl:choose>
-      <xsl:when test="$node/html:a">
-        <db:type>
-          <xsl:call-template name="classListing_methodBody_analyseType_sub">
-            <xsl:with-param name="node" select="$node"/>
-          </xsl:call-template>
-          <xsl:value-of select="$node/html:a/text()"/>
-        </db:type>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:variable name="type" select="$node/text()"/>
+      <xsl:when test="count($typeNodes) = 1">
+        <xsl:variable name="node" select="$typeNodes[1]"/>
         <xsl:choose>
-          <xsl:when test="$type = 'void'">
-            <db:void/>
+          <xsl:when test="$node/html:a">
+            <db:type>
+              <xsl:value-of select="$node/html:a/text()"/>
+            </db:type>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:message terminate="no">WARNING: Untested code. </xsl:message>
-            <db:type>
-              <xsl:value-of select="$type"/>
-            </db:type>
+            <xsl:variable name="type" select="$node/text()"/>
+            <xsl:choose>
+              <xsl:when test="$type = 'void'">
+                <db:void/>
+              </xsl:when>
+              <xsl:otherwise>
+                <db:type>
+                  <xsl:value-of select="$type"/>
+                </db:type>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template name="classListing_methodBody_analyseType_sub">
-    <!-- Deal more specifically with templates, that can be recurring. -->
-    <xsl:param name="node" as="element()"/>
-
-    <xsl:choose>
-      <xsl:when test="$node/html:a">
-        <xsl:value-of select="$node/html:a/text()"/>
-        
-        <xsl:if test="contains(normalize-space($node/following-sibling::text()[1]), '&lt;')">
-          &lt;
-          <xsl:call-template name="classListing_methodBody_analyseType_sub">
-            <xsl:with-param name="node" select="$node/following-sibling::text()/following-sibling::*[1]"/>
-          </xsl:call-template>
-          &gt;
-        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="type" select="$node/text()"/>
-        <xsl:value-of select="$type"/>
+        <db:type>
+          <xsl:for-each select="1 to count($typeNodes)">
+            <!-- Output the class names. -->
+            <xsl:variable name="node" select="subsequence($typeNodes, ., 1)"/>
+            <xsl:choose>
+              <xsl:when test="$node/html:a">
+                <xsl:value-of select="$node/html:a/text()"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="$node"/>
+              </xsl:otherwise>
+            </xsl:choose>
+            
+            <!-- Output the chevrons. -->
+            <xsl:if test="not(position() = count($typeNodes))">&lt;</xsl:if>
+          </xsl:for-each>
+          
+          <!-- Close the chevrons. -->
+          <xsl:for-each select="1 to count($typeNodes) - 1">&gt;</xsl:for-each>
+        </db:type>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
 
   <!-- Handle classes: detailed description. -->
   <xsl:template name="content_class">
