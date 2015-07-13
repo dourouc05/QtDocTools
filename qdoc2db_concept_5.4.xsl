@@ -163,7 +163,7 @@
           <xsl:value-of select="$className"/>
         </db:classname>
       </db:ooclass>
-      <xsl:apply-templates mode="classListing" select="$data/*">
+      <xsl:apply-templates mode="classListing" select="$data/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
     </db:classsynopsis>
@@ -318,7 +318,7 @@
 
     <db:section>
       <db:title>Member Function Documentation</db:title>
-      <xsl:apply-templates mode="content_class" select="$data/*">
+      <xsl:apply-templates mode="content_class" select="$data/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
     </db:section>
@@ -350,6 +350,9 @@
     <xsl:value-of select="./text()"/>
   </xsl:template>
   <xsl:template mode="content_class_title" match="html:span">
+    <xsl:apply-templates mode="content_class_title"/>
+  </xsl:template>
+  <xsl:template mode="content_class_title" match="html:i">
     <xsl:apply-templates mode="content_class_title"/>
   </xsl:template>
   <xsl:template name="content_class_content">
