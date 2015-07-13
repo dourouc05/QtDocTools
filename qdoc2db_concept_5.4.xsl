@@ -691,8 +691,8 @@
   <!-- Handle inline elements, inside paragraphs. DocBook happily allows lists inside paragraphs. -->
   <xsl:template mode="content_paragraph" match="text()">
     <xsl:choose>
-      <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '()')">
-        <xsl:value-of select="substring-after(., '()')"/>
+      <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '(')">
+        <xsl:value-of select="substring-after(., ')')"/>
       </xsl:when>
       <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '&lt;')">
         <!-- Templated type: starts with &lt;, ends with &gt;. -->
@@ -717,7 +717,14 @@
           <xsl:attribute name="xlink:href" select="@href"/>
           <xsl:apply-templates mode="content_paragraph"/>
         </db:link>
-        <xsl:text>()</xsl:text>
+        
+        <xsl:variable name="toEndList" select="substring-before(./following-sibling::text()[1], ')')[1]"/>
+        <xsl:variable name="justList" select="substring-after($toEndList, '(')"/>
+        
+        <xsl:text>(</xsl:text>
+        <xsl:value-of select="$justList"/>
+        <xsl:text>)</xsl:text>
+        
         <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
       </xsl:when>
       <xsl:when test="starts-with(./text(), 'Q')">
@@ -728,9 +735,8 @@
         </db:link>
         
         <!-- Maybe it's templated. -->
-        <xsl:variable name="test" select="./following-sibling::text()"/>
         <xsl:if test="starts-with(./following-sibling::text()[1], '&lt;')">
-          <xsl:variable name="toEndTemplate" select="substring-before(./following-sibling::text(), '&gt;')"/>
+          <xsl:variable name="toEndTemplate" select="substring-before(./following-sibling::text()[1], '&gt;')[1]"/>
           <xsl:variable name="templateArgument" select="substring-after($toEndTemplate, '&lt;')"/>
           
           <xsl:text>&lt;</xsl:text>
