@@ -694,6 +694,10 @@
       <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '()')">
         <xsl:value-of select="substring-after(., '()')"/>
       </xsl:when>
+      <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '&lt;')">
+        <!-- Templated type: starts with &lt;, ends with &gt;. -->
+        <xsl:value-of select="substring-after(., '&gt;')"/>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="."/>
       </xsl:otherwise>
@@ -722,6 +726,18 @@
           <xsl:attribute name="xlink:href" select="@href"/>
           <xsl:apply-templates mode="content_paragraph"/>
         </db:link>
+        
+        <!-- Maybe it's templated. -->
+        <xsl:variable name="test" select="./following-sibling::text()"/>
+        <xsl:if test="starts-with(./following-sibling::text()[1], '&lt;')">
+          <xsl:variable name="toEndTemplate" select="substring-before(./following-sibling::text(), '&gt;')"/>
+          <xsl:variable name="templateArgument" select="substring-after($toEndTemplate, '&lt;')"/>
+          
+          <xsl:text>&lt;</xsl:text>
+          <xsl:value-of select="$templateArgument"/>
+          <xsl:text>&gt;</xsl:text>
+        </xsl:if>
+        
         <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
