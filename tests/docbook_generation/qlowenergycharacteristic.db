@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0">
+   <db:info>
+      <db:title>QLowEnergyCharacteristic Class</db:title>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QLowEnergyCharacteristic</db:classname>
+      </db:ooclass>
+      <db:constructorsynopsis xlink:href="#QLowEnergyCharacteristic">
+         <db:methodname>QLowEnergyCharacteristic</db:methodname>
+         <db:void/>
+      </db:constructorsynopsis>
+      <db:constructorsynopsis xlink:href="#QLowEnergyCharacteristic-2">
+         <db:methodname>QLowEnergyCharacteristic</db:methodname>
+         <db:methodparam>
+            <db:modifier>const</db:modifier>
+            <db:type>QLowEnergyCharacteristic&amp;</db:type>
+            <db:parameter>other</db:parameter>
+         </db:methodparam>
+      </db:constructorsynopsis>
+      <db:destructorsynopsis xlink:href="dtor.QLowEnergyCharacteristic">
+         <db:methodname>~QLowEnergyCharacteristic</db:methodname>
+         <db:void/>
+      </db:destructorsynopsis>
+      <db:methodsynopsis xlink:href="descriptor">
+         <db:type>QLowEnergyDescriptor</db:type>
+         <db:methodname>descriptor</db:methodname>
+         <db:methodparam>
+            <db:modifier>const</db:modifier>
+            <db:type>QBluetoothUuid&amp;</db:type>
+            <db:parameter>uuid</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="descriptors">
+         <db:type>QList&lt;QLowEnergyDescriptor&gt;</db:type>
+         <db:methodname>descriptors</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="handle">
+         <db:type>QLowEnergyHandle</db:type>
+         <db:methodname>handle</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="isValid">
+         <db:type>bool</db:type>
+         <db:methodname>isValid</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="name">
+         <db:type>QString</db:type>
+         <db:methodname>name</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="properties">
+         <db:type>QLowEnergyCharacteristic::PropertyTypes</db:type>
+         <db:methodname>properties</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="uuid">
+         <db:type>QBluetoothUuid</db:type>
+         <db:methodname>uuid</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="value">
+         <db:type>QByteArray</db:type>
+         <db:methodname>value</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="operator-not-eq">
+         <db:type>bool</db:type>
+         <db:methodname>operator!=</db:methodname>
+         <db:methodparam>
+            <db:modifier>const</db:modifier>
+            <db:type>QLowEnergyCharacteristic&amp;</db:type>
+            <db:parameter>other</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="operator-eq">
+         <db:type>QLowEnergyCharacteristic</db:type>
+         <db:methodname>operator=</db:methodname>
+         <db:methodparam>
+            <db:modifier>const</db:modifier>
+            <db:type>QLowEnergyCharacteristic&amp;</db:type>
+            <db:parameter>other</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="operator-eq-eq">
+         <db:type>bool</db:type>
+         <db:methodname>operator==</db:methodname>
+         <db:methodparam>
+            <db:modifier>const</db:modifier>
+            <db:type>QLowEnergyCharacteristic&amp;</db:type>
+            <db:parameter>other</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+   </db:classsynopsis>
+   <db:section>
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> class stores information
+                                    about a Bluetooth Low Energy service characteristic.</db:para>
+      <db:para><db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> provides information
+                                    about a Bluetooth Low Energy service characteristic's <db:code><db:link xlink:href="qlowenergycharacteristic.html#name">name</db:link>()</db:code>,
+                                        <db:code><db:link xlink:href="qlowenergycharacteristic.html#uuid">uuid</db:link>()</db:code>, <db:code><db:link xlink:href="qlowenergycharacteristic.html#value">value</db:link>()</db:code>,
+                                        <db:code><db:link xlink:href="qlowenergycharacteristic.html#properties">properties</db:link>()</db:code>, <db:code><db:link xlink:href="qlowenergycharacteristic.html#handle">handle</db:link>()</db:code> and <db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptors">descriptors</db:link>()</db:code>. To obtain the characteristic's
+                                    specification and information, it is necessary to connect to the
+                                    device using the <db:code><db:link xlink:href="qlowenergyservice.html">QLowEnergyService</db:link></db:code> and <db:code><db:link xlink:href="qlowenergycontroller.html">QLowEnergyController</db:link></db:code> classes.</db:para>
+      <db:para>The characteristic value may be written via the <db:code><db:link xlink:href="qlowenergyservice.html">QLowEnergyService</db:link></db:code>
+                                    instance that manages the service to which this characteristic
+                                    belongs. The <db:code><db:link xlink:href="qlowenergyservice.html#writeCharacteristic">QLowEnergyService::writeCharacteristic</db:link>()</db:code> function
+                                    writes the new value. The <db:code><db:link xlink:href="qlowenergyservice.html#characteristicWritten">QLowEnergyService::characteristicWritten</db:link>()</db:code> signal
+                                    is emitted upon success. The <db:code><db:link xlink:href="qlowenergycharacteristic.html#value">value</db:link>()</db:code>
+                                    of this object is automatically updated accordingly.</db:para>
+      <db:para>Characteristics may contain none, one or more descriptors.
+                                    They can be individually retrieved using the <db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptor">descriptor</db:link>()</db:code> function. The <db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptors">descriptors</db:link>()</db:code> function returns all descriptors as
+                                    a list. The general purpose of a descriptor is to add contextual
+                                    information to the characteristic. For example, the descriptor
+                                    might provide format or range information specifying how the
+                                    characteristic's value is to be interpreted.</db:para>
+      <db:note>
+         <db:para>This class is provided by Qt 5.4 as
+                                    part of a Bluetooth Low Energy Tech Preview. Some API elements
+                                    may change until the final release of the
+                                feature.</db:para>
+      </db:note>
+      <db:para>
+         <db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qlowenergyservice.html">QLowEnergyService</db:link></db:code> and <db:code><db:link xlink:href="qlowenergydescriptor.html">QLowEnergyDescriptor</db:link></db:code>.</db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Type Documentation</db:title>
+      <db:section xml:id="PropertyType-enum">
+         <db:info>
+            <db:title>enum
+                                        QLowEnergyCharacteristic::​PropertyType</db:title>
+         </db:info>
+         <db:para>This enum describes the properties of a
+                                    characteristic.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::Unknown</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x00</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>The type is not
+                                                  known.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::Broadcasting</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x01</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Allow for the broadcasting
+                                                  of Generic Attributes (GATT) characteristic
+                                                  values.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::Read</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x02</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Allow the characteristic
+                                                  values to be read.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::WriteNoResponse</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x04</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Allow characteristic
+                                                  values without responses to be written.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::Write</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x08</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Allow for characteristic
+                                                  values to be written.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::Notify</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x10</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Permits notification of
+                                                  characteristic values.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::Indicate</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x20</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Permits indications of
+                                                  characteristic values.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::WriteSigned</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x40</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Permits signed writes of
+                                                  the GATT characteristic values.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QLowEnergyCharacteristic::ExtendedProperty</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0x80</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Additional characteristic
+                                                  properties are defined in the characteristic's
+                                                  extended properties descriptor.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The PropertyTypes type is a typedef for <db:code><db:link xlink:href="qtcore/qflags.html">QFlags</db:link>&lt;PropertyType&gt;</db:code>. It stores an OR
+                                    combination of PropertyType values.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qlowenergycharacteristic.html#properties">properties</db:link>()</db:code>.</db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section xml:id="QLowEnergyCharacteristic">
+         <db:info>
+            <db:title>QLowEnergyCharacteristic::​QLowEnergyCharacteristic()</db:title>
+         </db:info>
+         <db:para>Construct a new <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code>. A default-constructed
+                                    instance of this class is always invalid.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qlowenergycharacteristic.html#isValid">isValid</db:link>()</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="QLowEnergyCharacteristic-2">
+         <db:info>
+            <db:title>QLowEnergyCharacteristic::​QLowEnergyCharacteristic(const
+                                        QLowEnergyCharacteristic
+                                        &amp; other)</db:title>
+         </db:info>
+         <db:para>Construct a new <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> that is a copy of
+                                        <db:emphasis>other</db:emphasis>.</db:para>
+         <db:para>The two copies continue to share the same underlying data
+                                    which does not detach upon write.</db:para>
+      </db:section>
+      <db:section xml:id="dtor.QLowEnergyCharacteristic">
+         <db:info>
+            <db:title>QLowEnergyCharacteristic::​~QLowEnergyCharacteristic()</db:title>
+         </db:info>
+         <db:para>Destroys the <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> object.</db:para>
+      </db:section>
+      <db:section xml:id="descriptor">
+         <db:info>
+            <db:title>QLowEnergyDescriptor
+                                        QLowEnergyCharacteristic::​descriptor(const QBluetoothUuid &amp;
+                                        uuid) const</db:title>
+         </db:info>
+         <db:para>Returns the descriptor for <db:emphasis>uuid</db:emphasis> or an
+                                    invalid <db:code>QLowEnergyDescriptor</db:code>
+                                    instance.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptors">descriptors</db:link>()</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="descriptors">
+         <db:info>
+            <db:title>QList&lt;QLowEnergyDescriptor&gt;
+                                        QLowEnergyCharacteristic::​descriptors() const</db:title>
+         </db:info>
+         <db:para>Returns the list of descriptors belonging to this
+                                    characteristic; otherwise an empty list.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptor">descriptor</db:link>()</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="handle">
+         <db:info>
+            <db:title>QLowEnergyHandle
+                                        QLowEnergyCharacteristic::​handle() const</db:title>
+         </db:info>
+         <db:para>Returns the handle of the characteristic's value attribute;
+                                    or <db:code>0</db:code> if the handle cannot be accessed on
+                                    the platform or if the characteristic is invalid.</db:para>
+      </db:section>
+      <db:section xml:id="isValid">
+         <db:info>
+            <db:title>bool
+                                        QLowEnergyCharacteristic::​isValid() const</db:title>
+         </db:info>
+         <db:para>Returns <db:code>true</db:code> if the <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> object is valid,
+                                    otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>An invalid characteristic object is not associated with any
+                                    service (default-constructed) or the associated service is no
+                                    longer valid due to a disconnect from the underlying Bluetooth
+                                    Low Energy device, for example. Once the object is invalid it
+                                    cannot become valid anymore.</db:para>
+         <db:note>
+            <db:para>If a <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> instance turns invalid
+                                    due to a disconnect from the underlying device, the information
+                                    encapsulated by the current instance remains as it was at the
+                                    time of the disconnect. Therefore it can be retrieved after the
+                                    disconnect event.</db:para>
+         </db:note>
+      </db:section>
+      <db:section xml:id="name">
+         <db:info>
+            <db:title>QString
+                                        QLowEnergyCharacteristic::​name() const</db:title>
+         </db:info>
+         <db:para>Returns the human-readable name of the
+                                    characteristic.</db:para>
+         <db:para>The name is based on the characteristic's <db:code><db:link xlink:href="qlowenergycharacteristic.html#uuid">uuid</db:link>()</db:code>
+                                    which must have been standardized. The complete list of
+                                    characteristic types can be found under <db:link xlink:href="https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicsHome.aspx">Bluetooth.org Characteristics</db:link>.</db:para>
+         <db:para>The returned string is empty if the <db:code><db:link xlink:href="qlowenergycharacteristic.html#uuid">uuid</db:link>()</db:code> is
+                                    unknown.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qbluetoothuuid.html#characteristicToString">QBluetoothUuid::characteristicToString</db:link>()</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="properties">
+         <db:info>
+            <db:title>QLowEnergyCharacteristic::PropertyTypes
+                                        QLowEnergyCharacteristic::​properties() const</db:title>
+         </db:info>
+         <db:para>Returns the properties of the characteristic.</db:para>
+         <db:para>The properties define the access permissions for the
+                                    characteristic.</db:para>
+      </db:section>
+      <db:section xml:id="uuid">
+         <db:info>
+            <db:title>QBluetoothUuid
+                                        QLowEnergyCharacteristic::​uuid() const</db:title>
+         </db:info>
+         <db:para>Returns the UUID of the characteristic if <db:code><db:link xlink:href="qlowenergycharacteristic.html#isValid">isValid</db:link>()</db:code> returns <db:code>true</db:code>;
+                                    otherwise a <db:link xlink:href="qtcore/quuid.html#isNull">null</db:link> UUID.</db:para>
+      </db:section>
+      <db:section xml:id="value">
+         <db:info>
+            <db:title>QByteArray
+                                        QLowEnergyCharacteristic::​value() const</db:title>
+         </db:info>
+         <db:para>Returns the cached value of the characteristic.</db:para>
+         <db:para>If the characteristic's <db:code><db:link xlink:href="qlowenergycharacteristic.html#properties">properties</db:link>()</db:code> permit writing of new values, the
+                                    value can be updated using <db:code><db:link xlink:href="qlowenergyservice.html#writeCharacteristic">QLowEnergyService::writeCharacteristic</db:link>()</db:code>.</db:para>
+         <db:para>The cache is updated during the associated service's <db:link xlink:href="qlowenergyservice.html#discoverDetails">detail
+                                        discovery</db:link>, a successful <db:link xlink:href="qlowenergyservice.html#writeCharacteristic">write
+                                        operation</db:link> or when an update notification is
+                                    received.</db:para>
+         <db:para>The returned <db:code><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:code> is empty if the characteristic does not
+                                    have the <db:link xlink:href="qlowenergycharacteristic.html#PropertyType-enum">read
+                                        permission</db:link>. However, a non-readable characteristic
+                                    may obtain a non-empty value via a related notification or write
+                                    operation.</db:para>
+      </db:section>
+      <db:section xml:id="operator-not-eq">
+         <db:info>
+            <db:title>bool
+                                        QLowEnergyCharacteristic::​operator!=(const QLowEnergyCharacteristic
+                                        &amp; other) const</db:title>
+         </db:info>
+         <db:para>Returns <db:code>true</db:code> if
+                                        <db:emphasis>other</db:emphasis> is not equal to this <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code>; otherwise
+                                        <db:code>false</db:code>.</db:para>
+         <db:para>Two QLowEnergyCharcteristic instances are considered to be
+                                    equal if they refer to the same characteristic on the same
+                                    remote Bluetooth Low Energy device or both instances have been
+                                    default-constructed.</db:para>
+      </db:section>
+      <db:section xml:id="operator-eq">
+         <db:info>
+            <db:title>QLowEnergyCharacteristic &amp;
+                                        QLowEnergyCharacteristic::​operator=(const QLowEnergyCharacteristic
+                                        &amp; other)</db:title>
+         </db:info>
+         <db:para>Makes a copy of <db:emphasis>other</db:emphasis> and assigns it to
+                                    this <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> object. The two copies
+                                    continue to share the same service and controller
+                                    details.</db:para>
+      </db:section>
+      <db:section xml:id="operator-eq-eq">
+         <db:info>
+            <db:title>bool
+                                        QLowEnergyCharacteristic::​operator==(const QLowEnergyCharacteristic
+                                        &amp; other) const</db:title>
+         </db:info>
+         <db:para>Returns <db:code>true</db:code> if
+                                        <db:emphasis>other</db:emphasis> is equal to this <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code>; otherwise
+                                        <db:code>false</db:code>.</db:para>
+         <db:para>Two <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code> instances are considered
+                                    to be equal if they refer to the same characteristic on the same
+                                    remote Bluetooth Low Energy device or both instances have been
+                                    default-constructed.</db:para>
+      </db:section>
+   </db:section>
+</db:article>
