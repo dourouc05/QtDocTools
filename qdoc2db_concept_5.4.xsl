@@ -505,16 +505,17 @@
   <xsl:template mode="content" match="html:p">
     <!-- A paragraph may hold a single image (treat it accordingly), or be an admonition, or be a real paragraph. -->
     <xsl:choose>
-      <xsl:when test="count(child::*) = 1 and child::html:img and @class = 'centerAlign'">
-        <xsl:if test="not(./html:img[@alt] = '')">
-          <xsl:message terminate="no">WARNING: Unmatched attribute alt: <xsl:value-of select="@alt"
-            /></xsl:message>
-        </xsl:if>
-
+      <xsl:when test="count(child::*) = 1 and child::html:img">
         <db:informalfigure>
           <!--<db:title>docbook.xsd</db:title>-->
           <!-- If title: <figure>. Otherwise: <informalfigure>. -->
           <db:mediaobject>
+            <xsl:if test="./html:img[@alt]">
+              <db:alt>
+                <xsl:value-of select="./html:img/@alt"/>
+              </db:alt>
+            </xsl:if>
+
             <db:imageobject>
               <db:imagedata>
                 <xsl:attribute name="fileref">
@@ -671,6 +672,11 @@
   </xsl:template>
 
   <!-- Handle tables. -->
+  <xsl:template mode="content_table" match="html:thead">
+    <db:thead>
+      <xsl:apply-templates select="*" mode="content_table"/>
+    </db:thead>
+  </xsl:template>
   <xsl:template mode="content_table" match="html:tbody">
     <db:tbody>
       <xsl:apply-templates select="*" mode="content_table"/>
@@ -714,13 +720,22 @@
   <xsl:template mode="content_list" match="html:li">
     <db:listitem>
       <xsl:choose>
-        <!-- Has it a paragraph child? DocBook needs one! -->
-        <xsl:when test="*[1][self::html:p]">
-          <xsl:apply-templates mode="content_paragraph"/>
+        <!-- 
+          Has it a paragraph child? DocBook needs one! QDoc peculiarity: may very well have text, then
+          a paragraph tag! 
+        -->
+        <xsl:when test="./child::node()[1][self::html:p]">
+          <xsl:apply-templates mode="content"/>
+        </xsl:when>
+        <xsl:when test="./html:p">
+          <!-- It has a paragraph, but it's not the first element. Treat the beginning as if there were no paragraph near, then do the paragraph separately. -->
+          <db:para>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:para>
+          <xsl:apply-templates mode="content" select="./html:p"/>
         </xsl:when>
         <xsl:otherwise>
           <db:para>
-            <!-- Add it if it is not there. Don't forget to handle text (. instead of *). -->
             <xsl:apply-templates mode="content_paragraph"/>
           </db:para>
         </xsl:otherwise>
@@ -824,5 +839,21 @@
     <db:code>
       <xsl:apply-templates mode="content_paragraph"/>
     </db:code>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:img">
+    <db:inlinemediaobject>
+      <xsl:if test=".[@alt] and not(./@alt = '')">
+        <db:alt>
+          <xsl:value-of select="./@alt"/>
+        </db:alt>
+      </xsl:if>
+      <db:imageobject>
+        <db:imagedata>
+          <xsl:attribute name="fileref">
+            <xsl:value-of select="./@src"/>
+          </xsl:attribute>
+        </db:imagedata>
+      </db:imageobject>
+    </db:inlinemediaobject>
   </xsl:template>
 </xsl:stylesheet>
