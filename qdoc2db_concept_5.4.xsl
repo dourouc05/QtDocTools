@@ -201,6 +201,7 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template name="classListing_methodBody">
+    <xsl:variable name="titleNode" select="."/>
     <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
     <xsl:variable name="returnTypes"
       select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
@@ -222,32 +223,40 @@
         <db:void/>
       </xsl:when>
       <xsl:otherwise>
-        <db:methodparam>
-          <xsl:variable name="type"
-            select="$functionName/following-sibling::html:span[@class = 'type']"/>
+        <!--<xsl:variable name="types"
+          select="$functionName/following-sibling::html:span[@class = 'type']"/>-->
+        <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
+        
+        <xsl:for-each select="1 to $nArguments">
+          <xsl:variable name="firstNode" select="if (. = 1) then $functionName else $titleNode/text()[contains(., ',')][.]"/>
+          <xsl:variable name="types" select="$firstNode/following-sibling::html:span[@class = 'type']"/>
+          <xsl:variable name="type" select="$types[1]"/>
           <xsl:variable name="textAfterType"
             select="normalize-space($type/following-sibling::text()[1])"/>
-
-          <!-- Maybe this parameter is const. -->
-          <xsl:if test="normalize-space($textAfterName) = '(const'">
-            <db:modifier>const</db:modifier>
-          </xsl:if>
-
-          <!-- Output the type. -->
-          <db:type>
-            <xsl:value-of select="$type/html:a"/>
-
-            <!-- Maybe it's a pointer or a reference. -->
-            <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
-              <xsl:value-of select="$textAfterType"/>
+          
+          <db:methodparam>
+            <!-- Maybe this parameter is const. -->
+            <xsl:if test="normalize-space($textAfterName) = '(const'">
+              <db:modifier>const</db:modifier>
             </xsl:if>
-          </db:type>
-
-          <!-- Eventually the name. -->
-          <db:parameter>
-            <xsl:value-of select="normalize-space($type/following-sibling::html:i)"/>
-          </db:parameter>
-        </db:methodparam>
+            
+            <!-- Output the type. -->
+            <db:type>
+              <xsl:value-of select="$type/html:a"/>
+              
+              <!-- Maybe it's a pointer or a reference. -->
+              <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
+                <xsl:value-of select="$textAfterType"/>
+              </xsl:if>
+            </db:type>
+            
+            <!-- Eventually the name. -->
+            <db:parameter>
+              <xsl:variable name="names" select="$type/following-sibling::html:i"/>
+              <xsl:value-of select="normalize-space($names[1])"/>
+            </db:parameter>
+          </db:methodparam>
+        </xsl:for-each>
       </xsl:otherwise>
     </xsl:choose>
 
