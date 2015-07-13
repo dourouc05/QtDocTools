@@ -249,9 +249,10 @@
         </db:methodparam>
       </xsl:otherwise>
     </xsl:choose>
-    
+
     <!-- Handle function const. -->
-    <xsl:variable name="textAfterArguments" select="normalize-space(substring-after($textAfterName, ')'))"/>
+    <xsl:variable name="textAfterArguments"
+      select="normalize-space(substring-after($textAfterName, ')'))"/>
     <xsl:if test="string-length($textAfterArguments) > 0">
       <db:modifier>
         <xsl:value-of select="replace($textAfterArguments, ' \)', '')"/>
@@ -298,18 +299,18 @@
                 <xsl:value-of select="$node"/>
               </xsl:otherwise>
             </xsl:choose>
-            
+
             <!-- Output the chevrons. -->
             <xsl:if test="not(position() = count($typeNodes))">&lt;</xsl:if>
           </xsl:for-each>
-          
+
           <!-- Close the chevrons. -->
           <xsl:for-each select="1 to count($typeNodes) - 1">&gt;</xsl:for-each>
         </db:type>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- Handle classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
@@ -325,17 +326,17 @@
   <xsl:template mode="content_class" match="html:h2"/>
   <xsl:template mode="content_class" match="html:h3[@class = 'fn']">
     <xsl:param name="className" as="xs:string"/>
-    
+
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      
+
       <db:info>
         <db:title>
           <xsl:apply-templates mode="content_class_title"/>
         </db:title>
       </db:info>
-      
+
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
@@ -346,13 +347,14 @@
   </xsl:template>
   <xsl:template mode="content_class_title" match="html:a[@name]"/>
   <xsl:template mode="content_class_title" match="html:a[@href]">
-    <xsl:value-of select="./text()"/></xsl:template>
+    <xsl:value-of select="./text()"/>
+  </xsl:template>
   <xsl:template mode="content_class_title" match="html:span">
     <xsl:apply-templates mode="content_class_title"/>
   </xsl:template>
   <xsl:template name="content_class_content">
     <xsl:param name="node" as="element()?"/>
-    
+
     <xsl:if test="$node and not($node[self::html:h3])">
       <xsl:apply-templates mode="content" select="$node"/>
       <xsl:call-template name="content_class_content">
@@ -586,19 +588,52 @@
 
   <!-- Handle inline elements, inside paragraphs. DocBook happily allows lists inside paragraphs. -->
   <xsl:template mode="content_paragraph" match="text()">
-    <!-- <xsl:value-of select="normalize-space(.)"/> -->
-    <xsl:value-of select="."/>
+    <xsl:choose>
+      <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '()')">
+        <xsl:value-of select="substring-after(., '()')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:a">
-    <db:link>
-      <xsl:attribute name="xlink:href" select="@href"/>
-      <xsl:apply-templates mode="content_paragraph"/>
-    </db:link>
+    <!-- 
+      Output a link, maybe enclosing its content with <db:code> when it's a method (followed by parentheses) or a class. 
+      
+      Strange things to output <db:code> (output it as pure text, but unescaped), just to ensure there is no whitespace 
+      between this tag and the link, i.e. visible space to the user!
+    -->
+    <xsl:choose>
+      <xsl:when test="starts-with(./following-sibling::text()[1], '()')">
+        <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
+        <db:link>
+          <xsl:attribute name="xlink:href" select="@href"/>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:link>
+        <xsl:text>()</xsl:text>
+        <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
+      </xsl:when>
+      <xsl:when test="starts-with(./text(), 'Q')">
+        <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
+        <db:link>
+          <xsl:attribute name="xlink:href" select="@href"/>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:link>
+        <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:link>
+          <xsl:attribute name="xlink:href" select="@href"/>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:link>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:b | html:strong">
     <xsl:param name="forgetNotes" select="false()"/>
     <xsl:if test="not($forgetNotes and starts-with(text(), 'Note'))">
-      <db:emphasis role="strong">
+      <db:emphasis role="bold">
         <xsl:apply-templates mode="content_paragraph"/>
       </db:emphasis>
     </xsl:if>
@@ -618,5 +653,10 @@
     <db:orderedlist>
       <xsl:apply-templates mode="content_list"/>
     </db:orderedlist>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:code">
+    <db:code>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:code>
   </xsl:template>
 </xsl:stylesheet>
