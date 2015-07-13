@@ -108,9 +108,6 @@
       </xsl:if>
 
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
-      <!--<xsl:if test="$hasSeeAlso">
-        <xsl:apply-templates mode="content" select="$siblingAfterDescription[self::html:p]"/>
-      </xsl:if>-->
       <xsl:call-template name="content_withTitles">
         <xsl:with-param name="data" select="$description"/>
         <xsl:with-param name="hasSeeAlso" select="$hasSeeAlso"/>
@@ -184,16 +181,19 @@
     <xsl:choose>
       <xsl:when test="$isCtor">
         <db:constructorsynopsis>
+          <xsl:attribute name="xlink:href" select="concat('#', $functionAnchor)"/>
           <xsl:call-template name="classListing_methodBody"/>
         </db:constructorsynopsis>
       </xsl:when>
       <xsl:when test="$isDtor">
         <db:destructorsynopsis>
+          <xsl:attribute name="xlink:href" select="$functionAnchor"/>
           <xsl:call-template name="classListing_methodBody"/>
         </db:destructorsynopsis>
       </xsl:when>
       <xsl:when test="$isFct">
         <db:methodsynopsis>
+          <xsl:attribute name="xlink:href" select="$functionAnchor"/>
           <xsl:call-template name="classListing_methodBody"/>
         </db:methodsynopsis>
       </xsl:when>
@@ -310,7 +310,6 @@
     </xsl:choose>
   </xsl:template>
   
-
   <!-- Handle classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
@@ -318,32 +317,55 @@
 
     <db:section>
       <db:title>Member Function Documentation</db:title>
-      <db:para>TODO</db:para>
-      <xsl:message terminate="no">WARNING: to do. </xsl:message>
+      <xsl:apply-templates mode="content_class" select="$data/*">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
     </db:section>
   </xsl:template>
+  <xsl:template mode="content_class" match="html:h2"/>
   <xsl:template mode="content_class" match="html:h3[@class = 'fn']">
     <xsl:param name="className" as="xs:string"/>
-
+    
     <xsl:variable name="functionAnchor" select="./@id"/>
-    <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/>
-    <!-- Class, Class-2 -->
-    <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/>
-    <!-- dtor.Class -->
-    <xsl:variable name="isFct" select="not($isCtor or $isDtor)"/>
-
-    <xsl:choose>
-      <xsl:when test="$isCtor">
-        <!-- TODO -->
-      </xsl:when>
-    </xsl:choose>
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      
+      <db:info>
+        <db:title>
+          <xsl:apply-templates mode="content_class_title"/>
+        </db:title>
+      </db:info>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_class_title" match="text()">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template mode="content_class_title" match="html:a[@name]"/>
+  <xsl:template mode="content_class_title" match="html:a[@href]">
+    <xsl:value-of select="./text()"/></xsl:template>
+  <xsl:template mode="content_class_title" match="html:span">
+    <xsl:apply-templates mode="content_class_title"/>
+  </xsl:template>
+  <xsl:template name="content_class_content">
+    <xsl:param name="node" as="element()?"/>
+    
+    <xsl:if test="$node and not($node[self::html:h3])">
+      <xsl:apply-templates mode="content" select="$node"/>
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="$node/following-sibling::*[1]"/>
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
   <!-- Catch-all for style sheet errors. -->
-  <!--<xsl:template match="*" mode="#all">
+  <xsl:template match="*" mode="#all">
     <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of select="name()"
       /></xsl:message>
-  </xsl:template>-->
+  </xsl:template>
 
   <!-- 
     Handle HTML content and transform it into DocBook. 
