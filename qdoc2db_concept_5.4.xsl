@@ -226,35 +226,66 @@
         <!--<xsl:variable name="types"
           select="$functionName/following-sibling::html:span[@class = 'type']"/>-->
         <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
-        
+
         <xsl:for-each select="1 to $nArguments">
-          <xsl:variable name="firstNode" select="if (. = 1) then $functionName else $titleNode/text()[contains(., ',')][.]"/>
-          <xsl:variable name="types" select="$firstNode/following-sibling::html:span[@class = 'type']"/>
+          <xsl:variable name="index" select="." as="xs:integer"/>
+          <xsl:variable name="commas" select="$titleNode/text()[contains(., ',')]"/>
+          <xsl:variable name="firstNode"
+            select="
+              if (. = 1) then
+                $functionName
+              else
+                $commas[$index - 1]"/>
+          <xsl:variable name="types"
+            select="$firstNode/following-sibling::html:span[@class = 'type']"/>
           <xsl:variable name="type" select="$types[1]"/>
           <xsl:variable name="textAfterType"
             select="normalize-space($type/following-sibling::text()[1])"/>
-          
+
+          <xsl:variable name="test" select="$firstNode/following-sibling::*"/>
+
           <db:methodparam>
             <!-- Maybe this parameter is const. -->
             <xsl:if test="normalize-space($textAfterName) = '(const'">
               <db:modifier>const</db:modifier>
             </xsl:if>
-            
+
             <!-- Output the type. -->
             <db:type>
-              <xsl:value-of select="$type/html:a"/>
-              
+              <xsl:choose>
+                <xsl:when test="$type/html:a">
+                  <xsl:value-of select="$type/html:a"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$type/text()"/>
+                </xsl:otherwise>
+              </xsl:choose>
+
               <!-- Maybe it's a pointer or a reference. -->
               <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
-                <xsl:value-of select="$textAfterType"/>
+                <xsl:value-of select="concat(' ', $textAfterType)"/>
               </xsl:if>
             </db:type>
-            
-            <!-- Eventually the name. -->
+
+            <!-- Then the name. -->
+            <xsl:variable name="names" select="$type/following-sibling::html:i"/>
             <db:parameter>
-              <xsl:variable name="names" select="$type/following-sibling::html:i"/>
               <xsl:value-of select="normalize-space($names[1])"/>
             </db:parameter>
+
+            <!-- Eventually an initialiser. -->
+            <xsl:variable name="afterName" select="$names[1]/following-sibling::text()[1]"/>
+            <xsl:variable name="afterNameBeforeNext"
+              select="
+                if (not(contains($afterName, ','))) then
+                  substring-before($afterName, ')')
+                else
+                  substring-before($afterName, ',')"/>
+            <xsl:if test="contains($afterName, '=')">
+              <db:initializer>
+                <xsl:value-of select="normalize-space(substring-after($afterNameBeforeNext, '='))"/>
+              </db:initializer>
+            </xsl:if>
           </db:methodparam>
         </xsl:for-each>
       </xsl:otherwise>
@@ -383,7 +414,7 @@
           </xsl:call-template>
         </db:title>
       </db:info>
-      
+
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
@@ -458,7 +489,7 @@
     Handle HTML content and transform it into DocBook. 
     Tables are implemented with HTML model, not CALS. 
   -->
-  <xsl:template mode="content" match="html:div[@class='table']">
+  <xsl:template mode="content" match="html:div[@class = 'table']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
   <xsl:template mode="content" match="html:table">
@@ -705,7 +736,7 @@
       </xsl:when>
       <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '&lt;')">
         <!-- Templated type: starts with &lt;, ends with &gt;. -->
-        <xsl:value-of select="substring-after(., '&gt;')"/>
+        <xsl:value-of select="substring-after(., '>')"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="."/>
@@ -726,14 +757,15 @@
           <xsl:attribute name="xlink:href" select="@href"/>
           <xsl:apply-templates mode="content_paragraph"/>
         </db:link>
-        
-        <xsl:variable name="toEndList" select="substring-before(./following-sibling::text()[1], ')')[1]"/>
+
+        <xsl:variable name="toEndList"
+          select="substring-before(./following-sibling::text()[1], ')')[1]"/>
         <xsl:variable name="justList" select="substring-after($toEndList, '(')"/>
-        
+
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$justList"/>
         <xsl:text>)</xsl:text>
-        
+
         <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
       </xsl:when>
       <xsl:when test="starts-with(./text(), 'Q')">
@@ -742,17 +774,18 @@
           <xsl:attribute name="xlink:href" select="@href"/>
           <xsl:apply-templates mode="content_paragraph"/>
         </db:link>
-        
+
         <!-- Maybe it's templated. -->
         <xsl:if test="starts-with(./following-sibling::text()[1], '&lt;')">
-          <xsl:variable name="toEndTemplate" select="substring-before(./following-sibling::text()[1], '&gt;')[1]"/>
+          <xsl:variable name="toEndTemplate"
+            select="substring-before(./following-sibling::text()[1], '>')[1]"/>
           <xsl:variable name="templateArgument" select="substring-after($toEndTemplate, '&lt;')"/>
-          
+
           <xsl:text>&lt;</xsl:text>
           <xsl:value-of select="$templateArgument"/>
           <xsl:text>&gt;</xsl:text>
         </xsl:if>
-        
+
         <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
