@@ -72,10 +72,20 @@
         if ($hasFuncs) then
           $siblingAfterTypes/following-sibling::*[1]
         else
-        $siblingAfterTypes"/>
+          $siblingAfterTypes"/>
+
+    <xsl:variable name="nonmems" as="element(html:div)?"
+      select="$siblingAfterFuncs[self::html:div][@class = 'relnonmem']"/>
+    <xsl:variable name="hasNonmems" select="boolean($nonmems)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterNonmems"
+      select="
+        if ($hasNonmems) then
+          $siblingAfterFuncs/following-sibling::*[1]
+        else
+          $siblingAfterFuncs"/>
 
     <!-- Error checks. -->
-    <xsl:if test="boolean($siblingAfterFuncs)">
+    <xsl:if test="boolean($siblingAfterNonmems)">
       <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
           select="name($siblingAfterFuncs)"/>
       </xsl:message>
@@ -99,12 +109,19 @@
         </db:title>
       </db:info>
 
-      <!-- Output the list of methods of the class if any. -->
+      <!-- Output the list of methods of the class if any, then its related non-member functions. -->
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
           <xsl:with-param name="data" select="$funcs"/>
           <xsl:with-param name="className" select="$className"/>
         </xsl:call-template>
+
+        <xsl:if test="$hasNonmems">
+          <xsl:call-template name="functionListing">
+            <xsl:with-param name="data" select="$nonmems"/>
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:call-template>
+        </xsl:if>
       </xsl:if>
 
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
@@ -229,8 +246,6 @@
         <db:void/>
       </xsl:when>
       <xsl:otherwise>
-        <!--<xsl:variable name="types"
-          select="$functionName/following-sibling::html:span[@class = 'type']"/>-->
         <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
 
         <xsl:for-each select="1 to $nArguments">
@@ -356,6 +371,113 @@
         </db:type>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="functionListing">
+    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="className" as="xs:string"/>
+
+    <xsl:apply-templates mode="functionListing" select="$data/html:h3">
+      <xsl:with-param name="className" select="$className"/>
+    </xsl:apply-templates>
+  </xsl:template>
+  <xsl:template mode="functionListing" match="text()"/>
+  <xsl:template mode="functionListing" match="html:h3">
+    <xsl:choose>
+      <xsl:when test="./text()[1][normalize-space() = 'typedef']">
+        <xsl:message terminate="no">WARNING: No summary output for typedefs. </xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:funcsynopsis>
+          <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
+                
+          <db:funcprototype>
+            <xsl:variable name="titleNode" select="."/>
+            <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
+            <xsl:variable name="returnTypes"
+              select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
+            <xsl:variable name="isStatic" as="xs:boolean"
+              select="boolean($returnTypes/preceding-sibling::html:code[normalize-space(text()) = '[static]'])"/>
+
+            <xsl:if test="$isStatic">
+              <db:modifier>static</db:modifier>
+            </xsl:if>
+
+            <db:funcdef>
+              <xsl:if test="$returnTypes">
+                <xsl:call-template name="classListing_methodBody_analyseType">
+                  <xsl:with-param name="typeNodes" select="$returnTypes"/>
+                </xsl:call-template>
+              </xsl:if>
+
+              <db:function>
+                <xsl:value-of select="$functionName"/>
+              </db:function>
+            </db:funcdef>
+
+            <!-- Handle parameters list. -->
+            <xsl:variable name="textAfterName" select="$functionName/following-sibling::text()[1]"/>
+            <xsl:choose>
+              <xsl:when test="starts-with($textAfterName, '()')">
+                <db:void/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
+
+                <xsl:for-each select="1 to $nArguments">
+                  <xsl:variable name="index" select="." as="xs:integer"/>
+                  <xsl:variable name="commas" select="$titleNode/text()[contains(., ',')]"/>
+                  <xsl:variable name="firstNode"
+                    select="
+                      if (. = 1) then
+                        $functionName
+                      else
+                        $commas[$index - 1]"/>
+                  <xsl:variable name="types"
+                    select="$firstNode/following-sibling::html:span[@class = 'type']"/>
+                  <xsl:variable name="type" select="$types[1]"/>
+                  <xsl:variable name="textAfterType"
+                    select="normalize-space($type/following-sibling::text()[1])"/>
+
+                  <xsl:variable name="test" select="$firstNode/following-sibling::*"/>
+
+                  <db:paramdef>
+                    <!-- Maybe this parameter is const. -->
+                    <xsl:if test="normalize-space($textAfterName) = '(const'">
+                      <db:modifier>const</db:modifier>
+                    </xsl:if>
+
+                    <!-- Output the type. -->
+                    <db:type>
+                      <xsl:choose>
+                        <xsl:when test="$type/html:a">
+                          <xsl:value-of select="$type/html:a"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="$type/text()"/>
+                        </xsl:otherwise>
+                      </xsl:choose>
+
+                      <!-- Maybe it's a pointer or a reference. -->
+                      <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
+                        <xsl:value-of select="concat(' ', $textAfterType)"/>
+                      </xsl:if>
+                    </db:type>
+
+                    <!-- Then the name. -->
+                    <xsl:variable name="names" select="$type/following-sibling::html:i"/>
+                    <db:parameter>
+                      <xsl:value-of select="normalize-space($names[1])"/>
+                    </db:parameter>
+                  </db:paramdef>
+                </xsl:for-each>
+              </xsl:otherwise>
+            </xsl:choose>
+          </db:funcprototype>
+        </db:funcsynopsis>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:message>1</xsl:message>
   </xsl:template>
 
   <!-- Handle types: detailed description. -->
