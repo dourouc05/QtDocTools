@@ -72,7 +72,7 @@
         if ($hasFuncs) then
           $siblingAfterTypes/following-sibling::*[1]
         else
-          $siblingAfterTypes"/>
+        $siblingAfterTypes"/>
 
     <!-- Error checks. -->
     <xsl:if test="boolean($siblingAfterFuncs)">
@@ -205,6 +205,12 @@
     <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
     <xsl:variable name="returnTypes"
       select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
+    <xsl:variable name="isStatic" as="xs:boolean"
+      select="boolean($returnTypes/preceding-sibling::html:code[normalize-space(text()) = '[static]'])"/>
+
+    <xsl:if test="$isStatic">
+      <db:modifier>static</db:modifier>
+    </xsl:if>
 
     <xsl:if test="$returnTypes">
       <xsl:call-template name="classListing_methodBody_analyseType">
