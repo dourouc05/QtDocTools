@@ -637,9 +637,6 @@
   </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
-    <!-- <db:anchor>
-      <xsl:attribute name="xml:id" select="@name"/>
-    </db:anchor>-->
   </xsl:template>
   <xsl:template mode="content" match="html:p">
     <!-- A paragraph may hold a single image (treat it accordingly), or be an admonition, or be a real paragraph. -->
@@ -867,8 +864,17 @@
   </xsl:template>
   <xsl:template mode="content_table" match="html:td">
     <db:td>
+      <xsl:if test=".[@rowspan]">
+        <xsl:attribute name="rowspan">
+          <xsl:value-of select="./@rowspan"/>
+        </xsl:attribute>
+      </xsl:if>
+      
       <xsl:choose>
         <xsl:when test="./child::html:p">
+          <xsl:apply-templates select="*" mode="content"/>
+        </xsl:when>
+        <xsl:when test="./child::html:pre">
           <xsl:apply-templates select="*" mode="content"/>
         </xsl:when>
         <xsl:otherwise>
