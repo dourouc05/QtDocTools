@@ -636,9 +636,10 @@
     </db:informaltable>
   </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
-    <db:anchor>
+    <!-- Normally, these should already be in xml:id. -->
+    <!-- <db:anchor>
       <xsl:attribute name="xml:id" select="@name"/>
-    </db:anchor>
+    </db:anchor>-->
   </xsl:template>
   <xsl:template mode="content" match="html:p">
     <!-- A paragraph may hold a single image (treat it accordingly), or be an admonition, or be a real paragraph. -->
@@ -733,10 +734,26 @@
 
     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
       <db:section>
+        <!-- Handle anchors. -->
+        <xsl:choose>
+          <xsl:when test=".[@id]">
+            <xsl:attribute name="xml:id">
+              <xsl:value-of select="./@id"/>
+            </xsl:attribute>
+          </xsl:when>
+          <xsl:when test="./preceding-sibling::html:a[@name]">
+            <xsl:attribute name="xml:id">
+              <xsl:value-of select="./preceding-sibling::html:a[@name][last()]/@name"/>
+            </xsl:attribute>
+          </xsl:when>
+        </xsl:choose>
+        
+        <!-- Handle title. -->
         <db:title>
           <xsl:copy-of select="./text()"/>
         </db:title>
 
+        <!-- Handle subsections. -->
         <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
