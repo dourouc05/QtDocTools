@@ -35,7 +35,7 @@ start =
 content = p | pre | ul | ol | table
 anchor =
     element html:a {
-        attribute name { text }, 
+        attribute name { text },
         empty
     }
 table =
@@ -209,50 +209,119 @@ seealso_link =
     }
 # Actual class content. Statics are merged with funcs. 
 class_content = class_types?, class_funcs, class_nonmems?
-class_types = 
+class_types =
     element html:div {
-        attribute class { "types" }, 
-        element html:h2 { "Member Type Documentation" }, 
+        attribute class { "types" },
+        element html:h2 { "Member Type Documentation" },
         (enum | typedef)*
     }
-enum = 
-    # Complemented by Schematron. 
+enum = enumWithoutFlags | enumWithFlags
+# Complemented by Schematron. 
+enumWithoutFlags =
     element html:h3 {
-        attribute class { "fn" | "flags" }, 
-        attribute id { text }, 
-        anchor, 
+        attribute class { "fn" },
+        attribute id { text },
+        anchor,
         # The name of the enumeration (something like enum QLowEnergyCharacteristic::<span>PropertyType</span>). 
-        text,
-        element html:span {
-            attribute class { "name" }, 
-            text
-        }, 
-        # Maybe flags (something like flags QLowEnergyCharacteristic::&#8203;<html:span class="name">PropertyTypes</html:span>). 
-        (br, 
-         text, 
-         element html:span {
-            attribute class { "name" }, 
-            text
-        })?
-    }, 
-    # The enumeration description: 
-    p+, 
+        enum_name
+    },
+    # The enumeration description: a paragraph, a table of matchings. 
+    p+,
+    enum_matchings,
+    seealso?
+enumWithFlags =
+    element html:h3 {
+        attribute class { "flags" },
+        attribute id { text },
+        anchor,
+        # The name of the enumeration (something like enum QLowEnergyCharacteristic::<span>PropertyType</span>). 
+        enum_name,
+        # Flags (something like flags QLowEnergyCharacteristic::&#8203;<html:span class="name">PropertyTypes</html:span>). 
+        (br, enum_name)?
+    },
+    # The enumeration description: a paragraph, a table of matchings, then something for the flags. 
+    p+,
+    enum_matchings,
+    p+,
+    seealso?
+enum_name =
+    text,
+    element html:span {
+        attribute class { "name" },
+        text
+    }
+enum_matchings =
     element html:div {
-        attribute class { "table" }, 
+        attribute class { "table" },
         element html:table {
-            attribute class { "valuelist" }, 
-            element html:tbody { tr+ }
+            attribute class { "valuelist" },
+            element html:tbody {
+                (element html:tr {
+                    attribute class { text }?,
+                    attribute valign { text }?,
+                    element html:th {
+                        attribute class { "tblConst" },
+                        "Constant"
+                    },
+                    element html:th {
+                        attribute class { "tblval" },
+                        "Value"
+                    },
+                    element html:th {
+                        attribute class { "tbldscr" },
+                        "Description"
+                    }
+                },
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        element html:code { text }
+                    },
+                    element html:td {
+                        attribute class { text },
+                        element html:code { text }
+                    },
+                    element html:td {
+                        attribute class { text },
+                        p_content
+                    }
+                }+)
+                |
+                (element html:tr {
+                    attribute class { text }?,
+                    attribute valign { text }?,
+                    element html:th {
+                        attribute class { "tblConst" },
+                        "Constant"
+                    },
+                    element html:th {
+                        attribute class { "tblVal" },
+                        "Value"
+                    }
+                },
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        element html:code { text }
+                    },
+                    element html:td {
+                        attribute class { text },
+                        element html:code { text }
+                    }
+                }+)
+            }
         }
     }
-typedef = \div # TODO! 
-class_funcs = 
+typedef = \div
+# TODO! 
+class_funcs =
     element html:div {
-        attribute class { "func" }, 
+        attribute class { "func" },
         element html:h2 { "Member Function Documentation" }
     }
-class_nonmems = 
+class_nonmems =
     element html:div {
-        attribute class { "relnonmem" }, 
+        attribute class { "relnonmem" },
         element html:h2 { "Related Non-Members" }
     }
 
@@ -313,20 +382,23 @@ code = element html:code { text }
 i =
     element html:i { xsd:NCName }
     | element html:em { xsd:NCName }
+p_content =
+    (text
+     | a
+     | b
+     | br
+     | code
+     | i
+     | img
+     | element html:acronym {
+           # @TODO: this is not handled by XSLT. 
+           attribute title { xsd:NCName },
+           text
+       })+
 p =
     element html:p {
         attribute class { xsd:NCName }?,
-        (text
-         | a
-         | b
-         | br
-         | code
-         | i
-         | img
-         | element html:acronym {
-               attribute title { xsd:NCName },
-               text
-           })+
+        p_content
     }
 pre =
     element html:pre {

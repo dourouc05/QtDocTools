@@ -16,17 +16,7 @@
             <sch:assert test="count(./child::html:br) = 0"/>
         </sch:rule>
         <sch:rule context="//html:div[@class='types']/html:h3[@class = 'flags']">
-            <sch:assert test="count(./child::html:br) = 1"/>
             <sch:assert test="starts-with(./following-sibling::html:br/text()[1], 'flags ')"/>
-        </sch:rule>
-        <sch:rule context="//html:div[@class='types']/html:div[@class = 'table']/html:table[@class = 'valuelist']/html:tbody/html:tr">
-            <sch:assert test="count(./child::html:td) = 3 or count(./child::html:th) = 3"/>
-        </sch:rule>
-        <sch:rule context="//html:div[@class='types']/html:div[@class = 'table']/html:table[@class = 'valuelist']/html:tbody/html:tr[1]">
-            <sch:assert test="count(./child::html:th) = 3"/>
-            <sch:assert test="./html:th[1]/text() = 'Constant'"/>
-            <sch:assert test="./html:th[2]/text() = 'Value'"/>
-            <sch:assert test="./html:th[3]/text() = 'Description'"/>
         </sch:rule>
     </sch:pattern>
 </sch:schema>
