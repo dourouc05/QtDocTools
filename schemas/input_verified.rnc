@@ -463,7 +463,6 @@ p_content =
      | i
      | img
      | element html:acronym {
-           # @TODO: this is not handled by XSLT. 
            attribute title { xsd:NCName },
            text
        })+

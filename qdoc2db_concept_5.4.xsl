@@ -1003,6 +1003,14 @@
       </db:emphasis>
     </xsl:if>
   </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:acronym | html:abbr">
+    <db:acronym>
+      <db:alt>
+        <xsl:value-of select="./@title"/>
+      </db:alt>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:acronym>
+  </xsl:template>
   <xsl:template mode="content_paragraph" match="html:i | html:em">
     <!-- Need to distinguish them? -->
     <db:emphasis>
