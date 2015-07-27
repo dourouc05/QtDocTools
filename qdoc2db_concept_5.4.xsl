@@ -105,8 +105,11 @@
     </xsl:if>
 
     <!-- Actually output something. -->
-    <db:article version="5.0">
-      <!-- xsl:validation="strict" -->
+    <db:article version="5.0" xsl:validation="strict">
+      <xsl:attribute name="xml:lang">
+        <xsl:value-of select="./@lang"/>
+      </xsl:attribute>
+      
       <db:info>
         <db:title>
           <xsl:value-of select="$title"/>
