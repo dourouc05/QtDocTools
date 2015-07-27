@@ -888,10 +888,7 @@
       </xsl:if>
 
       <xsl:choose>
-        <xsl:when test="./child::html:p">
-          <xsl:apply-templates select="*" mode="content"/>
-        </xsl:when>
-        <xsl:when test="./child::html:pre">
+        <xsl:when test="./child::html:p | ./child::html:pre | ./child::html:ul | ./child::html:ol">
           <xsl:apply-templates select="*" mode="content"/>
         </xsl:when>
         <xsl:otherwise>

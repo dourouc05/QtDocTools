@@ -32,7 +32,7 @@ start =
     }
 
 ## Base elements.
-block = p | pre | ul | table
+content = p | pre | ul | ol | table
 anchor =
     element html:a {
         attribute name { text }
@@ -51,11 +51,11 @@ h5_html = element html:h5 { h_html }
 h4_html = element html:h4 { h_html }
 h3_html = element html:h3 { h_html }
 h2_html = element html:h2 { h_html }
-h6 = anchor, h6_html, block*
-h5 = anchor, h5_html, block*, h6*
-h4 = anchor, h4_html, block*, h5*
-h3 = anchor, h3_html, block*, h4*
-h2 = anchor, h2_html, block*, h3*
+h6 = anchor, h6_html, content*
+h5 = anchor, h5_html, content*, h6*
+h4 = anchor, h4_html, content*, h5*
+h3 = anchor, h3_html, content*, h4*
+h2 = anchor, h2_html, content*, h3*
 
 ## Main parts of the content. 
 qdocheaderdiv =
@@ -91,7 +91,7 @@ qdocheaderdiv =
                         }?,
                         
                         ## Actual content. 
-                        ## For class pages, first a brief description, then summary tables (whose order is important). 
+                        ## () For class pages, first a brief description, then summary tables (whose order is important). 
                         (class_brief,
                          class_summary,
                          # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
@@ -101,10 +101,10 @@ qdocheaderdiv =
                          class_statics?,
                          class_nonmems?)?,
                         
-                        ## Then the main description. 
+                        ## () Then the main description. 
                         description,
                         seealso?,
-                        \div*
+                        class_content?
                     }
                 }
             }
@@ -173,26 +173,26 @@ class_sub_divtable =
 # Textual description (only content for concept pages, after a title for class pages -- 
 # and the anchor comes before the <div> for classes, but after it for concepts). 
 description = description_class | description_concept
-description_class = 
+description_class =
     element html:a {
         attribute name { "details" }
     },
     element html:div {
         attribute class { "descr" },
         element html:h2 {
-            attribute id { "details" }, 
+            attribute id { "details" },
             "Detailed Description"
-        }, 
-        block*, 
+        },
+        content*,
         h3*
     }
 description_concept =
     element html:div {
         attribute class { "descr" },
         element html:a {
-            attribute name { "details" } 
-        }, 
-        block+,
+            attribute name { "details" }
+        },
+        content+,
         h2*
     }
 # "See also" list of links.  
@@ -206,6 +206,8 @@ seealso_link =
         attribute href { text },
         text
     }
+# Actual class content. 
+class_content = \div+
 
 ## HTML details. 
 \div =
@@ -241,17 +243,23 @@ html_table =
     }
 span =
     element html:span {
+        # @TODO: enumerate the recognised classes. 
         attribute class { xsd:NCName },
         (text | a)+
     }
 ul =
     element html:ul {
-        element html:li {
+        li+
+    }
+ol =
+    element html:ul {
+        li+
+    }
+li = element html:li {
             attribute class { xsd:NCName }?,
             attribute id { xsd:NCName }?,
             (text | a | code | i | p | ul)+
-        }*
-    }
+        }
 a =
     element html:a {
         attribute href { xsd:anyURI }?,
@@ -260,7 +268,7 @@ a =
     }
 br = element html:br { empty }
 code = element html:code { text }
-i = element html:i { xsd:NCName }
+i = element html:i { xsd:NCName } | element html:em { xsd:NCName }
 p =
     element html:p {
         attribute class { xsd:NCName }?,
@@ -297,7 +305,7 @@ tr =
     }
 img =
     element html:img {
-        attribute alt { text },
+        attribute alt { text }?,
         attribute src { text }
     }
-b = element html:b { (text | a)+ }
+b = element html:b { (text | a)+ } | element html:strong { (text | a)+ }
