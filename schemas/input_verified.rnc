@@ -1,4 +1,5 @@
 namespace html = "http://www.w3.org/1999/xhtml"
+namespace s = "http://www.ascc.net/xml/schematron"
 
 
 ## Root. 
@@ -36,9 +37,9 @@ anchor =
     element html:a {
         attribute name { text }
     }
-table = 
+table =
     element html:div {
-        attribute class { "table" }, 
+        attribute class { "table" },
         html_table
     }
 # Titles. 
@@ -93,10 +94,11 @@ qdocheaderdiv =
                         ## For class pages, first a brief description, then summary tables (whose order is important). 
                         (class_brief,
                          class_summary,
+                         # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
                          class_relatedFiles?,
                          class_types?,
-                         class_funcs, 
-                         class_statics?, 
+                         class_funcs,
+                         class_statics?,
                          class_nonmems?)?,
                         
                         ## Then the main description. 
@@ -151,7 +153,7 @@ class_statics =
         "Static Public Members"
     },
     class_sub_divtable
-class_nonmems = 
+class_nonmems =
     element html:a {
         attribute name { "related-non-members" }
     },
@@ -170,16 +172,30 @@ class_sub_divtable =
     }
 # Textual description (only content for concept pages, after a title for class pages -- 
 # and the anchor comes before the <div> for classes, but after it for concepts). 
-description =
+description = description_class | description_concept
+description_class = 
     element html:a {
         attribute name { "details" }
-    }?, 
+    },
     element html:div {
         attribute class { "descr" },
-        (anchor, block+)?,
-        (h2_html, block*, h3*)?, 
+        element html:h2 {
+            attribute id { "details" }, 
+            "Detailed Description"
+        }, 
+        block*, 
+        h3*
+    }
+description_concept =
+    element html:div {
+        attribute class { "descr" },
+        element html:a {
+            attribute name { "details" } 
+        }, 
+        block+,
         h2*
     }
+# "See also" list of links.  
 seealso =
     element html:p {
         element html:b { "See also " },
