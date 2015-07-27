@@ -15,7 +15,7 @@
   <xsl:strip-space elements="*"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
-  <!-- <xsl:import-schema schema-location="./schemas/docbook.xsd"/> -->
+  <xsl:import-schema schema-location="./schemas/docbook.xsd"/>
 
   <!-- Output document class. -->
   <xsl:template match="html:html">
@@ -316,27 +316,9 @@
             </xsl:if>
 
             <!-- Output the type. -->
-            <db:type>
-              <xsl:variable name="test1" select="$type/html:a"/>
-              <xsl:variable name="test2" select="$type/text()"/>
-              
-              <xsl:choose>
-                <xsl:when test="$type/html:a">
-                  <xsl:attribute name="xlink:href">
-                    <xsl:value-of select="$type/html:a/@href"/>
-                  </xsl:attribute>
-                  <xsl:value-of select="$type/html:a"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$type/text()"/>
-                </xsl:otherwise>
-              </xsl:choose>
-
-              <!-- Maybe it's a pointer or a reference. -->
-              <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
-                <xsl:value-of select="concat(' ', $textAfterType)"/>
-              </xsl:if>
-            </db:type>
+            <xsl:call-template name="classListing_methodBody_analyseType">
+              <xsl:with-param name="typeNodes" select="$type"/>
+            </xsl:call-template>
 
             <!-- Then the name. -->
             <xsl:variable name="names" select="$type/following-sibling::html:i"/>
@@ -374,6 +356,20 @@
   <xsl:template name="classListing_methodBody_analyseType">
     <xsl:param name="typeNodes" as="element()+"/>
 
+    <!-- 
+    Type can be composed of one or multiple nodes: 
+      -   <html:span class="type">int</html:span>
+      -   <html:span class="type"><html:a href="qcolor.html#QRgb-typedef">QRgb</html:a></html:span>
+    Multiple nodes are linked to templates: 
+      -   <html:span class="type">
+            <html:a href="qtcore/qlist.html">QList</html:a>
+          </html:span>
+          &lt;
+          <html:span class="type">
+            <html:a href="qlowenergydescriptor.html">QLowEnergyDescriptor</html:a>
+          </html:span>
+          &gt;
+    -->
     <xsl:choose>
       <xsl:when test="count($typeNodes) = 1">
         <xsl:variable name="node" select="$typeNodes[1]"/>
@@ -383,7 +379,7 @@
               <xsl:attribute name="xlink:href">
                 <xsl:value-of select="$node/html:a/@href"/>
               </xsl:attribute>
-              
+
               <xsl:value-of select="$node/html:a/text()"/>
             </db:type>
           </xsl:when>
@@ -404,8 +400,6 @@
       </xsl:when>
       <xsl:otherwise>
         <db:type>
-          
-          
           <xsl:for-each select="1 to count($typeNodes)">
             <!-- Output the class names. -->
             <xsl:variable name="node" select="subsequence($typeNodes, ., 1)"/>
@@ -494,8 +488,6 @@
               <xsl:variable name="textAfterType"
                 select="normalize-space($type/following-sibling::text()[1])"/>
 
-              <xsl:variable name="test" select="$firstNode/following-sibling::*"/>
-
               <db:paramdef>
                 <!-- Maybe this parameter is const. -->
                 <xsl:if test="normalize-space($textAfterName) = '(const'">
@@ -503,21 +495,9 @@
                 </xsl:if>
 
                 <!-- Output the type. -->
-                <db:type>
-                  <xsl:choose>
-                    <xsl:when test="$type/html:a">
-                      <xsl:value-of select="$type/html:a"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="$type/text()"/>
-                    </xsl:otherwise>
-                  </xsl:choose>
-
-                  <!-- Maybe it's a pointer or a reference. -->
-                  <xsl:if test="$textAfterType = '&amp;' or $textAfterType = '*'">
-                    <xsl:value-of select="concat(' ', $textAfterType)"/>
-                  </xsl:if>
-                </db:type>
+                <xsl:call-template name="classListing_methodBody_analyseType">
+                  <xsl:with-param name="typeNodes" select="$types"/>
+                </xsl:call-template>
 
                 <!-- Then the name. -->
                 <xsl:variable name="names" select="$type/following-sibling::html:i"/>
