@@ -1,0 +1,194 @@
+namespace html = "http://www.w3.org/1999/xhtml"
+
+
+## Root. 
+start =
+    element html:html {
+        attribute lang { xsd:NCName },
+        element html:head {
+            element html:meta {
+                # Ignored for the transformation. 
+                attribute content { text },
+                attribute http-equiv { xsd:NCName }
+            },
+            element html:title { text },
+            element html:link {
+                # Ignored for the transformation. 
+                attribute href { text },
+                attribute rel { xsd:NCName },
+                attribute type { text }
+            }
+        },
+        element html:body {
+            # qtdocheader (partly used) then footer. 
+            qdocheaderdiv,
+            element html:div {
+                # Ignored for the transformation.
+                attribute class { "footer" },
+                p
+            }
+        }
+    }
+
+## Base elements.
+block = p | pre | ul
+anchor =
+    element html:a {
+        attribute name { text }
+    }
+    
+# Titles. 
+h_html = attribute id { text }?, text
+h6_html = element html:h6 { h_html }
+h5_html = element html:h5 { h_html }
+h4_html = element html:h4 { h_html }
+h3_html = element html:h3 { h_html }
+h2_html = element html:h2 { h_html }
+h6 = anchor, h6_html, block*
+h5 = anchor, h5_html, block*, h6*
+h4 = anchor, h4_html, block*, h5*
+h3 = anchor, h3_html, block*, h4*
+h2 = anchor, h2_html, block*, h3*
+
+## Main parts of the content. 
+qdocheaderdiv =
+    element html:div {
+        attribute class { "header" },
+        attribute id { "qtdocheader" },
+        element html:div {
+            attribute class { "main" },
+            element html:div {
+                # Ignored for the transformation. 
+                attribute class { "main-rounded" },
+                \div+
+            },
+            element html:div {
+                attribute class { "content" },
+                element html:div {
+                    attribute class { "line" },
+                    element html:div {
+                        attribute class { "content mainContent" },
+                        element html:div {
+                            # Ignored for the transformation. 
+                            attribute class { "sidebar" },
+                            \div+
+                        },
+                        # Title and subtitle. 
+                        element html:h1 {
+                            attribute class { "title" },
+                            text
+                        },
+                        element html:span {
+                            attribute class { "subtitle" },
+                            text
+                        },
+                        # First the main description. 
+                        
+                        ## Actual content. 
+                        description,
+                        \div*
+                    }
+                }
+            }
+        }
+    }
+description =
+    element html:div {
+        attribute class { "descr" },
+        anchor,
+        block*,
+        h2*
+    }
+
+## HTML details. 
+\div =
+    element html:div {
+        attribute class { text },
+        attribute id { xsd:NCName }?,
+        (element html:h1 {
+             attribute class { xsd:NCName },
+             text
+         }?
+         | span?
+         | a
+         | \div
+         | p
+         | pre
+         | ul
+         | element html:h2 {
+               attribute id { xsd:NCName }?,
+               text
+           }
+         | element html:h3 {
+               attribute class { xsd:NCName }?,
+               attribute id { xsd:NCName }?,
+               (text | a | br | code | i | span)+
+           }
+         | element html:table {
+               attribute class { xsd:NCName },
+               element html:thead { tr }?,
+               element html:tbody { tr+ }
+           }?)*
+    }
+span =
+    element html:span {
+        attribute class { xsd:NCName },
+        (text | a)+
+    }
+ul =
+    element html:ul {
+        element html:li {
+            attribute class { xsd:NCName }?,
+            attribute id { xsd:NCName }?,
+            (text | a | code | i | p | ul)+
+        }*
+    }
+a =
+    element html:a {
+        attribute href { xsd:anyURI }?,
+        attribute name { xsd:NCName }?,
+        xsd:anyURI
+    }
+br = element html:br { empty }
+code = element html:code { text }
+i = element html:i { xsd:NCName }
+p =
+    element html:p {
+        attribute class { xsd:NCName }?,
+        (text
+         | a
+         | b
+         | br
+         | code
+         | i
+         | img
+         | element html:acronym {
+               attribute title { xsd:NCName },
+               text
+           })+
+    }
+pre =
+    element html:pre {
+        attribute class { xsd:NCName },
+        (text | span)+
+    }
+tr =
+    element html:tr {
+        attribute class { text }?,
+        attribute valign { xsd:NCName }?,
+        (element html:th {
+             attribute class { xsd:NCName }?,
+             xsd:NCName
+         }+
+         | element html:td {
+               attribute class { text }?,
+               attribute rowspan { xsd:integer }?,
+               (text | b | code | i | img | p | pre | span)+
+           }+)
+    }
+img =
+    element html:img {
+        attribute alt { text },
+        attribute src { text }
+    }
+b = element html:b { (text | a)+ }

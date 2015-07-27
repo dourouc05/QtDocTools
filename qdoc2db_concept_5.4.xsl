@@ -22,8 +22,10 @@
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
     <!-- Extract the metadata. -->
-    <xsl:variable name="title" select="$content/html:h1/text()"/>
-    <xsl:variable name="isClass"
+    <xsl:variable name="title" select="$content/html:h1[@class = 'title']/text()" as="xs:string"/>
+    <xsl:variable name="subtitle" as="xs:string"
+      select="string($content/html:span[@class = 'subtitle']/text())"/>
+    <xsl:variable name="isClass" as="xs:boolean"
       select="
         starts-with($title, 'Q')
         and ends-with($title, ' Class')
@@ -89,6 +91,9 @@
           $siblingAfterFuncs"/>
 
     <!-- Error checks. -->
+    <xsl:if test="not($subtitle = '')">
+      <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
+    </xsl:if>
     <xsl:if test="boolean($siblingAfterNonmems)">
       <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
           select="name($siblingAfterFuncs)"/>
@@ -109,7 +114,7 @@
       <xsl:attribute name="xml:lang">
         <xsl:value-of select="./@lang"/>
       </xsl:attribute>
-      
+
       <db:info>
         <db:title>
           <xsl:value-of select="$title"/>
@@ -686,7 +691,12 @@
   <xsl:template mode="content" match="html:h2 | html:h3"/>
   <xsl:template mode="content" match="html:pre">
     <db:programlisting>
-      <!-- All codes have class="cpp", even JavaScript (qtqml-javascript-imports.xml), no sense to read it. -->
+      <!-- All codes may have class="cpp", even JavaScript (qtqml-javascript-imports.xml), no sense to read it (even though it's sometimes correct: qtbluetooth-index.xml). -->
+      <!-- 
+      <xsl:if test=".[@class]">
+        <xsl:attribute name="language" select="@class"/>
+      </xsl:if>
+      -->
       <xsl:value-of select="."/>
     </db:programlisting>
   </xsl:template>
@@ -747,7 +757,7 @@
             </xsl:attribute>
           </xsl:when>
         </xsl:choose>
-        
+
         <!-- Handle title. -->
         <db:title>
           <xsl:copy-of select="./text()"/>
@@ -872,7 +882,7 @@
           <xsl:value-of select="./@rowspan"/>
         </xsl:attribute>
       </xsl:if>
-      
+
       <xsl:choose>
         <xsl:when test="./child::html:p">
           <xsl:apply-templates select="*" mode="content"/>
