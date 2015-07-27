@@ -528,6 +528,10 @@
           <xsl:apply-templates mode="content_title"/>
         </db:title>
       </db:info>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_types" match="html:h3[@class = 'flags']">
