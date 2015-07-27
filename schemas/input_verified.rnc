@@ -31,14 +31,20 @@ start =
     }
 
 ## Base elements.
-block = p | pre | ul
+block = p | pre | ul | table
 anchor =
     element html:a {
         attribute name { text }
     }
-    
+table = 
+    element html:div {
+        attribute class { "table" }, 
+        html_table
+    }
 # Titles. 
-h_html = attribute id { text }?, text
+h_html =
+    attribute id { text }?,
+    text
 h6_html = element html:h6 { h_html }
 h5_html = element html:h5 { h_html }
 h4_html = element html:h4 { h_html }
@@ -81,23 +87,108 @@ qdocheaderdiv =
                         element html:span {
                             attribute class { "subtitle" },
                             text
-                        },
-                        # First the main description. 
+                        }?,
                         
                         ## Actual content. 
+                        ## For class pages, first a brief description, then summary tables (whose order is important). 
+                        (class_brief,
+                         class_summary,
+                         class_relatedFiles?,
+                         class_types?,
+                         class_funcs, 
+                         class_statics?, 
+                         class_nonmems?)?,
+                        
+                        ## Then the main description. 
                         description,
+                        seealso?,
                         \div*
                     }
                 }
             }
         }
     }
+# Class summary. 
+class_brief = p
+class_relatedFiles = ul
+class_summary =
+    element html:div {
+        attribute class { "table" },
+        element html:table {
+            attribute class { "alignedsummary" },
+            element html:tbody {
+                # In this order: header to include, qmake addition, first availability. 
+                tr,
+                tr,
+                tr?
+            }
+        }
+    }
+class_types =
+    element html:a {
+        attribute name { "public-types" }
+    },
+    element html:h2 {
+        attribute id { "public-types" },
+        "Public Types"
+    },
+    class_sub_divtable
+class_funcs =
+    element html:a {
+        attribute name { "public-functions" }
+    },
+    element html:h2 {
+        attribute id { "public-functions" },
+        "Public Functions"
+    },
+    class_sub_divtable
+class_statics =
+    element html:a {
+        attribute name { "static-public-members" }
+    },
+    element html:h2 {
+        attribute id { "static-public-members" },
+        "Static Public Members"
+    },
+    class_sub_divtable
+class_nonmems = 
+    element html:a {
+        attribute name { "related-non-members" }
+    },
+    element html:h2 {
+        attribute id { "related-non-members" },
+        "Related Non-Members"
+    },
+    class_sub_divtable
+class_sub_divtable =
+    element html:div {
+        attribute class { "table" },
+        element html:table {
+            attribute class { "alignedsummary" },
+            element html:tbody { tr+ }
+        }
+    }
+# Textual description (only content for concept pages, after a title for class pages -- 
+# and the anchor comes before the <div> for classes, but after it for concepts). 
 description =
+    element html:a {
+        attribute name { "details" }
+    }?, 
     element html:div {
         attribute class { "descr" },
-        anchor,
-        block*,
+        (anchor, block+)?,
+        (h2_html, block*, h3*)?, 
         h2*
+    }
+seealso =
+    element html:p {
+        element html:b { "See also " },
+        (seealso_link | text)+
+    }
+seealso_link =
+    element html:a {
+        attribute href { text },
+        text
     }
 
 ## HTML details. 
@@ -124,11 +215,13 @@ description =
                attribute id { xsd:NCName }?,
                (text | a | br | code | i | span)+
            }
-         | element html:table {
-               attribute class { xsd:NCName },
-               element html:thead { tr }?,
-               element html:tbody { tr+ }
-           }?)*
+         | html_table?)*
+    }
+html_table =
+    element html:table {
+        attribute class { xsd:NCName },
+        element html:thead { tr }?,
+        element html:tbody { tr+ }
     }
 span =
     element html:span {

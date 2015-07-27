@@ -18,6 +18,7 @@
   <xsl:import-schema schema-location="./schemas/docbook.xsd"/>
 
   <!-- Output document class. -->
+  <!-- @TODO: classes may have a <ul> somewhere in the beginning to indicate other files to load. -->
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
@@ -691,7 +692,10 @@
   <xsl:template mode="content" match="html:h2 | html:h3"/>
   <xsl:template mode="content" match="html:pre">
     <db:programlisting>
-      <!-- All codes may have class="cpp", even JavaScript (qtqml-javascript-imports.xml), no sense to read it (even though it's sometimes correct: qtbluetooth-index.xml). -->
+      <!-- 
+        All codes may have class="cpp", even JavaScript (qtqml-javascript-imports.xml), 
+        no sense to read it (even though it's sometimes correct: qtbluetooth-index.xml). 
+      -->
       <!-- 
       <xsl:if test=".[@class]">
         <xsl:attribute name="language" select="@class"/>
