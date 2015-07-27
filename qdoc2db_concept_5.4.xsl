@@ -160,6 +160,25 @@
       </xsl:if>
     </db:article>
   </xsl:template>
+  
+  <!-- Utility templates, to be used everywhere. -->
+  <xsl:template mode="content_title" match="text()">
+    <xsl:value-of select="."/>
+  </xsl:template>
+  <xsl:template mode="content_title" match="html:code">
+    <xsl:value-of select="./text()"/>
+  </xsl:template>
+  <xsl:template mode="content_title" match="html:a[@name]"/>
+  <xsl:template mode="content_title" match="html:a[@href]">
+    <xsl:value-of select="./text()"/>
+  </xsl:template>
+  <xsl:template mode="content_title" match="html:i">
+    <xsl:apply-templates mode="content_title"/>
+  </xsl:template>
+  <xsl:template mode="content_title" match="html:span">
+    <xsl:apply-templates mode="content_title"/>
+    <xsl:text> </xsl:text>
+  </xsl:template>
 
   <!-- Handle table of content sections. -->
   <xsl:template match="html:div" mode="indexTable">
@@ -506,32 +525,10 @@
 
       <db:info>
         <db:title>
-          <xsl:call-template name="content_types_title_enum">
-            <xsl:with-param name="node" select="./child::*[1]"/>
-          </xsl:call-template>
+          <xsl:apply-templates mode="content_title"/>
         </db:title>
       </db:info>
     </db:section>
-  </xsl:template>
-  <xsl:template name="content_types_title_enum">
-    <xsl:param name="node" as="element()?"/>
-    <xsl:apply-templates mode="content_types_title_enum" select="$node"/>
-  </xsl:template>
-  <xsl:template mode="content_types_title_enum" match="text()">
-    <xsl:value-of select="."/>
-  </xsl:template>
-  <xsl:template mode="content_types_title_enum" match="html:a[@name]"/>
-  <xsl:template mode="content_types_title_enum" match="html:a[@href]">
-    <xsl:value-of select="./text()"/>
-  </xsl:template>
-  <xsl:template mode="content_types_title_enum" match="html:span">
-    <xsl:apply-templates mode="content_class_title"/>
-  </xsl:template>
-  <xsl:template mode="content_types_title_enum" match="html:i">
-    <xsl:apply-templates mode="content_class_title"/>
-  </xsl:template>
-  <xsl:template mode="content_types_title_enum" match="html:br">
-    <xsl:message terminate="yes">ERROR: Found a new line in a title</xsl:message>
   </xsl:template>
   <xsl:template mode="content_types" match="html:h3[@class = 'flags']">
     <xsl:variable name="functionAnchor" select="./@id"/>
@@ -541,10 +538,7 @@
 
       <db:info>
         <db:title>
-          <xsl:variable name="test" select="./child::*[1]"/>
-          <xsl:call-template name="content_types_title_flags">
-            <xsl:with-param name="node" select="./child::*[1]"/>
-          </xsl:call-template>
+          <xsl:apply-templates mode="content_title"/>
         </db:title>
       </db:info>
 
@@ -552,15 +546,6 @@
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
     </db:section>
-  </xsl:template>
-  <xsl:template name="content_types_title_flags">
-    <xsl:param name="node" as="node()?"/>
-    <xsl:if test="not($node[self::html:br])">
-      <xsl:apply-templates mode="content_types_title_enum" select="$node"/>
-      <xsl:call-template name="content_types_title_flags">
-        <xsl:with-param name="node" select="$node/following-sibling::node()[1]"/>
-      </xsl:call-template>
-    </xsl:if>
   </xsl:template>
 
   <!-- Handle classes: detailed description. -->
@@ -579,7 +564,7 @@
 
       <db:info>
         <db:title>
-          <xsl:apply-templates mode="content_class_title"/>
+          <xsl:apply-templates mode="content_title"/>
         </db:title>
       </db:info>
 
@@ -587,22 +572,6 @@
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
     </db:section>
-  </xsl:template>
-  <xsl:template mode="content_class_title" match="text()">
-    <xsl:value-of select="."/>
-  </xsl:template>
-  <xsl:template mode="content_class_title" match="html:code">
-    <xsl:value-of select="./text()"/>
-  </xsl:template>
-  <xsl:template mode="content_class_title" match="html:a[@name]"/>
-  <xsl:template mode="content_class_title" match="html:a[@href]">
-    <xsl:value-of select="./text()"/>
-  </xsl:template>
-  <xsl:template mode="content_class_title" match="html:span">
-    <xsl:apply-templates mode="content_class_title"/>
-  </xsl:template>
-  <xsl:template mode="content_class_title" match="html:i">
-    <xsl:apply-templates mode="content_class_title"/>
   </xsl:template>
   <xsl:template name="content_class_content">
     <xsl:param name="node" as="element()?"/>
@@ -631,7 +600,7 @@
 
       <db:info>
         <db:title>
-          <xsl:apply-templates mode="content_class_title"/>
+          <xsl:apply-templates mode="content_title"/>
         </db:title>
       </db:info>
 
@@ -648,7 +617,7 @@
 
       <db:info>
         <db:title>
-          <xsl:apply-templates mode="content_class_title"/>
+          <xsl:apply-templates mode="content_title"/>
         </db:title>
       </db:info>
 
