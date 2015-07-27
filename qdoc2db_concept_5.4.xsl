@@ -36,12 +36,12 @@
 
     <!-- Extract the various parts of the main structure. -->
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
-    <xsl:variable name="siblingAfterDescription" as="element()"
+    <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
 
     <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
     <xsl:variable name="hasSeeAlso" select="boolean($seeAlso)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterSeeAlso" as="element()"
+    <xsl:variable name="siblingAfterSeeAlso" as="element()?"
       select="
         if ($hasSeeAlso) then
           $siblingAfterDescription/following-sibling::*[1]
@@ -51,7 +51,7 @@
     <xsl:variable name="index" as="element()?"
       select="$siblingAfterSeeAlso[self::html:div][@class = 'table']"/>
     <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterIndex"
+    <xsl:variable name="siblingAfterIndex" as="element()?"
       select="
         if ($hasIndex) then
           $siblingAfterSeeAlso/following-sibling::*[1]
@@ -61,7 +61,7 @@
     <xsl:variable name="types" as="element()?"
       select="$siblingAfterIndex[self::html:div][@class = 'types']"/>
     <xsl:variable name="hasTypes" select="boolean($types)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterTypes"
+    <xsl:variable name="siblingAfterTypes" as="element()?"
       select="
         if ($hasTypes) then
           $siblingAfterIndex/following-sibling::*[1]
@@ -71,7 +71,7 @@
     <xsl:variable name="funcs" as="element(html:div)?"
       select="$siblingAfterTypes[self::html:div][@class = 'func']"/>
     <xsl:variable name="hasFuncs" select="boolean($funcs)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterFuncs"
+    <xsl:variable name="siblingAfterFuncs" as="element()?"
       select="
         if ($hasFuncs) then
           $siblingAfterTypes/following-sibling::*[1]
@@ -81,7 +81,7 @@
     <xsl:variable name="nonmems" as="element(html:div)?"
       select="$siblingAfterFuncs[self::html:div][@class = 'relnonmem']"/>
     <xsl:variable name="hasNonmems" select="boolean($nonmems)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterNonmems"
+    <xsl:variable name="siblingAfterNonmems" as="element()?"
       select="
         if ($hasNonmems) then
           $siblingAfterFuncs/following-sibling::*[1]
@@ -193,6 +193,9 @@
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="html:h3">
     <xsl:apply-templates mode="content_title_hidden"/>
+  </xsl:template>
+  <xsl:template mode="content_title_hidden" match="html:br">
+    <xsl:message terminate="no">WARNING: Line feed in title; this is not handled!</xsl:message>
   </xsl:template>
 
   <!-- Handle table of content sections. -->
@@ -682,9 +685,7 @@
   <xsl:template mode="content" match="html:h2 | html:h3"/>
   <xsl:template mode="content" match="html:pre">
     <db:programlisting>
-      <xsl:if test=".[@class]">
-        <xsl:attribute name="language" select="@class"/>
-      </xsl:if>
+      <!-- All codes have class="cpp", even JavaScript (qtqml-javascript-imports.xml), no sense to read it. -->
       <xsl:value-of select="."/>
     </db:programlisting>
   </xsl:template>

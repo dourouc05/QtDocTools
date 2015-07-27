@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.0">
+   <db:info>
+      <db:title>Importing JavaScript Resources in QML</db:title>
+   </db:info>
+   <db:anchor xml:id="details"/>
+   <db:para>
+      <db:link xlink:href="qtqml-javascript-resources.html">JavaScript resources</db:link> may be imported by QML documents and other JavaScript resources. JavaScript resources may be imported via either relative or absolute URLs. In the case of a relative URL, the location is resolved relative to the location of the <db:code><db:link xlink:href="qtqml-documents-topic.html">QML document</db:link></db:code> or <db:link xlink:href="qtqml-javascript-resources.html">JavaScript Resource</db:link> that contains the import. If the script file is not accessible, an error will occur. If the JavaScript needs to be fetched from a network resource, the component's <db:link xlink:href="qqmlcomponent.html#status-prop">status</db:link> is set to "Loading" until the script has been downloaded.</db:para>
+   <db:para>JavaScript resources may also import QML modules and other JavaScript resources. The syntax of an import statement within a JavaScript resource differs slightly from an import statement within a QML document, which is documented thoroughly below.</db:para>
+   <db:anchor xml:id="importing-a-javascript-resource-from-a-qml-document"/>
+   <db:section>
+      <db:title>Importing a JavaScript Resource from a QML Document</db:title>
+      <db:para>A QML document may import a JavaScript resource with the following syntax:</db:para>
+      <db:programlisting language="cpp">import "ResourceURL" as Qualifier</db:programlisting>
+      <db:para>For example:</db:para>
+      <db:programlisting language="cpp">import "jsfile.js" as Logic</db:programlisting>
+      <db:para>Imported JavaScript resources are always qualified using the "as" keyword. The qualifier for JavaScript resources must be unique, so there is always a one-to-one mapping between qualifiers and JavaScript files. (This also means qualifiers cannot be named the same as built-in JavaScript objects such as <db:code>Date</db:code> and <db:code>Math</db:code>).</db:para>
+      <db:para>The functions defined in an imported JavaScript file are available to objects defined in the importing QML document, via the <db:code>"Qualifier.functionName(params)"</db:code> syntax. Functions in JavaScript resources may take parameters whose type can be any of the supported QML basic types or object types, as well as normal JavaScript types. The normal <db:link xlink:href="qtqml-cppintegration-data.html">data type conversion rules</db:link> will apply to parameters and return values when calling such functions from QML.</db:para>
+      <db:anchor xml:id="imports-within-javascript-resources"/>
+   </db:section>
+   <db:section>
+      <db:title>Imports Within JavaScript Resources</db:title>
+      <db:para>In <db:code>QtQuick 2.0</db:code>, support has been added to allow JavaScript resources to import other JavaScript resources and also QML type namespaces using a variation of the standard QML import syntax (where all of the previously described rules and qualifications apply).</db:para>
+      <db:para>Due to the ability of a JavaScript resource to import another script or QML module in this fashion in <db:code>QtQuick 2.0</db:code>, some extra semantics are defined:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>a script with imports will not inherit imports from the QML document which imported it (so accessing Component.errorString will fail, for example)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>a script without imports will inherit imports from the QML document which imported it (so accessing Component.errorString will succeed, for example)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>a shared script (i.e., defined as .pragma library) does not inherit imports from any QML document even if it imports no other scripts or modules</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The first semantic is conceptually correct, given that a particular script might be imported by any number of QML files. The second semantic is retained for the purposes of backwards-compatibility. The third semantic remains unchanged from the current semantics for shared scripts, but is clarified here in respect to the newly possible case (where the script imports other scripts or modules).</db:para>
+      <db:anchor xml:id="importing-a-javascript-resource-from-another-javascript-resource"/>
+      <db:section>
+         <db:title>Importing a JavaScript Resource from Another JavaScript Resource</db:title>
+         <db:para>A JavaScript resource may import another in the following fashion:</db:para>
+         <db:programlisting language="cpp">.import "filename.js" as Qualifier</db:programlisting>
+         <db:para>For example:</db:para>
+         <db:programlisting language="cpp">.import "factorial.js" as MathFunctions</db:programlisting>
+         <db:anchor xml:id="importing-a-qml-module-from-a-javascript-resource"/>
+      </db:section>
+      <db:section>
+         <db:title>Importing a QML Module from a JavaScript Resource</db:title>
+         <db:para>A JavaScript resource may import a QML module in the following fashion:</db:para>
+         <db:programlisting language="cpp">.import TypeNamespace MajorVersion.MinorVersion as Qualifier</db:programlisting>
+         <db:para>For example:</db:para>
+         <db:programlisting language="cpp">.import Qt.test 1.0 as JsQtTest</db:programlisting>
+         <db:para>In particular, this may be useful in order to access functionality provided via a singleton type; see <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterSingletonType">qmlRegisterSingletonType</db:link>()</db:code> for more information.</db:para>
+         <db:note>
+            <db:para>The .import syntax doesn't work for scripts used in the <db:link xlink:href="qml-qtquick-workerscript.html">WorkerScript</db:link>
+            </db:para>
+         </db:note>
+         <db:anchor xml:id="including-a-javascript-resource-from-another-javascript-resource"/>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Including a JavaScript Resource from Another JavaScript Resource</db:title>
+      <db:para>When a JavaScript file is imported, it must be imported with a qualifier. The functions in that file are then accessible from the importing script via the qualifier (that is, as <db:code>Qualifier.functionName(params)</db:code>). Sometimes it is desirable to have the functions made available in the importing context without needing to qualify them, and in this circumstance the <db:code><db:link xlink:href="qml-qtqml-qt.html#include-method">Qt.include()</db:link></db:code> function may be used to include one JavaScript file from another. This copies all functions from the other file into the current file's namespace, but ignores all pragmas and imports defined in that file.</db:para>
+      <db:para>For example, the QML code below left calls <db:code>showCalculations()</db:code> in <db:code>script.js</db:code>, which in turn can call <db:code>factorial()</db:code> in <db:code>factorial.js</db:code>, as it has included <db:code>factorial.js</db:code> using <db:code><db:link xlink:href="qml-qtqml-qt.html#include-method">Qt.include()</db:link></db:code>.</db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para/>
+               </db:td>
+               <db:td>
+                  <db:para/>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para/>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+      <db:para>Notice that calling <db:code><db:link xlink:href="qml-qtqml-qt.html#include-method">Qt.include()</db:link></db:code> copies all functions from <db:code>factorial.js</db:code> into the <db:code>MyScript</db:code> namespace, which means the QML component can also access <db:code>factorial()</db:code> directly as <db:code>MyScript.factorial()</db:code>.</db:para>
+   </db:section>
+</db:article>
