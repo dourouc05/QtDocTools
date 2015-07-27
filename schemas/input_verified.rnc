@@ -257,68 +257,117 @@ enum_matchings =
             attribute class { "valuelist" },
             element html:tbody {
                 (element html:tr {
-                    attribute class { text }?,
-                    attribute valign { text }?,
-                    element html:th {
-                        attribute class { "tblConst" },
-                        "Constant"
-                    },
-                    element html:th {
-                        attribute class { "tblval" },
-                        "Value"
-                    },
-                    element html:th {
-                        attribute class { "tbldscr" },
-                        "Description"
-                    }
-                },
-                element html:tr {
-                    element html:td {
-                        attribute class { text },
-                        element html:code { text }
-                    },
-                    element html:td {
-                        attribute class { text },
-                        element html:code { text }
-                    },
-                    element html:td {
-                        attribute class { text },
-                        p_content
-                    }
-                }+)
-                |
-                (element html:tr {
-                    attribute class { text }?,
-                    attribute valign { text }?,
-                    element html:th {
-                        attribute class { "tblConst" },
-                        "Constant"
-                    },
-                    element html:th {
-                        attribute class { "tblVal" },
-                        "Value"
-                    }
-                },
-                element html:tr {
-                    element html:td {
-                        attribute class { text },
-                        element html:code { text }
-                    },
-                    element html:td {
-                        attribute class { text },
-                        element html:code { text }
-                    }
-                }+)
+                     attribute class { text }?,
+                     attribute valign { text }?,
+                     element html:th {
+                         attribute class { "tblConst" },
+                         "Constant"
+                     },
+                     element html:th {
+                         attribute class { "tblval" },
+                         "Value"
+                     },
+                     element html:th {
+                         attribute class { "tbldscr" },
+                         "Description"
+                     }
+                 },
+                 element html:tr {
+                     element html:td {
+                         attribute class { text },
+                         element html:code { text }
+                     },
+                     element html:td {
+                         attribute class { text },
+                         element html:code { text }
+                     },
+                     element html:td {
+                         attribute class { text },
+                         p_content
+                     }
+                 }+)
+                | (element html:tr {
+                       attribute class { text }?,
+                       attribute valign { text }?,
+                       element html:th {
+                           attribute class { "tblConst" },
+                           "Constant"
+                       },
+                       element html:th {
+                           attribute class { "tblVal" },
+                           "Value"
+                       }
+                   },
+                   element html:tr {
+                       element html:td {
+                           attribute class { text },
+                           element html:code { text }
+                       },
+                       element html:td {
+                           attribute class { text },
+                           element html:code { text }
+                       }
+                   }+)
             }
         }
     }
-typedef = \div
+typedef = element html:span { empty }
 # TODO! 
 class_funcs =
     element html:div {
         attribute class { "func" },
-        element html:h2 { "Member Function Documentation" }
+        element html:h2 { "Member Function Documentation" },
+        func*
     }
+func =
+    element html:h3 {
+        attribute class { "fn" },
+        attribute id { text },
+        element html:a {
+            attribute name { text },
+            empty
+        },
+        func_return,
+        func_name,
+        func_params
+    },
+    content+
+func_return =
+    text
+    | (element html:span {
+          attribute class { "type" },
+          (element html:a {
+              attribute href { text }, 
+              text
+          } | text)
+      }, type_template?)
+type_template = text, (text | element html:span {
+          attribute class { "type" },
+          (element html:a {
+              attribute href { text }, 
+              text
+          } | text)
+      }), text
+func_name =
+    text,
+    element html:span {
+        attribute class { "name" },
+        text
+    }
+func_params = text | (text, func_params_list, text)
+func_params_list = (func_params_list_one, text?)*
+func_params_list_one =
+    text,
+    (element html:span {
+         attribute class { "type" },
+         (element html:a {
+             attribute href { text },
+             text
+         } | text)
+     },
+     text?,
+     element html:i { text },
+     text)?
 class_nonmems =
     element html:div {
         attribute class { "relnonmem" },

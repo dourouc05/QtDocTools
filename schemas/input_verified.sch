@@ -19,4 +19,11 @@
             <sch:assert test="starts-with(./following-sibling::html:br/text()[1], 'flags ')"/>
         </sch:rule>
     </sch:pattern>
+    
+    <!-- About functions (func). -->
+    <sch:pattern>
+        <sch:rule context="//html:div[@class='func']/html:h3">
+            <sch:assert test="./html:a[1]/@name = @id"/>
+        </sch:rule>
+    </sch:pattern>
 </sch:schema>
