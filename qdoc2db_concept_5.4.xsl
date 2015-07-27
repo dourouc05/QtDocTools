@@ -317,8 +317,14 @@
 
             <!-- Output the type. -->
             <db:type>
+              <xsl:variable name="test1" select="$type/html:a"/>
+              <xsl:variable name="test2" select="$type/text()"/>
+              
               <xsl:choose>
                 <xsl:when test="$type/html:a">
+                  <xsl:attribute name="xlink:href">
+                    <xsl:value-of select="$type/html:a/@href"/>
+                  </xsl:attribute>
                   <xsl:value-of select="$type/html:a"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -374,6 +380,10 @@
         <xsl:choose>
           <xsl:when test="$node/html:a">
             <db:type>
+              <xsl:attribute name="xlink:href">
+                <xsl:value-of select="$node/html:a/@href"/>
+              </xsl:attribute>
+              
               <xsl:value-of select="$node/html:a/text()"/>
             </db:type>
           </xsl:when>
@@ -394,6 +404,8 @@
       </xsl:when>
       <xsl:otherwise>
         <db:type>
+          
+          
           <xsl:for-each select="1 to count($typeNodes)">
             <!-- Output the class names. -->
             <xsl:variable name="node" select="subsequence($typeNodes, ., 1)"/>
