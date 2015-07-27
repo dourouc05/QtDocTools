@@ -953,7 +953,7 @@
 
         <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
       </xsl:when>
-      <xsl:when test="starts-with(./text(), 'Q')">
+      <xsl:when test="starts-with(./text(), 'Q') and not(contains(./text(), ' '))">
         <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
         <db:link>
           <xsl:attribute name="xlink:href" select="@href"/>
