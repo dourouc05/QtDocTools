@@ -844,7 +844,18 @@
         </xsl:for-each-group>
 
         <xsl:if test="$hasSeeAlso">
-          <xsl:apply-templates mode="content" select="$seeAlso"/>
+          <db:section>
+            <db:info>
+              <db:title>See Also</db:title>
+            </db:info>
+            <db:simplelist>
+              <xsl:for-each select="$seeAlso/html:a">
+                <db:member>
+                  <xsl:apply-templates mode="content_paragraph" select="."/>
+                </db:member>
+              </xsl:for-each>
+            </db:simplelist>
+          </db:section>
         </xsl:if>
       </db:section>
     </xsl:for-each-group>
