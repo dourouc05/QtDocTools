@@ -22,7 +22,28 @@ start =
         },
         element html:body {
             # qtdocheader (partly used) then footer. 
-            qdocheaderdiv,
+            element html:div {
+                attribute class { "header" },
+                attribute id { "qtdocheader" },
+                element html:div {
+                    attribute class { "main" },
+                    element html:div {
+                        # Ignored for the transformation. 
+                        attribute class { "main-rounded" },
+                        \div+
+                    },
+                    element html:div {
+                        attribute class { "content" },
+                        element html:div {
+                            attribute class { "line" },
+                            element html:div {
+                                attribute class { "content mainContent" },
+                                actualContent
+                            }
+                        }
+                    }
+                }
+            },
             element html:div {
                 # Ignored for the transformation.
                 attribute class { "footer" },
@@ -59,58 +80,37 @@ h3 = anchor, h3_html, content*, h4*
 h2 = anchor, h2_html, content*, h3*
 
 ## Main parts of the content. 
-qdocheaderdiv =
+actualContent =
     element html:div {
-        attribute class { "header" },
-        attribute id { "qtdocheader" },
-        element html:div {
-            attribute class { "main" },
-            element html:div {
-                # Ignored for the transformation. 
-                attribute class { "main-rounded" },
-                \div+
-            },
-            element html:div {
-                attribute class { "content" },
-                element html:div {
-                    attribute class { "line" },
-                    element html:div {
-                        attribute class { "content mainContent" },
-                        element html:div {
-                            # Ignored for the transformation. 
-                            attribute class { "sidebar" },
-                            \div+
-                        },
-                        # Title and subtitle. 
-                        element html:h1 {
-                            attribute class { "title" },
-                            text
-                        },
-                        element html:span {
-                            attribute class { "subtitle" },
-                            text
-                        }?,
-                        
-                        ## Actual content. 
-                        ## () For class pages, first a brief description, then summary tables (whose order is important). 
-                        (class_brief,
-                         class_summary,
-                         # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
-                         class_relatedFiles?,
-                         class_summary_types?,
-                         class_summary_funcs,
-                         class_summary_statics?,
-                         class_summary_nonmems?)?,
-                        
-                        ## () Then the main description. 
-                        description,
-                        seealso?,
-                        class_content?
-                    }
-                }
-            }
-        }
-    }
+        # Ignored for the transformation. 
+        attribute class { "sidebar" },
+        \div+
+    },
+    # Title and subtitle. 
+    element html:h1 {
+        attribute class { "title" },
+        text
+    },
+    element html:span {
+        attribute class { "subtitle" },
+        text
+    }?,
+    
+    ## Actual content. 
+    ## () For (obsolete too!) class pages, first a brief description, then summary tables (whose order is important). 
+    (class_brief,
+     class_summary?,
+     # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
+     class_relatedFiles?,
+     class_summary_types?,
+     class_summary_funcs,
+     class_summary_statics?,
+     class_summary_nonmems?)?,
+    
+    ## () Then the main description. 
+    description?,
+    seealso?,
+    class_content?
 # Class summary. 
 class_brief = p
 class_relatedFiles = ul
@@ -130,36 +130,36 @@ class_summary =
 class_summary_types =
     element html:a {
         attribute name { "public-types" }
-    },
+    }?,
     element html:h2 {
-        attribute id { "public-types" },
+        attribute id { "public-types" }?,
         "Public Types"
     },
     class_sub_divtable
 class_summary_funcs =
     element html:a {
         attribute name { "public-functions" }
-    },
+    }?,
     element html:h2 {
-        attribute id { "public-functions" },
+        attribute id { "public-functions" }?,
         "Public Functions"
     },
     class_sub_divtable
 class_summary_statics =
     element html:a {
         attribute name { "static-public-members" }
-    },
+    }?,
     element html:h2 {
-        attribute id { "static-public-members" },
+        attribute id { "static-public-members" }?,
         "Static Public Members"
     },
     class_sub_divtable
 class_summary_nonmems =
     element html:a {
         attribute name { "related-non-members" }
-    },
+    }?,
     element html:h2 {
-        attribute id { "related-non-members" },
+        attribute id { "related-non-members" }?,
         "Related Non-Members"
     },
     class_sub_divtable
@@ -319,6 +319,8 @@ class_funcs =
         element html:h2 { "Member Function Documentation" },
         func*
     }
+    | (element html:h2 { "Member Function Documentation" },
+       func*)
 func =
     element html:h3 {
         attribute class { "fn" },
@@ -327,15 +329,13 @@ func =
             attribute name { text },
             empty
         },
-        func_modifiers, 
+        func_modifiers,
         func_return,
         func_name,
         func_params
     },
     content+
-func_modifiers = element html:code {
-    text
-}?
+func_modifiers = element html:code { text }?
 func_return = type
 func_name =
     text,
@@ -366,7 +366,7 @@ type_noTemplateAllowed =
 class_nonmems =
     element html:div {
         attribute class { "relnonmem" },
-        element html:h2 { "Related Non-Members" }, 
+        element html:h2 { "Related Non-Members" },
         nonmem+
     }
 nonmem = nonmem_func | nonmem_typedef
@@ -378,7 +378,7 @@ nonmem_func =
             attribute name { text },
             empty
         },
-        func_modifiers, 
+        func_modifiers,
         func_return,
         func_name,
         func_params
@@ -392,7 +392,7 @@ nonmem_typedef =
             attribute name { text },
             empty
         },
-        text, 
+        text,
         func_name
     },
     content+

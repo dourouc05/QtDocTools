@@ -26,6 +26,14 @@
                 inside.</sch:assert>
         </sch:rule>
     </sch:pattern>
+    
+    <sch:pattern>
+        <sch:title>Existence of included documents (their contents are not checked)</sch:title>
+        
+        <sch:rule context="//html:div[@class = 'content mainContent']/html:div[@class = 'table']">
+            <sch:assert test="if (./following-sibling::node()[1][self::html:ul]) then false() else true()"/>
+        </sch:rule>
+    </sch:pattern>
 
     <sch:pattern>
         <sch:title>About enumerations (enum)</sch:title>
@@ -66,12 +74,12 @@
                 />.</sch:assert>
             <sch:assert test="count(./html:code) &lt;= 1">Too many HTML &lt;code&gt;: found
                     <sch:value-of select="count(./html:code)"/>.</sch:assert>
+            <sch:let name="modifier" value="if (count(./html:code) = 1) then
+                normalize-space(./html:code/text())
+                else
+                '[static]'"/>
             <sch:assert
-                test="
-                    (if (count(./html:code) = 1) then
-                        normalize-space(./html:code/text())
-                    else
-                        '[static]') = '[static]'"
+                test="$modifier = '[static]' or $modifier = '(obsolete)'"
                 >A function has a modifier that is not recognised: <sch:value-of
                     select="normalize-space(./html:code/text())"/>. </sch:assert>
 
