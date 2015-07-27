@@ -591,6 +591,9 @@
   <xsl:template mode="content_class_title" match="text()">
     <xsl:value-of select="."/>
   </xsl:template>
+  <xsl:template mode="content_class_title" match="html:code">
+    <xsl:value-of select="./text()"/>
+  </xsl:template>
   <xsl:template mode="content_class_title" match="html:a[@name]"/>
   <xsl:template mode="content_class_title" match="html:a[@href]">
     <xsl:value-of select="./text()"/>
@@ -1031,5 +1034,10 @@
         </db:imagedata>
       </db:imageobject>
     </db:inlinemediaobject>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:p">
+    <xsl:if test="./child::*[self::html:img]">
+      <xsl:apply-templates mode="content_paragraph"/>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
