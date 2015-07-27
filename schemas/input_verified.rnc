@@ -35,7 +35,8 @@ start =
 content = p | pre | ul | ol | table
 anchor =
     element html:a {
-        attribute name { text }
+        attribute name { text }, 
+        empty
     }
 table =
     element html:div {
@@ -96,10 +97,10 @@ qdocheaderdiv =
                          class_summary,
                          # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
                          class_relatedFiles?,
-                         class_types?,
-                         class_funcs,
-                         class_statics?,
-                         class_nonmems?)?,
+                         class_summary_types?,
+                         class_summary_funcs,
+                         class_summary_statics?,
+                         class_summary_nonmems?)?,
                         
                         ## () Then the main description. 
                         description,
@@ -126,7 +127,7 @@ class_summary =
             }
         }
     }
-class_types =
+class_summary_types =
     element html:a {
         attribute name { "public-types" }
     },
@@ -135,7 +136,7 @@ class_types =
         "Public Types"
     },
     class_sub_divtable
-class_funcs =
+class_summary_funcs =
     element html:a {
         attribute name { "public-functions" }
     },
@@ -144,7 +145,7 @@ class_funcs =
         "Public Functions"
     },
     class_sub_divtable
-class_statics =
+class_summary_statics =
     element html:a {
         attribute name { "static-public-members" }
     },
@@ -153,7 +154,7 @@ class_statics =
         "Static Public Members"
     },
     class_sub_divtable
-class_nonmems =
+class_summary_nonmems =
     element html:a {
         attribute name { "related-non-members" }
     },
@@ -206,8 +207,54 @@ seealso_link =
         attribute href { text },
         text
     }
-# Actual class content. 
-class_content = \div+
+# Actual class content. Statics are merged with funcs. 
+class_content = class_types?, class_funcs, class_nonmems?
+class_types = 
+    element html:div {
+        attribute class { "types" }, 
+        element html:h2 { "Member Type Documentation" }, 
+        (enum | typedef)*
+    }
+enum = 
+    # Complemented by Schematron. 
+    element html:h3 {
+        attribute class { "fn" | "flags" }, 
+        attribute id { text }, 
+        anchor, 
+        # The name of the enumeration (something like enum QLowEnergyCharacteristic::<span>PropertyType</span>). 
+        text,
+        element html:span {
+            attribute class { "name" }, 
+            text
+        }, 
+        # Maybe flags (something like flags QLowEnergyCharacteristic::&#8203;<html:span class="name">PropertyTypes</html:span>). 
+        (br, 
+         text, 
+         element html:span {
+            attribute class { "name" }, 
+            text
+        })?
+    }, 
+    # The enumeration description: 
+    p+, 
+    element html:div {
+        attribute class { "table" }, 
+        element html:table {
+            attribute class { "valuelist" }, 
+            element html:tbody { tr+ }
+        }
+    }
+typedef = \div # TODO! 
+class_funcs = 
+    element html:div {
+        attribute class { "func" }, 
+        element html:h2 { "Member Function Documentation" }
+    }
+class_nonmems = 
+    element html:div {
+        attribute class { "relnonmem" }, 
+        element html:h2 { "Related Non-Members" }
+    }
 
 ## HTML details. 
 \div =
@@ -247,19 +294,14 @@ span =
         attribute class { xsd:NCName },
         (text | a)+
     }
-ul =
-    element html:ul {
-        li+
+ul = element html:ul { li+ }
+ol = element html:ul { li+ }
+li =
+    element html:li {
+        attribute class { xsd:NCName }?,
+        attribute id { xsd:NCName }?,
+        (text | a | code | i | p | ul)+
     }
-ol =
-    element html:ul {
-        li+
-    }
-li = element html:li {
-            attribute class { xsd:NCName }?,
-            attribute id { xsd:NCName }?,
-            (text | a | code | i | p | ul)+
-        }
 a =
     element html:a {
         attribute href { xsd:anyURI }?,
@@ -268,7 +310,9 @@ a =
     }
 br = element html:br { empty }
 code = element html:code { text }
-i = element html:i { xsd:NCName } | element html:em { xsd:NCName }
+i =
+    element html:i { xsd:NCName }
+    | element html:em { xsd:NCName }
 p =
     element html:p {
         attribute class { xsd:NCName }?,
@@ -308,4 +352,6 @@ img =
         attribute alt { text }?,
         attribute src { text }
     }
-b = element html:b { (text | a)+ } | element html:strong { (text | a)+ }
+b =
+    element html:b { (text | a)+ }
+    | element html:strong { (text | a)+ }
