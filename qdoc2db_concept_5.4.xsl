@@ -160,24 +160,39 @@
       </xsl:if>
     </db:article>
   </xsl:template>
-  
+
   <!-- Utility templates, to be used everywhere. -->
-  <xsl:template mode="content_title" match="text()">
+  <xsl:template name="content_title">
+    <xsl:variable name="content">
+      <xsl:apply-templates mode="content_title_hidden" select="."/>
+    </xsl:variable>
+    <db:info>
+      <db:title>
+        <xsl:value-of
+          select="replace(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '), '  ', ' ')"
+        />
+      </db:title>
+    </db:info>
+  </xsl:template>
+  <xsl:template mode="content_title_hidden" match="text()">
     <xsl:value-of select="."/>
   </xsl:template>
-  <xsl:template mode="content_title" match="html:code">
+  <xsl:template mode="content_title_hidden" match="html:code">
     <xsl:value-of select="./text()"/>
   </xsl:template>
-  <xsl:template mode="content_title" match="html:a[@name]"/>
-  <xsl:template mode="content_title" match="html:a[@href]">
+  <xsl:template mode="content_title_hidden" match="html:a[@name]"/>
+  <xsl:template mode="content_title_hidden" match="html:a[@href]">
     <xsl:value-of select="./text()"/>
   </xsl:template>
-  <xsl:template mode="content_title" match="html:i">
-    <xsl:apply-templates mode="content_title"/>
+  <xsl:template mode="content_title_hidden" match="html:i">
+    <xsl:apply-templates mode="content_title_hidden"/>
   </xsl:template>
-  <xsl:template mode="content_title" match="html:span">
-    <xsl:apply-templates mode="content_title"/>
+  <xsl:template mode="content_title_hidden" match="html:span">
+    <xsl:apply-templates mode="content_title_hidden"/>
     <xsl:text> </xsl:text>
+  </xsl:template>
+  <xsl:template mode="content_title_hidden" match="html:h3">
+    <xsl:apply-templates mode="content_title_hidden"/>
   </xsl:template>
 
   <!-- Handle table of content sections. -->
@@ -414,7 +429,8 @@
   <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
     <xsl:message terminate="no">WARNING: No summary output for typedefs. </xsl:message>
   </xsl:template>
-  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+  <xsl:template mode="functionListing"
+    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
     <db:funcsynopsis>
       <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
 
@@ -522,13 +538,8 @@
 
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
 
-      <db:info>
-        <db:title>
-          <xsl:apply-templates mode="content_title"/>
-        </db:title>
-      </db:info>
-      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
@@ -539,12 +550,7 @@
 
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
-
-      <db:info>
-        <db:title>
-          <xsl:apply-templates mode="content_title"/>
-        </db:title>
-      </db:info>
+      <xsl:call-template name="content_title"/>
 
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
@@ -565,12 +571,7 @@
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
-
-      <db:info>
-        <db:title>
-          <xsl:apply-templates mode="content_title"/>
-        </db:title>
-      </db:info>
+      <xsl:call-template name="content_title"/>
 
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
@@ -601,12 +602,7 @@
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
-
-      <db:info>
-        <db:title>
-          <xsl:apply-templates mode="content_title"/>
-        </db:title>
-      </db:info>
+      <xsl:call-template name="content_title"/>
 
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
@@ -618,12 +614,7 @@
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
-
-      <db:info>
-        <db:title>
-          <xsl:apply-templates mode="content_title"/>
-        </db:title>
-      </db:info>
+      <xsl:call-template name="content_title"/>
 
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
