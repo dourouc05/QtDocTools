@@ -51,7 +51,7 @@
     <sch:pattern>
         <sch:title>About functions (func)</sch:title>
 
-        <sch:rule context="//html:div[@class = 'func']/html:h3">
+        <sch:rule context="//html:h3[@class = 'fn' and not(contains(@id, '-enum')) and not(contains(@id, '-typedef'))]">
             <sch:let name="rawString" value="string-join(./text(), '')"/>
             <sch:let name="functionAnchor" value="./@id"/>
             <sch:let name="functionName" value="./html:span[@class = 'name']"/>
@@ -117,6 +117,16 @@
             <sch:assert
                 test="count(tokenize($rawString, '&lt;')) = count(tokenize($rawString, '>'))"
                 >Unbalanced chevrons for templates. </sch:assert>
+        </sch:rule>
+    </sch:pattern>
+    
+    <sch:pattern>
+        <sch:title>About related non-members (nonmem)</sch:title>
+        
+        <sch:rule context="//html:div[@class = 'relnonmem']/html:h3">
+            <sch:assert test="./html:a[1]/@name = @id">Mismatch between the &lt;h3&gt; title's id
+                and the HTML &lt;a&gt; anchor.</sch:assert>
+            <sch:assert test="if (contains(@id, '-typedef')) then starts-with(./html:a/following-sibling::text(), 'typedef') else true()"></sch:assert>
         </sch:rule>
     </sch:pattern>
 </sch:schema>

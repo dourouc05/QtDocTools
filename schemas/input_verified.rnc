@@ -366,8 +366,36 @@ type_noTemplateAllowed =
 class_nonmems =
     element html:div {
         attribute class { "relnonmem" },
-        element html:h2 { "Related Non-Members" }
+        element html:h2 { "Related Non-Members" }, 
+        nonmem+
     }
+nonmem = nonmem_func | nonmem_typedef
+nonmem_func =
+    element html:h3 {
+        attribute class { "fn" },
+        attribute id { text },
+        element html:a {
+            attribute name { text },
+            empty
+        },
+        func_modifiers, 
+        func_return,
+        func_name,
+        func_params
+    },
+    content+
+nonmem_typedef =
+    element html:h3 {
+        attribute class { "fn" },
+        attribute id { text },
+        element html:a {
+            attribute name { text },
+            empty
+        },
+        text, 
+        func_name
+    },
+    content+
 
 ## HTML details. 
 \div =
