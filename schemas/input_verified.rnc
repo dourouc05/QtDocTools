@@ -327,27 +327,16 @@ func =
             attribute name { text },
             empty
         },
+        func_modifiers, 
         func_return,
         func_name,
         func_params
     },
     content+
-func_return =
+func_modifiers = element html:code {
     text
-    | (element html:span {
-          attribute class { "type" },
-          (element html:a {
-              attribute href { text }, 
-              text
-          } | text)
-      }, type_template?)
-type_template = text, (text | element html:span {
-          attribute class { "type" },
-          (element html:a {
-              attribute href { text }, 
-              text
-          } | text)
-      }), text
+}?
+func_return = type
 func_name =
     text,
     element html:span {
@@ -358,16 +347,22 @@ func_params = text | (text, func_params_list, text)
 func_params_list = (func_params_list_one, text?)*
 func_params_list_one =
     text,
-    (element html:span {
-         attribute class { "type" },
-         (element html:a {
-             attribute href { text },
-             text
-         } | text)
-     },
+    (type,
      text?,
      element html:i { text },
      text)?
+type = type_noTemplateAllowed, type_template?
+type_template = text, type_noTemplateAllowed, text
+type_noTemplateAllowed =
+    text
+    | element html:span {
+          attribute class { "type" },
+          (element html:a {
+               attribute href { text },
+               text
+           }
+           | text)
+      }
 class_nonmems =
     element html:div {
         attribute class { "relnonmem" },
