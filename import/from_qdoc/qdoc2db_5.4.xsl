@@ -39,6 +39,23 @@
     </xsl:variable>
 
     <!-- Extract the various parts of the main structure. -->
+    <xsl:variable name="linkedDocumentsList"
+      select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
+    <xsl:variable name="hasLinkedDocumentsList" select="boolean($linkedDocumentsList)"
+      as="xs:boolean"/>
+    <xsl:variable name="linkedDocumentsFileNames" as="xs:string*"
+      select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
+    <xsl:variable name="linkedDocuments" as="element()*">
+      <xsl:for-each select="$linkedDocumentsFileNames">
+        <entry>
+          <xsl:attribute name="file-name"><xsl:value-of select="."/></xsl:attribute>
+          <xsl:attribute name="type"><xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
+          </xsl:attribute>
+          <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
+        </entry>
+      </xsl:for-each>
+    </xsl:variable>
+
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>

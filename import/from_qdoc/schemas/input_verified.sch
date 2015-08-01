@@ -48,7 +48,7 @@
                     if (ends-with($fileName, '-members')) then
                         true()
                     else
-                        ends-with($fileName, '-obsolete') or ends-with($fileName, '-styling')"
+                        ends-with($fileName, '-obsolete')"
                 >Unrecognised other document type: <sch:value-of select="$fileName"/>.</sch:assert>
             <sch:assert
                 test="
