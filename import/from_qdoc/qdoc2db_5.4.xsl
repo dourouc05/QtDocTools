@@ -170,16 +170,25 @@
       </db:info>
 
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
+      <xsl:if test="$hasTypes">
+        <xsl:message>WARNING: No summary output for types.</xsl:message>
+      </xsl:if>
+      <xsl:if test="$obsolete_hasTypes">
+        <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
+      </xsl:if>
+
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
           <xsl:with-param name="data" select="$funcs"/>
           <xsl:with-param name="className" select="$className"/>
+          <xsl:with-param name="obsoleteData" select="$obsolete_funcs"/>
         </xsl:call-template>
 
         <xsl:if test="$hasNonmems">
           <xsl:call-template name="functionListing">
             <xsl:with-param name="data" select="$nonmems"/>
             <xsl:with-param name="className" select="$className"/>
+            <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
           </xsl:call-template>
         </xsl:if>
       </xsl:if>
@@ -277,6 +286,7 @@
   <xsl:template name="classListing">
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
+    <xsl:param name="obsoleteData" as="element(html:h2)?"/>
 
     <db:classsynopsis>
       <db:ooclass>
@@ -287,11 +297,21 @@
       <xsl:apply-templates mode="classListing" select="$data/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
+      <xsl:if test="boolean($obsoleteData)">
+        <xsl:apply-templates mode="classListing"
+          select="$obsoleteData/following-sibling::html:h3[preceding-sibling::html:h2 = $obsoleteData]">
+          <xsl:with-param name="className" select="$className"/>
+          <xsl:with-param name="obsolete">
+            <xsl:value-of select="true()"/>
+          </xsl:with-param>
+        </xsl:apply-templates>
+      </xsl:if>
     </db:classsynopsis>
   </xsl:template>
   <xsl:template mode="classListing" match="text()"/>
   <xsl:template mode="classListing" match="html:h3[@class = 'fn']">
     <xsl:param name="className" as="xs:string"/>
+    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
 
     <!-- Possible anchors: for constructors, Class, Class-2; for destructors, dtor.Class -->
     <xsl:variable name="functionAnchor" select="./@id"/>
@@ -303,30 +323,42 @@
       <xsl:when test="$isCtor">
         <db:constructorsynopsis>
           <xsl:attribute name="xlink:href" select="concat('#', $functionAnchor)"/>
-          <xsl:call-template name="classListing_methodBody"/>
+          <xsl:call-template name="classListing_methodBody">
+            <xsl:with-param name="obsolete" select="$obsolete"/>
+          </xsl:call-template>
         </db:constructorsynopsis>
       </xsl:when>
       <xsl:when test="$isDtor">
         <db:destructorsynopsis>
           <xsl:attribute name="xlink:href" select="$functionAnchor"/>
-          <xsl:call-template name="classListing_methodBody"/>
+          <xsl:call-template name="classListing_methodBody">
+            <xsl:with-param name="obsolete" select="$obsolete"/>
+          </xsl:call-template>
         </db:destructorsynopsis>
       </xsl:when>
       <xsl:when test="$isFct">
         <db:methodsynopsis>
           <xsl:attribute name="xlink:href" select="$functionAnchor"/>
-          <xsl:call-template name="classListing_methodBody"/>
+          <xsl:call-template name="classListing_methodBody">
+            <xsl:with-param name="obsolete" select="$obsolete"/>
+          </xsl:call-template>
         </db:methodsynopsis>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
   <xsl:template name="classListing_methodBody">
+    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+
     <xsl:variable name="titleNode" select="."/>
     <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
     <xsl:variable name="returnTypes"
       select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
     <xsl:variable name="isStatic" as="xs:boolean"
       select="boolean($returnTypes/preceding-sibling::html:code[normalize-space(text()) = '[static]'])"/>
+
+    <xsl:if test="$obsolete">
+      <db:modifier>(obsolete)</db:modifier>
+    </xsl:if>
 
     <xsl:if test="$isStatic">
       <db:modifier>static</db:modifier>
@@ -485,10 +517,18 @@
   <xsl:template name="functionListing">
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
+    <xsl:param name="obsoleteData" as="element(html:h2)?"/>
 
     <xsl:apply-templates mode="functionListing" select="$data/html:h3">
       <xsl:with-param name="className" select="$className"/>
     </xsl:apply-templates>
+    <xsl:if test="boolean($obsoleteData)">
+      <xsl:apply-templates mode="functionListing"
+        select="$obsoleteData/following-sibling::html:h3[preceding-sibling::html:h2 = $obsoleteData]">
+        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="obsolete" select="true()"/>
+      </xsl:apply-templates>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
   <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
@@ -496,6 +536,7 @@
   </xsl:template>
   <xsl:template mode="functionListing"
     match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
     <db:funcsynopsis>
       <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
 
@@ -506,6 +547,10 @@
           select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
         <xsl:variable name="isStatic" as="xs:boolean"
           select="boolean($returnTypes/preceding-sibling::html:code[normalize-space(text()) = '[static]'])"/>
+        
+        <xsl:if test="$obsolete">
+          <db:modifier>(obsolete)</db:modifier>
+        </xsl:if>
 
         <xsl:if test="$isStatic">
           <db:modifier>static</db:modifier>
