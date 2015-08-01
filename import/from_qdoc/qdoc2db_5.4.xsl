@@ -39,23 +39,6 @@
     </xsl:variable>
 
     <!-- Extract the various parts of the main structure. -->
-    <xsl:variable name="linkedDocumentsList"
-      select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
-    <xsl:variable name="hasLinkedDocumentsList" select="boolean($linkedDocumentsList)"
-      as="xs:boolean"/>
-    <xsl:variable name="linkedDocumentsFileNames" as="xs:string*"
-      select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
-    <xsl:variable name="linkedDocuments" as="element()*">
-      <xsl:for-each select="$linkedDocumentsFileNames">
-        <entry>
-          <xsl:attribute name="file-name"><xsl:value-of select="."/></xsl:attribute>
-          <xsl:attribute name="type"><xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
-          </xsl:attribute>
-          <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
-        </entry>
-      </xsl:for-each>
-    </xsl:variable>
-
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
@@ -127,6 +110,52 @@
     <xsl:if test="not($isClass) and boolean($funcs)">
       <xsl:message terminate="no">WARNING: A concept has functions.</xsl:message>
     </xsl:if>
+
+    <!-- Do the same with linked documents. -->
+    <xsl:variable name="linkedDocumentsList"
+      select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
+    <xsl:variable name="hasLinkedDocumentsList" select="boolean($linkedDocumentsList)"
+      as="xs:boolean"/>
+    <xsl:variable name="linkedDocumentsFileNames" as="xs:string*"
+      select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
+    <xsl:variable name="linkedDocuments" as="element()*">
+      <xsl:for-each select="$linkedDocumentsFileNames">
+        <entry>
+          <xsl:attribute name="file-name">
+            <xsl:value-of select="."/>
+          </xsl:attribute>
+          <xsl:attribute name="type">
+            <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
+          </xsl:attribute>
+          <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
+        </entry>
+      </xsl:for-each>
+    </xsl:variable>
+    <xsl:if test="count($linkedDocuments) > 1">
+      <xsl:message>WARNING: More than one linked document. Unsupported.</xsl:message>
+    </xsl:if>
+    <xsl:variable name="obsolete"
+      select="
+        $linkedDocuments[1]
+        /html:html
+        /html:body
+        /html:div[@class = 'header']
+        /html:div[@class = 'main']
+        /html:div[@class = 'content']
+        /html:div[@class = 'line']
+        /html:div[@class = 'content mainContent']"/>
+
+    <xsl:variable name="obsolete_types" as="element()?"
+      select="$obsolete/html:h2[text() = 'Member Type Documentation']"/>
+    <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types)" as="xs:boolean"/>
+
+    <xsl:variable name="obsolete_funcs" as="element()?"
+      select="$obsolete/html:h2[text() = 'Member Function Documentation']"/>
+    <xsl:variable name="obsolete_hasFuncs" select="boolean($obsolete_funcs)" as="xs:boolean"/>
+
+    <xsl:variable name="obsolete_nonmems" as="element()?"
+      select="$obsolete/html:h2[text() = 'Related Non-Members']"/>
+    <xsl:variable name="obsolete_hasNonmems" select="boolean($obsolete_nonmems)" as="xs:boolean"/>
 
     <!-- Actually output something. -->
     <db:article version="5.0" xsl:validation="strict">
