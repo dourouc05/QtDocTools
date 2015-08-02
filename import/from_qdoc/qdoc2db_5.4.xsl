@@ -37,9 +37,23 @@
         <xsl:value-of select="substring-before($title, ' Class')"/>
       </xsl:if>
     </xsl:variable>
-    
+
     <!-- Extract the various parts of the prologue. -->
-    <xsl:variable name="prologueTable" select="$content/html:div[@class = 'table'][preceding-sibling::node()[self::html:p]][1]/html:table[@class = 'alignedsummary']"/>
+    <xsl:variable name="prologueTable"
+      select="
+        $content
+        /html:div[@class = 'table'][preceding-sibling::node()[self::html:p]][1]
+        /html:table[@class = 'alignedsummary']/html:tbody/html:tr"/>
+    <xsl:variable name="prologueHeader" as="element(html:span)?"
+      select="$prologueTable/html:td[contains(text(), 'Header')]/following-sibling::html:td/html:span"/>
+    <xsl:variable name="prologueQmake" as="element(html:td)?"
+      select="$prologueTable/html:td[contains(text(), 'qmake')]/following-sibling::html:td"/>
+    <xsl:variable name="prologueInherits" as="element(html:td)?"
+      select="$prologueTable/html:td[contains(text(), 'Inherits')]/following-sibling::html:td"/>
+    <xsl:variable name="prologueInheritedBy" as="element(html:td)?"
+      select="$prologueTable/html:td[contains(text(), 'Inherited By')]/following-sibling::html:td"/>
+    <xsl:variable name="prologueSince" as="element(html:td)?"
+      select="$prologueTable/html:td[contains(text(), 'Since')]/following-sibling::html:td"/>
 
     <!-- Extract the various parts of the main structure. -->
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
@@ -208,6 +222,13 @@
         <xsl:call-template name="classListing">
           <xsl:with-param name="data" select="$funcs"/>
           <xsl:with-param name="className" select="$className"/>
+          
+          <xsl:with-param name="header" select="$prologueHeader"/>
+          <xsl:with-param name="qmake" select="$prologueQmake"/>
+          <xsl:with-param name="inherits" select="$prologueInherits"/>
+          <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
+          <xsl:with-param name="since" select="$prologueSince"/>
+          
           <xsl:with-param name="obsoleteData" select="$obsolete_funcs"/>
         </xsl:call-template>
 
@@ -314,10 +335,10 @@
   <xsl:template mode="content_title_hidden" match="html:br">
     <xsl:message terminate="no">WARNING: Line feed in title; this is not handled!</xsl:message>
   </xsl:template>
-  
+
   <xsl:template name="content_seealso">
     <xsl:param name="seeAlso" as="element(html:p)"/>
-    
+
     <db:section>
       <db:title>See Also</db:title>
       <db:simplelist>
@@ -354,6 +375,12 @@
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
     <xsl:param name="obsoleteData" as="element(html:div)?"/>
+    
+    <xsl:param name="header" as="element()?"/>
+    <xsl:param name="qmake" as="element()?"/>
+    <xsl:param name="inherits" as="element()?"/>
+    <xsl:param name="inheritedBy" as="element()?"/>
+    <xsl:param name="since" as="element()?"/>
 
     <db:classsynopsis>
       <db:ooclass>
@@ -361,6 +388,23 @@
           <xsl:value-of select="$className"/>
         </db:classname>
       </db:ooclass>
+      
+      <xsl:if test="$header">
+        <classsynopsisinfo role="header"><xsl:value-of select="$header"/></classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$qmake">
+        <classsynopsisinfo role="qmake"><xsl:value-of select="$qmake"/></classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$inherits">
+        <classsynopsisinfo role="inherits"><xsl:value-of select="$inherits/html:a/text()"/></classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$inheritedBy">
+        <classsynopsisinfo role="inheritedBy"><xsl:value-of select="$inheritedBy/html:a/text()"/></classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$since">
+        <classsynopsisinfo role="since"><xsl:value-of select="$since"/></classsynopsisinfo>
+      </xsl:if>
+      
       <xsl:apply-templates mode="classListing" select="$data/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
