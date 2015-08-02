@@ -103,6 +103,7 @@ actualContent =
      # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
      class_relatedFiles?,
      class_summary_types?,
+     class_summary_properties?, 
      class_summary_funcs,
      class_summary_statics?,
      class_summary_nonmems?)?,
@@ -201,6 +202,27 @@ class_summary_types =
         "Public Types"
     },
     class_sub_divtable
+class_summary_properties =
+    element html:a {
+        attribute name { "properties" }
+    }?,
+    element html:h2 {
+        attribute id { "properties" }?,
+        "Properties"
+    },
+    class_sub_divtable_props, 
+    class_summary_properties_inherited?
+class_summary_properties_inherited = 
+    element html:ul {
+        element html:li {
+            attribute class { "fn" }, 
+            text, 
+            element html:a {
+                attribute href { text }, 
+                text
+            }
+        }+
+    }
 class_summary_funcs =
     element html:a {
         attribute name { "public-functions" }
@@ -234,6 +256,32 @@ class_sub_divtable =
         element html:table {
             attribute class { "alignedsummary" },
             element html:tbody { tr+ }
+        }
+    }
+class_sub_divtable_props =
+    element html:div {
+        attribute class { "table" },
+        element html:table {
+            attribute class { "propsummary" },
+            element html:tbody { 
+                element html:tr {
+                    (element html:td {
+                        attribute class { "topAlign" }, 
+                        element html:ul {
+                            element html:li {
+                                attribute class { "fn" }, 
+                                element html:b {
+                                    element html:a {
+                                        attribute href { text }, 
+                                        text
+                                    }
+                                }, 
+                                text
+                            }+
+                        }
+                    })+
+                }
+            }
         }
     }
 # Textual description (only content for concept pages, after a title for class pages -- 

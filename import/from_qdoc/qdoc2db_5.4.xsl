@@ -390,19 +390,19 @@
       </db:ooclass>
       
       <xsl:if test="$header">
-        <classsynopsisinfo role="header"><xsl:value-of select="$header"/></classsynopsisinfo>
+        <db:classsynopsisinfo role="header"><xsl:value-of select="$header"/></db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$qmake">
-        <classsynopsisinfo role="qmake"><xsl:value-of select="$qmake"/></classsynopsisinfo>
+        <db:classsynopsisinfo role="qmake"><xsl:value-of select="$qmake"/></db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$inherits">
-        <classsynopsisinfo role="inherits"><xsl:value-of select="$inherits/html:a/text()"/></classsynopsisinfo>
+        <db:classsynopsisinfo role="inherits"><xsl:value-of select="$inherits/html:a/text()"/></db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$inheritedBy">
-        <classsynopsisinfo role="inheritedBy"><xsl:value-of select="$inheritedBy/html:a/text()"/></classsynopsisinfo>
+        <db:classsynopsisinfo role="inheritedBy"><xsl:value-of select="$inheritedBy/html:a/text()"/></db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$since">
-        <classsynopsisinfo role="since"><xsl:value-of select="$since"/></classsynopsisinfo>
+        <db:classsynopsisinfo role="since"><xsl:value-of select="$since"/></db:classsynopsisinfo>
       </xsl:if>
       
       <xsl:apply-templates mode="classListing" select="$data/html:h3">
