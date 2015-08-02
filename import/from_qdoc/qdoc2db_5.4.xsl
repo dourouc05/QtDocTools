@@ -144,18 +144,44 @@
         /html:div[@class = 'content']
         /html:div[@class = 'line']
         /html:div[@class = 'content mainContent']"/>
+    <xsl:variable name="hasObsolete" select="boolean($obsolete)" as="xs:boolean"/>
 
-    <xsl:variable name="obsolete_types" as="element()?"
+    <xsl:variable name="obsolete_types_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Member Type Documentation']"/>
-    <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types)" as="xs:boolean"/>
+    <xsl:variable name="obsolete_types" as="element(html:div)?">
+      <html:div class="types">
+        <xsl:copy-of select="$obsolete_types_title"/>
+        <xsl:copy-of
+          select="$obsolete_types_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_types_title]"
+        />
+      </html:div>
+    </xsl:variable>
+    <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types_title)" as="xs:boolean"/>
 
-    <xsl:variable name="obsolete_funcs" as="element()?"
+    <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Member Function Documentation']"/>
-    <xsl:variable name="obsolete_hasFuncs" select="boolean($obsolete_funcs)" as="xs:boolean"/>
+    <xsl:variable name="obsolete_funcs" as="element(html:div)?">
+      <html:div class="func">
+        <xsl:copy-of select="$obsolete_funcs_title"/>
+        <xsl:copy-of
+          select="$obsolete_funcs_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_funcs_title]"
+        />
+      </html:div>
+    </xsl:variable>
+    <xsl:variable name="obsolete_hasFuncs" select="boolean($obsolete_funcs_title)" as="xs:boolean"/>
 
-    <xsl:variable name="obsolete_nonmems" as="element()?"
+    <xsl:variable name="obsolete_nonmems_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Related Non-Members']"/>
-    <xsl:variable name="obsolete_hasNonmems" select="boolean($obsolete_nonmems)" as="xs:boolean"/>
+    <xsl:variable name="obsolete_nonmems" as="element(html:div)?">
+      <html:div class="types">
+        <xsl:copy-of select="$obsolete_nonmems_title"/>
+        <xsl:copy-of
+          select="$obsolete_nonmems_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_nonmems_title]"
+        />
+      </html:div>
+    </xsl:variable>
+    <xsl:variable name="obsolete_hasNonmems" select="boolean($obsolete_nonmems_title)"
+      as="xs:boolean"/>
 
     <!-- Actually output something. -->
     <db:article version="5.0" xsl:validation="strict">
@@ -223,6 +249,32 @@
           <xsl:with-param name="data" select="$nonmems"/>
         </xsl:call-template>
       </xsl:if>
+
+      <xsl:if test="$hasObsolete">
+        <db:section>
+          <db:title>
+            <xsl:text>Obsolete Members</xsl:text>
+          </db:title>
+
+          <xsl:if test="$obsolete_hasTypes">
+            <xsl:call-template name="content_types">
+              <xsl:with-param name="data" select="$obsolete_types"/>
+            </xsl:call-template>
+          </xsl:if>
+
+          <xsl:if test="$obsolete_hasFuncs">
+            <xsl:call-template name="content_class">
+              <xsl:with-param name="data" select="$obsolete_funcs"/>
+            </xsl:call-template>
+          </xsl:if>
+
+          <xsl:if test="$obsolete_hasNonmems">
+            <xsl:call-template name="content_nonmems">
+              <xsl:with-param name="data" select="$obsolete_nonmems"/>
+            </xsl:call-template>
+          </xsl:if>
+        </db:section>
+      </xsl:if>
     </db:article>
   </xsl:template>
 
@@ -286,7 +338,7 @@
   <xsl:template name="classListing">
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
-    <xsl:param name="obsoleteData" as="element(html:h2)?"/>
+    <xsl:param name="obsoleteData" as="element(html:div)?"/>
 
     <db:classsynopsis>
       <db:ooclass>
@@ -298,8 +350,7 @@
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
       <xsl:if test="boolean($obsoleteData)">
-        <xsl:apply-templates mode="classListing"
-          select="$obsoleteData/following-sibling::html:h3[preceding-sibling::html:h2 = $obsoleteData]">
+        <xsl:apply-templates mode="classListing" select="$obsoleteData/html:h3">
           <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="obsolete">
             <xsl:value-of select="true()"/>
@@ -398,9 +449,35 @@
           <xsl:variable name="textAfterType"
             select="normalize-space($type/following-sibling::text()[1])"/>
 
-          <xsl:variable name="test" select="$firstNode/following-sibling::*"/>
+          <xsl:variable name="names" select="$type/following-sibling::html:i"/>
+          <xsl:variable name="afterName" select="$names[1]/following-sibling::text()[1]"/>
+          <xsl:variable name="afterNameBeforeNext"
+            select="
+              if (not(contains($afterName, ','))) then
+                substring-before($afterName, ')')
+              else
+                substring-before($afterName, ',')"/>
+          <xsl:variable name="hasInitialiser" select="contains($afterName, '=')" as="xs:boolean"/>
 
           <db:methodparam>
+            <!-- methodparam attributes. No repeating argument until Qt uses C's stdarg. -->
+            <xsl:choose>
+              <xsl:when test="$hasInitialiser">
+                <xsl:attribute name="choice">
+                  <xsl:text>opt</xsl:text>
+                </xsl:attribute>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:attribute name="choice">
+                  <xsl:text>req</xsl:text>
+                </xsl:attribute>
+              </xsl:otherwise>
+            </xsl:choose>
+
+            <xsl:attribute name="rep">
+              <xsl:text>norepeat</xsl:text>
+            </xsl:attribute>
+
             <!-- Maybe this parameter is const. -->
             <xsl:if test="normalize-space($textAfterName) = '(const'">
               <db:modifier>const</db:modifier>
@@ -412,20 +489,12 @@
             </xsl:call-template>
 
             <!-- Then the name. -->
-            <xsl:variable name="names" select="$type/following-sibling::html:i"/>
             <db:parameter>
               <xsl:value-of select="normalize-space($names[1])"/>
             </db:parameter>
 
             <!-- Eventually an initialiser. -->
-            <xsl:variable name="afterName" select="$names[1]/following-sibling::text()[1]"/>
-            <xsl:variable name="afterNameBeforeNext"
-              select="
-                if (not(contains($afterName, ','))) then
-                  substring-before($afterName, ')')
-                else
-                  substring-before($afterName, ',')"/>
-            <xsl:if test="contains($afterName, '=')">
+            <xsl:if test="$hasInitialiser">
               <db:initializer>
                 <xsl:value-of select="normalize-space(substring-after($afterNameBeforeNext, '='))"/>
               </db:initializer>
@@ -517,14 +586,13 @@
   <xsl:template name="functionListing">
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
-    <xsl:param name="obsoleteData" as="element(html:h2)?"/>
+    <xsl:param name="obsoleteData" as="element(html:div)?"/>
 
     <xsl:apply-templates mode="functionListing" select="$data/html:h3">
       <xsl:with-param name="className" select="$className"/>
     </xsl:apply-templates>
     <xsl:if test="boolean($obsoleteData)">
-      <xsl:apply-templates mode="functionListing"
-        select="$obsoleteData/following-sibling::html:h3[preceding-sibling::html:h2 = $obsoleteData]">
+      <xsl:apply-templates mode="functionListing" select="$obsoleteData/html:h3">
         <xsl:with-param name="className" select="$className"/>
         <xsl:with-param name="obsolete" select="true()"/>
       </xsl:apply-templates>
@@ -547,7 +615,7 @@
           select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
         <xsl:variable name="isStatic" as="xs:boolean"
           select="boolean($returnTypes/preceding-sibling::html:code[normalize-space(text()) = '[static]'])"/>
-        
+
         <xsl:if test="$obsolete">
           <db:modifier>(obsolete)</db:modifier>
         </xsl:if>
