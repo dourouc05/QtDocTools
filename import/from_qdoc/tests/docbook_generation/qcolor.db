@@ -3,9 +3,7 @@
             xmlns:xlink="http://www.w3.org/1999/xlink"
             version="5.0"
             xml:lang="en">
-   <db:info>
-      <db:title>QColor Class</db:title>
-   </db:info>
+   <db:title>QColor Class</db:title>
    <db:classsynopsis>
       <db:ooclass>
          <db:classname>QColor</db:classname>
@@ -1272,9 +1270,7 @@
          <db:para>In addition to the standard CMYK model, Qt provides an alpha-channel to feature <db:link xlink:href="qcolor.html#alpha-blended-drawing">alpha-blended drawing</db:link>.</db:para>
       </db:section>
       <db:section>
-         <db:info>
-            <db:title>See Also</db:title>
-         </db:info>
+         <db:title>See Also</db:title>
          <db:simplelist type="vert">
             <db:member><db:code><db:link xlink:href="qpalette.html">QPalette</db:link></db:code></db:member>
             <db:member><db:code><db:link xlink:href="qbrush.html">QBrush</db:link></db:code></db:member>
@@ -1285,9 +1281,7 @@
    <db:section>
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="NameFormat-enum">
-         <db:info>
-            <db:title>enum QColor::​NameFormat </db:title>
-         </db:info>
+         <db:title>enum QColor::​NameFormat </db:title>
          <db:para>How to format the output of the <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code> function</db:para>
          <db:informaltable>
             <db:tbody>
@@ -1311,9 +1305,7 @@
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="Spec-enum">
-         <db:info>
-            <db:title>enum QColor::​Spec </db:title>
-         </db:info>
+         <db:title>enum QColor::​Spec </db:title>
          <db:para>The type of color specified, either RGB, HSV, CMYK or HSL.</db:para>
          <db:informaltable>
             <db:tbody>
@@ -1349,133 +1341,97 @@
    <db:section>
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QColor">
-         <db:info>
-            <db:title>QColor::​QColor()</db:title>
-         </db:info>
+         <db:title>QColor::​QColor()</db:title>
          <db:para>Constructs an invalid color with the RGB value (0, 0, 0). An invalid color is a color that is not properly set up for the underlying window system.</db:para>
          <db:para>The alpha value of an invalid color is unspecified.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QColor-2">
-         <db:info>
-            <db:title>QColor::​QColor(int r, int g, int b, int a = 255)</db:title>
-         </db:info>
+         <db:title>QColor::​QColor(int r, int g, int b, int a = 255)</db:title>
          <db:para>Constructs a color with the RGB value <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>, and the alpha-channel (transparency) value of <db:emphasis>a</db:emphasis>.</db:para>
          <db:para>The color is left invalid if any of the arguments are invalid.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QColor-3">
-         <db:info>
-            <db:title>QColor::​QColor(QRgb color)</db:title>
-         </db:info>
+         <db:title>QColor::​QColor(QRgb color)</db:title>
          <db:para>Constructs a color with the value <db:emphasis>color</db:emphasis>. The alpha component is ignored and set to solid.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QColor-4">
-         <db:info>
-            <db:title>QColor::​QColor(const QString &amp; name)</db:title>
-         </db:info>
+         <db:title>QColor::​QColor(const QString &amp; name)</db:title>
          <db:para>Constructs a named color in the same way as <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code> using the given <db:emphasis>name</db:emphasis>.</db:para>
          <db:para>The color is left invalid if the <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QColor-5">
-         <db:info>
-            <db:title>QColor::​QColor(const char * name)</db:title>
-         </db:info>
+         <db:title>QColor::​QColor(const char * name)</db:title>
          <db:para>Constructs a named color in the same way as <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code> using the given <db:emphasis>name</db:emphasis>.</db:para>
          <db:para>The color is left invalid if the <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QColor-6">
-         <db:info>
-            <db:title>QColor::​QColor(const QColor &amp; color)</db:title>
-         </db:info>
+         <db:title>QColor::​QColor(const QColor &amp; color)</db:title>
          <db:para>Constructs a color that is a copy of <db:emphasis>color</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QColor-8">
-         <db:info>
-            <db:title>QColor::​QColor(Qt::GlobalColor color)</db:title>
-         </db:info>
+         <db:title>QColor::​QColor(Qt::GlobalColor color)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Constructs a new color with a color value of <db:emphasis>color</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code> and <db:link xlink:href="qcolor.html#predefined-colors">Predefined Colors</db:link>.</db:para>
       </db:section>
       <db:section xml:id="alpha">
-         <db:info>
-            <db:title>int QColor::​alpha() const</db:title>
-         </db:info>
+         <db:title>int QColor::​alpha() const</db:title>
          <db:para>Returns the alpha color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setAlpha">setAlpha</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>.</db:para>
       </db:section>
       <db:section xml:id="alphaF">
-         <db:info>
-            <db:title>qreal QColor::​alphaF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​alphaF() const</db:title>
          <db:para>Returns the alpha color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setAlphaF">setAlphaF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>.</db:para>
       </db:section>
       <db:section xml:id="black">
-         <db:info>
-            <db:title>int QColor::​black() const</db:title>
-         </db:info>
+         <db:title>int QColor::​black() const</db:title>
          <db:para>Returns the black color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#blackF">blackF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="blackF">
-         <db:info>
-            <db:title>qreal QColor::​blackF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​blackF() const</db:title>
          <db:para>Returns the black color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#black">black</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="blue">
-         <db:info>
-            <db:title>int QColor::​blue() const</db:title>
-         </db:info>
+         <db:title>int QColor::​blue() const</db:title>
          <db:para>Returns the blue color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setBlue">setBlue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="blueF">
-         <db:info>
-            <db:title>qreal QColor::​blueF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​blueF() const</db:title>
          <db:para>Returns the blue color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setBlueF">setBlueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="colorNames">
-         <db:info>
-            <db:title>[static] QStringList QColor::​colorNames()</db:title>
-         </db:info>
+         <db:title>[static] QStringList QColor::​colorNames()</db:title>
          <db:para>Returns a <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> containing the color names Qt knows about.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:link xlink:href="qcolor.html#predefined-colors">Predefined Colors</db:link>.</db:para>
       </db:section>
       <db:section xml:id="convertTo">
-         <db:info>
-            <db:title>QColor QColor::​convertTo(Spec colorSpec) const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​convertTo(Spec colorSpec) const</db:title>
          <db:para>Creates a copy of <db:emphasis>this</db:emphasis> color in the format specified by <db:emphasis>colorSpec</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#spec">spec</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="cyan">
-         <db:info>
-            <db:title>int QColor::​cyan() const</db:title>
-         </db:info>
+         <db:title>int QColor::​cyan() const</db:title>
          <db:para>Returns the cyan color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="cyanF">
-         <db:info>
-            <db:title>qreal QColor::​cyanF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​cyanF() const</db:title>
          <db:para>Returns the cyan color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="darker">
-         <db:info>
-            <db:title>QColor QColor::​darker(int factor = 200) const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​darker(int factor = 200) const</db:title>
          <db:para>Returns a darker (or lighter) color, but does not change this object.</db:para>
          <db:para>If the <db:emphasis>factor</db:emphasis> is greater than 100, this functions returns a darker color. Setting <db:emphasis>factor</db:emphasis> to 300 returns a color that has one-third the brightness. If the <db:emphasis>factor</db:emphasis> is less than 100, the return color is lighter, but we recommend using the <db:code><db:link xlink:href="qcolor.html#lighter">lighter</db:link>()</db:code> function for this purpose. If the <db:emphasis>factor</db:emphasis> is 0 or negative, the return value is unspecified.</db:para>
          <db:para>The function converts the current RGB color to HSV, divides the value (V) component by <db:emphasis>factor</db:emphasis> and converts the color back to RGB.</db:para>
@@ -1483,35 +1439,27 @@
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#lighter">lighter</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fromCmyk">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromCmyk(int c, int m, int y, int k, int a = 255)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromCmyk(int c, int m, int y, int k, int a = 255)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given CMYK color values: <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromCmykF">fromCmykF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="fromCmykF">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given CMYK color values: <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="fromHsl">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromHsl(int h, int s, int l, int a = 255)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromHsl(int h, int s, int l, int a = 255)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>l</db:emphasis> (lightness), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>The value of <db:emphasis>s</db:emphasis>, <db:emphasis>l</db:emphasis>, and <db:emphasis>a</db:emphasis> must all be in the range 0-255; the value of <db:emphasis>h</db:emphasis> must be in the range 0-359.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromHslF">fromHslF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fromHslF">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromHslF(qreal h, qreal s, qreal l, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromHslF(qreal h, qreal s, qreal l, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>l</db:emphasis> (lightness), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
@@ -1519,229 +1467,171 @@
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fromHsv">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromHsv(int h, int s, int v, int a = 255)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromHsv(int h, int s, int v, int a = 255)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>v</db:emphasis> (value), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>The value of <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis> must all be in the range 0-255; the value of <db:emphasis>h</db:emphasis> must be in the range 0-359.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromHsvF">fromHsvF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="fromHsvF">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromHsvF(qreal h, qreal s, qreal v, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromHsvF(qreal h, qreal s, qreal v, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>v</db:emphasis> (value), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="fromRgb">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromRgb(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromRgb(QRgb rgb)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:para>The alpha component of <db:emphasis>rgb</db:emphasis> is ignored (i.e. it is automatically set to 255), use the <db:code><db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()</db:code> function to include the alpha-channel specified by the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromRgbF">fromRgbF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fromRgb-2">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromRgb(int r, int g, int b, int a = 255)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromRgb(int r, int g, int b, int a = 255)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the RGB color values, <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#fromRgbF">fromRgbF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fromRgbF">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromRgbF(qreal r, qreal g, qreal b, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromRgbF(qreal r, qreal g, qreal b, qreal a = 1.0)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the RGB color values, <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fromRgba">
-         <db:info>
-            <db:title>[static] QColor QColor::​fromRgba(QRgb rgba)</db:title>
-         </db:info>
+         <db:title>[static] QColor QColor::​fromRgba(QRgb rgba)</db:title>
          <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value <db:emphasis>rgba</db:emphasis>.</db:para>
          <db:para>Unlike the <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code> function, the alpha-channel specified by the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value is included.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="getCmyk">
-         <db:info>
-            <db:title>void QColor::​getCmyk(int * c, int * m, int * y, int * k, int * a = 0)</db:title>
-         </db:info>
+         <db:title>void QColor::​getCmyk(int * c, int * m, int * y, int * k, int * a = 0)</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>c</db:emphasis>, <db:emphasis>m</db:emphasis>, <db:emphasis>y</db:emphasis>, <db:emphasis>k</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color's CMYK value.</db:para>
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#magenta">magenta</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#yellow">yellow</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#black">black</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()</db:code> and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="getCmykF">
-         <db:info>
-            <db:title>void QColor::​getCmykF(qreal * c, qreal * m, qreal * y, qreal * k, qreal * a = 0)</db:title>
-         </db:info>
+         <db:title>void QColor::​getCmykF(qreal * c, qreal * m, qreal * y, qreal * k, qreal * a = 0)</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>c</db:emphasis>, <db:emphasis>m</db:emphasis>, <db:emphasis>y</db:emphasis>, <db:emphasis>k</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color's CMYK value.</db:para>
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blackF">blackF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()</db:code> and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="getHsl">
-         <db:info>
-            <db:title>void QColor::​getHsl(int * h, int * s, int * l, int * a = 0) const</db:title>
-         </db:info>
+         <db:title>void QColor::​getHsl(int * h, int * s, int * l, int * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>l</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, lightness, and alpha-channel (transparency) components of the color's HSL value.</db:para>
          <db:para>These components can be retrieved individually using the hueHsl(), saturationHsl(), <db:code><db:link xlink:href="qcolor.html#lightness">lightness</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="getHslF">
-         <db:info>
-            <db:title>void QColor::​getHslF(qreal * h, qreal * s, qreal * l, qreal * a = 0) const</db:title>
-         </db:info>
+         <db:title>void QColor::​getHslF(qreal * h, qreal * s, qreal * l, qreal * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>l</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, lightness, and alpha-channel (transparency) components of the color's HSL value.</db:para>
          <db:para>These components can be retrieved individually using the hueHslF(), saturationHslF(), <db:code><db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="getHsv">
-         <db:info>
-            <db:title>void QColor::​getHsv(int * h, int * s, int * v, int * a = 0) const</db:title>
-         </db:info>
+         <db:title>void QColor::​getHsv(int * h, int * s, int * v, int * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, value, and alpha-channel (transparency) components of the color's HSV value.</db:para>
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code> and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="getHsvF">
-         <db:info>
-            <db:title>void QColor::​getHsvF(qreal * h, qreal * s, qreal * v, qreal * a = 0) const</db:title>
-         </db:info>
+         <db:title>void QColor::​getHsvF(qreal * h, qreal * s, qreal * v, qreal * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, value, and alpha-channel (transparency) components of the color's HSV value.</db:para>
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#valueF">valueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code> and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="getRgb">
-         <db:info>
-            <db:title>void QColor::​getRgb(int * r, int * g, int * b, int * a = 0) const</db:title>
-         </db:info>
+         <db:title>void QColor::​getRgb(int * r, int * g, int * b, int * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the red, green, blue, and alpha-channel (transparency) components of the color's RGB value.</db:para>
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="getRgbF">
-         <db:info>
-            <db:title>void QColor::​getRgbF(qreal * r, qreal * g, qreal * b, qreal * a = 0) const</db:title>
-         </db:info>
+         <db:title>void QColor::​getRgbF(qreal * r, qreal * g, qreal * b, qreal * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the red, green, blue, and alpha-channel (transparency) components of the color's RGB value.</db:para>
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="green">
-         <db:info>
-            <db:title>int QColor::​green() const</db:title>
-         </db:info>
+         <db:title>int QColor::​green() const</db:title>
          <db:para>Returns the green color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setGreen">setGreen</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="greenF">
-         <db:info>
-            <db:title>qreal QColor::​greenF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​greenF() const</db:title>
          <db:para>Returns the green color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setGreenF">setGreenF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="hslHue">
-         <db:info>
-            <db:title>int QColor::​hslHue() const</db:title>
-         </db:info>
+         <db:title>int QColor::​hslHue() const</db:title>
          <db:para>Returns the hue color component of this color.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="hslHueF">
-         <db:info>
-            <db:title>qreal QColor::​hslHueF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​hslHueF() const</db:title>
          <db:para>Returns the hue color component of this color.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="hslSaturation">
-         <db:info>
-            <db:title>int QColor::​hslSaturation() const</db:title>
-         </db:info>
+         <db:title>int QColor::​hslSaturation() const</db:title>
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="hslSaturationF">
-         <db:info>
-            <db:title>qreal QColor::​hslSaturationF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​hslSaturationF() const</db:title>
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="hsvHue">
-         <db:info>
-            <db:title>int QColor::​hsvHue() const</db:title>
-         </db:info>
+         <db:title>int QColor::​hsvHue() const</db:title>
          <db:para>Returns the hue color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="hsvHueF">
-         <db:info>
-            <db:title>qreal QColor::​hsvHueF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​hsvHueF() const</db:title>
          <db:para>Returns the hue color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="hsvSaturation">
-         <db:info>
-            <db:title>int QColor::​hsvSaturation() const</db:title>
-         </db:info>
+         <db:title>int QColor::​hsvSaturation() const</db:title>
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="hsvSaturationF">
-         <db:info>
-            <db:title>qreal QColor::​hsvSaturationF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​hsvSaturationF() const</db:title>
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="hue">
-         <db:info>
-            <db:title>int QColor::​hue() const</db:title>
-         </db:info>
+         <db:title>int QColor::​hue() const</db:title>
          <db:para>Returns the hue color component of this color.</db:para>
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hsvHue">hsvHue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="hueF">
-         <db:info>
-            <db:title>qreal QColor::​hueF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​hueF() const</db:title>
          <db:para>Returns the hue color component of this color.</db:para>
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hsvHueF">hsvHueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="isValid">
-         <db:info>
-            <db:title>bool QColor::​isValid() const</db:title>
-         </db:info>
+         <db:title>bool QColor::​isValid() const</db:title>
          <db:para>Returns <db:code>true</db:code> if the color is valid; otherwise returns <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section xml:id="isValidColor">
-         <db:info>
-            <db:title>[static] bool QColor::​isValidColor(const QString &amp; name)</db:title>
-         </db:info>
+         <db:title>[static] bool QColor::​isValidColor(const QString &amp; name)</db:title>
          <db:para>Returns <db:code>true</db:code> if the <db:emphasis>name</db:emphasis> is a valid color name and can be used to construct a valid <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> object, otherwise returns false.</db:para>
          <db:para>It uses the same algorithm used in <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>.</db:para>
          <db:para>This function was introduced in Qt 4.7.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="lighter">
-         <db:info>
-            <db:title>QColor QColor::​lighter(int factor = 150) const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​lighter(int factor = 150) const</db:title>
          <db:para>Returns a lighter (or darker) color, but does not change this object.</db:para>
          <db:para>If the <db:emphasis>factor</db:emphasis> is greater than 100, this functions returns a lighter color. Setting <db:emphasis>factor</db:emphasis> to 150 returns a color that is 50% brighter. If the <db:emphasis>factor</db:emphasis> is less than 100, the return color is darker, but we recommend using the <db:code><db:link xlink:href="qcolor.html#darker">darker</db:link>()</db:code> function for this purpose. If the <db:emphasis>factor</db:emphasis> is 0 or negative, the return value is unspecified.</db:para>
          <db:para>The function converts the current RGB color to HSV, multiplies the value (V) component by <db:emphasis>factor</db:emphasis> and converts the color back to RGB.</db:para>
@@ -1749,192 +1639,142 @@
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#darker">darker</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="lightness">
-         <db:info>
-            <db:title>int QColor::​lightness() const</db:title>
-         </db:info>
+         <db:title>int QColor::​lightness() const</db:title>
          <db:para>Returns the lightness color component of this color.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="lightnessF">
-         <db:info>
-            <db:title>qreal QColor::​lightnessF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​lightnessF() const</db:title>
          <db:para>Returns the lightness color component of this color.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="magenta">
-         <db:info>
-            <db:title>int QColor::​magenta() const</db:title>
-         </db:info>
+         <db:title>int QColor::​magenta() const</db:title>
          <db:para>Returns the magenta color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="magentaF">
-         <db:info>
-            <db:title>qreal QColor::​magentaF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​magentaF() const</db:title>
          <db:para>Returns the magenta color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#magenta">magenta</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="name">
-         <db:info>
-            <db:title>QString QColor::​name() const</db:title>
-         </db:info>
+         <db:title>QString QColor::​name() const</db:title>
          <db:para>Returns the name of the color in the format "#RRGGBB"; i.e. a "#" character followed by three two-digit hexadecimal numbers.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="name-2">
-         <db:info>
-            <db:title>QString QColor::​name(NameFormat format) const</db:title>
-         </db:info>
+         <db:title>QString QColor::​name(NameFormat format) const</db:title>
          <db:para>Returns the name of the color in the specified <db:emphasis>format</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code> and <db:link xlink:href="qcolor.html#NameFormat-enum">NameFormat</db:link>.</db:para>
       </db:section>
       <db:section xml:id="red">
-         <db:info>
-            <db:title>int QColor::​red() const</db:title>
-         </db:info>
+         <db:title>int QColor::​red() const</db:title>
          <db:para>Returns the red color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setRed">setRed</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="redF">
-         <db:info>
-            <db:title>qreal QColor::​redF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​redF() const</db:title>
          <db:para>Returns the red color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setRedF">setRedF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="rgb">
-         <db:info>
-            <db:title>QRgb QColor::​rgb() const</db:title>
-         </db:info>
+         <db:title>QRgb QColor::​rgb() const</db:title>
          <db:para>Returns the RGB value of the color. The alpha value is opaque.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#rgba">rgba</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="rgba">
-         <db:info>
-            <db:title>QRgb QColor::​rgba() const</db:title>
-         </db:info>
+         <db:title>QRgb QColor::​rgba() const</db:title>
          <db:para>Returns the RGB value of the color, including its alpha.</db:para>
          <db:para>For an invalid color, the alpha value of the returned color is unspecified.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="saturation">
-         <db:info>
-            <db:title>int QColor::​saturation() const</db:title>
-         </db:info>
+         <db:title>int QColor::​saturation() const</db:title>
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hsvSaturation">hsvSaturation</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="saturationF">
-         <db:info>
-            <db:title>qreal QColor::​saturationF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​saturationF() const</db:title>
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#hsvSaturationF">hsvSaturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setAlpha">
-         <db:info>
-            <db:title>void QColor::​setAlpha(int alpha)</db:title>
-         </db:info>
+         <db:title>void QColor::​setAlpha(int alpha)</db:title>
          <db:para>Sets the alpha of this color to <db:emphasis>alpha</db:emphasis>. Integer alpha is specified in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setAlphaF">
-         <db:info>
-            <db:title>void QColor::​setAlphaF(qreal alpha)</db:title>
-         </db:info>
+         <db:title>void QColor::​setAlphaF(qreal alpha)</db:title>
          <db:para>Sets the alpha of this color to <db:emphasis>alpha</db:emphasis>. qreal alpha is specified in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setBlue">
-         <db:info>
-            <db:title>void QColor::​setBlue(int blue)</db:title>
-         </db:info>
+         <db:title>void QColor::​setBlue(int blue)</db:title>
          <db:para>Sets the blue color component of this color to <db:emphasis>blue</db:emphasis>. Integer components are specified in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setBlueF">
-         <db:info>
-            <db:title>void QColor::​setBlueF(qreal blue)</db:title>
-         </db:info>
+         <db:title>void QColor::​setBlueF(qreal blue)</db:title>
          <db:para>Sets the blue color component of this color to <db:emphasis>blue</db:emphasis>. Float components are specified in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setCmyk">
-         <db:info>
-            <db:title>void QColor::​setCmyk(int c, int m, int y, int k, int a = 255)</db:title>
-         </db:info>
+         <db:title>void QColor::​setCmyk(int c, int m, int y, int k, int a = 255)</db:title>
          <db:para>Sets the color to CMYK values, <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setCmykF">
-         <db:info>
-            <db:title>void QColor::​setCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>void QColor::​setCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sets the color to CMYK values, <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setGreen">
-         <db:info>
-            <db:title>void QColor::​setGreen(int green)</db:title>
-         </db:info>
+         <db:title>void QColor::​setGreen(int green)</db:title>
          <db:para>Sets the green color component of this color to <db:emphasis>green</db:emphasis>. Integer components are specified in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setGreenF">
-         <db:info>
-            <db:title>void QColor::​setGreenF(qreal green)</db:title>
-         </db:info>
+         <db:title>void QColor::​setGreenF(qreal green)</db:title>
          <db:para>Sets the green color component of this color to <db:emphasis>green</db:emphasis>. Float components are specified in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setHsl">
-         <db:info>
-            <db:title>void QColor::​setHsl(int h, int s, int l, int a = 255)</db:title>
-         </db:info>
+         <db:title>void QColor::​setHsl(int h, int s, int l, int a = 255)</db:title>
          <db:para>Sets a HSL color value; <db:emphasis>h</db:emphasis> is the hue, <db:emphasis>s</db:emphasis> is the saturation, <db:emphasis>l</db:emphasis> is the lightness and <db:emphasis>a</db:emphasis> is the alpha component of the HSL color.</db:para>
          <db:para>The saturation, value and alpha-channel values must be in the range 0-255, and the hue value must be greater than -1.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#setHslF">setHslF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setHslF">
-         <db:info>
-            <db:title>void QColor::​setHslF(qreal h, qreal s, qreal l, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>void QColor::​setHslF(qreal h, qreal s, qreal l, qreal a = 1.0)</db:title>
          <db:para>Sets a HSL color lightness; <db:emphasis>h</db:emphasis> is the hue, <db:emphasis>s</db:emphasis> is the saturation, <db:emphasis>l</db:emphasis> is the lightness and <db:emphasis>a</db:emphasis> is the alpha component of the HSL color.</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setHsv">
-         <db:info>
-            <db:title>void QColor::​setHsv(int h, int s, int v, int a = 255)</db:title>
-         </db:info>
+         <db:title>void QColor::​setHsv(int h, int s, int v, int a = 255)</db:title>
          <db:para>Sets a HSV color value; <db:emphasis>h</db:emphasis> is the hue, <db:emphasis>s</db:emphasis> is the saturation, <db:emphasis>v</db:emphasis> is the value and <db:emphasis>a</db:emphasis> is the alpha component of the HSV color.</db:para>
          <db:para>The saturation, value and alpha-channel values must be in the range 0-255, and the hue value must be greater than -1.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#setHsvF">setHsvF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setHsvF">
-         <db:info>
-            <db:title>void QColor::​setHsvF(qreal h, qreal s, qreal v, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>void QColor::​setHsvF(qreal h, qreal s, qreal v, qreal a = 1.0)</db:title>
          <db:para>Sets a HSV color value; <db:emphasis>h</db:emphasis> is the hue, <db:emphasis>s</db:emphasis> is the saturation, <db:emphasis>v</db:emphasis> is the value and <db:emphasis>a</db:emphasis> is the alpha component of the HSV color.</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setNamedColor">
-         <db:info>
-            <db:title>void QColor::​setNamedColor(const QString &amp; name)</db:title>
-         </db:info>
+         <db:title>void QColor::​setNamedColor(const QString &amp; name)</db:title>
          <db:para>Sets the RGB value of this <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> to <db:emphasis>name</db:emphasis>, which may be in one of these formats:</db:para>
          <db:itemizedlist>
             <db:listitem>
@@ -1963,238 +1803,172 @@
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#QColor">QColor</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setRed">
-         <db:info>
-            <db:title>void QColor::​setRed(int red)</db:title>
-         </db:info>
+         <db:title>void QColor::​setRed(int red)</db:title>
          <db:para>Sets the red color component of this color to <db:emphasis>red</db:emphasis>. Integer components are specified in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setRedF">
-         <db:info>
-            <db:title>void QColor::​setRedF(qreal red)</db:title>
-         </db:info>
+         <db:title>void QColor::​setRedF(qreal red)</db:title>
          <db:para>Sets the red color component of this color to <db:emphasis>red</db:emphasis>. Float components are specified in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setRgb">
-         <db:info>
-            <db:title>void QColor::​setRgb(int r, int g, int b, int a = 255)</db:title>
-         </db:info>
+         <db:title>void QColor::​setRgb(int r, int g, int b, int a = 255)</db:title>
          <db:para>Sets the RGB value to <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis> and the alpha value to <db:emphasis>a</db:emphasis>.</db:para>
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setRgb-2">
-         <db:info>
-            <db:title>void QColor::​setRgb(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>void QColor::​setRgb(QRgb rgb)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sets the RGB value to <db:emphasis>rgb</db:emphasis>. The alpha value is set to opaque.</db:para>
       </db:section>
       <db:section xml:id="setRgbF">
-         <db:info>
-            <db:title>void QColor::​setRgbF(qreal r, qreal g, qreal b, qreal a = 1.0)</db:title>
-         </db:info>
+         <db:title>void QColor::​setRgbF(qreal r, qreal g, qreal b, qreal a = 1.0)</db:title>
          <db:para>Sets the color channels of this color to <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue) and <db:emphasis>a</db:emphasis> (alpha, transparency).</db:para>
          <db:para>All values must be in the range 0.0-1.0.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="setRgba">
-         <db:info>
-            <db:title>void QColor::​setRgba(QRgb rgba)</db:title>
-         </db:info>
+         <db:title>void QColor::​setRgba(QRgb rgba)</db:title>
          <db:para>Sets the RGB value to <db:emphasis>rgba</db:emphasis>, including its alpha.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#rgba">rgba</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="spec">
-         <db:info>
-            <db:title>Spec QColor::​spec() const</db:title>
-         </db:info>
+         <db:title>Spec QColor::​spec() const</db:title>
          <db:para>Returns how the color was specified.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:link xlink:href="qcolor.html#Spec-enum">Spec</db:link> and <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="toCmyk">
-         <db:info>
-            <db:title>QColor QColor::​toCmyk() const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​toCmyk() const</db:title>
          <db:para>Creates and returns a CMYK <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="toHsl">
-         <db:info>
-            <db:title>QColor QColor::​toHsl() const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​toHsl() const</db:title>
          <db:para>Creates and returns an HSL <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="toHsv">
-         <db:info>
-            <db:title>QColor QColor::​toHsv() const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​toHsv() const</db:title>
          <db:para>Creates and returns an HSV <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="toRgb">
-         <db:info>
-            <db:title>QColor QColor::​toRgb() const</db:title>
-         </db:info>
+         <db:title>QColor QColor::​toRgb() const</db:title>
          <db:para>Create and returns an RGB <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="value">
-         <db:info>
-            <db:title>int QColor::​value() const</db:title>
-         </db:info>
+         <db:title>int QColor::​value() const</db:title>
          <db:para>Returns the value color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#valueF">valueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="valueF">
-         <db:info>
-            <db:title>qreal QColor::​valueF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​valueF() const</db:title>
          <db:para>Returns the value color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="yellow">
-         <db:info>
-            <db:title>int QColor::​yellow() const</db:title>
-         </db:info>
+         <db:title>int QColor::​yellow() const</db:title>
          <db:para>Returns the yellow color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="yellowF">
-         <db:info>
-            <db:title>qreal QColor::​yellowF() const</db:title>
-         </db:info>
+         <db:title>qreal QColor::​yellowF() const</db:title>
          <db:para>Returns the yellow color component of this color.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#yellow">yellow</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>, and <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>.</db:para>
       </db:section>
       <db:section xml:id="operator-QVariant">
-         <db:info>
-            <db:title>QColor::​operator QVariant() const</db:title>
-         </db:info>
+         <db:title>QColor::​operator QVariant() const</db:title>
          <db:para>Returns the color as a <db:code><db:link xlink:href="qtcore/qvariant.html">QVariant</db:link></db:code></db:para>
       </db:section>
       <db:section xml:id="operator-not-eq">
-         <db:info>
-            <db:title>bool QColor::​operator!=(const QColor &amp; color) const</db:title>
-         </db:info>
+         <db:title>bool QColor::​operator!=(const QColor &amp; color) const</db:title>
          <db:para>Returns <db:code>true</db:code> if this color has a different RGB and alpha values from <db:emphasis>color</db:emphasis>; otherwise returns <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-eq">
-         <db:info>
-            <db:title>QColor &amp; QColor::​operator=(const QColor &amp; color)</db:title>
-         </db:info>
+         <db:title>QColor &amp; QColor::​operator=(const QColor &amp; color)</db:title>
          <db:para>Assigns a copy of <db:emphasis>color</db:emphasis> to this color, and returns a reference to it.</db:para>
       </db:section>
       <db:section xml:id="operator-eq-2">
-         <db:info>
-            <db:title>QColor &amp; QColor::​operator=(Qt::GlobalColor color)</db:title>
-         </db:info>
+         <db:title>QColor &amp; QColor::​operator=(Qt::GlobalColor color)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Assigns a copy of <db:emphasis>color</db:emphasis> and returns a reference to this color.</db:para>
       </db:section>
       <db:section xml:id="operator-eq-eq">
-         <db:info>
-            <db:title>bool QColor::​operator==(const QColor &amp; color) const</db:title>
-         </db:info>
+         <db:title>bool QColor::​operator==(const QColor &amp; color) const</db:title>
          <db:para>Returns <db:code>true</db:code> if this color has the same RGB and alpha values as <db:emphasis>color</db:emphasis>; otherwise returns <db:code>false</db:code>.</db:para>
       </db:section>
    </db:section>
    <db:section>
       <db:title>Related Non-Members</db:title>
       <db:section xml:id="QRgb-typedef">
-         <db:info>
-            <db:title>typedef QRgb </db:title>
-         </db:info>
+         <db:title>typedef QRgb </db:title>
          <db:para>An ARGB quadruplet on the format #AARRGGBB, equivalent to an unsigned int.</db:para>
          <db:para>The type also holds a value for the alpha-channel. The default alpha channel is <db:code>ff</db:code>, i.e opaque. For more information, see the <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link> section.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#rgb">QColor::rgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#rgba">QColor::rgba</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qAlpha">
-         <db:info>
-            <db:title>int qAlpha(QRgb rgba)</db:title>
-         </db:info>
+         <db:title>int qAlpha(QRgb rgba)</db:title>
          <db:para>Returns the alpha component of the ARGB quadruplet <db:emphasis>rgba</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">QColor::alpha</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qBlue">
-         <db:info>
-            <db:title>int qBlue(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>int qBlue(QRgb rgb)</db:title>
          <db:para>Returns the blue component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#blue">QColor::blue</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qGray">
-         <db:info>
-            <db:title>int qGray(int r, int g, int b)</db:title>
-         </db:info>
+         <db:title>int qGray(int r, int g, int b)</db:title>
          <db:para>Returns a gray value (0 to 255) from the (<db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>) triplet.</db:para>
          <db:para>The gray value is calculated using the formula (<db:emphasis>r</db:emphasis> * 11 + <db:emphasis>g</db:emphasis> * 16 + <db:emphasis>b</db:emphasis> * 5)/32.</db:para>
       </db:section>
       <db:section xml:id="qGray-2">
-         <db:info>
-            <db:title>int qGray(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>int qGray(QRgb rgb)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a gray value (0 to 255) from the given ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:para>The gray value is calculated using the formula (R * 11 + G * 16 + B * 5)/32; the alpha-channel is ignored.</db:para>
       </db:section>
       <db:section xml:id="qGreen">
-         <db:info>
-            <db:title>int qGreen(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>int qGreen(QRgb rgb)</db:title>
          <db:para>Returns the green component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#green">QColor::green</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qPremultiply">
-         <db:info>
-            <db:title>QRgb qPremultiply(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>QRgb qPremultiply(QRgb rgb)</db:title>
          <db:para>Converts an unpremultiplied ARGB quadruplet <db:emphasis>rgb</db:emphasis> into a premultiplied ARGB quadruplet.</db:para>
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qUnpremultiply">qUnpremultiply</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qRed">
-         <db:info>
-            <db:title>int qRed(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>int qRed(QRgb rgb)</db:title>
          <db:para>Returns the red component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#red">QColor::red</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qRgb">
-         <db:info>
-            <db:title>QRgb qRgb(int r, int g, int b)</db:title>
-         </db:info>
+         <db:title>QRgb qRgb(int r, int g, int b)</db:title>
          <db:para>Returns the ARGB quadruplet (255, <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>).</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qRgba">qRgba</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#qRed">qRed</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qRgba">
-         <db:info>
-            <db:title>QRgb qRgba(int r, int g, int b, int a)</db:title>
-         </db:info>
+         <db:title>QRgb qRgba(int r, int g, int b, int a)</db:title>
          <db:para>Returns the ARGB quadruplet (<db:emphasis>a</db:emphasis>, <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>).</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#qRed">qRed</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()</db:code>, and <db:code><db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="qUnpremultiply">
-         <db:info>
-            <db:title>QRgb qUnpremultiply(QRgb rgb)</db:title>
-         </db:info>
+         <db:title>QRgb qUnpremultiply(QRgb rgb)</db:title>
          <db:para>Converts a premultiplied ARGB quadruplet <db:emphasis>rgb</db:emphasis> into an unpremultiplied ARGB quadruplet.</db:para>
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:code><db:link xlink:href="qcolor.html#qPremultiply">qPremultiply</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-lt-lt-41">
-         <db:info>
-            <db:title>QDataStream &amp; operator&lt;&lt;(QDataStream &amp; stream, const QColor &amp; color)</db:title>
-         </db:info>
+         <db:title>QDataStream &amp; operator&lt;&lt;(QDataStream &amp; stream, const QColor &amp; color)</db:title>
          <db:para>Writes the <db:emphasis>color</db:emphasis> to the <db:emphasis>stream</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:link xlink:href="qtcore/datastreamformat.html">Serializing Qt Data Types</db:link>.</db:para>
       </db:section>
       <db:section xml:id="operator-gt-gt-17">
-         <db:info>
-            <db:title>QDataStream &amp; operator&gt;&gt;(QDataStream &amp; stream, QColor &amp; color)</db:title>
-         </db:info>
+         <db:title>QDataStream &amp; operator&gt;&gt;(QDataStream &amp; stream, QColor &amp; color)</db:title>
          <db:para>Reads the <db:emphasis>color</db:emphasis> from the <db:emphasis>stream</db:emphasis>.</db:para>
          <db:para><db:emphasis role="bold">See also </db:emphasis><db:link xlink:href="qtcore/datastreamformat.html">Serializing Qt Data Types</db:link>.</db:para>
       </db:section>
@@ -2204,15 +1978,11 @@
       <db:section>
          <db:title>Member Function Documentation</db:title>
          <db:section xml:id="dark">
-            <db:info>
-               <db:title>QColor QColor::​dark(int factor = 200) const</db:title>
-            </db:info>
+            <db:title>QColor QColor::​dark(int factor = 200) const</db:title>
             <db:para>Use darker(<db:emphasis>factor</db:emphasis>) instead.</db:para>
          </db:section>
          <db:section xml:id="light">
-            <db:info>
-               <db:title>QColor QColor::​light(int factor = 150) const</db:title>
-            </db:info>
+            <db:title>QColor QColor::​light(int factor = 150) const</db:title>
             <db:para>Use lighter(<db:emphasis>factor</db:emphasis>) instead.</db:para>
          </db:section>
       </db:section>

@@ -189,11 +189,9 @@
         <xsl:value-of select="./@lang"/>
       </xsl:attribute>
 
-      <db:info>
-        <db:title>
-          <xsl:value-of select="$title"/>
-        </db:title>
-      </db:info>
+      <db:title>
+        <xsl:value-of select="$title"/>
+      </db:title>
 
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
       <xsl:if test="$hasTypes">
@@ -283,13 +281,12 @@
     <xsl:variable name="content">
       <xsl:apply-templates mode="content_title_hidden" select="."/>
     </xsl:variable>
-    <db:info>
-      <db:title>
-        <xsl:value-of
-          select="replace(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '), '  ', ' ')"
-        />
-      </db:title>
-    </db:info>
+    <db:title>
+      <!-- Normalise spaces and line feeds in titles. -->
+      <xsl:value-of
+        select="replace(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '), '  ', ' ')"
+      />
+    </db:title>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="text()">
     <xsl:value-of select="."/>
@@ -993,9 +990,7 @@
 
         <xsl:if test="$hasSeeAlso">
           <db:section>
-            <db:info>
-              <db:title>See Also</db:title>
-            </db:info>
+            <db:title>See Also</db:title>
             <db:simplelist>
               <xsl:for-each select="$seeAlso/html:a">
                 <db:member>
