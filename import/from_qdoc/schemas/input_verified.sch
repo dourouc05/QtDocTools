@@ -37,32 +37,50 @@
                 resolve-uri() allows to force URI resolution with respect to the XML document base, 
                 not something else. 
                 
+                XPath not precise enough, can be applied on many more things than first expected... 
+                (Inherited properties and co.) Hence the $skip variable. 
+                
                 Recognised files: obsolete. 
             -->
+            <sch:let name="skip" value="contains(., '#') or contains(., '/')"/>
             <sch:let name="fileNameHtml" value="."/>
             <sch:let name="fileName" value="replace($fileNameHtml, '.html', '')"/>
             <sch:let name="fileNameXml" value="concat($fileName, '.xml')"/>
             <sch:let name="pathXml" value="resolve-uri($fileNameXml, base-uri())"/>
             <sch:assert
                 test="
-                    if (ends-with($fileName, '-members')) then
+                    if ($skip or ends-with($fileName, '-members')) then
                         true()
                     else
                         ends-with($fileName, '-obsolete')"
-                >Unrecognised other document type: <sch:value-of select="$fileName"/>.</sch:assert>
+                >Unrecognised other document type: '<sch:value-of select="$fileName"
+                />'.</sch:assert>
             <sch:assert
                 test="
-                    if (ends-with($fileName, '-members')) then
+                    if ($skip or ends-with($fileName, '-members')) then
                         true()
                     else
                         doc-available($pathXml)"
-                >Linked related document unavailable: <sch:value-of select="$fileNameXml"
-                />.</sch:assert>
+                >Linked related document unavailable: '<sch:value-of select="$fileNameXml"
+                />'.</sch:assert>
         </sch:rule>
     </sch:pattern>
 
     <sch:pattern>
-        <sch:title>About enumerations (enum)</sch:title>
+        <sch:title>About enumerations (prop)</sch:title>
+
+        <sch:rule context="//html:div[@class = 'prop']/html:h3">
+            <sch:assert test="ends-with(@id, '-prop')">A property has an xml:id that does not end
+                with '-prop'.</sch:assert>
+            <sch:assert test="./html:a[1]/@name = @id">Mismatch between the &lt;h3&gt; title's id
+                and the HTML &lt;a&gt; anchor.</sch:assert>
+            <sch:report test="./html:span[@class = 'name']/following-sibling::node()/text() = ' : '"
+                >The text for a property is not simply ' : '.</sch:report>
+        </sch:rule>
+    </sch:pattern>
+
+    <sch:pattern>
+        <sch:title>About properties (properties)</sch:title>
 
         <sch:rule context="//html:div[@class = 'types']/html:h3">
             <sch:assert test="ends-with(@id, '-enum')">An enumeration has an xml:id that does not
@@ -86,7 +104,12 @@
         <sch:title>About functions (func)</sch:title>
 
         <sch:rule
-            context="//html:h3[@class = 'fn' and not(contains(@id, '-enum')) and not(contains(@id, '-typedef'))]">
+            context="
+                //html:h3[@class = 'fn'
+                and not(contains(@id, '-enum'))
+                and not(contains(@id, '-typedef'))
+                and not(parent::html:div[@class = 'prop'])
+                and not(parent::html:div[@class = 'macros'])]">
             <sch:let name="rawString" value="string-join(./text(), '')"/>
             <sch:let name="functionAnchor" value="./@id"/>
             <sch:let name="functionName" value="./html:span[@class = 'name']"/>
@@ -101,15 +124,24 @@
                 />.</sch:assert>
             <sch:assert test="count(./html:code) &lt;= 1">Too many HTML &lt;code&gt;: found
                     <sch:value-of select="count(./html:code)"/>.</sch:assert>
+            <sch:let name="allowedModifiers"
+                value="
+                    ('[static]',
+                    '(obsolete)',
+                    '[protected]',
+                    '[virtual]',
+                    '[virtual protected]',
+                    '[slot]',
+                    '[protected slot]',
+                    '[signal]')"/>
             <sch:let name="modifier"
                 value="
                     if (count(./html:code) = 1) then
                         normalize-space(./html:code/text())
                     else
                         '[static]'"/>
-            <sch:assert test="$modifier = '[static]' or $modifier = '(obsolete)'">A function has a
-                modifier that is not recognised: <sch:value-of
-                    select="normalize-space(./html:code/text())"/>. </sch:assert>
+            <sch:assert test="$modifier = $allowedModifiers">A function has a modifier that is not
+                recognised: <sch:value-of select="normalize-space(./html:code/text())"/>. </sch:assert>
 
             <!-- Test the first nodes to check their types. -->
             <sch:let name="firstNode" value="./child::node()[1]"/>
@@ -135,13 +167,9 @@
             <!-- Check the extremities of the argument list, and the presence of a const. -->
             <sch:assert
                 test="starts-with($functionName/following-sibling::node()[1][self::text()], '(')"
-                >The function has no argument list; looking for a (, got <sch:value-of
+                >A function has no argument list; looking for a (, got <sch:value-of
                     select="$functionName/following-sibling::node()[1][self::text()]"
                 />.</sch:assert>
-            <sch:let name="lastQualifier"
-                value="normalize-space(substring-after($functionName/following-sibling::node()[last()][self::text()], ')'))"/>
-            <sch:assert test="$lastQualifier = 'const' or $lastQualifier = ''">The function has an
-                unrecognised qualifier: <sch:value-of select="$lastQualifier"/>.</sch:assert>
             <sch:assert
                 test="ends-with(replace($functionName/following-sibling::node()[last()][self::text()], ' const', ''), ')')"
                 >The function has no argument list; looking for a ), got <sch:value-of

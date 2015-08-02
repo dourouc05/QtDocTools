@@ -103,9 +103,17 @@ actualContent =
      # @TODO: check whether those files exist (unparsed-text-available() or document-available()). 
      class_relatedFiles?,
      class_summary_types?,
-     class_summary_properties?, 
+     class_summary_properties?,
      class_summary_funcs,
+     class_summary_funcs_public_reimpl?,
+     class_summary_public_slots?,
+     class_summary_signals?,
      class_summary_statics?,
+     class_summary_funcs_protected?,
+     class_summary_funcs_protected_reimpl?,
+     class_summary_protected_slots?,
+     class_summary_macros?,
+     class_summary_inherited?,
      class_summary_nonmems?)?,
     
     ## () Then the main description. 
@@ -210,19 +218,8 @@ class_summary_properties =
         attribute id { "properties" }?,
         "Properties"
     },
-    class_sub_divtable_props, 
-    class_summary_properties_inherited?
-class_summary_properties_inherited = 
-    element html:ul {
-        element html:li {
-            attribute class { "fn" }, 
-            text, 
-            element html:a {
-                attribute href { text }, 
-                text
-            }
-        }+
-    }
+    class_sub_divtable_props,
+    class_sub_inherited?
 class_summary_funcs =
     element html:a {
         attribute name { "public-functions" }
@@ -232,6 +229,36 @@ class_summary_funcs =
         "Public Functions"
     },
     class_sub_divtable
+class_summary_funcs_public_reimpl =
+    element html:a {
+        attribute name { "reimplemented-public-functions" }
+    }?,
+    element html:h2 {
+        # No, it has no id! 
+        "Reimplemented Public Functions"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_public_slots =
+    element html:a {
+        attribute name { "public-slots" }
+    }?,
+    element html:h2 {
+        attribute id { "public-slots" },
+        "Public Slots"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_signals =
+    element html:a {
+        attribute name { "signals" }
+    }?,
+    element html:h2 {
+        attribute id { "signals" },
+        "Signals"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
 class_summary_statics =
     element html:a {
         attribute name { "static-public-members" }
@@ -240,7 +267,52 @@ class_summary_statics =
         attribute id { "static-public-members" }?,
         "Static Public Members"
     },
-    class_sub_divtable
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_funcs_protected =
+    element html:a {
+        attribute name { "protected-functions" }
+    }?,
+    element html:h2 {
+        attribute id { "protected-functions" }?,
+        "Protected Functions"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_funcs_protected_reimpl =
+    element html:a {
+        attribute name { "reimplemented-protected-functions" }
+    }?,
+    element html:h2 {
+        attribute id { "reimplemented-protected-functions" }?,
+        "Reimplemented Protected Functions"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_protected_slots =
+    element html:a {
+        attribute name { "protected-slots" }
+    }?,
+    element html:h2 {
+        attribute id { "protected-slots" }?,
+        "Protected Slots"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_macros =
+    element html:a {
+        attribute name { "macros" }
+    }?,
+    element html:h2 {
+        attribute id { "macros" }?,
+        "Macros"
+    },
+    class_sub_divtable,
+    class_sub_inherited?
+class_summary_inherited =
+    # This one is really strange. 
+    element html:h3 { "Additional Inherited Members" },
+    class_sub_inherited?
 class_summary_nonmems =
     element html:a {
         attribute name { "related-non-members" }
@@ -250,6 +322,17 @@ class_summary_nonmems =
         "Related Non-Members"
     },
     class_sub_divtable
+class_sub_inherited =
+    element html:ul {
+        element html:li {
+            attribute class { "fn" },
+            text,
+            element html:a {
+                attribute href { text },
+                text
+            }
+        }+
+    }
 class_sub_divtable =
     element html:div {
         attribute class { "table" },
@@ -263,23 +346,23 @@ class_sub_divtable_props =
         attribute class { "table" },
         element html:table {
             attribute class { "propsummary" },
-            element html:tbody { 
+            element html:tbody {
                 element html:tr {
-                    (element html:td {
-                        attribute class { "topAlign" }, 
+                    element html:td {
+                        attribute class { "topAlign" },
                         element html:ul {
                             element html:li {
-                                attribute class { "fn" }, 
+                                attribute class { "fn" },
                                 element html:b {
                                     element html:a {
-                                        attribute href { text }, 
+                                        attribute href { text },
                                         text
                                     }
-                                }, 
+                                },
                                 text
                             }+
                         }
-                    })+
+                    }+
                 }
             }
         }
@@ -321,7 +404,7 @@ seealso_link =
         text
     }
 # Actual class content. Statics are merged with funcs. 
-class_content = class_types?, class_funcs, class_nonmems?
+class_content = class_types?, class_properties?, class_funcs, class_nonmems?, class_macros?
 class_types =
     element html:div {
         attribute class { "types" },
@@ -329,7 +412,6 @@ class_types =
         (enum | typedef)*
     }
 enum = enumWithoutFlags | enumWithFlags
-# Complemented by Schematron. 
 enumWithoutFlags =
     element html:h3 {
         attribute class { "fn" },
@@ -426,6 +508,31 @@ enum_matchings =
     }
 typedef = element html:span { empty }
 # TODO! 
+class_properties =
+    element html:div {
+        attribute class { "prop" },
+        element html:h2 { "Property Documentation" },
+        prop*
+    }
+prop =
+    element html:h3 {
+        attribute class { "fn" },
+        attribute id { text },
+        element html:a {
+            attribute name { text },
+            empty
+        },
+        element html:span {
+            attribute class { "name" },
+            text
+        },
+        text,
+        element html:span {
+            attribute class { "type" },
+            (text | a)
+        }
+    },
+    content+
 class_funcs =
     element html:div {
         attribute class { "func" },
@@ -447,7 +554,8 @@ func =
         func_name,
         func_params
     },
-    content+
+    # Strangely, some (rare) functions have no documentation (see QWidget for instance). 
+    content*
 func_modifiers = element html:code { text }?
 func_return = type
 func_name =
@@ -509,6 +617,26 @@ nonmem_typedef =
         func_name
     },
     content+
+class_macros = 
+    element html:div {
+        attribute class { "macros" },
+        element html:h2 { "Macro Documentation" },
+        macro+
+    }
+macro = 
+    element html:h3 {
+        attribute class { "fn" },
+        attribute id { text },
+        element html:a {
+            attribute name { text },
+            empty
+        },
+        element html:span {
+            attribute class { "name" }, 
+            text
+        }
+    }, 
+    content+
 
 ## HTML details. 
 \div =
@@ -546,15 +674,19 @@ span =
     element html:span {
         # @TODO: enumerate the recognised classes. 
         attribute class { xsd:NCName },
-        (text | a)+
+        (text | a | i | b)+
     }
 ul = element html:ul { li+ }
-ol = element html:ul { li+ }
+ol =
+    element html:ol {
+        attribute class { "1" },
+        li+
+    }
 li =
     element html:li {
         attribute class { xsd:NCName }?,
         attribute id { xsd:NCName }?,
-        (text | a | code | i | p | ul)+
+        (text | a | code | i | b | p | ul)+
     }
 a =
     element html:a {
@@ -565,8 +697,8 @@ a =
 br = element html:br { empty }
 code = element html:code { text }
 i =
-    element html:i { xsd:NCName }
-    | element html:em { xsd:NCName }
+    element html:i { text }
+    | element html:em { text }
 p_content =
     (text
      | a
@@ -587,7 +719,7 @@ p =
 pre =
     element html:pre {
         attribute class { xsd:NCName },
-        (text | span)+
+        (text | span | a)+
     }
 tr =
     element html:tr {
@@ -595,12 +727,12 @@ tr =
         attribute valign { xsd:NCName }?,
         (element html:th {
              attribute class { xsd:NCName }?,
-             xsd:NCName
+             text
          }+
          | element html:td {
                attribute class { text }?,
                attribute rowspan { xsd:integer }?,
-               (text | b | code | i | img | p | pre | span)+
+               (text | a | b | code | i | img | p | pre | span)+
            }+)
     }
 img =

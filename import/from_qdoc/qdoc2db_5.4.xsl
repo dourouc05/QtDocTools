@@ -938,6 +938,12 @@
   </xsl:template>
   <xsl:template mode="content" match="html:ol">
     <db:orderedlist>
+      <xsl:choose>
+        <xsl:when test=".[@class = '1']">
+          <xsl:attribute name="numeration"><xsl:text>1</xsl:text></xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+      
       <xsl:apply-templates mode="content_list"/>
     </db:orderedlist>
   </xsl:template>
