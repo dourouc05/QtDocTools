@@ -120,10 +120,75 @@ class_summary =
         element html:table {
             attribute class { "alignedsummary" },
             element html:tbody {
-                # In this order: header to include, qmake addition, first availability. 
-                tr,
-                tr,
-                tr?
+                # In this order: header to include, qmake addition, inherits?, inherited by?, first availability?. 
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        " Header:"
+                    },
+                    element html:td {
+                        attribute class { text },
+                        element html:span {
+                            attribute class { "preprocessor" },
+                            text
+                        }
+                    }
+                },
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        " qmake:"
+                    },
+                    element html:td {
+                        attribute class { text },
+                        text
+                    }
+                },
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        " Inherits:"
+                    },
+                    element html:td {
+                        attribute class { text },
+                        (element html:a {
+                             attribute href { text },
+                             text
+                         },
+                         text)+
+                    }
+                }?,
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        " Inherited By:"
+                    },
+                    element html:td {
+                        attribute class { text },
+                        (element html:p {
+                             (element html:a {
+                                  attribute href { text },
+                                  text
+                              },
+                              text)+
+                         }
+                         | (element html:a {
+                                attribute href { text },
+                                text
+                            },
+                            text)+)
+                    }
+                }?,
+                element html:tr {
+                    element html:td {
+                        attribute class { text },
+                        " Since:"
+                    },
+                    element html:td {
+                        attribute class { text },
+                        text
+                    }
+                }?
             }
         }
     }

@@ -37,7 +37,7 @@
                 resolve-uri() allows to force URI resolution with respect to the XML document base, 
                 not something else. 
                 
-                Recognised files: obsolete, style. 
+                Recognised files: obsolete. 
             -->
             <sch:let name="fileNameHtml" value="."/>
             <sch:let name="fileName" value="replace($fileNameHtml, '.html', '')"/>

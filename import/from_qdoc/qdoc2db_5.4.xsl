@@ -37,6 +37,9 @@
         <xsl:value-of select="substring-before($title, ' Class')"/>
       </xsl:if>
     </xsl:variable>
+    
+    <!-- Extract the various parts of the prologue. -->
+    <xsl:variable name="prologueTable" select="$content/html:div[@class = 'table'][preceding-sibling::node()[self::html:p]][1]/html:table[@class = 'alignedsummary']"/>
 
     <!-- Extract the various parts of the main structure. -->
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
