@@ -45,15 +45,15 @@
         /html:div[@class = 'table'][preceding-sibling::node()[self::html:p]][1]
         /html:table[@class = 'alignedsummary']/html:tbody/html:tr"/>
     <xsl:variable name="prologueHeader" as="element(html:span)?"
-      select="$prologueTable/html:td[contains(text(), 'Header')]/following-sibling::html:td/html:span"/>
+      select="$prologueTable/html:td[1][contains(text(), 'Header')]/following-sibling::html:td/html:span"/>
     <xsl:variable name="prologueQmake" as="element(html:td)?"
-      select="$prologueTable/html:td[contains(text(), 'qmake')]/following-sibling::html:td"/>
+      select="$prologueTable/html:td[1][contains(text(), 'qmake')]/following-sibling::html:td"/>
     <xsl:variable name="prologueInherits" as="element(html:td)?"
-      select="$prologueTable/html:td[contains(text(), 'Inherits')]/following-sibling::html:td"/>
+      select="$prologueTable/html:td[1][contains(text(), 'Inherits')]/following-sibling::html:td"/>
     <xsl:variable name="prologueInheritedBy" as="element(html:td)?"
-      select="$prologueTable/html:td[contains(text(), 'Inherited By')]/following-sibling::html:td"/>
+      select="$prologueTable/html:td[1][contains(text(), 'Inherited By')]/following-sibling::html:td"/>
     <xsl:variable name="prologueSince" as="element(html:td)?"
-      select="$prologueTable/html:td[contains(text(), 'Since')]/following-sibling::html:td"/>
+      select="$prologueTable/html:td[1][contains(text(), 'Since')]/following-sibling::html:td"/>
 
     <!-- Extract the various parts of the main structure. -->
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
@@ -89,15 +89,25 @@
         else
           $siblingAfterIndex"/>
 
+    <xsl:variable name="properties" as="element()?"
+      select="$siblingAfterTypes[self::html:div][@class = 'prop']"/>
+    <xsl:variable name="hasProperties" select="boolean($properties)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterProperties" as="element()?"
+      select="
+        if ($hasProperties) then
+          $siblingAfterTypes/following-sibling::*[1]
+        else
+          $siblingAfterTypes"/>
+
     <xsl:variable name="funcs" as="element(html:div)?"
-      select="$siblingAfterTypes[self::html:div][@class = 'func']"/>
+      select="$siblingAfterProperties[self::html:div][@class = 'func']"/>
     <xsl:variable name="hasFuncs" select="boolean($funcs)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterFuncs" as="element()?"
       select="
         if ($hasFuncs) then
-          $siblingAfterTypes/following-sibling::*[1]
+          $siblingAfterProperties/following-sibling::*[1]
         else
-          $siblingAfterTypes"/>
+          $siblingAfterProperties"/>
 
     <xsl:variable name="nonmems" as="element(html:div)?"
       select="$siblingAfterFuncs[self::html:div][@class = 'relnonmem']"/>
@@ -123,6 +133,12 @@
     </xsl:if>
     <xsl:if test="not($isClass) and boolean($types)">
       <xsl:message terminate="no">WARNING: A concept has types.</xsl:message>
+    </xsl:if>
+    <xsl:if test="not($isClass) and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A concept has functions.</xsl:message>
+    </xsl:if>
+    <xsl:if test="not($isClass) and boolean($properties)">
+      <xsl:message terminate="no">WARNING: A concept has properties.</xsl:message>
     </xsl:if>
     <xsl:if test="not($isClass) and boolean($funcs)">
       <xsl:message terminate="no">WARNING: A concept has functions.</xsl:message>
@@ -174,7 +190,19 @@
       </html:div>
     </xsl:variable>
     <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types_title)" as="xs:boolean"/>
-
+    
+    <xsl:variable name="obsolete_properties_title" as="element(html:h2)?"
+      select="$obsolete/html:h2[text() = 'Property Documentation']"/>
+    <xsl:variable name="obsolete_properties" as="element(html:div)?">
+      <html:div class="prop">
+        <xsl:copy-of select="$obsolete_properties_title"/>
+        <xsl:copy-of
+          select="$obsolete_properties_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_properties_title]"
+        />
+      </html:div>
+    </xsl:variable>
+    <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)" as="xs:boolean"/>
+    
     <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Member Function Documentation']"/>
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
@@ -220,16 +248,18 @@
 
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
-          <xsl:with-param name="data" select="$funcs"/>
+          <xsl:with-param name="functions" select="$funcs"/>
+          <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="className" select="$className"/>
-          
+
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
-          
-          <xsl:with-param name="obsoleteData" select="$obsolete_funcs"/>
+
+          <xsl:with-param name="obsoleteFunctions" select="$obsolete_funcs"/>
+          <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
 
         <xsl:if test="$hasNonmems">
@@ -372,10 +402,13 @@
 
   <!-- Handle classes: class structure. -->
   <xsl:template name="classListing">
-    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="functions" as="element(html:div)"/>
+    <xsl:param name="properties" as="element(html:div)?"/>
     <xsl:param name="className" as="xs:string"/>
-    <xsl:param name="obsoleteData" as="element(html:div)?"/>
     
+    <xsl:param name="obsoleteFunctions" as="element(html:div)?"/>
+    <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
+
     <xsl:param name="header" as="element()?"/>
     <xsl:param name="qmake" as="element()?"/>
     <xsl:param name="inherits" as="element()?"/>
@@ -388,28 +421,49 @@
           <xsl:value-of select="$className"/>
         </db:classname>
       </db:ooclass>
-      
+
       <xsl:if test="$header">
-        <db:classsynopsisinfo role="header"><xsl:value-of select="$header"/></db:classsynopsisinfo>
+        <db:classsynopsisinfo role="header">
+          <xsl:value-of select="$header"/>
+        </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$qmake">
-        <db:classsynopsisinfo role="qmake"><xsl:value-of select="$qmake"/></db:classsynopsisinfo>
+        <db:classsynopsisinfo role="qmake">
+          <xsl:value-of select="$qmake"/>
+        </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$inherits">
-        <db:classsynopsisinfo role="inherits"><xsl:value-of select="$inherits/html:a/text()"/></db:classsynopsisinfo>
+        <db:classsynopsisinfo role="inherits">
+          <xsl:value-of select="$inherits/html:a/text()"/>
+        </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$inheritedBy">
-        <db:classsynopsisinfo role="inheritedBy"><xsl:value-of select="$inheritedBy/html:a/text()"/></db:classsynopsisinfo>
+        <db:classsynopsisinfo role="inheritedBy">
+          <xsl:value-of select="$inheritedBy/html:p/html:a/text()"/>
+        </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$since">
-        <db:classsynopsisinfo role="since"><xsl:value-of select="$since"/></db:classsynopsisinfo>
+        <db:classsynopsisinfo role="since">
+          <xsl:value-of select="$since"/>
+        </db:classsynopsisinfo>
       </xsl:if>
       
-      <xsl:apply-templates mode="classListing" select="$data/html:h3">
+      <!-- Deal with properties as fields. -->
+      <xsl:apply-templates mode="propertiesListing" select="$properties/html:h3"/>
+      <xsl:if test="boolean($obsoleteProperties)">
+        <xsl:apply-templates mode="propertiesListing" select="$obsoleteProperties/html:h3">
+          <xsl:with-param name="obsolete">
+            <xsl:value-of select="true()"/>
+          </xsl:with-param>
+        </xsl:apply-templates>
+      </xsl:if>
+
+      <!-- Deal with functions. -->
+      <xsl:apply-templates mode="classListing" select="$functions/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
-      <xsl:if test="boolean($obsoleteData)">
-        <xsl:apply-templates mode="classListing" select="$obsoleteData/html:h3">
+      <xsl:if test="boolean($obsoleteFunctions)">
+        <xsl:apply-templates mode="classListing" select="$obsoleteFunctions/html:h3">
           <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="obsolete">
             <xsl:value-of select="true()"/>
@@ -418,6 +472,26 @@
       </xsl:if>
     </db:classsynopsis>
   </xsl:template>
+  
+  <xsl:template mode="propertiesListing" match="text()"/>
+  <xsl:template mode="propertiesListing" match="html:h3[@class = 'fn']">
+    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+    <xsl:variable name="anchor" select="./@id"/>
+    
+    <db:fieldsynopsis>
+      <xsl:if test="$obsolete">
+        <db:modifier><xsl:text>(obsolete)</xsl:text></db:modifier>
+      </xsl:if>
+      
+      <xsl:call-template name="classListing_methodBody_analyseType">
+        <xsl:with-param name="typeNodes" select="./html:span[@class = 'type']"></xsl:with-param>
+      </xsl:call-template>
+      <db:varname>
+        <xsl:value-of select="./html:span[@class = 'name']/text()"/>
+      </db:varname>
+    </db:fieldsynopsis>
+  </xsl:template>
+  
   <xsl:template mode="classListing" match="text()"/>
   <xsl:template mode="classListing" match="html:h3[@class = 'fn']">
     <xsl:param name="className" as="xs:string"/>
@@ -487,10 +561,15 @@
     <!-- Handle parameters list. -->
     <xsl:variable name="textAfterName" select="$functionName/following-sibling::text()[1]"/>
     <xsl:choose>
+      <!-- Either the function has zero arguments or at least one. -->
       <xsl:when test="starts-with($textAfterName, '()')">
         <db:void/>
       </xsl:when>
-      <xsl:otherwise>
+      <!-- 
+        This code mostly works, but miserably fails on more complicated cases. E.g.:
+            QPixmap QWidget::grab(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))
+      -->
+      <xsl:when test="false()">
         <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
 
         <xsl:for-each select="1 to $nArguments">
@@ -560,6 +639,13 @@
             </xsl:if>
           </db:methodparam>
         </xsl:for-each>
+      </xsl:when>
+      <!-- Output everything as a raw string, a post-processor will deal with it. -->
+      <xsl:otherwise>
+        <db:void role="parameters"/>
+        <db:exceptionname role="parameters">
+          <xsl:value-of select="$functionName/following-sibling::node()"/>
+        </db:exceptionname>
       </xsl:otherwise>
     </xsl:choose>
 
@@ -796,9 +882,17 @@
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
 
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
+      <xsl:choose>
+        <xsl:when test="./following-sibling::*[1][not(self::html:h3)]">
+          <xsl:call-template name="content_class_content">
+            <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message>WARNING: This function has no documentation.</xsl:message>
+          <db:para/>
+        </xsl:otherwise>
+      </xsl:choose>
     </db:section>
   </xsl:template>
   <xsl:template name="content_class_content">
@@ -893,19 +987,23 @@
           </db:mediaobject>
         </db:informalfigure>
       </xsl:when>
-      <xsl:when test="./html:b and starts-with(./html:b/text(), 'Note')">
-        <db:note>
-          <db:para>
-            <xsl:apply-templates mode="content_paragraph">
-              <xsl:with-param name="forgetNotes" select="true()"/>
-            </xsl:apply-templates>
-          </db:para>
-        </db:note>
-      </xsl:when>
-      <xsl:when test="./html:b and starts-with(./html:b/text(), 'See also')">
-        <xsl:call-template name="content_seealso">
-          <xsl:with-param name="seeAlso" select="."/>
-        </xsl:call-template>
+      <xsl:when test="./html:b and count(./html:b) = 1">
+        <xsl:choose>
+          <xsl:when test="starts-with(./html:b/text(), 'Note')">
+            <db:note>
+              <db:para>
+                <xsl:apply-templates mode="content_paragraph">
+                  <xsl:with-param name="forgetNotes" select="true()"/>
+                </xsl:apply-templates>
+              </db:para>
+            </db:note>
+          </xsl:when>
+          <xsl:when test="starts-with(./html:b/text(), 'See also')">
+            <xsl:call-template name="content_seealso">
+              <xsl:with-param name="seeAlso" select="."/>
+            </xsl:call-template>
+          </xsl:when>
+        </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="not(. = '')">
@@ -940,10 +1038,12 @@
     <db:orderedlist>
       <xsl:choose>
         <xsl:when test=".[@class = '1']">
-          <xsl:attribute name="numeration"><xsl:text>1</xsl:text></xsl:attribute>
+          <xsl:attribute name="numeration">
+            <xsl:text>arabic</xsl:text>
+          </xsl:attribute>
         </xsl:when>
       </xsl:choose>
-      
+
       <xsl:apply-templates mode="content_list"/>
     </db:orderedlist>
   </xsl:template>
