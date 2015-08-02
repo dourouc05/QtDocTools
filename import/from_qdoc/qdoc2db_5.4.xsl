@@ -311,6 +311,21 @@
   <xsl:template mode="content_title_hidden" match="html:br">
     <xsl:message terminate="no">WARNING: Line feed in title; this is not handled!</xsl:message>
   </xsl:template>
+  
+  <xsl:template name="content_seealso">
+    <xsl:param name="seeAlso" as="element(html:p)"/>
+    
+    <db:section>
+      <db:title>See Also</db:title>
+      <db:simplelist>
+        <xsl:for-each select="$seeAlso/html:a">
+          <db:member>
+            <xsl:apply-templates mode="content_paragraph" select="."/>
+          </db:member>
+        </xsl:for-each>
+      </db:simplelist>
+    </db:section>
+  </xsl:template>
 
   <!-- Handle table of content sections. -->
   <xsl:template match="html:div" mode="indexTable">
@@ -805,7 +820,10 @@
     <!-- Normally, these should already be in xml:id. -->
   </xsl:template>
   <xsl:template mode="content" match="html:p">
-    <!-- A paragraph may hold a single image (treat it accordingly), or be an admonition, or be a real paragraph. -->
+    <!-- 
+      A paragraph may hold a single image (treat it accordingly), or be an admonition, 
+      or be a See also list of links, or be a real paragraph. 
+    -->
     <xsl:choose>
       <xsl:when test="count(child::*) = 1 and child::html:img">
         <db:informalfigure>
@@ -836,6 +854,11 @@
             </xsl:apply-templates>
           </db:para>
         </db:note>
+      </xsl:when>
+      <xsl:when test="./html:b and starts-with(./html:b/text(), 'See also')">
+        <xsl:call-template name="content_seealso">
+          <xsl:with-param name="seeAlso" select="."/>
+        </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
         <xsl:if test="not(. = '')">
@@ -989,16 +1012,9 @@
         </xsl:for-each-group>
 
         <xsl:if test="$hasSeeAlso">
-          <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist>
-              <xsl:for-each select="$seeAlso/html:a">
-                <db:member>
-                  <xsl:apply-templates mode="content_paragraph" select="."/>
-                </db:member>
-              </xsl:for-each>
-            </db:simplelist>
-          </db:section>
+          <xsl:call-template name="content_seealso">
+            <xsl:with-param name="seeAlso" select="$seeAlso"/>
+          </xsl:call-template>
         </xsl:if>
       </db:section>
     </xsl:for-each-group>
