@@ -35,7 +35,7 @@ struct Parameter{
 	int nPointers = 0;
 	int nReferences = 0;
 	std::string* identifier;
-	Value* initialiser;
+	Value* initialiser = nullptr;
 };
 
 struct Object {
@@ -53,9 +53,11 @@ void assert_nullptr(T * ptr) {
 template<class I>
 AST* cpp_prototype(I begin, I end) {
 	// Prepare the places to return the values being read. 
+	AST* retval = new AST;
 	Object* currentObject = new Object;
 	Value* currentValue = nullptr;
 	std::string* currentIdentifier = nullptr;
+	Parameter* currentParameter = new Parameter; 
 
 	auto valueInt = axe::e_ref([&currentValue](I i1, I i2) {
 		assert_nullptr(currentValue); currentValue = new Value;
@@ -72,7 +74,7 @@ AST* cpp_prototype(I begin, I end) {
 		currentValue->content.s = new std::string(std::string(i1, i2));
 		currentValue->type = STRING;
 	});
-	auto valueObjectSimple = axe::e_ref([&currentValue, &currentObject](I i1, I i2) {
+	auto valueObject = axe::e_ref([&currentValue, &currentObject](I i1, I i2) {
 		assert_nullptr(currentValue); currentValue = new Value;
 		currentValue->content.o = currentObject;
 		currentValue->type = OBJECT;
@@ -96,6 +98,33 @@ AST* cpp_prototype(I begin, I end) {
 		}
 		currentObject->parameters.push_back(currentValue);
 		currentValue = nullptr;
+	});
+
+	auto parameterConst = axe::e_ref([&currentParameter](I i1, I i2) {
+		if (std::distance(i1, i2) > 2) {
+			currentParameter->isConst = true;
+		}
+	});
+	auto parameterType = axe::e_ref([&currentParameter, &currentIdentifier](I i1, I i2) {
+		currentParameter->type = currentIdentifier;
+	});
+	auto parameterPointers = axe::e_ref([&currentParameter](I i1, I i2) {
+		currentParameter->nPointers = std::distance(i1, i2);
+	});
+	auto parameterReferences = axe::e_ref([&currentParameter](I i1, I i2) {
+		currentParameter->nReferences = std::distance(i1, i2);
+	});
+	auto parameterIdentifier = axe::e_ref([&currentParameter, &currentIdentifier](I i1, I i2) {
+		currentParameter->identifier = currentIdentifier;
+	});
+	auto parameterInitialiser = axe::e_ref([&currentParameter, &currentValue](I i1, I i2) {
+		currentParameter->initialiser = currentValue;
+		currentValue = nullptr;
+	});
+
+	auto addParameter = axe::e_ref([&retval, &currentParameter](I i1, I i2) {
+		retval->parameters.push_back(currentParameter);
+		currentParameter = new Parameter;
 	});
 
 
@@ -122,14 +151,21 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_litteral = value_string | value_number;
 
 	auto value_object_simple = (identifier >> objectIdentifier) & *space & paren_open & *space & ~((value_litteral >> objectNewValue) % spaced_comma) & *space & paren_close;
-	auto value_simple = value_litteral | value_object_simple; 
+	auto value_simple = value_litteral | (value_object_simple >> valueObject);
 
 	auto value_object_compound = (identifier >> objectIdentifier) & *space & ~(paren_open & *space & ~((value_simple >> objectNewValue) % spaced_comma) & *space & paren_close);
-	auto value = value_simple | value_object_compound;
+	auto value = value_simple | (value_object_compound >> valueObject);
 	// Note: identifier | value_object_simplest would not work (the parser gets into identifier, and is unable to get out to reach the next alike). 
 
-	auto parameter = ~kw_const & *space & identifier & *space & ~(+kw_reference | +kw_pointer) & *space & identifier & ~(*space & equal & *space & value & *space);
-	auto parameters_list = parameter % spaced_comma;
+	auto parameter = ~(kw_const >> parameterConst) 
+		& *space 
+		& (identifier >> parameterType) 
+		& *space 
+		& ~((+kw_pointer) >> parameterPointers | (+kw_reference) >> parameterReferences)
+		& *space 
+		& (identifier >> parameterIdentifier)
+		& ~(*space & equal & *space & (value >> parameterInitialiser) & *space);
+	auto parameters_list = (parameter >> addParameter) % spaced_comma;
 	auto start = paren_open & *space & ~parameters_list & *space & paren_close;
 
 	// Bootstrap it all. 
@@ -139,7 +175,6 @@ AST* cpp_prototype(I begin, I end) {
 		std::cout << currentObject->identifier << std::endl;
 	}
 
-	AST* retval = new AST();
 	retval->matched = result.matched;
 	return retval;
 }
