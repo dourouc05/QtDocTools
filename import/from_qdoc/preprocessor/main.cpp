@@ -150,12 +150,19 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueString;
 	auto value_litteral = value_string | value_number;
 
-	auto value_object_simple = (identifier >> objectIdentifier) & *space & paren_open & *space & ~((value_litteral >> objectNewValue) % spaced_comma) & *space & paren_close;
+	auto value_object_simple = (identifier >> objectIdentifier) 
+		& *space 
+		& paren_open 
+		& *space 
+		& ~((value_litteral >> objectNewValue) % spaced_comma) 
+		& *space 
+		& paren_close;
 	auto value_simple = value_litteral | (value_object_simple >> valueObject);
 
-	auto value_object_compound = (identifier >> objectIdentifier) & *space & ~(paren_open & *space & ~((value_simple >> objectNewValue) % spaced_comma) & *space & paren_close);
+	auto value_object_compound = (identifier >> objectIdentifier) 
+		& *space 
+		& paren_open & *space & ~((value_simple >> objectNewValue) % spaced_comma) & *space & paren_close;
 	auto value = value_simple | (value_object_compound >> valueObject);
-	// Note: identifier | value_object_simplest would not work (the parser gets into identifier, and is unable to get out to reach the next alike). 
 
 	auto parameter = ~(kw_const >> parameterConst) 
 		& *space 
@@ -175,7 +182,44 @@ AST* cpp_prototype(I begin, I end) {
 	return retval;
 }
 
-std::string test_serialise(AST* ast) {
+std::string test_serialise_object(const Object* const o);
+std::string test_serialise_value(const Value* const v) {
+	switch (v->type)
+	{
+	case NONE:
+		std::cerr << "ASSERTION ERROR." << std::endl;
+		return "none";
+	case INTEGER:
+		return std::to_string(v->content.i);
+	case DOUBLE:
+		return std::to_string(v->content.d);
+	case STRING:
+		return *v->content.s;
+	case OBJECT:
+		return test_serialise_object(v->content.o);
+	default:
+		std::cerr << "ASSERTION ERROR." << std::endl;
+		return "unknown";
+	}
+}
+
+std::string test_serialise_object(const Object* const o) {
+	std::string retval = *o->identifier; 
+	retval += "(";
+	auto end = o->parameters.end();
+	for (auto iterator = o->parameters.begin(); iterator != end; ++iterator) {
+		Value* value = *iterator;
+		retval += test_serialise_value(value);
+		if (std::next(iterator) != end) {
+			retval += ", ";
+		}
+	}
+	retval += ")";
+
+	return retval;
+}
+
+std::string test_serialise(const AST* const ast) {
 	if (!ast->matched) {
 		return "";
 	}
@@ -200,40 +244,18 @@ std::string test_serialise(AST* ast) {
 		if (p->initialiser != nullptr) {
 			Value* value = p->initialiser;
 			retval += " = ";
-
-			switch (value->type)
-			{
-			case NONE:
-				std::cerr << "ASSERTION ERROR." << std::endl;
-				break;
-			case INTEGER:
-				retval += std::to_string(value->content.i);
-				break;
-			case DOUBLE:
-				retval += std::to_string(value->content.d);
-				break;
-			case STRING:
-				retval += *value->content.s;
-				break;
-			case OBJECT: 
-				//Object* o = value->content.o;
-				retval += "object";
-				break;
-			default:
-				std::cerr << "ASSERTION ERROR." << std::endl;
-				break;
-			}
+			retval += test_serialise_value(p->initialiser);
 		}
 
 		if (std::next(iterator) != end) {
-			retval += ",";
+			retval += ", ";
 		}
 	}
 	retval += ")";
 	return retval;
 }
 
-bool test_match(const std::string str, const std::string testName) {
+bool test_match(const std::string & str, const std::string & testName) {
 	// Start parsing. 
 	AST* ast = cpp_prototype(str.begin(), str.end());
 	if (!ast->matched) {
@@ -260,16 +282,17 @@ bool test_match(const std::string str, const std::string testName) {
 void test() {
 	int count = 0; 
 	int total = 0;
-	total++; count += test_match("()", "Dumb test");
-	total++; count += test_match("(QRect rectangle)", "Simple test");
-	total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
-	total++; count += test_match("(const QRect & rectangle, QSize * size)", "Two parameters and a pointer test");
-	total++; count += test_match("(const QRect && rectangle, QSize ** size)", "Move semantics and double pointer test");
-	total++; count += test_match("(QRect rectangle = 0)", "Simple initialiser test");
-	total++; count += test_match("(QRect rectangle = \"rect\")", "String initialiser test");
-	total++; count += test_match("(QRect rectangle = QRect())", "Simple object initialiser test");
-	total++; count += test_match("(QRect rectangle = QRect(1))", "Object initialiser (one argument) test");
-	total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
+	//total++; count += test_match("()", "Dumb test");
+	//total++; count += test_match("(QRect rectangle)", "Simple test");
+	//total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
+	//total++; count += test_match("(const QRect & rectangle, QSize * size)", "Two parameters and a pointer test");
+	//total++; count += test_match("(const QRect && rectangle, QSize ** size)", "Move semantics and double pointer test");
+	//total++; count += test_match("(QRect rectangle = 0)", "Simple initialiser test");
+	//total++; count += test_match("(QRect rectangle = \"rect\")", "String initialiser test");
+	//total++; count += test_match("(QRect rectangle = QRect())", "Simple object initialiser test");
+	//total++; count += test_match("(QRect rectangle = QRect(1))", "Object initialiser (one argument) test");
+	//total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
+	total++; count += test_match("(QRect rectangle = QRect(QRect(1, \"left\")))", "Compound object test");
 	total++; count += test_match("(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))", "Horrible initialiser test");
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
