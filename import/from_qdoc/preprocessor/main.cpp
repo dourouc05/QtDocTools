@@ -6,7 +6,8 @@
 #include "axe_1.5.4.164/include/axe.h"
 //#include <axe/axe.h>
 
-#pragma warning(disable:4503)
+// For templates: "decorated name length exceeded, name was truncated"
+#pragma warning(disable: 4503)
 
 struct Parameter;
 struct Object;
@@ -54,7 +55,8 @@ template<class I>
 AST* cpp_prototype(I begin, I end) {
 	// Prepare the places to return the values being read. 
 	AST* retval = new AST;
-	Object* currentObject = new Object;
+	Object* currentOuterObject = nullptr;
+	Object* currentInnerObject = nullptr;
 	Value* currentValue = nullptr;
 	std::string* currentIdentifier = nullptr;
 	Parameter* currentParameter = new Parameter; 
@@ -74,9 +76,14 @@ AST* cpp_prototype(I begin, I end) {
 		currentValue->content.s = new std::string(std::string(i1, i2));
 		currentValue->type = STRING;
 	});
-	auto valueObject = axe::e_ref([&currentValue, &currentObject](I i1, I i2) {
+	auto valueOuterObject = axe::e_ref([&currentValue, &currentOuterObject](I i1, I i2) {
 		assert_nullptr(currentValue); currentValue = new Value;
-		currentValue->content.o = currentObject;
+		currentValue->content.o = currentOuterObject;
+		currentValue->type = OBJECT;
+	});
+	auto valueInnerObject = axe::e_ref([&currentValue, &currentInnerObject](I i1, I i2) {
+		assert_nullptr(currentValue); currentValue = new Value;
+		currentValue->content.o = currentInnerObject;
 		currentValue->type = OBJECT;
 	});
 
@@ -84,10 +91,13 @@ AST* cpp_prototype(I begin, I end) {
 		currentIdentifier = new std::string(i1, i2);
 	});
 
-	auto objectIdentifier = axe::e_ref([&currentObject, &currentIdentifier](I i1, I i2) {
-		currentObject->identifier = currentIdentifier;
+	auto outerObject = axe::e_ref([&currentOuterObject](I i1, I i2) {
+		currentOuterObject = new Object	;
 	});
-	auto objectNewValue = axe::e_ref([&currentObject, &currentValue](I i1, I i2) {
+	auto outerObjectIdentifier = axe::e_ref([&currentOuterObject, &currentIdentifier](I i1, I i2) {
+		currentOuterObject->identifier = currentIdentifier;
+	});
+	auto outerObjectNewValue = axe::e_ref([&currentOuterObject, &currentValue](I i1, I i2) {
 		if (currentValue == nullptr) {
 			// When the last parameter is read, a new value is added, but no text was found for it! 
 			// Hence the null pointer and this case. 
@@ -96,7 +106,25 @@ AST* cpp_prototype(I begin, I end) {
 		if (currentValue->type == NONE) {
 			std::cerr << "ASSERTION FAILED." << std::endl;
 		}
-		currentObject->parameters.push_back(currentValue);
+		currentOuterObject->parameters.push_back(currentValue);
+		currentValue = nullptr;
+	});
+	auto innerObject = axe::e_ref([&currentInnerObject](I i1, I i2) { // Duplicate of previous functions. @TODO: merge innards. 
+		currentInnerObject = new Object;
+	});
+	auto innerObjectIdentifier = axe::e_ref([&currentInnerObject, &currentIdentifier](I i1, I i2) {
+		currentInnerObject->identifier = currentIdentifier;
+	});
+	auto innerObjectNewValue = axe::e_ref([&currentInnerObject, &currentValue](I i1, I i2) {
+		if (currentValue == nullptr) {
+			// When the last parameter is read, a new value is added, but no text was found for it! 
+			// Hence the null pointer and this case. 
+			return;
+		}
+		if (currentValue->type == NONE) {
+			std::cerr << "ASSERTION FAILED." << std::endl;
+		}
+		currentInnerObject->parameters.push_back(currentValue);
 		currentValue = nullptr;
 	});
 
@@ -150,19 +178,19 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueString;
 	auto value_litteral = value_string | value_number;
 
-	auto value_object_simple = (identifier >> objectIdentifier) 
+	auto value_object_simple = (identifier >> outerObject >> outerObjectIdentifier)
 		& *space 
 		& paren_open 
 		& *space 
-		& ~((value_litteral >> objectNewValue) % spaced_comma) 
+		& ~((value_litteral >> outerObjectNewValue) % spaced_comma)
 		& *space 
 		& paren_close;
-	auto value_simple = value_litteral | (value_object_simple >> valueObject);
+	auto value_simple = value_litteral | (value_object_simple >> valueOuterObject);
 
-	auto value_object_compound = (identifier >> objectIdentifier) 
+	auto value_object_compound = (identifier >> innerObject >> innerObjectIdentifier)
 		& *space 
-		& paren_open & *space & ~((value_simple >> objectNewValue) % spaced_comma) & *space & paren_close;
-	auto value = value_simple | (value_object_compound >> valueObject);
+		& paren_open & *space & ~((value_simple >> innerObjectNewValue) % spaced_comma) & *space & paren_close;
+	auto value = value_simple | (value_object_compound >> valueInnerObject);
 
 	auto parameter = ~(kw_const >> parameterConst) 
 		& *space 
@@ -282,16 +310,16 @@ bool test_match(const std::string & str, const std::string & testName) {
 void test() {
 	int count = 0; 
 	int total = 0;
-	//total++; count += test_match("()", "Dumb test");
-	//total++; count += test_match("(QRect rectangle)", "Simple test");
-	//total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
-	//total++; count += test_match("(const QRect & rectangle, QSize * size)", "Two parameters and a pointer test");
-	//total++; count += test_match("(const QRect && rectangle, QSize ** size)", "Move semantics and double pointer test");
-	//total++; count += test_match("(QRect rectangle = 0)", "Simple initialiser test");
-	//total++; count += test_match("(QRect rectangle = \"rect\")", "String initialiser test");
-	//total++; count += test_match("(QRect rectangle = QRect())", "Simple object initialiser test");
-	//total++; count += test_match("(QRect rectangle = QRect(1))", "Object initialiser (one argument) test");
-	//total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
+	total++; count += test_match("()", "Dumb test");
+	total++; count += test_match("(QRect rectangle)", "Simple test");
+	total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
+	total++; count += test_match("(const QRect & rectangle, QSize * size)", "Two parameters and a pointer test");
+	total++; count += test_match("(const QRect && rectangle, QSize ** size)", "Move semantics and double pointer test");
+	total++; count += test_match("(QRect rectangle = 0)", "Simple initialiser test");
+	total++; count += test_match("(QRect rectangle = \"rect\")", "String initialiser test");
+	total++; count += test_match("(QRect rectangle = QRect())", "Simple object initialiser test");
+	total++; count += test_match("(QRect rectangle = QRect(1))", "Object initialiser (one argument) test");
+	total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
 	total++; count += test_match("(QRect rectangle = QRect(QRect(1, \"left\")))", "Compound object test");
 	total++; count += test_match("(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))", "Horrible initialiser test");
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
