@@ -156,7 +156,11 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_object_compound = (identifier >> outerObjectIdentifier)
 		& *space 
 		& paren_open & *space & ~((value_simple >> outerObjectNewValue) % spaced_comma) & *space & paren_close;
-	auto value = (value_object_compound >> valueAllocator >> valueOuterObject) | value_simple;
+	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject);
+	// value_object_compound and value_object_simple have the same prefix: if both are allowed inside value, 
+	// then the parser will be confused about which one is actually at hand; it will then follow the first one, 
+	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
+	// As a consequence, this would be a waste of both time and memory. 
 
 	auto parameter = ~(kw_const >> parameterAllocator >> parameterConst)
 		& *space 
@@ -279,17 +283,17 @@ void test() {
 	int count = 0; 
 	int total = 0;
 
-	//total++; count += test_match("()", "Dumb test");
-	//total++; count += test_match("(QRect rectangle)", "Simple test");
-	//total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
-	//total++; count += test_match("(const QRect & rectangle, QSize * size)", "Two parameters and a pointer test");
-	//total++; count += test_match("(const QRect && rectangle, QSize ** size)", "Move semantics and double pointer test");
-	//total++; count += test_match("(QRect rectangle = 0)", "Simple initialiser test");
-	//total++; count += test_match("(QRect rectangle = \"rect\")", "String initialiser test");
-	//total++; count += test_match("(QRect rectangle = QRect())", "Simple object initialiser test");
-	//total++; count += test_match("(QRect rectangle = QRect(1))", "Object initialiser (one argument) test");
-	//total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
-	//total++; count += test_match("(QRect rectangle = QRect(QRect(1, \"left\")))", "Compound object test");
+	total++; count += test_match("()", "Dumb test");
+	total++; count += test_match("(QRect rectangle)", "Simple test");
+	total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
+	total++; count += test_match("(const QRect & rectangle, QSize * size)", "Two parameters and a pointer test");
+	total++; count += test_match("(const QRect && rectangle, QSize ** size)", "Move semantics and double pointer test");
+	total++; count += test_match("(QRect rectangle = 0)", "Simple initialiser test");
+	total++; count += test_match("(QRect rectangle = \"rect\")", "String initialiser test");
+	total++; count += test_match("(QRect rectangle = QRect())", "Simple object initialiser test");
+	total++; count += test_match("(QRect rectangle = QRect(1))", "Object initialiser (one argument) test");
+	total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
+	total++; count += test_match("(QRect rectangle = QRect(QRect(1, \"left\")))", "Compound object test");
 	total++; count += test_match("(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))", "Horrible initialiser test");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
