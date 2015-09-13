@@ -46,11 +46,20 @@ AST* cpp_prototype(I begin, I end) {
 		if (currentIdentifier == nullptr) {
 			currentIdentifier = new std::string(i1, i2);
 		}
-	});
+	}); 
 	auto valueIdentifierAddNamespacedComponent = axe::e_ref([&currentIdentifier](I i1, I i2) {
 		// Parses different components, but their structure is forgotten in the AST... 
 		currentIdentifier->append("::" + std::string(i1, i2));
 	});
+	auto valueIdentifierAddTemplatedComponent = axe::e_ref([&currentIdentifier](I i1, I i2) {
+		// Parses different components, but their structure is forgotten in the AST... 
+		currentIdentifier->append("<" + std::string(i1, i2) + ">");
+	});
+	auto valueIdentifierAddPointer = axe::e_ref([&currentIdentifier](I i1, I i2) {
+		// Parses different components, but their structure is forgotten in the AST... 
+		currentIdentifier->append("*");
+	});
+	
 
 	auto outerObjectIdentifier = axe::e_ref([&currentOuterObject, &currentIdentifier](I i1, I i2) {
 		currentOuterObject = new Object;
@@ -128,6 +137,8 @@ AST* cpp_prototype(I begin, I end) {
 	auto equal = axe::r_lit('=');
 	auto paren_open = axe::r_lit('(');
 	auto paren_close = axe::r_lit(')');
+	auto tpl_open = axe::r_lit('<');
+	auto tpl_close = axe::r_lit('>');
 	auto quote = axe::r_lit('"');
 	auto underscore = axe::r_lit('_');
 
@@ -140,7 +151,13 @@ AST* cpp_prototype(I begin, I end) {
 	// Recursive rules don't work due to syntax sugar missing. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
 	auto identifier = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) >> valueIdentifier;
-	auto type = identifier & *(kw_namespace & identifier >> valueIdentifierAddNamespacedComponent);
+	auto type_namespace = kw_namespace & identifier >> valueIdentifierAddNamespacedComponent;
+	auto type_template = tpl_open & *space & (identifier >> valueIdentifierAddTemplatedComponent) & *type_namespace & *space & tpl_close;
+	auto type = identifier
+		& *space
+		& *type_namespace
+		& *space
+		& ~type_template;
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
 	auto value_litteral = value_string | value_number;
