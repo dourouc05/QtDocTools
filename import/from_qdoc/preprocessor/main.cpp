@@ -66,32 +66,32 @@ void test() {
 }
 
 int main(int argc, const char* argv[]) {
-	//pugi::xml_document doc;
-	//pugi::xml_parse_result result = doc.load_file("qwidget.db");
-	//if (!result) {
-	//	std::cerr << "Error while loading XML file: " << std::endl; 
-	//	std::cerr << "    " << result.description() << std::endl;
-	//}
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("qwidget.db");
+	if (!result) {
+		std::cerr << "Error while loading XML file: " << std::endl; 
+		std::cerr << "    " << result.description() << std::endl;
+	}
 
-	//pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
-	//int total = 0;
-	//int errors = 0;
-	//for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
-	//	pugi::xpath_node node = *it;
-	//	total += 1;
+	pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
+	int total = 0;
+	int errors = 0;
+	for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
+		pugi::xpath_node node = *it;
+		total += 1;
 
-	//	std::string prototype = node.node().value();
-	//	AST* ast = cpp_prototype(prototype.begin(), prototype.end());
-	//	if (test_differ(ast, prototype)) {
-	//		std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
-	//		std::cerr << "    " << prototype << std::endl;
-	//		errors += 1;
-	//	}
-	//}
+		std::string prototype = node.node().value();
+		AST* ast = cpp_prototype(prototype.begin(), prototype.end());
+		if (test_differ(ast, prototype)) {
+			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
+			std::cerr << "    " << prototype << std::endl;
+			errors += 1;
+		}
+	}
 
-	//std::cerr << errors << " errors out of " << total << "." << std::endl;
+	std::cerr << errors << " errors out of " << total << "." << std::endl;
 
-	test();
+	//test();
 	//std::string str = "(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))";
 	//std::string str = "(QRect rectangle)";
 	//cpp_prototype(str.begin(), str.end());

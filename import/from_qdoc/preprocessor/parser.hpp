@@ -47,17 +47,9 @@ AST* cpp_prototype(I begin, I end) {
 			currentIdentifier = new std::string(i1, i2);
 		}
 	}); 
-	auto valueIdentifierAddNamespacedComponent = axe::e_ref([&currentIdentifier](I i1, I i2) {
+	auto valueIdentifierAddCharacters = axe::e_ref([&currentIdentifier](I i1, I i2) {
 		// Parses different components, but their structure is forgotten in the AST... 
-		currentIdentifier->append("::" + std::string(i1, i2));
-	});
-	auto valueIdentifierAddTemplatedComponent = axe::e_ref([&currentIdentifier](I i1, I i2) {
-		// Parses different components, but their structure is forgotten in the AST... 
-		currentIdentifier->append("<" + std::string(i1, i2) + ">");
-	});
-	auto valueIdentifierAddPointer = axe::e_ref([&currentIdentifier](I i1, I i2) {
-		// Parses different components, but their structure is forgotten in the AST... 
-		currentIdentifier->append("*");
+		currentIdentifier->append(std::string(i1, i2));
 	});
 	
 
@@ -148,11 +140,18 @@ AST* cpp_prototype(I begin, I end) {
 	auto kw_namespace = axe::r_lit("::");
 
 	// Grammar rules. 
-	// Recursive rules don't work due to syntax sugar missing. Order: build simple values (litterals), grow them into
+	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
 	auto identifier = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) >> valueIdentifier;
-	auto type_namespace = kw_namespace & identifier >> valueIdentifierAddNamespacedComponent;
-	auto type_template = tpl_open & *space & (identifier >> valueIdentifierAddTemplatedComponent) & *type_namespace & *space & tpl_close;
+	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & identifier >> valueIdentifierAddCharacters;
+	auto type_template = (tpl_open >> valueIdentifierAddCharacters) 
+		& *space 
+		& (identifier >> valueIdentifierAddCharacters) 
+		& *type_namespace 
+		& *space
+		& *(kw_pointer >> valueIdentifierAddCharacters)
+		& *space
+		& (tpl_close >> valueIdentifierAddCharacters);
 	auto type = identifier
 		& *space
 		& *type_namespace
