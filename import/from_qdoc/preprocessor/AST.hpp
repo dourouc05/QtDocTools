@@ -22,6 +22,7 @@ public:
 
 	AST();
 	~AST();
+	std::string serialise() const;
 };
 
 class Parameter {
