@@ -19,6 +19,7 @@ class AST {
 public:
 	bool matched;
 	std::list<Parameter*> parameters;
+	bool isConst = false;
 
 	AST();
 	~AST();

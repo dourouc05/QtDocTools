@@ -121,6 +121,9 @@ AST* cpp_prototype(I begin, I end) {
 		retval->parameters.push_back(currentParameter);
 		currentParameter = nullptr;
 	});
+	auto isConst = axe::e_ref([&retval](I i1, I i2) {
+		retval->isConst = true;
+	});
 
 	// Lexer. 
 	auto space = axe::r_any(" \t");
@@ -188,7 +191,7 @@ AST* cpp_prototype(I begin, I end) {
 		& (identifier >> parameterIdentifier)
 		& ~(*space & equal & *space & (value >> parameterInitialiser) & *space);
 	auto parameters_list = (parameter >> addParameter) % spaced_comma;
-	auto start = paren_open & *space & ~parameters_list & *space & paren_close;
+	auto start = paren_open & *space & ~parameters_list & *space & paren_close & *space & ~(kw_const >> isConst);
 
 	// Bootstrap it all. 
 	auto result = start(begin, end);

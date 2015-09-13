@@ -113,5 +113,10 @@ std::string AST::serialise() const {
 		}
 	}
 	retval += ")";
+
+	if (isConst) {
+		retval += " const";
+	}
+
 	return retval;
 }
