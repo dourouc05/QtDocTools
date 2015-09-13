@@ -7,8 +7,9 @@ class Parameter;
 class Object;
 class Value;
 
-enum ValueType { NONE, INTEGER, DOUBLE, STRING, OBJECT };
+enum ValueType { NONE, BOOLEAN, INTEGER, DOUBLE, STRING, OBJECT };
 typedef union {
+	bool b;
 	int i;
 	double d;
 	std::string* s;

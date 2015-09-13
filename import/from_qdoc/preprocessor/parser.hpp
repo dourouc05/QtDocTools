@@ -19,6 +19,14 @@ AST* cpp_prototype(I begin, I end) {
 	auto valueAllocator = axe::e_ref([&currentValue](I i1, I i2) {
 		currentValue = new Value;
 	});
+	auto valueTrue = axe::e_ref([&currentValue](I i1, I i2) {
+		currentValue->content.b = true;
+		currentValue->type = BOOLEAN;
+	});
+	auto valueFalse = axe::e_ref([&currentValue](I i1, I i2) {
+		currentValue->content.b = false;
+		currentValue->type = BOOLEAN;
+	});
 	auto valueInt = axe::e_ref([&currentValue](I i1, I i2) {
 		std::stringstream(std::string(i1, i2)) >> currentValue->content.i;
 		currentValue->type = INTEGER;
@@ -141,6 +149,8 @@ AST* cpp_prototype(I begin, I end) {
 	auto kw_reference = axe::r_lit('&');
 	auto kw_pointer = +axe::r_lit('*');
 	auto kw_namespace = axe::r_lit("::");
+	auto kw_true = axe::r_lit("true");
+	auto kw_false = axe::r_lit("false");
 
 	// Grammar rules. 
 	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
@@ -160,9 +170,10 @@ AST* cpp_prototype(I begin, I end) {
 		& *type_namespace
 		& *space
 		& ~type_template;
+	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
-	auto value_litteral = value_string | value_number;
+	auto value_litteral = value_string | value_number | value_boolean;
 
 	auto value_object_simple = (identifier >> innerObjectIdentifier)
 		& *space

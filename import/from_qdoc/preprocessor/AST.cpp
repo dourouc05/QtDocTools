@@ -50,6 +50,8 @@ std::string ast_serialise_value(const Value* const v) {
 	case NONE:
 		std::cerr << "ASSERTION ERROR." << std::endl;
 		return "none";
+	case BOOLEAN: 
+		return (v->content.b) ? "true" : "false";
 	case INTEGER:
 		return std::to_string(v->content.i);
 	case DOUBLE:
