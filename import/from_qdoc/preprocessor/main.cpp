@@ -19,7 +19,7 @@ bool test_differ(const AST* const ast, const std::string & str) {
 bool test_match(const std::string & str, const std::string & testName) {
 	// Start parsing. 
 	AST* ast = cpp_prototype(str.begin(), str.end());
-	if (! ast->matched) {
+	if (!ast->matched) {
 		std::cerr << testName << " failed (no match): '" << str << "'" << std::endl;
 		delete ast;
 		return false;
@@ -55,6 +55,7 @@ void test() {
 	total++; count += test_match("(QRect rectangle = QRect(1, \"left\"))", "Object initialiser (two arguments) test");
 	total++; count += test_match("(QRect rectangle = QRect(QRect(1, \"left\")))", "Compound object test");
 	total++; count += test_match("(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))", "Horrible initialiser test");
+	total++; count += test_match("( Qt::GestureType  gesture )", "Namespaced type");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -70,17 +71,24 @@ int main(int argc, const char* argv[]) {
 	}
 
 	pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
+	int total = 0;
+	int errors = 0;
 	for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
 		pugi::xpath_node node = *it;
+		total += 1;
+
 		std::string prototype = node.node().value();
 		AST* ast = cpp_prototype(prototype.begin(), prototype.end());
 		if (test_differ(ast, prototype)) {
 			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
 			std::cerr << "    " << prototype << std::endl;
+			errors += 1;
 		}
 	}
 
-	//test();
+	std::cerr << errors << " errors out of " << total << "." << std::endl;
+
+	test();
 	//std::string str = "(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))";
 	//std::string str = "(QRect rectangle)";
 	//cpp_prototype(str.begin(), str.end());

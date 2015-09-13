@@ -47,6 +47,10 @@ AST* cpp_prototype(I begin, I end) {
 			currentIdentifier = new std::string(i1, i2);
 		}
 	});
+	auto valueIdentifierAddNamespacedComponent = axe::e_ref([&currentIdentifier](I i1, I i2) {
+		// Parses different components, but their structure is forgotten in the AST... 
+		currentIdentifier->append("::" + std::string(i1, i2));
+	});
 
 	auto outerObjectIdentifier = axe::e_ref([&currentOuterObject, &currentIdentifier](I i1, I i2) {
 		currentOuterObject = new Object;
@@ -130,11 +134,13 @@ AST* cpp_prototype(I begin, I end) {
 	auto kw_const = axe::r_lit("const");
 	auto kw_reference = axe::r_lit('&');
 	auto kw_pointer = +axe::r_lit('*');
+	auto kw_namespace = axe::r_lit("::");
 
 	// Grammar rules. 
 	// Recursive rules don't work due to syntax sugar missing. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
 	auto identifier = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) >> valueIdentifier;
+	auto type = identifier & *(kw_namespace & identifier >> valueIdentifierAddNamespacedComponent);
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
 	auto value_litteral = value_string | value_number;
@@ -159,7 +165,7 @@ AST* cpp_prototype(I begin, I end) {
 
 	auto parameter = ~(kw_const >> parameterAllocator >> parameterConst)
 		& *space
-		& (identifier >> parameterAllocator >> parameterType)
+		& (type >> parameterAllocator >> parameterType)
 		& *space
 		& ~((+kw_pointer) >> parameterPointers | (+kw_reference) >> parameterReferences)
 		& *space
