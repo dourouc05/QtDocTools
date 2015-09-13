@@ -63,7 +63,8 @@ void test() {
 	total++; count += test_match("( int  id ,  bool  enable  = true )", "Boolean default value");
 	total++; count += test_match("( const  QKeySequence  &  key ,  Qt::ShortcutContext  context  = Qt::WindowShortcut )", "Complex default value");
 	total++; count += test_match("( Qt::GestureType  gesture ,  Qt::GestureFlags  flags  = Qt::GestureFlags())", "Basic flags: namespaced objects");
-	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground | DrawChildren))", "Complex flags");
+	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground ) )", "Complex flags: objects with constant in constructor");
+	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground | DrawChildren ) )", "Complex flags: objects with expressions in constructor");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;

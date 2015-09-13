@@ -147,6 +147,8 @@ AST* cpp_prototype(I begin, I end) {
 	auto tpl_close = axe::r_lit('>');
 	auto quote = axe::r_lit('"');
 	auto underscore = axe::r_lit('_');
+	auto and = axe::r_lit('&');
+	auto or = axe::r_lit('|');
 
 	auto kw_const = axe::r_lit("const");
 	auto kw_reference = axe::r_lit('&');
@@ -176,12 +178,15 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
 	auto value_litteral = value_string | value_number | value_boolean;
+	auto value_constant = (identifier & *space & *type_namespace) >> valueAllocator >> valueConstant;
+	auto value_constant_nowrite = identifier & *space & *type_namespace;
+	auto value_expression = (value_constant_nowrite & *((and | or) & value_constant_nowrite)) >> valueAllocator >> valueConstant;
 
 	auto value_object_simple = (identifier >> innerObjectIdentifier)
 		& *space
 		& paren_open
 		& *space
-		& ~((value_litteral >> innerObjectNewValue) % spaced_comma)
+		& ~(((value_litteral | value_expression) >> innerObjectNewValue) % spaced_comma)
 		& *space
 		& paren_close;
 	auto value_simple = value_litteral | (value_object_simple >> valueAllocator >> valueInnerObject);
@@ -189,8 +194,7 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_object_compound = (identifier >> outerObjectIdentifier)
 		& *space
 		& paren_open & *space & ~((value_simple >> outerObjectNewValue) % spaced_comma) & *space & paren_close;
-	auto value_constant = identifier & *space & *type_namespace;
-	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | (value_constant >> valueAllocator >> valueConstant);
+	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | value_constant;
 	// value_object_compound and value_object_simple have the same prefix: if both are allowed inside value, 
 	// then the parser will be confused about which one is actually at hand; it will then follow the first one, 
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
