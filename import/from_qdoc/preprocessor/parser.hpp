@@ -64,7 +64,6 @@ AST* cpp_prototype(I begin, I end) {
 		currentIdentifier->append(std::string(i1, i2));
 	});
 	
-
 	auto outerObjectIdentifier = axe::e_ref([&currentOuterObject, &currentIdentifier](I i1, I i2) {
 		currentOuterObject = new Object;
 		currentOuterObject->identifier = currentIdentifier;
@@ -159,19 +158,18 @@ AST* cpp_prototype(I begin, I end) {
 	// Grammar rules. 
 	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
-	auto identifier = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) >> valueIdentifier;
-	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & identifier >> valueIdentifierAddCharacters;
+	auto raw_identifier = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) >> valueIdentifier;
+	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & raw_identifier >> valueIdentifierAddCharacters;
+	auto identifier = raw_identifier & *type_namespace;
+	auto identifier_nowrite = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) & *(kw_namespace & ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)));
 	auto type_template = (tpl_open >> valueIdentifierAddCharacters) 
 		& *space 
-		& (identifier >> valueIdentifierAddCharacters) 
-		& *type_namespace 
+		& (identifier_nowrite >> valueIdentifierAddCharacters)
 		& *space
 		& *(kw_pointer >> valueIdentifierAddCharacters)
 		& *space
 		& (tpl_close >> valueIdentifierAddCharacters);
 	auto type = identifier
-		& *space
-		& *type_namespace
 		& *space
 		& ~type_template;
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
