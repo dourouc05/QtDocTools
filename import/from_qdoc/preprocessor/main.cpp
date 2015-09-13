@@ -6,6 +6,15 @@
 
 #include "AST.hpp"
 #include "parser.hpp"
+#include "pugixml-1.6\src\pugixml.hpp"
+
+bool test_differ(const AST* const ast, const std::string & str) {
+	std::string original = str;
+	std::string serialised = ast->serialise();
+	original.erase(std::remove(original.begin(), original.end(), ' '), original.end());
+	serialised.erase(std::remove(serialised.begin(), serialised.end(), ' '), serialised.end());
+	return original.compare(serialised) != 0;
+}
 
 bool test_match(const std::string & str, const std::string & testName) {
 	// Start parsing. 
@@ -17,11 +26,7 @@ bool test_match(const std::string & str, const std::string & testName) {
 	}
 
 	// Test the AST: serialise it as C++ prototype; compare with input, removing all spaces.
-	std::string original = str;
-	std::string serialised = ast->serialise();
-	original.erase(std::remove(original.begin(), original.end(), ' '), original.end());
-	serialised.erase(std::remove(serialised.begin(), serialised.end(), ' '), serialised.end());
-	if (original.compare(serialised) != 0) {
+	if (test_differ(ast, str)) {
 		std::cerr << testName << " failed (ASTs differ): '" << str << "'" << std::endl;
 		std::cerr << "    Found '" << ast->serialise() << "' instead." << std::endl;
 		delete ast;
@@ -57,7 +62,25 @@ void test() {
 }
 
 int main(int argc, const char* argv[]) {
-	test();
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("qwidget.db");
+	if (!result) {
+		std::cerr << "Error while loading XML file: " << std::endl; 
+		std::cerr << "    " << result.description() << std::endl;
+	}
+
+	pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
+	for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
+		pugi::xpath_node node = *it;
+		std::string prototype = node.node().value();
+		AST* ast = cpp_prototype(prototype.begin(), prototype.end());
+		if (test_differ(ast, prototype)) {
+			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
+			std::cerr << "    " << prototype << std::endl;
+		}
+	}
+
+	//test();
 	//std::string str = "(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))";
 	//std::string str = "(QRect rectangle)";
 	//cpp_prototype(str.begin(), str.end());
