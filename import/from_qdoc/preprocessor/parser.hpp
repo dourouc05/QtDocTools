@@ -49,6 +49,10 @@ AST* cpp_prototype(I begin, I end) {
 		currentValue->type = OBJECT;
 		currentInnerObject = nullptr;
 	});
+	auto valueConstant = axe::e_ref([&currentValue](I i1, I i2) {
+		currentValue->content.s = new std::string(std::string(i1, i2));
+		currentValue->type = CONSTANT;
+	});
 
 	auto valueIdentifier = axe::e_ref([&currentIdentifier](I i1, I i2) {
 		if (currentIdentifier == nullptr) {
@@ -187,7 +191,8 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_object_compound = (identifier >> outerObjectIdentifier)
 		& *space
 		& paren_open & *space & ~((value_simple >> outerObjectNewValue) % spaced_comma) & *space & paren_close;
-	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject);
+	auto value_constant = identifier & *space & *type_namespace;
+	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | (value_constant >> valueAllocator >> valueConstant);
 	// value_object_compound and value_object_simple have the same prefix: if both are allowed inside value, 
 	// then the parser will be confused about which one is actually at hand; it will then follow the first one, 
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 

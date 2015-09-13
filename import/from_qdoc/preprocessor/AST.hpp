@@ -7,7 +7,7 @@ class Parameter;
 class Object;
 class Value;
 
-enum ValueType { NONE, BOOLEAN, INTEGER, DOUBLE, STRING, OBJECT };
+enum ValueType { NONE, BOOLEAN, INTEGER, DOUBLE, STRING, OBJECT, CONSTANT }; // Constant is implemented as string.
 typedef union {
 	bool b;
 	int i;

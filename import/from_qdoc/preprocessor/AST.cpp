@@ -60,6 +60,8 @@ std::string ast_serialise_value(const Value* const v) {
 		return *v->content.s;
 	case OBJECT:
 		return ast_serialise_object(v->content.o);
+	case CONSTANT:
+		return *v->content.s;
 	default:
 		std::cerr << "ASSERTION ERROR." << std::endl;
 		return "unknown";

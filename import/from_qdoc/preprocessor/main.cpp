@@ -60,7 +60,10 @@ void test() {
 	total++; count += test_match("( QList < Qt::QAction >  actions )", "Template namespaced type");
 	total++; count += test_match("( QList < QAction  *>  actions )", "Template type with pointer");
 	total++; count += test_match("(Qt::WidgetAttribute  attribute) const", "Constant method");
-	total++; count += test_match("( int  id ,  bool  enable  = true)", "Boolean default value");
+	total++; count += test_match("( int  id ,  bool  enable  = true )", "Boolean default value");
+	total++; count += test_match("( const  QKeySequence  &  key ,  Qt::ShortcutContext  context  = Qt::WindowShortcut )", "Complex default value");
+	total++; count += test_match("( Qt::GestureType  gesture ,  Qt::GestureFlags  flags  = Qt::GestureFlags())", "Basic flags");
+	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground | DrawChildren))", "Complex flags");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -68,32 +71,32 @@ void test() {
 }
 
 int main(int argc, const char* argv[]) {
-	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("qwidget.db");
-	if (!result) {
-		std::cerr << "Error while loading XML file: " << std::endl; 
-		std::cerr << "    " << result.description() << std::endl;
-	}
+	//pugi::xml_document doc;
+	//pugi::xml_parse_result result = doc.load_file("qwidget.db");
+	//if (!result) {
+	//	std::cerr << "Error while loading XML file: " << std::endl; 
+	//	std::cerr << "    " << result.description() << std::endl;
+	//}
 
-	pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
-	int total = 0;
-	int errors = 0;
-	for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
-		pugi::xpath_node node = *it;
-		total += 1;
+	//pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
+	//int total = 0;
+	//int errors = 0;
+	//for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
+	//	pugi::xpath_node node = *it;
+	//	total += 1;
 
-		std::string prototype = node.node().value();
-		AST* ast = cpp_prototype(prototype.begin(), prototype.end());
-		if (test_differ(ast, prototype)) {
-			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
-			std::cerr << "    " << prototype << std::endl;
-			errors += 1;
-		}
-	}
+	//	std::string prototype = node.node().value();
+	//	AST* ast = cpp_prototype(prototype.begin(), prototype.end());
+	//	if (test_differ(ast, prototype)) {
+	//		std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
+	//		std::cerr << "    " << prototype << std::endl;
+	//		errors += 1;
+	//	}
+	//}
 
-	std::cerr << errors << " errors out of " << total << "." << std::endl;
+	//std::cerr << errors << " errors out of " << total << "." << std::endl;
 
-	//test();
+	test();
 	//std::string str = "(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))";
 	//std::string str = "(QRect rectangle)";
 	//cpp_prototype(str.begin(), str.end());
