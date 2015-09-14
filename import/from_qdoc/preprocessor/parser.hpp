@@ -181,7 +181,10 @@ AST* cpp_prototype(I begin, I end) {
 	auto value_litteral = value_string | value_number | value_boolean;
 	auto value_constant = (identifier & *space & *type_namespace) >> valueAllocator >> valueConstant;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;
-	auto value_expression = (value_constant_nowrite & *((and | or) & value_constant_nowrite)) >> valueAllocator >> valueConstant;
+	auto value_expression_operator = and | or;
+	auto value_expression_spaced_operator = *space & value_expression_operator & *space;
+	auto value_expression = (value_constant_nowrite & *(value_expression_spaced_operator & value_constant_nowrite & *space))
+		>> valueAllocator >> valueConstant;
 
 	auto value_object_simple = (identifier >> innerObjectIdentifier)
 		& *space
