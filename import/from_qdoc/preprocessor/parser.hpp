@@ -149,6 +149,8 @@ AST* cpp_prototype(I begin, I end) {
 	auto underscore = axe::r_lit('_');
 	auto and = axe::r_lit('&');
 	auto or = axe::r_lit('|');
+	auto alpha = axe::r_alpha() | underscore; 
+	auto alphanum = axe::r_alnumstr() | underscore; 
 
 	auto kw_const = axe::r_lit("const");
 	auto kw_reference = axe::r_lit('&');
@@ -160,10 +162,10 @@ AST* cpp_prototype(I begin, I end) {
 	// Grammar rules. 
 	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
-	auto raw_identifier = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) >> valueIdentifier;
+	auto raw_identifier = (alpha & *alphanum) >> valueIdentifier;
 	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & raw_identifier >> valueIdentifierAddCharacters;
 	auto identifier = raw_identifier & *type_namespace;
-	auto identifier_nowrite = ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)) & *(kw_namespace & ((axe::r_alpha() | underscore) & *(axe::r_alnumstr() | underscore)));
+	auto identifier_nowrite = (alpha & *alphanum) % kw_namespace;
 	auto type_template = (tpl_open >> valueIdentifierAddCharacters) 
 		& *space 
 		& (identifier_nowrite >> valueIdentifierAddCharacters)
@@ -171,9 +173,8 @@ AST* cpp_prototype(I begin, I end) {
 		& *(kw_pointer >> valueIdentifierAddCharacters)
 		& *space
 		& (tpl_close >> valueIdentifierAddCharacters);
-	auto type = identifier
-		& *space
-		& ~type_template;
+	auto type = identifier & *space & ~type_template;
+
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
@@ -189,7 +190,7 @@ AST* cpp_prototype(I begin, I end) {
 		& ~(((value_litteral | value_expression) >> innerObjectNewValue) % spaced_comma)
 		& *space
 		& paren_close;
-	auto value_simple = value_litteral | (value_object_simple >> valueAllocator >> valueInnerObject);
+	auto value_simple = value_litteral | (value_object_simple >> valueAllocator >> valueInnerObject) | value_expression;
 
 	auto value_object_compound = (identifier >> outerObjectIdentifier)
 		& *space
