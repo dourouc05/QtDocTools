@@ -126,9 +126,9 @@ int main(int argc, const char* argv[]) {
 		}
 
 		// Replace the node by a parsed version. 
-		pugi::xml_node methodsynopsis = node.node().parent();
-		methodsynopsis.remove_child(node.node().previous_sibling()); // <db:void role="parameters"/>
-		methodsynopsis.remove_child(node.node()); // <db:exceptionname role="parameters">( QAction  *  action )</db:exceptionname>
+		pugi::xml_node methodsynopsis = node.node().parent().parent(); // <db:methodsynopsis>
+		methodsynopsis.remove_child(node.node().parent().previous_sibling()); // <db:void role="parameters"/>
+		methodsynopsis.remove_child(node.node().parent()); // <db:exceptionname role="parameters">( QAction  *  action )</db:exceptionname>
 		ast_to_xml(methodsynopsis, ast);
 	}
 
