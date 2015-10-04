@@ -56,4 +56,6 @@ public:
 
 	Value();
 	~Value();
+
+	std::string serialise() const;
 };

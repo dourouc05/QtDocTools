@@ -71,33 +71,73 @@ void test() {
 	else std::cerr << "Good job." << std::endl;
 }
 
+void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
+	if (ast->parameters.size() == 0) {
+		methodsynopsis.append_child("db:void");
+	} else {
+		auto end = ast->parameters.end();
+		for (auto iterator = ast->parameters.begin(); iterator != end; ++iterator) {
+			Parameter* p = *iterator;
+			pugi::xml_node param = methodsynopsis.append_child("db:methodparam");
+
+			if (p->isConst) {
+				param.append_child("db:modifier").text().set("const");
+			}
+
+			std::string type = *p->type + ' ' + std::string(p->nPointers, '*') + std::string(p->nReferences, '&');
+			param.append_child("db:type").text().set(type.c_str());
+
+			param.append_child("db:parameter").text().set((*p->identifier).c_str());
+
+			//if (p->initialiser != nullptr) {
+			//	param.append_child("db:initializer").text().set(p->initialiser); // TODO
+			//}
+		}
+	}
+
+	if (ast->isConst) {
+		methodsynopsis.append_child("db:modifier").text().set("const");
+	}
+}
+
 int main(int argc, const char* argv[]) {
-	//pugi::xml_document doc;
-	//pugi::xml_parse_result result = doc.load_file("qwidget.db");
-	//if (!result) {
-	//	std::cerr << "Error while loading XML file: " << std::endl; 
-	//	std::cerr << "    " << result.description() << std::endl;
-	//}
+	pugi::xml_document doc;
+	pugi::xml_parse_result result = doc.load_file("qwidget.db");
+	if (!result) {
+		std::cerr << "Error while loading XML file: " << std::endl; 
+		std::cerr << "    " << result.description() << std::endl;
+	}
 
-	//pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
-	//int total = 0;
-	//int errors = 0;
-	//for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
-	//	pugi::xpath_node node = *it;
-	//	total += 1;
+	pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
+	int total = 0;
+	int errors = 0;
+	for (pugi::xpath_node_set::const_iterator it = to_analyse.begin(); it != to_analyse.end(); ++it) {
+		pugi::xpath_node node = *it;
+		total += 1;
 
-	//	std::string prototype = node.node().value();
-	//	AST* ast = cpp_prototype(prototype.begin(), prototype.end());
-	//	if (test_differ(ast, prototype)) {
-	//		std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
-	//		std::cerr << "    " << prototype << std::endl;
-	//		errors += 1;
-	//	}
-	//}
+		// Parse the text. 
+		std::string prototype = node.node().value();
+		AST* ast = cpp_prototype(prototype.begin(), prototype.end());
+		if (test_differ(ast, prototype)) {
+			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
+			std::cerr << "    " << prototype << std::endl;
+			errors += 1;
+			continue;
+		}
 
-	//std::cerr << errors << " errors out of " << total << "." << std::endl;
+		// Replace the node by a parsed version. 
+		pugi::xml_node methodsynopsis = node.node().parent();
+		methodsynopsis.remove_child(node.node().previous_sibling()); // <db:void role="parameters"/>
+		methodsynopsis.remove_child(node.node()); // <db:exceptionname role="parameters">( QAction  *  action )</db:exceptionname>
+		ast_to_xml(methodsynopsis, ast);
+	}
 
-	test();
+	std::cerr << errors << " errors out of " << total << "." << std::endl;
+	if (errors == 0) {
+		doc.save_file("qwidget-new.db");
+	}
+
+	//test();
 	//std::string str = "(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))";
 	//std::string str = "(QRect rectangle)";
 	//cpp_prototype(str.begin(), str.end());
