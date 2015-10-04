@@ -89,9 +89,9 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 
 			param.append_child("db:parameter").text().set((*p->identifier).c_str());
 
-			//if (p->initialiser != nullptr) {
-			//	param.append_child("db:initializer").text().set(p->initialiser); // TODO
-			//}
+			if (p->initialiser != nullptr) {
+				param.append_child("db:initializer").text().set(p->initialiser->serialise().c_str());
+			}
 		}
 	}
 

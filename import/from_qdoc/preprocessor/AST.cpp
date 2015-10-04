@@ -44,37 +44,36 @@ Value::~Value() {
 	}
 }
 
-std::string ast_serialise_object(const Object* const o);
-std::string ast_serialise_value(const Value* const v) {
-	switch (v->type) {
+std::string Value::serialise() const {
+	switch (type) {
 	case NONE:
 		std::cerr << "ASSERTION ERROR." << std::endl;
 		return "none";
 	case BOOLEAN: 
-		return (v->content.b) ? "true" : "false";
+		return (content.b) ? "true" : "false";
 	case INTEGER:
-		return std::to_string(v->content.i);
+		return std::to_string(content.i);
 	case DOUBLE:
-		return std::to_string(v->content.d);
+		return std::to_string(content.d);
 	case STRING:
-		return *v->content.s;
+		return *content.s;
 	case OBJECT:
-		return ast_serialise_object(v->content.o);
+		return content.o->serialise();
 	case CONSTANT:
-		return *v->content.s;
+		return *content.s;
 	default:
 		std::cerr << "ASSERTION ERROR." << std::endl;
 		return "unknown";
 	}
 }
 
-std::string ast_serialise_object(const Object* const o) {
-	std::string retval = *o->identifier;
+std::string Object::serialise() const {
+	std::string retval = *identifier;
 	retval += "(";
-	auto end = o->parameters.end();
-	for (auto iterator = o->parameters.begin(); iterator != end; ++iterator) {
+	auto end = parameters.end();
+	for (auto iterator = parameters.begin(); iterator != end; ++iterator) {
 		Value* value = *iterator;
-		retval += ast_serialise_value(value);
+		retval += value->serialise();
 		if (std::next(iterator) != end) {
 			retval += ", ";
 		}
@@ -82,6 +81,10 @@ std::string ast_serialise_object(const Object* const o) {
 	retval += ")";
 
 	return retval;
+}
+
+std::string Parameter::serialise() const {
+	return *type + ' ' + std::string(nPointers, '*') + std::string(nReferences, '&');
 }
 
 std::string AST::serialise() const {
@@ -98,18 +101,13 @@ std::string AST::serialise() const {
 			retval += "const ";
 		}
 
-		retval += *p->type;
-		retval += ' ';
-		retval += std::string(p->nPointers, '*');
-		retval += std::string(p->nReferences, '&');
-		retval += ' ';
-
+		retval += p->serialise() + ' ';
 		retval += *p->identifier;
 
 		if (p->initialiser != nullptr) {
 			Value* value = p->initialiser;
 			retval += " = ";
-			retval += ast_serialise_value(p->initialiser);
+			retval += p->initialiser->serialise();
 		}
 
 		if (std::next(iterator) != end) {

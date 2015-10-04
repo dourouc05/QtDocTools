@@ -24,6 +24,7 @@ public:
 
 	AST();
 	~AST();
+
 	std::string serialise() const;
 };
 
@@ -38,6 +39,8 @@ public:
 
 	Parameter();
 	~Parameter();
+
+	std::string serialise() const;
 };
 
 class Object {
@@ -47,6 +50,8 @@ public:
 
 	Object();
 	~Object();
+
+	std::string serialise() const;
 };
 
 class Value {
