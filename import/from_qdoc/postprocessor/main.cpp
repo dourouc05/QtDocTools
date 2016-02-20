@@ -126,7 +126,8 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 
 int main(int argc, const char* argv[]) {
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("qwidget.db");
+	// pugi::xml_parse_result result = doc.load_file("qwidget.db");
+	pugi::xml_parse_result result = doc.load(std::cin);
 	if (!result) {
 		std::cerr << "Error while loading XML file: " << std::endl; 
 		std::cerr << "    " << result.description() << std::endl;
@@ -158,7 +159,8 @@ int main(int argc, const char* argv[]) {
 
 	std::cerr << errors << " errors out of " << total << " prototypes analysed." << std::endl;
 	if (errors == 0) {
-		doc.save_file("qwidget-new.db");
+		// doc.save_file("qwidget-new.db");
+		doc.save(std::cout);
 	}
 
 	//test();
