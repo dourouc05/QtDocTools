@@ -18,7 +18,7 @@ bool test_differ(const AST* const ast, const std::string & str) {
 
 bool test_match(const std::string & str, const std::string & testName) {
 	// Start parsing. 
-	AST* ast = cpp_prototype(str.begin(), str.end());
+	AST* ast = cpp_prototype(str);
 	if (!ast->matched) {
 		std::cerr << testName << " failed (no match): '" << str << "'" << std::endl;
 		delete ast;
@@ -117,7 +117,7 @@ int main(int argc, const char* argv[]) {
 
 		// Parse the text. 
 		std::string prototype = node.node().value();
-		AST* ast = cpp_prototype(prototype.begin(), prototype.end());
+		AST* ast = cpp_prototype(prototype);
 		if (test_differ(ast, prototype)) {
 			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
 			std::cerr << "    " << prototype << std::endl;
