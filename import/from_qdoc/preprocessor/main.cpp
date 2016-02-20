@@ -6,7 +6,7 @@
 
 #include "AST.hpp"
 #include "parser.hpp"
-#include "pugixml-1.6\src\pugixml.hpp"
+#include "pugixml\src\pugixml.hpp"
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;

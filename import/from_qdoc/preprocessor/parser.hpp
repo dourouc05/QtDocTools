@@ -1,5 +1,4 @@
-#include "axe_1.5.4.164/include/axe.h"
-//#include <axe/axe.h>
+#include "axe/include/axe.h"
 
 #include "AST.hpp"
 
