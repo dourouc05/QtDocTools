@@ -71,6 +71,29 @@ void test() {
 	else std::cerr << "Good job." << std::endl;
 }
 
+std::string trim(const std::string & str) {
+	size_t first = str.find_first_not_of(' ');
+	size_t last = str.find_last_not_of(' ');
+	return str.substr(first, last - first + 1);
+}
+
+std::string replace(const std::string & str, const std::string & before, const std::string & after) {
+	size_t index = 0;
+	std::string modified = str;
+
+	while (true) {
+		index = str.find(before, index);
+		if (index == std::string::npos) {
+			break;
+		}
+
+		modified.replace(index, before.length(), after);
+		index += after.length();
+	}
+
+	return modified;
+}
+
 void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 	if (ast->parameters.size() == 0) {
 		methodsynopsis.append_child("db:void");
@@ -84,7 +107,8 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 				param.append_child("db:modifier").text().set("const");
 			}
 
-			std::string type = *p->type + ' ' + std::string(p->nPointers, '*') + std::string(p->nReferences, '&');
+			std::string sub_type = replace(replace(*p->type, "*", " *"), "&", " &");
+			std::string type = trim(sub_type + ' ' + std::string(p->nPointers, '*') + std::string(p->nReferences, '&'));
 			param.append_child("db:type").text().set(type.c_str());
 
 			param.append_child("db:parameter").text().set((*p->identifier).c_str());
@@ -132,7 +156,7 @@ int main(int argc, const char* argv[]) {
 		ast_to_xml(methodsynopsis, ast);
 	}
 
-	std::cerr << errors << " errors out of " << total << "." << std::endl;
+	std::cerr << errors << " errors out of " << total << " prototypes analysed." << std::endl;
 	if (errors == 0) {
 		doc.save_file("qwidget-new.db");
 	}
