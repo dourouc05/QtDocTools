@@ -474,9 +474,9 @@
 
   <!-- Handle classes: class structure. -->
   <xsl:template name="classListing">
+    <xsl:param name="className" as="xs:string"/>
     <xsl:param name="functions" as="element(html:div)"/>
     <xsl:param name="properties" as="element(html:div)?"/>
-    <xsl:param name="className" as="xs:string"/>
     
     <xsl:param name="obsoleteFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
@@ -903,11 +903,47 @@
 
   <!-- Handle QML types: type structure. -->
   <xsl:template name="qmlTypeListing">
+    <xsl:param name="qmlTypeName" as="xs:string"/>
+    
     <xsl:param name="import" as="element()?"/>
     <xsl:param name="instantiates" as="element()?"/>
     <xsl:param name="inherits" as="element()?"/>
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
+    
+    <db:classsynopsis>
+      <db:ooclass>
+        <db:classname>
+          <xsl:value-of select="$qmlTypeName"/>
+        </db:classname>
+      </db:ooclass>
+      
+      <xsl:if test="$import">
+        <db:classsynopsisinfo role="import">
+          <xsl:value-of select="$import"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$instantiates">
+        <db:classsynopsisinfo role="instantiates">
+          <xsl:value-of select="$instantiates"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$inherits">
+        <db:classsynopsisinfo role="inherits">
+          <xsl:value-of select="$inherits/html:a/text()"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$inheritedBy">
+        <db:classsynopsisinfo role="inheritedBy">
+          <xsl:value-of select="$inheritedBy/html:p/html:a/text()"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$since">
+        <db:classsynopsisinfo role="since">
+          <xsl:value-of select="$since"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+    </db:classsynopsis>
   </xsl:template>
 
   <!-- Handle types: detailed description. -->
