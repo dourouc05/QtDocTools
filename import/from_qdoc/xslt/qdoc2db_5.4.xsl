@@ -990,7 +990,7 @@
                 <xsl:value-of select="./html:img/@alt"/>
               </db:alt>
             </xsl:if>
-
+            
             <db:imageobject>
               <db:imagedata>
                 <xsl:attribute name="fileref">
@@ -1025,6 +1025,19 @@
             <xsl:apply-templates mode="content_paragraph"/>
           </db:para>
         </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template mode="content" match="html:blockquote">
+    <!-- Blockquotes are barely used in the documentation. -->
+    <xsl:choose>
+      <xsl:when test="count(child::*) = 1 and child::html:p and html:p/count(child::*) = 1 and html:p/child::html:code">
+        <db:programlisting>
+          <xsl:value-of select="./html:p/html:code/text()"/>
+        </db:programlisting>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Unexpected element: html:blockquote</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
