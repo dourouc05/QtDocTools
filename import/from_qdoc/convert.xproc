@@ -8,7 +8,6 @@
     </p:output>
     
     <!-- First import the input as HTML data, make it XML. -->
-    <!--
     <p:exec>
         <p:input port="source"/>
         <p:with-option name="command" select="'python'"/>
@@ -16,7 +15,6 @@
         <p:with-option name="source-is-xml" select="false()"/>
         <p:with-option name="result-is-xml" select="true()"/>
     </p:exec>
-    -->
     
     <!-- Then perform an XSLT step to get DocBook. -->
     <p:xslt>

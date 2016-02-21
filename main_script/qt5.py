@@ -11,12 +11,11 @@ This script runs qdoc to generate a XML-formatted version of the documentation i
 TODO: actual CLI parameters.
 """
 
-__author__ = 'Thibaut Cuvelier'
+import xml.etree.ElementTree as ETree
+import subprocess
 
 try:
     import html5lib
-    import xml.etree.ElementTree as ETree
-
     no_html5 = False
 except ImportError:
     no_html5 = True
@@ -25,17 +24,21 @@ except ImportError:
 
 # Command-line configuration.
 sources = "F:/QtDoc/QtDoc/QtSrc/qt-everywhere-opensource-src-5.4.2/"
-qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
 output = "F:/QtDoc/output/html/"
 indexFolder = output
 version = [5, 4, 2]
+
+qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
+saxon9 = "F:/QtDoc/QtDoc/SaxonHE9-7-0-3J/saxon9he.jar"
+xslt2 = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl"
 
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
 prepare = True
 generate = True  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = True and not no_html5
+generate_xml = True and not no_html5  # Could be started without generation!
+generate_db = True  # Needs XML to be generated first.
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
@@ -213,7 +216,7 @@ def generate_module(module_name, configuration_file):
 # Convert the documentation HTML files as XML for the given module.
 def generate_module_xml(module_name, configuration_file):
     for root, subdirs, files in os.walk(output + module_name + "/"):
-        if root.endswith('/style'):
+        if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
 
         for file in files:
@@ -225,6 +228,27 @@ def generate_module_xml(module_name, configuration_file):
                     tree = html5lib.parse(f)
                 with open(out_file_name, 'wb') as f:
                     f.write(ETree.tostring(tree))
+    logging.info('Parsing as XML: done with module %s' % module_name)
+
+
+# Call an XSLT 2 engine to convert a single XHTML5 file into DocBook.
+# TODO: handle various XSLT stylesheets.
+def generate_module_docbook_file(file_in, file_out):
+    subprocess.call(['java', '-jar', saxon9])
+
+
+# Convert the documentation XML files as DocBook for the given module.
+def generate_module_db(module_name, configuration_file):
+    for root, subdirs, files in os.walk(output + module_name + "/"):
+        if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
+            continue
+
+        for file in files:
+            if file.endswith('.xml'):
+                base_file_name = os.path.join(root, file[:-4])
+                in_file_name = base_file_name + '.xml'
+                out_file_name = base_file_name + '.db'
+                generate_module_docbook_file(in_file_name, out_file_name)
     logging.info('Parsing as XML: done with module %s' % module_name)
 
 
@@ -253,10 +277,16 @@ if __name__ == '__main__':
     if generate_xml:
         for moduleName, conf in configs.items():
             generate_module_xml(module_name=moduleName, configuration_file=conf)
+    time_xml = time.perf_counter()
 
-    time_end = time.perf_counter()
-    print("Total time: %f s" % (time_end - time_beginning))
+    if generate_db:
+        for moduleName, conf in configs.items():
+            generate_module_db(module_name=moduleName, configuration_file=conf)
+    time_db = time.perf_counter()
+
+    print("Total time: %f s" % (time_db - time_beginning))
     print("Time to read configuration files: %f s" % (time_configs - time_beginning))
     print("Time to create indexes: %f s" % (time_prepare - time_configs))
     print("Time to generate HTML files: %f s" % (time_generate - time_prepare))
-    print("Time to generate XML files: %f s" % (time_end - time_generate))
+    print("Time to generate XML files: %f s" % (time_xml - time_generate))
+    print("Time to generate DocBook files: %f s" % (time_db - time_xml))
