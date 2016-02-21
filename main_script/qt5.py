@@ -35,9 +35,9 @@ xslt2 = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl"
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = True
-generate = True  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = True and not no_html5  # Could be started without generation!
+prepare = False
+generate = False  # If prepare is not True when generate is, need an indexFolder.
+generate_xml = False and not no_html5  # Could be started without generation!
 generate_db = True  # Needs XML to be generated first.
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
@@ -232,9 +232,11 @@ def generate_module_xml(module_name, configuration_file):
 
 
 # Call an XSLT 2 engine to convert a single XHTML5 file into DocBook.
-# TODO: handle various XSLT stylesheets.
-def generate_module_docbook_file(file_in, file_out):
-    subprocess.call(['java', '-jar', saxon9])
+# Here, specific to one XSLT2 engine: Saxon 9. Displays errors to the user.
+def call_xslt(file_in, file_out, stylesheet):
+    result = subprocess.run(['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out],
+                            stdout=subprocess.PIPE)
+    print(result.stdout)
 
 
 # Convert the documentation XML files as DocBook for the given module.
@@ -248,8 +250,8 @@ def generate_module_db(module_name, configuration_file):
                 base_file_name = os.path.join(root, file[:-4])
                 in_file_name = base_file_name + '.xml'
                 out_file_name = base_file_name + '.db'
-                generate_module_docbook_file(in_file_name, out_file_name)
-    logging.info('Parsing as XML: done with module %s' % module_name)
+                call_xslt(in_file_name, out_file_name, xslt2)
+    logging.info('XML to DocBook: done with module %s' % module_name)
 
 
 # Algorithm:
