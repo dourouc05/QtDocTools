@@ -16,10 +16,24 @@
   <xsl:strip-space elements="*"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
-  <xsl:import-schema schema-location="./schemas/docbook.xsd"/>
+  <xsl:import-schema schema-location="./schemas/docbook.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
 
   <!-- Output document class. -->
   <!-- @TODO: classes may have a <ul> somewhere in the beginning to indicate other files to load. -->
+  <xsl:template match="/" use-when="system-property('xsl:is-schema-aware')='yes'" priority="2">
+    <xsl:variable name="input" as="document-node()">
+      <xsl:document validation="strict">
+        <xsl:copy-of select="/"/>
+      </xsl:document>
+    </xsl:variable>
+    <xsl:result-document validation="strict">
+      <xsl:apply-templates select="$input/html:html"/>
+    </xsl:result-document>
+  </xsl:template>
+  <xsl:template match="/">
+    <xsl:apply-templates select="html:html"/>
+  </xsl:template>    
+  
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
@@ -229,7 +243,7 @@
       as="xs:boolean"/>
 
     <!-- Actually output something. -->
-    <db:article version="5.0" xsl:validation="strict">
+    <db:article version="5.0">
       <xsl:attribute name="xml:lang">
         <xsl:value-of select="./@lang"/>
       </xsl:attribute>
