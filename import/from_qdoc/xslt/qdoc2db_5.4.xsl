@@ -41,6 +41,7 @@
     <xsl:variable name="title" select="$content/html:h1[@class = 'title']/text()" as="xs:string"/>
     <xsl:variable name="subtitle" as="xs:string"
       select="string($content/html:span[@class = 'subtitle']/text())"/>
+    <xsl:variable name="hasSubtitle" as="xs:boolean" select="not($subtitle = '')"/>
     <xsl:variable name="isClass" as="xs:boolean"
       select="
         starts-with($title, 'Q')
@@ -134,7 +135,21 @@
           $siblingAfterFuncs"/>
 
     <!-- Error checks. -->
-    <xsl:if test="not($subtitle = '')">
+    <xsl:variable name="isExamplePage" as="xs:boolean"
+      select=" $hasSubtitle and ends-with($title, 'Example File')"/>
+    <xsl:variable name="isBareExamplePage" as="xs:boolean" 
+      select="
+        $isExamplePage 
+          and count($description/child::*) = 2
+          and $description/child::*[1][self::html:a][@name = 'details']
+          and $description/child::*[2][self::html:pre]"/> 
+    <!-- 
+      TODO: is the distinction with $isExamplePage required? It seems only pages with source code 
+      (and not the "main" page for each example) have a nonempty subtitle and require this. 
+    -->
+
+    <xsl:if test="$hasSubtitle and not($isBareExamplePage)">
+      <!-- Ignore the subtitles for example pages, with only source code (it is redundant with the title). -->
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
     <xsl:if test="boolean($siblingAfterNonmems)">
@@ -209,7 +224,7 @@
       </html:div>
     </xsl:variable>
     <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types_title)" as="xs:boolean"/>
-    
+
     <xsl:variable name="obsolete_properties_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Property Documentation']"/>
     <xsl:variable name="obsolete_properties" as="element(html:div)?">
@@ -220,8 +235,9 @@
         />
       </html:div>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)" as="xs:boolean"/>
-    
+    <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)"
+      as="xs:boolean"/>
+
     <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Member Function Documentation']"/>
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">

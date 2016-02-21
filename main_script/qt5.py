@@ -237,7 +237,7 @@ def call_xslt(file_in, file_out, stylesheet):
     result = subprocess.run(['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out],
                             stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s': %s" % (file_in, result.stderr))
+        logging.warning("Problem(s) with file '%s': %s" % (file_in, result.stderr.decode('utf-8')))
 
 
 # Convert the documentation XML files as DocBook for the given module.
@@ -247,7 +247,11 @@ def generate_module_db(module_name, configuration_file):
             continue
 
         for file in files:
-            if file.endswith('.xml'):
+            # Avoid lists of examples (-manifest.xml) and files automatically included within the output with the XSLT
+            # stylesheet (-members.xml, -obsolete.xml).
+            if file.endswith('.xml') \
+                    and not file.endswith('-manifest.xml') \
+                    and not file.endswith('-members.xml') and not file.endswith('-obsolete.xml'):
                 base_file_name = os.path.join(root, file[:-4])
                 in_file_name = base_file_name + '.xml'
                 out_file_name = base_file_name + '.db'
