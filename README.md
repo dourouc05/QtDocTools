@@ -20,7 +20,7 @@ In more details, the following steps are required:
    
 The first two steps are performed within the main Python script `main_script/qt5.py`. 
 The QDoc automation is also available as a stand-alone script in 
-�import/from_qdoc/qdoc2html�. The HMLT5-to-XML transformation is also available as a 
-stand-alone script in �import/from_qdoc/html2xml�. The XSL transformations is performed 
-with the stylesheets in �import/from_qdoc/xslt�, whilst the C++ parsing is done with 
-the executable in �import/from_qdoc/postprocessor�.
+`import/from_qdoc/qdoc2html`. The HMLT5-to-XML transformation is also available as a 
+stand-alone script in `import/from_qdoc/html2xml`. The XSL transformations is performed 
+with the stylesheets in `import/from_qdoc/xslt`, whilst the C++ parsing is done with 
+the executable in `import/from_qdoc/postprocessor`.
