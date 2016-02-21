@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:lang="en">
+    <db:title>Introduction to QDoc</db:title>
+    <db:programlisting>/*!
+        \classQObject
+        \brief The QObjectclass is the base class of all Qt objects.
+        
+        \ingroup objectmodel
+        
+        \reentrant
+        
+        QObject is the heart of the Qt \l{Object Model}. The
+        central feature in this model is a very powerful mechanism
+        for seamless object communication called \l{signals and
+        slots}. You can connect a signal to a slot with connect()
+        and destroy the connection with disconnect(). To avoid
+        never ending notification loops you can temporarily block
+        signals with blockSignals(). The protected functions
+        connectNotify() and disconnectNotify() make it possible to
+        track connections.QObjects organize themselves in \l {Object Trees &amp;
+        Ownership} {object trees}. When you create a QObject with
+        another object as parent, the object will automatically
+        add itself to the parent's \c children() list. The parent
+        takes ownership of the object. It will automatically
+        delete its children in its destructor. You can look for an
+        object by name and optionally type using findChild() or
+        findChildren().
+        
+        Every object has an objectName() and its class name can be
+        found via the corresponding metaObject() (see
+        QMetaObject::className()). You can determine whether the
+        object's class inherits another class in the QObject
+        inheritance hierarchy by using the \c inherits() function.....*/</db:programlisting>
+    <db:para>From the QDoc comment above, QDoc generates the HTML <db:link xlink:href="qtcore/qobject.html">QObject class reference</db:link> page.</db:para>
+    <db:para>This manual explains how to use the QDoc commands in QDoc comments to embed good documentation in your source files. It also explains how to make a <db:link xlink:href="21-0-qdoc-configuration.html">QDoc configuration file</db:link>, which you will pass to QDoc on the command line.</db:para>
+    <db:section xml:id="running-qdoc">
+        <db:title>Running QDoc</db:title>
+        <db:para>The current name of the QDoc program is <db:code>qdoc</db:code>. To run qdoc from the command line, give it the name of a configuration file:</db:para>
+        <db:programlisting>$ ../../bin/qdoc ./config.qdocconf</db:programlisting>
+        <db:para>QDoc recognizes the <db:code>.qdocconf</db:code> suffix as a <db:link xlink:href="21-0-qdoc-configuration.html">QDoc configuration file</db:link>. The configuration file is where you tell QDoc where to find the project source files, header files, and <db:code>.qdoc</db:code> files. It is also where you tell QDoc what kind of output to generate (HTML, DITA XML,...), and where to put the generated documentation. The configuration file also contains other information for QDoc.</db:para>
+        <db:para>See <db:link xlink:href="21-0-qdoc-configuration.html">The QDoc Configuration File</db:link> for instructions on how to set up a QDoc configuration file.</db:para>
+        <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist>
+                <db:member>
+                    <db:link xlink:href="qdoc-index.html">QDoc Manual</db:link>
+                </db:member>
+                <db:member>
+                    <db:link xlink:href="27-qdoc-commands-alphabetical.html">Command Index</db:link>
+                </db:member>
+            </db:simplelist>
+        </db:section>
+    </db:section>
+    <db:section xml:id="how-qdoc-works">
+        <db:title>How QDoc Works</db:title>
+        <db:para>QDoc begins by reading the configuration file you specified on the command line. It stores all the variables from the configuration file for later use. One of the first variables it uses is <db:code>outputformats</db:code>. This variable tells QDoc which output generators it will run. The default value is <db:emphasis>HTML</db:emphasis>, so if you don't set <db:code>outputformats</db:code> in your configuration file, QDoc will generate HTML output. That's usually what you will want anyway, but you can also specify <db:emphasis>DITAXML</db:emphasis> to get DITA XML output instead.</db:para>
+        <db:para>Next, QDoc uses the values of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#headerdirs-variable">headerdirs</db:link> variable and/or the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#headers-variable">headers</db:link> variable to find and parse all the header files for your project. QDoc does <db:emphasis>not</db:emphasis> scan header files for QDoc comments. It parses the header files to build a master tree of all the items that should be documented, in other words, the items that QDoc should find QDoc comments for.</db:para>
+        <db:para>For each QDoc comment it finds, it searches the master tree for the item where the documentation belongs. Then it interprets the qdoc commands in the comment and stores the interpreted commands and the comment text in the tree node for the item.</db:para>
+        <db:para>Finally, QDoc traverses the master tree. For each node, if the node has stored documentation, QDoc calls the output generator specified by the <db:code>outputformats</db:code> variable to format and write the documentation in the directory specified in the configuration file in the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#outputdir-variable">outputdir</db:link> variable.</db:para>
+        <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist>
+                <db:member>
+                    <db:link xlink:href="qdoc-index.html">QDoc Manual</db:link>
+                </db:member>
+                <db:member>
+                    <db:link xlink:href="27-qdoc-commands-alphabetical.html">Command Index</db:link>
+                </db:member>
+            </db:simplelist>
+        </db:section>
+    </db:section>
+    <db:section xml:id="command-types">
+        <db:title>Command Types</db:title>
+        <db:para>QDoc interprets three types of commands:</db:para>
+        <db:itemizedlist>
+            <db:listitem>
+                <db:para>
+                    <db:link xlink:href="13-qdoc-commands-topics.html">Topic Commands</db:link>
+                </db:para>
+            </db:listitem>
+            <db:listitem>
+                <db:para>
+                    <db:link xlink:href="14-qdoc-commands-contextcommands.html">Context Commands</db:link>
+                </db:para>
+            </db:listitem>
+            <db:listitem>
+                <db:para>
+                    <db:link xlink:href="03-qdoc-commands-markup.html">Markup Commands</db:link>
+                </db:para>
+            </db:listitem>
+        </db:itemizedlist>
+        <db:para>Topic commands identify the element you are documenting, for example a C++ class, function, type, or an extra page of text that doesn't map to an underlying C++ element.</db:para>
+        <db:para>Context commands tell QDoc how the element being documented relates to other documented elements, for example, next and previous page links, inclusion in page groups, or library modules. Context commands can also provide information about the documented element that QDoc can't get from the source files, for example, whether the element is thread-safe, whether it is an overloaded or reimplemented function, or whether it has been deprecated.</db:para>
+        <db:para>Markup commands tell QDoc how text and image elements in the document should be rendered, or about the document's outline structure.</db:para>
+        <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist>
+                <db:member>
+                    <db:link xlink:href="qdoc-index.html">QDoc Manual</db:link>
+                </db:member>
+                <db:member>
+                    <db:link xlink:href="27-qdoc-commands-alphabetical.html">Command Index</db:link>
+                </db:member>
+            </db:simplelist>
+        </db:section>
+    </db:section>
+</db:article>

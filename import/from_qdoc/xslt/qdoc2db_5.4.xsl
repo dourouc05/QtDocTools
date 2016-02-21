@@ -166,17 +166,22 @@
     <xsl:variable name="linkedDocumentsFileNames" as="xs:string*"
       select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
     <xsl:variable name="linkedDocuments" as="element()*">
-      <xsl:for-each select="$linkedDocumentsFileNames">
-        <entry>
-          <xsl:attribute name="file-name">
-            <xsl:value-of select="."/>
-          </xsl:attribute>
-          <xsl:attribute name="type">
-            <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
-          </xsl:attribute>
-          <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
-        </entry>
-      </xsl:for-each>
+      <xsl:choose>
+        <xsl:when test="$linkedDocumentsFileNames">
+          <xsl:for-each select="$linkedDocumentsFileNames">
+            <entry>
+              <xsl:attribute name="file-name">
+                <xsl:value-of select="."/>
+              </xsl:attribute>
+              <xsl:attribute name="type">
+                <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
+              </xsl:attribute>
+              <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
+            </entry>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise/>
+      </xsl:choose>
     </xsl:variable>
     <xsl:if test="count($linkedDocuments) > 1">
       <xsl:message>WARNING: More than one linked document. Unsupported.</xsl:message>
