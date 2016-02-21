@@ -1,5 +1,4 @@
-A journey from QDoc 5 to DocBook
---------------------------------
+## A journey from QDoc 5 to DocBook ##
 
 The goal of this step is to take Qt's sources and to turn them into DocBook documents. 
 Qt's internal documentation system is QDoc, whose sole output format is HTML. 
@@ -19,9 +18,9 @@ In more details, the following steps are required:
  - Use a C++ parser to deal with the function prototypes and make the DocBook content
    fully exploitable
    
-The first two steps are performed within the main Python script ´main_script/qt5.py´. 
+The first two steps are performed within the main Python script `main_script/qt5.py`. 
 The QDoc automation is also available as a stand-alone script in 
-´import/from_qdoc/qdoc2html´. The HMLT5-to-XML transformation is also available as a 
-stand-alone script in ´import/from_qdoc/html2xml´. The XSL transformations is performed 
-with the stylesheets in ´import/from_qdoc/xslt´, whilst the C++ parsing is done with 
-the executable in ´import/from_qdoc/postprocessor´. 
+ï¿½import/from_qdoc/qdoc2htmlï¿½. The HMLT5-to-XML transformation is also available as a 
+stand-alone script in ï¿½import/from_qdoc/html2xmlï¿½. The XSL transformations is performed 
+with the stylesheets in ï¿½import/from_qdoc/xsltï¿½, whilst the C++ parsing is done with 
+the executable in ï¿½import/from_qdoc/postprocessorï¿½.
