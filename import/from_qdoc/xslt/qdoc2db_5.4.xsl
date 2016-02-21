@@ -42,6 +42,7 @@
     <xsl:variable name="subtitle" as="xs:string"
       select="string($content/html:span[@class = 'subtitle']/text())"/>
     <xsl:variable name="hasSubtitle" as="xs:boolean" select="not($subtitle = '')"/>
+
     <xsl:variable name="isClass" as="xs:boolean"
       select="
         starts-with($title, 'Q')
@@ -53,12 +54,23 @@
       </xsl:if>
     </xsl:variable>
 
+    <xsl:variable name="isQmlType" as="xs:boolean"
+      select="
+        ends-with($title, ' QML Type')
+        and count(contains($title, ' ')) = 2"/>
+    <xsl:variable name="qmlTypeName">
+      <xsl:if test="$isQmlType">
+        <xsl:value-of select="substring-before($title, ' QML Type')"/>
+      </xsl:if>
+    </xsl:variable>
+
     <!-- Extract the various parts of the prologue. -->
     <xsl:variable name="prologueTable"
       select="
         $content
         /html:div[@class = 'table'][preceding-sibling::node()[self::html:p]][1]
         /html:table[@class = 'alignedsummary']/html:tbody/html:tr"/>
+    <!-- C++ classes. -->
     <xsl:variable name="prologueHeader" as="element(html:span)?"
       select="$prologueTable/html:td[1][contains(text(), 'Header')]/following-sibling::html:td/html:span"/>
     <xsl:variable name="prologueQmake" as="element(html:td)?"
@@ -66,9 +78,21 @@
     <xsl:variable name="prologueInherits" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Inherits')]/following-sibling::html:td"/>
     <xsl:variable name="prologueInheritedBy" as="element(html:td)?"
-      select="$prologueTable/html:td[1][contains(text(), 'Inherited By')]/following-sibling::html:td"/>
+      select="$prologueTable/html:td[1][contains(text(), 'Inherited')]/following-sibling::html:td"/>
+    <!-- QML types. -->
+    <xsl:variable name="prologueImport" as="element(html:td)?"
+      select="$prologueTable/html:td[1][contains(text(), 'Import')]/following-sibling::html:td"/>
+    <!-- For both.  -->
     <xsl:variable name="prologueSince" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Since')]/following-sibling::html:td"/>
+    <!-- Check all lines have been used. -->
+    <xsl:variable name="prologueCount" as="xs:integer"
+      select="
+        count((boolean($prologueQmake), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince)))"
+    />
+    <xsl:if test="count($prologueTable) != $prologueCount">
+      <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
+    </xsl:if>
 
     <!-- Extract the various parts of the main structure. -->
     <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
@@ -136,13 +160,14 @@
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
-      select=" $hasSubtitle and ends-with($title, 'Example File')"/>
-    <xsl:variable name="isBareExamplePage" as="xs:boolean" 
+      select="$hasSubtitle and ends-with($title, 'Example File')"/>
+    <xsl:variable name="isBareExamplePage" as="xs:boolean"
       select="
-        $isExamplePage 
+        $isExamplePage
           and count($description/child::*) = 2
           and $description/child::*[1][self::html:a][@name = 'details']
-          and $description/child::*[2][self::html:pre]"/> 
+          and $description/child::*[2][self::html:pre]"
+    />
     <!-- 
       TODO: is the distinction with $isExamplePage required? It seems only pages with source code 
       (and not the "main" page for each example) have a nonempty subtitle and require this. 
