@@ -1,5 +1,3 @@
-__author__ = 'Thibaut Cuvelier'
-
 import os
 import os.path
 import time
@@ -7,9 +5,18 @@ import subprocess
 import json
 import logging
 
+"""
+This script runs qdoc to generate a XML-formatted version of the documentation in input.
+
+TODO: actual CLI parameters.
+"""
+
+__author__ = 'Thibaut Cuvelier'
+
 try:
     import html5lib
     import xml.etree.ElementTree as ETree
+
     no_html5 = False
 except ImportError:
     no_html5 = True
@@ -17,11 +24,11 @@ except ImportError:
     ETree = None
 
 # Command-line configuration.
-sources = "C:/Qt/5.4/Src/"
-qdoc = "C:/Qt/5.4/mingw491_32/bin/qdoc.exe"
-output = "C:/Qt/_script/html/"
+sources = "F:/QtDoc/QtDoc/QtSrc/qt-everywhere-opensource-src-5.4.2/"
+qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
+output = "F:/QtDoc/output/html/"
 indexFolder = output
-version = [5, 4, 0]
+version = [5, 4, 2]
 
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
@@ -44,6 +51,7 @@ environment = {"QT_INSTALL_DOCS": sources + "qtbase/doc",
                "QT_VERSION_TAG": ''.join(versionString),  # E.g.: 531
                "QT_VER": '.'.join(versionString[:2]),  # E.g.: 5.3
                "QT_VERSION": '.'.join(versionString)}  # E.g.: 5.3.1
+
 
 # Retrieve the list of modules in the sources: get the list of files, ensure it is a directory, and a module (first
 # letter is q). Handle ignore list.
@@ -217,7 +225,7 @@ def generate_module_xml(module_name, configuration_file):
                     tree = html5lib.parse(f)
                 with open(out_file_name, 'wb') as f:
                     f.write(ETree.tostring(tree))
-    logging.info('Done with module %s' % module_name)
+    logging.info('Parsing as XML: done with module %s' % module_name)
 
 
 # Algorithm:
@@ -247,8 +255,8 @@ if __name__ == '__main__':
             generate_module_xml(module_name=moduleName, configuration_file=conf)
 
     time_end = time.perf_counter()
-    print("Total time: %f" % (time_end - time_beginning))
-    print("Time to read configuration files: %f" % (time_configs - time_beginning))
-    print("Time to create indexes: %f" % (time_prepare - time_configs))
-    print("Time to generate HTML files: %f" % (time_generate - time_prepare))
-    print("Time to generate XML files: %f" % (time_end - time_generate))
+    print("Total time: %f s" % (time_end - time_beginning))
+    print("Time to read configuration files: %f s" % (time_configs - time_beginning))
+    print("Time to create indexes: %f s" % (time_prepare - time_configs))
+    print("Time to generate HTML files: %f s" % (time_generate - time_prepare))
+    print("Time to generate XML files: %f s" % (time_end - time_generate))

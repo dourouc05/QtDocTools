@@ -98,8 +98,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 	if (ast->parameters.size() == 0) {
 		methodsynopsis.append_child("db:void");
 	} else {
-		auto end = ast->parameters.end();
-		for (auto iterator = ast->parameters.begin(); iterator != end; ++iterator) {
+		for (auto iterator = ast->parameters.begin(); iterator != ast->parameters.end(); ++iterator) {
 			Parameter* p = *iterator;
 			pugi::xml_node param = methodsynopsis.append_child("db:methodparam");
 
@@ -111,7 +110,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 			std::string type = trim(sub_type + ' ' + std::string(p->nPointers, '*') + std::string(p->nReferences, '&'));
 			param.append_child("db:type").text().set(type.c_str());
 
-			param.append_child("db:parameter").text().set((*p->identifier).c_str());
+			param.append_child("db:parameter").text().set(p->identifier->c_str());
 
 			if (p->initialiser != nullptr) {
 				param.append_child("db:initializer").text().set(p->initialiser->serialise().c_str());

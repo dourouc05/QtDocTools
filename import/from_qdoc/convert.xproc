@@ -8,6 +8,7 @@
     </p:output>
     
     <!-- First import the input as HTML data, make it XML. -->
+    <!--
     <p:exec>
         <p:input port="source"/>
         <p:with-option name="command" select="'python'"/>
@@ -15,8 +16,9 @@
         <p:with-option name="source-is-xml" select="false()"/>
         <p:with-option name="result-is-xml" select="true()"/>
     </p:exec>
+    -->
     
-    <!-- Then perform an XSLT step. -->
+    <!-- Then perform an XSLT step to get DocBook. -->
     <p:xslt>
         <p:input port="stylesheet">
             <p:document href="xslt/qdoc2db_5.4.xsl"/>
@@ -26,7 +28,7 @@
         </p:input>
     </p:xslt>
     
-    <!-- Finally, deal with the function prototypes as postprocessing step. -->
+    <!-- Finally, deal with the function prototypes as postprocessing step, refines the DocBook documents. -->
     <p:exec>
         <p:with-option name="command" select="'python'"/>
         <p:with-option name="args" select="'./html2xml/html2xml_stdin.py'"/>
