@@ -75,20 +75,22 @@
       select="$prologueTable/html:td[1][contains(text(), 'Header')]/following-sibling::html:td/html:span"/>
     <xsl:variable name="prologueQmake" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'qmake')]/following-sibling::html:td"/>
+    <!-- QML types. -->
+    <xsl:variable name="prologueImport" as="element(html:td)?"
+      select="$prologueTable/html:td[1][contains(text(), 'Import')]/following-sibling::html:td"/>
+    <xsl:variable name="prologueInstantiates" as="element(html:td)?"
+      select="$prologueTable/html:td[1][contains(text(), 'Instantiates')]/following-sibling::html:td"/>
+    <!-- For both.  -->
     <xsl:variable name="prologueInherits" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Inherits')]/following-sibling::html:td"/>
     <xsl:variable name="prologueInheritedBy" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Inherited')]/following-sibling::html:td"/>
-    <!-- QML types. -->
-    <xsl:variable name="prologueImport" as="element(html:td)?"
-      select="$prologueTable/html:td[1][contains(text(), 'Import')]/following-sibling::html:td"/>
-    <!-- For both.  -->
     <xsl:variable name="prologueSince" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Since')]/following-sibling::html:td"/>
     <!-- Check all lines have been used. -->
     <xsl:variable name="prologueCount" as="xs:integer"
       select="
-        count((boolean($prologueQmake), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince)))"
+      count((boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"
     />
     <xsl:if test="count($prologueTable) != $prologueCount">
       <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
@@ -305,23 +307,23 @@
       <xsl:if test="$obsolete_hasTypes">
         <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
-
+      
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="className" select="$className"/>
-
+          
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
-
+          
           <xsl:with-param name="obsoleteFunctions" select="$obsolete_funcs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
-
+        
         <xsl:if test="$hasNonmems">
           <xsl:call-template name="functionListing">
             <xsl:with-param name="data" select="$nonmems"/>
@@ -329,6 +331,16 @@
             <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
           </xsl:call-template>
         </xsl:if>
+      </xsl:if>
+      
+      <xsl:if test="$isQmlType">
+        <xsl:call-template name="qmlTypeListing">
+          <xsl:with-param name="import" select="$prologueImport"/>
+          <xsl:with-param name="instantiates" select="$prologueInstantiates"/>
+          <xsl:with-param name="inherits" select="$prologueInherits"/>
+          <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
+          <xsl:with-param name="since" select="$prologueSince"/>
+        </xsl:call-template>
       </xsl:if>
 
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
@@ -887,6 +899,15 @@
         </xsl:choose>
       </db:funcprototype>
     </db:funcsynopsis>
+  </xsl:template>
+
+  <!-- Handle QML types: type structure. -->
+  <xsl:template name="qmlTypeListing">
+    <xsl:param name="import" as="element()?"/>
+    <xsl:param name="instantiates" as="element()?"/>
+    <xsl:param name="inherits" as="element()?"/>
+    <xsl:param name="inheritedBy" as="element()?"/>
+    <xsl:param name="since" as="element()?"/>
   </xsl:template>
 
   <!-- Handle types: detailed description. -->
