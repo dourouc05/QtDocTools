@@ -235,8 +235,9 @@ def generate_module_xml(module_name, configuration_file):
 # Here, specific to one XSLT2 engine: Saxon 9. Displays errors to the user.
 def call_xslt(file_in, file_out, stylesheet):
     result = subprocess.run(['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out],
-                            stdout=subprocess.PIPE)
-    print(result.stdout)
+                            stderr=subprocess.PIPE)
+    if len(result.stderr) > 0:
+        logging.warning("Problem(s) with file '%s': %s" % (file_in, result.stderr))
 
 
 # Convert the documentation XML files as DocBook for the given module.
