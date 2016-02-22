@@ -54,10 +54,7 @@
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="isQmlType" as="xs:boolean"
-      select="
-        ends-with($title, ' QML Type')
-        and count(contains($title, ' ')) = 2"/>
+    <xsl:variable name="isQmlType" as="xs:boolean" select="ends-with($title, ' QML Type')"/>
     <xsl:variable name="qmlTypeName">
       <xsl:if test="$isQmlType">
         <xsl:value-of select="substring-before($title, ' QML Type')"/>
@@ -90,17 +87,21 @@
     <!-- Check all lines have been used. -->
     <xsl:variable name="prologueCount" as="xs:integer"
       select="
-      count((boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"
+      count((boolean($prologueHeader), boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"
     />
     <xsl:if test="count($prologueTable) != $prologueCount">
       <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
     </xsl:if>
 
     <!-- Extract the various parts of the main structure. -->
-    <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()"/>
+    <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()?"/>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
+    <xsl:if test="not($description) and not($isQmlType)">
+      <xsl:message>WARNING: No description found for a document that is not a QML type.</xsl:message>
+    </xsl:if>
 
+    <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
     <xsl:variable name="hasSeeAlso" select="boolean($seeAlso)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterSeeAlso" as="element()?"
