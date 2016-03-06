@@ -16,13 +16,12 @@
   <xsl:strip-space elements="*"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
-  <xsl:import-schema schema-location="./schemas/docbook.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
+  <xsl:import-schema schema-location="../schemas/docbook.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
 
-  <!-- Output document class. -->
-  <!-- @TODO: classes may have a <ul> somewhere in the beginning to indicate other files to load. -->
+  <!-- Output document class. (First a trick to keep the same stylesheet schema-aware and non-schema-aware.) -->
   <xsl:template match="/" use-when="system-property('xsl:is-schema-aware')='yes'" priority="2">
     <xsl:variable name="input" as="document-node()">
-      <xsl:document validation="strict">
+      <xsl:document>
         <xsl:copy-of select="/"/>
       </xsl:document>
     </xsl:variable>
@@ -34,6 +33,7 @@
     <xsl:apply-templates select="html:html"/>
   </xsl:template>    
   
+  <!-- @TODO: classes may have a <ul> somewhere in the beginning to indicate other files to load. -->
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
