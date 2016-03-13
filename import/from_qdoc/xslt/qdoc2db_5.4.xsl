@@ -93,13 +93,12 @@
       <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
     </xsl:if>
 
-    <!-- Extract the various parts of the main structure. -->
-    <xsl:variable name="description" as="element()*">
-      <xsl:choose>
-        <xsl:when test="not($isQmlType)">
-          <xsl:copy-of select="$content/html:div[@class = 'descr']"/>
-        </xsl:when>
-        <xsl:otherwise>
+    <!-- Extract the various parts of the main structure. 
+      QML types have a description without outer <div>; complexity to deal with this.
+      The following code will look after siblings of $description for classes, no copy allowed in this case!
+    -->
+    <xsl:variable name="descriptionRawQml" as="element()?">
+        <xsl:if test="$isQmlType">
           <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
           <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
           
@@ -109,42 +108,31 @@
           <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
           
           <html:div class="descr">
+            <html:h2>Detailed Description</html:h2>
+            <!-- TODO: need to rewrite titles so h2 is the highest level?  -->
             <xsl:copy-of
               select="
-                $content/html:h2[@id = 'details']
-                /following-sibling::html:*[
-                  text() != '' 
-                  and text() != $propText
-                  and text() != $methText
-                  and not(
-                    generate-id(preceding-sibling::html:h2[1]) = $propTitleId
-                    or
-                    generate-id(preceding-sibling::html:h2[1]) = $methTitleId
-                  )
-                ]"
+              $content/html:h2[@id = 'details']
+              /following-sibling::html:*[
+              text() != '' 
+              and text() != $propText
+              and text() != $methText
+              and not(
+              generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+              or
+              generate-id(preceding-sibling::html:h2[1]) = $methTitleId
+              )
+              ]"
             />
           </html:div>
-        </xsl:otherwise>
-      </xsl:choose>
+        </xsl:if>
     </xsl:variable>
+    <xsl:variable name="description" as="element()" select="if(not($isQmlType)) then $content/html:div[@class = 'descr'] else $descriptionRawQml"/>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
     <xsl:if test="not($description)">
       <xsl:message>WARNING: No description found, while one was expected.</xsl:message>
     </xsl:if>
-    <!-- Extract the description for QML types: 
-      //html:h2[@id = 'details']/following-sibling::html:*[generate-id(preceding-sibling::html:h2[1][@id = 'details']) = generate-id(//html:h2[@id = 'details'])] 
-    Problem? Item has multiple <h2> in its description! 
-    
-    h2 after the description: Property Documentation; Method Documentation 
-    
-    //html:h2[@id = 'details']/following-sibling::html:*[not(text() = 'Property Documentation')]
-    //html:h2[@id = 'details']/following-sibling::html:*[generate-id(preceding-sibling::html:h2[1][@id = 'details']) = generate-id(//html:h2[text() = 'Property Documentation'])]
-    
-    => 
-    
-    //html:h2[@id = 'details']/following-sibling::html:*[not(generate-id(preceding-sibling::html:h2[1]) = generate-id(//html:h2[text() = 'Property Documentation']) or generate-id(preceding-sibling::html:h2[1]) = generate-id(//html:h2[text() = 'Method Documentation']))]
-    -->
 
     <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
