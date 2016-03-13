@@ -94,12 +94,22 @@
     </xsl:if>
 
     <!-- Extract the various parts of the main structure. -->
-    <xsl:variable name="description" select="$content/html:div[@class = 'descr']" as="element()?"/>
+    <xsl:variable name="description" select="
+      if (not($isQmlType)) then
+        $content/html:div[@class = 'descr']
+      else
+        $content/html:h2[@id = 'details']
+      " as="element()"/>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
-    <xsl:if test="not($description) and not($isQmlType)">
-      <xsl:message>WARNING: No description found for a document that is not a QML type.</xsl:message>
+    <xsl:if test="not($description)">
+      <xsl:message>WARNING: No description found, while one was expected.</xsl:message>
     </xsl:if>
+    <!-- Extract the description for QML types: 
+      //html:h2[@id = 'details']/following-sibling::html:*[generate-id(preceding-sibling::html:h2[1][@id = 'details']) = generate-id(//html:h2[@id = 'details'])] 
+    Problem? Item has multiple <h2> in its description! 
+    
+    h2 after the description: Property Documentation; Method Documentation -->
 
     <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
@@ -336,6 +346,7 @@
       
       <xsl:if test="$isQmlType">
         <xsl:call-template name="qmlTypeListing">
+          <xsl:with-param name="qmlTypeName" select="$qmlTypeName"/>
           <xsl:with-param name="import" select="$prologueImport"/>
           <xsl:with-param name="instantiates" select="$prologueInstantiates"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
