@@ -94,12 +94,39 @@
     </xsl:if>
 
     <!-- Extract the various parts of the main structure. -->
-    <xsl:variable name="description" select="
-      if (not($isQmlType)) then
-        $content/html:div[@class = 'descr']
-      else
-        $content/html:h2[@id = 'details']
-      " as="element()"/>
+    <xsl:variable name="description" as="element()*">
+      <xsl:choose>
+        <xsl:when test="not($isQmlType)">
+          <xsl:copy-of select="$content/html:div[@class = 'descr']"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
+          <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
+          
+          <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]" as="element()"/>
+          <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
+          <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]" as="element()"/>
+          <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
+          
+          <html:div class="descr">
+            <xsl:copy-of
+              select="
+                $content/html:h2[@id = 'details']
+                /following-sibling::html:*[
+                  text() != '' 
+                  and text() != $propText
+                  and text() != $methText
+                  and not(
+                    generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+                    or
+                    generate-id(preceding-sibling::html:h2[1]) = $methTitleId
+                  )
+                ]"
+            />
+          </html:div>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
     <xsl:if test="not($description)">
@@ -109,7 +136,15 @@
       //html:h2[@id = 'details']/following-sibling::html:*[generate-id(preceding-sibling::html:h2[1][@id = 'details']) = generate-id(//html:h2[@id = 'details'])] 
     Problem? Item has multiple <h2> in its description! 
     
-    h2 after the description: Property Documentation; Method Documentation -->
+    h2 after the description: Property Documentation; Method Documentation 
+    
+    //html:h2[@id = 'details']/following-sibling::html:*[not(text() = 'Property Documentation')]
+    //html:h2[@id = 'details']/following-sibling::html:*[generate-id(preceding-sibling::html:h2[1][@id = 'details']) = generate-id(//html:h2[text() = 'Property Documentation'])]
+    
+    => 
+    
+    //html:h2[@id = 'details']/following-sibling::html:*[not(generate-id(preceding-sibling::html:h2[1]) = generate-id(//html:h2[text() = 'Property Documentation']) or generate-id(preceding-sibling::html:h2[1]) = generate-id(//html:h2[text() = 'Method Documentation']))]
+    -->
 
     <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
