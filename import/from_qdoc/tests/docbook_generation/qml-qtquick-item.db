@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:lang="en">
+    <db:title>Item QML Type</db:title>
+    <db:classsynopsis>
+        <db:ooclass>
+            <db:classname>Item</db:classname>
+        </db:ooclass>
+        <db:classsynopsisinfo role="import"> import
+            QtQuick 2.4</db:classsynopsisinfo>
+        <db:classsynopsisinfo role="instantiates">QQuickItem</db:classsynopsisinfo>
+        <db:classsynopsisinfo role="inherits"/>
+        <db:classsynopsisinfo role="inheritedBy">AnimatedSpriteBorderImageCanvasColumnFlickableFlipableFlowFocusScopeGridImageLoaderMouseAreaMultiPointTouchAreaParticlePainterPathViewPinchAreaRectangleRepeaterRowShaderEffectShaderEffectSourceSignalSpySpriteSequenceTestCaseTextTextEditTextInput</db:classsynopsisinfo>
+    </db:classsynopsis>
+    <db:section>
+        <db:title>Detailed Description</db:title>
+        <db:para>The Item type is the base type for all visual items in Qt
+            Quick.</db:para>
+        <db:para>All visual items in Qt Quick inherit from Item. Although an Item
+            object has no visual appearance, it defines all the attributes that
+            are common across visual items, such as x and y position, width and
+            height, <db:link xlink:href="qtquick-positioning-anchors.html">anchoring</db:link> and key handling support.</db:para>
+        <db:para>The Item type can be useful for grouping several items under a
+            single root visual item. For example:</db:para>
+        <db:programlisting>import QtQuick 2.0 Item {
+            Image { source: "tile.png" } Image {
+            x: 80width: 100height: 100source: "tile.png" } Image { x: 190width: 100height: 100fillMode: Image.Tilesource: "tile.png" } }</db:programlisting>
+        <db:section>
+            <db:title>Key Handling</db:title>
+            <db:para>Key handling is available to all Item-based visual types via the
+                <db:link xlink:href="qml-qtquick-keys.html">Keys</db:link> attached
+                property. The <db:emphasis>Keys</db:emphasis> attached property provides basic
+                signals such as <db:link xlink:href="qml-qtquick-keys.html#pressed-signal">pressed</db:link> and <db:link xlink:href="qml-qtquick-keys.html#released-signal">released</db:link>,
+                as well as signals for specific keys, such as <db:link xlink:href="qml-qtquick-keys.html#spacePressed-signal">spacePressed</db:link>. The example below assigns <db:link xlink:href="qtquick-input-focus.html">keyboard focus</db:link> to the
+                item and handles the left key via the general
+                <db:code>onPressed</db:code> handler and the return key via
+                the <db:code>onReturnPressed</db:code> handler:</db:para>
+            <db:programlisting>import QtQuick 2.0 Item {
+                focus: trueKeys.onPressed: { if (event.key==Qt.Key_Left) { console.log("move
+                left"); event.accepted=true; } } Keys.onReturnPressed: console.log("Pressed
+                return"); }</db:programlisting>
+            <db:para>See the <db:link xlink:href="qml-qtquick-keys.html">Keys</db:link>
+                attached property for detailed documentation.</db:para>
+        </db:section>
+        <db:section>
+            <db:title>Layout Mirroring</db:title>
+            <db:para>Item layouts can be mirrored using the <db:link xlink:href="qml-qtquick-layoutmirroring.html">LayoutMirroring</db:link>
+                attached property. This causes <db:link xlink:href="qml-qtquick-item.html#anchors.top-prop">anchors</db:link>
+                to be horizontally reversed, and also causes items that lay out or
+                position their children (such as <db:link xlink:href="qml-qtquick-listview.html">ListView</db:link> or <db:link xlink:href="qtquick-positioning-layouts.html#row">Row</db:link>) to
+                horizontally reverse the direction of their layouts.</db:para>
+            <db:para>See <db:link xlink:href="qml-qtquick-layoutmirroring.html">LayoutMirroring</db:link> for more details.</db:para>
+        </db:section>
+        <db:section>
+            <db:title>Item Layers</db:title>
+            <db:para>An Item will normally be rendered directly into the window it
+                belongs to. However, by setting <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link>, it is possible to delegate the item and
+                its entire subtree into an offscreen surface. Only the offscreen
+                surface, a texture, will be then drawn into the window.</db:para>
+            <db:para>If it is desired to have a texture size different from that of
+                the item, this is possible using <db:link xlink:href="qml-qtquick-item.html#layer.textureSize-prop">layer.textureSize</db:link>. To render only a section of the
+                item into the texture, use <db:link xlink:href="qml-qtquick-item.html#layer.sourceRect-prop">layer.sourceRect</db:link>. It is also possible to specify
+                <db:link xlink:href="qml-qtquick-item.html#layer.sourceRect-prop">layer.sourceRect</db:link> so it extends beyond the bounds of
+                the item. In this case, the exterior will be padded with transparent
+                pixels.</db:para>
+            <db:para>The item will use linear interpolation for scaling if <db:link xlink:href="qml-qtquick-item.html#layer.smooth-prop">layer.smooth</db:link> is set to <db:code>true</db:code> and
+                will use mipmap for downsampling if <db:link xlink:href="qml-qtquick-item.html#layer.mipmap-prop">layer.mipmap</db:link> is set to <db:code>true</db:code>.
+                Mipmapping may improve visual quality of downscaled items. For
+                mipmapping of single Image items, prefer <db:link xlink:href="qml-qtquick-image.html#mipmap-prop">Image::mipmap</db:link>.</db:para>
+        </db:section>
+        <db:section>
+            <db:title>Layer Opacity vs Item Opacity</db:title>
+            <db:para>When applying <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link> to an item hierarchy the opacity is applied to
+                each item individually. This can lead to undesired visual results
+                when the opacity is applied to a subtree. Consider the following
+                example:</db:para>
+            <db:para>A layer is rendered with the root item's opacity being 1, and
+                then the root item's opacity is applied to the texture when it is
+                drawn. This means that fading in a large item hierarchy from
+                transparent to opaque, or vice versa, can be done without the
+                overlap artifacts that the normal item by item alpha blending has.
+                Here is the same example with layer enabled:</db:para>
+        </db:section>
+        <db:section>
+            <db:title>Combined with ShaderEffects</db:title>
+            <db:para>Setting <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link> to true will turn the item into a
+                <db:link xlink:href="qquickitem.html#isTextureProvider">texture
+                    provider</db:link>, making it possible to use the item directly
+                as a texture, for instance in combination with the <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link>
+                type.</db:para>
+            <db:para>It is possible to apply an effect on a layer at runtime using
+                layer.effect:</db:para>
+            <db:programlisting>Item {
+                id: layerRootlayer.enabled: truelayer.effect: ShaderEffect { fragmentShader: " uniform
+                lowp sampler2D source; // this item uniform lowp float
+                qt_Opacity; // inherited opacity of this item varying highp vec2
+                qt_TexCoord0; void main() { lowp vec4 p = texture2D(source,
+                qt_TexCoord0); lowp float g = dot(p.xyz, vec3(0.344, 0.5,
+                0.156)); gl_FragColor = vec4(g, g, g, p.a) * qt_Opacity;
+                }" }</db:programlisting>
+            <db:para>In this example, we implement the shader effect manually. The
+                <db:link xlink:href="qtgraphicaleffects/qtgraphicaleffects-index.html">Qt Graphical Effects</db:link> module contains a suite of
+                ready-made effects for use with Qt Quick.</db:para>
+            <db:para>See <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link> for more information about using
+                effects.</db:para>
+            <db:note>
+                <db:para>
+                    <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link> is actually just a more convenient way
+                    of using <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.</db:para>
+            </db:note>
+        </db:section>
+        <db:section>
+            <db:title>Memory and Performance</db:title>
+            <db:para>When an item's layer is enabled, the scene graph will allocate
+                memory in the GPU equal to <db:code>width x height x
+                    4</db:code>. In memory constrained configurations, large layers
+                should be used with care.</db:para>
+            <db:para>In the <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code> /
+                <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> world, it
+                is some times favorable to cache complex content in a pixmap, image
+                or texture. In Qt Quick, because of the techniques already applied
+                by the <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html">scene graph renderer</db:link>, this will in most cases not be
+                the case. Excessive draw calls are already reduced because of
+                batching and a cache will in most cases end up blending more pixels
+                than the original content. The overhead of rendering to an offscreen
+                and the blending involved with drawing the resulting texture is
+                therefore often more costly than simply letting the item and its
+                children be drawn normally.</db:para>
+            <db:para>Also, an item using a layer can not be <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html#batching">batched</db:link> during rendering. This means that a scene with
+                many layered items may have performance problems.</db:para>
+            <db:para>Layering can be convenient and useful for visual effects, but
+                should in most cases be enabled for the duration of the effect and
+                disabled afterwards.</db:para>
+        </db:section>
+    </db:section>
+</db:article>

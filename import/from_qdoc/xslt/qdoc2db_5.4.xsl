@@ -97,11 +97,19 @@
       QML types have a description without outer <div>; complexity to deal with this.
       The following code will look after siblings of $description for classes, no copy allowed in this case!
     -->
+    <!-- 
+      TODO: copy anchors into DocBook! E.g.: 
+      <html:a name="key-handling"></html:a>
+      <html:h3>Key Handling</html:h3> 
+      Must be done afterwards, when $description is used. 
+    -->
     <xsl:variable name="descriptionRawQml" as="element()?">
         <xsl:if test="$isQmlType">
           <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
           <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
           
+          <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
+          <xsl:variable name="descTitleId" select="generate-id($descTitle)"/>
           <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]" as="element()"/>
           <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
           <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]" as="element()"/>
@@ -109,21 +117,39 @@
           
           <html:div class="descr">
             <html:h2>Detailed Description</html:h2>
-            <!-- TODO: need to rewrite titles so h2 is the highest level?  -->
-            <xsl:copy-of
+            <xsl:for-each
               select="
-              $content/html:h2[@id = 'details']
+              $descTitle
               /following-sibling::html:*[
-              text() != '' 
-              and text() != $propText
-              and text() != $methText
-              and not(
-              generate-id(preceding-sibling::html:h2[1]) = $propTitleId
-              or
-              generate-id(preceding-sibling::html:h2[1]) = $methTitleId
-              )
+                text() != '' 
+                and text() != $propText
+                and text() != $methText
+                and not(
+                  generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+                  or
+                  generate-id(preceding-sibling::html:h2[1]) = $methTitleId
+                )
               ]"
-            />
+              >
+              <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
+              <xsl:choose>
+                <xsl:when test="current()[self::html:h2]">
+                  <html:h3>
+                    <xsl:attribute name="id" select="current()[@id]"/>
+                    <xsl:value-of select="current()"/>
+                  </html:h3>
+                </xsl:when>
+                <xsl:when test="current()[self::html:h3][generate-id(preceding-sibling::html:h2[1]) != $descTitleId]">
+                  <html:h4>
+                    <xsl:attribute name="id" select="current()[@id]"/>
+                    <xsl:value-of select="current()"/>
+                  </html:h4>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:copy-of select="current()"></xsl:copy-of>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:for-each>
           </html:div>
         </xsl:if>
     </xsl:variable>
