@@ -21,8 +21,76 @@
          <db:varname>activeFocusOnTab</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
-         <db:type>AnchorLine&lt;AnchorLine&lt;AnchorLine&lt;AnchorLine&lt;AnchorLine&lt;AnchorLine&lt;AnchorLine&lt;Item&lt;Item&lt;real&lt;real&lt;real&lt;real&lt;real&lt;real&lt;real&lt;real&lt;bool&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;</db:type>
-         <db:varname>anchors.topanchors.bottomanchors.leftanchors.rightanchors.horizontalCenteranchors.verticalCenteranchors.baselineanchors.fillanchors.centerInanchors.marginsanchors.topMarginanchors.bottomMarginanchors.leftMarginanchors.rightMarginanchors.horizontalCenterOffsetanchors.verticalCenterOffsetanchors.baselineOffsetanchors.alignWhenCentered</db:varname>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.top</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.bottom</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.left</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.right</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.horizontalCenter</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.verticalCenter</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>AnchorLine</db:type>
+         <db:varname>anchors.baseline</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
+         <db:varname>anchors.fill</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
+         <db:varname>anchors.centerIn</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.margins</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.topMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.bottomMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.leftMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.rightMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.horizontalCenterOffset</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.verticalCenterOffset</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>anchors.baselineOffset</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>anchors.alignWhenCentered</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
          <db:type>bool</db:type>
@@ -37,8 +105,20 @@
          <db:varname>children</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
-         <db:type>real&lt;real&lt;real&lt;real&gt;&gt;&gt;</db:type>
-         <db:varname>childrenRect.xchildrenRect.ychildrenRect.widthchildrenRect.height</db:varname>
+         <db:type>real</db:type>
+         <db:varname>childrenRect.x</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>childrenRect.y</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>childrenRect.width</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>childrenRect.height</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
          <db:type>bool</db:type>

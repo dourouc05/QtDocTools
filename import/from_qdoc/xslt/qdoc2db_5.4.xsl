@@ -1092,18 +1092,24 @@
   </xsl:template>
   
   <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
-    <xsl:variable name="row" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
-    <xsl:variable name="title" select="$row/html:td/html:p"/>
-    <xsl:variable name="anchor" select="$row/@id"/>
+    <xsl:variable name="rows" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
     
-    <db:fieldsynopsis>
-      <xsl:call-template name="classListing_methodBody_analyseType">
-        <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"></xsl:with-param>
-      </xsl:call-template>
-      <db:varname>
-        <xsl:value-of select="$title/html:span[@class = 'name']/text()"/>
-      </db:varname>
-    </db:fieldsynopsis>
+    <xsl:for-each select="$rows">
+      <xsl:variable name="row" select="." as="element(html:tr)"/>
+      <xsl:variable name="title" select="$row/html:td/html:p"/>
+      <xsl:variable name="anchor" select="$row/@id"/>
+
+      <xsl:if test="$title/html:span[@class = 'name']">
+        <db:fieldsynopsis>
+          <xsl:call-template name="classListing_methodBody_analyseType">
+            <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"/>
+          </xsl:call-template>
+          <db:varname>
+            <xsl:value-of select="$title/html:span[@class = 'name']/text()"/>
+          </db:varname>
+        </db:fieldsynopsis>
+      </xsl:if>
+    </xsl:for-each>
   </xsl:template>
   
   <xsl:template mode="qmlMethodsListing" match="html:div[@class = 'qmlitem']">
