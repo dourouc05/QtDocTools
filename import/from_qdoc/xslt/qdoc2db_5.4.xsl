@@ -159,9 +159,11 @@
     <xsl:if test="not($description)">
       <xsl:message>WARNING: No description found, while one was expected.</xsl:message>
     </xsl:if>
+    <xsl:if test="$siblingAfterDescription and $isQmlType">
+      <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in the style sheets!</xsl:message>
+    </xsl:if>
 
-    <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
-    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
+    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/> <!-- For QML types: see also handled naturally as a paragraph. -->
     <xsl:variable name="hasSeeAlso" select="boolean($seeAlso)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterSeeAlso" as="element()?"
       select="
@@ -169,7 +171,8 @@
           $siblingAfterDescription/following-sibling::*[1]
         else
           $siblingAfterDescription"/>
-
+    
+    <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="index" as="element()?"
       select="$siblingAfterSeeAlso[self::html:div][@class = 'table']"/>
     <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
