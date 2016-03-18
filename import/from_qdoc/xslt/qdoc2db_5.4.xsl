@@ -1057,7 +1057,7 @@
       
       <xsl:if test="$import">
         <db:classsynopsisinfo role="import">
-          <xsl:value-of select="$import"/>
+          <xsl:value-of select="normalize-space($import)"/>
         </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$instantiates">
