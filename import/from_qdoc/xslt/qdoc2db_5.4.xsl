@@ -60,6 +60,8 @@
         <xsl:value-of select="substring-before($title, ' QML Type')"/>
       </xsl:if>
     </xsl:variable>
+    
+    <xsl:variable name="isConcept" select="not($isClass) and not($isQmlType)" as="xs:boolean"/>
 
     <!-- Extract the various parts of the prologue. -->
     <xsl:variable name="prologueTable"
@@ -186,7 +188,6 @@
       <!-- In this case, would need to find a way back in the page (cannot use the $sibling variables). -->
     </xsl:if>
     
-    <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="types" as="element()?"
       select="$siblingAfterIndex[self::html:div][@class = 'types']"/>
     <xsl:variable name="hasTypes" select="boolean($types)" as="xs:boolean"/>
@@ -226,6 +227,26 @@
           $siblingAfterFuncs/following-sibling::*[1]
         else
           $siblingAfterFuncs"/>
+    
+    <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
+    <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()"/>
+    <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
+    <xsl:variable name="qmlProps" as="element(html:div)?">
+      <xsl:if test="$isQmlType">
+       <html:div class="qml-props">
+         <xsl:for-each
+           select="
+            $qmlPropsTitle
+              /following-sibling::html:div[
+                @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
+              ]"
+           >
+             <xsl:copy-of select="current()"></xsl:copy-of>
+         </xsl:for-each>
+       </html:div>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:variable name="hasQmlProps" select="boolean($nonmems)" as="xs:boolean"/>
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
@@ -252,19 +273,37 @@
       </xsl:message>
     </xsl:if>
     <xsl:if test="$isClass and not(boolean($funcs))">
-      <xsl:message terminate="no">WARNING: A class has no functions.</xsl:message>
+      <xsl:message terminate="no">WARNING: A C++ class has no C++ functions.</xsl:message>
     </xsl:if>
-    <xsl:if test="not($isClass) and boolean($types)">
-      <xsl:message terminate="no">WARNING: A concept has types.</xsl:message>
+    <xsl:if test="$isClass and boolean($hasQmlProps)">
+      <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
     </xsl:if>
-    <xsl:if test="not($isClass) and boolean($funcs)">
-      <xsl:message terminate="no">WARNING: A concept has functions.</xsl:message>
+    <xsl:if test="$isConcept and boolean($types)">
+      <xsl:message terminate="no">WARNING: A concept has C++ types.</xsl:message>
     </xsl:if>
-    <xsl:if test="not($isClass) and boolean($properties)">
-      <xsl:message terminate="no">WARNING: A concept has properties.</xsl:message>
+    <xsl:if test="$isConcept and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A concept has C++ functions.</xsl:message>
     </xsl:if>
-    <xsl:if test="not($isClass) and boolean($funcs)">
-      <xsl:message terminate="no">WARNING: A concept has functions.</xsl:message>
+    <xsl:if test="$isConcept and boolean($properties)">
+      <xsl:message terminate="no">WARNING: A concept has C++ properties.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isConcept and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A concept has C++ functions.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isQmlType and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isQmlType and boolean($types)">
+      <xsl:message terminate="no">WARNING: A QML type has C++ types.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isQmlType and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isQmlType and boolean($properties)">
+      <xsl:message terminate="no">WARNING: A QML type has C++ properties.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isQmlType and boolean($funcs)">
+      <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
     </xsl:if>
 
     <!-- Do the same with linked documents. -->
@@ -403,11 +442,14 @@
       <xsl:if test="$isQmlType">
         <xsl:call-template name="qmlTypeListing">
           <xsl:with-param name="qmlTypeName" select="$qmlTypeName"/>
+          
           <xsl:with-param name="import" select="$prologueImport"/>
           <xsl:with-param name="instantiates" select="$prologueInstantiates"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
+          
+          <xsl:with-param name="props" select="$qmlProps"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -979,6 +1021,8 @@
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
     
+    <xsl:param name="props" as="element()?"></xsl:param> 
+    
     <db:classsynopsis>
       <db:ooclass>
         <db:classname>
@@ -1011,7 +1055,28 @@
           <xsl:value-of select="$since"/>
         </db:classsynopsisinfo>
       </xsl:if>
+      
+      <xsl:if test="$props">
+        <!-- Deal with properties as fields. -->
+        <xsl:apply-templates mode="qmlPropertiesListing" select="$props/html:div[@class = 'qmlitem']"/>
+      </xsl:if>
     </db:classsynopsis>
+  </xsl:template>
+  
+  <xsl:template mode="qmlPropertiesListing" match="text()"/>
+  <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
+    <xsl:variable name="row" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
+    <xsl:variable name="title" select="$row/html:td/html:p"/>
+    <xsl:variable name="anchor" select="$row/@id"/>
+    
+    <db:fieldsynopsis>
+      <xsl:call-template name="classListing_methodBody_analyseType">
+        <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"></xsl:with-param>
+      </xsl:call-template>
+      <db:varname>
+        <xsl:value-of select="$title/html:span[@class = 'name']/text()"/>
+      </db:varname>
+    </db:fieldsynopsis>
   </xsl:template>
 
   <!-- Handle types: detailed description. -->
