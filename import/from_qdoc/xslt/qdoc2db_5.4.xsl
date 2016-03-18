@@ -226,27 +226,47 @@
         if ($hasNonmems) then
           $siblingAfterFuncs/following-sibling::*[1]
         else
-          $siblingAfterFuncs"/>
+        $siblingAfterFuncs"/>
     
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()"/>
     <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
     <xsl:variable name="qmlProps" as="element(html:div)?">
       <xsl:if test="$isQmlType">
-       <html:div class="qml-props">
-         <xsl:for-each
-           select="
+        <html:div class="qml-props">
+          <xsl:for-each
+            select="
             $qmlPropsTitle
-              /following-sibling::html:div[
-                @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
-              ]"
-           >
-             <xsl:copy-of select="current()"></xsl:copy-of>
-         </xsl:for-each>
-       </html:div>
+            /following-sibling::html:div[
+            @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
+            ]"
+            >
+            <xsl:copy-of select="current()"></xsl:copy-of>
+          </xsl:for-each>
+        </html:div>
       </xsl:if>
     </xsl:variable>
-    <xsl:variable name="hasQmlProps" select="boolean($nonmems)" as="xs:boolean"/>
+    <xsl:variable name="hasQmlProps" select="boolean($qmlProps)" as="xs:boolean"/>
+    
+    <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
+    <xsl:variable name="qmlMethsTitle" select="$content/html:h2[text() = $qmlMethsTitleText]" as="element()"/>
+    <xsl:variable name="qmlMethsTitleId" select="generate-id($qmlMethsTitle)"/>
+    <xsl:variable name="qmlMeths" as="element(html:div)?">
+      <xsl:if test="$isQmlType">
+        <html:div class="qml-meths">
+          <xsl:for-each
+            select="
+              $qmlMethsTitle
+              /following-sibling::html:div[
+                @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlMethsTitleId
+              ]"
+            >
+            <xsl:copy-of select="current()"></xsl:copy-of>
+          </xsl:for-each>
+        </html:div>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:variable name="hasQmlMeths" select="boolean($qmlMeths)" as="xs:boolean"/>
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
@@ -277,6 +297,9 @@
     </xsl:if>
     <xsl:if test="$isClass and boolean($hasQmlProps)">
       <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isClass and boolean($hasQmlMeths)">
+      <xsl:message terminate="no">WARNING: A C++ class has QML methods.</xsl:message>
     </xsl:if>
     <xsl:if test="$isConcept and boolean($types)">
       <xsl:message terminate="no">WARNING: A concept has C++ types.</xsl:message>
@@ -450,6 +473,7 @@
           <xsl:with-param name="since" select="$prologueSince"/>
           
           <xsl:with-param name="props" select="$qmlProps"/>
+          <xsl:with-param name="meths" select="$qmlMeths"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -1021,7 +1045,8 @@
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
     
-    <xsl:param name="props" as="element()?"></xsl:param> 
+    <xsl:param name="props" as="element()?"/> 
+    <xsl:param name="meths" as="element()?"/>
     
     <db:classsynopsis>
       <db:ooclass>
@@ -1057,13 +1082,15 @@
       </xsl:if>
       
       <xsl:if test="$props">
-        <!-- Deal with properties as fields. -->
         <xsl:apply-templates mode="qmlPropertiesListing" select="$props/html:div[@class = 'qmlitem']"/>
+      </xsl:if>
+      
+      <xsl:if test="$meths">
+        <xsl:apply-templates mode="qmlMethodsListing" select="$meths/html:div[@class = 'qmlitem']"/>
       </xsl:if>
     </db:classsynopsis>
   </xsl:template>
   
-  <xsl:template mode="qmlPropertiesListing" match="text()"/>
   <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
     <xsl:variable name="row" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
     <xsl:variable name="title" select="$row/html:td/html:p"/>
@@ -1077,6 +1104,47 @@
         <xsl:value-of select="$title/html:span[@class = 'name']/text()"/>
       </db:varname>
     </db:fieldsynopsis>
+  </xsl:template>
+  
+  <xsl:template mode="qmlMethodsListing" match="html:div[@class = 'qmlitem']">
+    <xsl:variable name="row" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
+    <xsl:variable name="title" select="$row/html:td/html:p"/>
+    <xsl:variable name="anchor" select="$row/@id"/>
+    
+    <db:methodsynopsis>
+      <!-- Return type. -->
+      <xsl:choose>
+        <xsl:when test="$title/html:*[2][self::html:span][@class = 'type']">
+          <db:type>
+            <xsl:value-of select="$title/html:*[2][self::html:span][@class = 'type']"/>
+            <!-- TODO: what about links in type? -->
+          </db:type>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:void/>
+        </xsl:otherwise>
+      </xsl:choose>
+      
+      <!-- Method name. -->
+      <db:methodname>
+        <xsl:value-of select="$title/html:span[@class = 'name']/text()"/>
+      </db:methodname>
+      
+      <!-- Parameters. -->
+      <xsl:choose>
+        <xsl:when test="count($title/html:span[@class = 'type']) = 0">
+          <db:void/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:for-each select="$title/html:span[@class = 'type']">
+            <db:methodparam>
+              <db:type><xsl:value-of select="."/></db:type><!-- TODO: what about links in type? -->
+              <db:parameter><xsl:value-of select="./following-sibling::html:*"/></db:parameter>
+            </db:methodparam>
+          </xsl:for-each>
+        </xsl:otherwise>
+      </xsl:choose>
+    </db:methodsynopsis>
   </xsl:template>
 
   <!-- Handle types: detailed description. -->
