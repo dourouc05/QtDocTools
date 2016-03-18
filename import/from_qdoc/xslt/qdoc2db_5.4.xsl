@@ -1286,12 +1286,10 @@
           </xsl:when>
         </xsl:choose>
 
-        <!-- Handle title. -->
+        <!-- Handle title then subsections. -->
         <db:title>
           <xsl:copy-of select="./text()"/>
         </db:title>
-
-        <!-- Handle subsections. -->
         <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
@@ -1307,40 +1305,40 @@
                         <db:title>
                           <xsl:copy-of select="./text()"/>
                         </db:title>
-                      </db:section>
 
-                      <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
-                        <xsl:choose>
-                          <xsl:when test="current-group()[self::html:h5]">
-                            <db:section>
-                              <db:title>
-                                <xsl:copy-of select="./text()"/>
-                              </db:title>
-
-                              <xsl:for-each-group select="current-group()"
-                                group-starting-with="html:h6">
-                                <xsl:choose>
-                                  <xsl:when test="current-group()[self::html:h6]">
-                                    <db:section>
-                                      <db:title>
-                                        <xsl:copy-of select="./text()"/>
-                                      </db:title>
-
+                        <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
+                          <xsl:choose>
+                            <xsl:when test="current-group()[self::html:h5]">
+                              <db:section>
+                                <db:title>
+                                  <xsl:copy-of select="./text()"/>
+                                </db:title>
+  
+                                <xsl:for-each-group select="current-group()"
+                                  group-starting-with="html:h6">
+                                  <xsl:choose>
+                                    <xsl:when test="current-group()[self::html:h6]">
+                                      <db:section>
+                                        <db:title>
+                                          <xsl:copy-of select="./text()"/>
+                                        </db:title>
+  
+                                        <xsl:apply-templates select="current-group()" mode="content"/>
+                                      </db:section>
+                                    </xsl:when>
+                                    <xsl:otherwise>
                                       <xsl:apply-templates select="current-group()" mode="content"/>
-                                    </db:section>
-                                  </xsl:when>
-                                  <xsl:otherwise>
-                                    <xsl:apply-templates select="current-group()" mode="content"/>
-                                  </xsl:otherwise>
-                                </xsl:choose>
-                              </xsl:for-each-group>
-                            </db:section>
-                          </xsl:when>
-                          <xsl:otherwise>
-                            <xsl:apply-templates select="current-group()" mode="content"/>
-                          </xsl:otherwise>
-                        </xsl:choose>
-                      </xsl:for-each-group>
+                                    </xsl:otherwise>
+                                  </xsl:choose>
+                                </xsl:for-each-group>
+                              </db:section>
+                            </xsl:when>
+                            <xsl:otherwise>
+                              <xsl:apply-templates select="current-group()" mode="content"/>
+                            </xsl:otherwise>
+                          </xsl:choose>
+                        </xsl:for-each-group>
+                      </db:section>
                     </xsl:when>
                     <xsl:otherwise>
                       <xsl:apply-templates select="current-group()" mode="content"/>
