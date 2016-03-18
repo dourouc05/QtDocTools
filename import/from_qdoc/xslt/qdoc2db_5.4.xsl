@@ -172,9 +172,8 @@
         else
           $siblingAfterDescription"/>
     
-    <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="index" as="element()?"
-      select="$siblingAfterSeeAlso[self::html:div][@class = 'table']"/>
+      select="$siblingAfterSeeAlso[self::html:div][@class = 'table'][html:table[@class = 'annotated']]"/> <!-- For pages that contain only an index, like accessibility -->
     <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterIndex" as="element()?"
       select="
@@ -182,7 +181,12 @@
           $siblingAfterSeeAlso/following-sibling::*[1]
         else
           $siblingAfterSeeAlso"/>
-
+    <xsl:if test="$isQmlType and //html:*[self::html:div][@class = 'table'][html:table[@class = 'annotated']]">
+      <xsl:message>WARNING: QML type seems to have an index page; not implemented. </xsl:message>
+      <!-- In this case, would need to find a way back in the page (cannot use the $sibling variables). -->
+    </xsl:if>
+    
+    <!-- TODO: this was written only for classes and concepts, not QML types! (No $description.) -->
     <xsl:variable name="types" as="element()?"
       select="$siblingAfterIndex[self::html:div][@class = 'types']"/>
     <xsl:variable name="hasTypes" select="boolean($types)" as="xs:boolean"/>
