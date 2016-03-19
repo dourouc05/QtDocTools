@@ -1122,10 +1122,9 @@
       <!-- Return type. -->
       <xsl:choose>
         <xsl:when test="$title/html:*[2][self::html:span][@class = 'type']">
-          <db:type>
-            <xsl:value-of select="$title/html:*[2][self::html:span][@class = 'type']"/>
-            <!-- TODO: what about links in type? -->
-          </db:type>
+          <xsl:call-template name="classListing_methodBody_analyseType">
+            <xsl:with-param name="typeNodes" select="$title/html:*[2][self::html:span][@class = 'type']"/>
+          </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
           <db:void/>
@@ -1182,7 +1181,9 @@
             
             <db:methodparam>
               <xsl:if test="$hasType">
-                <db:type><xsl:value-of select="$type"/></db:type><!-- TODO: what about links in type? -->
+                <xsl:call-template name="classListing_methodBody_analyseType">
+                  <xsl:with-param name="typeNodes" select="$type"/>
+                </xsl:call-template>
               </xsl:if>
               <db:parameter><xsl:value-of select="normalize-space($name)"/></db:parameter>
             </db:methodparam>
