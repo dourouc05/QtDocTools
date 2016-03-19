@@ -257,13 +257,11 @@
          <db:methodname>childAt</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter> x real 
-                                                  y</db:parameter>
+            <db:parameter>x</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  y</db:parameter>
+            <db:parameter>y</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -271,13 +269,11 @@
          <db:methodname>contains</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
-            <db:parameter>contains point 
-                                                  point</db:parameter>
+            <db:parameter>contains</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>point</db:type>
-            <db:parameter>
-                                                  point</db:parameter>
+            <db:parameter>point</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -285,8 +281,7 @@
          <db:methodname>forceActiveFocus</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>Qt::FocusReason</db:type>
-            <db:parameter>
-                                                  reason</db:parameter>
+            <db:parameter>reason</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -299,15 +294,41 @@
          <db:methodname>grabToImage</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>bool</db:type>
-            <db:parameter>grabToImage callback targetSize</db:parameter>
+            <db:parameter>grabToImage</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>callback</db:type>
+            <db:parameter>callback</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:parameter>targetSize</db:parameter>
          </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis>
+         <db:type>object</db:type>
+         <db:methodname>mapFromItem</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>targetSize</db:type>
-            <db:parameter/>
+            <db:type>object</db:type>
+            <db:parameter>mapFromItem</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type>Item</db:type>
+            <db:parameter>item</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type>real</db:type>
+            <db:parameter>x</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type>real</db:type>
+            <db:parameter>y</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type>real</db:type>
+            <db:parameter>width</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type>real</db:type>
+            <db:parameter>height</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -315,68 +336,19 @@
          <db:methodname>mapFromItem</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
-            <db:parameter>mapFromItem Item  item real 
-                                                  x real  y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>mapFromItem</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>Item</db:type>
-            <db:parameter> item real 
-                                                  x real  y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>item</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  x real  y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>x</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter> y real 
-                                                  width real 
-                                                  height</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>real</db:type>
-            <db:parameter>
-                                                  width real 
-                                                  height</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>real</db:type>
-            <db:parameter>
-                                                  height</db:parameter>
-         </db:methodparam>
-      </db:methodsynopsis>
-      <db:methodsynopsis>
-         <db:type>object</db:type>
-         <db:methodname>mapFromItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>mapFromItem Item  item real 
-                                                  x real 
-                                                  y</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>Item</db:type>
-            <db:parameter> item real 
-                                                  x real 
-                                                  y</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>real</db:type>
-            <db:parameter>
-                                                  x real 
-                                                  y</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>real</db:type>
-            <db:parameter>
-                                                  y</db:parameter>
+            <db:parameter>y</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -384,41 +356,27 @@
          <db:methodname>mapToItem</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
-            <db:parameter>mapToItem Item  item real 
-                                                  x real  y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>mapToItem</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>Item</db:type>
-            <db:parameter> item real 
-                                                  x real  y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>item</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  x real  y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>x</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter> y real 
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>y</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  width real 
-                                                  height</db:parameter>
+            <db:parameter>width</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  height</db:parameter>
+            <db:parameter>height</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -426,26 +384,19 @@
          <db:methodname>mapToItem</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
-            <db:parameter>mapToItem Item  item real 
-                                                  x real 
-                                                  y</db:parameter>
+            <db:parameter>mapToItem</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>Item</db:type>
-            <db:parameter> item real 
-                                                  x real 
-                                                  y</db:parameter>
+            <db:parameter>item</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  x real 
-                                                  y</db:parameter>
+            <db:parameter>x</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
-            <db:parameter>
-                                                  y</db:parameter>
+            <db:parameter>y</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
@@ -453,8 +404,7 @@
          <db:methodname>nextItemInFocusChain</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
             <db:type>bool</db:type>
-            <db:parameter>
-                                                  forward</db:parameter>
+            <db:parameter>forward</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
    </db:classsynopsis>

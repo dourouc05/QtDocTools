@@ -1100,6 +1100,7 @@
       <xsl:variable name="anchor" select="$row/@id"/>
 
       <xsl:if test="$title/html:span[@class = 'name']">
+        <!-- TODO: how to handle property groups? -->
         <db:fieldsynopsis>
           <xsl:call-template name="classListing_methodBody_analyseType">
             <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"/>
@@ -1143,9 +1144,47 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:for-each select="$title/html:span[@class = 'type']">
+            <!-- 
+              Peculiarity: could very well see a type, but nothing else in the vicinity! Example from Item: 
+              <html:tr class="odd" id="grabToImage-method" valign="top">
+                <html:td class="tblQmlFuncNode">
+                  <html:p>
+                    <html:a name="grabToImage-method"/>
+                    <html:span class="type">bool</html:span>
+                    <html:span class="name">grabToImage</html:span> 
+                    (
+                      <html:span class="type">callback</html:span>, 
+                      <html:span class="type">targetSize</html:span> 
+                    )
+                  </html:p>
+                </html:td>
+              </html:tr>
+            -->
+            <xsl:variable name="potentialType" select="." as="element(html:span)"/>
+            <xsl:variable name="nextNode" select="$potentialType/following-sibling::node()[1]" as="node()"/>
+            <xsl:variable name="hasType" as="xs:boolean" select="$nextNode and not($nextNode[self::text()])"/>
+            
+            <xsl:variable name="type" as="element(html:span)?">
+              <xsl:if test="$hasType">
+                <xsl:copy-of select="$potentialType"></xsl:copy-of>
+              </xsl:if>
+            </xsl:variable>
+            <xsl:variable name="name" as="text()">
+              <xsl:choose>
+                <xsl:when test="$hasType">
+                  <xsl:value-of select="$nextNode"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$potentialType"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
+            
             <db:methodparam>
-              <db:type><xsl:value-of select="."/></db:type><!-- TODO: what about links in type? -->
-              <db:parameter><xsl:value-of select="./following-sibling::html:*"/></db:parameter>
+              <xsl:if test="$hasType">
+                <db:type><xsl:value-of select="$type"/></db:type><!-- TODO: what about links in type? -->
+              </xsl:if>
+              <db:parameter><xsl:value-of select="normalize-space($name)"/></db:parameter>
             </db:methodparam>
           </xsl:for-each>
         </xsl:otherwise>
