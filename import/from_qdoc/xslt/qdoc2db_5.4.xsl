@@ -489,7 +489,7 @@
         <xsl:apply-templates mode="indexTable" select="$index"/>
       </xsl:if>
 
-      <!-- There may be types and functions for classes. -->
+      <!-- There may be types and functions for C++ classes. -->
       <xsl:if test="$hasTypes">
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$types"/>
@@ -507,7 +507,21 @@
           <xsl:with-param name="data" select="$nonmems"/>
         </xsl:call-template>
       </xsl:if>
-
+      
+      <!-- There may be properties and methods for QML types. -->
+      <xsl:if test="$hasQmlProps">
+        <xsl:call-template name="content_qmlProps">
+          <xsl:with-param name="data" select="$qmlProps"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$hasQmlMeths">
+        <xsl:call-template name="content_qmlMeths">
+          <xsl:with-param name="data" select="$qmlMeths"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <!-- There may be obsolete things for C++ classes. -->
       <xsl:if test="$hasObsolete">
         <db:section>
           <db:title>
@@ -1090,7 +1104,6 @@
       </xsl:if>
     </db:classsynopsis>
   </xsl:template>
-  
   <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
     <xsl:variable name="rows" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
     
@@ -1112,7 +1125,6 @@
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
-  
   <xsl:template mode="qmlMethodsListing" match="html:div[@class = 'qmlitem']">
     <xsl:variable name="row" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
     <xsl:variable name="title" select="$row/html:td/html:p"/>
@@ -1193,7 +1205,7 @@
     </db:methodsynopsis>
   </xsl:template>
 
-  <!-- Handle types: detailed description. -->
+  <!-- Handle C++ types: detailed description. -->
   <xsl:template name="content_types">
     <xsl:param name="data" as="element(html:div)"/>
 
@@ -1231,7 +1243,7 @@
     </db:section>
   </xsl:template>
 
-  <!-- Handle classes: detailed description. -->
+  <!-- Handle C++ classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
 
@@ -1269,11 +1281,11 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-
-  <!-- Handle classes: non-member related functions. -->
+  
+  <!-- Handle C++ classes: non-member related functions. -->
   <xsl:template name="content_nonmems">
     <xsl:param name="data" as="element(html:div)"/>
-
+    
     <db:section>
       <db:title>Related Non-Members</db:title>
       <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
@@ -1284,7 +1296,7 @@
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
-
+      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
@@ -1296,10 +1308,54 @@
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
-
+      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  
+  <!-- Handle QML properties. -->
+  <xsl:template name="content_qmlProps">
+    <xsl:param name="data" as="element(html:div)"/>
+    
+    <db:section>
+      <db:title>Properties Documentation</db:title>
+      <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_qmlProps"
+    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  
+  <!-- Handle QML methods. -->
+  <xsl:template name="content_qmlMeths">
+    <xsl:param name="data" as="element(html:div)"/>
+    
+    <db:section>
+      <db:title>Methods Documentation</db:title>
+      <!--<xsl:apply-templates mode="content_qmlProps" select="$data/html:h3"/>-->
+      <xsl:message terminate="yes">NOT IMPLEMENTED.</xsl:message>
     </db:section>
   </xsl:template>
 
