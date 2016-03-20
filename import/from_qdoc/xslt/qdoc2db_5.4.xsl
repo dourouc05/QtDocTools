@@ -1325,8 +1325,9 @@
     </db:section>
   </xsl:template>
   <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
-    <xsl:variable name="functionAnchor" select="./@id"/>
+    <xsl:variable name="functionAnchor" select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr[1]/@id"/>
     <db:section>
+      <xsl:message><xsl:copy-of select="$functionAnchor"></xsl:copy-of></xsl:message>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
       
