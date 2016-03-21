@@ -1284,7 +1284,7 @@
   <xsl:template name="content_class_content">
     <xsl:param name="node" as="element()?"/>
 
-    <xsl:if test="$node and not($node[self::html:h3])">
+    <xsl:if test="$node and not($node[self::html:h3]) and not($node[self::html:div[starts-with(@class, 'qml')]])">
       <xsl:apply-templates mode="content" select="$node"/>
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="$node/following-sibling::*[1]"/>
@@ -1339,12 +1339,17 @@
     <xsl:variable name="functionAnchor" select="$row/@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      
+      <xsl:if test="not($row/html:td/html:p)">
+        <xsl:message>PROBLEM</xsl:message>
+      </xsl:if>
+      
       <xsl:call-template name="content_title_param">
         <xsl:with-param name="what" select="$row/html:td/html:p"/>
       </xsl:call-template>
       
       <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+        <xsl:with-param name="node" select="./html:div[@class = 'qmldoc']/child::html:*[1]"/>
       </xsl:call-template>
     </db:section>
   </xsl:template>
