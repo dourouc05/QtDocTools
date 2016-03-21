@@ -552,15 +552,25 @@
 
   <!-- Utility templates, to be used everywhere. -->
   <xsl:template name="content_title">
+    <xsl:call-template name="content_title_param">
+      <xsl:with-param name="what" select="."/>
+    </xsl:call-template>
+  </xsl:template>
+  <xsl:template name="content_title_param">
+    <xsl:param name="what" as="element()"/>
+    
     <xsl:variable name="content">
-      <xsl:apply-templates mode="content_title_hidden" select="."/>
+      <xsl:apply-templates mode="content_title_hidden" select="$what"/>
     </xsl:variable>
     <db:title>
       <!-- Normalise spaces and line feeds in titles. -->
       <xsl:value-of
-        select="replace(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '), '  ', ' ')"
+        select="normalize-space(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '))"
       />
     </db:title>
+  </xsl:template>
+  <xsl:template mode="content_title_hidden" match="html:p">
+    <xsl:apply-templates mode="content_title_hidden"/>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="text()">
     <xsl:value-of select="."/>
@@ -1325,23 +1335,13 @@
     </db:section>
   </xsl:template>
   <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
-    <xsl:variable name="functionAnchor" select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr[1]/@id"/>
+    <xsl:variable name="row" select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr[1]"/>
+    <xsl:variable name="functionAnchor" select="$row/@id"/>
     <db:section>
-      <xsl:message><xsl:copy-of select="$functionAnchor"></xsl:copy-of></xsl:message>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
-      
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      <xsl:call-template name="content_title_param">
+        <xsl:with-param name="what" select="$row/html:td/html:p"/>
       </xsl:call-template>
-    </db:section>
-  </xsl:template>
-  <xsl:template mode="content_qmlProps"
-    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
-    <xsl:variable name="functionAnchor" select="./@id"/>
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
       
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
