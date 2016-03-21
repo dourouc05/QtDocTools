@@ -559,15 +559,23 @@
   <xsl:template name="content_title_param">
     <xsl:param name="what" as="element()"/>
     
+    <db:title>
+      <xsl:call-template name="content_title_value">
+        <xsl:with-param name="what" select="$what"/>
+      </xsl:call-template>
+    </db:title>
+  </xsl:template>
+  <xsl:template name="content_title_value">
+    <xsl:param name="what" as="element()"/>
+    
     <xsl:variable name="content">
       <xsl:apply-templates mode="content_title_hidden" select="$what"/>
     </xsl:variable>
-    <db:title>
-      <!-- Normalise spaces and line feeds in titles. -->
-      <xsl:value-of
-        select="normalize-space(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '))"
-      />
-    </db:title>
+    
+    <!-- Normalise spaces and line feeds in titles. -->
+    <xsl:value-of
+      select="normalize-space(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '))"
+    />
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="html:p">
     <xsl:apply-templates mode="content_title_hidden"/>
@@ -1335,19 +1343,40 @@
     </db:section>
   </xsl:template>
   <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
-    <xsl:variable name="row" select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr[1]"/>
+    <xsl:variable name="table" select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody" as="element(html:tbody)"/>
+    <xsl:variable name="row" select="$table/html:tr[1]" as="element(html:tr)"/>
     <xsl:variable name="functionAnchor" select="$row/@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       
-      <xsl:if test="not($row/html:td/html:p)">
-        <xsl:message>PROBLEM</xsl:message>
-      </xsl:if>
+      <!-- Output the title. Either only one (single property) or a sequence of titles (property group). -->
+      <xsl:choose>
+        <xsl:when test="$row/html:td/html:p">
+          <!-- Single property. -->
+          <xsl:call-template name="content_title_param">
+            <xsl:with-param name="what" select="$row/html:td/html:p"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- Property group. Group title on the first row; actual properties on subsequent rows. -->
+          <db:title>
+            <xsl:value-of select="$row/html:b"/>
+          </db:title>
+          
+          <xsl:for-each select="$table/html:tr">
+            <xsl:if test="not(.//html:b)">
+              <db:bridgehead renderas="sect3">
+                <xsl:call-template name="content_title_value">
+                  <xsl:with-param name="what" select="./html:td/html:p"/>
+                </xsl:call-template>
+              </db:bridgehead>
+            </xsl:if>
+          </xsl:for-each>
+          <db:para/>
+        </xsl:otherwise>
+      </xsl:choose>
       
-      <xsl:call-template name="content_title_param">
-        <xsl:with-param name="what" select="$row/html:td/html:p"/>
-      </xsl:call-template>
-      
+      <!-- Deal with the content. -->
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./html:div[@class = 'qmldoc']/child::html:*[1]"/>
       </xsl:call-template>
