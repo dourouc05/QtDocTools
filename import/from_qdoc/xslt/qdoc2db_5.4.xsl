@@ -552,16 +552,9 @@
 
   <!-- Utility templates, to be used everywhere. -->
   <xsl:template name="content_title">
-    <xsl:call-template name="content_title_param">
-      <xsl:with-param name="what" select="."/>
-    </xsl:call-template>
-  </xsl:template>
-  <xsl:template name="content_title_param">
-    <xsl:param name="what" as="element()"/>
-    
     <db:title>
       <xsl:call-template name="content_title_value">
-        <xsl:with-param name="what" select="$what"/>
+        <xsl:with-param name="what" select="."/>
       </xsl:call-template>
     </db:title>
   </xsl:template>
@@ -1349,13 +1342,21 @@
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       
-      <!-- Output the title. Either only one (single property) or a sequence of titles (property group). -->
+      <!-- 
+        Output the title. Either only one (single property) or a sequence of titles (property group).
+        Not reusing that of C++, as it does not handle links (need to renormalise a lot strings in C++, 
+        not as much for QML). 
+      -->
       <xsl:choose>
         <xsl:when test="$row/html:td/html:p">
           <!-- Single property. -->
-          <xsl:call-template name="content_title_param">
-            <xsl:with-param name="what" select="$row/html:td/html:p"/>
-          </xsl:call-template>
+          <db:title>
+            <xsl:value-of select="$row/html:td/html:p/html:span[@class = 'name']"/>
+            <xsl:text> : </xsl:text>
+            <xsl:for-each select="$row/html:td/html:p/html:span[@class = 'name']/following-sibling::node()">
+              <xsl:apply-templates mode="content_paragraph" select="."/>
+            </xsl:for-each>
+          </db:title>
         </xsl:when>
         <xsl:otherwise>
           <!-- Property group. Group title on the first row; actual properties on subsequent rows. -->
@@ -1366,13 +1367,12 @@
           <xsl:for-each select="$table/html:tr">
             <xsl:if test="not(.//html:b)">
               <db:bridgehead renderas="sect3">
-                <xsl:call-template name="content_title_value">
-                  <xsl:with-param name="what" select="./html:td/html:p"/>
-                </xsl:call-template>
+                <xsl:value-of select="./html:td/html:p/html:span[@class = 'name']"/>
+                <xsl:text> : </xsl:text>
+                <xsl:apply-templates mode="content_paragraph" select="./html:td/html:p/html:span[@class = 'type']"/>
               </db:bridgehead>
             </xsl:if>
           </xsl:for-each>
-          <db:para/>
         </xsl:otherwise>
       </xsl:choose>
       
@@ -1390,7 +1390,8 @@
     <db:section>
       <db:title>Methods Documentation</db:title>
       <!--<xsl:apply-templates mode="content_qmlProps" select="$data/html:h3"/>-->
-      <xsl:message terminate="yes">NOT IMPLEMENTED.</xsl:message>
+      <!--<xsl:message terminate="yes">NOT IMPLEMENTED.</xsl:message>-->
+      <db:para/>
     </db:section>
   </xsl:template>
 
@@ -1426,7 +1427,7 @@
           <!--<db:title>docbook.xsd</db:title>-->
           <!-- If title: <figure>. Otherwise: <informalfigure>. -->
           <db:mediaobject>
-            <xsl:if test="./html:img[@alt]">
+            <xsl:if test="not(normalize-space(./html:img/@alt) = '')">
               <db:alt>
                 <xsl:value-of select="./html:img/@alt"/>
               </db:alt>
@@ -1718,6 +1719,9 @@
   </xsl:template>
 
   <!-- Handle inline elements, inside paragraphs. DocBook happily allows lists inside paragraphs. -->
+  <xsl:template mode="content_paragraph" match="html:span">
+    <xsl:apply-templates mode="content_paragraph" select="child::node()"/>
+  </xsl:template>
   <xsl:template mode="content_paragraph" match="text()">
     <xsl:choose>
       <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '(')">
