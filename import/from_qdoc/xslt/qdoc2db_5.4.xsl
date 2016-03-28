@@ -518,6 +518,12 @@
           <xsl:with-param name="data" select="$funcs"/>
         </xsl:call-template>
       </xsl:if>
+      
+      <xsl:if test="$hasMacros">
+        <xsl:call-template name="content_macros">
+          <xsl:with-param name="data" select="$macros"/>
+        </xsl:call-template>
+      </xsl:if>
 
       <xsl:if test="$hasNonmems">
         <xsl:call-template name="content_nonmems">
@@ -1390,6 +1396,39 @@
         <xsl:with-param name="node" select="$node/following-sibling::*[1]"/>
       </xsl:call-template>
     </xsl:if>
+  </xsl:template>
+  
+  <!-- Handle C++ macros. -->
+  <xsl:template name="content_macros">
+    <xsl:param name="data" as="element(html:div)"/>
+    
+    <db:section>
+      <db:title>Macro Documentation</db:title>
+      <xsl:apply-templates mode="content_macros" select="$data/html:h3"/>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_macros" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_macros"
+    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
   </xsl:template>
   
   <!-- Handle C++ classes: non-member related functions. -->
