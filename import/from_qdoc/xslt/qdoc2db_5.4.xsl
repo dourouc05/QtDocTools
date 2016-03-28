@@ -1351,8 +1351,7 @@
         <xsl:when test="$row/html:td/html:p">
           <!-- Single property. -->
           <db:title>
-            <xsl:value-of select="$row/html:td/html:p/html:span[@class = 'name']"/>
-            <xsl:text> : </xsl:text>
+            <xsl:apply-templates mode="content_paragraph" select="$row/html:td/html:p/html:span[@class = 'name']"/>
             <xsl:for-each select="$row/html:td/html:p/html:span[@class = 'name']/following-sibling::node()">
               <xsl:apply-templates mode="content_paragraph" select="."/>
             </xsl:for-each>
@@ -1389,9 +1388,7 @@
     
     <db:section>
       <db:title>Methods Documentation</db:title>
-      <!--<xsl:apply-templates mode="content_qmlProps" select="$data/html:h3"/>-->
-      <!--<xsl:message terminate="yes">NOT IMPLEMENTED.</xsl:message>-->
-      <db:para/>
+      <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
     </db:section>
   </xsl:template>
 

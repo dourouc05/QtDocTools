@@ -532,7 +532,7 @@
    <db:section>
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="activeFocus-prop">
-         <db:title>activeFocus :  : bool</db:title>
+         <db:title>activeFocus : bool</db:title>
          <db:para>This read-only property indicates whether the item
                                         has active focus.</db:para>
          <db:para>If activeFocus is true, either this item is the one that
@@ -561,7 +561,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="activeFocusOnTab-prop">
-         <db:title>activeFocusOnTab :  :
+         <db:title>activeFocusOnTab :
                                                   bool</db:title>
          <db:para>This property holds whether the item wants to be in
                                         tab focus chain. By default this is set to false.</db:para>
@@ -672,7 +672,7 @@
                                         see <db:link xlink:href="qtquick-positioning-anchors.html#anchor-layout">Anchor Layouts</db:link>.</db:para>
       </db:section>
       <db:section xml:id="antialiasing-prop">
-         <db:title>antialiasing :  : bool</db:title>
+         <db:title>antialiasing : bool</db:title>
          <db:para>Used by visual elements to decide if the item
                                         should use antialiasing or not. In some cases items with
                                         antialiasing require more memory and are potentially slower
@@ -681,7 +681,7 @@
                                         elements.</db:para>
       </db:section>
       <db:section xml:id="baselineOffset-prop">
-         <db:title>baselineOffset :  :
+         <db:title>baselineOffset :
                                                   int</db:title>
          <db:para>Specifies the position of the item's baseline in
                                         local coordinates.</db:para>
@@ -692,7 +692,7 @@
                                         used.</db:para>
       </db:section>
       <db:section xml:id="children-prop">
-         <db:title>children :  : list&lt;<db:link xlink:href="qml-qtquick-item.html">Item</db:link>&gt;</db:title>
+         <db:title>children : list&lt;<db:link xlink:href="qml-qtquick-item.html">Item</db:link>&gt;</db:title>
          <db:para>The children property contains the list of visual
                                         children of this item. The resources property contains
                                         non-visual resources that you want to reference by
@@ -718,7 +718,7 @@
                                         correctly size the item.</db:para>
       </db:section>
       <db:section xml:id="clip-prop">
-         <db:title>clip :  : bool</db:title>
+         <db:title>clip : bool</db:title>
          <db:para>This property holds whether clipping is enabled.
                                         The default clip value is
                                         <db:code>false</db:code>.</db:para>
@@ -727,7 +727,7 @@
                                         bounding rectangle.</db:para>
       </db:section>
       <db:section xml:id="data-prop">
-         <db:title>data :  : list&lt;Object&gt;</db:title>
+         <db:title>data : list&lt;Object&gt;</db:title>
          <db:para>The data property allows you to freely mix visual
                                         children and resources in an item. If you assign a visual
                                         item to the data list it becomes a child and if you assign
@@ -742,7 +742,7 @@
                                         automatically assigned to this property.</db:para>
       </db:section>
       <db:section xml:id="enabled-prop">
-         <db:title>enabled :  : bool</db:title>
+         <db:title>enabled : bool</db:title>
          <db:para>This property holds whether the item receives mouse
                                         and keyboard events. By default this is true.</db:para>
          <db:para>Setting this property directly affects the
@@ -769,7 +769,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="focus-prop">
-         <db:title>focus :  : bool</db:title>
+         <db:title>focus : bool</db:title>
          <db:para>This property holds whether the item has focus
                                         within the enclosing <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link>.
                                         If true, this item will gain active focus when the enclosing
@@ -797,14 +797,14 @@
          </db:section>
       </db:section>
       <db:section xml:id="height-prop">
-         <db:title>height :  : real</db:title>
+         <db:title>height : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
          <db:programlisting>Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="implicitHeight-prop">
-         <db:title>implicitHeight :  :
+         <db:title>implicitHeight :
                                                   real</db:title>
          <db:para>Defines the natural width or height of the Item if
                                         no <db:link xlink:href="qml-qtquick-item.html#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.html#height-prop">height</db:link>
@@ -827,7 +827,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="implicitWidth-prop">
-         <db:title>implicitWidth :  :
+         <db:title>implicitWidth :
                                                   real</db:title>
          <db:para>Defines the natural width or height of the Item if
                                         no <db:link xlink:href="qml-qtquick-item.html#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.html#height-prop">height</db:link>
@@ -851,7 +851,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="layer.effect-prop">
-         <db:title>layer.effect :  : <db:link xlink:href="qtqml/qml-qtqml-component.html">Component</db:link>
+         <db:title>layer.effect : <db:link xlink:href="qtqml/qml-qtqml-component.html">Component</db:link>
          </db:title>
          <db:para>Holds the effect that is applied to this
                                         layer.</db:para>
@@ -868,7 +868,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="layer.enabled-prop">
-         <db:title>layer.enabled :  :
+         <db:title>layer.enabled :
                                                   bool</db:title>
          <db:para>Holds whether the item is layered or not. Layering
                                         is disabled by default.</db:para>
@@ -880,7 +880,7 @@
                                         the layer is disabled.</db:para>
       </db:section>
       <db:section xml:id="layer.format-prop">
-         <db:title>layer.format :  : enumeration</db:title>
+         <db:title>layer.format : enumeration</db:title>
          <db:para>This property defines the internal OpenGL format of
                                         the texture. Modifying this property makes most sense when
                                         the <db:emphasis>layer.effect</db:emphasis> is also specified.
@@ -911,7 +911,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="layer.mipmap-prop">
-         <db:title>layer.mipmap :  : bool</db:title>
+         <db:title>layer.mipmap : bool</db:title>
          <db:para>If this property is true, mipmaps are generated for
                                         the texture.</db:para>
          <db:note>
@@ -921,7 +921,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="layer.samplerName-prop">
-         <db:title>layer.samplerName :  :
+         <db:title>layer.samplerName :
                                                   string</db:title>
          <db:para>Holds the name of the effect's source texture
                                         property.</db:para>
@@ -941,12 +941,12 @@
          </db:section>
       </db:section>
       <db:section xml:id="layer.smooth-prop">
-         <db:title>layer.smooth :  : bool</db:title>
+         <db:title>layer.smooth : bool</db:title>
          <db:para>Holds whether the layer is smoothly
                                         transformed.</db:para>
       </db:section>
       <db:section xml:id="layer.sourceRect-prop">
-         <db:title>layer.sourceRect :  :
+         <db:title>layer.sourceRect :
                                                   <db:link xlink:href="qtqml/qml-rect.html">rect</db:link>
          </db:title>
          <db:para>This property defines the rectangular area of the
@@ -956,7 +956,7 @@
                                         is rendered to the texture.</db:para>
       </db:section>
       <db:section xml:id="layer.textureSize-prop">
-         <db:title>layer.textureSize :  :
+         <db:title>layer.textureSize :
                                                   size</db:title>
          <db:para>This property holds the requested pixel size of the
                                         layers texture. If it is empty, which is the default, the
@@ -969,7 +969,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="layer.wrapMode-prop">
-         <db:title>layer.wrapMode :  :
+         <db:title>layer.wrapMode :
                                                   enumeration</db:title>
          <db:para>This property defines the OpenGL wrap modes
                                         associated with the texture. Modifying this property makes
@@ -1007,7 +1007,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="opacity-prop">
-         <db:title>opacity :  : real</db:title>
+         <db:title>opacity : real</db:title>
          <db:para>This property holds the opacity of the item.
                                         Opacity is specified as a number between 0.0 (fully
                                         transparent) and 1.0 (fully opaque). The default value is
@@ -1076,7 +1076,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="parent-prop">
-         <db:title>parent :  : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+         <db:title>parent : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
          </db:title>
          <db:para>This property holds the visual parent of the
                                         item.</db:para>
@@ -1090,7 +1090,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="resources-prop">
-         <db:title>resources :  : list&lt;Object&gt;</db:title>
+         <db:title>resources : list&lt;Object&gt;</db:title>
          <db:para>The children property contains the list of visual
                                         children of this item. The resources property contains
                                         non-visual resources that you want to reference by
@@ -1104,7 +1104,7 @@
                                         documentation for details.</db:para>
       </db:section>
       <db:section xml:id="rotation-prop">
-         <db:title>rotation :  : real</db:title>
+         <db:title>rotation : real</db:title>
          <db:para>This property holds the rotation of the item in
                                         degrees clockwise around its <db:link xlink:href="qml-qtquick-item.html#transformOrigin-prop">transformOrigin</db:link>.</db:para>
          <db:para>The default value is 0 degrees (that is, no
@@ -1145,7 +1145,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="scale-prop">
-         <db:title>scale :  : real</db:title>
+         <db:title>scale : real</db:title>
          <db:para>This property holds the scale factor for this
                                         item.</db:para>
          <db:para>A scale of less than 1.0 causes the item to be rendered
@@ -1195,7 +1195,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="smooth-prop">
-         <db:title>smooth :  : bool</db:title>
+         <db:title>smooth : bool</db:title>
          <db:para>Primarily used in image based items to decide if
                                         the item should use smooth sampling or not. Smooth sampling
                                         is performed using linear interpolation, while non-smooth is
@@ -1205,7 +1205,7 @@
          <db:para>By default is true.</db:para>
       </db:section>
       <db:section xml:id="state-prop">
-         <db:title>state :  : string</db:title>
+         <db:title>state : string</db:title>
          <db:para>This property holds the name of the current state
                                         of the item.</db:para>
          <db:para>If the item is in its default state, that is, no
@@ -1224,7 +1224,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="states-prop">
-         <db:title>states :  : list&lt;<db:link xlink:href="qml-qtquick-state.html">State</db:link>&gt;</db:title>
+         <db:title>states : list&lt;<db:link xlink:href="qml-qtquick-state.html">State</db:link>&gt;</db:title>
          <db:para>This property holds the list of possible states for
                                         this item. To change the state of this item, set the <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>
                                         property to one of these states, or set the <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>
@@ -1246,13 +1246,13 @@
          </db:section>
       </db:section>
       <db:section xml:id="transform-prop">
-         <db:title>transform :  : list&lt;<db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>&gt;</db:title>
+         <db:title>transform : list&lt;<db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>&gt;</db:title>
          <db:para>This property holds the list of transformations to
                                         apply.</db:para>
          <db:para>For more information see <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>.</db:para>
       </db:section>
       <db:section xml:id="transformOrigin-prop">
-         <db:title>transformOrigin :  :
+         <db:title>transformOrigin :
                                                   enumeration</db:title>
          <db:para>This property holds the origin point around which
                                         scale and rotation transform.</db:para>
@@ -1275,7 +1275,7 @@
                                             <db:link xlink:href="qml-qtquick-rotation.html">Rotation</db:link> transform types with <db:link xlink:href="qml-qtquick-item.html#transform-prop">transform</db:link>.</db:para>
       </db:section>
       <db:section xml:id="transitions-prop">
-         <db:title>transitions :  : list&lt;<db:link xlink:href="qml-qtquick-transition.html">Transition</db:link>&gt;</db:title>
+         <db:title>transitions : list&lt;<db:link xlink:href="qml-qtquick-transition.html">Transition</db:link>&gt;</db:title>
          <db:para>This property holds the list of transitions for
                                         this item. These define the transitions to be applied to the
                                         item whenever it changes its <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>.</db:para>
@@ -1293,7 +1293,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="visible-prop">
-         <db:title>visible :  : bool</db:title>
+         <db:title>visible : bool</db:title>
          <db:para>This property holds whether the item is visible. By
                                         default this is true.</db:para>
          <db:para>Setting this property directly affects the
@@ -1340,7 +1340,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="visibleChildren-prop">
-         <db:title>visibleChildren :  :
+         <db:title>visibleChildren :
                                                   list&lt;<db:link xlink:href="qml-qtquick-item.html">Item</db:link>&gt;</db:title>
          <db:para>This read-only property lists all of the item's
                                         children that are currently visible. Note that a child's
@@ -1349,28 +1349,28 @@
                                         changed.</db:para>
       </db:section>
       <db:section xml:id="width-prop">
-         <db:title>width :  : real</db:title>
+         <db:title>width : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
          <db:programlisting>Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="x-prop">
-         <db:title>x :  : real</db:title>
+         <db:title>x : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
          <db:programlisting>Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="y-prop">
-         <db:title>y :  : real</db:title>
+         <db:title>y : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
          <db:programlisting>Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="z-prop">
-         <db:title>z :  : real</db:title>
+         <db:title>z : real</db:title>
          <db:para>Sets the stacking order of sibling items. By
                                         default the stacking order is 0.</db:para>
          <db:para>Items with a higher stacking value are drawn on top of
@@ -1460,6 +1460,185 @@
    </db:section>
    <db:section>
       <db:title>Methods Documentation</db:title>
-      <db:para/>
+      <db:section xml:id="childAt-method">
+         <db:title>childAt(real<db:emphasis> x</db:emphasis>,
+                                                  real<db:emphasis>
+                                                  y</db:emphasis>)</db:title>
+         <db:para>Returns the first visible child item found at point
+                                            (<db:emphasis>x</db:emphasis>, <db:emphasis>y</db:emphasis>) within the
+                                        coordinate system of this item.</db:para>
+         <db:para>Returns <db:code>null</db:code> if there is no such
+                                        item.</db:para>
+      </db:section>
+      <db:section xml:id="contains-method">
+         <db:title>contains(point<db:emphasis>
+                                                  point</db:emphasis>)</db:title>
+         <db:para>Returns true if this item contains
+                                            <db:emphasis>point</db:emphasis>, which is in local coordinates;
+                                        returns false otherwise.</db:para>
+      </db:section>
+      <db:section xml:id="forceActiveFocus-method-2">
+         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code><db:emphasis>
+                                                  reason</db:emphasis>)</db:title>
+         <db:para>Forces active focus on the item with the given
+                                            <db:emphasis>reason</db:emphasis>.</db:para>
+         <db:para>This method sets focus on the item and ensures that all
+                                        ancestor <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> objects in the object hierarchy are
+                                        also given <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>.</db:para>
+         <db:para>This QML method was introduced in Qt 5.1.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
+               </db:member>
+               <db:member><db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code></db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="forceActiveFocus-method">
+         <db:title>forceActiveFocus()</db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Forces active focus on the item.</db:para>
+         <db:para>This method sets focus on the item and ensures that all
+                                        ancestor <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> objects in the object hierarchy are
+                                        also given <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>.</db:para>
+         <db:para>The reason for the focus change will be
+                                            <db:emphasis>Qt::OtherFocusReason</db:emphasis>. Use the
+                                        overloaded method to specify the focus reason to enable
+                                        better handling of the focus change.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="grabToImage-method">
+         <db:title>grabToImage(callback, targetSize)</db:title>
+         <db:para>Grabs the item into an in-memory image.</db:para>
+         <db:para>The grab happens asynchronously and the JavaScript
+                                        function <db:emphasis>callback</db:emphasis> is invoked when the grab
+                                        is completed.</db:para>
+         <db:para>Use <db:emphasis>targetSize</db:emphasis> to specify the size of
+                                        the target image. By default, the result will have the same
+                                        size as the item.</db:para>
+         <db:para>If the grab could not be initiated, the function returns
+                                            <db:code>false</db:code>.</db:para>
+         <db:para>The following snippet shows how to grab an item and
+                                        store the results to a file.</db:para>
+         <db:programlisting>Rectangle { id: sourcewidth: 100height: 100gradient: Gradient { GradientStop { position: 0; color: "steelblue" } GradientStop { position: 1; color: "black" } } } //
+                                            ...source.grabToImage(function(result) { result.saveToFile("something.png"); });</db:programlisting>
+         <db:para>The following snippet shows how to grab an item and use
+                                        the results in another image element.</db:para>
+         <db:programlisting>Image { id: image } //
+                                            ...source.grabToImage(function(result) { image.source=result.url; }, Qt.size(50, 50));</db:programlisting>
+         <db:note>
+            <db:para>This function will render the
+                                        item to an offscreen surface and copy that surface from the
+                                        GPU's memory into the CPU's memory, which can be quite
+                                        costly. For "live" preview, use <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layers</db:link> or <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.</db:para>
+         </db:note>
+      </db:section>
+      <db:section xml:id="mapFromItem-method-2">
+         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+            <db:emphasis> item</db:emphasis>,
+                                                  real<db:emphasis>
+                                                  x</db:emphasis>, real<db:emphasis> y</db:emphasis>, real<db:emphasis>
+                                                  width</db:emphasis>, real<db:emphasis>
+                                                  height</db:emphasis>)</db:title>
+         <db:para>Maps the point (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>) or rect (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>, <db:emphasis>width</db:emphasis>,
+                                            <db:emphasis>height</db:emphasis>), which is in
+                                            <db:emphasis>item</db:emphasis>'s coordinate system, to this
+                                        item's coordinate system, and returns an object with
+                                            <db:code>x</db:code> and <db:code>y</db:code>
+                                        (and optionally <db:code>width</db:code> and
+                                            <db:code>height</db:code>) properties matching the
+                                        mapped coordinate.</db:para>
+         <db:para>If <db:emphasis>item</db:emphasis> is a
+                                            <db:code>null</db:code> value, this maps the point
+                                        or rect from the coordinate system of the root QML
+                                        view.</db:para>
+      </db:section>
+      <db:section xml:id="mapFromItem-method">
+         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+            <db:emphasis> item</db:emphasis>,
+                                                  real<db:emphasis>
+                                                  x</db:emphasis>, real<db:emphasis>
+                                                  y</db:emphasis>)</db:title>
+         <db:para>Maps the point (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>) or rect (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>, <db:emphasis>width</db:emphasis>,
+                                            <db:emphasis>height</db:emphasis>), which is in
+                                            <db:emphasis>item</db:emphasis>'s coordinate system, to this
+                                        item's coordinate system, and returns an object with
+                                            <db:code>x</db:code> and <db:code>y</db:code>
+                                        (and optionally <db:code>width</db:code> and
+                                            <db:code>height</db:code>) properties matching the
+                                        mapped coordinate.</db:para>
+         <db:para>If <db:emphasis>item</db:emphasis> is a
+                                            <db:code>null</db:code> value, this maps the point
+                                        or rect from the coordinate system of the root QML
+                                        view.</db:para>
+      </db:section>
+      <db:section xml:id="mapToItem-method-2">
+         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+            <db:emphasis> item</db:emphasis>,
+                                                  real<db:emphasis>
+                                                  x</db:emphasis>, real<db:emphasis> y</db:emphasis>, real<db:emphasis>
+                                                  width</db:emphasis>, real<db:emphasis>
+                                                  height</db:emphasis>)</db:title>
+         <db:para>Maps the point (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>) or rect (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>, <db:emphasis>width</db:emphasis>,
+                                            <db:emphasis>height</db:emphasis>), which is in this item's
+                                        coordinate system, to <db:emphasis>item</db:emphasis>'s coordinate
+                                        system, and returns an object with <db:code>x</db:code>
+                                        and <db:code>y</db:code> (and optionally
+                                            <db:code>width</db:code> and
+                                            <db:code>height</db:code>) properties matching the
+                                        mapped coordinate.</db:para>
+         <db:para>If <db:emphasis>item</db:emphasis> is a
+                                            <db:code>null</db:code> value, this maps the point
+                                        or rect to the coordinate system of the root QML
+                                        view.</db:para>
+      </db:section>
+      <db:section xml:id="mapToItem-method">
+         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+            <db:emphasis> item</db:emphasis>,
+                                                  real<db:emphasis>
+                                                  x</db:emphasis>, real<db:emphasis>
+                                                  y</db:emphasis>)</db:title>
+         <db:para>Maps the point (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>) or rect (<db:emphasis>x</db:emphasis>,
+                                            <db:emphasis>y</db:emphasis>, <db:emphasis>width</db:emphasis>,
+                                            <db:emphasis>height</db:emphasis>), which is in this item's
+                                        coordinate system, to <db:emphasis>item</db:emphasis>'s coordinate
+                                        system, and returns an object with <db:code>x</db:code>
+                                        and <db:code>y</db:code> (and optionally
+                                            <db:code>width</db:code> and
+                                            <db:code>height</db:code>) properties matching the
+                                        mapped coordinate.</db:para>
+         <db:para>If <db:emphasis>item</db:emphasis> is a
+                                            <db:code>null</db:code> value, this maps the point
+                                        or rect to the coordinate system of the root QML
+                                        view.</db:para>
+      </db:section>
+      <db:section xml:id="nextItemInFocusChain-method">
+         <db:title>nextItemInFocusChain(bool<db:emphasis>
+                                                  forward</db:emphasis>)</db:title>
+         <db:para>Returns the item in the focus chain which is next
+                                        to this item. If <db:emphasis>forward</db:emphasis> is
+                                            <db:code>true</db:code>, or not supplied, it is the
+                                        next item in the forwards direction. If
+                                            <db:emphasis>forward</db:emphasis> is
+                                        <db:code>false</db:code>, it is the next item in the
+                                        backwards direction.</db:para>
+         <db:para>This QML method was introduced in Qt 5.1.</db:para>
+      </db:section>
    </db:section>
 </db:article>
