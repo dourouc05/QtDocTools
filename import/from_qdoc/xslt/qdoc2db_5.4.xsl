@@ -1404,30 +1404,7 @@
     
     <db:section>
       <db:title>Macro Documentation</db:title>
-      <xsl:apply-templates mode="content_macros" select="$data/html:h3"/>
-    </db:section>
-  </xsl:template>
-  <xsl:template mode="content_macros" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
-    <xsl:variable name="functionAnchor" select="./@id"/>
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
-      
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
-    </db:section>
-  </xsl:template>
-  <xsl:template mode="content_macros"
-    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
-    <xsl:variable name="functionAnchor" select="./@id"/>
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
-      
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
+      <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
     </db:section>
   </xsl:template>
   
