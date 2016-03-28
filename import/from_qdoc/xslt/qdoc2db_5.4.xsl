@@ -217,16 +217,26 @@
           $siblingAfterProperties/following-sibling::*[1]
         else
           $siblingAfterProperties"/>
+    
+    <xsl:variable name="macros" as="element(html:div)?"
+      select="$siblingAfterFuncs[self::html:div][@class = 'macros']"/>
+    <xsl:variable name="hasMacros" select="boolean($macros)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterMacros" as="element()?"
+      select="
+        if ($hasMacros) then
+          $siblingAfterFuncs/following-sibling::*[1]
+        else
+          $siblingAfterFuncs"/>
 
     <xsl:variable name="nonmems" as="element(html:div)?"
-      select="$siblingAfterFuncs[self::html:div][@class = 'relnonmem']"/>
+      select="$siblingAfterMacros[self::html:div][@class = 'relnonmem']"/>
     <xsl:variable name="hasNonmems" select="boolean($nonmems)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterNonmems" as="element()?"
       select="
         if ($hasNonmems) then
-          $siblingAfterFuncs/following-sibling::*[1]
+          $siblingAfterMacros/following-sibling::*[1]
         else
-        $siblingAfterFuncs"/>
+          $siblingAfterMacros"/>
     
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
@@ -452,6 +462,13 @@
           <xsl:with-param name="obsoleteFunctions" select="$obsolete_funcs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
+        
+        <xsl:if test="$hasMacros">
+          <xsl:call-template name="macroListing">
+            <xsl:with-param name="data" select="$macros"/>
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:call-template>
+        </xsl:if>
         
         <xsl:if test="$hasNonmems">
           <xsl:call-template name="functionListing">
@@ -967,6 +984,78 @@
         </db:type>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="macroListing">
+    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="className" as="xs:string"/>
+    
+    <xsl:apply-templates mode="macroListing" select="$data/html:h3">
+      <xsl:with-param name="className" select="$className"/>
+    </xsl:apply-templates>
+  </xsl:template>
+  <xsl:template mode="macroListing" match="text()"/>
+  <xsl:template mode="macroListing" match="html:h3[@class = 'fn']">
+    <db:funcsynopsis>
+      <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
+      
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+        <xsl:variable name="titleNode" select="."/>
+        <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
+        
+        <db:funcdef>
+          <db:function>
+            <xsl:value-of select="$functionName"/>
+          </db:function>
+        </db:funcdef>
+        
+        <!-- Handle parameters list. -->
+        <xsl:variable name="textAfterName" select="normalize-space($functionName/following-sibling::text()[1])"/>
+        <xsl:choose>
+          <xsl:when test="$textAfterName = '' or starts-with($textAfterName, '()')">
+            <db:void/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
+            
+            <xsl:for-each select="1 to $nArguments">
+              <xsl:variable name="index" select="." as="xs:integer"/>
+              <xsl:variable name="commas" select="$titleNode/text()[contains(., ',')]"/>
+              <xsl:variable name="firstNode"
+                select="
+                if (. = 1) then
+                $functionName
+                else
+                $commas[$index - 1]"/>
+              <xsl:variable name="types"
+                select="$firstNode/following-sibling::html:span[@class = 'type']"/>
+              <xsl:variable name="type" select="$types[1]"/>
+              <xsl:variable name="textAfterType"
+                select="normalize-space($type/following-sibling::text()[1])"/>
+              
+              <db:paramdef>
+                <!-- Maybe this parameter is const. -->
+                <xsl:if test="normalize-space($textAfterName) = '(const'">
+                  <db:modifier>const</db:modifier>
+                </xsl:if>
+                
+                <!-- Output the type. -->
+                <xsl:call-template name="classListing_methodBody_analyseType">
+                  <xsl:with-param name="typeNodes" select="$types"/>
+                </xsl:call-template>
+                
+                <!-- Then the name. -->
+                <xsl:variable name="names" select="$type/following-sibling::html:i"/>
+                <db:parameter>
+                  <xsl:value-of select="normalize-space($names[1])"/>
+                </db:parameter>
+              </db:paramdef>
+            </xsl:for-each>
+          </xsl:otherwise>
+        </xsl:choose>
+      </db:funcprototype>
+    </db:funcsynopsis>
   </xsl:template>
 
   <xsl:template name="functionListing">
