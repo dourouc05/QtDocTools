@@ -18,7 +18,7 @@
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
   <xsl:import-schema schema-location="../schemas/docbook.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
 
-  <!-- Output document class. (First a trick to keep the same stylesheet schema-aware and non-schema-aware.) -->
+  <!-- Trick to keep the same stylesheet schema-aware and non-schema-aware. -->
   <xsl:template match="/" use-when="system-property('xsl:is-schema-aware')='yes'" priority="2">
     <xsl:variable name="input" as="document-node()">
       <xsl:document>
@@ -33,7 +33,7 @@
     <xsl:apply-templates select="html:html"/>
   </xsl:template>    
   
-  <!-- @TODO: classes may have a <ul> somewhere in the beginning to indicate other files to load. -->
+  <!-- Main function. Output document class. -->
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
 
@@ -121,17 +121,17 @@
             <html:h2>Detailed Description</html:h2>
             <xsl:for-each
               select="
-              $descTitle
-              /following-sibling::html:*[
-                text() != '' 
-                and text() != $propText
-                and text() != $methText
-                and not(
-                  generate-id(preceding-sibling::html:h2[1]) = $propTitleId
-                  or
-                  generate-id(preceding-sibling::html:h2[1]) = $methTitleId
-                )
-              ]"
+                $descTitle
+                /following-sibling::html:*[
+                  text() != '' 
+                  and text() != $propText
+                  and text() != $methText
+                  and not(
+                    generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+                    or
+                    generate-id(preceding-sibling::html:h2[1]) = $methTitleId
+                  )
+                ]"
               >
               <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
               <xsl:choose>
@@ -165,7 +165,7 @@
       <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in the style sheets!</xsl:message>
     </xsl:if>
 
-    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/> <!-- For QML types: see also handled naturally as a paragraph. -->
+    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/> <!-- For QML types: "see also" handled naturally as a paragraph. -->
     <xsl:variable name="hasSeeAlso" select="boolean($seeAlso)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterSeeAlso" as="element()?"
       select="
@@ -229,7 +229,7 @@
         $siblingAfterFuncs"/>
     
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
-    <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()"/>
+    <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
     <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
     <xsl:variable name="qmlProps" as="element(html:div)?">
       <xsl:if test="$isQmlType">
@@ -249,7 +249,7 @@
     <xsl:variable name="hasQmlProps" select="boolean($qmlProps)" as="xs:boolean"/>
     
     <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
-    <xsl:variable name="qmlMethsTitle" select="$content/html:h2[text() = $qmlMethsTitleText]" as="element()"/>
+    <xsl:variable name="qmlMethsTitle" select="$content/html:h2[text() = $qmlMethsTitleText]" as="element()?"/>
     <xsl:variable name="qmlMethsTitleId" select="generate-id($qmlMethsTitle)"/>
     <xsl:variable name="qmlMeths" as="element(html:div)?">
       <xsl:if test="$isQmlType">
@@ -664,14 +664,24 @@
         </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$inherits">
-        <db:classsynopsisinfo role="inherits">
-          <xsl:value-of select="$inherits/html:a/text()"/>
-        </db:classsynopsisinfo>
+        <xsl:for-each select="$inherits/html:a">
+          <db:classsynopsisinfo role="inherits">
+            <db:link>
+              <xsl:attribute name="xlink:href" select="./@href"/>
+              <xsl:value-of select="./text()"/>
+            </db:link>
+          </db:classsynopsisinfo>
+        </xsl:for-each>
       </xsl:if>
       <xsl:if test="$inheritedBy">
-        <db:classsynopsisinfo role="inheritedBy">
-          <xsl:value-of select="$inheritedBy/html:p/html:a/text()"/>
-        </db:classsynopsisinfo>
+        <xsl:for-each select="$inheritedBy/html:p/html:a">
+          <db:classsynopsisinfo role="inheritedBy">
+            <db:link>
+              <xsl:attribute name="xlink:href" select="./@href"/>
+              <xsl:value-of select="./text()"/>
+            </db:link>
+          </db:classsynopsisinfo>
+        </xsl:for-each>
       </xsl:if>
       <xsl:if test="$since">
         <db:classsynopsisinfo role="since">
@@ -1420,9 +1430,8 @@
     -->
     <xsl:choose>
       <xsl:when test="count(child::*) = 1 and child::html:img">
+        <!-- If title: <figure>. Otherwise: <informalfigure>. -->
         <db:informalfigure>
-          <!--<db:title>docbook.xsd</db:title>-->
-          <!-- If title: <figure>. Otherwise: <informalfigure>. -->
           <db:mediaobject>
             <xsl:if test="not(normalize-space(./html:img/@alt) = '')">
               <db:alt>
