@@ -31,6 +31,7 @@ version = [5, 4, 2]
 qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
 saxon9 = "F:/QtDoc/QtDoc/SaxonHE9-7-0-3J/saxon9he.jar"
 xslt2 = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl"
+postprocess = "F:/QtDoc/QtDoc/import/from_qdoc/postprocessor/postprocessor.exe"
 
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
@@ -237,12 +238,19 @@ def call_xslt(file_in, file_out, stylesheet):
     result = subprocess.run(['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out],
                             stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s': %s" % (file_in, result.stderr.decode('utf-8')))
+        logging.warning("Problem(s) with file '%s' at stage XSLT: %s" % (file_in, result.stderr.decode('utf-8')))
+
+
+# Call the C++ parser for prototypes. Communication goes with standard inputs and outputs. 
+def call_cpp_parser(file_in, file_out):
+    result = subprocess.run([postprocess, '-s:%s' % file_in, '-o:%s' % file_out], stderr=subprocess.PIPE)
+    if len(result.stderr) > 0:
+        logging.warning("Problem(s) with file '%s' at C++ prototypes: %s" % (file_in, result.stderr.decode('utf-8')))
 
 
 # Convert the documentation XML files as DocBook for the given module.
 def generate_module_db(module_name, configuration_file):
-    for root, subdirs, files in os.walk(output + module_name + "/"):
+    for root, sub_dirs, files in os.walk(output + module_name + "/"):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
 
@@ -256,6 +264,10 @@ def generate_module_db(module_name, configuration_file):
                 in_file_name = base_file_name + '.xml'
                 out_file_name = base_file_name + '.db'
                 call_xslt(in_file_name, out_file_name, xslt2)
+
+                # For C++ classes, also handle the function prototypes with the C++ application.
+                if file.startswith('q') and not file.startswith('qml-'):
+                    call_cpp_parser(out_file_name, out_file_name)
     logging.info('XML to DocBook: done with module %s' % module_name)
 
 
