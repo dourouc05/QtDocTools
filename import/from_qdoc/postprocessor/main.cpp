@@ -124,14 +124,52 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 }
 
 int main(int argc, const char* argv[]) {
+	// Parse arguments to the program: -s:input.xml -o:output.xml (like Saxon). 
+	bool readFromFile = false;
+	bool writeToFile = false;
+	std::string inFile, outFile; 
+
+	if (argc > 1) {
+		for (int i = 1; i < argc; ++i) {
+			if (std::string(argv[i]).compare(0, 3, "-s:") == 0) { // Input file (source). 
+				readFromFile = true; 
+				inFile = std::string(argv[i]).substr(3);
+			}
+			else if (std::string(argv[i]).compare(0, 3, "-o:") == 0) { // Output file. 
+				writeToFile = true;
+				outFile = std::string(argv[i]).substr(3);
+			}
+		}
+	}
+
+#if 0
+	std::cout << "Read:  " << readFromFile << ", " << inFile << std::endl;
+	std::cout << "Write: " << writeToFile << ", " << outFile << std::endl;
+#endif 
+
+	// Parse the input document. 
 	pugi::xml_document doc;
-	// pugi::xml_parse_result result = doc.load_file("qwidget.db");
-	pugi::xml_parse_result result = doc.load(std::cin);
+	pugi::xml_parse_result result;
+
+	if (readFromFile) {
+		result = doc.load_file(inFile.c_str());
+	}
+	else {
+		result = doc.load(std::cin);
+	}
+
 	if (!result) {
 		std::cerr << "Error while loading XML file: " << std::endl; 
 		std::cerr << "    " << result.description() << std::endl;
+		if (readFromFile) {
+			std::cerr << "  Trying to read from a file: " << inFile << std::endl; 
+		} else {
+			std::cerr << "  Trying to read from std::in." << std::endl; 
+		}
+		return -1;
 	}
 
+	// Start the compiler on the given nodes. 
 	pugi::xpath_node_set to_analyse = doc.select_nodes("//db:exceptionname[@role='parameters']/text()");
 	int total = 0;
 	int errors = 0;
@@ -156,16 +194,23 @@ int main(int argc, const char* argv[]) {
 		ast_to_xml(methodsynopsis, ast);
 	}
 
-	std::cerr << errors << " errors out of " << total << " prototypes analysed." << std::endl;
+	// Write the output if there were no errors. 
 	if (errors == 0) {
-		// doc.save_file("qwidget-new.db");
-		doc.save(std::cout);
+		if (writeToFile) {
+			doc.save_file(outFile.c_str());
+		}
+		else {
+			doc.save(std::cout);
+		}
+	}
+	else {
+		std::cerr << errors << " errors out of " << total << " prototypes analysed." << std::endl;
 	}
 
-	//test();
-	//std::string str = "(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))";
-	//std::string str = "(QRect rectangle)";
-	//cpp_prototype(str.begin(), str.end());
+	// Run the test suite. 
+#if 0
+	test();
 	std::cin.ignore();
+#endif
 	return 0;
 }
