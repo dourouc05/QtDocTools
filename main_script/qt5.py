@@ -36,9 +36,9 @@ postprocess = "F:/QtDoc/QtDoc/import/from_qdoc/postprocessor/postprocessor.exe"
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = False
-generate = False  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = False and not no_html5  # Could be started without generation!
+prepare = True
+generate = True  # If prepare is not True when generate is, need an indexFolder.
+generate_xml = True and not no_html5  # Could be started without generation!
 generate_db = True  # Needs XML to be generated first.
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
@@ -169,17 +169,19 @@ def get_configuration_files(configs_output=False, configs_file=None):
         logging.info("Looking for configuration files...")
         return retrieve_from_sources()
     else:
-        if os.path.isfile(configs_file):
+        if os.path.isfile(configs_file):  # The target file exists: read it and return it.
             logging.info("Reading existing list of configuration files...")
-            # The target file exists: read it and return it.
             with open(configs_file) as jsonFile:
                 return json.load(jsonFile)
-        else:
+        else:  # It does not exist: retrieve the information and write the file.
             logging.info("Looking for configuration files and building a list...")
-            # It does not exist: retrieve the information and write the file.
             configs = retrieve_from_sources()
+
+            # Create the file (and its containing directory!).
+            os.makedirs(os.path.dirname(configs_file), exist_ok=True)
             with open(configs_file, 'w') as jsonFile:
                 json.dump(configs, jsonFile)
+
             return configs
 
 
