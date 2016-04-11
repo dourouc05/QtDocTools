@@ -48,9 +48,10 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		currentValue->type = OBJECT;
 		currentInnerObject = nullptr;
 	});
-	auto valueConstant = axe::e_ref([&currentValue](const char * i1, const char * i2) {
+	auto valueConstant = axe::e_ref([&currentValue, &currentIdentifier](const char * i1, const char * i2) {
 		currentValue->content.s = new std::string(std::string(i1, i2));
 		currentValue->type = CONSTANT;
+		currentIdentifier = nullptr; // This rule may have been matched! 
 	});
 
 	auto valueIdentifier = axe::e_ref([&currentIdentifier](const char * i1, const char * i2) {

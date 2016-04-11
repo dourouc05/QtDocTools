@@ -44,7 +44,7 @@ bool test_match(const std::string & str, const std::string & testName) {
 void test() {
 	int count = 0; 
 	int total = 0;
-
+	
 	total++; count += test_match("()", "Dumb test");
 	total++; count += test_match("(QRect rectangle)", "Simple test");
 	total++; count += test_match("(const QRect & rectangle)", "Constant reference test");
@@ -68,7 +68,7 @@ void test() {
 	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground ) )", "Complex flags: objects with constant in constructor");
 	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground | DrawChildren ) )", "Complex flags: objects with expressions in constructor");
 	total++; count += test_match("( QMouseEvent  *)", "QSpashScreen::mousePressEvent: no name for argument");
-	total++; count += test_match("(const  QString  &  message ,  int  alignment  = Qt::AlignLeft, const  QColor  &  color  = Qt::black)", "QSpashScreen (2)");
+	total++; count += test_match("(const  QString  &  message ,  int  alignment  = Qt::AlignLeft, const  QColor  &  color  = Qt::black)", "QSplashScreen::showMessage: identifier updates with constants");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
