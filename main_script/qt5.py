@@ -31,7 +31,7 @@ version = [5, 4, 2]
 qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
 saxon9 = "F:/QtDoc/QtDoc/SaxonHE9-7-0-3J/saxon9he.jar"
 xslt2 = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl"
-postprocess = "F:/QtDoc/QtDoc/import/from_qdoc/postprocessor/postprocessor.exe"
+postprocess = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/postprocessor/postprocessor.exe"
 
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
@@ -240,14 +240,14 @@ def call_xslt(file_in, file_out, stylesheet):
     result = subprocess.run(['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out],
                             stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s' at stage XSLT: %s" % (file_in, result.stderr.decode('utf-8')))
+        logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, result.stderr.decode('utf-8')))
 
 
 # Call the C++ parser for prototypes. Communication goes with standard inputs and outputs. 
 def call_cpp_parser(file_in, file_out):
     result = subprocess.run([postprocess, '-s:%s' % file_in, '-o:%s' % file_out], stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s' at C++ prototypes: %s" % (file_in, result.stderr.decode('utf-8')))
+        logging.warning("Problem(s) with file '%s' at C++ prototypes: \n%s" % (file_in, result.stderr.decode('utf-8')))
 
 
 # Convert the documentation XML files as DocBook for the given module.

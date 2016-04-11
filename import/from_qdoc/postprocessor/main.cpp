@@ -8,6 +8,8 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
+#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
+
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
 	std::string serialised = ast->serialise();
@@ -124,6 +126,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 }
 
 int main(int argc, const char* argv[]) {
+#if RUN_TEST_SUITE == 0
 	// Parse arguments to the program: -s:input.xml -o:output.xml (like Saxon). 
 	bool readFromFile = false;
 	bool writeToFile = false;
@@ -141,11 +144,6 @@ int main(int argc, const char* argv[]) {
 			}
 		}
 	}
-
-#if 0
-	std::cout << "Read:  " << readFromFile << ", " << inFile << std::endl;
-	std::cout << "Write: " << writeToFile << ", " << outFile << std::endl;
-#endif 
 
 	// Parse the input document. 
 	pugi::xml_document doc;
@@ -208,7 +206,7 @@ int main(int argc, const char* argv[]) {
 	}
 
 	// Run the test suite. 
-#if 0
+#else
 	test();
 	std::cin.ignore();
 #endif
