@@ -6,7 +6,7 @@
 // For templates: "decorated name length exceeded, name was truncated"
 #pragma warning(disable: 4503)
 
-AST* cpp_prototype(const char * begin, const char * end) {
+AST* cpp_prototype(char const * begin, char const * end) {
 	// Prepare the places to return the values being read. 
 	AST* retval = new AST;
 	Object* currentOuterObject = nullptr; // Two objects can be nested in prototypes. A more general solution would be to use a stack, 
@@ -60,7 +60,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		}
 	});
 	auto valueIdentifierAddCharacters = axe::e_ref([&currentIdentifier](const char * i1, const char * i2) {
-		// Parses different components, but their structure is forgotten in the AST... 
+		// Parse different components, but their structure is forgotten in the AST... Not needed for this application. 
 		currentIdentifier->append(std::string(i1, i2));
 	});
 
@@ -136,7 +136,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		retval->isConst = true;
 	});
 
-	// Lexer. 
+	/// Lexer. 
 	auto space = axe::r_any(" \t");
 	auto comma = axe::r_lit(',');
 	auto spaced_comma = *space & comma & *space;
@@ -147,8 +147,8 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto tpl_close = axe::r_lit('>');
 	auto quote = axe::r_lit('"');
 	auto underscore = axe::r_lit('_');
-	auto and_ = axe::r_lit('&');
-	auto or_ = axe::r_lit('|');
+	auto kw_and = axe::r_lit('&');
+	auto kw_or = axe::r_lit('|');
 	auto alpha = axe::r_alpha() | underscore;
 	auto alphanum = axe::r_alnumstr() | underscore;
 
@@ -159,10 +159,22 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto kw_true = axe::r_lit("true");
 	auto kw_false = axe::r_lit("false");
 
-	// Grammar rules. 
+	auto kw_signed = axe::r_lit("signed");
+	auto kw_unsigned = axe::r_lit("unsigned");
+	auto kw_long = axe::r_lit("long");
+	auto kw_short = axe::r_lit("short");
+	auto kw_bool = axe::r_lit("bool");
+	auto kw_char = axe::r_lit("char");
+	auto kw_int = axe::r_lit("int");
+	auto kw_float = axe::r_lit("float");
+	auto kw_double = axe::r_lit("double");
+	auto all_types_kw = kw_signed | kw_unsigned | kw_short | kw_long | kw_bool | kw_char | kw_int | kw_long | kw_float | kw_double;
+	auto base_types_kw = kw_bool | kw_char | kw_int | kw_unsigned | kw_long | kw_float | kw_double; // Those that can be used independently
+
+	/// Grammar rules. 
 	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
-	auto raw_identifier = (alpha & *alphanum) >> valueIdentifier;
+	auto raw_identifier = ((alpha & *alphanum)) >> valueIdentifier;
 	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & raw_identifier >> valueIdentifierAddCharacters;
 	auto identifier = raw_identifier & *type_namespace;
 	auto identifier_nowrite = (alpha & *alphanum) % kw_namespace;
@@ -185,7 +197,15 @@ AST* cpp_prototype(const char * begin, const char * end) {
 			& *space
 			)
 		& (tpl_close >> valueIdentifierAddCharacters);
-	auto type = identifier & *space & ~type_template;
+	auto type_primitive = (
+			((kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
+			| ((kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & base_types_kw)
+			| ((kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
+			| ((kw_short | kw_long) & *space & base_types_kw)
+			| ((kw_signed | kw_unsigned) & *space & base_types_kw) 
+			| base_types_kw
+		) >> valueIdentifier; // The parser has problems with potentially missing parts of the type, i.e. ~(kw_signed | kw_unsigned). 
+	auto type = type_primitive | (identifier & *space & ~type_template);
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
@@ -193,7 +213,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto value_litteral = value_string | value_number | value_boolean;
 	auto value_constant = (identifier & *space & *type_namespace) >> valueAllocator >> valueConstant;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;
-	auto value_expression_operator = and_ | or_;
+	auto value_expression_operator = kw_and | kw_or;
 	auto value_expression_spaced_operator = *space & value_expression_operator & *space;
 	auto value_expression = (value_constant_nowrite & *(value_expression_spaced_operator & value_constant_nowrite & *space))
 		>> valueAllocator >> valueConstant;
@@ -216,14 +236,15 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
 	// As a consequence, this would be a waste of both time and memory. 
 
-	auto parameter = ~(kw_const >> parameterAllocator >> parameterConst)
+	auto parameter = ~(kw_const >> parameterAllocator >> parameterConst) // const
 		& *space
-		& (type >> parameterAllocator >> parameterType)
+		& (type >> parameterAllocator >> parameterType) // Type. 
 		& *space
-		& ~((+kw_pointer) >> parameterPointers | (+kw_reference) >> parameterReferences)
+		& ~((+kw_pointer) >> parameterPointers | (+kw_reference) >> parameterReferences) // Pointers and references in type.
 		& *space
-		& ~(identifier >> parameterIdentifier)
-		& ~(*space & equal & *space & (value >> parameterInitialiser) & *space);
+		& ~((!all_types_kw & identifier) >> parameterIdentifier) // Identifier (sometimes omitted). 
+		& *space
+		& ~(equal & *space & (value >> parameterInitialiser) & *space); // Initialiser (= …). 
 	auto parameters_list = (parameter >> addParameter) % spaced_comma;
 	auto start = paren_open & *space & ~parameters_list & *space & paren_close & *space & ~(kw_const >> isConst);
 
@@ -232,9 +253,4 @@ AST* cpp_prototype(const char * begin, const char * end) {
 
 	retval->matched = result.matched;
 	return retval;
-}
-
-AST* cpp_prototype(const std::string & str) {
-	const char * cstr = str.c_str();
-	return cpp_prototype(cstr, cstr + str.length());
 }

@@ -20,7 +20,9 @@ bool test_differ(const AST* const ast, const std::string & str) {
 
 bool test_match(const std::string & str, const std::string & testName) {
 	// Start parsing. 
-	AST* ast = cpp_prototype(str);
+	const char * cstr = str.c_str();
+	AST* ast = cpp_prototype(cstr, cstr + str.length());
+
 	if (!ast->matched) {
 		std::cerr << testName << " failed (no match): '" << str << "'" << std::endl;
 		delete ast;
@@ -70,6 +72,9 @@ void test() {
 	total++; count += test_match("( QMouseEvent  *)", "QSpashScreen::mousePressEvent: no name for argument");
 	total++; count += test_match("(const  QString  &  message ,  int  alignment  = Qt::AlignLeft, const  QColor  &  color  = Qt::black)", "QSplashScreen::showMessage: identifier updates with constants");
 	total++; count += test_match("(const  QMap < QString ,  QUrl > &  links , const  QString  &  keyword )", "QHelpIndexWidget::linksActivated: multiple parameters in template");
+	total++; count += test_match("(unsigned offset, int  count)", "Simple primitive types");
+	total++; count += test_match("( unsigned long  offset ,  unsigned long  count )", "QDomCharacterData::deleteData: complex primitive types");
+	total++; count += test_match("(unsigned long long int offset, signed long long count, long double count)", "Primitive types horror test");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
