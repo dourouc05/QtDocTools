@@ -172,6 +172,18 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		& *space
 		& *(kw_pointer >> valueIdentifierAddCharacters)
 		& *space
+		& *(kw_reference >> valueIdentifierAddCharacters)
+		& *space
+		& *(
+			(comma >> valueIdentifierAddCharacters)
+			& *space
+			& (identifier_nowrite >> valueIdentifierAddCharacters)
+			& *space
+			& *(kw_pointer >> valueIdentifierAddCharacters)
+			& *space
+			& *(kw_reference >> valueIdentifierAddCharacters)
+			& *space
+			)
 		& (tpl_close >> valueIdentifierAddCharacters);
 	auto type = identifier & *space & ~type_template;
 

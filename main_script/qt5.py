@@ -41,6 +41,9 @@ generate_html = False  # If prepare is not True when generate is, need an indexF
 generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
 
+keep_html = False
+keep_xhtml = True
+
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
 # Off-line configuration, should be altered only infrequently.
@@ -231,6 +234,9 @@ def generate_module_xml(module_name, configuration_file):
                     tree = html5lib.parse(f)
                 with open(out_file_name, 'wb') as f:
                     f.write(ETree.tostring(tree))
+
+                if not keep_html:
+                    os.remove(file)
     logging.info('Parsing as XML: done with module %s' % module_name)
 
 
@@ -266,6 +272,9 @@ def generate_module_db(module_name, configuration_file):
                 in_file_name = base_file_name + '.xml'
                 out_file_name = base_file_name + '.db'
                 call_xslt(in_file_name, out_file_name, xslt2)
+
+                if not keep_xhtml:
+                    os.remove(file)
 
                 # For C++ classes, also handle the function prototypes with the C++ application.
                 if file.startswith('q') and not file.startswith('qml-'):
