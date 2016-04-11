@@ -36,9 +36,9 @@ postprocess = "F:/QtDoc/QtDoc/import/from_qdoc/postprocessor/postprocessor.exe"
 configsFile = output + "configs.json"
 outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
-prepare = True
-generate = True  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = True and not no_html5  # Could be started without generation!
+prepare = False
+generate_html = False  # If prepare is not True when generate is, need an indexFolder.
+generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
@@ -290,7 +290,7 @@ if __name__ == '__main__':
             prepare_module(module_name=moduleName, configuration_file=conf)
     time_prepare = time.perf_counter()
 
-    if generate:
+    if generate_html:
         for moduleName, conf in configs.items():
             generate_module(module_name=moduleName, configuration_file=conf)
     time_generate = time.perf_counter()

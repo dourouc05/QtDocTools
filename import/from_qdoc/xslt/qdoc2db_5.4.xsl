@@ -1594,7 +1594,8 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template mode="content" match="html:h2 | html:h3"/>
+  <!-- Titles are handled in template content_withTitles_before. -->
+  <xsl:template mode="content" match="html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
   <xsl:template mode="content" match="html:pre">
     <db:programlisting>
       <!-- 
