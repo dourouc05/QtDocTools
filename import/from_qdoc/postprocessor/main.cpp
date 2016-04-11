@@ -75,6 +75,7 @@ void test() {
 	total++; count += test_match("(unsigned offset, int  count)", "Simple primitive types");
 	total++; count += test_match("( unsigned long  offset ,  unsigned long  count )", "QDomCharacterData::deleteData: complex primitive types");
 	total++; count += test_match("(unsigned long long int offset, signed long long count, long double count)", "Primitive types horror test");
+	total++; count += test_match("(const  QString  &  publicId , const  QString  &  systemId ,  QXmlInputSource  &  ret )", "QXmlDefaultHandler::resolveEntity: mix pointers and references");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -118,7 +119,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 			}
 
 			std::string sub_type = replace(replace(*p->type, "*", " *"), "&", " &");
-			std::string type = trim(sub_type + ' ' + std::string(p->nPointers, '*') + std::string(p->nReferences, '&'));
+			std::string type = trim(sub_type + ' ' + p->pointersReferencesStr());
 			param.append_child("db:type").text().set(type.c_str());
 
 			auto id = p->identifier; 

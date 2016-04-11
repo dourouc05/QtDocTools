@@ -86,8 +86,12 @@ std::string Object::serialise() const {
 	return retval;
 }
 
+std::string Parameter::pointersReferencesStr() const {
+	return pointersReferences ? *pointersReferences : "";
+}
+
 std::string Parameter::serialise() const {
-	return *type + ' ' + std::string(nPointers, '*') + std::string(nReferences, '&');
+	return *type + ' ' + pointersReferencesStr();
 }
 
 std::string AST::serialise() const {

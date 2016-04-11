@@ -32,14 +32,14 @@ class Parameter {
 public: 
 	bool isConst = false;
 	std::string* type;
-	int nPointers = 0;
-	int nReferences = 0;
+	std::string* pointersReferences = nullptr;
 	std::string* identifier;
 	Value* initialiser = nullptr;
 
 	Parameter();
 	~Parameter();
 
+	std::string pointersReferencesStr() const; 
 	std::string serialise() const;
 };
 

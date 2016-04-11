@@ -6,7 +6,7 @@
 // For templates: "decorated name length exceeded, name was truncated"
 #pragma warning(disable: 4503)
 
-AST* cpp_prototype(char const * begin, char const * end) {
+AST* cpp_prototype(const char * begin, const char * end) {
 	// Prepare the places to return the values being read. 
 	AST* retval = new AST;
 	Object* currentOuterObject = nullptr; // Two objects can be nested in prototypes. A more general solution would be to use a stack, 
@@ -113,11 +113,8 @@ AST* cpp_prototype(char const * begin, char const * end) {
 		currentParameter->type = currentIdentifier;
 		currentIdentifier = nullptr;
 	});
-	auto parameterPointers = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
-		currentParameter->nPointers = std::distance(i1, i2);
-	});
-	auto parameterReferences = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
-		currentParameter->nReferences = std::distance(i1, i2);
+	auto parameterPointersReferences = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
+		currentParameter->pointersReferences = new std::string(i1, i2);
 	});
 	auto parameterIdentifier = axe::e_ref([&currentParameter, &currentIdentifier](const char * i1, const char * i2) {
 		currentParameter->identifier = currentIdentifier;
@@ -199,10 +196,8 @@ AST* cpp_prototype(char const * begin, char const * end) {
 		& (tpl_close >> valueIdentifierAddCharacters);
 	auto type_primitive = (
 			((kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
-			| ((kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & base_types_kw)
-			| ((kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
-			| ((kw_short | kw_long) & *space & base_types_kw)
-			| ((kw_signed | kw_unsigned) & *space & base_types_kw) 
+			| ((kw_signed | kw_unsigned | kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & base_types_kw)
+			| ((kw_short | kw_long | kw_signed | kw_unsigned) & *space & base_types_kw)
 			| base_types_kw
 		) >> valueIdentifier; // The parser has problems with potentially missing parts of the type, i.e. ~(kw_signed | kw_unsigned). 
 	auto type = type_primitive | (identifier & *space & ~type_template);
@@ -240,7 +235,7 @@ AST* cpp_prototype(char const * begin, char const * end) {
 		& *space
 		& (type >> parameterAllocator >> parameterType) // Type. 
 		& *space
-		& ~((+kw_pointer) >> parameterPointers | (+kw_reference) >> parameterReferences) // Pointers and references in type.
+		& ~(((kw_pointer | kw_reference) & *(*space & (kw_pointer | kw_reference))) >> parameterPointersReferences) // Pointers and references in type.
 		& *space
 		& ~((!all_types_kw & identifier) >> parameterIdentifier) // Identifier (sometimes omitted). 
 		& *space
