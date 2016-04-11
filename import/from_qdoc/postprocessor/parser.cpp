@@ -209,7 +209,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		& *space
 		& ~((+kw_pointer) >> parameterPointers | (+kw_reference) >> parameterReferences)
 		& *space
-		& (identifier >> parameterIdentifier)
+		& ~(identifier >> parameterIdentifier)
 		& ~(*space & equal & *space & (value >> parameterInitialiser) & *space);
 	auto parameters_list = (parameter >> addParameter) % spaced_comma;
 	auto start = paren_open & *space & ~parameters_list & *space & paren_close & *space & ~(kw_const >> isConst);

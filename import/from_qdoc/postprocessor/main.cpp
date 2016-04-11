@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
@@ -67,6 +67,8 @@ void test() {
 	total++; count += test_match("( Qt::GestureType  gesture ,  Qt::GestureFlags  flags  = Qt::GestureFlags())", "Basic flags: namespaced objects");
 	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground ) )", "Complex flags: objects with constant in constructor");
 	total++; count += test_match("( QPainter  *  painter , const  QPoint  &  targetOffset  = QPoint(), const QRegion  &  sourceRegion = QRegion(), RenderFlags  renderFlags = RenderFlags( DrawWindowBackground | DrawChildren ) )", "Complex flags: objects with expressions in constructor");
+	total++; count += test_match("( QMouseEvent  *)", "QSpashScreen::mousePressEvent: no name for argument");
+	total++; count += test_match("(const  QString  &  message ,  int  alignment  = Qt::AlignLeft, const  QColor  &  color  = Qt::black)", "QSpashScreen (2)");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -100,6 +102,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 	if (ast->parameters.size() == 0) {
 		methodsynopsis.append_child("db:void");
 	} else {
+		int paramsCounter = 1;
 		for (auto iterator = ast->parameters.begin(); iterator != ast->parameters.end(); ++iterator) {
 			Parameter* p = *iterator;
 			pugi::xml_node param = methodsynopsis.append_child("db:methodparam");
@@ -112,11 +115,14 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 			std::string type = trim(sub_type + ' ' + std::string(p->nPointers, '*') + std::string(p->nReferences, '&'));
 			param.append_child("db:type").text().set(type.c_str());
 
-			param.append_child("db:parameter").text().set(p->identifier->c_str());
+			auto id = p->identifier; 
+			param.append_child("db:parameter").text().set((id != nullptr) ? id->c_str() : std::string("arg" + paramsCounter).c_str());
 
 			if (p->initialiser != nullptr) {
 				param.append_child("db:initializer").text().set(p->initialiser->serialise().c_str());
 			}
+
+			++paramsCounter;
 		}
 	}
 

@@ -15,6 +15,9 @@ AST::~AST() {
 }
 
 Parameter::Parameter() {
+	type = nullptr; 
+	identifier = nullptr; 
+	initialiser = nullptr;
 }
 
 Parameter::~Parameter() {
@@ -102,7 +105,9 @@ std::string AST::serialise() const {
 		}
 
 		retval += p->serialise() + ' ';
-		retval += *p->identifier;
+		if (p->identifier != nullptr) { // In rare occasions, there is no identifier! 
+			retval += *p->identifier;
+		}
 
 		if (p->initialiser != nullptr) {
 			Value* value = p->initialiser;
