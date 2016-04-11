@@ -6,7 +6,7 @@
 // For templates: "decorated name length exceeded, name was truncated"
 #pragma warning(disable: 4503)
 
-AST* cpp_prototype(const char * begin, const char * end) {
+AST* cpp_prototype(const char * begin, char const * end) {
 	// Prepare the places to return the values being read. 
 	AST* retval = new AST;
 	Object* currentOuterObject = nullptr; // Two objects can be nested in prototypes. A more general solution would be to use a stack, 
@@ -129,6 +129,12 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		retval->parameters.push_back(currentParameter);
 		currentParameter = nullptr;
 	});
+	auto addEllipsisParameter = axe::e_ref([&retval, &currentParameter](const char * i1, const char * i2) {
+		currentParameter = new Parameter; 
+		currentParameter->isEllipsis = true; 
+		retval->parameters.push_back(currentParameter);
+		currentParameter = nullptr;
+	}); 
 	auto isConst = axe::e_ref([&retval](const char * i1, const char * i2) {
 		retval->isConst = true;
 	});
@@ -153,6 +159,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto kw_reference = axe::r_lit('&');
 	auto kw_pointer = +axe::r_lit('*');
 	auto kw_namespace = axe::r_lit("::");
+	auto kw_ellipsis = axe::r_lit("...");
 	auto kw_true = axe::r_lit("true");
 	auto kw_false = axe::r_lit("false");
 
@@ -241,7 +248,8 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		& *space
 		& ~(equal & *space & (value >> parameterInitialiser) & *space); // Initialiser (= …). 
 	auto parameters_list = (parameter >> addParameter) % spaced_comma;
-	auto start = paren_open & *space & ~parameters_list & *space & paren_close & *space & ~(kw_const >> isConst);
+	auto parameters_ellipsis = ~(~(comma & *space) & kw_ellipsis >> addEllipsisParameter); 
+	auto start = paren_open & *space & ~parameters_list & *space & parameters_ellipsis & *space & paren_close & *space & ~(kw_const >> isConst);
 
 	// Bootstrap it all. 
 	auto result = start(begin, end);

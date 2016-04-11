@@ -91,6 +91,9 @@ std::string Parameter::pointersReferencesStr() const {
 }
 
 std::string Parameter::serialise() const {
+	if (isEllipsis) {
+		return "...";
+	}
 	return *type + ' ' + pointersReferencesStr();
 }
 

@@ -164,14 +164,6 @@ WARNING at 2016-04-11 09:10:05,133: Problem(s) with file 'F:/QtDoc/output/html/q
 
 WARNING at 2016-04-11 09:10:13,412: Problem(s) with file 'F:/QtDoc/output/html/qtxml/qdomnode.xml' at stage XSLT: WARNING: No summary output for types.
 
-WARNING at 2016-04-11 09:12:39,848: Problem(s) with file 'F:/QtDoc/output/html/qtxml/qxmldefaulthandler.db' at C++ prototypes: Error when parsing a prototype, probably unsupported features:
-    (const  QString  &  publicId , const  QString  &  systemId ,  QXmlInputSource  *&  ret )
-1 errors out of 22 prototypes analysed.
-
-WARNING at 2016-04-11 09:12:47,483: Problem(s) with file 'F:/QtDoc/output/html/qtxml/qxmlentityresolver.db' at C++ prototypes: Error when parsing a prototype, probably unsupported features:
-    (const  QString  &  publicId , const  QString  &  systemId ,  QXmlInputSource  *&  ret )
-1 errors out of 1 prototypes analysed.
-
 WARNING at 2016-04-11 09:13:26,968: Problem(s) with file 'F:/QtDoc/output/html/qtxml/xml-namespaces.xml' at stage XSLT: WARNING: Unmatched element: html:p
 
 INFO at 2016-04-11 09:13:43,305: XML to DocBook: done with module qtxml
@@ -220,13 +212,6 @@ An empty sequence is not allowed as the value of variable $description
 WARNING at 2016-04-11 09:14:16,441: Problem(s) with file 'F:/QtDoc/output/html/qtnfc/qndeffilter-record.db' at C++ prototypes: Error while loading XML file: 
     File was not found
   Trying to read from a file: F:/QtDoc/output/html/qtnfc/qndeffilter-record.db
-
-WARNING at 2016-04-11 09:14:21,908: Problem(s) with file 'F:/QtDoc/output/html/qtnfc/qndeffilter.db' at C++ prototypes: Error when parsing a prototype, probably unsupported features:
-    ( unsigned int  min  = 1,  unsigned int  max  = 1)
-Error when parsing a prototype, probably unsupported features:
-    ( QNdefRecord::TypeNameFormat  typeNameFormat , const  QByteArray  &  type ,  unsigned int  min  = 1,  unsigned int  max  = 1)
-2 errors out of 7 prototypes analysed.
-
 WARNING at 2016-04-11 09:14:30,222: Problem(s) with file 'F:/QtDoc/output/html/qtnfc/qndefnfcsmartposterrecord.xml' at stage XSLT: WARNING: No summary output for types.
 
 WARNING at 2016-04-11 09:14:34,095: Problem(s) with file 'F:/QtDoc/output/html/qtnfc/qndefnfctextrecord.xml' at stage XSLT: WARNING: No summary output for types.
@@ -857,25 +842,6 @@ WARNING at 2016-04-11 09:36:29,696: Problem(s) with file 'F:/QtDoc/output/html/q
      processing /html:html
 An empty sequence is not allowed as the value of variable $propTitle
 
-INFO at 2016-04-11 09:41:06,306: XML to DocBook: done with module qtquickcontrols
-WARNING at 2016-04-11 09:41:22,854: Problem(s) with file 'F:/QtDoc/output/html/qtandroidextras/qandroidjniobject.db' at C++ prototypes: Error when parsing a prototype, probably unsupported features:
-    (const  char  *  className , const  char  *  signature , ...)
-Error when parsing a prototype, probably unsupported features:
-    ( jclass  clazz , const  char  *  signature , ...)
-Error when parsing a prototype, probably unsupported features:
-    (const  char  *  methodName , const  char  *  signature , ...) const
-Error when parsing a prototype, probably unsupported features:
-    (const  char  *  methodName , const  char  *  signature , ...) const
-Error when parsing a prototype, probably unsupported features:
-    (const  char  *  className , const  char  *  methodName , const  char  *  signature , ...)
-Error when parsing a prototype, probably unsupported features:
-    ( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)
-Error when parsing a prototype, probably unsupported features:
-    (const  char  *  className , const  char  *  methodName , const  char  *  signature , ...)
-Error when parsing a prototype, probably unsupported features:
-    ( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)
-8 errors out of 35 prototypes analysed.
-
 WARNING at 2016-04-11 09:41:26,941: Problem(s) with file 'F:/QtDoc/output/html/qtandroidextras/qtandroid.xml' at stage XSLT: WARNING: A concept has C++ functions.
 WARNING: A concept has C++ functions.
 
@@ -883,10 +849,6 @@ INFO at 2016-04-11 09:42:11,064: XML to DocBook: done with module qtandroidextra
 WARNING at 2016-04-11 09:42:18,490: Problem(s) with file 'F:/QtDoc/output/html/qtsql/qsql.xml' at stage XSLT: WARNING: A concept has C++ types.
 WARNING: No summary output for types.
 WARNING: Line feed in title; this is not handled!
-
-WARNING at 2016-04-11 09:42:22,763: Problem(s) with file 'F:/QtDoc/output/html/qtsql/qsqldatabase.db' at C++ prototypes: Error when parsing a prototype, probably unsupported features:
-    (const  QString  &  connectionName  = QLatin1String( defaultConnection ),  bool  open  = true)
-1 errors out of 24 prototypes analysed.
 
 WARNING at 2016-04-11 09:42:26,983: Problem(s) with file 'F:/QtDoc/output/html/qtsql/qsqldriver.xml' at stage XSLT: WARNING: No summary output for types.
 

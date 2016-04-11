@@ -76,6 +76,8 @@ void test() {
 	total++; count += test_match("( unsigned long  offset ,  unsigned long  count )", "QDomCharacterData::deleteData: complex primitive types");
 	total++; count += test_match("(unsigned long long int offset, signed long long count, long double count)", "Primitive types horror test");
 	total++; count += test_match("(const  QString  &  publicId , const  QString  &  systemId ,  QXmlInputSource  &  ret )", "QXmlDefaultHandler::resolveEntity: mix pointers and references");
+	total++; count += test_match("( ...)", "Just an ellipsis");
+	total++; count += test_match("( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)", "QAndroidJniObject::callStaticMethod: ellipsis");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -114,19 +116,25 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 			Parameter* p = *iterator;
 			pugi::xml_node param = methodsynopsis.append_child("db:methodparam");
 
-			if (p->isConst) {
-				param.append_child("db:modifier").text().set("const");
+			if (p->isEllipsis) {
+				// TODO: modify DocBook to allow <varargs> here, instead of methodparam… (like funcparam).
+				param.append_child("db:parameter").text().set("...");
 			}
+			else {
+				if (p->isConst) {
+					param.append_child("db:modifier").text().set("const");
+				}
 
-			std::string sub_type = replace(replace(*p->type, "*", " *"), "&", " &");
-			std::string type = trim(sub_type + ' ' + p->pointersReferencesStr());
-			param.append_child("db:type").text().set(type.c_str());
+				std::string sub_type = replace(replace(*p->type, "*", " *"), "&", " &");
+				std::string type = trim(sub_type + ' ' + p->pointersReferencesStr());
+				param.append_child("db:type").text().set(type.c_str());
 
-			auto id = p->identifier; 
-			param.append_child("db:parameter").text().set((id != nullptr) ? id->c_str() : std::string("arg" + paramsCounter).c_str());
+				auto id = p->identifier;
+				param.append_child("db:parameter").text().set((id != nullptr) ? id->c_str() : std::string("arg" + paramsCounter).c_str());
 
-			if (p->initialiser != nullptr) {
-				param.append_child("db:initializer").text().set(p->initialiser->serialise().c_str());
+				if (p->initialiser != nullptr) {
+					param.append_child("db:initializer").text().set(p->initialiser->serialise().c_str());
+				}
 			}
 
 			++paramsCounter;

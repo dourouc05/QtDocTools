@@ -35,6 +35,7 @@ public:
 	std::string* pointersReferences = nullptr;
 	std::string* identifier;
 	Value* initialiser = nullptr;
+	bool isEllipsis = false; 
 
 	Parameter();
 	~Parameter();
