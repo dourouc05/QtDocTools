@@ -2036,6 +2036,11 @@
       <xsl:apply-templates mode="content_paragraph"/>
     </db:code>
   </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:pre">
+    <db:programlisting>
+      <xsl:value-of select="."/>
+    </db:programlisting>
+  </xsl:template>
   <xsl:template mode="content_paragraph" match="html:img">
     <db:inlinemediaobject>
       <xsl:if test=".[@alt] and not(./@alt = '')">

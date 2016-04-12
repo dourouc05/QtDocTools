@@ -142,12 +142,12 @@
                      <db:para>A <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> pointer to an instance of the
                                                   custom widget, constructed with the parent
                                                   supplied.</db:para>
-                     <db:note>
-                        <db:para>createWidget() is a factory function
+                     <db:para>
+                        <db:emphasis role="bold">Note:
+                                                  </db:emphasis>createWidget() is a factory function
                                                   responsible for creating the widget only. The
                                                   custom widget's properties will not be available
                                                   until load() returns.</db:para>
-                     </db:note>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -218,6 +218,14 @@
                                     file snippet that is used by <db:emphasis>Qt Designer</db:emphasis>'s
                                     widget factory to create a custom widget and its applicable
                                     properties.</db:para>
+         <db:para>Since Qt 4.4, <db:emphasis>Qt Designer</db:emphasis>'s widget box
+                                    allows for a complete UI file to describe <db:emphasis role="bold">one</db:emphasis>
+                                    custom widget. The UI file can be loaded using the
+                                        <db:code>&lt;ui&gt;</db:code> tag. Specifying the
+                                    &lt;ui&gt; tag allows for adding the &lt;customwidget&gt;
+                                    element that contains additional information for custom widgets.
+                                    The <db:code>&lt;widget&gt;</db:code> tag is sufficient if
+                                    no additional information is required</db:para>
          <db:para>If the custom widget does not provide a reasonable size
                                     hint, it is necessary to specify a default geometry in the
                                     string returned by the <db:code>domXml()</db:code> function
@@ -566,12 +574,11 @@
                                     in other locations by setting the
                                         <db:code>QT_PLUGIN_PATH</db:code> environment variable
                                     before running the application.</db:para>
-         <db:note>
-            <db:para>
-               <db:emphasis>Qt Designer</db:emphasis> will
+         <db:para>
+            <db:emphasis role="bold">Note: </db:emphasis>
+            <db:emphasis>Qt Designer</db:emphasis> will
                                     look for a <db:code>designer</db:code> subdirectory in each
                                     path supplied.</db:para>
-         </db:note>
          <db:para>See <db:code><db:link xlink:href="qtcore/qcoreapplication.html#libraryPaths">QCoreApplication::libraryPaths</db:link>()</db:code> for more
                                     information about customizing paths for libraries and plugins
                                     with Qt applications.</db:para>
@@ -587,7 +594,10 @@
             <db:listitem>
                <db:para>Create a <db:code>.pri</db:code> file that contains
                                         the headers sources and sources of the custom
-                                            widget:</db:para>
+                                            widget:<db:programlisting> INCLUDEPATH += $$PWD HEADERS
+                                                += $$PWD/analogclock.h SOURCES += $$PWD/analogclock.cpp</db:programlisting>
+                  <db:programlisting>include(customwidget.pri)</db:programlisting>
+               </db:para>
                <db:para>This file would then be included by the
                                                 <db:code>.pro</db:code> file of the plugin and
                                             the application:</db:para>
