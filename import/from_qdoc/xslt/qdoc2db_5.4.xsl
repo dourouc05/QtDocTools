@@ -1431,7 +1431,7 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:message>WARNING: This function has no documentation.</xsl:message>
+          <xsl:message>WARNING: The function "<xsl:value-of select="$functionAnchor"/>" has no documentation.</xsl:message>
           <db:para/>
         </xsl:otherwise>
       </xsl:choose>
@@ -1583,6 +1583,9 @@
     <db:informaltable>
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:informaltable>
+  </xsl:template>
+  <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft']">
+    <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
@@ -1905,6 +1908,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:br"/>
   <xsl:template mode="content_paragraph" match="html:a">
     <!-- 
       Output a link, maybe enclosing its content with <db:code> when it's a method (followed by parentheses) or a class. 
