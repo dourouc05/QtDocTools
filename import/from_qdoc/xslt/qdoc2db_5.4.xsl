@@ -112,9 +112,9 @@
           
           <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
           <xsl:variable name="descTitleId" select="generate-id($descTitle)"/>
-          <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]" as="element()"/>
+          <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]" as="element()?"/>
           <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
-          <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]" as="element()"/>
+          <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]" as="element()?"/>
           <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
           
           <html:div class="descr">
@@ -241,8 +241,9 @@
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
     <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
+    <xsl:variable name="hasQmlProps" select="$isQmlType and boolean($qmlPropsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlProps" as="element(html:div)?">
-      <xsl:if test="$isQmlType">
+      <xsl:if test="$isQmlType and $hasQmlProps">
         <html:div class="qml-props">
           <xsl:for-each
             select="
@@ -256,13 +257,13 @@
         </html:div>
       </xsl:if>
     </xsl:variable>
-    <xsl:variable name="hasQmlProps" select="boolean($qmlProps)" as="xs:boolean"/>
     
     <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
     <xsl:variable name="qmlMethsTitle" select="$content/html:h2[text() = $qmlMethsTitleText]" as="element()?"/>
     <xsl:variable name="qmlMethsTitleId" select="generate-id($qmlMethsTitle)"/>
+    <xsl:variable name="hasQmlMeths" select="$isQmlType and boolean($qmlMethsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlMeths" as="element(html:div)?">
-      <xsl:if test="$isQmlType">
+      <xsl:if test="$isQmlType and $hasQmlMeths">
         <html:div class="qml-meths">
           <xsl:for-each
             select="
@@ -276,7 +277,6 @@
         </html:div>
       </xsl:if>
     </xsl:variable>
-    <xsl:variable name="hasQmlMeths" select="boolean($qmlMeths)" as="xs:boolean"/>
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
