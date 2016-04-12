@@ -1587,6 +1587,13 @@
   <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
+  <xsl:template mode="content" match="html:b">
+    <db:para>
+      <db:emphasis role="bold">
+        <xsl:apply-templates mode="content_paragraph"/>
+      </db:emphasis>
+    </db:para>
+  </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
   </xsl:template>
