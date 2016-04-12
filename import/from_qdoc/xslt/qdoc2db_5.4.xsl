@@ -45,8 +45,7 @@
 
     <xsl:variable name="isClass" as="xs:boolean"
       select="
-        starts-with($title, 'Q')
-        and ends-with($title, ' Class')
+        ends-with($title, ' Class')
         and count(contains($title, ' ')) = 1"/>
     <xsl:variable name="className">
       <xsl:if test="$isClass">
@@ -244,6 +243,16 @@
         else
           $siblingAfterMacros"/>
     
+    <xsl:variable name="vars" as="element(html:div)?"
+      select="$siblingAfterMacros[self::html:div][@class = 'vars']"/>
+    <xsl:variable name="hasVars" select="boolean($vars)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterNonmems" as="element()?"
+      select="
+      if ($hasVars) then
+        $siblingAfterNonmems/following-sibling::*[1]
+      else
+        $siblingAfterNonmems"/>
+    
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
     <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
@@ -303,6 +312,13 @@
         </html:div>
       </xsl:if>
     </xsl:variable>
+    
+    <xsl:if test="$hasProperties">
+      <xsl:message terminate="yes">ERROR: Properties not implemented!</xsl:message>
+    </xsl:if>
+    <xsl:if test="$hasVars">
+      <xsl:message terminate="yes">ERROR: Member variables not implemented!</xsl:message>
+    </xsl:if>
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
@@ -325,7 +341,7 @@
     </xsl:if>
     <xsl:if test="boolean($siblingAfterNonmems)">
       <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
-          select="name($siblingAfterFuncs)"/>
+        select="name($siblingAfterNonmems)"/>
       </xsl:message>
     </xsl:if>
     <xsl:if test="$isClass and not(boolean($funcs))">
@@ -358,14 +374,11 @@
     <xsl:if test="$isQmlType and boolean($types)">
       <xsl:message terminate="no">WARNING: A QML type has C++ types.</xsl:message>
     </xsl:if>
-    <xsl:if test="$isQmlType and boolean($funcs)">
-      <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
-    </xsl:if>
     <xsl:if test="$isQmlType and boolean($properties)">
       <xsl:message terminate="no">WARNING: A QML type has C++ properties.</xsl:message>
     </xsl:if>
-    <xsl:if test="$isQmlType and boolean($funcs)">
-      <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
+    <xsl:if test="$isQmlType and boolean($vars)">
+      <xsl:message terminate="no">WARNING: A QML type has C++ variables.</xsl:message>
     </xsl:if>
 
     <!-- Do the same with linked documents (only for C++ classes). -->
@@ -478,9 +491,10 @@
       
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
+          <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
-          <xsl:with-param name="className" select="$className"/>
+          <xsl:with-param name="vars" select="$vars"/>
           
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
@@ -694,8 +708,9 @@
   <!-- Handle classes: class structure. -->
   <xsl:template name="classListing">
     <xsl:param name="className" as="xs:string"/>
-    <xsl:param name="functions" as="element(html:div)"/>
+    <xsl:param name="functions" as="element(html:div)?"/>
     <xsl:param name="properties" as="element(html:div)?"/>
+    <xsl:param name="vars" as="element(html:div)?"/>
     
     <xsl:param name="obsoleteFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
@@ -749,15 +764,19 @@
         </db:classsynopsisinfo>
       </xsl:if>
       
-      <!-- Deal with properties as fields. -->
-      <xsl:apply-templates mode="propertiesListing" select="$properties/html:h3"/>
+      <!-- Deal with properties and variables as fields. -->
+      <xsl:apply-templates mode="propertiesListing" select="$properties/html:h3">
+        <xsl:with-param name="kind" select="'Qt property'"/>
+      </xsl:apply-templates>
       <xsl:if test="boolean($obsoleteProperties)">
         <xsl:apply-templates mode="propertiesListing" select="$obsoleteProperties/html:h3">
-          <xsl:with-param name="obsolete">
-            <xsl:value-of select="true()"/>
-          </xsl:with-param>
+          <xsl:with-param name="obsolete" select="true()"/>
+          <xsl:with-param name="kind" select="'Qt property'"/>
         </xsl:apply-templates>
       </xsl:if>
+      <xsl:apply-templates mode="propertiesListing" select="$vars/html:h3">
+        <xsl:with-param name="kind" select="'public variable'"/>
+      </xsl:apply-templates>
 
       <!-- Deal with functions. -->
       <xsl:apply-templates mode="classListing" select="$functions/html:h3">
@@ -777,9 +796,14 @@
   <xsl:template mode="propertiesListing" match="text()"/>
   <xsl:template mode="propertiesListing" match="html:h3[@class = 'fn']">
     <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+    <xsl:param name="kind" as="xs:string"/>
     <xsl:variable name="anchor" select="./@id"/>
     
     <db:fieldsynopsis>
+      <xsl:if test="$kind">
+        <db:modifier>(<xsl:value-of select="$kind"/>)</db:modifier>
+      </xsl:if>
+      
       <xsl:if test="$obsolete">
         <db:modifier><xsl:text>(obsolete)</xsl:text></db:modifier>
       </xsl:if>
