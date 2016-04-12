@@ -108,12 +108,15 @@
     <xsl:variable name="descriptionRawQml" as="element()?">
         <xsl:if test="$isQmlType">
           <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
+          <xsl:variable name="attachedPropText" select="'Attached Property Documentation'" as="xs:string"/>
           <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
           
           <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
           <xsl:variable name="descTitleId" select="generate-id($descTitle)"/>
           <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]" as="element()?"/>
           <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
+          <xsl:variable name="attachedPropTitle" select="$content/html:h2[text() = $attachedPropText]" as="element()?"/>
+          <xsl:variable name="attachedPropTitleId" select="generate-id($attachedPropTitle)"/>
           <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]" as="element()?"/>
           <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
           
@@ -125,9 +128,12 @@
                 /following-sibling::html:*[
                   text() != '' 
                   and text() != $propText
+                  and text() != $attachedPropText
                   and text() != $methText
                   and not(
                     generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+                    or
+                    generate-id(preceding-sibling::html:h2[1]) = $attachedPropTitleId
                     or
                     generate-id(preceding-sibling::html:h2[1]) = $methTitleId
                   )
@@ -258,6 +264,26 @@
       </xsl:if>
     </xsl:variable>
     
+    <xsl:variable name="qmlAttachedPropsTitleText" select="'Attached Property Documentation'" as="xs:string"/>
+    <xsl:variable name="qmlAttachedPropsTitle" select="$content/html:h2[text() = $qmlAttachedPropsTitleText]" as="element()?"/>
+    <xsl:variable name="qmlAttachedPropsTitleId" select="generate-id($qmlAttachedPropsTitle)"/>
+    <xsl:variable name="hasQmlAttachedProps" select="$isQmlType and boolean($qmlAttachedPropsTitle)" as="xs:boolean"/>
+    <xsl:variable name="qmlAttachedProps" as="element(html:div)?">
+      <xsl:if test="$isQmlType and $hasQmlAttachedProps">
+        <html:div class="qml-attached-props">
+          <xsl:for-each
+            select="
+            $qmlAttachedPropsTitle
+            /following-sibling::html:div[
+            @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlAttachedPropsTitleId
+            ]"
+            >
+            <xsl:copy-of select="current()"></xsl:copy-of>
+          </xsl:for-each>
+        </html:div>
+      </xsl:if>
+    </xsl:variable>
+    
     <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
     <xsl:variable name="qmlMethsTitle" select="$content/html:h2[text() = $qmlMethsTitleText]" as="element()?"/>
     <xsl:variable name="qmlMethsTitleId" select="generate-id($qmlMethsTitle)"/>
@@ -267,10 +293,10 @@
         <html:div class="qml-meths">
           <xsl:for-each
             select="
-              $qmlMethsTitle
-              /following-sibling::html:div[
-                @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlMethsTitleId
-              ]"
+            $qmlMethsTitle
+            /following-sibling::html:div[
+            @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlMethsTitleId
+            ]"
             >
             <xsl:copy-of select="current()"></xsl:copy-of>
           </xsl:for-each>
@@ -308,6 +334,9 @@
     <xsl:if test="$isClass and boolean($hasQmlProps)">
       <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
     </xsl:if>
+    <xsl:if test="$isClass and boolean($hasQmlAttachedProps)">
+      <xsl:message terminate="no">WARNING: A C++ class has QML attached properties.</xsl:message>
+    </xsl:if>
     <xsl:if test="$isClass and boolean($hasQmlMeths)">
       <xsl:message terminate="no">WARNING: A C++ class has QML methods.</xsl:message>
     </xsl:if>
@@ -339,7 +368,7 @@
       <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
     </xsl:if>
 
-    <!-- Do the same with linked documents. -->
+    <!-- Do the same with linked documents (only for C++ classes). -->
     <xsl:variable name="linkedDocumentsList"
       select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
     <xsl:variable name="hasLinkedDocumentsList" select="boolean($linkedDocumentsList)"
@@ -490,6 +519,7 @@
           <xsl:with-param name="since" select="$prologueSince"/>
           
           <xsl:with-param name="props" select="$qmlProps"/>
+          <xsl:with-param name="attachedProps" select="$qmlAttachedProps"/>
           <xsl:with-param name="meths" select="$qmlMeths"/>
         </xsl:call-template>
       </xsl:if>
@@ -535,6 +565,13 @@
       <xsl:if test="$hasQmlProps">
         <xsl:call-template name="content_qmlProps">
           <xsl:with-param name="data" select="$qmlProps"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$hasQmlAttachedProps">
+        <xsl:call-template name="content_qmlProps">
+          <xsl:with-param name="data" select="$qmlAttachedProps"/>
+          <xsl:with-param name="attached" select="true()"/>
         </xsl:call-template>
       </xsl:if>
       
@@ -1176,6 +1213,7 @@
     <xsl:param name="since" as="element()?"/>
     
     <xsl:param name="props" as="element()?"/> 
+    <xsl:param name="attachedProps" as="element()?"/> 
     <xsl:param name="meths" as="element()?"/>
     
     <db:classsynopsis>
@@ -1215,12 +1253,20 @@
         <xsl:apply-templates mode="qmlPropertiesListing" select="$props/html:div[@class = 'qmlitem']"/>
       </xsl:if>
       
+      <xsl:if test="$attachedProps">
+        <xsl:apply-templates mode="qmlPropertiesListing" select="$attachedProps/html:div[@class = 'qmlitem']">
+          <xsl:with-param name="attached" select="true()"></xsl:with-param>
+        </xsl:apply-templates>
+      </xsl:if>
+      
       <xsl:if test="$meths">
         <xsl:apply-templates mode="qmlMethodsListing" select="$meths/html:div[@class = 'qmlitem']"/>
       </xsl:if>
     </db:classsynopsis>
   </xsl:template>
   <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
+    <xsl:param name="attached" select="false()"></xsl:param>
+    
     <xsl:variable name="rows" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
     
     <xsl:for-each select="$rows">
@@ -1231,6 +1277,10 @@
       <xsl:if test="$title/html:span[@class = 'name']">
         <!-- TODO: how to handle property groups? -->
         <db:fieldsynopsis>
+          <xsl:if test="$attached">
+            <db:modifier>attached</db:modifier>
+          </xsl:if>
+          
           <xsl:call-template name="classListing_methodBody_analyseType">
             <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"/>
           </xsl:call-template>
@@ -1444,9 +1494,18 @@
   <!-- Handle QML properties. -->
   <xsl:template name="content_qmlProps">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="attached" select="false()" as="xs:boolean"></xsl:param>
     
     <db:section>
-      <db:title>Properties Documentation</db:title>
+      <xsl:choose>
+        <xsl:when test="$attached">
+          <db:title>Attached Properties Documentation</db:title>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:title>Properties Documentation</db:title>
+        </xsl:otherwise>
+      </xsl:choose>
+      
       <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
     </db:section>
   </xsl:template>
@@ -1656,9 +1715,7 @@
     </xsl:call-template>
     <xsl:variable name="firstTitle" select="$data/html:h2[1]"/>
     <xsl:variable name="afterFirstTitleIncluded"
-      select="
-        ($firstTitle,
-        $firstTitle/following-sibling::*)"/>
+      select="($firstTitle, $firstTitle/following-sibling::*)"/>
 
     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
       <db:section>
