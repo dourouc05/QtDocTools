@@ -1627,23 +1627,19 @@
         <!-- An implicit array of images. -->
         <db:informaltable>
           <db:tbody>
-            <db:tr>
-                <xsl:for-each select="child::html:*">
-                  <xsl:choose>
-                    <xsl:when test="self::html:img">
-                      <db:td>
-                        <db:para>
-                          <xsl:apply-templates mode="content_paragraph" select="."/>
-                        </db:para>
-                      </db:td>
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:text disable-output-escaping="yes">&lt;/db:tr&gt;</xsl:text>
-                      <xsl:text disable-output-escaping="yes">&lt;db:tr&gt;</xsl:text>
-                    </xsl:otherwise>
-                  </xsl:choose>
-                </xsl:for-each>
-            </db:tr>
+            <xsl:for-each-group select="child::html:*" group-starting-with="html:br">
+              <db:tr>
+                <xsl:for-each select="current-group()">
+                  <xsl:if test="self::html:img">
+                    <db:td>
+                      <db:para>
+                        <xsl:apply-templates mode="content_paragraph" select="."/>
+                      </db:para>
+                    </db:td>
+                  </xsl:if>
+               </xsl:for-each>
+              </db:tr>
+            </xsl:for-each-group>
           </db:tbody>
         </db:informaltable>
       </xsl:when>
