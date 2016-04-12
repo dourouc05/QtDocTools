@@ -75,6 +75,12 @@
         <db:para>Only one buddy widget can be defined for each label. To
             change the buddy used, it is necessary to delete any existing
             buddy connection before you create a new one.</db:para>
+        <db:para>Connections between labels and their buddy widgets can be
+            deleted in the same way as signal-slot connections in signals
+            and slots editing mode: Select the buddy connection by clicking
+            on it and press the <db:emphasis role="bold">Delete</db:emphasis> key. This operation
+            does not modify either the label or its buddy in any
+            way.</db:para>
         <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">

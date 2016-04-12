@@ -1587,13 +1587,6 @@
   <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
-  <xsl:template mode="content" match="html:b">
-    <db:para>
-      <db:emphasis role="bold">
-        <xsl:apply-templates mode="content_paragraph"/>
-      </db:emphasis>
-    </db:para>
-  </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
   </xsl:template>
@@ -1623,7 +1616,8 @@
           </db:mediaobject>
         </db:informalfigure>
       </xsl:when>
-      <xsl:when test="./html:b and count(./html:b) = 1">
+      <xsl:when test="./html:b and count(./html:b) = 1 and starts-with(./html:b/text(), 'Note') and starts-with(./html:b/text(), 'See also')">
+        <!-- Sometimes, some "titles" are in bold, but are not recognised by these special texts! They should flow normally. -->
         <xsl:choose>
           <xsl:when test="starts-with(./html:b/text(), 'Note')">
             <db:note>
@@ -1857,9 +1851,45 @@
         </xsl:attribute>
       </xsl:if>
 
+      <!-- 
+        A cell in the table might contain directly a paragraph (or code, or a list), or text that
+        should be wrapped in a paragraph. Except that it sometimes contains text to wrap, then a 
+        paragraph! Example (designer-creating-custom-widgets): 
+            <html:td>
+              A <html:a href="qtwidgets/qwidget.html">QWidget</html:a> pointer to an instance 
+              of the custom widget, constructed with the parent supplied.
+              <html:p>
+                <html:b>Note: </html:b>
+                createWidget() is a factory function responsible for creating the widget only. 
+                The custom widget's properties will not be available until load() returns.
+              </html:p>
+            </html:td>
+      -->
       <xsl:choose>
-        <xsl:when test="./child::html:p | ./child::html:pre | ./child::html:ul | ./child::html:ol">
+        <xsl:when test="./child::node()[1][self::html:p] | ./child::node()[1][self::html:pre] | ./child::node()[1][self::html:ul] | ./child::node()[1][self::html:ol]">
           <xsl:apply-templates select="*" mode="content"/>
+        </xsl:when>
+        <xsl:when test="./child::html:p">
+          <!-- There is some text to wrap, then already wrapped text. -->
+          <xsl:variable name="startText" as="element(html:p)">
+            <html:p>
+              <xsl:for-each select="./child::node()">
+                <xsl:if test="not(self::html:p)">
+                  <xsl:copy-of select="."></xsl:copy-of>
+                </xsl:if>
+              </xsl:for-each>
+            </html:p>
+          </xsl:variable>
+          <xsl:variable name="endText" as="element(html:p)+">
+            <xsl:for-each select="./child::node()">
+              <xsl:if test="self::html:p">
+                <xsl:copy-of select="."></xsl:copy-of>
+              </xsl:if>
+            </xsl:for-each>
+          </xsl:variable>
+          
+          <xsl:apply-templates select="$startText" mode="content"/>
+          <xsl:apply-templates select="$endText" mode="content"/>
         </xsl:when>
         <xsl:otherwise>
           <db:para>
