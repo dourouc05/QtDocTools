@@ -1,0 +1,314 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- designer-manual.qdoc -->
+        <html:title>Creating Main Windows in Qt Designer | Qt Designer Manual </html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtdesigner-manual.html">Qt Designer
+                                    Manual</html:a></html:li>
+                            <html:li>Creating Main Windows in Qt Designer</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:link href="designer-using-containers.html" rel="prev" />
+                            <html:link href="designer-resources.html" rel="next" />
+                            <html:p class="naviNextPrevious headerNavi">
+                                <html:a class="prevPage" href="designer-using-containers.html">Using
+                                    Containers in Qt Designer</html:a>
+                                <html:a class="nextPage" href="designer-resources.html">Editing
+                                    Resources with Qt Designer</html:a>
+                            </html:p><html:p> </html:p><html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#menus"
+                                            >Menus</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#creating-a-menu"
+                                                >Creating a Menu</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#creating-a-menu-entry">Creating a Menu
+                                                Entry</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#toolbars"
+                                                >Toolbars</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#creating-and-removing-a-toolbar">Creating and
+                                                Removing a Toolbar</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#adding-and-removing-toolbar-buttons">Adding
+                                                and Removing Toolbar Buttons</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#actions"
+                                                >Actions</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#the-action-editor"
+                                                >The Action Editor</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#creating-an-action"
+                                                >Creating an Action</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#adding-an-action"
+                                                >Adding an Action</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#dock-widgets">Dock
+                                                Widgets</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#adding-a-dock-widget"
+                                                >Adding a Dock Widget</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">Creating Main Windows in Qt Designer</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$designer-creating-mainwindows.html-description -->
+                            <html:div class="descr">
+                                <html:a name="details"></html:a>
+                                <html:p><html:i>Qt Designer</html:i> can be used to create user
+                                    interfaces for different purposes, and it provides different
+                                    kinds of form templates for each user interface. The main window
+                                    template is used to create application windows with menu bars,
+                                    toolbars, and dock widgets.</html:p>
+                                <html:p>Create a new main window by opening the
+                                        <html:b>File</html:b> menu and selecting the <html:b>New
+                                        Form...</html:b> option, or by pressing
+                                        <html:b>Ctrl+N</html:b>. Then, select the <html:b>Main
+                                        Window</html:b> template. This template provides a main
+                                    application window containing a menu bar and a toolbar by
+                                    default -- these can be removed if they are not
+                                    required.</html:p>
+                                <html:p>If you remove the menu bar, a new one can be created by
+                                    selecting the <html:b>Create Menu Bar</html:b> option from the
+                                    context menu, obtained by right-clicking within the main window
+                                    form.</html:p>
+                                <html:p>An application can have only <html:b>one</html:b> menu bar,
+                                    but <html:b>several</html:b> toolbars.</html:p>
+                                <html:a name="menus"></html:a>
+                                <html:h2 id="menus">Menus</html:h2>
+                                <html:p>Menus are added to the menu bar by modifying the
+                                        <html:b>Type Here</html:b> placeholders. One of these is
+                                    always present for editing purposes, and will not be displayed
+                                    in the preview or in the finished window.</html:p>
+                                <html:p>Once created, the properties of a menu can be accessed using
+                                    the <html:a href="designer-widget-mode.html#the-property-editor"
+                                        >Property Editor</html:a>, and each menu can be accessed for
+                                    this purpose via the <html:a
+                                        href="designer-widget-mode.html#the-object-inspector">The
+                                        Object Inspector</html:a>.</html:p>
+                                <html:p>Existing menus can be removed by opening a context menu over
+                                    the label in the menu bar, and selecting <html:b>Remove Menu
+                                        'menu_name'</html:b>.</html:p>
+                                <html:a name="creatingamenu"></html:a><html:div class="float-left"
+                                            ><html:p><html:img alt=""
+                                            src="images/designer-creating-menu1.png" />
+                                        <html:img alt="" src="images/designer-creating-menu2.png" />
+                                        <html:br />
+                                        <html:img alt="" src="images/designer-creating-menu3.png" />
+                                        <html:img alt="" src="images/designer-creating-menu4.png"
+                                         /></html:p>
+                                </html:div><html:a name="creating-a-menu"></html:a>
+                                <html:h3>Creating a Menu</html:h3>
+                                <html:p>Double-click the placeholder item to begin editing. The menu
+                                    text, displayed using a line edit, can be modified.</html:p>
+                                <html:p>Insert the required text for the new menu. Inserting an
+                                    ampersand character (&amp;) causes the letter following it to be
+                                    used as a mnemonic for the menu.</html:p>
+                                <html:p>Press <html:b>Return</html:b> or <html:b>Enter</html:b> to
+                                    accept the new text, or press <html:b>Escape</html:b> to reject
+                                    it. You can undo the editing operation later if
+                                    required.</html:p>
+                                <html:div class="clear-both"></html:div><html:p>Menus can also be
+                                    rearranged in the menu bar simply by dragging and dropping them
+                                    in the preferred location. A vertical red line indicates the
+                                    position where the menu will be inserted.</html:p>
+                                <html:p>Menus can contain any number of entries and separators, and
+                                    can be nested to the required depth. Adding new entries to menus
+                                    can be achieved by navigating the menu structure in the usual
+                                    way.</html:p>
+                                <html:a name="creatingamenuentry"></html:a><html:div
+                                    class="float-right"><html:p><html:img alt=""
+                                            src="images/designer-creating-menu-entry1.png" />
+                                        <html:img alt=""
+                                            src="images/designer-creating-menu-entry2.png" />
+                                        <html:br />
+                                        <html:img alt=""
+                                            src="images/designer-creating-menu-entry3.png" />
+                                        <html:img alt=""
+                                            src="images/designer-creating-menu-entry4.png"
+                                         /></html:p>
+                                </html:div><html:a name="creating-a-menu-entry"></html:a>
+                                <html:h3>Creating a Menu Entry</html:h3>
+                                <html:p>Double-click the <html:b>Type Here</html:b> placeholder to
+                                    begin editing, or double-click <html:b>Add Separator</html:b> to
+                                    insert a new separator line after the last entry in the
+                                    menu.</html:p>
+                                <html:p>The menu entry's text is displayed using a line edit, and
+                                    can be modified.</html:p>
+                                <html:p>Insert the required text for the new entry, optionally using
+                                    the ampersand character (&amp;) to mark the letter to use as a
+                                    mnemonic for the entry.</html:p>
+                                <html:p>Press <html:b>Return</html:b> or <html:b>Enter</html:b> to
+                                    accept the new text, or press <html:b>Escape</html:b> to reject
+                                    it. The action created for this menu entry will be accessible
+                                    via the <html:a
+                                        href="designer-creating-mainwindows.html#theactioneditor"
+                                        >Action Editor</html:a>, and any associated keyboard
+                                    shortcut can be set there.</html:p>
+                                <html:div class="clear-both"></html:div><html:p>Just like with
+                                    menus, entries can be moved around simply by dragging and
+                                    dropping them in the preferred location. When an entry is
+                                    dragged over a closed menu, the menu will open to allow it to be
+                                    inserted there. Since menu entries are based on actions, they
+                                    can also be dropped onto toolbars, where they will be displayed
+                                    as toolbar buttons.</html:p>
+                                <html:a name="toolbars"></html:a>
+                                <html:h2 id="toolbars">Toolbars</html:h2>
+                                <html:div class="float-left"><html:p><html:img alt=""
+                                            src="images/designer-creating-toolbar.png" /></html:p>
+                                </html:div><html:a name="creating-and-removing-a-toolbar"></html:a>
+                                <html:h3>Creating and Removing a Toolbar</html:h3>
+                                <html:p>Toolbars are added to a main window in a similar way to the
+                                    menu bar: Select the <html:b>Add Tool Bar</html:b> option from
+                                    the form's context menu. Alternatively, if there is an existing
+                                    toolbar in the main window, you can click the arrow on its right
+                                    end to create a new toolbar.</html:p>
+                                <html:p>Toolbars are removed from the form via an entry in the
+                                    toolbar's context menu.</html:p>
+                                <html:div class="clear-both"></html:div><html:a
+                                    name="adding-and-removing-toolbar-buttons"></html:a>
+                                <html:h3>Adding and Removing Toolbar Buttons</html:h3>
+                                <html:p>Toolbar buttons are created as actions in the <html:a
+                                        href="designer-creating-mainwindows.html#theactioneditor"
+                                        >Action Editor</html:a> and dragged onto the toolbar. Since
+                                    actions can be represented by menu entries and toolbar buttons,
+                                    they can be moved between menus and toolbars.</html:p>
+                                <html:div class="float-right"><html:p><html:img alt=""
+                                            src="images/designer-adding-toolbar-action.png" />
+                                        <html:img alt=""
+                                            src="images/designer-removing-toolbar-action.png"
+                                         /></html:p>
+                                </html:div><html:p>To share an action between a menu and a toolbar,
+                                    drag its icon from the action editor to the toolbar rather than
+                                    from the menu where its entry is located. See <html:a
+                                        href="designer-creating-mainwindows.html#adding-an-action"
+                                        >Adding an Action</html:a> for more information about this
+                                    process.</html:p>
+                                <html:p>Toolbar buttons are removed via the toolbar's context
+                                    menu.</html:p>
+                                <html:div class="clear-both"></html:div><html:a name="actions"></html:a>
+                                <html:h2 id="actions">Actions</html:h2>
+                                <html:p>With the menu bar and the toolbars in place, it's time to
+                                    populate them with actions. New actions for both menus and
+                                    toolbars are created in the action editor window, simplifying
+                                    the creation and management of actions.</html:p>
+                                <html:a name="theactioneditor"></html:a><html:div class="float-left"
+                                            ><html:p><html:img alt=""
+                                            src="images/designer-action-editor.png" /></html:p>
+                                </html:div><html:a name="the-action-editor"></html:a>
+                                <html:h3>The Action Editor</html:h3>
+                                <html:p>Enable the action editor by opening the
+                                        <html:b>Tools</html:b> menu, and switching on the
+                                        <html:b>Action Editor</html:b> option.</html:p>
+                                <html:p>The action editor allows you to create <html:b>New</html:b>
+                                    actions and <html:b>Delete</html:b> actions. It also provides a
+                                    search function, <html:b>Filter</html:b>, using the action's
+                                    text.</html:p>
+                                <html:p><html:i>Qt Designer</html:i>'s action editor can be viewed
+                                    in the classic <html:b>Icon View</html:b> and <html:b>Detailed
+                                        View</html:b>. The screenshot below shows the action editor
+                                    in <html:b>Detailed View</html:b>. You can also copy and paste
+                                    actions between menus, toolbars and forms.</html:p>
+                                <html:div class="clear-both"></html:div><html:a
+                                    name="creating-an-action"></html:a>
+                                <html:h3>Creating an Action</html:h3>
+                                <html:p>To create an action, use the action editor's
+                                        <html:b>New</html:b> button, which will then pop up an input
+                                    dialog. Provide the new action with a <html:b>Text</html:b> --
+                                    this is the text that will appear in a menu entry and as the
+                                    action's tooltip. The text is also automatically added to an
+                                    "action" prefix, creating the action's <html:b>Object
+                                        Name</html:b>.</html:p>
+                                <html:p>In addition, the dialog provides the option of selecting an
+                                        <html:b>Icon</html:b> for the action, as well as removing
+                                    the current icon.</html:p>
+                                <html:p>Once the action is created, it can be used wherever actions
+                                    are applicable.</html:p>
+                                <html:div class="clear-left"></html:div><html:a
+                                    name="addinganaction"></html:a><html:div class="float-right"
+                                            ><html:p><html:img alt=""
+                                            src="images/designer-adding-menu-action.png" />
+                                        <html:img alt=""
+                                            src="images/designer-adding-toolbar-action.png"
+                                         /></html:p>
+                                </html:div><html:a name="adding-an-action"></html:a>
+                                <html:h3>Adding an Action</html:h3>
+                                <html:p>To add an action to a menu or a toolbar, simply press the
+                                    left mouse button over the action in the action editor, and drag
+                                    it to the preferred location.</html:p>
+                                <html:p><html:i>Qt Designer</html:i> provides highlighted guide
+                                    lines that tell you where the action will be added. Release the
+                                    mouse button to add the action when you have found the right
+                                    spot.</html:p>
+                                <html:div class="clear-right"></html:div><html:a name="dock-widgets"></html:a>
+                                <html:h2 id="dock-widgets">Dock Widgets</html:h2>
+                                <html:p>Since dock widgets are <html:a
+                                        href="designer-using-containers.html">container
+                                        widgets</html:a>, they can be added to a form in the usual
+                                    way. Once added to a form, dock widgets are not placed in any
+                                    particular dock area by default; you need to set the
+                                        <html:b>docked</html:b> property to true for each widget and
+                                    choose an appropriate value for its
+                                        <html:b>dockWidgetArea</html:b> property.</html:p>
+                                <html:a name="addingadockwidget"></html:a><html:div
+                                    class="float-left"><html:p><html:img alt=""
+                                            src="images/designer-adding-dockwidget.png" /></html:p>
+                                </html:div><html:a name="adding-a-dock-widget"></html:a>
+                                <html:h3>Adding a Dock Widget</html:h3>
+                                <html:p>To add a dock widget to a form, drag one from the
+                                        <html:b>Containers</html:b> section of the widget box, and
+                                    drop it onto the main form area. Do not add the dock widget to
+                                    an existing layout. Instead, open the <html:b>Property
+                                        Editor</html:b> and enable the <html:b>docked</html:b>
+                                    property to place it in a dock area.</html:p>
+                                <html:p>Note that it is sometimes easier to configure a dock widget
+                                    if it is added to a form before a layout is applied to the
+                                    central widget. For example, it is possible to undock it and
+                                    resize it, making it more convenient to add child
+                                    widgets.</html:p>
+                                <html:p>Dock widgets can be optionally floated as independent tool
+                                    windows. Hence, it is useful to give them window titles by
+                                    setting their <html:a
+                                        href="qtwidgets/qdockwidget.html#windowTitle-prop"
+                                        >windowTitle</html:a> property. This also helps to identify
+                                    them on the form.</html:p>
+                                <html:div class="clear-both"></html:div></html:div>
+                            <!-- @@@designer-creating-mainwindows.html -->
+                            <html:p class="naviNextPrevious footerNavi">
+                                <html:a class="prevPage" href="designer-using-containers.html">Using
+                                    Containers in Qt Designer</html:a>
+                                <html:a class="nextPage" href="designer-resources.html">Editing
+                                    Resources with Qt Designer</html:a>
+                            </html:p>
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

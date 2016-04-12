@@ -1587,6 +1587,13 @@
   <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
+  <xsl:template mode="content" match="html:div[@class = 'float-left' or @class = 'float-right']">
+    <xsl:apply-templates select="*" mode="content"/>
+    <!-- Used for implicit tables of images, usually. -->
+  </xsl:template>
+  <xsl:template mode="content" match="html:div[@class = 'clear-both' or @class = 'clear-left' or @class = 'clear-right']">
+    <xsl:apply-templates select="*" mode="content"/>
+  </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
   </xsl:template>
@@ -1615,6 +1622,30 @@
             </db:imageobject>
           </db:mediaobject>
         </db:informalfigure>
+      </xsl:when>
+      <xsl:when test="child::html:img and count(child::html:*) = count(child::html:img) + count(child::html:br)">
+        <!-- An implicit array of images. -->
+        <db:informaltable>
+          <db:tbody>
+            <db:tr>
+                <xsl:for-each select="child::html:*">
+                  <xsl:choose>
+                    <xsl:when test="self::html:img">
+                      <db:td>
+                        <db:para>
+                          <xsl:apply-templates mode="content_paragraph" select="."/>
+                        </db:para>
+                      </db:td>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:text disable-output-escaping="yes">&lt;/db:tr&gt;</xsl:text>
+                      <xsl:text disable-output-escaping="yes">&lt;db:tr&gt;</xsl:text>
+                    </xsl:otherwise>
+                  </xsl:choose>
+                </xsl:for-each>
+            </db:tr>
+          </db:tbody>
+        </db:informaltable>
       </xsl:when>
       <xsl:when test="./html:b and count(./html:b) = 1 and starts-with(./html:b/text(), 'Note') and starts-with(./html:b/text(), 'See also')">
         <!-- Sometimes, some "titles" are in bold, but are not recognised by these special texts! They should flow normally. -->
