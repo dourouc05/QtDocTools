@@ -162,7 +162,11 @@
           </html:div>
         </xsl:if>
     </xsl:variable>
-    <xsl:variable name="description" as="element()" select="if(not($isQmlType)) then $content/html:div[@class = 'descr'] else $descriptionRawQml"/>
+    <xsl:variable name="hasActuallyNoDescription" as="xs:boolean" select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))"/>
+    <xsl:variable name="description" as="element()?" select="if(not($isQmlType)) then $content/html:div[@class = 'descr'] else $descriptionRawQml"/>
+    <xsl:if test="$hasActuallyNoDescription and not($description)">
+      <xsl:message>WARNING: Found no description, while there should be one. </xsl:message>
+    </xsl:if>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
     <xsl:if test="not($description)">
