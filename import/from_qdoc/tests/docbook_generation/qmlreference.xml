@@ -1,0 +1,107 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en"><html:head>
+  <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- qmlreference.qdoc -->
+  <html:title>The QML Reference | Qt QML 5.4</html:title>
+  <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+</html:head>
+<html:body>
+<html:div class="header" id="qtdocheader">
+    <html:div class="main">
+    <html:div class="main-rounded">
+        <html:div class="navigationbar">
+        <html:ul>
+<html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+<html:li><html:a href="qtqml-index.html">Qt QML</html:a></html:li>
+<html:li>The QML Reference</html:li>
+<html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+    </html:ul>
+    </html:div>
+</html:div>
+<html:div class="content">
+<html:div class="line">
+<html:div class="content mainContent">
+<html:div class="sidebar"><html:div class="sidebar-content" id="sidebar-content" /></html:div>
+<html:h1 class="title">The QML Reference</html:h1>
+<html:span class="subtitle" />
+<!-- $$$qmlreference.html-description -->
+<html:div class="descr"> <html:a name="details" />
+<html:p>QML is a multi-paradigm language for creating highly dynamic applications. With QML, application building blocks such as UI components are <html:i>declared</html:i> and various properties set to define the application behavior. Application behavior can be further scripted through JavaScript, which is a subset of the language. In addition, QML heavily uses Qt, which allows types and other Qt features to be accessible directly from QML applications.</html:p>
+<html:p>This reference guide describes the features of the QML language. Many of the QML types in the guide originate from the <html:a href="qtqml-index.html">Qt QML</html:a> or <html:a href="qtquick/qtquick-index.html">Qt Quick</html:a> modules.</html:p>
+<html:ul>
+<html:li><html:a href="qtqml-syntax-basics.html">QML Syntax Basics</html:a><html:ul>
+<html:li><html:a href="qtqml-syntax-imports.html">Import Statements</html:a></html:li>
+<html:li><html:a href="qtqml-syntax-basics.html#object-declarations">Object Declarations</html:a><html:ul>
+<html:li><html:a href="qtqml-syntax-basics.html#child-objects">Child Objects</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-syntax-basics.html#comments">Comments</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-syntax-objectattributes.html">QML Object Attributes</html:a><html:ul>
+<html:li><html:a href="qtqml-syntax-objectattributes.html#the-id-attribute">The <html:i>id</html:i> Attribute</html:a></html:li>
+<html:li><html:a href="qtqml-syntax-objectattributes.html#property-attributes">Property Attributes</html:a></html:li>
+<html:li><html:a href="qtqml-syntax-objectattributes.html#signal-attributes">Signal Attributes</html:a></html:li>
+<html:li><html:a href="qtqml-syntax-objectattributes.html#method-attributes">Method Attributes</html:a></html:li>
+<html:li><html:a href="qtqml-syntax-objectattributes.html#attached-properties-and-attached-signal-handlers">Attached Properties and Attached Signal Handlers</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-syntax-propertybinding.html">Property Binding</html:a></html:li>
+<html:li><html:a href="qtqml-syntax-signals.html">Signal and Handler Event System</html:a></html:li>
+<html:li><html:a href="qtqml-javascript-topic.html">Integrating QML and JavaScript</html:a><html:ul>
+<html:li><html:a href="qtqml-javascript-expressions.html">Using JavaScript Expressions with QML</html:a></html:li>
+<html:li><html:a href="qtqml-javascript-dynamicobjectcreation.html">Dynamic QML Object Creation from JavaScript</html:a></html:li>
+<html:li><html:a href="qtqml-javascript-resources.html">Defining JavaScript Resources In QML</html:a></html:li>
+<html:li><html:a href="qtqml-javascript-imports.html">Importing JavaScript Resources In QML</html:a></html:li>
+<html:li><html:a href="qtqml-javascript-hostenvironment.html">JavaScript Host Environment</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-typesystem-topic.html">The QML Type System</html:a><html:ul>
+<html:li><html:a href="qtqml-typesystem-basictypes.html">Basic Types</html:a></html:li>
+<html:li><html:a href="qtqml-typesystem-topic.html#javascript-types">JavaScript Types</html:a></html:li>
+<html:li><html:a href="qtqml-typesystem-objecttypes.html">QML Object Types</html:a><html:ul>
+<html:li><html:a href="qtqml-documents-definetypes.html">Defining Object Types from QML</html:a></html:li>
+<html:li><html:a href="qtqml-cppintegration-definetypes.html">Defining Object Types from C++</html:a></html:li>
+</html:ul>
+</html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-modules-topic.html">QML Modules</html:a><html:ul>
+<html:li><html:a href="qtqml-modules-qmldir.html">Specifying A QML Module</html:a></html:li>
+<html:li><html:a href="qtqml-modules-topic.html#supported-qml-module-types">Supported QML Module Types</html:a><html:ul>
+<html:li><html:a href="qtqml-modules-identifiedmodules.html">Identified Modules</html:a></html:li>
+<html:li><html:a href="qtqml-modules-legacymodules.html">Legacy Modules</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-modules-cppplugins.html">Providing Types and Functionality in a C++ Plugin</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-documents-topic.html">QML Documents</html:a><html:ul>
+<html:li><html:a href="qtqml-documents-structure.html">Structure of a QML Document</html:a></html:li>
+<html:li><html:a href="qtqml-documents-topic.html#syntax-of-the-qml-language">Syntax of the QML Language</html:a></html:li>
+<html:li><html:a href="qtqml-documents-definetypes.html">Defining Object Types through QML Documents</html:a><html:ul>
+<html:li><html:a href="qtqml-documents-definetypes.html#defining-an-object-type-with-a-qml-file">Defining an Object Type with a QML File</html:a></html:li>
+<html:li><html:a href="qtqml-documents-definetypes.html#accessible-attributes-of-custom-types">Accessible Attributes of Custom Types</html:a></html:li>
+</html:ul>
+</html:li>
+<html:li><html:a href="qtqml-documents-networktransparency.html">Resource Loading and Network Transparency</html:a></html:li>
+<html:li><html:a href="qtqml-documents-scope.html">Scope and Naming Resolution</html:a></html:li>
+</html:ul>
+</html:li>
+</html:ul>
+</html:div>
+<!-- @@@qmlreference.html -->
+        </html:div>
+       </html:div>
+   </html:div>
+   </html:div>
+</html:div>
+<html:div class="footer">
+   <html:p>
+   <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<html:br />    The documentation provided herein is licensed under the terms of the    <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</html:a> as published by the Free Software Foundation.<html:br />    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </html:p>
+</html:div>
+
+
+</html:body></html:html>

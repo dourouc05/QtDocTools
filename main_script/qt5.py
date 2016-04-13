@@ -221,6 +221,7 @@ def generate_module(module_name, configuration_file):
 
 # Convert the documentation HTML files as XML for the given module.
 def generate_module_xml(module_name, configuration_file):
+    logging.info('Parsing as XML: starting to work with module %s' % module_name)
     for root, subdirs, files in os.walk(output + module_name + "/"):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
@@ -258,6 +259,7 @@ def call_cpp_parser(file_in, file_out):
 
 # Convert the documentation XML files as DocBook for the given module.
 def generate_module_db(module_name, configuration_file):
+    logging.info('XML to DocBook: starting to work with module %s' % module_name)
     for root, sub_dirs, files in os.walk(output + module_name + "/"):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue

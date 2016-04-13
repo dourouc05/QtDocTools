@@ -2036,6 +2036,9 @@
       
       Strange things to output <db:code> (output it as pure text, but unescaped), just to ensure there is no whitespace 
       between this tag and the link, i.e. visible space to the user!
+      
+      The content may have multiple text values, such as: 
+          <html:a href="qtqml-syntax-objectattributes.html#the-id-attribute">The <html:i>id</html:i> Attribute</html:a>
     -->
     <xsl:choose>
       <xsl:when test="starts-with(./following-sibling::text()[1], '()')">
@@ -2055,7 +2058,7 @@
 
         <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
       </xsl:when>
-      <xsl:when test="starts-with(./text(), 'Q') and not(contains(./text(), ' '))">
+      <xsl:when test="count(./text()) = 1 and starts-with(./text(), 'Q') and not(contains(./text(), ' '))">
         <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
         <db:link>
           <xsl:attribute name="xlink:href" select="@href"/>
