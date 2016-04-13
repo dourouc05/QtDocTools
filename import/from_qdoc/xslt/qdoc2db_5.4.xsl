@@ -313,9 +313,6 @@
       </xsl:if>
     </xsl:variable>
     
-    <xsl:if test="$hasProperties">
-      <xsl:message terminate="yes">ERROR: Properties not implemented!</xsl:message>
-    </xsl:if>
     <xsl:if test="$hasVars">
       <xsl:message terminate="yes">ERROR: Member variables not implemented!</xsl:message>
     </xsl:if>
@@ -550,10 +547,16 @@
         <xsl:apply-templates mode="indexTable" select="$index"/>
       </xsl:if>
 
-      <!-- There may be types and functions for C++ classes. -->
+      <!-- There may be types, properties, functions, and macros for C++ classes. -->
       <xsl:if test="$hasTypes">
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$types"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$hasProperties">
+        <xsl:call-template name="content_props">
+          <xsl:with-param name="data" select="$properties"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -1394,7 +1397,7 @@
       </xsl:choose>
     </db:methodsynopsis>
   </xsl:template>
-
+  
   <!-- Handle C++ types: detailed description. -->
   <xsl:template name="content_types">
     <xsl:param name="data" as="element(html:div)"/>
@@ -1427,6 +1430,32 @@
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
 
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  
+  <!-- Handle C++ properties: detailed description. -->
+  <xsl:template name="content_props">
+    <xsl:param name="data" as="element(html:div)"/>
+    
+    <db:section>
+      <db:title>Property Documentation</db:title>
+      <xsl:apply-templates mode="content_props" select="$data/html:h3"/>
+    </db:section>
+  </xsl:template>
+  <!-- 
+    Two types of types: either class="fn", just an enum; or class="flags". 
+    In the latter case, the title mentions both an enum and a flags, separated with a <br/>. 
+  -->
+  <xsl:template mode="content_props" match="html:h3[@class = 'fn']">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
+      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
@@ -1667,10 +1696,10 @@
           </db:tbody>
         </db:informaltable>
       </xsl:when>
-      <xsl:when test="./html:b and count(./html:b) = 1 and starts-with(./html:b/text(), 'Note') and starts-with(./html:b/text(), 'See also')">
+      <xsl:when test="./html:b and (starts-with(./html:b[1]/text(), 'Note') or starts-with(./html:b[1]/text(), 'Warning') or starts-with(./html:b[1]/text(), 'See also'))">
         <!-- Sometimes, some "titles" are in bold, but are not recognised by these special texts! They should flow normally. -->
         <xsl:choose>
-          <xsl:when test="starts-with(./html:b/text(), 'Note')">
+          <xsl:when test="starts-with(./html:b[1]/text(), 'Note')">
             <db:note>
               <db:para>
                 <xsl:apply-templates mode="content_paragraph">
@@ -1679,7 +1708,16 @@
               </db:para>
             </db:note>
           </xsl:when>
-          <xsl:when test="starts-with(./html:b/text(), 'See also')">
+          <xsl:when test="starts-with(./html:b[1]/text(), 'Warning')">
+            <db:warning>
+              <db:para>
+                <xsl:apply-templates mode="content_paragraph">
+                  <xsl:with-param name="forgetNotes" select="true()"/>
+                </xsl:apply-templates>
+              </db:para>
+            </db:warning>
+          </xsl:when>
+          <xsl:when test="starts-with(./html:b[1]/text(), 'See also')">
             <xsl:call-template name="content_seealso">
               <xsl:with-param name="seeAlso" select="."/>
             </xsl:call-template>
@@ -1910,7 +1948,7 @@
               A <html:a href="qtwidgets/qwidget.html">QWidget</html:a> pointer to an instance 
               of the custom widget, constructed with the parent supplied.
               <html:p>
-                <html:b>Note: </html:b>
+                <html:b>content_props </html:b>
                 createWidget() is a factory function responsible for creating the widget only. 
                 The custom widget's properties will not be available until load() returns.
               </html:p>
