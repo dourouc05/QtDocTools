@@ -1,0 +1,394 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qquickrectangle.cpp -->
+        <html:title>Rectangle QML Type | Qt Quick 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtquick-index.html">Qt Quick</html:a></html:li>
+                            <html:li><html:a href="qtquick-qmlmodule.html">QML
+                                Types</html:a></html:li>
+                            <html:li>Rectangle QML Type</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#properties"
+                                                >Properties</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#details">Detailed
+                                                Description</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#appearance"
+                                                >Appearance</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#example-usage"
+                                                >Example Usage</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#performance"
+                                                >Performance</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">Rectangle QML Type</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$Rectangle-brief -->
+                            <html:p>Paints a filled rectangle with an optional border <html:a
+                                    href="#details">More...</html:a></html:p>
+                            <!-- @@@Rectangle -->
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> Import
+                                                Statement:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> import
+                                                QtQuick 2.4</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Inherits:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:p><html:a href="qml-qtquick-item.html"
+                                                  >Item</html:a></html:p>
+                                            </html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div><html:ul>
+                                <html:li><html:a href="qml-qtquick-rectangle-members.html">List of
+                                        all members, including inherited members</html:a></html:li>
+                            </html:ul>
+                            <html:a name="properties"></html:a>
+                            <html:h2 id="properties">Properties</html:h2>
+                            <html:ul>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-qtquick-rectangle.html#antialiasing-prop"
+                                                >antialiasing</html:a></html:b></html:b> :
+                                    bool</html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-qtquick-rectangle.html#border-prop"
+                                                >border</html:a></html:b></html:b><html:ul>
+                                        <html:li class="fn"><html:b><html:b><html:a
+                                                  href="qml-qtquick-rectangle.html#border.width-prop"
+                                                  >border.width</html:a></html:b></html:b> :
+                                            int</html:li>
+                                        <html:li class="fn"><html:b><html:b><html:a
+                                                  href="qml-qtquick-rectangle.html#border.color-prop"
+                                                  >border.color</html:a></html:b></html:b> :
+                                            color</html:li>
+                                    </html:ul>
+                                </html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-qtquick-rectangle.html#color-prop"
+                                                >color</html:a></html:b></html:b> : color</html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-qtquick-rectangle.html#gradient-prop"
+                                                >gradient</html:a></html:b></html:b> :
+                                    Gradient</html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-qtquick-rectangle.html#radius-prop"
+                                                >radius</html:a></html:b></html:b> : real</html:li>
+                            </html:ul>
+                            <!-- $$$Rectangle-description -->
+                            <html:a name="details"></html:a>
+                            <html:h2 id="details">Detailed Description</html:h2>
+                            <html:p></html:p>
+                            <html:p>Rectangle items are used to fill areas with solid color or
+                                gradients, and/or to provide a rectangular border.</html:p>
+                            <html:a name="appearance"></html:a>
+                            <html:h2 id="appearance">Appearance</html:h2>
+                            <html:p>Each Rectangle item is painted using either a solid fill color,
+                                specified using the <html:a
+                                    href="qml-qtquick-rectangle.html#color-prop">color</html:a>
+                                property, or a gradient, defined using a Gradient type and set using
+                                the <html:a href="qml-qtquick-rectangle.html#gradient-prop"
+                                    >gradient</html:a> property. If both a color and a gradient are
+                                specified, the gradient is used.</html:p>
+                            <html:p>You can add an optional border to a rectangle with its own color
+                                and thickness by setting the <html:a
+                                    href="qml-qtquick-rectangle.html#border.color-prop"
+                                    >border.color</html:a> and <html:a
+                                    href="qml-qtquick-rectangle.html#border.width-prop"
+                                    >border.width</html:a> properties. Set the color to
+                                "transparent" to paint a border without a fill color.</html:p>
+                            <html:p>You can also create rounded rectangles using the <html:a
+                                    href="qml-qtquick-rectangle.html#radius-prop">radius</html:a>
+                                property. Since this introduces curved edges to the corners of a
+                                rectangle, it may be appropriate to set the <html:a
+                                    href="qml-qtquick-item.html#antialiasing-prop"
+                                    >Item::antialiasing</html:a> property to improve its
+                                appearance.</html:p>
+                            <html:a name="example-usage"></html:a>
+                            <html:h2 id="example-usage">Example Usage</html:h2>
+                            <html:div class="float-right"><html:p><html:img alt=""
+                                        src="images/declarative-rect.png" /></html:p>
+                            </html:div><html:p>The following example shows the effects of some of
+                                the common properties on a Rectangle item, which in this case is
+                                used to create a square:</html:p>
+                            <html:pre class="qml">import QtQuick 2.0 <html:span class="type"><html:a
+                                        href="qml-qtquick-rectangle.html"
+                                    >Rectangle</html:a></html:span> { <html:span class="name"
+                                    >width</html:span>: <html:span class="number">100</html:span>
+                                <html:span class="name">height</html:span>: <html:span
+                                    class="number">100</html:span>
+                                <html:span class="name">color</html:span>: <html:span class="string"
+                                    >"red"</html:span>
+                                <html:span class="name">border</html:span>.color: <html:span
+                                    class="string">"black"</html:span>
+                                <html:span class="name">border</html:span>.width: <html:span
+                                    class="number">5</html:span>
+                                <html:span class="name">radius</html:span>: <html:span
+                                    class="number">10</html:span> }</html:pre>
+                            <html:br style="clear: both" /><html:a name="performance"></html:a>
+                            <html:h2 id="performance">Performance</html:h2>
+                            <html:p>Using the <html:a href="qml-qtquick-item.html#antialiasing-prop"
+                                    >Item::antialiasing</html:a> property improves the appearance of
+                                a rounded rectangle at the cost of rendering performance. You should
+                                consider unsetting this property for rectangles in motion, and only
+                                set it when they are stationary.</html:p>
+                            <html:p><html:b>See also </html:b><html:a
+                                    href="qtquick-imageelements-example.html#image"
+                                >Image</html:a>.</html:p>
+                            <!-- @@@Rectangle -->
+                            <html:h2>Property Documentation</html:h2>
+                            <!-- $$$antialiasing -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="antialiasing-prop"
+                                                  valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="antialiasing-prop"></html:a><html:span
+                                                  class="name">antialiasing</html:span> : <html:span
+                                                  class="type">bool</html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>Used to decide if the Rectangle should use
+                                        antialiasing or not. <html:a
+                                            href="qtquick-visualcanvas-scenegraph-renderer.html#antialiasing"
+                                            >Antialiasing</html:a> provides information on the
+                                        performance implications of this property.</html:p>
+                                    <html:p>The default is true for Rectangles with a radius, and
+                                        false otherwise.</html:p>
+                                </html:div></html:div><!-- @@@antialiasing -->
+                            <html:br />
+                            <!-- $$$border -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="even" id="border-prop" valign="top">
+                                                  <html:th class="centerAlign"><html:p><html:a
+                                                  name="border-prop"></html:a><html:b>border
+                                                  group</html:b></html:p></html:th>
+                                                </html:tr>
+                                                <html:tr class="odd" id="border.width-prop"
+                                                  valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="border.width-prop"></html:a><html:span
+                                                  class="name">border.width</html:span> : <html:span
+                                                  class="type">int</html:span></html:p></html:td>
+                                                </html:tr>
+                                                <html:tr class="odd" id="border.color-prop"
+                                                  valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="border.color-prop"></html:a><html:span
+                                                  class="name">border.color</html:span> : <html:span
+                                                  class="type">color</html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>The width and color used to draw the border of the
+                                        rectangle.</html:p>
+                                    <html:p>A width of 1 creates a thin line. For no line, use a
+                                        width of 0 or a transparent color.</html:p>
+                                    <html:p><html:b>Note: </html:b>The width of the rectangle's
+                                        border does not affect the geometry of the rectangle itself
+                                        or its position relative to other items if anchors are
+                                        used.</html:p><html:p>The border is rendered within the
+                                        rectangle's boundaries.</html:p>
+                                </html:div></html:div><!-- @@@border -->
+                            <html:br />
+                            <!-- $$$color -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="color-prop" valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="color-prop"></html:a><html:span class="name"
+                                                  >color</html:span> : <html:span class="type"
+                                                  >color</html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>This property holds the color used to fill the
+                                        rectangle.</html:p>
+                                    <html:p>The default color is white.</html:p>
+                                    <html:div class="float-right"><html:p><html:img alt=""
+                                                src="images/rect-color.png" /></html:p>
+                                    </html:div><html:p>The following example shows rectangles with
+                                        colors specified using hexadecimal and named color
+                                        notation:</html:p>
+                                    <html:pre class="qml"><html:span class="type"><html:a
+                                                href="qml-qtquick-rectangle.html"
+                                            >Rectangle</html:a></html:span> { <html:span
+                                            class="name">color</html:span>: <html:span
+                                            class="string">"#00B000"</html:span>
+                                        <html:span class="name">width</html:span>: <html:span
+                                            class="number">80</html:span>; <html:span class="name"
+                                            >height</html:span>: <html:span class="number"
+                                            >80</html:span> } <html:span class="type"><html:a
+                                                href="qml-qtquick-rectangle.html"
+                                            >Rectangle</html:a></html:span> { <html:span
+                                            class="name">color</html:span>: <html:span
+                                            class="string">"steelblue"</html:span>
+                                        <html:span class="name">y</html:span>: <html:span
+                                            class="number">100</html:span>; <html:span class="name"
+                                            >width</html:span>: <html:span class="number"
+                                            >80</html:span>; <html:span class="name"
+                                            >height</html:span>: <html:span class="number"
+                                            >80</html:span> }</html:pre>
+                                    <html:br style="clear: both" /><html:p>If both a gradient and a
+                                        color are specified, the gradient will be used.</html:p>
+                                    <html:p><html:b>See also </html:b><html:a
+                                            href="qml-qtquick-rectangle.html#gradient-prop"
+                                            >gradient</html:a>.</html:p>
+                                </html:div></html:div><!-- @@@color -->
+                            <html:br />
+                            <!-- $$$gradient -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="gradient-prop" valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="gradient-prop"></html:a><html:span
+                                                  class="name">gradient</html:span> : <html:span
+                                                  class="type"><html:a
+                                                  href="qml-qtquick-gradient.html"
+                                                  >Gradient</html:a></html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>The gradient to use to fill the rectangle.</html:p>
+                                    <html:p>This property allows for the construction of simple
+                                        vertical gradients. Other gradients may by formed by adding
+                                        rotation to the rectangle.</html:p>
+                                    <html:div class="float-left"><html:p><html:img alt=""
+                                                src="images/declarative-rect_gradient.png"
+                                             /></html:p>
+                                    </html:div><html:pre class="qml"><html:span class="type"><html:a
+                                                href="qml-qtquick-rectangle.html"
+                                            >Rectangle</html:a></html:span> { <html:span
+                                            class="name">y</html:span>: <html:span class="number"
+                                            >0</html:span>; <html:span class="name"
+                                            >width</html:span>: <html:span class="number"
+                                            >80</html:span>; <html:span class="name"
+                                            >height</html:span>: <html:span class="number"
+                                            >80</html:span>
+                                        <html:span class="name">color</html:span>: <html:span
+                                            class="string">"lightsteelblue"</html:span> } <html:span
+                                            class="type"><html:a href="qml-qtquick-rectangle.html"
+                                                >Rectangle</html:a></html:span> { <html:span
+                                            class="name">y</html:span>: <html:span class="number"
+                                            >100</html:span>; <html:span class="name"
+                                            >width</html:span>: <html:span class="number"
+                                            >80</html:span>; <html:span class="name"
+                                            >height</html:span>: <html:span class="number"
+                                            >80</html:span>
+                                        <html:span class="name">gradient</html:span>: <html:span
+                                            class="name">Gradient</html:span> { <html:span
+                                            class="type"><html:a
+                                                href="qml-qtquick-gradientstop.html"
+                                                >GradientStop</html:a></html:span> { <html:span
+                                            class="name">position</html:span>: <html:span
+                                            class="number">0.0</html:span>; <html:span class="name"
+                                            >color</html:span>: <html:span class="string"
+                                            >"lightsteelblue"</html:span> } <html:span class="type"
+                                                ><html:a href="qml-qtquick-gradientstop.html"
+                                                >GradientStop</html:a></html:span> { <html:span
+                                            class="name">position</html:span>: <html:span
+                                            class="number">1.0</html:span>; <html:span class="name"
+                                            >color</html:span>: <html:span class="string"
+                                            >"blue"</html:span> } } } <html:span class="type"
+                                                ><html:a href="qml-qtquick-rectangle.html"
+                                                >Rectangle</html:a></html:span> { <html:span
+                                            class="name">y</html:span>: <html:span class="number"
+                                            >200</html:span>; <html:span class="name"
+                                            >width</html:span>: <html:span class="number"
+                                            >80</html:span>; <html:span class="name"
+                                            >height</html:span>: <html:span class="number"
+                                            >80</html:span>
+                                        <html:span class="name">rotation</html:span>: <html:span
+                                            class="number">90</html:span>
+                                        <html:span class="name">gradient</html:span>: <html:span
+                                            class="name">Gradient</html:span> { <html:span
+                                            class="type"><html:a
+                                                href="qml-qtquick-gradientstop.html"
+                                                >GradientStop</html:a></html:span> { <html:span
+                                            class="name">position</html:span>: <html:span
+                                            class="number">0.0</html:span>; <html:span class="name"
+                                            >color</html:span>: <html:span class="string"
+                                            >"lightsteelblue"</html:span> } <html:span class="type"
+                                                ><html:a href="qml-qtquick-gradientstop.html"
+                                                >GradientStop</html:a></html:span> { <html:span
+                                            class="name">position</html:span>: <html:span
+                                            class="number">1.0</html:span>; <html:span class="name"
+                                            >color</html:span>: <html:span class="string"
+                                            >"blue"</html:span> } } }</html:pre>
+                                    <html:br style="clear: both" /><html:p>If both a gradient and a
+                                        color are specified, the gradient will be used.</html:p>
+                                    <html:p><html:b>See also </html:b><html:a
+                                            href="qml-qtquick-gradient.html">Gradient</html:a> and
+                                            <html:a href="qml-qtquick-rectangle.html#color-prop"
+                                            >color</html:a>.</html:p>
+                                </html:div></html:div><!-- @@@gradient -->
+                            <html:br />
+                            <!-- $$$radius -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="radius-prop" valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="radius-prop"></html:a><html:span
+                                                  class="name">radius</html:span> : <html:span
+                                                  class="type">real</html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>This property holds the corner radius used to draw
+                                        a rounded rectangle.</html:p>
+                                    <html:p>If radius is non-zero, the rectangle will be painted as
+                                        a rounded rectangle, otherwise it will be painted as a
+                                        normal rectangle. The same radius is used by all 4 corners;
+                                        there is currently no way to specify different radii for
+                                        different corners.</html:p>
+                                </html:div></html:div><!-- @@@radius -->
+                            <html:br />
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

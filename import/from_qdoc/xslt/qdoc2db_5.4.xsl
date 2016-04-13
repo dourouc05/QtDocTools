@@ -1644,7 +1644,7 @@
   <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
-  <xsl:template mode="content" match="html:div[@class = 'float-left' or @class = 'float-right']">
+  <xsl:template mode="content" match="html:div[@class = 'float-left' or @class = 'float-right' or @float-right]">
     <xsl:apply-templates select="*" mode="content"/>
     <!-- Used for implicit tables of images, usually. -->
   </xsl:template>
@@ -1757,17 +1757,17 @@
   </xsl:template>
   <!-- Titles are handled in template content_withTitles_before. -->
   <xsl:template mode="content" match="html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
+  <xsl:template mode="content" match="html:br"/>
   <xsl:template mode="content" match="html:pre">
     <db:programlisting>
       <!-- 
         All codes may have class="cpp", even JavaScript (qtqml-javascript-imports.xml), 
-        no sense to read it (even though it's sometimes correct: qtbluetooth-index.xml). 
+        even though it's sometimes correct: qtbluetooth-index.xml, qml-color.xml. 
+        In other words: when it's not C++, it's reliable. 
       -->
-      <!-- 
-      <xsl:if test=".[@class]">
+      <xsl:if test="@class and not(@class = 'cpp')">
         <xsl:attribute name="language" select="@class"/>
       </xsl:if>
-      -->
       <xsl:value-of select="."/>
     </db:programlisting>
   </xsl:template>
