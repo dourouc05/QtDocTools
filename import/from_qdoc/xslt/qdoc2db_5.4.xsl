@@ -78,6 +78,8 @@
       select="$prologueTable/html:td[1][contains(text(), 'Import')]/following-sibling::html:td"/>
     <xsl:variable name="prologueInstantiates" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Instantiates')]/following-sibling::html:td"/>
+    <xsl:variable name="prologueInstantiatedBy" as="element(html:td)?"
+      select="$prologueTable/html:td[1][contains(text(), 'Instantiated By')]/following-sibling::html:td"/>
     <!-- For both.  -->
     <xsl:variable name="prologueInherits" as="element(html:td)?"
       select="$prologueTable/html:td[1][contains(text(), 'Inherits')]/following-sibling::html:td"/>
@@ -88,7 +90,7 @@
     <!-- Check all lines have been used. -->
     <xsl:variable name="prologueCount" as="xs:integer"
       select="
-      count((boolean($prologueHeader), boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"
+      count((boolean($prologueHeader), boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInstantiatedBy), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"
     />
     <xsl:if test="count($prologueTable) != $prologueCount">
       <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
@@ -521,6 +523,7 @@
           
           <xsl:with-param name="import" select="$prologueImport"/>
           <xsl:with-param name="instantiates" select="$prologueInstantiates"/>
+          <xsl:with-param name="instantiatedBy" select="$prologueInstantiatedBy"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
@@ -1237,6 +1240,7 @@
     
     <xsl:param name="import" as="element()?"/>
     <xsl:param name="instantiates" as="element()?"/>
+    <xsl:param name="instantiatedBy" as="element()?"></xsl:param>
     <xsl:param name="inherits" as="element()?"/>
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
@@ -1260,6 +1264,11 @@
       <xsl:if test="$instantiates">
         <db:classsynopsisinfo role="instantiates">
           <xsl:value-of select="$instantiates"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="$instantiatedBy">
+        <db:classsynopsisinfo role="instantiatedBy">
+          <xsl:value-of select="$instantiatedBy"/>
         </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$inherits">
@@ -1691,8 +1700,13 @@
           </db:tbody>
         </db:informaltable>
       </xsl:when>
-      <xsl:when test="./html:b and (starts-with(./html:b[1]/text(), 'Note') or starts-with(./html:b[1]/text(), 'Warning') or starts-with(./html:b[1]/text(), 'See also'))">
-        <!-- Sometimes, some "titles" are in bold, but are not recognised by these special texts! They should flow normally. -->
+      <xsl:when test="
+        ./html:b and (
+          starts-with(./html:b[1]/text(), 'Note') 
+          or starts-with(./html:b[1]/text(), 'Warning') 
+          or starts-with(./html:b[1]/text(), 'See also')
+        )">
+        <!-- Sometimes, some "titles" are in bold, but do not correspond to these special texts! They should flow normally, unmatched here. -->
         <xsl:choose>
           <xsl:when test="starts-with(./html:b[1]/text(), 'Note')">
             <db:note>
