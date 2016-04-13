@@ -636,26 +636,38 @@
 
   <!-- Utility templates, to be used everywhere. -->
   <xsl:template name="content_title">
-    <db:title>
-      <xsl:call-template name="content_title_value">
+    <xsl:variable name="title_raw">
+      <xsl:apply-templates mode="content_title_hidden">
         <xsl:with-param name="what" select="."/>
-      </xsl:call-template>
-    </db:title>
-  </xsl:template>
-  <xsl:template name="content_title_value">
-    <xsl:param name="what" as="element()"/>
-    
-    <xsl:variable name="content">
-      <xsl:apply-templates mode="content_title_hidden" select="$what"/>
+      </xsl:apply-templates>
     </xsl:variable>
-    
-    <!-- Normalise spaces and line feeds in titles. -->
-    <xsl:value-of
-      select="normalize-space(replace(replace($content, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '))"
-    />
+    <xsl:variable name="title" select="normalize-space(replace(replace($title_raw, ' \(', '('), '(\r|\n|\r\n|(  ))+', ' '))"/>
+    <xsl:for-each select="tokenize($title, '\|\\\|/\|')">
+      <xsl:choose>
+        <xsl:when test="starts-with($title, .)">
+          <!-- This is the first (and often only) title of the list. -->
+          <db:title>
+            <xsl:value-of select="normalize-space(.)"/>
+          </db:title>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:bridgehead renderas="sect2">
+            <xsl:value-of select="normalize-space(.)"/>
+          </db:bridgehead>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:template>
+  <xsl:template mode="content_title_hidden" match="html:br">
+    <xsl:text>|\|/|</xsl:text>
+  </xsl:template>
+  <xsl:template mode="content_title_hidden" match="html:h3">
+    <xsl:apply-templates mode="content_title_hidden"/>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="html:p">
-    <xsl:apply-templates mode="content_title_hidden"/>
+    <xsl:for-each-group select="." group-starting-with="html:br">
+      <xsl:apply-templates mode="content_title_hidden"/>
+    </xsl:for-each-group>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="text()">
     <xsl:value-of select="."/>
@@ -673,12 +685,6 @@
   <xsl:template mode="content_title_hidden" match="html:span">
     <xsl:apply-templates mode="content_title_hidden"/>
     <xsl:text> </xsl:text>
-  </xsl:template>
-  <xsl:template mode="content_title_hidden" match="html:h3">
-    <xsl:apply-templates mode="content_title_hidden"/>
-  </xsl:template>
-  <xsl:template mode="content_title_hidden" match="html:br">
-    <xsl:message terminate="no">WARNING: Line feed in title; this is not handled!</xsl:message>
   </xsl:template>
 
   <xsl:template name="content_seealso">
