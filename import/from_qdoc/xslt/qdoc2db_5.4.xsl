@@ -312,10 +312,6 @@
         </html:div>
       </xsl:if>
     </xsl:variable>
-    
-    <xsl:if test="$hasVars">
-      <xsl:message terminate="yes">ERROR: Member variables not implemented!</xsl:message>
-    </xsl:if>
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
@@ -575,6 +571,12 @@
       <xsl:if test="$hasNonmems">
         <xsl:call-template name="content_nonmems">
           <xsl:with-param name="data" select="$nonmems"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$hasVars">
+        <xsl:call-template name="content_vars">
+          <xsl:with-param name="data" select="$vars"/>
         </xsl:call-template>
       </xsl:if>
       
@@ -1533,6 +1535,27 @@
   </xsl:template>
   <xsl:template mode="content_nonmems"
     match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <db:section>
+      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:call-template name="content_title"/>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  
+  <!-- Handle C++ classes: non-member related functions. -->
+  <xsl:template name="content_vars">
+    <xsl:param name="data" as="element(html:div)"/>
+    
+    <db:section>
+      <db:title>Member Variable Documentation</db:title>
+      <xsl:apply-templates mode="content_vars" select="$data/html:h3"/>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_vars" match="html:h3[@class = 'fn']">
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
