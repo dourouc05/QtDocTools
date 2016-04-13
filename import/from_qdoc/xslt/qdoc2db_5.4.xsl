@@ -339,9 +339,7 @@
         select="name($siblingAfterNonmems)"/>
       </xsl:message>
     </xsl:if>
-    <xsl:if test="$isClass and not(boolean($funcs))">
-      <xsl:message terminate="no">WARNING: A C++ class has no C++ functions.</xsl:message>
-    </xsl:if>
+    <!-- A C++ class can perfectly have no functions! Example: QQuickItem::ItemChangedData. -->
     <xsl:if test="$isClass and boolean($hasQmlProps)">
       <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
     </xsl:if>

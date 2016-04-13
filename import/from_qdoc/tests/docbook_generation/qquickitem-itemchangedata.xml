@@ -1,0 +1,193 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qquickitem.cpp -->
+        <html:title>ItemChangeData Class | Qt Quick 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtquick-index.html">Qt Quick</html:a></html:li>
+                            <html:li><html:a href="qtquick-module.html">C++
+                                Classes</html:a></html:li>
+                            <html:li>ItemChangeData</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#public-variables"
+                                                >Public Variables</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#details">Detailed
+                                                Description</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">ItemChangeData Class</html:h1>
+                            <html:span class="small-subtitle">(<html:a
+                                    href="qquickitem-itemchangedata.html"
+                                    >QQuickItem::ItemChangeData</html:a>)<html:br /></html:span>
+                            <!-- $$$ItemChangeData-brief -->
+                            <html:p>Adds supplimentary information to the <html:a
+                                    href="qquickitem.html#itemChange"
+                                    >QQuickItem::itemChange</html:a>() function. <html:a
+                                    href="#details">More...</html:a></html:p>
+                            <!-- @@@ItemChangeData -->
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Header:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:span class="preprocessor">#include
+                                                  &lt;ItemChangeData&gt;</html:span>
+                                            </html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                qmake:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> QT +=
+                                                quick</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div><html:ul>
+                                <html:li><html:a href="qquickitem-itemchangedata-members.html">List
+                                        of all members, including inherited
+                                    members</html:a></html:li>
+                            </html:ul>
+                            <html:a name="public-variables"></html:a>
+                            <html:h2 id="public-variables">Public Variables</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qquickitem-itemchangedata.html#boolValue-var"
+                                                  >boolValue</html:a></html:b></html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QQuickItem * </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qquickitem-itemchangedata.html#item-var"
+                                                  >item</html:a></html:b></html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qreal </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qquickitem-itemchangedata.html#realValue-var"
+                                                  >realValue</html:a></html:b></html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QQuickWindow * </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qquickitem-itemchangedata.html#window-var"
+                                                  >window</html:a></html:b></html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:a name="details"></html:a>
+                            <!-- $$$ItemChangeData-description -->
+                            <html:div class="descr">
+                                <html:h2 id="details">Detailed Description</html:h2>
+                                <html:p>Adds supplimentary information to the <html:a
+                                        href="qquickitem.html#itemChange"
+                                        >QQuickItem::itemChange</html:a>() function.</html:p>
+                                <html:p>The meaning of each member of this class is defined by the
+                                    change type.</html:p>
+                            </html:div>
+                            <html:p><html:b>See also </html:b><html:a
+                                    href="qquickitem.html#ItemChange-enum"
+                                    >QQuickItem::ItemChange</html:a>.</html:p>
+                            <!-- @@@ItemChangeData -->
+                            <html:div class="vars">
+                                <html:h2>Member Variable Documentation</html:h2>
+                                <!-- $$$boolValue -->
+                                <html:h3 class="fn" id="boolValue-var"><html:a name="boolValue-var"
+                                        ></html:a><html:span class="type">bool</html:span>
+                                        ItemChangeData::<html:span class="name"
+                                        >boolValue</html:span></html:h3>
+                                <html:p>Contains supplimentary information to the <html:a
+                                        href="qquickitem.html#itemChange"
+                                        >QQuickItem::itemChange</html:a>() function.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qquickitem.html#ItemChange-enum"
+                                        >QQuickItem::ItemChange</html:a>.</html:p>
+                                <!-- @@@boolValue -->
+                                <!-- $$$item -->
+                                <html:h3 class="fn" id="item-var"><html:a name="item-var"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qquickitem.html#QQuickItem"
+                                        >QQuickItem</html:a></html:span> *
+                                        ItemChangeData::<html:span class="name"
+                                    >item</html:span></html:h3>
+                                <html:p>Contains supplimentary information to the <html:a
+                                        href="qquickitem.html#itemChange"
+                                        >QQuickItem::itemChange</html:a>() function.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qquickitem.html#ItemChange-enum"
+                                        >QQuickItem::ItemChange</html:a>.</html:p>
+                                <!-- @@@item -->
+                                <!-- $$$realValue -->
+                                <html:h3 class="fn" id="realValue-var"><html:a name="realValue-var"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span> ItemChangeData::<html:span
+                                        class="name">realValue</html:span></html:h3>
+                                <html:p>Contains supplimentary information to the <html:a
+                                        href="qquickitem.html#itemChange"
+                                        >QQuickItem::itemChange</html:a>() function.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qquickitem.html#ItemChange-enum"
+                                        >QQuickItem::ItemChange</html:a>.</html:p>
+                                <!-- @@@realValue -->
+                                <!-- $$$window -->
+                                <html:h3 class="fn" id="window-var"><html:a name="window-var"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qquickwindow.html"
+                                        >QQuickWindow</html:a></html:span> *
+                                        ItemChangeData::<html:span class="name"
+                                    >window</html:span></html:h3>
+                                <html:p>Contains supplimentary information to the <html:a
+                                        href="qquickitem.html#itemChange"
+                                        >QQuickItem::itemChange</html:a>() function.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qquickitem.html#ItemChange-enum"
+                                        >QQuickItem::ItemChange</html:a>.</html:p>
+                                <!-- @@@window -->
+                            </html:div>
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>
