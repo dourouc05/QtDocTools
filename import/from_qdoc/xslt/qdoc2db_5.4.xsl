@@ -1444,23 +1444,7 @@
     
     <db:section>
       <db:title>Property Documentation</db:title>
-      <xsl:apply-templates mode="content_props" select="$data/html:h3"/>
-    </db:section>
-  </xsl:template>
-  <!-- 
-    Two types of types: either class="fn", just an enum; or class="flags". 
-    In the latter case, the title mentions both an enum and a flags, separated with a <br/>. 
-  -->
-  <xsl:template mode="content_props" match="html:h3[@class = 'fn']">
-    <xsl:variable name="functionAnchor" select="./@id"/>
-    
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
-      
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
+      <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
     </db:section>
   </xsl:template>
 
@@ -1533,8 +1517,7 @@
       </xsl:call-template>
     </db:section>
   </xsl:template>
-  <xsl:template mode="content_nonmems"
-    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+  <xsl:template mode="content_nonmems" match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
@@ -1546,24 +1529,13 @@
     </db:section>
   </xsl:template>
   
-  <!-- Handle C++ classes: non-member related functions. -->
+  <!-- Handle C++ classes: member variables. -->
   <xsl:template name="content_vars">
     <xsl:param name="data" as="element(html:div)"/>
     
     <db:section>
       <db:title>Member Variable Documentation</db:title>
-      <xsl:apply-templates mode="content_vars" select="$data/html:h3"/>
-    </db:section>
-  </xsl:template>
-  <xsl:template mode="content_vars" match="html:h3[@class = 'fn']">
-    <xsl:variable name="functionAnchor" select="./@id"/>
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
-      
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
+      <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
     </db:section>
   </xsl:template>
   
@@ -1971,7 +1943,7 @@
               A <html:a href="qtwidgets/qwidget.html">QWidget</html:a> pointer to an instance 
               of the custom widget, constructed with the parent supplied.
               <html:p>
-                <html:b>content_props </html:b>
+                <html:b>Note: </html:b>
                 createWidget() is a factory function responsible for creating the widget only. 
                 The custom widget's properties will not be available until load() returns.
               </html:p>
