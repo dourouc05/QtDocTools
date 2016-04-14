@@ -239,7 +239,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		& paren_close;
 	auto value_simple = value_litteral | (value_object_simple >> valueAllocator >> valueInnerObject) | value_expression;
 
-	auto value_object_compound = (identifier >> outerObjectIdentifier)
+	auto value_object_compound = ((identifier >> valueIdentifier) & *space & ~type_template) >> outerObjectIdentifier
 		& *space
 		& paren_open & *space & ~((value_simple >> outerObjectNewValue) % spaced_comma) & *space & paren_close;
 	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | value_constant;
