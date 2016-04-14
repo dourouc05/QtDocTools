@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
@@ -198,7 +198,8 @@ int main(int argc, const char* argv[]) {
 
 		// Parse the text. 
 		std::string prototype = node.node().value();
-		AST* ast = cpp_prototype(prototype);
+		const char * cstr = prototype.c_str();
+		AST* ast = cpp_prototype(cstr, cstr + prototype.length());
 		if (test_differ(ast, prototype)) {
 			std::cerr << "Error when parsing a prototype, probably unsupported features:" << std::endl;
 			std::cerr << "    " << prototype << std::endl;

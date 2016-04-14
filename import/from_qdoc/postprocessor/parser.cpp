@@ -6,7 +6,7 @@
 // For templates: "decorated name length exceeded, name was truncated"
 #pragma warning(disable: 4503)
 
-AST* cpp_prototype(const char * begin, char const * end) {
+AST* cpp_prototype(const char * begin, const char * end) {
 	// Prepare the places to return the values being read. 
 	AST* retval = new AST;
 	Object* currentOuterObject = nullptr; // Two objects can be nested in prototypes. A more general solution would be to use a stack, 
