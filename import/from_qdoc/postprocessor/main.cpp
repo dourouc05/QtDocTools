@@ -79,6 +79,7 @@ void test() {
 	total++; count += test_match("( ...)", "Just an ellipsis");
 	total++; count += test_match("( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)", "QAndroidJniObject::callStaticMethod: ellipsis"); 
 	total++; count += test_match("(const  QMediaTimeInterval  &  interval)", "QMediaTimeRange::operator+=: regression");
+	total++; count += test_match("( QByteArray  const &  name )", "QMediaObject::addPropertyWatch: const after type");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;

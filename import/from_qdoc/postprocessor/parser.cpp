@@ -104,7 +104,17 @@ AST* cpp_prototype(const char * begin, const char * end) {
 			currentParameter = new Parameter;
 		}
 	});
-	auto parameterConst = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
+	auto parameterConstFront = axe::e_ref([&currentParameter](const char * i1, const char * i2) { // TODO
+		if (std::distance(i1, i2) > 2) {
+			currentParameter->isConst = true;
+		}
+	});
+	auto parameterConstMiddle = axe::e_ref([&currentParameter](const char * i1, const char * i2) { // TODO
+		if (std::distance(i1, i2) > 2) {
+			currentParameter->isConst = true;
+		}
+	});
+	auto parameterConstRear = axe::e_ref([&currentParameter](const char * i1, const char * i2) { // TODO
 		if (std::distance(i1, i2) > 2) {
 			currentParameter->isConst = true;
 		}
@@ -238,11 +248,15 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
 	// As a consequence, this would be a waste of both time and memory. 
 
-	auto parameter = ~(kw_const >> parameterAllocator >> parameterConst) // const
+	auto parameter = ~(kw_const >> parameterAllocator >> parameterConstFront) // const
 		& *space
 		& (type >> parameterAllocator >> parameterType) // Type. 
 		& *space
+		& ~(kw_const >> parameterAllocator >> parameterConstMiddle) // const
+		& *space
 		& ~(((kw_pointer | kw_reference) & *(*space & (kw_pointer | kw_reference))) >> parameterPointersReferences) // Pointers and references in type.
+		& *space
+		& ~(kw_const >> parameterAllocator >> parameterConstRear) // const
 		& *space
 		& ~(identifier >> parameterIdentifier) // Identifier (sometimes omitted). 
 		& *space
