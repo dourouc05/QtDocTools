@@ -1734,10 +1734,10 @@
         </db:informaltable>
       </xsl:when>
       <xsl:when test="
-        ./html:b and (
-          starts-with(./html:b[1]/text(), 'Note') 
-          or starts-with(./html:b[1]/text(), 'Warning') 
-          or starts-with(./html:b[1]/text(), 'See also')
+        ./child::node()[1][self::html:b] and (
+          starts-with(./html:b[1]/text()[1], 'Note') 
+          or starts-with(./html:b[1]/text()[1], 'Warning') 
+          or starts-with(./html:b[1]/text()[1], 'See also')
         )">
         <!-- Sometimes, some "titles" are in bold, but do not correspond to these special texts! They should flow normally, unmatched here. -->
         <xsl:choose>
