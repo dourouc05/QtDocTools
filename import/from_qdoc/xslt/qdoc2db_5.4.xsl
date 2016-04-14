@@ -1778,13 +1778,13 @@
   <xsl:template mode="content" match="html:blockquote">
     <!-- Blockquotes are barely used in the documentation. -->
     <xsl:choose>
-      <xsl:when test="count(child::*) = 1 and child::html:p and html:p/count(child::*) = 1 and html:p/child::html:code">
+      <xsl:when test="count(child::html:*) = 1 and child::html:p">
         <db:programlisting>
           <xsl:value-of select="./html:p/html:code/text()"/>
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:message>WARNING: Unexpected element: html:blockquote</xsl:message>
+        <xsl:message>WARNING: Unexpected html:blockquote here.</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0"
+            xml:lang="en">
+   <db:title>Completer Example</db:title>
+   <db:informalfigure>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/completer-example.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+   </db:informalfigure>
+   <db:para>This
+                                    example uses a custom item model,
+                                        <db:code>FileSystemModel</db:code>, and a <db:code><db:link xlink:href="qcompleter.html">QCompleter</db:link></db:code> object. <db:code><db:link xlink:href="qcompleter.html">QCompleter</db:link></db:code> is a class that
+                                    provides completions based on an item model. The type of model,
+                                    the completion mode, and the case sensitivity can be selected
+                                    using combo boxes.</db:para>
+   <db:section xml:id="the-resource-file">
+      <db:title>The Resource File</db:title>
+      <db:para>The Completer example requires a resource file in order to
+                                    store the <db:emphasis>countries.txt</db:emphasis> and
+                                        <db:emphasis>words.txt</db:emphasis>. The resource file contains the
+                                    following code:</db:para>
+      <db:programlisting>&lt;!DOCTYPE RCC&gt;&lt;RCC version="1.0"&gt;
+                                    &lt;qresource prefix="/"&gt;
+                                    &lt;file&gt;resources/countries.txt&lt;/file&gt;
+                                    &lt;file&gt;resources/wordlist.txt&lt;/file&gt;
+                                    &lt;/qresource&gt; &lt;/RCC&gt;</db:programlisting>
+   </db:section>
+   <db:section xml:id="filesystemmodel-class-definition">
+      <db:title>FileSystemModel Class
+                                    Definition</db:title>
+      <db:para>The <db:code>FileSystemModel</db:code> class is a
+                                    subclass of <db:code><db:link xlink:href="qfilesystemmodel.html">QFileSystemModel</db:link></db:code>, which provides a data model for
+                                    the local filesystem.</db:para>
+      <db:programlisting>class
+                                    FileSystemModel : publicQFileSystemModel { public:
+                                        FileSystemModel(QObject*parent =0); QVariant data(constQModelIndex&amp;index,int role =Qt::DisplayRole) const Q_DECL_OVERRIDE; };</db:programlisting>
+      <db:para>This class only has a constructor and a
+                                        <db:code>data()</db:code> function as it is only created
+                                    to enable <db:code>data()</db:code> to return the entire
+                                    file path for the display role, unlike <db:code><db:link xlink:href="qfilesystemmodel.html">QFileSystemModel</db:link></db:code>'s
+                                        <db:code>data()</db:code> function that only returns the
+                                    folder and not the drive label. This is further explained in
+                                        <db:code>FileSystemModel</db:code>'s
+                                    implementation.</db:para>
+   </db:section>
+   <db:section xml:id="filesystemmodel-class-implementation">
+      <db:title>FileSystemModel
+                                    Class Implementation</db:title>
+      <db:para>The constructor for the
+                                        <db:code>FileSystemModel</db:code> class is used to pass
+                                        <db:emphasis>parent</db:emphasis> to <db:code><db:link xlink:href="qfilesystemmodel.html">QFileSystemModel</db:link></db:code>.</db:para>
+      <db:programlisting>FileSystemModel::FileSystemModel(QObject*parent) : QFileSystemModel(parent) {
+                                    }</db:programlisting>
+      <db:para>As mentioned earlier, the <db:code>data()</db:code>
+                                    function is reimplemented in order to get it to return the
+                                    entire file parth for the display role. For example, with a
+                                        <db:code><db:link xlink:href="qfilesystemmodel.html">QFileSystemModel</db:link></db:code>, you will see "Program Files" in
+                                    the view. However, with <db:code>FileSystemModel</db:code>,
+                                    you will see "C:\Program Files".</db:para>
+      <db:programlisting>QVariant FileSystemModel::data(constQModelIndex&amp;index,int role) const { if (role ==Qt::DisplayRole &amp;&amp; index.column() ==0) { QString path =QDir::toNativeSeparators(filePath(index));
+                                        if (path.endsWith(QDir::separator())) path.chop(1);
+                                        return path; }
+                                        returnQFileSystemModel::data(index, role); }</db:programlisting>
+      <db:para>The screenshots below illustrate this difference:</db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:inlinemediaobject>
+                        <db:imageobject>
+                           <db:imagedata fileref="images/completer-example-qdirmodel.png"/>
+                        </db:imageobject>
+                     </db:inlinemediaobject>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>
+                     <db:inlinemediaobject>
+                        <db:imageobject>
+                           <db:imagedata fileref="images/completer-example-dirmodel.png"/>
+                        </db:imageobject>
+                     </db:inlinemediaobject>
+                  </db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+      <db:para>The <db:code><db:link xlink:href="qtcore/qt.html#ItemDataRole-enum">Qt::EditRole</db:link></db:code>, which <db:code><db:link xlink:href="qcompleter.html">QCompleter</db:link></db:code> uses to look for matches, is left
+                                    unchanged.</db:para>
+   </db:section>
+   <db:section xml:id="mainwindow-class-definition">
+      <db:title>MainWindow Class
+                                    Definition</db:title>
+      <db:para>The <db:code>MainWindow</db:code> class is a subclass of
+                                        <db:code><db:link xlink:href="qmainwindow.html">QMainWindow</db:link></db:code> and
+                                    implements five private slots - <db:code>about()</db:code>,
+                                        <db:code>changeCase()</db:code>,
+                                        <db:code>changeMode()</db:code>,
+                                        <db:code>changeModel()</db:code>, and
+                                        <db:code>changeMaxVisible()</db:code>.</db:para>
+      <db:programlisting>class
+                                    MainWindow : publicQMainWindow { Q_OBJECT public: MainWindow(QWidget*parent =0); privateslots: void about(); void changeCase(int); void changeMode(int); void
+                                    changeModel(); void
+                                        changeMaxVisible(int);</db:programlisting>
+      <db:para>Within the <db:code>MainWindow</db:code> class, we have
+                                    two private functions: <db:code>createMenu()</db:code> and
+                                        <db:code>modelFromFile()</db:code>. We also declare the
+                                    private widgets needed - three <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> objects, a <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code>, a <db:code><db:link xlink:href="qcompleter.html">QCompleter</db:link></db:code>, a <db:code><db:link xlink:href="qlabel.html">QLabel</db:link></db:code>, and a <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>.</db:para>
+      <db:programlisting>private: void
+                                    createMenu(); QAbstractItemModel*modelFromFile(constQString&amp; fileName); QComboBox*caseCombo; QComboBox*modeCombo; QComboBox*modelCombo; QSpinBox*maxVisibleSpinBox;
+                                        QCheckBox*wrapCheckBox;
+                                        QCompleter*completer; QLabel*contentsLabel;
+                                        QLineEdit*lineEdit; };</db:programlisting>
+   </db:section>
+   <db:section xml:id="mainwindow-class-implementation">
+      <db:title>MainWindow Class
+                                    Implementation</db:title>
+      <db:para>The constructor of <db:code>MainWindow</db:code>
+                                    constructs a <db:code>MainWindow</db:code> with a parent
+                                    widget and initializes the private members. The
+                                        <db:code>createMenu()</db:code> function is then
+                                    invoked.</db:para>
+      <db:para>We set up three <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> objects,
+                                        <db:code>modelComb</db:code>,
+                                        <db:code>modeCombo</db:code> and
+                                        <db:code>caseCombo</db:code>. By default, the
+                                        <db:code>modelCombo</db:code> is set to <db:code><db:link xlink:href="qfilesystemmodel.html">QFileSystemModel</db:link></db:code>, the
+                                        <db:code>modeCombo</db:code> is set to "Filtered Popup"
+                                    and the <db:code>caseCombo</db:code> is set to "Case
+                                    Insensitive".</db:para>
+      <db:programlisting>MainWindow::MainWindow(QWidget*parent) : QMainWindow(parent), completer(0), lineEdit(0) { createMenu(); QWidget*centralWidget
+                                        =newQWidget; QLabel*modelLabel =newQLabel; modelLabel-&gt;setText(tr("Model")); modelCombo =newQComboBox; modelCombo-&gt;addItem(tr("QFileSytemModel")); modelCombo-&gt;addItem(tr("QFileSytemModel that shows full path"));
+                                        modelCombo-&gt;addItem(tr("Country list")); modelCombo-&gt;addItem(tr("Word
+                                        list")); modelCombo-&gt;setCurrentIndex(0); QLabel*modeLabel =newQLabel; modeLabel-&gt;setText(tr("Completion Mode")); modeCombo =newQComboBox; modeCombo-&gt;addItem(tr("Inline")); modeCombo-&gt;addItem(tr("Filtered Popup")); modeCombo-&gt;addItem(tr("Unfiltered Popup")); modeCombo-&gt;setCurrentIndex(1); QLabel*caseLabel =newQLabel; caseLabel-&gt;setText(tr("Case
+                                        Sensitivity")); caseCombo =newQComboBox; caseCombo-&gt;addItem(tr("Case
+                                        Insensitive")); caseCombo-&gt;addItem(tr("Case
+                                        Sensitive")); caseCombo-&gt;setCurrentIndex(0);</db:programlisting>
+      <db:para>The <db:code>maxVisibleSpinBox</db:code> is created and
+                                    determines the number of visible item in the completer</db:para>
+      <db:para>The <db:code>wrapCheckBox</db:code> is then set up. This
+                                        <db:code>checkBox</db:code> determines if the
+                                        <db:code>completer</db:code>'s <db:link xlink:href="qcompleter.html#wrapAround-prop">setWrapAround()</db:link> property is enabled or
+                                    disabled.</db:para>
+      <db:programlisting>QLabel*maxVisibleLabel
+                                        =newQLabel; maxVisibleLabel-&gt;setText(tr("Max
+                                        Visible Items")); maxVisibleSpinBox =newQSpinBox;
+                                        maxVisibleSpinBox-&gt;setRange(3,25);
+                                        maxVisibleSpinBox-&gt;setValue(10); wrapCheckBox =newQCheckBox; wrapCheckBox-&gt;setText(tr("Wrap
+                                        around completions")); wrapCheckBox-&gt;setChecked(true);</db:programlisting>
+      <db:para>We instantiate <db:code>contentsLabel</db:code> and set
+                                    its size policy to <db:link xlink:href="qsizepolicy.html#Policy-enum">fixed</db:link>. The combo boxes' <db:link xlink:href="qcombobox.html#activated">activated()</db:link> signals
+                                    are then connected to their respective slots.</db:para>
+      <db:programlisting> contentsLabel =newQLabel; contentsLabel-&gt;setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+                                        connect(modelCombo,
+                                        SIGNAL(activated(int)),this, SLOT(changeModel()));
+                                        connect(modeCombo,
+                                        SIGNAL(activated(int)),this, SLOT(changeMode(int))); connect(caseCombo, SIGNAL(activated(int)),this, SLOT(changeCase(int)));
+                                        connect(maxVisibleSpinBox, SIGNAL(valueChanged(int)),this,
+                                        SLOT(changeMaxVisible(int)));</db:programlisting>
+      <db:para>The <db:code>lineEdit</db:code> is set up and then we
+                                    arrange all the widgets using a <db:code><db:link xlink:href="qgridlayout.html">QGridLayout</db:link></db:code>. The
+                                        <db:code>changeModel()</db:code> function is called, to
+                                    initialize the <db:code>completer</db:code>.</db:para>
+      <db:programlisting> lineEdit =newQLineEdit; QGridLayout*layout =newQGridLayout; layout-&gt;addWidget(modelLabel,0,0); layout-&gt;addWidget(modelCombo,0,1); layout-&gt;addWidget(modeLabel,1,0); layout-&gt;addWidget(modeCombo,1,1); layout-&gt;addWidget(caseLabel,2,0); layout-&gt;addWidget(caseCombo,2,1); layout-&gt;addWidget(maxVisibleLabel,3,0); layout-&gt;addWidget(maxVisibleSpinBox,3,1); layout-&gt;addWidget(wrapCheckBox,4,0); layout-&gt;addWidget(contentsLabel,5,0,1,2); layout-&gt;addWidget(lineEdit,6,0,1,2);
+                                        centralWidget-&gt;setLayout(layout);
+                                    setCentralWidget(centralWidget); changeModel();
+                                        setWindowTitle(tr("Completer")); lineEdit-&gt;setFocus(); }</db:programlisting>
+      <db:para>The <db:code>createMenu()</db:code> function is used to
+                                    instantiate the <db:code><db:link xlink:href="qaction.html">QAction</db:link></db:code>
+                                    objects needed to fill the <db:code>fileMenu</db:code> and
+                                        <db:code>helpMenu</db:code>. The actions' <db:link xlink:href="qaction.html#triggered">triggered()</db:link> signals
+                                    are connected to their respective slots.</db:para>
+      <db:programlisting>void
+                                        MainWindow::createMenu() { QAction*exitAction =newQAction(tr("Exit"),this); QAction*aboutAct =newQAction(tr("About"),this); QAction*aboutQtAct =newQAction(tr("About Qt"),this);
+                                        connect(exitAction,
+                                        SIGNAL(triggered()),
+                                        qApp, SLOT(quit()));
+                                        connect(aboutAct,
+                                        SIGNAL(triggered()),this, SLOT(about()));
+                                        connect(aboutQtAct,
+                                        SIGNAL(triggered()),
+                                        qApp,
+                                    SLOT(aboutQt())); QMenu* fileMenu = menuBar()-&gt;addMenu(tr("File")); fileMenu-&gt;addAction(exitAction); QMenu* helpMenu = menuBar()-&gt;addMenu(tr("About")); helpMenu-&gt;addAction(aboutAct); helpMenu-&gt;addAction(aboutQtAct); }</db:programlisting>
+      <db:para>The <db:code>modelFromFile()</db:code> function accepts
+                                    the <db:emphasis>fileName</db:emphasis> of a file and processes it
+                                    depending on its contents.</db:para>
+      <db:para>We first validate the <db:code>file</db:code> to ensure
+                                    that it can be opened in <db:code><db:link xlink:href="qtcore/qiodevice.html#OpenModeFlag-enum">QFile::ReadOnly</db:link></db:code> mode. If this is unsuccessful, the
+                                    function returns an empty <db:code><db:link xlink:href="qtcore/qstringlistmodel.html">QStringListModel</db:link></db:code>.</db:para>
+      <db:programlisting>QAbstractItemModel*MainWindow::modelFromFile(constQString&amp; fileName) { QFile file(fileName); if (!file.open(QFile::ReadOnly)) returnnewQStringListModel(completer);</db:programlisting>
+      <db:para>The mouse cursor is then overridden with <db:code><db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::WaitCursor</db:link></db:code> before we fill a <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> object,
+                                        <db:code>words</db:code>, with the contents of
+                                        <db:code>file</db:code>. Once this is done, we restore
+                                    the mouse cursor.</db:para>
+      <db:programlisting>#ifndef
+                                        QT_NO_CURSORQApplication::setOverrideCursor(QCursor(Qt::WaitCursor)); #endifQStringList words; while (!file.atEnd()) { QByteArray line = file.readLine(); if (!line.isEmpty()) words &lt;&lt; line.trimmed(); } #ifndef QT_NO_CURSORQApplication::restoreOverrideCursor();
+                                        #endif</db:programlisting>
+      <db:para>As mentioned earlier, the resources file contains two files
+                                    - <db:emphasis>countries.txt</db:emphasis> and <db:emphasis>words.txt</db:emphasis>.
+                                    If the <db:code>file</db:code> read is
+                                        <db:emphasis>words.txt</db:emphasis>, we return a <db:code><db:link xlink:href="qtcore/qstringlistmodel.html">QStringListModel</db:link></db:code> with <db:code>words</db:code>
+                                    as its <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> and <db:code>completer</db:code>
+                                    as its parent.</db:para>
+      <db:programlisting>if (!fileName.contains(QLatin1String("countries.txt"))) returnnewQStringListModel(words, completer);</db:programlisting>
+      <db:para>If the <db:code>file</db:code> read is
+                                        <db:emphasis>countries.txt</db:emphasis>, then we require a <db:code><db:link xlink:href="qtgui/qstandarditemmodel.html">QStandardItemModel</db:link></db:code> with
+                                        <db:code>words.count()</db:code> rows, 2 columns, and
+                                        <db:code>completer</db:code> as its parent.</db:para>
+      <db:programlisting>QStandardItemModel*m =newQStandardItemModel(words.count(),2, completer);</db:programlisting>
+      <db:para>A standard line in <db:emphasis>countries.txt</db:emphasis>
+                                    is:</db:para>
+      <db:programlisting/>
+      <db:para>Hence, to populate the <db:code><db:link xlink:href="qtgui/qstandarditemmodel.html">QStandardItemModel</db:link></db:code> object,
+                                        <db:code>m</db:code>, we have to split the country name
+                                    and its symbol. Once this is done, we return
+                                        <db:code>m</db:code>.</db:para>
+      <db:programlisting>for (int i =0; i &lt; words.count(); ++i) { QModelIndex countryIdx = m-&gt;index(i,0); QModelIndex symbolIdx = m-&gt;index(i,1); QString country = words[i].mid(0,
+                                        words[i].length() -2).trimmed(); QString symbol = words[i].right(2); m-&gt;setData(countryIdx, country); m-&gt;setData(symbolIdx, symbol); } return m; }</db:programlisting>
+      <db:para>The <db:code>changeMode()</db:code> function sets the
+                                        <db:code>completer</db:code>'s mode, depending on the
+                                    value of <db:code>index</db:code>.</db:para>
+      <db:programlisting>void
+                                        MainWindow::changeMode(int index) { QCompleter::CompletionMode mode; if (index ==0) mode =QCompleter::InlineCompletion; elseif (index ==1) mode =QCompleter::PopupCompletion; else mode =QCompleter::UnfilteredPopupCompletion;
+                                        completer-&gt;setCompletionMode(mode);
+                                    }</db:programlisting>
+      <db:para>The <db:code>changeModel()</db:code> function changes
+                                    the item model used based on the model selected by the
+                                    user.</db:para>
+      <db:para>A <db:code>switch</db:code> statement is used to change
+                                    the item model based on the index of
+                                        <db:code>modelCombo</db:code>. If
+                                        <db:code>case</db:code> is 0, we use an unsorted <db:code><db:link xlink:href="qfilesystemmodel.html">QFileSystemModel</db:link></db:code>,
+                                    providing us with a file path excluding the drive
+                                    label.</db:para>
+      <db:programlisting>void
+                                        MainWindow::changeModel() { delete completer; completer =newQCompleter(this); completer-&gt;setMaxVisibleItems(maxVisibleSpinBox-&gt;value()); switch (modelCombo-&gt;currentIndex()) { default: case0: { // Unsorted QFileSystemModelQFileSystemModel*fsModel =newQFileSystemModel(completer);
+                                        fsModel-&gt;setRootPath(""); completer-&gt;setModel(fsModel); contentsLabel-&gt;setText(tr("Enter
+                                        file path")); } break;</db:programlisting>
+      <db:para>Note that we create the model with
+                                        <db:code>completer</db:code> as the parent as this
+                                    allows us to replace the model with a new model. The
+                                        <db:code>completer</db:code> will ensure that the old
+                                    one is deleted the moment a new model is assigned to
+                                    it.</db:para>
+      <db:para>If <db:code>case</db:code> is 1, we use the
+                                        <db:code>DirModel</db:code> we defined earlier,
+                                    resulting in full paths for the files.</db:para>
+      <db:programlisting>case1: { // FileSystemModel that shows full
+                                        paths FileSystemModel *fsModel =new
+                                    FileSystemModel(completer); completer-&gt;setModel(fsModel); fsModel-&gt;setRootPath(""); contentsLabel-&gt;setText(tr("Enter
+                                        file path")); } break;</db:programlisting>
+      <db:para>When <db:code>case</db:code> is 2, we attempt to
+                                    complete names of countries. This requires a <db:code><db:link xlink:href="qtreeview.html">QTreeView</db:link></db:code> object,
+                                        <db:code>treeView</db:code>. The country names are
+                                    extracted from <db:emphasis>countries.txt</db:emphasis> and set the popup
+                                    used to display completions to
+                                    <db:code>treeView</db:code>.</db:para>
+      <db:programlisting>case2: { // Country List
+                                        completer-&gt;setModel(modelFromFile(":/resources/countries.txt"));
+                                        QTreeView*treeView =newQTreeView; completer-&gt;setPopup(treeView); treeView-&gt;setRootIsDecorated(false); treeView-&gt;header()-&gt;hide(); treeView-&gt;header()-&gt;setStretchLastSection(false); treeView-&gt;header()-&gt;setSectionResizeMode(0,QHeaderView::Stretch); treeView-&gt;header()-&gt;setSectionResizeMode(1,QHeaderView::ResizeToContents);
+                                        contentsLabel-&gt;setText(tr("Enter
+                                        name of your country")); } break;</db:programlisting>
+      <db:para>The screenshot below shows the Completer with the country
+                                    list model.</db:para>
+      <db:informalfigure>
+         <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="images/completer-example-country.png"/>
+            </db:imageobject>
+         </db:mediaobject>
+      </db:informalfigure>
+      <db:para>If <db:code>case</db:code> is 3, we
+                                    attempt to complete words. This is done using a <db:code><db:link xlink:href="qtcore/qstringlistmodel.html">QStringListModel</db:link></db:code> that contains data extracted from
+                                        <db:emphasis>words.txt</db:emphasis>. The model is sorted <db:link xlink:href="qcompleter.html#ModelSorting-enum">case
+                                        insensitively</db:link>.</db:para>
+      <db:para>The screenshot below shows the Completer with the word list
+                                    model.</db:para>
+      <db:informalfigure>
+         <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="images/completer-example-word.png"/>
+            </db:imageobject>
+         </db:mediaobject>
+      </db:informalfigure>
+      <db:para>Once the model type is selected, we call the
+                                        <db:code>changeMode()</db:code> function and the
+                                        <db:code>changeCase()</db:code> function and set the
+                                    wrap option accordingly. The
+                                    <db:code>wrapCheckBox</db:code>'s <db:link xlink:href="qabstractbutton.html#clicked">clicked()</db:link>
+                                    signal is connected to the <db:code>completer</db:code>'s
+                                        <db:link xlink:href="qcompleter.html#wrapAround-prop">setWrapAround()</db:link> slot.</db:para>
+      <db:programlisting>case3: { // Word list completer-&gt;setModel(modelFromFile(":/resources/wordlist.txt"));
+                                        completer-&gt;setModelSorting(QCompleter::CaseInsensitivelySortedModel);
+                                        contentsLabel-&gt;setText(tr("Enter
+                                        a word")); } break; } changeMode(modeCombo-&gt;currentIndex());
+                                        changeCase(caseCombo-&gt;currentIndex()); completer-&gt;setWrapAround(wrapCheckBox-&gt;isChecked()); lineEdit-&gt;setCompleter(completer);
+                                        connect(wrapCheckBox, SIGNAL(clicked(bool)), completer, SLOT(setWrapAround(bool)));
+                                    }</db:programlisting>
+      <db:para>The <db:code>changeMaxVisible()</db:code> update the
+                                    maximum number of visible items in the completer.</db:para>
+      <db:programlisting>void
+                                        MainWindow::changeMaxVisible(int max) { completer-&gt;setMaxVisibleItems(max); }</db:programlisting>
+      <db:para>The <db:code>about()</db:code> function provides a brief
+                                    description about the example.</db:para>
+      <db:programlisting>void
+                                        MainWindow::about()
+                                    { QMessageBox::about(this, tr("About"), tr("This example
+                                        demonstrates the ""different features of the QCompleter
+                                        class.")); }</db:programlisting>
+   </db:section>
+   <db:section xml:id="func-target-main-main-func-function">
+      <db:title> Function</db:title>
+      <db:para>The <db:code>main()</db:code> function instantiates
+                                        <db:code><db:link xlink:href="qapplication.html">QApplication</db:link></db:code> and
+                                        <db:code>MainWindow</db:code> and invokes the <db:link xlink:href="qwidget.html#show">show()</db:link> function.</db:para>
+      <db:programlisting>int
+                                        main(int argc,char*argv[]) { Q_INIT_RESOURCE(completer); QApplication app(argc, argv); MainWindow window;
+                                        window.show();
+                                        return app.exec(); }</db:programlisting>
+      <db:para>Files:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-fsmodel-cpp.html">tools/completer/fsmodel.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-fsmodel-h.html">tools/completer/fsmodel.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-mainwindow-cpp.html">tools/completer/mainwindow.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-mainwindow-h.html">tools/completer/mainwindow.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-main-cpp.html">tools/completer/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-completer-pro.html">tools/completer/completer.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwidgets-tools-completer-completer-qrc.html">tools/completer/completer.qrc</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+</db:article>

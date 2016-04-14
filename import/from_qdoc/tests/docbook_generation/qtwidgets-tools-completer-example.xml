@@ -1,0 +1,1113 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- completer.qdoc -->
+        <html:title>Completer Example | Qt Widgets 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtwidgets-index.html">Qt
+                                Widgets</html:a></html:li>
+                            <html:li>Completer Example</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#the-resource-file"
+                                                >The Resource File</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#filesystemmodel-class-definition"
+                                                >FileSystemModel Class Definition</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#filesystemmodel-class-implementation"
+                                                >FileSystemModel Class
+                                            Implementation</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#mainwindow-class-definition">MainWindow Class
+                                                Definition</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#mainwindow-class-implementation">MainWindow
+                                                Class Implementation</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#func-target-main-main-func-function"
+                                                  ><html:code>main()</html:code>
+                                            Function</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">Completer Example</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$tools/completer-description -->
+                            <html:div class="descr">
+                                <html:a name="details"></html:a>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/completer-example.png" /></html:p><html:p>This
+                                    example uses a custom item model,
+                                        <html:code>FileSystemModel</html:code>, and a <html:a
+                                        href="qcompleter.html">QCompleter</html:a> object. <html:a
+                                        href="qcompleter.html">QCompleter</html:a> is a class that
+                                    provides completions based on an item model. The type of model,
+                                    the completion mode, and the case sensitivity can be selected
+                                    using combo boxes.</html:p>
+                                <html:a name="the-resource-file"></html:a>
+                                <html:h2 id="the-resource-file">The Resource File</html:h2>
+                                <html:p>The Completer example requires a resource file in order to
+                                    store the <html:i>countries.txt</html:i> and
+                                        <html:i>words.txt</html:i>. The resource file contains the
+                                    following code:</html:p>
+                                <html:pre class="cpp">&lt;!DOCTYPE RCC&gt;&lt;RCC version="1.0"&gt;
+                                    &lt;qresource prefix="/"&gt;
+                                    &lt;file&gt;resources/countries.txt&lt;/file&gt;
+                                    &lt;file&gt;resources/wordlist.txt&lt;/file&gt;
+                                    &lt;/qresource&gt; &lt;/RCC&gt;</html:pre>
+                                <html:a name="filesystemmodel-class-definition"></html:a>
+                                <html:h2 id="filesystemmodel-class-definition">FileSystemModel Class
+                                    Definition</html:h2>
+                                <html:p>The <html:code>FileSystemModel</html:code> class is a
+                                    subclass of <html:a href="qfilesystemmodel.html"
+                                        >QFileSystemModel</html:a>, which provides a data model for
+                                    the local filesystem.</html:p>
+                                <html:pre class="cpp"><html:span class="keyword">class</html:span>
+                                    FileSystemModel : <html:span class="keyword">public</html:span>
+                                    <html:span class="type"><html:a href="qfilesystemmodel.html"
+                                            >QFileSystemModel</html:a></html:span> { <html:span
+                                        class="keyword">public</html:span>:
+                                        FileSystemModel(<html:span class="type"><html:a
+                                            href="qtcore/qobject.html">QObject</html:a></html:span>
+                                    <html:span class="operator">*</html:span>parent <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="number">0</html:span>); <html:span
+                                        class="type"><html:a href="qtcore/qvariant.html"
+                                            >QVariant</html:a></html:span> data(<html:span
+                                        class="keyword">const</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qmodelindex.html"
+                                            >QModelIndex</html:a></html:span>
+                                    <html:span class="operator">&amp;</html:span>index<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="type">int</html:span> role <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qt.html"
+                                            >Qt</html:a></html:span><html:span class="operator"
+                                        >::</html:span>DisplayRole) <html:span class="keyword"
+                                        >const</html:span> Q_DECL_OVERRIDE; };</html:pre>
+                                <html:p>This class only has a constructor and a
+                                        <html:code>data()</html:code> function as it is only created
+                                    to enable <html:code>data()</html:code> to return the entire
+                                    file path for the display role, unlike <html:a
+                                        href="qfilesystemmodel.html">QFileSystemModel</html:a>'s
+                                        <html:code>data()</html:code> function that only returns the
+                                    folder and not the drive label. This is further explained in
+                                        <html:code>FileSystemModel</html:code>'s
+                                    implementation.</html:p>
+                                <html:a name="filesystemmodel-class-implementation"></html:a>
+                                <html:h2 id="filesystemmodel-class-implementation">FileSystemModel
+                                    Class Implementation</html:h2>
+                                <html:p>The constructor for the
+                                        <html:code>FileSystemModel</html:code> class is used to pass
+                                        <html:i>parent</html:i> to <html:a
+                                        href="qfilesystemmodel.html"
+                                    >QFileSystemModel</html:a>.</html:p>
+                                <html:pre class="cpp">FileSystemModel<html:span class="operator"
+                                        >::</html:span>FileSystemModel(<html:span class="type"
+                                            ><html:a href="qtcore/qobject.html"
+                                        >QObject</html:a></html:span>
+                                    <html:span class="operator">*</html:span>parent) : <html:span
+                                        class="type"><html:a href="qfilesystemmodel.html"
+                                            >QFileSystemModel</html:a></html:span>(parent) {
+                                    }</html:pre>
+                                <html:p>As mentioned earlier, the <html:code>data()</html:code>
+                                    function is reimplemented in order to get it to return the
+                                    entire file parth for the display role. For example, with a
+                                        <html:a href="qfilesystemmodel.html"
+                                        >QFileSystemModel</html:a>, you will see "Program Files" in
+                                    the view. However, with <html:code>FileSystemModel</html:code>,
+                                    you will see "C:\Program Files".</html:p>
+                                <html:pre class="cpp"><html:span class="type"><html:a
+                                            href="qtcore/qvariant.html"
+                                        >QVariant</html:a></html:span> FileSystemModel<html:span
+                                        class="operator">::</html:span>data(<html:span
+                                        class="keyword">const</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qmodelindex.html"
+                                            >QModelIndex</html:a></html:span>
+                                    <html:span class="operator">&amp;</html:span>index<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="type">int</html:span> role) <html:span
+                                        class="keyword">const</html:span> { <html:span
+                                        class="keyword">if</html:span> (role <html:span
+                                        class="operator">=</html:span><html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qt.html"
+                                            >Qt</html:a></html:span><html:span class="operator"
+                                        >::</html:span>DisplayRole <html:span class="operator"
+                                        >&amp;</html:span><html:span class="operator"
+                                        >&amp;</html:span> index<html:span class="operator"
+                                        >.</html:span>column() <html:span class="operator"
+                                        >=</html:span><html:span class="operator">=</html:span>
+                                    <html:span class="number">0</html:span>) { <html:span
+                                        class="type"><html:a href="qtcore/qstring.html"
+                                            >QString</html:a></html:span> path <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qdir.html"
+                                            >QDir</html:a></html:span><html:span class="operator"
+                                        >::</html:span>toNativeSeparators(filePath(index));
+                                        <html:span class="keyword">if</html:span> (path<html:span
+                                        class="operator">.</html:span>endsWith(<html:span
+                                        class="type"><html:a href="qtcore/qdir.html"
+                                        >QDir</html:a></html:span><html:span class="operator"
+                                        >::</html:span>separator())) path<html:span class="operator"
+                                        >.</html:span>chop(<html:span class="number">1</html:span>);
+                                        <html:span class="keyword">return</html:span> path; }
+                                        <html:span class="keyword">return</html:span>
+                                    <html:span class="type"><html:a href="qfilesystemmodel.html"
+                                            >QFileSystemModel</html:a></html:span><html:span
+                                        class="operator">::</html:span>data(index<html:span
+                                        class="operator">,</html:span> role); }</html:pre>
+                                <html:p>The screenshots below illustrate this difference:</html:p>
+                                <html:div class="table"><html:table class="generic">
+                                        <html:tbody>
+                                            <html:tr class="odd" valign="top">
+                                                <html:td><html:img alt=""
+                                                  src="images/completer-example-qdirmodel.png"
+                                                   /></html:td>
+                                                <html:td><html:img alt=""
+                                                  src="images/completer-example-dirmodel.png"
+                                                   /></html:td>
+                                            </html:tr>
+                                        </html:tbody>
+                                    </html:table></html:div>
+                                <html:p>The <html:a href="qtcore/qt.html#ItemDataRole-enum"
+                                        >Qt::EditRole</html:a>, which <html:a href="qcompleter.html"
+                                        >QCompleter</html:a> uses to look for matches, is left
+                                    unchanged.</html:p>
+                                <html:a name="mainwindow-class-definition"></html:a>
+                                <html:h2 id="mainwindow-class-definition">MainWindow Class
+                                    Definition</html:h2>
+                                <html:p>The <html:code>MainWindow</html:code> class is a subclass of
+                                        <html:a href="qmainwindow.html">QMainWindow</html:a> and
+                                    implements five private slots - <html:code>about()</html:code>,
+                                        <html:code>changeCase()</html:code>,
+                                        <html:code>changeMode()</html:code>,
+                                        <html:code>changeModel()</html:code>, and
+                                        <html:code>changeMaxVisible()</html:code>.</html:p>
+                                <html:pre class="cpp"><html:span class="keyword">class</html:span>
+                                    MainWindow : <html:span class="keyword">public</html:span>
+                                    <html:span class="type"><html:a href="qmainwindow.html"
+                                            >QMainWindow</html:a></html:span> { Q_OBJECT <html:span
+                                        class="keyword">public</html:span>: MainWindow(<html:span
+                                        class="type"><html:a href="qwidget.html"
+                                        >QWidget</html:a></html:span>
+                                    <html:span class="operator">*</html:span>parent <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="number">0</html:span>); <html:span
+                                        class="keyword">private</html:span>
+                                    <html:span class="keyword">slots</html:span>: <html:span
+                                        class="type">void</html:span> about(); <html:span
+                                        class="type">void</html:span> changeCase(<html:span
+                                        class="type">int</html:span>); <html:span class="type"
+                                        >void</html:span> changeMode(<html:span class="type"
+                                        >int</html:span>); <html:span class="type">void</html:span>
+                                    changeModel(); <html:span class="type">void</html:span>
+                                        changeMaxVisible(<html:span class="type"
+                                    >int</html:span>);</html:pre>
+                                <html:p>Within the <html:code>MainWindow</html:code> class, we have
+                                    two private functions: <html:code>createMenu()</html:code> and
+                                        <html:code>modelFromFile()</html:code>. We also declare the
+                                    private widgets needed - three <html:a href="qcombobox.html"
+                                        >QComboBox</html:a> objects, a <html:a href="qcheckbox.html"
+                                        >QCheckBox</html:a>, a <html:a href="qcompleter.html"
+                                        >QCompleter</html:a>, a <html:a href="qlabel.html"
+                                        >QLabel</html:a>, and a <html:a href="qlineedit.html"
+                                        >QLineEdit</html:a>.</html:p>
+                                <html:pre class="cpp"><html:span class="keyword"
+                                    >private</html:span>: <html:span class="type">void</html:span>
+                                    createMenu(); <html:span class="type"><html:a
+                                            href="qtcore/qabstractitemmodel.html"
+                                            >QAbstractItemModel</html:a></html:span>
+                                    <html:span class="operator"
+                                        >*</html:span>modelFromFile(<html:span class="keyword"
+                                        >const</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qstring.html"
+                                            >QString</html:a></html:span><html:span class="operator"
+                                        >&amp;</html:span> fileName); <html:span class="type"
+                                            ><html:a href="qcombobox.html"
+                                        >QComboBox</html:a></html:span>
+                                    <html:span class="operator">*</html:span>caseCombo; <html:span
+                                        class="type"><html:a href="qcombobox.html"
+                                            >QComboBox</html:a></html:span>
+                                    <html:span class="operator">*</html:span>modeCombo; <html:span
+                                        class="type"><html:a href="qcombobox.html"
+                                            >QComboBox</html:a></html:span>
+                                    <html:span class="operator">*</html:span>modelCombo; <html:span
+                                        class="type"><html:a href="qspinbox.html"
+                                        >QSpinBox</html:a></html:span>
+                                    <html:span class="operator">*</html:span>maxVisibleSpinBox;
+                                        <html:span class="type"><html:a href="qcheckbox.html"
+                                            >QCheckBox</html:a></html:span>
+                                    <html:span class="operator">*</html:span>wrapCheckBox;
+                                        <html:span class="type"><html:a href="qcompleter.html"
+                                            >QCompleter</html:a></html:span>
+                                    <html:span class="operator">*</html:span>completer; <html:span
+                                        class="type"><html:a href="qlabel.html"
+                                        >QLabel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>contentsLabel;
+                                        <html:span class="type"><html:a href="qlineedit.html"
+                                            >QLineEdit</html:a></html:span>
+                                    <html:span class="operator">*</html:span>lineEdit; };</html:pre>
+                                <html:a name="mainwindow-class-implementation"></html:a>
+                                <html:h2 id="mainwindow-class-implementation">MainWindow Class
+                                    Implementation</html:h2>
+                                <html:p>The constructor of <html:code>MainWindow</html:code>
+                                    constructs a <html:code>MainWindow</html:code> with a parent
+                                    widget and initializes the private members. The
+                                        <html:code>createMenu()</html:code> function is then
+                                    invoked.</html:p>
+                                <html:p>We set up three <html:a href="qcombobox.html"
+                                        >QComboBox</html:a> objects,
+                                        <html:code>modelComb</html:code>,
+                                        <html:code>modeCombo</html:code> and
+                                        <html:code>caseCombo</html:code>. By default, the
+                                        <html:code>modelCombo</html:code> is set to <html:a
+                                        href="qfilesystemmodel.html">QFileSystemModel</html:a>, the
+                                        <html:code>modeCombo</html:code> is set to "Filtered Popup"
+                                    and the <html:code>caseCombo</html:code> is set to "Case
+                                    Insensitive".</html:p>
+                                <html:pre class="cpp">MainWindow<html:span class="operator"
+                                        >::</html:span>MainWindow(<html:span class="type"><html:a
+                                            href="qwidget.html">QWidget</html:a></html:span>
+                                    <html:span class="operator">*</html:span>parent) : <html:span
+                                        class="type"><html:a href="qmainwindow.html"
+                                            >QMainWindow</html:a></html:span>(parent)<html:span
+                                        class="operator">,</html:span> completer(<html:span
+                                        class="number">0</html:span>)<html:span class="operator"
+                                        >,</html:span> lineEdit(<html:span class="number"
+                                        >0</html:span>) { createMenu(); <html:span class="type"
+                                            ><html:a href="qwidget.html"
+                                        >QWidget</html:a></html:span>
+                                    <html:span class="operator">*</html:span>centralWidget
+                                        <html:span class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qwidget.html"
+                                            >QWidget</html:a></html:span>; <html:span class="type"
+                                            ><html:a href="qlabel.html">QLabel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>modelLabel <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qlabel.html"
+                                            >QLabel</html:a></html:span>; modelLabel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string"
+                                        >"Model"</html:span>)); modelCombo <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qcombobox.html"
+                                            >QComboBox</html:a></html:span>; modelCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string"
+                                        >"QFileSytemModel"</html:span>)); modelCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string"
+                                        >"QFileSytemModel that shows full path"</html:span>));
+                                        modelCombo<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string"
+                                        >"Country list"</html:span>)); modelCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string">"Word
+                                        list"</html:span>)); modelCombo<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setCurrentIndex(<html:span class="number"
+                                        >0</html:span>); <html:span class="type"><html:a
+                                            href="qlabel.html">QLabel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>modeLabel <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qlabel.html"
+                                            >QLabel</html:a></html:span>; modeLabel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string"
+                                        >"Completion Mode"</html:span>)); modeCombo <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qcombobox.html"
+                                            >QComboBox</html:a></html:span>; modeCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string"
+                                        >"Inline"</html:span>)); modeCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string"
+                                        >"Filtered Popup"</html:span>)); modeCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string"
+                                        >"Unfiltered Popup"</html:span>)); modeCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setCurrentIndex(<html:span class="number"
+                                        >1</html:span>); <html:span class="type"><html:a
+                                            href="qlabel.html">QLabel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>caseLabel <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qlabel.html"
+                                            >QLabel</html:a></html:span>; caseLabel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Case
+                                        Sensitivity"</html:span>)); caseCombo <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qcombobox.html"
+                                            >QComboBox</html:a></html:span>; caseCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string">"Case
+                                        Insensitive"</html:span>)); caseCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addItem(tr(<html:span class="string">"Case
+                                        Sensitive"</html:span>)); caseCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setCurrentIndex(<html:span class="number"
+                                        >0</html:span>);</html:pre>
+                                <html:p>The <html:code>maxVisibleSpinBox</html:code> is created and
+                                    determines the number of visible item in the completer</html:p>
+                                <html:p>The <html:code>wrapCheckBox</html:code> is then set up. This
+                                        <html:code>checkBox</html:code> determines if the
+                                        <html:code>completer</html:code>'s <html:a
+                                        href="qcompleter.html#wrapAround-prop"
+                                        >setWrapAround()</html:a> property is enabled or
+                                    disabled.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="type"><html:a href="qlabel.html"
+                                            >QLabel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>maxVisibleLabel
+                                        <html:span class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qlabel.html"
+                                            >QLabel</html:a></html:span>; maxVisibleLabel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Max
+                                        Visible Items"</html:span>)); maxVisibleSpinBox <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qspinbox.html"
+                                            >QSpinBox</html:a></html:span>;
+                                        maxVisibleSpinBox<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setRange(<html:span class="number"
+                                        >3</html:span><html:span class="operator"
+                                        >,</html:span><html:span class="number">25</html:span>);
+                                        maxVisibleSpinBox<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setValue(<html:span class="number"
+                                        >10</html:span>); wrapCheckBox <html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qcheckbox.html"
+                                            >QCheckBox</html:a></html:span>; wrapCheckBox<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Wrap
+                                        around completions"</html:span>)); wrapCheckBox<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setChecked(<html:span class="keyword"
+                                        >true</html:span>);</html:pre>
+                                <html:p>We instantiate <html:code>contentsLabel</html:code> and set
+                                    its size policy to <html:a href="qsizepolicy.html#Policy-enum"
+                                        >fixed</html:a>. The combo boxes' <html:a
+                                        href="qcombobox.html#activated">activated()</html:a> signals
+                                    are then connected to their respective slots.</html:p>
+                                <html:pre class="cpp"> contentsLabel <html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qlabel.html"
+                                            >QLabel</html:a></html:span>; contentsLabel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setSizePolicy(<html:span class="type"
+                                            ><html:a href="qsizepolicy.html"
+                                        >QSizePolicy</html:a></html:span><html:span class="operator"
+                                        >::</html:span>Fixed<html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="type"><html:a href="qsizepolicy.html"
+                                            >QSizePolicy</html:a></html:span><html:span
+                                        class="operator">::</html:span>Fixed);
+                                        connect(modelCombo<html:span class="operator">,</html:span>
+                                        SIGNAL(activated(<html:span class="type"
+                                        >int</html:span>))<html:span class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span><html:span
+                                        class="operator">,</html:span> SLOT(changeModel()));
+                                        connect(modeCombo<html:span class="operator">,</html:span>
+                                        SIGNAL(activated(<html:span class="type"
+                                        >int</html:span>))<html:span class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span><html:span
+                                        class="operator">,</html:span> SLOT(changeMode(<html:span
+                                        class="type">int</html:span>))); connect(caseCombo<html:span
+                                        class="operator">,</html:span> SIGNAL(activated(<html:span
+                                        class="type">int</html:span>))<html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="keyword">this</html:span><html:span
+                                        class="operator">,</html:span> SLOT(changeCase(<html:span
+                                        class="type">int</html:span>)));
+                                        connect(maxVisibleSpinBox<html:span class="operator"
+                                        >,</html:span> SIGNAL(valueChanged(<html:span class="type"
+                                        >int</html:span>))<html:span class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span><html:span
+                                        class="operator">,</html:span>
+                                        SLOT(changeMaxVisible(<html:span class="type"
+                                        >int</html:span>)));</html:pre>
+                                <html:p>The <html:code>lineEdit</html:code> is set up and then we
+                                    arrange all the widgets using a <html:a href="qgridlayout.html"
+                                        >QGridLayout</html:a>. The
+                                        <html:code>changeModel()</html:code> function is called, to
+                                    initialize the <html:code>completer</html:code>.</html:p>
+                                <html:pre class="cpp"> lineEdit <html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qlineedit.html"
+                                            >QLineEdit</html:a></html:span>; <html:span class="type"
+                                            ><html:a href="qgridlayout.html"
+                                        >QGridLayout</html:a></html:span>
+                                    <html:span class="operator">*</html:span>layout <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qgridlayout.html"
+                                            >QGridLayout</html:a></html:span>; layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(modelLabel<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(modelCombo<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(modeLabel<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(modeCombo<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(caseLabel<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">2</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(caseCombo<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">2</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(maxVisibleLabel<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">3</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(maxVisibleSpinBox<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">3</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(wrapCheckBox<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">4</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(contentsLabel<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">5</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">2</html:span>); layout<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addWidget(lineEdit<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">6</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">0</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">1</html:span><html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">2</html:span>);
+                                        centralWidget<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>setLayout(layout);
+                                    setCentralWidget(centralWidget); changeModel();
+                                        setWindowTitle(tr(<html:span class="string"
+                                        >"Completer"</html:span>)); lineEdit<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setFocus(); }</html:pre>
+                                <html:p>The <html:code>createMenu()</html:code> function is used to
+                                    instantiate the <html:a href="qaction.html">QAction</html:a>
+                                    objects needed to fill the <html:code>fileMenu</html:code> and
+                                        <html:code>helpMenu</html:code>. The actions' <html:a
+                                        href="qaction.html#triggered">triggered()</html:a> signals
+                                    are connected to their respective slots.</html:p>
+                                <html:pre class="cpp"><html:span class="type">void</html:span>
+                                        MainWindow<html:span class="operator"
+                                    >::</html:span>createMenu() { <html:span class="type"><html:a
+                                            href="qaction.html">QAction</html:a></html:span>
+                                    <html:span class="operator">*</html:span>exitAction <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qaction.html"
+                                            >QAction</html:a></html:span>(tr(<html:span
+                                        class="string">"Exit"</html:span>)<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span>); <html:span
+                                        class="type"><html:a href="qaction.html"
+                                        >QAction</html:a></html:span>
+                                    <html:span class="operator">*</html:span>aboutAct <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qaction.html"
+                                            >QAction</html:a></html:span>(tr(<html:span
+                                        class="string">"About"</html:span>)<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span>); <html:span
+                                        class="type"><html:a href="qaction.html"
+                                        >QAction</html:a></html:span>
+                                    <html:span class="operator">*</html:span>aboutQtAct <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qaction.html"
+                                            >QAction</html:a></html:span>(tr(<html:span
+                                        class="string">"About Qt"</html:span>)<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span>);
+                                        connect(exitAction<html:span class="operator">,</html:span>
+                                        SIGNAL(triggered())<html:span class="operator">,</html:span>
+                                        qApp<html:span class="operator">,</html:span> SLOT(quit()));
+                                        connect(aboutAct<html:span class="operator">,</html:span>
+                                        SIGNAL(triggered())<html:span class="operator">,</html:span>
+                                    <html:span class="keyword">this</html:span><html:span
+                                        class="operator">,</html:span> SLOT(about()));
+                                        connect(aboutQtAct<html:span class="operator">,</html:span>
+                                        SIGNAL(triggered())<html:span class="operator">,</html:span>
+                                        qApp<html:span class="operator">,</html:span>
+                                    SLOT(aboutQt())); <html:span class="type"><html:a
+                                            href="qmenu.html">QMenu</html:a></html:span><html:span
+                                        class="operator">*</html:span> fileMenu <html:span
+                                        class="operator">=</html:span> menuBar()<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addMenu(tr(<html:span class="string"
+                                        >"File"</html:span>)); fileMenu<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>addAction(exitAction); <html:span class="type"
+                                            ><html:a href="qmenu.html"
+                                        >QMenu</html:a></html:span><html:span class="operator"
+                                        >*</html:span> helpMenu <html:span class="operator"
+                                        >=</html:span> menuBar()<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addMenu(tr(<html:span class="string"
+                                        >"About"</html:span>)); helpMenu<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>addAction(aboutAct); helpMenu<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>addAction(aboutQtAct); }</html:pre>
+                                <html:p>The <html:code>modelFromFile()</html:code> function accepts
+                                    the <html:i>fileName</html:i> of a file and processes it
+                                    depending on its contents.</html:p>
+                                <html:p>We first validate the <html:code>file</html:code> to ensure
+                                    that it can be opened in <html:a
+                                        href="qtcore/qiodevice.html#OpenModeFlag-enum"
+                                        >QFile::ReadOnly</html:a> mode. If this is unsuccessful, the
+                                    function returns an empty <html:a
+                                        href="qtcore/qstringlistmodel.html"
+                                        >QStringListModel</html:a>.</html:p>
+                                <html:pre class="cpp"><html:span class="type"><html:a
+                                            href="qtcore/qabstractitemmodel.html"
+                                            >QAbstractItemModel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>MainWindow<html:span
+                                        class="operator">::</html:span>modelFromFile(<html:span
+                                        class="keyword">const</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qstring.html"
+                                            >QString</html:a></html:span><html:span class="operator"
+                                        >&amp;</html:span> fileName) { <html:span class="type"
+                                            ><html:a href="qtcore/qfile.html"
+                                        >QFile</html:a></html:span> file(fileName); <html:span
+                                        class="keyword">if</html:span> (<html:span class="operator"
+                                        >!</html:span>file<html:span class="operator"
+                                        >.</html:span>open(<html:span class="type"><html:a
+                                            href="qtcore/qfile.html"
+                                        >QFile</html:a></html:span><html:span class="operator"
+                                        >::</html:span>ReadOnly)) <html:span class="keyword"
+                                        >return</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a
+                                            href="qtcore/qstringlistmodel.html"
+                                            >QStringListModel</html:a></html:span>(completer);</html:pre>
+                                <html:p>The mouse cursor is then overridden with <html:a
+                                        href="qtcore/qt.html#CursorShape-enum"
+                                        >Qt::WaitCursor</html:a> before we fill a <html:a
+                                        href="qtcore/qstringlist.html">QStringList</html:a> object,
+                                        <html:code>words</html:code>, with the contents of
+                                        <html:code>file</html:code>. Once this is done, we restore
+                                    the mouse cursor.</html:p>
+                                <html:pre class="cpp"><html:span class="preprocessor">#ifndef
+                                        QT_NO_CURSOR</html:span>
+                                    <html:span class="type"><html:a href="qapplication.html"
+                                            >QApplication</html:a></html:span><html:span
+                                        class="operator">::</html:span>setOverrideCursor(<html:span
+                                        class="type"><html:a href="qtgui/qcursor.html"
+                                            >QCursor</html:a></html:span>(<html:span class="type"
+                                            ><html:a href="qtcore/qt.html"
+                                        >Qt</html:a></html:span><html:span class="operator"
+                                        >::</html:span>WaitCursor)); <html:span class="preprocessor"
+                                        >#endif</html:span>
+                                    <html:span class="type"><html:a href="qtcore/qstringlist.html"
+                                            >QStringList</html:a></html:span> words; <html:span
+                                        class="keyword">while</html:span> (<html:span
+                                        class="operator">!</html:span>file<html:span
+                                        class="operator">.</html:span>atEnd()) { <html:span
+                                        class="type"><html:a href="qtcore/qbytearray.html"
+                                            >QByteArray</html:a></html:span> line <html:span
+                                        class="operator">=</html:span> file<html:span
+                                        class="operator">.</html:span>readLine(); <html:span
+                                        class="keyword">if</html:span> (<html:span class="operator"
+                                        >!</html:span>line<html:span class="operator"
+                                    >.</html:span>isEmpty()) words <html:span class="operator"
+                                        >&lt;</html:span><html:span class="operator"
+                                        >&lt;</html:span> line<html:span class="operator"
+                                        >.</html:span>trimmed(); } <html:span class="preprocessor"
+                                        >#ifndef QT_NO_CURSOR</html:span>
+                                    <html:span class="type"><html:a href="qapplication.html"
+                                            >QApplication</html:a></html:span><html:span
+                                        class="operator">::</html:span>restoreOverrideCursor();
+                                        <html:span class="preprocessor"
+                                    >#endif</html:span></html:pre>
+                                <html:p>As mentioned earlier, the resources file contains two files
+                                    - <html:i>countries.txt</html:i> and <html:i>words.txt</html:i>.
+                                    If the <html:code>file</html:code> read is
+                                        <html:i>words.txt</html:i>, we return a <html:a
+                                        href="qtcore/qstringlistmodel.html"
+                                        >QStringListModel</html:a> with <html:code>words</html:code>
+                                    as its <html:a href="qtcore/qstringlist.html"
+                                        >QStringList</html:a> and <html:code>completer</html:code>
+                                    as its parent.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="keyword">if</html:span> (<html:span
+                                        class="operator">!</html:span>fileName<html:span
+                                        class="operator"
+                                        >.</html:span>contains(QLatin1String(<html:span
+                                        class="string">"countries.txt"</html:span>))) <html:span
+                                        class="keyword">return</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a
+                                            href="qtcore/qstringlistmodel.html"
+                                            >QStringListModel</html:a></html:span>(words<html:span
+                                        class="operator">,</html:span> completer);</html:pre>
+                                <html:p>If the <html:code>file</html:code> read is
+                                        <html:i>countries.txt</html:i>, then we require a <html:a
+                                        href="qtgui/qstandarditemmodel.html"
+                                        >QStandardItemModel</html:a> with
+                                        <html:code>words.count()</html:code> rows, 2 columns, and
+                                        <html:code>completer</html:code> as its parent.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="type"><html:a
+                                            href="qtgui/qstandarditemmodel.html"
+                                            >QStandardItemModel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>m <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a
+                                            href="qtgui/qstandarditemmodel.html"
+                                            >QStandardItemModel</html:a></html:span>(words<html:span
+                                        class="operator">.</html:span>count()<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="number">2</html:span><html:span
+                                        class="operator">,</html:span> completer);</html:pre>
+                                <html:p>A standard line in <html:i>countries.txt</html:i>
+                                    is:</html:p>
+                                <html:blockquote><html:p>Norway NO</html:p>
+                                </html:blockquote>
+                                <html:p>Hence, to populate the <html:a
+                                        href="qtgui/qstandarditemmodel.html"
+                                        >QStandardItemModel</html:a> object,
+                                        <html:code>m</html:code>, we have to split the country name
+                                    and its symbol. Once this is done, we return
+                                        <html:code>m</html:code>.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="keyword">for</html:span> (<html:span
+                                        class="type">int</html:span> i <html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="number">0</html:span>; i <html:span
+                                        class="operator">&lt;</html:span> words<html:span
+                                        class="operator">.</html:span>count(); <html:span
+                                        class="operator">+</html:span><html:span class="operator"
+                                        >+</html:span>i) { <html:span class="type"><html:a
+                                            href="qtcore/qmodelindex.html"
+                                        >QModelIndex</html:a></html:span> countryIdx <html:span
+                                        class="operator">=</html:span> m<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>index(i<html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="number">0</html:span>); <html:span
+                                        class="type"><html:a href="qtcore/qmodelindex.html"
+                                            >QModelIndex</html:a></html:span> symbolIdx <html:span
+                                        class="operator">=</html:span> m<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>index(i<html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="number">1</html:span>); <html:span
+                                        class="type"><html:a href="qtcore/qstring.html"
+                                            >QString</html:a></html:span> country <html:span
+                                        class="operator">=</html:span> words<html:span
+                                        class="operator">[</html:span>i<html:span class="operator"
+                                        >]</html:span><html:span class="operator"
+                                        >.</html:span>mid(<html:span class="number"
+                                        >0</html:span><html:span class="operator">,</html:span>
+                                        words<html:span class="operator">[</html:span>i<html:span
+                                        class="operator">]</html:span><html:span class="operator"
+                                        >.</html:span>length() <html:span class="operator"
+                                        >-</html:span>
+                                    <html:span class="number">2</html:span>)<html:span
+                                        class="operator">.</html:span>trimmed(); <html:span
+                                        class="type"><html:a href="qtcore/qstring.html"
+                                            >QString</html:a></html:span> symbol <html:span
+                                        class="operator">=</html:span> words<html:span
+                                        class="operator">[</html:span>i<html:span class="operator"
+                                        >]</html:span><html:span class="operator"
+                                        >.</html:span>right(<html:span class="number"
+                                    >2</html:span>); m<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setData(countryIdx<html:span
+                                        class="operator">,</html:span> country); m<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setData(symbolIdx<html:span
+                                        class="operator">,</html:span> symbol); } <html:span
+                                        class="keyword">return</html:span> m; }</html:pre>
+                                <html:p>The <html:code>changeMode()</html:code> function sets the
+                                        <html:code>completer</html:code>'s mode, depending on the
+                                    value of <html:code>index</html:code>.</html:p>
+                                <html:pre class="cpp"><html:span class="type">void</html:span>
+                                        MainWindow<html:span class="operator"
+                                        >::</html:span>changeMode(<html:span class="type"
+                                        >int</html:span> index) { <html:span class="type"><html:a
+                                            href="qcompleter.html"
+                                        >QCompleter</html:a></html:span><html:span class="operator"
+                                        >::</html:span>CompletionMode mode; <html:span
+                                        class="keyword">if</html:span> (index <html:span
+                                        class="operator">=</html:span><html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="number">0</html:span>) mode <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="type"><html:a href="qcompleter.html"
+                                            >QCompleter</html:a></html:span><html:span
+                                        class="operator">::</html:span>InlineCompletion; <html:span
+                                        class="keyword">else</html:span>
+                                    <html:span class="keyword">if</html:span> (index <html:span
+                                        class="operator">=</html:span><html:span class="operator"
+                                        >=</html:span>
+                                    <html:span class="number">1</html:span>) mode <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="type"><html:a href="qcompleter.html"
+                                            >QCompleter</html:a></html:span><html:span
+                                        class="operator">::</html:span>PopupCompletion; <html:span
+                                        class="keyword">else</html:span> mode <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="type"><html:a href="qcompleter.html"
+                                            >QCompleter</html:a></html:span><html:span
+                                        class="operator">::</html:span>UnfilteredPopupCompletion;
+                                        completer<html:span class="operator">-</html:span><html:span
+                                        class="operator">&gt;</html:span>setCompletionMode(mode);
+                                    }</html:pre>
+                                <html:p>The <html:code>changeModel()</html:code> function changes
+                                    the item model used based on the model selected by the
+                                    user.</html:p>
+                                <html:p>A <html:code>switch</html:code> statement is used to change
+                                    the item model based on the index of
+                                        <html:code>modelCombo</html:code>. If
+                                        <html:code>case</html:code> is 0, we use an unsorted <html:a
+                                        href="qfilesystemmodel.html">QFileSystemModel</html:a>,
+                                    providing us with a file path excluding the drive
+                                    label.</html:p>
+                                <html:pre class="cpp"><html:span class="type">void</html:span>
+                                        MainWindow<html:span class="operator"
+                                    >::</html:span>changeModel() { <html:span class="keyword"
+                                        >delete</html:span> completer; completer <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qcompleter.html"
+                                            >QCompleter</html:a></html:span>(<html:span
+                                        class="keyword">this</html:span>); completer<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setMaxVisibleItems(maxVisibleSpinBox<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>value()); <html:span class="keyword"
+                                        >switch</html:span> (modelCombo<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>currentIndex()) { <html:span class="keyword"
+                                        >default</html:span>: <html:span class="keyword"
+                                        >case</html:span>
+                                    <html:span class="number">0</html:span>: { <html:span
+                                        class="comment">// Unsorted QFileSystemModel</html:span>
+                                    <html:span class="type"><html:a href="qfilesystemmodel.html"
+                                            >QFileSystemModel</html:a></html:span>
+                                    <html:span class="operator">*</html:span>fsModel <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qfilesystemmodel.html"
+                                            >QFileSystemModel</html:a></html:span>(completer);
+                                        fsModel<html:span class="operator">-</html:span><html:span
+                                        class="operator">&gt;</html:span>setRootPath(<html:span
+                                        class="string">""</html:span>); completer<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setModel(fsModel); contentsLabel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Enter
+                                        file path"</html:span>)); } <html:span class="keyword"
+                                        >break</html:span>;</html:pre>
+                                <html:p>Note that we create the model with
+                                        <html:code>completer</html:code> as the parent as this
+                                    allows us to replace the model with a new model. The
+                                        <html:code>completer</html:code> will ensure that the old
+                                    one is deleted the moment a new model is assigned to
+                                    it.</html:p>
+                                <html:p>If <html:code>case</html:code> is 1, we use the
+                                        <html:code>DirModel</html:code> we defined earlier,
+                                    resulting in full paths for the files.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="keyword">case</html:span>
+                                    <html:span class="number">1</html:span>: { <html:span
+                                        class="comment">// FileSystemModel that shows full
+                                        paths</html:span> FileSystemModel <html:span
+                                        class="operator">*</html:span>fsModel <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    FileSystemModel(completer); completer<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>setModel(fsModel); fsModel<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setRootPath(<html:span class="string"
+                                        >""</html:span>); contentsLabel<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Enter
+                                        file path"</html:span>)); } <html:span class="keyword"
+                                        >break</html:span>;</html:pre>
+                                <html:p>When <html:code>case</html:code> is 2, we attempt to
+                                    complete names of countries. This requires a <html:a
+                                        href="qtreeview.html">QTreeView</html:a> object,
+                                        <html:code>treeView</html:code>. The country names are
+                                    extracted from <html:i>countries.txt</html:i> and set the popup
+                                    used to display completions to
+                                    <html:code>treeView</html:code>.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="keyword">case</html:span>
+                                    <html:span class="number">2</html:span>: { <html:span
+                                        class="comment">// Country List</html:span>
+                                        completer<html:span class="operator">-</html:span><html:span
+                                        class="operator"
+                                        >&gt;</html:span>setModel(modelFromFile(<html:span
+                                        class="string">":/resources/countries.txt"</html:span>));
+                                        <html:span class="type"><html:a href="qtreeview.html"
+                                            >QTreeView</html:a></html:span>
+                                    <html:span class="operator">*</html:span>treeView <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="keyword">new</html:span>
+                                    <html:span class="type"><html:a href="qtreeview.html"
+                                            >QTreeView</html:a></html:span>; completer<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setPopup(treeView); treeView<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setRootIsDecorated(<html:span
+                                        class="keyword">false</html:span>); treeView<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>header()<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>hide(); treeView<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>header()<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setStretchLastSection(<html:span
+                                        class="keyword">false</html:span>); treeView<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>header()<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setSectionResizeMode(<html:span
+                                        class="number">0</html:span><html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="type"><html:a href="qheaderview.html"
+                                            >QHeaderView</html:a></html:span><html:span
+                                        class="operator">::</html:span>Stretch); treeView<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>header()<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setSectionResizeMode(<html:span
+                                        class="number">1</html:span><html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="type"><html:a href="qheaderview.html"
+                                            >QHeaderView</html:a></html:span><html:span
+                                        class="operator">::</html:span>ResizeToContents);
+                                        contentsLabel<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Enter
+                                        name of your country"</html:span>)); } <html:span
+                                        class="keyword">break</html:span>;</html:pre>
+                                <html:p>The screenshot below shows the Completer with the country
+                                    list model.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/completer-example-country.png"
+                                     /></html:p><html:p>If <html:code>case</html:code> is 3, we
+                                    attempt to complete words. This is done using a <html:a
+                                        href="qtcore/qstringlistmodel.html"
+                                        >QStringListModel</html:a> that contains data extracted from
+                                        <html:i>words.txt</html:i>. The model is sorted <html:a
+                                        href="qcompleter.html#ModelSorting-enum">case
+                                        insensitively</html:a>.</html:p>
+                                <html:p>The screenshot below shows the Completer with the word list
+                                    model.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/completer-example-word.png"
+                                     /></html:p><html:p>Once the model type is selected, we call the
+                                        <html:code>changeMode()</html:code> function and the
+                                        <html:code>changeCase()</html:code> function and set the
+                                    wrap option accordingly. The
+                                    <html:code>wrapCheckBox</html:code>'s <html:a
+                                        href="qabstractbutton.html#clicked">clicked()</html:a>
+                                    signal is connected to the <html:code>completer</html:code>'s
+                                        <html:a href="qcompleter.html#wrapAround-prop"
+                                        >setWrapAround()</html:a> slot.</html:p>
+                                <html:pre class="cpp">
+                                    <html:span class="keyword">case</html:span>
+                                    <html:span class="number">3</html:span>: { <html:span
+                                        class="comment">// Word list</html:span> completer<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setModel(modelFromFile(<html:span
+                                        class="string">":/resources/wordlist.txt"</html:span>));
+                                        completer<html:span class="operator">-</html:span><html:span
+                                        class="operator">&gt;</html:span>setModelSorting(<html:span
+                                        class="type"><html:a href="qcompleter.html"
+                                            >QCompleter</html:a></html:span><html:span
+                                        class="operator"
+                                    >::</html:span>CaseInsensitivelySortedModel);
+                                        contentsLabel<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setText(tr(<html:span class="string">"Enter
+                                        a word"</html:span>)); } <html:span class="keyword"
+                                        >break</html:span>; } changeMode(modeCombo<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>currentIndex());
+                                        changeCase(caseCombo<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>currentIndex()); completer<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setWrapAround(wrapCheckBox<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>isChecked()); lineEdit<html:span
+                                        class="operator">-</html:span><html:span class="operator"
+                                        >&gt;</html:span>setCompleter(completer);
+                                        connect(wrapCheckBox<html:span class="operator"
+                                        >,</html:span> SIGNAL(clicked(bool))<html:span
+                                        class="operator">,</html:span> completer<html:span
+                                        class="operator">,</html:span> SLOT(setWrapAround(bool)));
+                                    }</html:pre>
+                                <html:p>The <html:code>changeMaxVisible()</html:code> update the
+                                    maximum number of visible items in the completer.</html:p>
+                                <html:pre class="cpp"><html:span class="type">void</html:span>
+                                        MainWindow<html:span class="operator"
+                                        >::</html:span>changeMaxVisible(<html:span class="type"
+                                        >int</html:span> max) { completer<html:span class="operator"
+                                        >-</html:span><html:span class="operator"
+                                    >&gt;</html:span>setMaxVisibleItems(max); }</html:pre>
+                                <html:p>The <html:code>about()</html:code> function provides a brief
+                                    description about the example.</html:p>
+                                <html:pre class="cpp"><html:span class="type">void</html:span>
+                                        MainWindow<html:span class="operator">::</html:span>about()
+                                    { <html:span class="type"><html:a href="qmessagebox.html"
+                                            >QMessageBox</html:a></html:span><html:span
+                                        class="operator">::</html:span>about(<html:span
+                                        class="keyword">this</html:span><html:span class="operator"
+                                        >,</html:span> tr(<html:span class="string"
+                                        >"About"</html:span>)<html:span class="operator"
+                                        >,</html:span> tr(<html:span class="string">"This example
+                                        demonstrates the "</html:span>
+                                    <html:span class="string">"different features of the QCompleter
+                                        class."</html:span>)); }</html:pre>
+                                <html:a name="func-target-main-main-func-function"></html:a>
+                                <html:h2 id="func-target-main-main-func-function"
+                                        ><html:code>main()</html:code> Function</html:h2>
+                                <html:p>The <html:code>main()</html:code> function instantiates
+                                        <html:a href="qapplication.html">QApplication</html:a> and
+                                        <html:code>MainWindow</html:code> and invokes the <html:a
+                                        href="qwidget.html#show">show()</html:a> function.</html:p>
+                                <html:pre class="cpp"><html:span class="type">int</html:span>
+                                        main(<html:span class="type">int</html:span> argc<html:span
+                                        class="operator">,</html:span>
+                                    <html:span class="type">char</html:span>
+                                    <html:span class="operator">*</html:span>argv<html:span
+                                        class="operator">[</html:span><html:span class="operator"
+                                        >]</html:span>) { Q_INIT_RESOURCE(completer); <html:span
+                                        class="type"><html:a href="qapplication.html"
+                                            >QApplication</html:a></html:span> app(argc<html:span
+                                        class="operator">,</html:span> argv); MainWindow window;
+                                        window<html:span class="operator">.</html:span>show();
+                                        <html:span class="keyword">return</html:span> app<html:span
+                                        class="operator">.</html:span>exec(); }</html:pre>
+                                <html:p>Files:</html:p>
+                                <html:ul>
+                                    <html:li><html:a
+                                            href="qtwidgets-tools-completer-fsmodel-cpp.html"
+                                            >tools/completer/fsmodel.cpp</html:a></html:li>
+                                    <html:li><html:a href="qtwidgets-tools-completer-fsmodel-h.html"
+                                            >tools/completer/fsmodel.h</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtwidgets-tools-completer-mainwindow-cpp.html"
+                                            >tools/completer/mainwindow.cpp</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtwidgets-tools-completer-mainwindow-h.html"
+                                            >tools/completer/mainwindow.h</html:a></html:li>
+                                    <html:li><html:a href="qtwidgets-tools-completer-main-cpp.html"
+                                            >tools/completer/main.cpp</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtwidgets-tools-completer-completer-pro.html"
+                                            >tools/completer/completer.pro</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtwidgets-tools-completer-completer-qrc.html"
+                                            >tools/completer/completer.qrc</html:a></html:li>
+                                </html:ul>
+                            </html:div>
+                            <!-- @@@tools/completer -->
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>
