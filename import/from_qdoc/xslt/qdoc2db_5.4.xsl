@@ -268,12 +268,14 @@
     <xsl:variable name="vars" as="element(html:div)?"
       select="$siblingAfterMacros[self::html:div][@class = 'vars']"/>
     <xsl:variable name="hasVars" select="boolean($vars)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterNonmems" as="element()?"
+    <xsl:variable name="siblingAfterVars" as="element()?"
       select="
       if ($hasVars) then
         $siblingAfterNonmems/following-sibling::*[1]
       else
         $siblingAfterNonmems"/>
+    
+    <xsl:variable name="legitVarsFollower" as="xs:boolean" select="boolean($siblingAfterVars[self::html:p and contains(@class, 'navi')])"/>
     
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
@@ -354,9 +356,9 @@
       <!-- Ignore the subtitles for example pages, with only source code (it is redundant with the title). -->
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
-    <xsl:if test="boolean($siblingAfterNonmems)">
+    <xsl:if test="boolean($siblingAfterVars) and not($legitVarsFollower)">
       <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
-        select="name($siblingAfterNonmems)"/>
+        select="name($siblingAfterVars)"/>
       </xsl:message>
     </xsl:if>
     <!-- A C++ class can perfectly have no functions! Example: QQuickItem::ItemChangedData. -->
