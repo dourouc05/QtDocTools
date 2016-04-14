@@ -65,9 +65,8 @@
         <xsl:value-of select="substring-before($title, ' Namespace')"/>
       </xsl:if>
     </xsl:variable>
-    
-    <xsl:if test="$isNamespace">
-      <xsl:message terminate="yes">ERROR: Namespaces not implemented yet. </xsl:message>
+    <xsl:if test="$isNamespace and $warnVocabularyUnsupportedFeatures">
+      <xsl:message>WARNING: No summary output for namespaces (actually replaced by classes).</xsl:message>
     </xsl:if>
 
     <xsl:variable name="isQmlType" as="xs:boolean" select="ends-with($title, ' QML Type')"/>
@@ -77,7 +76,7 @@
       </xsl:if>
     </xsl:variable>
     
-    <xsl:variable name="isConcept" select="not($isClass) and not($isQmlType)" as="xs:boolean"/>
+    <xsl:variable name="isConcept" select="not($isClass) and not($isNamespace) and not($isQmlType)" as="xs:boolean"/>
 
     <!-- Extract the various parts of the prologue. -->
     <xsl:variable name="prologueTable"
@@ -503,9 +502,9 @@
         <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
       
-      <xsl:if test="$isClass">
+      <xsl:if test="$isClass or $isNamespace">
         <xsl:call-template name="classListing">
-          <xsl:with-param name="className" select="$className"/>
+          <xsl:with-param name="className" select="if ($isClass) then $className else $namespaceName"/>
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
