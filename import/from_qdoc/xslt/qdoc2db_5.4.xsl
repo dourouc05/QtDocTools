@@ -1780,6 +1780,11 @@
   <xsl:template mode="content" match="html:blockquote">
     <!-- Blockquotes are barely used in the documentation. -->
     <xsl:choose>
+      <xsl:when test="count(./html:*) &gt; 1 and ./html:p and (./html:p/html:i or ./html:p/html:b)">
+        <db:blockquote>
+          <xsl:apply-templates mode="content"/>
+        </db:blockquote>
+      </xsl:when>
       <xsl:when test="count(child::html:*) = 1 and child::html:p">
         <db:programlisting>
           <xsl:value-of select="./html:p/html:code/text()"/>
@@ -2174,9 +2179,18 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:i | html:em">
     <!-- Need to distinguish them? -->
-    <db:emphasis>
-      <xsl:apply-templates mode="content_paragraph"/>
-    </db:emphasis>
+    <xsl:choose>
+      <xsl:when test="..[self::html:code]">
+        <db:replaceable>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:replaceable>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:emphasis>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:emphasis>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:ul">
     <db:itemizedlist>
