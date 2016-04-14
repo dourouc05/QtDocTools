@@ -1677,6 +1677,9 @@
   <xsl:template mode="content" match="html:div[@class = 'clear-both' or @class = 'clear-left' or @class = 'clear-right']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
+  <xsl:template mode="content" match="html:div[@style = 'text-align: left']">
+    <xsl:apply-templates select="*" mode="content"/>
+  </xsl:template>
   <xsl:template mode="content" match="html:hr">
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
