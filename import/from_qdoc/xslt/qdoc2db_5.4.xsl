@@ -55,6 +55,20 @@
         <xsl:value-of select="substring-before($title, ' Class')"/>
       </xsl:if>
     </xsl:variable>
+    
+    <xsl:variable name="isNamespace" as="xs:boolean"
+      select="
+      ends-with($title, ' Namespace')
+      and count(contains($title, ' ')) = 1"/>
+    <xsl:variable name="namespaceName">
+      <xsl:if test="$isNamespace">
+        <xsl:value-of select="substring-before($title, ' Namespace')"/>
+      </xsl:if>
+    </xsl:variable>
+    
+    <xsl:if test="$isNamespace">
+      <xsl:message terminate="yes">ERROR: Namespaces not implemented yet. </xsl:message>
+    </xsl:if>
 
     <xsl:variable name="isQmlType" as="xs:boolean" select="ends-with($title, ' QML Type')"/>
     <xsl:variable name="qmlTypeName">
