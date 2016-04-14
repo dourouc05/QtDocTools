@@ -51,7 +51,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto valueConstant = axe::e_ref([&currentValue, &currentIdentifier](const char * i1, const char * i2) {
 		currentValue->content.s = new std::string(std::string(i1, i2));
 		currentValue->type = CONSTANT;
-		currentIdentifier = nullptr; // This rule may have been matched! 
+		currentIdentifier = nullptr; // The rules for identifiers may have been matched! 
 	});
 
 	auto valueIdentifier = axe::e_ref([&currentIdentifier](const char * i1, const char * i2) {
@@ -244,7 +244,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		& *space
 		& ~(((kw_pointer | kw_reference) & *(*space & (kw_pointer | kw_reference))) >> parameterPointersReferences) // Pointers and references in type.
 		& *space
-		& ~((!all_types_kw & identifier) >> parameterIdentifier) // Identifier (sometimes omitted). 
+		& ~(identifier >> parameterIdentifier) // Identifier (sometimes omitted). 
 		& *space
 		& ~(equal & *space & (value >> parameterInitialiser) & *space); // Initialiser (= …). 
 	auto parameters_list = (parameter >> addParameter) % spaced_comma;

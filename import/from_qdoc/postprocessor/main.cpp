@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
@@ -77,7 +77,8 @@ void test() {
 	total++; count += test_match("(unsigned long long int offset, signed long long count, long double count)", "Primitive types horror test");
 	total++; count += test_match("(const  QString  &  publicId , const  QString  &  systemId ,  QXmlInputSource  &  ret )", "QXmlDefaultHandler::resolveEntity: mix pointers and references");
 	total++; count += test_match("( ...)", "Just an ellipsis");
-	total++; count += test_match("( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)", "QAndroidJniObject::callStaticMethod: ellipsis");
+	total++; count += test_match("( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)", "QAndroidJniObject::callStaticMethod: ellipsis"); 
+	total++; count += test_match("(const  QMediaTimeInterval  &  interval)", "QMediaTimeRange::operator+=: regression");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
