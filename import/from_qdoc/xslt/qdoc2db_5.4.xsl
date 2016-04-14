@@ -1639,7 +1639,7 @@
 
   <!-- 
     Handle HTML content and transform it into DocBook. 
-    Tables are implemented with HTML model, not CALS. 
+    (Tables are implemented with HTML model, not CALS.) 
   -->
   <xsl:template mode="content" match="html:div[@class = 'table']">
     <xsl:apply-templates select="*" mode="content"/>
@@ -1658,6 +1658,10 @@
   </xsl:template>
   <xsl:template mode="content" match="html:div[@class = 'clear-both' or @class = 'clear-left' or @class = 'clear-right']">
     <xsl:apply-templates select="*" mode="content"/>
+  </xsl:template>
+  <xsl:template mode="content" match="html:hr">
+    <!-- Due to lack of proper separator in DocBook… -->
+    <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
   </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
