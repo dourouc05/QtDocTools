@@ -2108,12 +2108,30 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:b/html:u">
+    <!-- 
+      This defines an accelerator, e.g.:
+          <html:li><html:b><html:u>A</html:u></html:b>bout</html:li>
+          <html:li><html:b><html:u>C</html:u></html:b>opy (CDE: Ctrl+C, Ctrl+Insert)</html:li>
+      Hard to guess anything about the surroundings. 
+    -->
+    <db:accel>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:accel>
+  </xsl:template>
   <xsl:template mode="content_paragraph" match="html:b | html:strong">
     <xsl:param name="forgetNotes" select="false()"/>
-    <xsl:if test="not($forgetNotes and starts-with(text(), 'Note'))">
-      <db:emphasis role="bold">
-        <xsl:apply-templates mode="content_paragraph"/>
-      </db:emphasis>
+    <xsl:if test="not($forgetNotes)">
+      <xsl:choose>
+        <xsl:when test="not(./html:u)">
+          <db:emphasis role="bold">
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:emphasis>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:acronym | html:abbr">
