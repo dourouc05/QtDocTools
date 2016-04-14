@@ -14,6 +14,9 @@
   exclude-result-prefixes="xsl xs html" version="2.0">
   <xsl:output method="xml" indent="yes"/>
   <xsl:strip-space elements="*"/>
+  
+  <xsl:param name="vocabulary" select="'docbook'"/> <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for Boost's variant (TODO). -->
+  <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()"/> <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
   <xsl:import-schema schema-location="../schemas/docbook.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
@@ -479,10 +482,10 @@
       </db:title>
 
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
-      <xsl:if test="$hasTypes">
+      <xsl:if test="$hasTypes and $warnVocabularyUnsupportedFeatures">
         <xsl:message>WARNING: No summary output for types.</xsl:message>
       </xsl:if>
-      <xsl:if test="$obsolete_hasTypes">
+      <xsl:if test="$obsolete_hasTypes and $warnVocabularyUnsupportedFeatures">
         <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
       
@@ -1158,7 +1161,9 @@
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
   <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
-    <xsl:message terminate="no">WARNING: No summary output for typedefs. </xsl:message>
+    <xsl:if test="$warnVocabularyUnsupportedFeatures">
+      <xsl:message terminate="no">WARNING: No summary output for typedefs. </xsl:message>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="functionListing"
     match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
