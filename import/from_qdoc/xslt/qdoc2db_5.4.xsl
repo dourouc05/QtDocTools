@@ -1667,7 +1667,7 @@
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:informaltable>
   </xsl:template>
-  <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft']">
+  <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft' or @class = 'qt-code']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
   <xsl:template mode="content" match="html:div[@class = 'float-left' or @class = 'float-right' or @float-right]">
