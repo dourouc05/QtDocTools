@@ -94,7 +94,11 @@ std::string Parameter::serialise() const {
 	if (isEllipsis) {
 		return "...";
 	}
-	return *type + ' ' + pointersReferencesStr();
+	std::string constness_str = "";
+	if (constness == MiddleConst) {
+		constness_str += "const ";
+	}
+	return *type + ' ' + constness_str + pointersReferencesStr();
 }
 
 std::string AST::serialise() const {
@@ -107,11 +111,14 @@ std::string AST::serialise() const {
 	for (auto iterator = parameters.begin(); iterator != end; ++iterator) {
 		Parameter* p = *iterator;
 
-		if (p->isConst) {
+		if (p->constness == FrontConst) {
 			retval += "const ";
 		}
 
 		retval += p->serialise() + ' ';
+		if (p->constness == RearConst) {
+			retval += "const ";
+		}
 		if (p->identifier != nullptr) { // In rare occasions, there is no identifier! 
 			retval += *p->identifier;
 		}

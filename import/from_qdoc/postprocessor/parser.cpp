@@ -104,19 +104,19 @@ AST* cpp_prototype(const char * begin, const char * end) {
 			currentParameter = new Parameter;
 		}
 	});
-	auto parameterConstFront = axe::e_ref([&currentParameter](const char * i1, const char * i2) { // TODO
+	auto parameterConstFront = axe::e_ref([&currentParameter](const char * i1, const char * i2) { 
 		if (std::distance(i1, i2) > 2) {
-			currentParameter->isConst = true;
+			currentParameter->constness = FrontConst;
 		}
 	});
-	auto parameterConstMiddle = axe::e_ref([&currentParameter](const char * i1, const char * i2) { // TODO
+	auto parameterConstMiddle = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
 		if (std::distance(i1, i2) > 2) {
-			currentParameter->isConst = true;
+			currentParameter->constness = MiddleConst;
 		}
 	});
-	auto parameterConstRear = axe::e_ref([&currentParameter](const char * i1, const char * i2) { // TODO
+	auto parameterConstRear = axe::e_ref([&currentParameter](const char * i1, const char * i2) { 
 		if (std::distance(i1, i2) > 2) {
-			currentParameter->isConst = true;
+			currentParameter->constness = RearConst;
 		}
 	});
 	auto parameterType = axe::e_ref([&currentParameter, &currentIdentifier](const char * i1, const char * i2) {

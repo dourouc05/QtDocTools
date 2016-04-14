@@ -79,7 +79,8 @@ void test() {
 	total++; count += test_match("( ...)", "Just an ellipsis");
 	total++; count += test_match("( jclass  clazz , const  char  *  methodName , const  char  *  signature , ...)", "QAndroidJniObject::callStaticMethod: ellipsis"); 
 	total++; count += test_match("(const  QMediaTimeInterval  &  interval)", "QMediaTimeRange::operator+=: regression");
-	total++; count += test_match("( QByteArray  const &  name )", "QMediaObject::addPropertyWatch: const after type");
+	total++; count += test_match("( QByteArray  const &  name )", "QMediaObject::addPropertyWatch: const after type"); 
+	total++; count += test_match("(const  QModelIndex  &  topLeft, const  QModelIndex  &  bottomRight, const  QVector < int > &  roles = QVector<int>())", "QTreeView::dataChanged: const after type"); 
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -123,13 +124,17 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 				param.append_child("db:parameter").text().set("...");
 			}
 			else {
-				if (p->isConst) {
+				if (p->constness == FrontConst) {
 					param.append_child("db:modifier").text().set("const");
 				}
 
-				std::string sub_type = replace(replace(*p->type, "*", " *"), "&", " &");
+				std::string sub_type = replace(replace(p->serialise(), "*", " *"), "&", " &");
 				std::string type = trim(sub_type + ' ' + p->pointersReferencesStr());
 				param.append_child("db:type").text().set(type.c_str());
+
+				if (p->constness == RearConst) {
+					param.append_child("db:modifier").text().set("const");
+				}
 
 				auto id = p->identifier;
 				param.append_child("db:parameter").text().set((id != nullptr) ? id->c_str() : std::string("arg" + paramsCounter).c_str());

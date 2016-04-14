@@ -28,9 +28,16 @@ public:
 	std::string serialise() const;
 };
 
+typedef enum {
+	FrontConst, 
+	MiddleConst, 
+	RearConst, 
+	NoConst
+} Constness;
+
 class Parameter {
 public: 
-	bool isConst = false;
+	Constness constness = NoConst;
 	std::string* type;
 	std::string* pointersReferences = nullptr;
 	std::string* identifier;
