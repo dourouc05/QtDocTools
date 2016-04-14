@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0"
+            xml:lang="en">
+   <db:title>Glow QML Type</db:title>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>Glow</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="import">import QtGraphicalEffects 1.0</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="inherits"/>
+      <db:classsynopsisinfo role="since">
+                                                QtGraphicalEffects 1.0</db:classsynopsisinfo>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>cached</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>color</db:type>
+         <db:varname>color</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>fast</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>radius</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>int</db:type>
+         <db:varname>samples</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qtqml/qml-variant.html">variant</db:type>
+         <db:varname>source</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>spread</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>transparentBorder</db:varname>
+      </db:fieldsynopsis>
+   </db:classsynopsis>
+   <db:section>
+      <db:title>Detailed Description</db:title>
+      <db:para>By default effect produces a high quality glow image, thus the
+                                rendering speed of the effect may not be the highest possible. The
+                                rendering speed is reduced especially if the glow edges are heavily
+                                softened. For use cases that require faster rendering speed and the
+                                highest possible visual quality is not necessary, property <db:link xlink:href="qml-qtgraphicaleffects-glow.html#fast-prop">fast</db:link>
+                                can be set to true.</db:para>
+      <db:section>
+         <db:title>Example</db:title>
+         <db:para>The following example shows how to apply the effect.</db:para>
+         <db:programlisting language="qml">import QtQuick 2.0 import QtGraphicalEffects 1.0
+                                    Item { width: 300height: 300Rectangle { anchors.fill: parentcolor: "black" } Image { id: butterflysource: "images/butterfly.png"sourceSize: Qt.size(parent.width,
+                                    parent.height) smooth: truevisible: false } Glow { anchors.fill: butterflyradius: 8samples: 16color: "white"source: butterfly } }</db:programlisting>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Properties Documentation</db:title>
+      <db:section xml:id="cached-prop">
+         <db:title>cached : bool</db:title>
+         <db:para>This property allows the effect output pixels to be
+                                        cached in order to improve the rendering
+                                        performance.</db:para>
+         <db:para>Every time the source or effect properties are changed,
+                                        the pixels in the cache must be updated. Memory consumption
+                                        is increased, because an extra buffer of memory is required
+                                        for storing the effect output.</db:para>
+         <db:para>It is recommended to disable the cache when the source
+                                        or the effect properties are animated.</db:para>
+         <db:para>By default, the property is set to
+                                            <db:code>false</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="color-prop">
+         <db:title>color : color</db:title>
+         <db:para>This property defines the RGBA color value which is
+                                        used for the glow.</db:para>
+         <db:para>By default, the property is set to
+                                            <db:code>"white"</db:code>.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Output examples with different color
+                                                  values</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_color1.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_color2.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_color3.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> color: #ffffff
+                                                  </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> color: #00ff00
+                                                  </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> color: #aa00ff00
+                                                  </db:emphasis>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 8</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 8</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 8</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 16</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 16</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 16</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0.5</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0.5</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0.5</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="fast-prop">
+         <db:title>fast : bool</db:title>
+         <db:para>This property selects the blurring algorithm that
+                                        is used to produce the softness for the effect. Setting this
+                                        to true enables fast algorithm, setting value to false
+                                        produces higher quality result.</db:para>
+         <db:para>By default, the property is set to
+                                            <db:code>false</db:code>.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Output examples with different fast
+                                                  values</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_fast1.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_fast2.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> fast: false </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> fast: true </db:emphasis>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 16</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 16</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 24</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 24</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0.3</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0.3</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="radius-prop">
+         <db:title>radius : real</db:title>
+         <db:para>Radius defines the softness of the glow. A larger
+                                        radius causes the edges of the glow to appear more
+                                        blurry.</db:para>
+         <db:para>Depending on the radius value, value of the <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link> should be set to sufficiently large to
+                                        ensure the visual quality.</db:para>
+         <db:para>The value ranges from 0.0 (no blur) to inf. By default,
+                                        the property is set to <db:code>0.0</db:code> (no
+                                        blur).</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Output examples with different radius
+                                                  values</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_radius1.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_radius2.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_radius3.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> radius: 0 </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> radius: 6 </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> radius: 12 </db:emphasis>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 24</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 24</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 24</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#spread-prop">spread</db:link>: 0</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="samples-prop">
+         <db:title>samples : int</db:title>
+         <db:para>This property defines how many samples are taken
+                                        per pixel when edge softening blur calculation is done.
+                                        Larger value produces better quality, but is slower to
+                                        render.</db:para>
+         <db:para>Ideally, this value should be twice as large as the
+                                        highest required radius value, for example, if the radius is
+                                        animated between 0.0 and 4.0, samples should be set to
+                                        8.</db:para>
+         <db:para>The value ranges from 0 to 32. By default, the property
+                                        is set to <db:code>0</db:code>.</db:para>
+         <db:para>This property is not intended to be animated. Changing
+                                        this property may cause the underlying OpenGL shaders to be
+                                        recompiled.</db:para>
+         <db:para>When <db:link xlink:href="qml-qtgraphicaleffects-glow.html#fast-prop">fast</db:link> property is set to true, this property
+                                        has no effect.</db:para>
+      </db:section>
+      <db:section xml:id="source-prop">
+         <db:title>source : <db:link xlink:href="qtqml/qml-variant.html">variant</db:link>
+         </db:title>
+         <db:para>This property defines the source item that is going
+                                        to be used as source for the generated glow.</db:para>
+         <db:note>
+            <db:para>It is not supported to let the
+                                        effect include itself, for instance by setting source to the
+                                        effect's parent.</db:para>
+         </db:note>
+      </db:section>
+      <db:section xml:id="spread-prop">
+         <db:title>spread : real</db:title>
+         <db:para>This property defines how large part of the glow
+                                        color is strenghtened near the source edges.</db:para>
+         <db:para>The values range from 0.0 to 1.0. By default, the
+                                        property is set to <db:code>0.5</db:code>.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Output examples with different spread
+                                                  values</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_spread1.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_spread2.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+                  <db:td>
+                     <db:informalfigure>
+                        <db:mediaobject>
+                           <db:imageobject>
+                              <db:imagedata fileref="images/Glow_spread3.png"/>
+                           </db:imageobject>
+                        </db:mediaobject>
+                     </db:informalfigure>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> spread: 0.0 </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> spread: 0.5 </db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold"> spread: 1.0 </db:emphasis>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 8</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 8</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#radius-prop">radius</db:link>: 8</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 16</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 16</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="qml-qtgraphicaleffects-glow.html#samples-prop">samples</db:link>: 16</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:link xlink:href="graphicaleffects.html#color">color</db:link>:
+                                                  #ffffff</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="transparentBorder-prop">
+         <db:title>transparentBorder :
+                                                  bool</db:title>
+         <db:para>This property determines whether or not the effect
+                                        has a transparent border.</db:para>
+         <db:para>When set to <db:code>true</db:code>, the exterior of
+                                        the item is padded with a 1 pixel wide transparent edge,
+                                        making sampling outside the source texture use transparency
+                                        instead of the edge pixels. Without this property, an image
+                                        which has opaque edges will not get a blurred edge.</db:para>
+         <db:para>In the snippet below, the Rectangle on the left has
+                                        transparent borders and has blurred edges, whereas the
+                                        Rectangle on the right does not.</db:para>
+         <db:programlisting language="qml">import QtQuick 2.0 import
+                                        QtGraphicalEffects 1.0 Rectangle { width: 180height: 100Row { anchors.centerIn: parentspacing: 16Rectangle { id: normalRectwidth: 60height: 60color: "#444"layer.enabled:
+                                            truelayer.effect: Glow { radius: 4samples: radius*2source: normalRectcolor: "steelblue" } } Rectangle { id: transparentBorderRectwidth: 60height: 60color: "#444"layer.enabled:
+                                            truelayer.effect: Glow { radius: 4samples: radius*2source: transparentBorderRectcolor: "steelblue"transparentBorder:
+                                            true } } }
+                                        }</db:programlisting>
+         <db:para/>
+      </db:section>
+   </db:section>
+</db:article>
