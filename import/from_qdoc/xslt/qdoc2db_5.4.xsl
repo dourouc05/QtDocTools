@@ -242,36 +242,36 @@
           $siblingAfterProperties/following-sibling::*[1]
         else
           $siblingAfterProperties"/>
-    
-    <xsl:variable name="macros" as="element(html:div)?"
-      select="$siblingAfterFuncs[self::html:div][@class = 'macros']"/>
-    <xsl:variable name="hasMacros" select="boolean($macros)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterMacros" as="element()?"
-      select="
-        if ($hasMacros) then
-          $siblingAfterFuncs/following-sibling::*[1]
-        else
-          $siblingAfterFuncs"/>
 
     <xsl:variable name="nonmems" as="element(html:div)?"
-      select="$siblingAfterMacros[self::html:div][@class = 'relnonmem']"/>
+      select="$siblingAfterFuncs[self::html:div][@class = 'relnonmem']"/>
     <xsl:variable name="hasNonmems" select="boolean($nonmems)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterNonmems" as="element()?"
       select="
         if ($hasNonmems) then
-          $siblingAfterMacros/following-sibling::*[1]
+          $siblingAfterFuncs/following-sibling::*[1]
         else
-          $siblingAfterMacros"/>
+          $siblingAfterFuncs"/>
+    
+    <xsl:variable name="macros" as="element(html:div)?"
+      select="$siblingAfterNonmems[self::html:div][@class = 'macros']"/>
+    <xsl:variable name="hasMacros" select="boolean($macros)" as="xs:boolean"/>
+    <xsl:variable name="siblingAfterMacros" as="element()?"
+      select="
+        if ($hasMacros) then
+          $siblingAfterNonmems/following-sibling::*[1]
+        else
+          $siblingAfterNonmems"/>
     
     <xsl:variable name="vars" as="element(html:div)?"
       select="$siblingAfterMacros[self::html:div][@class = 'vars']"/>
     <xsl:variable name="hasVars" select="boolean($vars)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterVars" as="element()?"
       select="
-      if ($hasVars) then
-        $siblingAfterNonmems/following-sibling::*[1]
-      else
-        $siblingAfterNonmems"/>
+        if ($hasVars) then
+          $siblingAfterMacros/following-sibling::*[1]
+        else
+          $siblingAfterMacros"/>
     
     <xsl:variable name="legitVarsFollower" as="xs:boolean" select="boolean($siblingAfterVars[self::html:p and contains(@class, 'navi')])"/>
     
@@ -1099,7 +1099,8 @@
         </xsl:if>
 
         <db:funcdef>
-          <xsl:if test="$returnTypes">
+          <!-- Unhappily, DocBook does not allow <db:void> here… -->
+          <xsl:if test="$returnTypes and not(contains($returnTypes/text(), 'void'))">
             <xsl:call-template name="classListing_methodBody_analyseType">
               <xsl:with-param name="typeNodes" select="$returnTypes"/>
             </xsl:call-template>
@@ -1137,7 +1138,8 @@
               <db:paramdef choice="req">
                 <!-- Maybe this parameter is const. -->
                 <xsl:if test="normalize-space($textAfterName) = '(const'">
-                  <db:modifier>const</db:modifier>
+                  <!-- DocBook does not allow <db:modifier>!? -->
+                  <db:type>const</db:type>
                 </xsl:if>
 
                 <!-- Output the type. -->

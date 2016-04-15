@@ -285,9 +285,9 @@ def generate_module_db(module_name, configuration_file):
                 if file.startswith('q') and not file.startswith('qml-'):
                     call_cpp_parser(out_file_name, out_file_name)
 
-                # Handle a bit of output.
-                if count % 10 == 0:
-                    logging.info('XML to DocBook: module %s, %i files done out of %i' % (module_name, count, n_files))
+            # Handle a bit of output.
+            if count % 10 == 0:
+                logging.info('XML to DocBook: module %s, %i files done out of %i' % (module_name, count, n_files))
     logging.info('XML to DocBook: done with module %s' % module_name)
 
 
