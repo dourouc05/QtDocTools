@@ -17,6 +17,7 @@
   
   <xsl:param name="vocabulary" select="'docbook'"/> <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for Boost's variant (TODO). -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()"/> <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
+  <xsl:param name="warnMissingDocumentation" select="false()"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
   <xsl:import-schema schema-location="../schemas/docbook.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
@@ -921,81 +922,6 @@
       <xsl:when test="starts-with($textAfterName, '()')">
         <db:void/>
       </xsl:when>
-      <!-- 
-        This code mostly works, but miserably fails on more complicated cases. E.g.:
-            QPixmap QWidget::grab(const QRect & rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))
-      -->
-      <xsl:when test="false()">
-        <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
-
-        <xsl:for-each select="1 to $nArguments">
-          <xsl:variable name="index" select="." as="xs:integer"/>
-          <xsl:variable name="commas" select="$titleNode/text()[contains(., ',')]"/>
-          <xsl:variable name="firstNode"
-            select="
-              if (. = 1) then
-                $functionName
-              else
-                $commas[$index - 1]"/>
-          <xsl:variable name="types"
-            select="$firstNode/following-sibling::html:span[@class = 'type']"/>
-          <xsl:variable name="type" select="$types[1]"/>
-          <xsl:variable name="textAfterType"
-            select="normalize-space($type/following-sibling::text()[1])"/>
-
-          <xsl:variable name="names" select="$type/following-sibling::html:i"/>
-          <xsl:variable name="afterName" select="$names[1]/following-sibling::text()[1]"/>
-          <xsl:variable name="afterNameBeforeNext"
-            select="
-              if (not(contains($afterName, ','))) then
-                substring-before($afterName, ')')
-              else
-                substring-before($afterName, ',')"/>
-          <xsl:variable name="hasInitialiser" select="contains($afterName, '=')" as="xs:boolean"/>
-
-          <db:methodparam>
-            <!-- methodparam attributes. No repeating argument until Qt uses C's stdarg. -->
-            <xsl:choose>
-              <xsl:when test="$hasInitialiser">
-                <xsl:attribute name="choice">
-                  <xsl:text>opt</xsl:text>
-                </xsl:attribute>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:attribute name="choice">
-                  <xsl:text>req</xsl:text>
-                </xsl:attribute>
-              </xsl:otherwise>
-            </xsl:choose>
-
-            <xsl:attribute name="rep">
-              <xsl:text>norepeat</xsl:text>
-            </xsl:attribute>
-
-            <!-- Maybe this parameter is const. -->
-            <xsl:if test="normalize-space($textAfterName) = '(const'">
-              <db:modifier>const</db:modifier>
-            </xsl:if>
-
-            <!-- Output the type. -->
-            <xsl:call-template name="classListing_methodBody_analyseType">
-              <xsl:with-param name="typeNodes" select="$type"/>
-            </xsl:call-template>
-
-            <!-- Then the name. -->
-            <db:parameter>
-              <xsl:value-of select="normalize-space($names[1])"/>
-            </db:parameter>
-
-            <!-- Eventually an initialiser. -->
-            <xsl:if test="$hasInitialiser">
-              <db:initializer>
-                <xsl:value-of select="normalize-space(substring-after($afterNameBeforeNext, '='))"/>
-              </db:initializer>
-            </xsl:if>
-          </db:methodparam>
-        </xsl:for-each>
-      </xsl:when>
       <!-- Output everything as a raw string, a post-processor will deal with it. -->
       <xsl:otherwise>
         <db:void role="parameters"/>
@@ -1115,38 +1041,11 @@
             <db:void/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
-            
-            <xsl:for-each select="1 to $nArguments">
-              <xsl:variable name="index" select="." as="xs:integer"/>
-              <xsl:variable name="commas" select="$titleNode/text()[contains(., ',')]"/>
-              <xsl:variable name="firstNode"
-                select="
-                if (. = 1) then
-                $functionName
-                else
-                $commas[$index - 1]"/>
-              <xsl:variable name="types"
-                select="$firstNode/following-sibling::html:span[@class = 'type']"/>
-              <xsl:variable name="type" select="$types[1]"/>
-              <xsl:variable name="textAfterType"
-                select="normalize-space($type/following-sibling::text()[1])"/>
-              
-              <db:paramdef>
-                <!-- Maybe this parameter is const. -->
-                <xsl:if test="normalize-space($textAfterName) = '(const'">
-                  <db:modifier>const</db:modifier>
-                </xsl:if>
-                
-                <!-- Output the type. -->
-                <xsl:call-template name="classListing_methodBody_analyseType">
-                  <xsl:with-param name="typeNodes" select="$types"/>
-                </xsl:call-template>
-                
-                <!-- Then the name. -->
-                <xsl:variable name="names" select="$type/following-sibling::html:i"/>
+            <xsl:for-each select="./html:i">
+              <db:paramdef choice="req">
+                <!-- A macro only has a name. -->
                 <db:parameter>
-                  <xsl:value-of select="normalize-space($names[1])"/>
+                  <xsl:value-of select="normalize-space(.)"/>
                 </db:parameter>
               </db:paramdef>
             </xsl:for-each>
@@ -1235,7 +1134,7 @@
               <xsl:variable name="textAfterType"
                 select="normalize-space($type/following-sibling::text()[1])"/>
 
-              <db:paramdef>
+              <db:paramdef choice="req">
                 <!-- Maybe this parameter is const. -->
                 <xsl:if test="normalize-space($textAfterName) = '(const'">
                   <db:modifier>const</db:modifier>
@@ -1504,7 +1403,9 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:message>WARNING: The function "<xsl:value-of select="$functionAnchor"/>" has no documentation.</xsl:message>
+          <xsl:if test="$warnMissingDocumentation">
+            <xsl:message>WARNING: The function "<xsl:value-of select="$functionAnchor"/>" has no documentation.</xsl:message>
+          </xsl:if>
           <db:para/>
         </xsl:otherwise>
       </xsl:choose>
