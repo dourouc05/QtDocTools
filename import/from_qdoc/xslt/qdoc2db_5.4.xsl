@@ -1580,6 +1580,19 @@
   <xsl:template mode="content" match="html:div[@style = 'text-align: left']">
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
+  <xsl:template mode="content" match="html:div[@class = 'multi-column']">
+    <db:informaltable>
+      <db:tbody>
+          <db:tr>
+            <xsl:for-each select="./html:div[@class = 'doc-column']">
+              <db:td>
+                <xsl:apply-templates select="*" mode="content"/>
+              </db:td>
+            </xsl:for-each>
+          </db:tr>
+      </db:tbody>
+    </db:informaltable>
+  </xsl:template>
   <xsl:template mode="content" match="html:hr">
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
