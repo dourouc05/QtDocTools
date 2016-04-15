@@ -223,11 +223,9 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
 	auto value_litteral = value_string | value_number | value_boolean;
-	auto value_constant = (identifier & *space & *type_namespace) >> valueAllocator >> valueConstant;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;
-	auto value_expression_operator = kw_and | kw_or;
-	auto value_expression_spaced_operator = *space & value_expression_operator & *space;
-	auto value_expression = (value_constant_nowrite & *(value_expression_spaced_operator & value_constant_nowrite & *space))
+	auto value_constant = value_constant_nowrite >> valueAllocator >> valueConstant;
+	auto value_expression = (value_constant_nowrite & *(*space & (kw_and | kw_or) & *space & value_constant_nowrite & *space))
 		>> valueAllocator >> valueConstant;
 
 	auto value_object_simple = (identifier >> innerObjectIdentifier)
@@ -242,7 +240,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto value_object_compound = ((identifier >> valueIdentifier) & *space & ~type_template) >> outerObjectIdentifier
 		& *space
 		& paren_open & *space & ~((value_simple >> outerObjectNewValue) % spaced_comma) & *space & paren_close;
-	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | value_constant;
+	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | value_expression;
 	// value_object_compound and value_object_simple have the same prefix: if both are allowed inside value, 
 	// then the parser will be confused about which one is actually at hand; it will then follow the first one, 
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 

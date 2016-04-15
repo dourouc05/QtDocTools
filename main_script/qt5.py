@@ -267,6 +267,7 @@ def generate_module_db(module_name, configuration_file):
         count = 0
         n_files = len(files)
         for file in files:
+            count += 1
             # Avoid lists of examples (-manifest.xml) and files automatically included within the output with the XSLT
             # stylesheet (-members.xml, -obsolete.xml).
             if file.endswith('.xml') \
@@ -285,7 +286,6 @@ def generate_module_db(module_name, configuration_file):
                     call_cpp_parser(out_file_name, out_file_name)
 
                 # Handle a bit of output.
-                count += 1
                 if count % 10 == 0:
                     logging.info('XML to DocBook: module %s, %i files done out of %i' % (module_name, count, n_files))
     logging.info('XML to DocBook: done with module %s' % module_name)
