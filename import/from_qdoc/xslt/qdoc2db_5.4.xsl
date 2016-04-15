@@ -180,14 +180,11 @@
     </xsl:variable>
     <xsl:variable name="hasActuallyNoDescription" as="xs:boolean" select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))"/>
     <xsl:variable name="description" as="element()?" select="if(not($isQmlType)) then $content/html:div[@class = 'descr'] else $descriptionRawQml"/>
-    <xsl:if test="$hasActuallyNoDescription and not($description)">
+    <xsl:if test="not($hasActuallyNoDescription) and not($description)">
       <xsl:message>WARNING: Found no description, while there should be one. </xsl:message>
     </xsl:if>
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$description/following-sibling::*[1]"/>
-    <xsl:if test="not($description)">
-      <xsl:message>WARNING: No description found, while one was expected.</xsl:message>
-    </xsl:if>
     <xsl:if test="$siblingAfterDescription and $isQmlType">
       <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in the style sheets!</xsl:message>
     </xsl:if>
