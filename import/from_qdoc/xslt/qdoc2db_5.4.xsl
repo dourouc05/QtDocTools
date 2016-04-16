@@ -1736,8 +1736,51 @@
   </xsl:template>
   <xsl:template mode="content" match="html:blockquote">
     <db:blockquote>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_bq"/>
     </db:blockquote>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h1 | html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
+  <xsl:template mode="content_bq" match="text()"/>
+  <xsl:template mode="content_bq" match="html:a">
+    <xsl:choose>
+      <xsl:when test="./html:h1">
+        <db:bridgehead renderas="sect1">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h2">
+        <db:bridgehead renderas="sect2">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h3">
+        <db:bridgehead renderas="sect3">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h4">
+        <db:bridgehead renderas="sect4">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h5">
+        <db:bridgehead renderas="sect5">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h6">
+        <db:bridgehead renderas="sect6">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:p">
+    <xsl:if test="not(. = '')">
+      <db:para>
+        <xsl:apply-templates mode="content_paragraph"/>
+      </db:para>
+    </xsl:if>
   </xsl:template>
   <!-- Titles are handled in template content_withTitles_before. -->
   <xsl:template mode="content" match="html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
