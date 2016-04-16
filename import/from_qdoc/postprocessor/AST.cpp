@@ -111,6 +111,10 @@ std::string AST::serialise() const {
 	for (auto iterator = parameters.begin(); iterator != end; ++iterator) {
 		Parameter* p = *iterator;
 
+		if (p->volatility) {
+			retval += "volatile ";
+		}
+
 		if (p->constness == FrontConst) {
 			retval += "const ";
 		}

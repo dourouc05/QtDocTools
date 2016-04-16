@@ -83,6 +83,7 @@ void test() {
 	total++; count += test_match("(const  QModelIndex  &  topLeft, const  QModelIndex  &  bottomRight, const  QVector < int > &  roles = QVector<int>())", "QTreeView::dataChanged: templated initialiser");
 	total++; count += test_match("(Q a = b | c)", "QtConcurrent::blockingFilteredReduced: OR operator in initialiser, simplified");
 	total++; count += test_match("(ConstIterator  begin, ConstIterator  end, FilterFunction  filterFunction, ReduceFunction  reduceFunction, QtConcurrent::ReduceOptions  reduceOptions = UnorderedReduce | SequentialReduce)", "QtConcurrent::blockingFilteredReduced: OR operator in initialiser");
+	total++; count += test_match("( volatile bool  *  flag ,  int  msecs  = 0)", "QQmlIncubationController::incubateWhile: volatile keyword");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -126,6 +127,10 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 				param.append_child("db:parameter").text().set("...");
 			}
 			else {
+				if (p->volatility) {
+					param.append_child("db:modifier").text().set("volatile");
+				}
+
 				if (p->constness == FrontConst) {
 					param.append_child("db:modifier").text().set("const");
 				}

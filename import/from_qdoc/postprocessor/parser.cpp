@@ -104,6 +104,11 @@ AST* cpp_prototype(const char * begin, const char * end) {
 			currentParameter = new Parameter;
 		}
 	});
+	auto parameterVolatile = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
+		if (std::distance(i1, i2) > 2) {
+			currentParameter->volatility = true;
+		}
+	});
 	auto parameterConstFront = axe::e_ref([&currentParameter](const char * i1, const char * i2) { 
 		if (std::distance(i1, i2) > 2) {
 			currentParameter->constness = FrontConst;
@@ -165,7 +170,8 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto alpha = axe::r_alpha() | underscore;
 	auto alphanum = axe::r_alnumstr() | underscore;
 
-	auto kw_const = axe::r_lit("const");
+	auto kw_const = axe::r_lit("const"); 
+	auto kw_volatile = axe::r_lit("volatile"); 
 	auto kw_reference = axe::r_lit('&');
 	auto kw_pointer = +axe::r_lit('*');
 	auto kw_namespace = axe::r_lit("::");
@@ -246,7 +252,10 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
 	// As a consequence, this would be a waste of both time and memory. 
 
-	auto parameter = ~(kw_const >> parameterAllocator >> parameterConstFront) // const
+	auto parameter = 
+		~(kw_volatile >> parameterAllocator >> parameterVolatile) // volatile
+		& *space
+		& ~(kw_const >> parameterAllocator >> parameterConstFront) // const
 		& *space
 		& (type >> parameterAllocator >> parameterType) // Type. 
 		& *space

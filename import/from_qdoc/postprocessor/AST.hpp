@@ -37,6 +37,7 @@ typedef enum {
 
 class Parameter {
 public: 
+	bool volatility = false; 
 	Constness constness = NoConst;
 	std::string* type;
 	std::string* pointersReferences = nullptr;
