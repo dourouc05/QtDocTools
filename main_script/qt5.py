@@ -257,9 +257,11 @@ def call_cpp_parser(file_in, file_out):
 
 # Convert the documentation XML files as DocBook for the given module.
 def generate_module_db(module_name):
-    extension = '.xml'
-    forbidden_suffixes = ['-members', '-compat', '-obsolete']
-    forbidden_suffixes_nobase = ['-manifest']
+    ext = '.xml'  # Extension for files that are recognised here.
+    forbidden_suffixes = ['-members', '-compat', '-obsolete']  # Suffixes for supplementary files (they have a base file
+    # for which they provide some more information).
+    ignored_suffixes = ['-manifest']  # Suffixes for ignored files.
+    count_db = 0
 
     logging.info('XML to DocBook: starting to work with module %s' % module_name)
     for root, sub_dirs, files in os.walk(output + module_name + "/"):
@@ -271,15 +273,23 @@ def generate_module_db(module_name):
         for file in files:
             count += 1
 
+            # Handle a bit of output (even though the DocBook counter is not yet updated for this iteration).
+            if count % 10 == 0:
+                logging.info('XML to DocBook: module %s, %i files done out of %i (%i DocBook files generated)'
+                             % (module_name, count, n_files, count_db))
+
             # Avoid lists of examples (-manifest.xml) and files automatically included within the output with the XSLT
             # stylesheet (-members.xml, -obsolete.xml, -compat.xml). But only if the base file exists!
-            if not file.endswith(extension):
+            if not file.endswith(ext):
                 continue
-            if any([file.endswith(fs + extension) for fs in forbidden_suffixes_nobase]):
+            if any([file.endswith(fs + ext) for fs in ignored_suffixes]):
                 continue
-            if any([file.endswith(fs + extension) for fs in forbidden_suffixes]) and \
-                    os.path.isfile([file.replace(fs + extension, '') for fs in forbidden_suffixes if file.endswith(fs + extension)][0] + extension):
-                continue
+            if any([file.endswith(fs + ext) for fs in forbidden_suffixes]):
+                base_names = [file.replace(fs + ext, '') for fs in forbidden_suffixes if file.endswith(fs + ext)]
+                base_file = base_names[0] + ext
+                if os.path.isfile(os.path.join(root, base_file)):
+                    continue
+            count_db += 1
 
             # Actual processing.
             base_file_name = os.path.join(root, file[:-4])
@@ -293,11 +303,7 @@ def generate_module_db(module_name):
             # For C++ classes, also handle the function prototypes with the C++ application.
             if file.startswith('q') and not file.startswith('qml-'):
                 call_cpp_parser(out_file_name, out_file_name)
-
-            # Handle a bit of output.
-            if count % 10 == 0:
-                logging.info('XML to DocBook: module %s, %i files done out of %i' % (module_name, count, n_files))
-    logging.info('XML to DocBook: done with module %s' % module_name)
+    logging.info('XML to DocBook: done with module %s (%i DocBook files generated)' % (module_name, count_db))
 
 
 # Algorithm:
