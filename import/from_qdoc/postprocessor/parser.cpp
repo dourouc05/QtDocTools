@@ -6,7 +6,7 @@
 // For templates: "decorated name length exceeded, name was truncated"
 #pragma warning(disable: 4503)
 
-AST* cpp_prototype(const char * begin, const char * end) {
+AST* cpp_prototype(const char * begin, char const * end) {
 	// Prepare the places to return the values being read. 
 	AST* retval = new AST;
 	Object* currentOuterObject = nullptr; // Two objects can be nested in prototypes. A more general solution would be to use a stack, 
@@ -26,13 +26,9 @@ AST* cpp_prototype(const char * begin, const char * end) {
 		currentValue->content.b = false;
 		currentValue->type = BOOLEAN;
 	});
-	auto valueInt = axe::e_ref([&currentValue](const char * i1, const char * i2) {
-		std::stringstream(std::string(i1, i2)) >> currentValue->content.i;
-		currentValue->type = INTEGER;
-	});
 	auto valueDouble = axe::e_ref([&currentValue](const char * i1, const char * i2) {
-		std::stringstream(std::string(i1, i2)) >> currentValue->content.d;
-		currentValue->type = DOUBLE;
+		currentValue->content.s = new std::string(i1, i2);
+		currentValue->type = STRING;
 	});
 	auto valueString = axe::e_ref([&currentValue](const char * i1, const char * i2) {
 		currentValue->content.s = new std::string(std::string(i1, i2));
@@ -226,7 +222,7 @@ AST* cpp_prototype(const char * begin, const char * end) {
 	auto type = type_primitive | (identifier & *space & ~type_template);
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
-	auto value_number = (axe::r_decimal() >> valueAllocator >> valueInt) | (axe::r_double() >> valueAllocator >> valueDouble);
+	auto value_number = axe::r_double() >> valueAllocator >> valueDouble;
 	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
 	auto value_litteral = value_string | value_number | value_boolean;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;

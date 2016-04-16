@@ -7,11 +7,9 @@ class Parameter;
 class Object;
 class Value;
 
-enum ValueType { NONE, BOOLEAN, INTEGER, DOUBLE, STRING, OBJECT, CONSTANT }; // Constant is implemented as string.
+enum ValueType { NONE, BOOLEAN, STRING, OBJECT, CONSTANT }; // Constant and numbers (integers, doubles) are implemented as strings.
 typedef union {
 	bool b;
-	int i;
-	double d;
 	std::string* s;
 	Object* o;
 } ValueContent;

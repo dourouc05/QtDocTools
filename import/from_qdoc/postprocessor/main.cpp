@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
@@ -84,6 +84,8 @@ void test() {
 	total++; count += test_match("(Q a = b | c)", "QtConcurrent::blockingFilteredReduced: OR operator in initialiser, simplified");
 	total++; count += test_match("(ConstIterator  begin, ConstIterator  end, FilterFunction  filterFunction, ReduceFunction  reduceFunction, QtConcurrent::ReduceOptions  reduceOptions = UnorderedReduce | SequentialReduce)", "QtConcurrent::blockingFilteredReduced: OR operator in initialiser");
 	total++; count += test_match("( volatile bool  *  flag ,  int  msecs  = 0)", "QQmlIncubationController::incubateWhile: volatile keyword");
+	total++; count += test_match("(const  QGeoCoordinate  &  center ,  qreal  radius  =  1.0)", "QGeoCircle::QGeoCircle: real numbers, simplified");
+	total++; count += test_match("(const  QGeoCoordinate  &  center ,  qreal  radius  = -1.0)", "QGeoCircle::QGeoCircle: real numbers");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;

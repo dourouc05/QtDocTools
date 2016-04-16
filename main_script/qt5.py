@@ -261,6 +261,7 @@ def generate_module_db(module_name):
     forbidden_suffixes = ['-members', '-compat', '-obsolete']  # Suffixes for supplementary files (they have a base file
     # for which they provide some more information).
     ignored_suffixes = ['-manifest']  # Suffixes for ignored files.
+    ignored_files = {'qtdoc': ['classes.xml', 'obsoleteclasses.xml', 'hierarchy.xml', 'qmlbasictypes.xml', 'qmltypes.xml']}  # TODO? Specifically ignored files (generated elsewhere).
     count_db = 0
 
     logging.info('XML to DocBook: starting to work with module %s' % module_name)
@@ -289,6 +290,8 @@ def generate_module_db(module_name):
                 base_file = base_names[0] + ext
                 if os.path.isfile(os.path.join(root, base_file)):
                     continue
+            if module_name in ignored_files and file in ignored_files[module_name]:
+                continue
             count_db += 1
 
             # Actual processing.

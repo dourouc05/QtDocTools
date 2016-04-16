@@ -54,10 +54,6 @@ std::string Value::serialise() const {
 		return "none";
 	case BOOLEAN: 
 		return (content.b) ? "true" : "false";
-	case INTEGER:
-		return std::to_string(content.i);
-	case DOUBLE:
-		return std::to_string(content.d);
 	case STRING:
 		return *content.s;
 	case OBJECT:
