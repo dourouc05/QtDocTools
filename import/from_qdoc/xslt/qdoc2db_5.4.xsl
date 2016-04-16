@@ -1739,49 +1739,6 @@
       <xsl:apply-templates mode="content_bq"/>
     </db:blockquote>
   </xsl:template>
-  <xsl:template mode="content_bq" match="html:h1 | html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
-  <xsl:template mode="content_bq" match="text()"/>
-  <xsl:template mode="content_bq" match="html:a">
-    <xsl:choose>
-      <xsl:when test="./html:h1">
-        <db:bridgehead renderas="sect1">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h2">
-        <db:bridgehead renderas="sect2">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h3">
-        <db:bridgehead renderas="sect3">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h4">
-        <db:bridgehead renderas="sect4">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h5">
-        <db:bridgehead renderas="sect5">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h6">
-        <db:bridgehead renderas="sect6">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-    </xsl:choose>
-  </xsl:template>
-  <xsl:template mode="content_bq" match="html:p">
-    <xsl:if test="not(. = '')">
-      <db:para>
-        <xsl:apply-templates mode="content_paragraph"/>
-      </db:para>
-    </xsl:if>
-  </xsl:template>
   <!-- Titles are handled in template content_withTitles_before. -->
   <xsl:template mode="content" match="html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
   <xsl:template mode="content" match="html:br"/>
@@ -2257,5 +2214,84 @@
     <xsl:if test="./child::*[self::html:img]">
       <xsl:apply-templates mode="content_paragraph"/>
     </xsl:if>
+  </xsl:template>
+  
+  <!-- 
+    Finally, take back those elements and handle block quotes.
+    Something similar is required to handle correctly text(). 
+  -->
+  <xsl:template mode="content_bq" match="html:h1 | html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
+  <xsl:template mode="content_bq" match="text()"/>
+  <xsl:template mode="content_bq" match="html:a">
+    <xsl:choose>
+      <xsl:when test="./html:h1">
+        <db:bridgehead renderas="sect1">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h2">
+        <db:bridgehead renderas="sect2">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h3">
+        <db:bridgehead renderas="sect3">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h4">
+        <db:bridgehead renderas="sect4">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h5">
+        <db:bridgehead renderas="sect5">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+      <xsl:when test="./html:h6">
+        <db:bridgehead renderas="sect6">
+          <xsl:value-of select="."/>
+        </db:bridgehead>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:p">
+    <xsl:if test="not(. = '')">
+      <db:para>
+        <xsl:apply-templates mode="content_paragraph"/>
+      </db:para>
+    </xsl:if>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:ul">
+    <db:itemizedlist>
+      <xsl:apply-templates mode="content_list"/>
+    </db:itemizedlist>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:ol">
+    <db:orderedlist>
+      <xsl:choose>
+        <xsl:when test=".[@class = '1']">
+          <xsl:attribute name="numeration">
+            <xsl:text>arabic</xsl:text>
+          </xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+      
+      <xsl:apply-templates mode="content_list"/>
+    </db:orderedlist>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:pre">
+    <db:programlisting>
+      <!-- 
+        All codes may have class="cpp", even JavaScript (qtqml-javascript-imports.xml), 
+        even though it's sometimes correct: qtbluetooth-index.xml, qml-color.xml. 
+        In other words: when it's not C++, it's reliable. 
+      -->
+      <xsl:if test="@class and not(@class = 'cpp')">
+        <xsl:attribute name="language" select="@class"/>
+      </xsl:if>
+      <xsl:value-of select="."/>
+    </db:programlisting>
   </xsl:template>
 </xsl:stylesheet>

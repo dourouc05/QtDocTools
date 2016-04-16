@@ -4,6 +4,7 @@
     version="5.0"
     xml:lang="en">
     <db:title>Introduction to QDoc</db:title>
+    <db:para>QDoc is a tool used by Qt Developers to generate documentation for software projects. It works by extracting <db:emphasis>QDoc comments</db:emphasis> from project source files and then formatting these comments as HTML pages or DITA XML documents. QDoc finds QDoc comments in <db:code>.cpp</db:code> files and in <db:code>.qdoc</db:code> files. QDoc does not look for QDoc comments in <db:code>.h</db:code> files. A QDoc comment always begins with an exclamation mark (<db:emphasis role="bold">!</db:emphasis>)). For example:</db:para>
     <db:programlisting>/*!
         \classQObject
         \brief The QObjectclass is the base class of all Qt objects.
@@ -39,12 +40,16 @@
     <db:section xml:id="running-qdoc">
         <db:title>Running QDoc</db:title>
         <db:para>The current name of the QDoc program is <db:code>qdoc</db:code>. To run qdoc from the command line, give it the name of a configuration file:</db:para>
-        <db:programlisting>$ ../../bin/qdoc ./config.qdocconf</db:programlisting>
+        <db:blockquote>
+            <db:para>
+                <db:code>$ ../../bin/qdoc ./config.qdocconf</db:code>
+            </db:para>
+        </db:blockquote>
         <db:para>QDoc recognizes the <db:code>.qdocconf</db:code> suffix as a <db:link xlink:href="21-0-qdoc-configuration.html">QDoc configuration file</db:link>. The configuration file is where you tell QDoc where to find the project source files, header files, and <db:code>.qdoc</db:code> files. It is also where you tell QDoc what kind of output to generate (HTML, DITA XML,...), and where to put the generated documentation. The configuration file also contains other information for QDoc.</db:para>
         <db:para>See <db:link xlink:href="21-0-qdoc-configuration.html">The QDoc Configuration File</db:link> for instructions on how to set up a QDoc configuration file.</db:para>
         <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                 <db:member>
                     <db:link xlink:href="qdoc-index.html">QDoc Manual</db:link>
                 </db:member>
@@ -58,11 +63,12 @@
         <db:title>How QDoc Works</db:title>
         <db:para>QDoc begins by reading the configuration file you specified on the command line. It stores all the variables from the configuration file for later use. One of the first variables it uses is <db:code>outputformats</db:code>. This variable tells QDoc which output generators it will run. The default value is <db:emphasis>HTML</db:emphasis>, so if you don't set <db:code>outputformats</db:code> in your configuration file, QDoc will generate HTML output. That's usually what you will want anyway, but you can also specify <db:emphasis>DITAXML</db:emphasis> to get DITA XML output instead.</db:para>
         <db:para>Next, QDoc uses the values of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#headerdirs-variable">headerdirs</db:link> variable and/or the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#headers-variable">headers</db:link> variable to find and parse all the header files for your project. QDoc does <db:emphasis>not</db:emphasis> scan header files for QDoc comments. It parses the header files to build a master tree of all the items that should be documented, in other words, the items that QDoc should find QDoc comments for.</db:para>
+        <db:para>After parsing all the header files and building the master tree of items to be documented, QDoc uses the value of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#sourcedirs-variable">sourcedirs</db:link> variable and/or the value of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#sources-variable">sources</db:link> variable to find and parse all the <db:code>.cpp</db:code> and <db:code>.qdoc</db:code> files for your project. These are the files QDoc scans for <db:emphasis>QDoc comments</db:emphasis>. Remember that a QDoc comment begins with an exclamation mark: <db:emphasis role="bold">/*!</db:emphasis> .</db:para>
         <db:para>For each QDoc comment it finds, it searches the master tree for the item where the documentation belongs. Then it interprets the qdoc commands in the comment and stores the interpreted commands and the comment text in the tree node for the item.</db:para>
         <db:para>Finally, QDoc traverses the master tree. For each node, if the node has stored documentation, QDoc calls the output generator specified by the <db:code>outputformats</db:code> variable to format and write the documentation in the directory specified in the configuration file in the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#outputdir-variable">outputdir</db:link> variable.</db:para>
         <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                 <db:member>
                     <db:link xlink:href="qdoc-index.html">QDoc Manual</db:link>
                 </db:member>
@@ -97,7 +103,7 @@
         <db:para>Markup commands tell QDoc how text and image elements in the document should be rendered, or about the document's outline structure.</db:para>
         <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                 <db:member>
                     <db:link xlink:href="qdoc-index.html">QDoc Manual</db:link>
                 </db:member>

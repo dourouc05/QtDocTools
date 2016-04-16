@@ -214,7 +214,9 @@
       <db:programlisting>QStandardItemModel*m =newQStandardItemModel(words.count(),2, completer);</db:programlisting>
       <db:para>A standard line in <db:emphasis>countries.txt</db:emphasis>
                                     is:</db:para>
-      <db:programlisting/>
+      <db:blockquote>
+         <db:para>Norway NO</db:para>
+      </db:blockquote>
       <db:para>Hence, to populate the <db:code><db:link xlink:href="qtgui/qstandarditemmodel.html">QStandardItemModel</db:link></db:code> object,
                                         <db:code>m</db:code>, we have to split the country name
                                     and its symbol. Once this is done, we return

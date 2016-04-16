@@ -258,7 +258,8 @@ def call_cpp_parser(file_in, file_out):
 # Convert the documentation XML files as DocBook for the given module.
 def generate_module_db(module_name):
     extension = '.xml'
-    forbidden_suffixes = ['-manifest', '-members', '-compat', '-obsolete']
+    forbidden_suffixes = ['-members', '-compat', '-obsolete']
+    forbidden_suffixes_nobase = ['-manifest']
 
     logging.info('XML to DocBook: starting to work with module %s' % module_name)
     for root, sub_dirs, files in os.walk(output + module_name + "/"):
@@ -274,8 +275,10 @@ def generate_module_db(module_name):
             # stylesheet (-members.xml, -obsolete.xml, -compat.xml). But only if the base file exists!
             if not file.endswith(extension):
                 continue
+            if any([file.endswith(fs + extension) for fs in forbidden_suffixes_nobase]):
+                continue
             if any([file.endswith(fs + extension) for fs in forbidden_suffixes]) and \
-                    [file.replace(fs + extension, '') for fs in forbidden_suffixes if file.endswith(fs)][0]:
+                    os.path.isfile([file.replace(fs + extension, '') for fs in forbidden_suffixes if file.endswith(fs + extension)][0] + extension):
                 continue
 
             # Actual processing.
