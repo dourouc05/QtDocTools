@@ -1,18 +1,16 @@
-import os
-import os.path
-import time
-import subprocess
-import json
-import logging
-
 """
 This script runs qdoc to generate a XML-formatted version of the documentation in input.
 
 TODO: actual CLI parameters.
 """
 
-import xml.etree.ElementTree as ETree
+import os
+import os.path
+import time
 import subprocess
+import json
+import logging
+import xml.etree.ElementTree as ETree
 
 try:
     import html5lib
@@ -41,8 +39,8 @@ generate_html = False  # If prepare is not True when generate is, need an indexF
 generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
 
-keep_html = False
-keep_xhtml = True
+keep_html = False  # TODO!
+keep_xhtml = True  # TODO!
 
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
@@ -220,7 +218,7 @@ def generate_module(module_name, configuration_file):
 
 
 # Convert the documentation HTML files as XML for the given module.
-def generate_module_xml(module_name, configuration_file):
+def generate_module_xml(module_name):
     logging.info('Parsing as XML: starting to work with module %s' % module_name)
     for root, subdirs, files in os.walk(output + module_name + "/"):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
@@ -250,7 +248,7 @@ def call_xslt(file_in, file_out, stylesheet):
         logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, result.stderr.decode('utf-8')))
 
 
-# Call the C++ parser for prototypes. Communication goes with standard inputs and outputs. 
+# Call the C++ parser for prototypes.
 def call_cpp_parser(file_in, file_out):
     result = subprocess.run([postprocess, '-s:%s' % file_in, '-o:%s' % file_out], stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
@@ -258,7 +256,10 @@ def call_cpp_parser(file_in, file_out):
 
 
 # Convert the documentation XML files as DocBook for the given module.
-def generate_module_db(module_name, configuration_file):
+def generate_module_db(module_name):
+    extension = '.xml'
+    forbidden_suffixes = ['-manifest', '-members', '-compat', '-obsolete']
+
     logging.info('XML to DocBook: starting to work with module %s' % module_name)
     for root, sub_dirs, files in os.walk(output + module_name + "/"):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
@@ -268,22 +269,27 @@ def generate_module_db(module_name, configuration_file):
         n_files = len(files)
         for file in files:
             count += 1
+
             # Avoid lists of examples (-manifest.xml) and files automatically included within the output with the XSLT
-            # stylesheet (-members.xml, -obsolete.xml).
-            if file.endswith('.xml') \
-                    and not file.endswith('-manifest.xml') \
-                    and not file.endswith('-members.xml') and not file.endswith('-obsolete.xml'):
-                base_file_name = os.path.join(root, file[:-4])
-                in_file_name = base_file_name + '.xml'
-                out_file_name = base_file_name + '.db'
-                call_xslt(in_file_name, out_file_name, xslt2)
+            # stylesheet (-members.xml, -obsolete.xml, -compat.xml). But only if the base file exists!
+            if not file.endswith(extension):
+                continue
+            if any([file.endswith(fs + extension) for fs in forbidden_suffixes]) and \
+                    [file.replace(fs + extension, '') for fs in forbidden_suffixes if file.endswith(fs)][0]:
+                continue
 
-                if not keep_xhtml:
-                    os.remove(file)
+            # Actual processing.
+            base_file_name = os.path.join(root, file[:-4])
+            in_file_name = base_file_name + '.xml'
+            out_file_name = base_file_name + '.db'
+            call_xslt(in_file_name, out_file_name, xslt2)
 
-                # For C++ classes, also handle the function prototypes with the C++ application.
-                if file.startswith('q') and not file.startswith('qml-'):
-                    call_cpp_parser(out_file_name, out_file_name)
+            # if not keep_xhtml:
+            #     os.remove(file)
+
+            # For C++ classes, also handle the function prototypes with the C++ application.
+            if file.startswith('q') and not file.startswith('qml-'):
+                call_cpp_parser(out_file_name, out_file_name)
 
             # Handle a bit of output.
             if count % 10 == 0:
@@ -315,12 +321,12 @@ if __name__ == '__main__':
 
     if generate_xml:
         for moduleName, conf in configs.items():
-            generate_module_xml(module_name=moduleName, configuration_file=conf)
+            generate_module_xml(module_name=moduleName)
     time_xml = time.perf_counter()
 
     if generate_db:
         for moduleName, conf in configs.items():
-            generate_module_db(module_name=moduleName, configuration_file=conf)
+            generate_module_db(module_name=moduleName)
     time_db = time.perf_counter()
 
     print("Total time: %f s" % (time_db - time_beginning))

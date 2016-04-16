@@ -284,10 +284,10 @@
         <html:div class="qml-props">
           <xsl:for-each
             select="
-            $qmlPropsTitle
-            /following-sibling::html:div[
-            @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
-            ]"
+              $qmlPropsTitle
+                /following-sibling::html:div[
+                  @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
+                ]"
             >
             <xsl:copy-of select="current()"></xsl:copy-of>
           </xsl:for-each>
@@ -458,9 +458,21 @@
     </xsl:variable>
     <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)"
       as="xs:boolean"/>
-
-    <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
+    
+    <xsl:variable name="obsolete_memfuncs_title" as="element(html:h2)?"
       select="$obsolete/html:h2[text() = 'Member Function Documentation']"/>
+    <xsl:variable name="obsolete_memfuncs" as="element(html:div)?">
+      <html:div class="func">
+        <xsl:copy-of select="$obsolete_memfuncs_title"/>
+        <xsl:copy-of
+          select="$obsolete_memfuncs_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_memfuncs_title]"
+        />
+      </html:div>
+    </xsl:variable>
+    <xsl:variable name="obsolete_hasMemFuncs" select="boolean($obsolete_memfuncs_title)" as="xs:boolean"/>
+    
+    <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
+      select="$obsolete/html:h2[text() = 'Function Documentation']"/>
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
       <html:div class="func">
         <xsl:copy-of select="$obsolete_funcs_title"/>
@@ -502,9 +514,9 @@
         <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
       
-      <xsl:if test="$isClass or $isNamespace">
+      <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
-          <xsl:with-param name="className" select="if ($isClass) then $className else $namespaceName"/>
+          <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
@@ -515,7 +527,7 @@
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
           
-          <xsl:with-param name="obsoleteFunctions" select="$obsolete_funcs"/>
+          <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
         
@@ -533,6 +545,26 @@
             <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
           </xsl:call-template>
         </xsl:if>
+      </xsl:if>
+      
+      <xsl:if test="$isNamespace">
+        <xsl:call-template name="classListing">
+          <xsl:with-param name="className" select="$namespaceName"/>
+          <xsl:with-param name="isNamespace" select="true()"/>
+          
+          <xsl:with-param name="functions" select="$funcs"/>
+          <xsl:with-param name="properties" select="$properties"/>
+          <xsl:with-param name="vars" select="$vars"/>
+          
+          <xsl:with-param name="header" select="$prologueHeader"/>
+          <xsl:with-param name="qmake" select="$prologueQmake"/>
+          <xsl:with-param name="inherits" select="$prologueInherits"/>
+          <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
+          <xsl:with-param name="since" select="$prologueSince"/>
+          
+          <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
+          <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
+        </xsl:call-template>
       </xsl:if>
       
       <xsl:if test="$isQmlType">
@@ -634,9 +666,16 @@
             </xsl:call-template>
           </xsl:if>
 
+          <xsl:if test="$obsolete_hasMemFuncs">
+            <xsl:call-template name="content_class">
+              <xsl:with-param name="data" select="$obsolete_memfuncs"/>
+            </xsl:call-template>
+          </xsl:if>
+          
           <xsl:if test="$obsolete_hasFuncs">
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_funcs"/>
+              <xsl:with-param name="title" select="'Function Documentation'"></xsl:with-param>
             </xsl:call-template>
           </xsl:if>
 
@@ -740,11 +779,13 @@
   <!-- Handle classes: class structure. -->
   <xsl:template name="classListing">
     <xsl:param name="className" as="xs:string"/>
+    <xsl:param name="isNamespace" as="xs:boolean" select="false()"/>
+    
     <xsl:param name="functions" as="element(html:div)?"/>
     <xsl:param name="properties" as="element(html:div)?"/>
     <xsl:param name="vars" as="element(html:div)?"/>
     
-    <xsl:param name="obsoleteFunctions" as="element(html:div)?"/>
+    <xsl:param name="obsoleteMemberFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
 
     <xsl:param name="header" as="element()?"/>
@@ -759,7 +800,12 @@
           <xsl:value-of select="$className"/>
         </db:classname>
       </db:ooclass>
-
+      
+      <xsl:if test="$isNamespace">
+        <db:classsynopsisinfo role="isNamespace">
+          yes
+        </db:classsynopsisinfo>
+      </xsl:if>
       <xsl:if test="$header">
         <db:classsynopsisinfo role="header">
           <xsl:value-of select="$header"/>
@@ -814,8 +860,8 @@
       <xsl:apply-templates mode="classListing" select="$functions/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
-      <xsl:if test="boolean($obsoleteFunctions)">
-        <xsl:apply-templates mode="classListing" select="$obsoleteFunctions/html:h3">
+      <xsl:if test="boolean($obsoleteMemberFunctions)">
+        <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
           <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="obsolete">
             <xsl:value-of select="true()"/>
@@ -1386,9 +1432,12 @@
   <!-- Handle C++ classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="title" as="xs:string" select="'Member Function Documentation'"></xsl:param>
 
     <db:section>
-      <db:title>Member Function Documentation</db:title>
+      <db:title>
+        <xsl:value-of select="$title"/>
+      </db:title>
       <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
     </db:section>
   </xsl:template>

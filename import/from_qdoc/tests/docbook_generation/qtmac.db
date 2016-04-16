@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:lang="en">
+    <db:title>QtMac Namespace</db:title>
+    <db:classsynopsis>
+        <db:ooclass>
+            <db:classname>QtMac</db:classname>
+        </db:ooclass>
+        <db:classsynopsisinfo role="isNamespace">
+            yes
+        </db:classsynopsisinfo>
+        <db:classsynopsisinfo role="header">#include
+            &lt;QtMac&gt;</db:classsynopsisinfo>
+        <db:classsynopsisinfo role="qmake"> QT +=
+            macextras</db:classsynopsisinfo>
+        <db:classsynopsisinfo role="since"> Qt
+            5.2</db:classsynopsisinfo>
+        <db:methodsynopsis xlink:href="applicationIconBadgeNumber">
+            <db:type>int</db:type>
+            <db:methodname>applicationIconBadgeNumber</db:methodname>
+            <db:void/>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="badgeLabelText">
+            <db:type xlink:href="qtcore/qstring.html">QString</db:type>
+            <db:methodname>badgeLabelText</db:methodname>
+            <db:void/>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="currentCGContext">
+            <db:type>CGContextRef</db:type>
+            <db:methodname>currentCGContext</db:methodname>
+            <db:void/>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="fromCGImageRef">
+            <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
+            <db:methodname>fromCGImageRef</db:methodname>
+            <db:void role="parameters"/>
+            <db:exceptionname role="parameters">( CGImageRef  image )</db:exceptionname>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="isMainWindow">
+            <db:type>bool</db:type>
+            <db:methodname>isMainWindow</db:methodname>
+            <db:void role="parameters"/>
+            <db:exceptionname role="parameters">( QWindow 
+                *  window )</db:exceptionname>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="setApplicationIconBadgeNumber">
+            <db:void/>
+            <db:methodname>setApplicationIconBadgeNumber</db:methodname>
+            <db:void role="parameters"/>
+            <db:exceptionname role="parameters">( int 
+                number )</db:exceptionname>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="setBadgeLabelText">
+            <db:void/>
+            <db:methodname>setBadgeLabelText</db:methodname>
+            <db:void role="parameters"/>
+            <db:exceptionname role="parameters">(const  QString  &amp; 
+                text )</db:exceptionname>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="toCGImageRef">
+            <db:type>CGImageRef</db:type>
+            <db:methodname>toCGImageRef</db:methodname>
+            <db:void role="parameters"/>
+            <db:exceptionname role="parameters">(const  QPixmap 
+                &amp;  pixmap )</db:exceptionname>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="toNSImage">
+            <db:type>NSImage</db:type>
+            <db:methodname>toNSImage</db:methodname>
+            <db:void role="parameters"/>
+            <db:exceptionname role="parameters">(const
+                QPixmap  &amp; 
+                pixmap )</db:exceptionname>
+        </db:methodsynopsis>
+    </db:classsynopsis>
+    <db:section xml:id="details">
+        <db:title>Detailed Description</db:title>
+        <db:para>The <db:code><db:link xlink:href="qtmac.html">QtMac</db:link></db:code> namespace
+            contains miscellaneous functionality specific to the OS X
+            operating system.</db:para>
+    </db:section>
+    <db:section>
+        <db:title>Member Function Documentation</db:title>
+        <db:section xml:id="applicationIconBadgeNumber">
+            <db:title>int QtMac::applicationIconBadgeNumber()</db:title>
+            <db:section>
+                <db:title>See Also</db:title>
+                <db:simplelist type="vert">
+                    <db:member><db:code><db:link xlink:href="qtmac.html#setApplicationIconBadgeNumber">setApplicationIconBadgeNumber</db:link>()</db:code></db:member>
+                </db:simplelist>
+            </db:section>
+        </db:section>
+        <db:section xml:id="badgeLabelText">
+            <db:title>QString QtMac::badgeLabelText()</db:title>
+            <db:section>
+                <db:title>See Also</db:title>
+                <db:simplelist type="vert">
+                    <db:member><db:code><db:link xlink:href="qtmac.html#setBadgeLabelText">setBadgeLabelText</db:link>()</db:code></db:member>
+                </db:simplelist>
+            </db:section>
+        </db:section>
+        <db:section xml:id="currentCGContext">
+            <db:title>CGContextRef QtMac::currentCGContext()</db:title>
+            <db:para/>
+        </db:section>
+        <db:section xml:id="fromCGImageRef">
+            <db:title>QPixmap QtMac::fromCGImageRef(CGImageRef image)</db:title>
+            <db:para/>
+        </db:section>
+        <db:section xml:id="isMainWindow">
+            <db:title>bool QtMac::isMainWindow(QWindow * window)</db:title>
+            <db:para/>
+        </db:section>
+        <db:section xml:id="setApplicationIconBadgeNumber">
+            <db:title>void QtMac::setApplicationIconBadgeNumber(int number)</db:title>
+            <db:section>
+                <db:title>See Also</db:title>
+                <db:simplelist type="vert">
+                    <db:member><db:code><db:link xlink:href="qtmac.html#applicationIconBadgeNumber">applicationIconBadgeNumber</db:link>()</db:code></db:member>
+                </db:simplelist>
+            </db:section>
+        </db:section>
+        <db:section xml:id="setBadgeLabelText">
+            <db:title>void QtMac::setBadgeLabelText(const QString &amp; text)</db:title>
+            <db:section>
+                <db:title>See Also</db:title>
+                <db:simplelist type="vert">
+                    <db:member><db:code><db:link xlink:href="qtmac.html#badgeLabelText">badgeLabelText</db:link>()</db:code></db:member>
+                </db:simplelist>
+            </db:section>
+        </db:section>
+        <db:section xml:id="toCGImageRef">
+            <db:title>CGImageRef QtMac::toCGImageRef(const QPixmap &amp; pixmap)</db:title>
+            <db:para/>
+        </db:section>
+        <db:section xml:id="toNSImage">
+            <db:title>NSImage * QtMac::toNSImage(const QPixmap &amp; pixmap)</db:title>
+            <db:para/>
+        </db:section>
+    </db:section>
+    <db:section>
+        <db:title>Obsolete Members</db:title>
+        <db:section>
+            <db:title>Function Documentation</db:title>
+            <db:section xml:id="fromNSData">
+                <db:title>QByteArray QtMac::fromNSData(const NSData * data)</db:title>
+                <db:para/>
+            </db:section>
+            <db:section xml:id="toNSData">
+                <db:title>NSData * QtMac::toNSData(const QByteArray &amp; data)</db:title>
+                <db:para/>
+            </db:section>
+        </db:section>
+    </db:section>
+</db:article>
