@@ -1638,6 +1638,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  <xsl:template mode="content" match="html:span"/>
   <xsl:template mode="content" match="html:hr">
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
@@ -1734,22 +1735,9 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="html:blockquote">
-    <!-- Blockquotes are barely used in the documentation. -->
-    <xsl:choose>
-      <xsl:when test="count(./html:*) &gt; 1 and ./html:p and (./html:p/html:i or ./html:p/html:b)">
-        <db:blockquote>
-          <xsl:apply-templates mode="content"/>
-        </db:blockquote>
-      </xsl:when>
-      <xsl:when test="count(child::html:*) = 1 and child::html:p">
-        <db:programlisting>
-          <xsl:value-of select="./html:p/html:code/text()"/>
-        </db:programlisting>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message>WARNING: Unexpected html:blockquote here.</xsl:message>
-      </xsl:otherwise>
-    </xsl:choose>
+    <db:blockquote>
+      <xsl:apply-templates mode="content"/>
+    </db:blockquote>
   </xsl:template>
   <!-- Titles are handled in template content_withTitles_before. -->
   <xsl:template mode="content" match="html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
@@ -2070,7 +2058,9 @@
     -->
     <xsl:choose>
       <xsl:when test="starts-with(./following-sibling::text()[1], '()')">
-        <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
+        <xsl:if test="not(ancestor::node()[self::html:code])">
+          <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
+        </xsl:if>
         <db:link>
           <xsl:attribute name="xlink:href" select="@href"/>
           <xsl:apply-templates mode="content_paragraph"/>
@@ -2083,11 +2073,15 @@
         <xsl:text>(</xsl:text>
         <xsl:value-of select="$justList"/>
         <xsl:text>)</xsl:text>
-
-        <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
+        
+        <xsl:if test="not(ancestor::node()[self::html:code])">
+          <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
+        </xsl:if>
       </xsl:when>
       <xsl:when test="count(./text()) = 1 and starts-with(./text(), 'Q') and not(contains(./text(), ' '))">
-        <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
+        <xsl:if test="not(ancestor::node()[self::html:code])">
+          <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
+        </xsl:if>
         <db:link>
           <xsl:attribute name="xlink:href" select="@href"/>
           <xsl:apply-templates mode="content_paragraph"/>
@@ -2103,8 +2097,10 @@
           <xsl:value-of select="$templateArgument"/>
           <xsl:text>&gt;</xsl:text>
         </xsl:if>
-
-        <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
+        
+        <xsl:if test="not(ancestor::node()[self::html:code])">
+          <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <db:link>
@@ -2162,6 +2158,21 @@
         </db:emphasis>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:u">
+    <db:accel>
+      <xsl:apply-templates mode="content_list"/>
+    </db:accel>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:sub">
+    <db:subscript>
+      <xsl:apply-templates mode="content_list"/>
+    </db:subscript>
+  </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:sup">
+    <db:superscript>
+      <xsl:apply-templates mode="content_list"/>
+    </db:superscript>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:ul">
     <db:itemizedlist>
