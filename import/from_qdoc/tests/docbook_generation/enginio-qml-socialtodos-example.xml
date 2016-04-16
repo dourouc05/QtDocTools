@@ -1,0 +1,670 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- socialtodos.qdoc -->
+        <html:title>Enginio QML Examples - Social Todos | Enginio QML Types and Examples
+            5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li>Enginio Manual</html:li>
+                            <html:li><html:a href="enginio-qml-types-and-examples.html">Enginio QML
+                                    Types and Examples</html:a></html:li>
+                            <html:li>Enginio QML Examples - Social Todos</html:li>
+                            <html:li id="buildversion">Enginio 5.4.2 Reference
+                                Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#introduction"
+                                                >Introduction</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#configure-backend"
+                                                >Configure Backend</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#1-create-allusers-usergroup">1. Create
+                                                'allUsers' Usergroup</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#2-create-todolists-object-type">2. Create
+                                                'todoLists' Object Type</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#3-create-todos-object-type">3. Create 'todos'
+                                                Object Type</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#4-configure-users-object-type">4. Configure
+                                                'users' Object Type</html:a></html:li>
+                                        <html:li class="level2"><html:a
+                                                href="#5-configure-usergroups-object-type">5.
+                                                Configure 'usergroups' Object
+                                            Type</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#configure-and-run-qml-application">Configure
+                                                and Run QML Application</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#qml-application-walk-through">QML Application
+                                                Walk-through</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">Enginio QML Examples - Social Todos</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$socialtodos-description -->
+                            <html:div class="descr">
+                                <html:a name="details"></html:a>
+                                <html:a name="introduction"></html:a>
+                                <html:h2 id="introduction">Introduction</html:h2>
+                                <html:p>Social Todos is a simple todo list application with a social
+                                    twist, demonstrating the user management and access control
+                                    features of the Enginio service. The application allows the end
+                                    user to register a new user account, log in, and create and
+                                    delete task lists, manage tasks on those lists and share lists
+                                    with selected other users.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/socialtodo-example.png" /></html:p><html:p>The
+                                    application data is modeled as <html:i>todo items</html:i> and
+                                        <html:i>todo lists</html:i>.</html:p>
+                                <html:ul>
+                                    <html:li>A <html:i>todo item</html:i> represents a single tasks
+                                        which needs to be done. Todo item contais a textual
+                                        description of the task and a boolean status flag telling
+                                        whether the task is completed or not.</html:li>
+                                    <html:li>A <html:i>todo list</html:i> represents a list of
+                                        tasks. Todo list contains zero or more todo items and each
+                                        todo item belongs to just one todo list. Todo lists are
+                                        created by the application end users. By default only the
+                                        user who created a list can access it and its todo items.
+                                        However, the creator can share the list with other
+                                        users.</html:li>
+                                </html:ul>
+                                <html:p>The Social Todos example uses the following Enginio
+                                    features:</html:p>
+                                <html:div class="qt-enginio-example-2-col-desc-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>User management with integrated
+                                                  Enginio accounts</html:b></html:td>
+                                                  <html:td>Enables end users to register and login.
+                                                  end users are identified by username and
+                                                  password.</html:td>
+                                                </html:tr>
+                                                <html:tr class="even" valign="top">
+                                                  <html:td><html:b>Object storage</html:b></html:td>
+                                                  <html:td>Provides shared persistent storage for
+                                                  task lists and tasks.</html:td>
+                                                </html:tr>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Data
+                                                  validation</html:b></html:td>
+                                                  <html:td>Enforces required data structure for task
+                                                  lists and tasks.</html:td>
+                                                </html:tr>
+                                                <html:tr class="even" valign="top">
+                                                  <html:td><html:b>Access control
+                                                  mechanisms</html:b></html:td>
+                                                  <html:td>Restricts access to application data so
+                                                  that it is available only to authenticated
+                                                  (logged-in) end users. End users can see and
+                                                  manipulate only those task lists and tasks which
+                                                  they are entitled to.</html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:p>To get the Social Todos application working
+                                    correctly you will need to:</html:p>
+                                <html:ol class="1">
+                                    <html:li>Create a new application backend via <html:a
+                                            href="https://dashboard.engin.io">Enginio
+                                            Dashboard</html:a>.</html:li>
+                                    <html:li>Configure the backend as instructed in the <html:a
+                                            href="enginio-qml-socialtodos-example.html#configure-backend"
+                                            >Configure Backend</html:a> section.</html:li>
+                                    <html:li>And then run the application as explained in the
+                                            <html:a
+                                            href="enginio-qml-socialtodos-example.html#configure-and-run-qml-application"
+                                            >Configure and Run QML Application</html:a>
+                                        section.</html:li>
+                                    <html:li>Finally you can check the QML application details in
+                                            <html:a
+                                            href="enginio-qml-socialtodos-example.html#qml-application-walk-through"
+                                            >QML Application Walk-through</html:a>.</html:li>
+                                </html:ol>
+                                <html:a name="configure-backend"></html:a>
+                                <html:h2 id="configure-backend">Configure Backend</html:h2>
+                                <html:p>This section presents steps for configuring a fresh Enginio
+                                    Backend for the Social Todos example. A big part of the backend
+                                    configuration is related to restricting who can create and
+                                    access the application data.</html:p>
+                                <html:div class="qt-enginio-example-2-col-desc-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Data creation
+                                                  controls</html:b></html:td>
+                                                  <html:td>Todo list and todo item creation is
+                                                  allowed for registered application users only. The
+                                                  protection is based on having a single usergroup
+                                                  (group name 'allUsers') in the backend
+                                                  configuration. Todo list and todo item creation
+                                                  rights are granted to members of this group.
+                                                  Application users are added to this usergroup when
+                                                  they use the QML application.<html:p>For built-in
+                                                  users and usergroups the creation control is
+                                                  handled slightly differently. New users can be
+                                                  freely created and thus anyone can register to use
+                                                  the application. Usergroups creation is completely
+                                                  blocked, since the application uses just one fixed
+                                                  usergroup.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                                <html:tr class="even" valign="top">
+                                                  <html:td><html:b>Data access
+                                                  controls</html:b></html:td>
+                                                  <html:td>Data access (and manipulation) to todo
+                                                  lists and todo items is allowed only for logged-in
+                                                  users. By default only the user who creates the
+                                                  todo list can access the list and its todo
+                                                  items.<html:p>However, the creator can share the
+                                                  list with other users. List sharing happens by
+                                                  granting the right to access the list to selected
+                                                  other users.</html:p>
+                                                  <html:p>Access permissions are explicitly managed
+                                                  only for todo lists. Todo items are configured to
+                                                  inherit permissions from the todo list which they
+                                                  belong to.</html:p>
+                                                  <html:p>For user objects, the access is allowed
+                                                  only to logged-in users which are members of
+                                                  'allUsers' usergroup.</html:p>
+                                                  <html:p>For usergroups objects, the access is
+                                                  allowed so that everyone can see the single fixed
+                                                  'allUsers' usergroup.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:a name="1-create-allusers-usergroup"></html:a>
+                                <html:h3>1. Create 'allUsers' Usergroup</html:h3>
+                                <html:p>Create a new usergroup <html:code>allUsers</html:code>. The
+                                    usergroup will be used to restrict that only registered
+                                    application end users can store new todo lists and items to the
+                                    backend. The usergroup itself is secured with suitable data
+                                    access permissions.</html:p>
+                                <html:p>First create the usergroup:</html:p>
+                                <html:ul>
+                                    <html:li>In the Dashboard: Select <html:b>Usergroups</html:b>,
+                                        click <html:b>Add</html:b>, enter name
+                                            <html:code>allUsers</html:code> for the usergroup, and
+                                        select <html:b>Save</html:b>.</html:li>
+                                </html:ul>
+                                <html:p>Then secure the usergroup by configuring suitable permission
+                                    settings:</html:p>
+                                <html:ul>
+                                    <html:li>In the Dashboard: Open <html:b>allUsers</html:b>
+                                        usergroup for editing, apply the configurations below, and
+                                        finally select <html:b>Save</html:b> in usergroup
+                                        editor.</html:li>
+                                </html:ul>
+                                <html:div class="qt-enginio-example-3-col-conf-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:thead>
+                                                <html:tr class="qt-style">
+                                                  <html:th>Setting area</html:th>
+                                                  <html:th>Required configurations</html:th>
+                                                  <html:th></html:th>
+                                                </html:tr>
+                                            </html:thead>
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Object
+                                                  permissions</html:b></html:td>
+                                                  <html:td>Configure the following permissions:<html:ul>
+                                                  <html:li>Grant <html:code>read</html:code>
+                                                  permission to
+                                                  <html:code>all</html:code>.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Object permissions</html:i>
+                                                  control who can perform operations to
+                                                  <html:code>allUsers</html:code>
+                                                  usergroup.<html:p>In this case read-only access is
+                                                  given to everybody, so the QML application can
+                                                  read the <html:code>allUsers</html:code> data even
+                                                  when the application doesn't have any logged in
+                                                  user.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                                <html:tr class="even" valign="top">
+                                                  <html:td><html:b>Member management
+                                                  permissions</html:b></html:td>
+                                                  <html:td>Configure the following permissions:<html:ul>
+                                                  <html:li>Grant <html:code>create</html:code>
+                                                  permission to
+                                                  <html:code>all</html:code>.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Member management
+                                                  permissions</html:i> control who can add new
+                                                  members to the <html:code>allUsers</html:code>
+                                                  usergroup or remove existing ones.<html:p>Now
+                                                  everyone can add members, and consequently the QML
+                                                  application can add the end user to the
+                                                  <html:code>allUsers</html:code> usergroup.
+                                                  However, since other permissions are not granted,
+                                                  usergroup members can not be listed or
+                                                  removed.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:a name="2-create-todolists-object-type"></html:a>
+                                <html:h3>2. Create 'todoLists' Object Type</html:h3>
+                                <html:p>Create a new object type
+                                        <html:code>objects.todoLists</html:code>. The object type
+                                    defines the data schema and other settings for todo list
+                                    objects.</html:p>
+                                <html:p>Create the object type:</html:p>
+                                <html:ul>
+                                    <html:li>In Dashboard: Select <html:b>Object Types</html:b>,
+                                        click <html:b>Add</html:b>, enter name
+                                            <html:code>objects.todoLists</html:code> for the object
+                                        type, and select <html:b>Save</html:b>.</html:li>
+                                </html:ul>
+                                <html:p>Then configure the object type with needed details:</html:p>
+                                <html:ul>
+                                    <html:li>In Dashboard: Open <html:b>objects.todoLists</html:b>
+                                        object type for editing, apply the configurations below, and
+                                        finally select <html:b>Save</html:b> in object type
+                                        editor.</html:li>
+                                </html:ul>
+                                <html:div class="qt-enginio-example-3-col-conf-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:thead>
+                                                <html:tr class="qt-style">
+                                                  <html:th>Setting area</html:th>
+                                                  <html:th>Required configurations</html:th>
+                                                  <html:th></html:th>
+                                                </html:tr>
+                                            </html:thead>
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Properties</html:b></html:td>
+                                                  <html:td>Add following property:<html:ul>
+                                                  <html:li><html:code>name</html:code>, with data
+                                                  type <html:i>string</html:i></html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Properties</html:i> are key/value
+                                                  pairs containing actual object data.<html:p>The
+                                                  '<html:code>name</html:code>' property will hold
+                                                  the name of the todo list.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                                <html:tr class="even" valign="top">
+                                                  <html:td><html:b>Permissions</html:b></html:td>
+                                                  <html:td>Configure following permissions:<html:ul>
+                                                  <html:li>Collection permissions<html:ul>
+                                                  <html:li>Grant <html:i>read</html:i> and
+                                                  <html:i>create</html:i> permission to
+                                                  <html:code>allUsers</html:code>
+                                                  usergroup.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  <html:li>Object permissions template<html:ul>
+                                                  <html:li>Grant <html:i>admin</html:i> permission
+                                                  to <html:i>creator</html:i> subject.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Collection permissions</html:i>
+                                                  control who is able to create new
+                                                  <html:code>objects.todoLists</html:code> objects
+                                                  or list existing ones. Now those rights are
+                                                  granted to <html:code>allUsers</html:code>
+                                                  usergroup members.<html:p><html:i>Object
+                                                  permissions template</html:i> define how object
+                                                  level permissions will be initially set for
+                                                  created <html:code>objects.todoLists</html:code>
+                                                  objects. Now <html:i>admin</html:i> permission
+                                                  will be granted to the user who creates the
+                                                  <html:code>objects.todoLists</html:code>
+                                                  object.</html:p>
+                                                  <html:p><html:i>Admin</html:i> right allows the
+                                                  user to perform all 'normal' operations on the
+                                                  <html:code>objects.todoLists</html:code> object
+                                                  (i.e. read, update and delete the object).
+                                                  <html:i>Admin</html:i> right allows the user also
+                                                  to manage object's permissions (i.e. grant and
+                                                  withdraw rights for other users).</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:a name="3-create-todos-object-type"></html:a>
+                                <html:h3>3. Create 'todos' Object Type</html:h3>
+                                <html:p>Create a new object type
+                                        <html:code>objects.todos</html:code>. The object type
+                                    defines data schema and other settings for todo item
+                                    objects.</html:p>
+                                <html:p>Create the object type:</html:p>
+                                <html:ul>
+                                    <html:li>In Dashboard: Select <html:b>Object Types</html:b>,
+                                        click <html:b>Add</html:b>, enter name
+                                            <html:code>objects.todos</html:code> for the object
+                                        type, and select <html:b>Save</html:b>.</html:li>
+                                </html:ul>
+                                <html:p>Then configure the object type with needed details:</html:p>
+                                <html:ul>
+                                    <html:li>In Dashboard: Open <html:b>objects.todos</html:b>
+                                        object type for editing, apply the configurations below, and
+                                        finally select <html:b>Save</html:b> in object type
+                                        editor.</html:li>
+                                </html:ul>
+                                <html:div class="qt-enginio-example-3-col-conf-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:thead>
+                                                <html:tr class="qt-style">
+                                                  <html:th>Setting area</html:th>
+                                                  <html:th>Required configurations</html:th>
+                                                  <html:th></html:th>
+                                                </html:tr>
+                                            </html:thead>
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Properties</html:b></html:td>
+                                                  <html:td>Add following properties:<html:ul>
+                                                  <html:li><html:code>title</html:code>, with data
+                                                  type <html:i>string</html:i></html:li>
+                                                  <html:li><html:code>done</html:code>, with data
+                                                  type <html:i>boolean</html:i></html:li>
+                                                  <html:li><html:code>todoList</html:code>, with
+                                                  data type <html:i>ref</html:i> and target
+                                                  <html:code>objects.todoLists</html:code></html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Properties</html:i> are key/value
+                                                  pairs containing actual object data.<html:p>The
+                                                  '<html:code>title</html:code>' property will hold
+                                                  the textual content for the todo item.</html:p>
+                                                  <html:p>The '<html:code>done</html:code>' property
+                                                  is boolean status whether the item is done or
+                                                  not.</html:p>
+                                                  <html:p>The '<html:code>todoList</html:code>' is a
+                                                  reference to parent todo list, i.e. a link to todo
+                                                  list object to which this todo item belongs
+                                                  to.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                                <html:tr class="even" valign="top">
+                                                  <html:td><html:b>Reference
+                                                  constraints</html:b></html:td>
+                                                  <html:td>Configure following reference constraint action:<html:ul>
+                                                  <html:li>For <html:code>todoList</html:code>
+                                                  reference, setup <html:i>cascade delete</html:i>
+                                                  action.</html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Reference constraints</html:i>
+                                                  are mechanism to enforce "exists" relationships
+                                                  between objects. <html:i>Action</html:i> specifies
+                                                  what is done when a referenced object is deleted.
+                                                  <html:i>Cascade delete</html:i> selection means
+                                                  that the referencing
+                                                  <html:code>objects.todos</html:code> object is
+                                                  also deleted in this case.</html:td>
+                                                </html:tr>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Permissions</html:b></html:td>
+                                                  <html:td>Configure following permissions:<html:ul>
+                                                  <html:li>Collection permissions<html:ul>
+                                                  <html:li>Grant <html:i>read</html:i> and
+                                                  <html:i>create</html:i> permission to
+                                                  <html:code>allUsers</html:code>
+                                                  usergroup.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  <html:li>Object permissions template<html:ul>
+                                                  <html:li>Clear all permissions grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  <html:li>Object permissions inheritance<html:ul>
+                                                  <html:li>Enable object permissions inheritance for
+                                                  <html:code>todoList</html:code>
+                                                  reference.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Collection permissions</html:i>
+                                                  control who is able to create new
+                                                  <html:code>objects.todos</html:code> objects or
+                                                  list existing ones. Now those rights are granted
+                                                  to <html:code>allUsers</html:code> usergroup
+                                                  members.<html:p><html:i>Object permissions
+                                                  template</html:i> define how object level
+                                                  permissions will be initially set for created
+                                                  <html:code>objects.todos</html:code> objects. Now
+                                                  object permissions template is left empty, because
+                                                  dynamic permission inheritance is used.</html:p>
+                                                  <html:p>Object permissions inheritance enables
+                                                  inheriting object level permissions dynamically
+                                                  from referenced objects. Now permissions
+                                                  inheritance is enabled for
+                                                  <html:code>todoList</html:code> reference. Thus
+                                                  <html:code>objects.todos</html:code> object
+                                                  inherits its permissions from referenced
+                                                  <html:code>objects.todoLists</html:code>
+                                                  object.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:a name="4-configure-users-object-type"></html:a>
+                                <html:h3>4. Configure 'users' Object Type</html:h3>
+                                <html:p>Configure built-in <html:code>users</html:code> object type
+                                    with needed security permissions. The
+                                        <html:code>users</html:code> object type defines data schema
+                                    and other settings for user objects, modeling application end
+                                    users.</html:p>
+                                <html:ul>
+                                    <html:li>In Dashboard: select <html:b>Object Types</html:b>,
+                                        open <html:b>users</html:b> object type for editing, apply
+                                        the configurations below, and finally select
+                                            <html:b>Save</html:b> in object type editor.</html:li>
+                                </html:ul>
+                                <html:div class="qt-enginio-example-3-col-conf-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:thead>
+                                                <html:tr class="qt-style">
+                                                  <html:th>Setting area</html:th>
+                                                  <html:th>Required configurations</html:th>
+                                                  <html:th></html:th>
+                                                </html:tr>
+                                            </html:thead>
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Permissions</html:b></html:td>
+                                                  <html:td>Configure permissions and dynamic rules:<html:ul>
+                                                  <html:li>Collection permissions<html:ul>
+                                                  <html:li>Grant <html:i>create</html:i> permission
+                                                  to <html:code>all</html:code>.</html:li>
+                                                  <html:li>Grant <html:i>read</html:i> permission to
+                                                  <html:code>allUsers</html:code>
+                                                  usergroup.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  <html:li>Object permissions template<html:ul>
+                                                  <html:li>Grant <html:i>read</html:i> permission to
+                                                  <html:code>allUsers</html:code>
+                                                  usergroup.</html:li>
+                                                  <html:li>Grant <html:i>admin</html:i> permission
+                                                  to <html:i>creator</html:i> subject.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Collection permissions</html:i>
+                                                  control who is able to create new
+                                                  <html:code>users</html:code> objects or list
+                                                  existing ones. In this case create right is
+                                                  granted to all, so anyone can freely register to
+                                                  application as a new user. However, listing of
+                                                  existing users is granted only to members of
+                                                  <html:code>allUsers</html:code>
+                                                  usergroup.<html:p><html:i>Object permissions
+                                                  template</html:i> define how object level
+                                                  permissions will be initially set for created
+                                                  <html:code>users</html:code> objects. Read-only
+                                                  right is given to <html:code>allUsers</html:code>
+                                                  usergroup members, so registered users are able to
+                                                  see each other details for sharing
+                                                  purposes.</html:p>
+                                                  <html:p>Now <html:i>admin</html:i> permission will
+                                                  be granted to the user who creates the
+                                                  <html:code>users</html:code> object, i.e. to user
+                                                  itself. <html:i>Admin</html:i> right allows the
+                                                  user to perform all operations on the
+                                                  <html:code>users</html:code> object (i.e. read,
+                                                  update and delete the object and also to manage
+                                                  its access rights).</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:a name="5-configure-usergroups-object-type"></html:a>
+                                <html:h3>5. Configure 'usergroups' Object Type</html:h3>
+                                <html:p>Configure built-in <html:code>usergroups</html:code> object
+                                    type with needed security permissions. The
+                                        <html:code>usergroups</html:code> object type defines data
+                                    schema and other settings for usergroups objects.</html:p>
+                                <html:ul>
+                                    <html:li>In Dashboard: select <html:b>Object Types</html:b>,
+                                        open <html:b>usergroups</html:b> object type for editing,
+                                        apply the configurations below, and finally select
+                                            <html:b>Save</html:b> in object type editor.</html:li>
+                                </html:ul>
+                                <html:div class="qt-enginio-example-3-col-conf-table"><html:div
+                                        class="table"><html:table class="generic">
+                                            <html:thead>
+                                                <html:tr class="qt-style">
+                                                  <html:th>Setting area</html:th>
+                                                  <html:th>Required configurations</html:th>
+                                                  <html:th></html:th>
+                                                </html:tr>
+                                            </html:thead>
+                                            <html:tbody>
+                                                <html:tr class="odd" valign="top">
+                                                  <html:td><html:b>Permissions</html:b></html:td>
+                                                  <html:td>Configure permissions and dynamic rules:<html:ul>
+                                                  <html:li>Collection permissions<html:ul>
+                                                  <html:li>Grant <html:i>read</html:i> permission to
+                                                  <html:code>all</html:code>.</html:li>
+                                                  <html:li>Clear other permission grants.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  <html:li>Object permissions template<html:ul>
+                                                  <html:li>No changes.</html:li>
+                                                  </html:ul>
+                                                  </html:li>
+                                                  </html:ul>
+                                                  </html:td>
+                                                  <html:td><html:i>Collection permissions</html:i>
+                                                  control which users are able to create new
+                                                  <html:code>usergroups</html:code> objects or list
+                                                  existing ones. In this case listing rights are
+                                                  granted for everyone (i.e. those are publicly
+                                                  readable). Thus the QML application can locate the
+                                                  <html:code>allUsers</html:code> usergoup in the
+                                                  application startup phase, even before the end
+                                                  user logs in to the system. However, since create
+                                                  right is not granted to anyone, new usergroups can
+                                                  not be created.<html:p><html:i>Object permissions
+                                                  template</html:i> define how object level
+                                                  permissions will be set initially for the created
+                                                  <html:code>usergroups</html:code> objects. Since
+                                                  new usergoups will not be created dynamically,
+                                                  there is no need to modify the permission
+                                                  template. Note that changes made in the
+                                                  permissions template will effect existing
+                                                  <html:code>usergroups</html:code> objects and thus
+                                                  the <html:code>allUsers</html:code> group as
+                                                  well.</html:p>
+                                                  </html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div>
+                                </html:div><html:a name="configure-and-run-qml-application"></html:a>
+                                <html:h2 id="configure-and-run-qml-application">Configure and Run
+                                    QML Application</html:h2>
+                                <html:a name="qml-application-walk-through"></html:a>
+                                <html:h2 id="qml-application-walk-through">QML Application
+                                    Walk-through</html:h2>
+                                <html:p>Files:</html:p>
+                                <html:ul>
+                                    <html:li><html:a href="qtenginioqml-socialtodos-header-qml.html"
+                                            >socialtodos/Header.qml</html:a></html:li>
+                                    <html:li><html:a href="qtenginioqml-socialtodos-list-qml.html"
+                                            >socialtodos/List.qml</html:a></html:li>
+                                    <html:li><html:a href="qtenginioqml-socialtodos-login-qml.html"
+                                            >socialtodos/Login.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-sharedialog-qml.html"
+                                            >socialtodos/ShareDialog.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-textfield-qml.html"
+                                            >socialtodos/TextField.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-todolists-qml.html"
+                                            >socialtodos/TodoLists.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-touchbutton-qml.html"
+                                            >socialtodos/TouchButton.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-socialtodos-qml.html"
+                                            >socialtodos/socialtodos.qml</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-socialtodos-pro.html"
+                                            >socialtodos/socialtodos.pro</html:a></html:li>
+                                    <html:li><html:a
+                                            href="qtenginioqml-socialtodos-socialtodos-qrc.html"
+                                            >socialtodos/socialtodos.qrc</html:a></html:li>
+                                </html:ul>
+                            </html:div>
+                            <!-- @@@socialtodos -->
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0"
+            xml:lang="en">
+   <db:title>Enginio QML Examples - Social Todos</db:title>
+   <db:section xml:id="introduction">
+      <db:title>Introduction</db:title>
+      <db:para>Social Todos is a simple todo list application with a social
+                                    twist, demonstrating the user management and access control
+                                    features of the Enginio service. The application allows the end
+                                    user to register a new user account, log in, and create and
+                                    delete task lists, manage tasks on those lists and share lists
+                                    with selected other users.</db:para>
+      <db:informalfigure>
+         <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="images/socialtodo-example.png"/>
+            </db:imageobject>
+         </db:mediaobject>
+      </db:informalfigure>
+      <db:para>The
+                                    application data is modeled as <db:emphasis>todo items</db:emphasis> and
+                                        <db:emphasis>todo lists</db:emphasis>.</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>A <db:emphasis>todo item</db:emphasis> represents a single tasks
+                                        which needs to be done. Todo item contais a textual
+                                        description of the task and a boolean status flag telling
+                                        whether the task is completed or not.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>A <db:emphasis>todo list</db:emphasis> represents a list of
+                                        tasks. Todo list contains zero or more todo items and each
+                                        todo item belongs to just one todo list. Todo lists are
+                                        created by the application end users. By default only the
+                                        user who created a list can access it and its todo items.
+                                        However, the creator can share the list with other
+                                        users.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The Social Todos example uses the following Enginio
+                                    features:</db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">User management with integrated
+                                                  Enginio accounts</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables end users to register and login.
+                                                  end users are identified by username and
+                                                  password.</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">Object storage</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides shared persistent storage for
+                                                  task lists and tasks.</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">Data
+                                                  validation</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enforces required data structure for task
+                                                  lists and tasks.</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">Access control
+                                                  mechanisms</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Restricts access to application data so
+                                                  that it is available only to authenticated
+                                                  (logged-in) end users. End users can see and
+                                                  manipulate only those task lists and tasks which
+                                                  they are entitled to.</db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+      <db:para>To get the Social Todos application working
+                                    correctly you will need to:</db:para>
+      <db:orderedlist numeration="arabic">
+         <db:listitem>
+            <db:para>Create a new application backend via <db:link xlink:href="https://dashboard.engin.io">Enginio
+                                            Dashboard</db:link>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Configure the backend as instructed in the <db:link xlink:href="enginio-qml-socialtodos-example.html#configure-backend">Configure Backend</db:link> section.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>And then run the application as explained in the
+                                            <db:link xlink:href="enginio-qml-socialtodos-example.html#configure-and-run-qml-application">Configure and Run QML Application</db:link>
+                                        section.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Finally you can check the QML application details in
+                                            <db:link xlink:href="enginio-qml-socialtodos-example.html#qml-application-walk-through">QML Application Walk-through</db:link>.</db:para>
+         </db:listitem>
+      </db:orderedlist>
+   </db:section>
+   <db:section xml:id="configure-backend">
+      <db:title>Configure Backend</db:title>
+      <db:para>This section presents steps for configuring a fresh Enginio
+                                    Backend for the Social Todos example. A big part of the backend
+                                    configuration is related to restricting who can create and
+                                    access the application data.</db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">Data creation
+                                                  controls</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Todo list and todo item creation is
+                                                  allowed for registered application users only. The
+                                                  protection is based on having a single usergroup
+                                                  (group name 'allUsers') in the backend
+                                                  configuration. Todo list and todo item creation
+                                                  rights are granted to members of this group.
+                                                  Application users are added to this usergroup when
+                                                  they use the QML application.</db:para>
+                  <db:para>For built-in
+                                                  users and usergroups the creation control is
+                                                  handled slightly differently. New users can be
+                                                  freely created and thus anyone can register to use
+                                                  the application. Usergroups creation is completely
+                                                  blocked, since the application uses just one fixed
+                                                  usergroup.</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">Data access
+                                                  controls</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Data access (and manipulation) to todo
+                                                  lists and todo items is allowed only for logged-in
+                                                  users. By default only the user who creates the
+                                                  todo list can access the list and its todo
+                                                  items.</db:para>
+                  <db:para>However, the creator can share the
+                                                  list with other users. List sharing happens by
+                                                  granting the right to access the list to selected
+                                                  other users.</db:para>
+                  <db:para>Access permissions are explicitly managed
+                                                  only for todo lists. Todo items are configured to
+                                                  inherit permissions from the todo list which they
+                                                  belong to.</db:para>
+                  <db:para>For user objects, the access is allowed
+                                                  only to logged-in users which are members of
+                                                  'allUsers' usergroup.</db:para>
+                  <db:para>For usergroups objects, the access is
+                                                  allowed so that everyone can see the single fixed
+                                                  'allUsers' usergroup.</db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+      <db:section>
+         <db:title>1. Create 'allUsers' Usergroup</db:title>
+         <db:para>Create a new usergroup <db:code>allUsers</db:code>. The
+                                    usergroup will be used to restrict that only registered
+                                    application end users can store new todo lists and items to the
+                                    backend. The usergroup itself is secured with suitable data
+                                    access permissions.</db:para>
+         <db:para>First create the usergroup:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In the Dashboard: Select <db:emphasis role="bold">Usergroups</db:emphasis>,
+                                        click <db:emphasis role="bold">Add</db:emphasis>, enter name
+                                            <db:code>allUsers</db:code> for the usergroup, and
+                                        select <db:emphasis role="bold">Save</db:emphasis>.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>Then secure the usergroup by configuring suitable permission
+                                    settings:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In the Dashboard: Open <db:emphasis role="bold">allUsers</db:emphasis>
+                                        usergroup for editing, apply the configurations below, and
+                                        finally select <db:emphasis role="bold">Save</db:emphasis> in usergroup
+                                        editor.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Setting area</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Required configurations</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Object
+                                                  permissions</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure the following permissions:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>Grant <db:code>read</db:code>
+                                                  permission to
+                                                  <db:code>all</db:code>.</db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Clear other permission grants.</db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Object permissions</db:emphasis>
+                                                  control who can perform operations to
+                                                  <db:code>allUsers</db:code>
+                                                  usergroup.</db:para>
+                     <db:para>In this case read-only access is
+                                                  given to everybody, so the QML application can
+                                                  read the <db:code>allUsers</db:code> data even
+                                                  when the application doesn't have any logged in
+                                                  user.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Member management
+                                                  permissions</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure the following permissions:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>Grant <db:code>create</db:code>
+                                                  permission to
+                                                  <db:code>all</db:code>.</db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Clear other permission grants.</db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Member management
+                                                  permissions</db:emphasis> control who can add new
+                                                  members to the <db:code>allUsers</db:code>
+                                                  usergroup or remove existing ones.</db:para>
+                     <db:para>Now
+                                                  everyone can add members, and consequently the QML
+                                                  application can add the end user to the
+                                                  <db:code>allUsers</db:code> usergroup.
+                                                  However, since other permissions are not granted,
+                                                  usergroup members can not be listed or
+                                                  removed.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>2. Create 'todoLists' Object Type</db:title>
+         <db:para>Create a new object type
+                                        <db:code>objects.todoLists</db:code>. The object type
+                                    defines the data schema and other settings for todo list
+                                    objects.</db:para>
+         <db:para>Create the object type:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In Dashboard: Select <db:emphasis role="bold">Object Types</db:emphasis>,
+                                        click <db:emphasis role="bold">Add</db:emphasis>, enter name
+                                            <db:code>objects.todoLists</db:code> for the object
+                                        type, and select <db:emphasis role="bold">Save</db:emphasis>.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>Then configure the object type with needed details:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In Dashboard: Open <db:emphasis role="bold">objects.todoLists</db:emphasis>
+                                        object type for editing, apply the configurations below, and
+                                        finally select <db:emphasis role="bold">Save</db:emphasis> in object type
+                                        editor.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Setting area</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Required configurations</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Properties</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Add following property:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>
+                                 <db:code>name</db:code>, with data
+                                                  type <db:emphasis>string</db:emphasis>
+                              </db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Properties</db:emphasis> are key/value
+                                                  pairs containing actual object data.</db:para>
+                     <db:para>The
+                                                  '<db:code>name</db:code>' property will hold
+                                                  the name of the todo list.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Permissions</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure following permissions:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>Collection permissions<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>read</db:emphasis> and
+                                                  <db:emphasis>create</db:emphasis> permission to
+                                                  <db:code>allUsers</db:code>
+                                                  usergroup.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Clear other permission grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Object permissions template<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>admin</db:emphasis> permission
+                                                  to <db:emphasis>creator</db:emphasis> subject.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Clear other permission grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Collection permissions</db:emphasis>
+                                                  control who is able to create new
+                                                  <db:code>objects.todoLists</db:code> objects
+                                                  or list existing ones. Now those rights are
+                                                  granted to <db:code>allUsers</db:code>
+                                                  usergroup members.</db:para>
+                     <db:para>
+                        <db:emphasis>Object
+                                                  permissions template</db:emphasis> define how object
+                                                  level permissions will be initially set for
+                                                  created <db:code>objects.todoLists</db:code>
+                                                  objects. Now <db:emphasis>admin</db:emphasis> permission
+                                                  will be granted to the user who creates the
+                                                  <db:code>objects.todoLists</db:code>
+                                                  object.</db:para>
+                     <db:para>
+                        <db:emphasis>Admin</db:emphasis> right allows the
+                                                  user to perform all 'normal' operations on the
+                                                  <db:code>objects.todoLists</db:code> object
+                                                  (i.e. read, update and delete the object).
+                                                  <db:emphasis>Admin</db:emphasis> right allows the user also
+                                                  to manage object's permissions (i.e. grant and
+                                                  withdraw rights for other users).</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>3. Create 'todos' Object Type</db:title>
+         <db:para>Create a new object type
+                                        <db:code>objects.todos</db:code>. The object type
+                                    defines data schema and other settings for todo item
+                                    objects.</db:para>
+         <db:para>Create the object type:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In Dashboard: Select <db:emphasis role="bold">Object Types</db:emphasis>,
+                                        click <db:emphasis role="bold">Add</db:emphasis>, enter name
+                                            <db:code>objects.todos</db:code> for the object
+                                        type, and select <db:emphasis role="bold">Save</db:emphasis>.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>Then configure the object type with needed details:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In Dashboard: Open <db:emphasis role="bold">objects.todos</db:emphasis>
+                                        object type for editing, apply the configurations below, and
+                                        finally select <db:emphasis role="bold">Save</db:emphasis> in object type
+                                        editor.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Setting area</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Required configurations</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Properties</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Add following properties:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>
+                                 <db:code>title</db:code>, with data
+                                                  type <db:emphasis>string</db:emphasis>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>
+                                 <db:code>done</db:code>, with data
+                                                  type <db:emphasis>boolean</db:emphasis>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>
+                                 <db:code>todoList</db:code>, with
+                                                  data type <db:emphasis>ref</db:emphasis> and target
+                                                  <db:code>objects.todoLists</db:code>
+                              </db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Properties</db:emphasis> are key/value
+                                                  pairs containing actual object data.</db:para>
+                     <db:para>The
+                                                  '<db:code>title</db:code>' property will hold
+                                                  the textual content for the todo item.</db:para>
+                     <db:para>The '<db:code>done</db:code>' property
+                                                  is boolean status whether the item is done or
+                                                  not.</db:para>
+                     <db:para>The '<db:code>todoList</db:code>' is a
+                                                  reference to parent todo list, i.e. a link to todo
+                                                  list object to which this todo item belongs
+                                                  to.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Reference
+                                                  constraints</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure following reference constraint action:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>For <db:code>todoList</db:code>
+                                                  reference, setup <db:emphasis>cascade delete</db:emphasis>
+                                                  action.</db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Reference constraints</db:emphasis>
+                                                  are mechanism to enforce "exists" relationships
+                                                  between objects. <db:emphasis>Action</db:emphasis> specifies
+                                                  what is done when a referenced object is deleted.
+                                                  <db:emphasis>Cascade delete</db:emphasis> selection means
+                                                  that the referencing
+                                                  <db:code>objects.todos</db:code> object is
+                                                  also deleted in this case.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Permissions</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure following permissions:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>Collection permissions<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>read</db:emphasis> and
+                                                  <db:emphasis>create</db:emphasis> permission to
+                                                  <db:code>allUsers</db:code>
+                                                  usergroup.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Clear other permission grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Object permissions template<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Clear all permissions grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Object permissions inheritance<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Enable object permissions inheritance for
+                                                  <db:code>todoList</db:code>
+                                                  reference.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Collection permissions</db:emphasis>
+                                                  control who is able to create new
+                                                  <db:code>objects.todos</db:code> objects or
+                                                  list existing ones. Now those rights are granted
+                                                  to <db:code>allUsers</db:code> usergroup
+                                                  members.</db:para>
+                     <db:para>
+                        <db:emphasis>Object permissions
+                                                  template</db:emphasis> define how object level
+                                                  permissions will be initially set for created
+                                                  <db:code>objects.todos</db:code> objects. Now
+                                                  object permissions template is left empty, because
+                                                  dynamic permission inheritance is used.</db:para>
+                     <db:para>Object permissions inheritance enables
+                                                  inheriting object level permissions dynamically
+                                                  from referenced objects. Now permissions
+                                                  inheritance is enabled for
+                                                  <db:code>todoList</db:code> reference. Thus
+                                                  <db:code>objects.todos</db:code> object
+                                                  inherits its permissions from referenced
+                                                  <db:code>objects.todoLists</db:code>
+                                                  object.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>4. Configure 'users' Object Type</db:title>
+         <db:para>Configure built-in <db:code>users</db:code> object type
+                                    with needed security permissions. The
+                                        <db:code>users</db:code> object type defines data schema
+                                    and other settings for user objects, modeling application end
+                                    users.</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In Dashboard: select <db:emphasis role="bold">Object Types</db:emphasis>,
+                                        open <db:emphasis role="bold">users</db:emphasis> object type for editing, apply
+                                        the configurations below, and finally select
+                                            <db:emphasis role="bold">Save</db:emphasis> in object type editor.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Setting area</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Required configurations</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Permissions</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure permissions and dynamic rules:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>Collection permissions<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>create</db:emphasis> permission
+                                                  to <db:code>all</db:code>.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>read</db:emphasis> permission to
+                                                  <db:code>allUsers</db:code>
+                                                  usergroup.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Clear other permission grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Object permissions template<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>read</db:emphasis> permission to
+                                                  <db:code>allUsers</db:code>
+                                                  usergroup.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>admin</db:emphasis> permission
+                                                  to <db:emphasis>creator</db:emphasis> subject.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Clear other permission grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Collection permissions</db:emphasis>
+                                                  control who is able to create new
+                                                  <db:code>users</db:code> objects or list
+                                                  existing ones. In this case create right is
+                                                  granted to all, so anyone can freely register to
+                                                  application as a new user. However, listing of
+                                                  existing users is granted only to members of
+                                                  <db:code>allUsers</db:code>
+                                                  usergroup.</db:para>
+                     <db:para>
+                        <db:emphasis>Object permissions
+                                                  template</db:emphasis> define how object level
+                                                  permissions will be initially set for created
+                                                  <db:code>users</db:code> objects. Read-only
+                                                  right is given to <db:code>allUsers</db:code>
+                                                  usergroup members, so registered users are able to
+                                                  see each other details for sharing
+                                                  purposes.</db:para>
+                     <db:para>Now <db:emphasis>admin</db:emphasis> permission will
+                                                  be granted to the user who creates the
+                                                  <db:code>users</db:code> object, i.e. to user
+                                                  itself. <db:emphasis>Admin</db:emphasis> right allows the
+                                                  user to perform all operations on the
+                                                  <db:code>users</db:code> object (i.e. read,
+                                                  update and delete the object and also to manage
+                                                  its access rights).</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>5. Configure 'usergroups' Object Type</db:title>
+         <db:para>Configure built-in <db:code>usergroups</db:code> object
+                                    type with needed security permissions. The
+                                        <db:code>usergroups</db:code> object type defines data
+                                    schema and other settings for usergroups objects.</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>In Dashboard: select <db:emphasis role="bold">Object Types</db:emphasis>,
+                                        open <db:emphasis role="bold">usergroups</db:emphasis> object type for editing,
+                                        apply the configurations below, and finally select
+                                            <db:emphasis role="bold">Save</db:emphasis> in object type editor.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Setting area</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Required configurations</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para/>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis role="bold">Permissions</db:emphasis>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Configure permissions and dynamic rules:<db:itemizedlist>
+                           <db:listitem>
+                              <db:para>Collection permissions<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>Grant <db:emphasis>read</db:emphasis> permission to
+                                                  <db:code>all</db:code>.</db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                       <db:para>Clear other permission grants.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                           <db:listitem>
+                              <db:para>Object permissions template<db:itemizedlist>
+                                    <db:listitem>
+                                       <db:para>No changes.</db:para>
+                                    </db:listitem>
+                                 </db:itemizedlist>
+                              </db:para>
+                           </db:listitem>
+                        </db:itemizedlist>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:emphasis>Collection permissions</db:emphasis>
+                                                  control which users are able to create new
+                                                  <db:code>usergroups</db:code> objects or list
+                                                  existing ones. In this case listing rights are
+                                                  granted for everyone (i.e. those are publicly
+                                                  readable). Thus the QML application can locate the
+                                                  <db:code>allUsers</db:code> usergoup in the
+                                                  application startup phase, even before the end
+                                                  user logs in to the system. However, since create
+                                                  right is not granted to anyone, new usergroups can
+                                                  not be created.</db:para>
+                     <db:para>
+                        <db:emphasis>Object permissions
+                                                  template</db:emphasis> define how object level
+                                                  permissions will be set initially for the created
+                                                  <db:code>usergroups</db:code> objects. Since
+                                                  new usergoups will not be created dynamically,
+                                                  there is no need to modify the permission
+                                                  template. Note that changes made in the
+                                                  permissions template will effect existing
+                                                  <db:code>usergroups</db:code> objects and thus
+                                                  the <db:code>allUsers</db:code> group as
+                                                  well.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+   </db:section>
+   <db:section xml:id="configure-and-run-qml-application">
+      <db:title>Configure and Run
+                                    QML Application</db:title>
+   </db:section>
+   <db:section xml:id="qml-application-walk-through">
+      <db:title>QML Application
+                                    Walk-through</db:title>
+      <db:para>Files:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-header-qml.html">socialtodos/Header.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-list-qml.html">socialtodos/List.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-login-qml.html">socialtodos/Login.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-sharedialog-qml.html">socialtodos/ShareDialog.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-textfield-qml.html">socialtodos/TextField.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-todolists-qml.html">socialtodos/TodoLists.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-touchbutton-qml.html">socialtodos/TouchButton.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-socialtodos-qml.html">socialtodos/socialtodos.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-socialtodos-pro.html">socialtodos/socialtodos.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtenginioqml-socialtodos-socialtodos-qrc.html">socialtodos/socialtodos.qrc</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+</db:article>

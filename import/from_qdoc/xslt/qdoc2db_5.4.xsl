@@ -1618,31 +1618,25 @@
       <xsl:apply-templates select="*" mode="content_table"/>
     </db:informaltable>
   </xsl:template>
-  <xsl:template mode="content" match="html:div[@class = 'LegaleseLeft' or @class = 'qt-code']">
-    <xsl:apply-templates select="*" mode="content"/>
-  </xsl:template>
-  <xsl:template mode="content" match="html:div[@class = 'float-left' or @class = 'float-right' or @float-right]">
-    <xsl:apply-templates select="*" mode="content"/>
-    <!-- Used for implicit tables of images, usually. -->
-  </xsl:template>
-  <xsl:template mode="content" match="html:div[@class = 'clear-both' or @class = 'clear-left' or @class = 'clear-right']">
-    <xsl:apply-templates select="*" mode="content"/>
-  </xsl:template>
-  <xsl:template mode="content" match="html:div[@style = 'text-align: left']">
-    <xsl:apply-templates select="*" mode="content"/>
-  </xsl:template>
-  <xsl:template mode="content" match="html:div[@class = 'multi-column']">
-    <db:informaltable>
-      <db:tbody>
-          <db:tr>
-            <xsl:for-each select="./html:div[@class = 'doc-column']">
-              <db:td>
-                <xsl:apply-templates select="*" mode="content"/>
-              </db:td>
-            </xsl:for-each>
-          </db:tr>
-      </db:tbody>
-    </db:informaltable>
+  <xsl:template mode="content" match="html:div">
+    <xsl:choose>
+      <xsl:when test="@class = 'multi-column'">
+        <db:informaltable>
+          <db:tbody>
+            <db:tr>
+              <xsl:for-each select="./html:div[@class = 'doc-column']">
+                <db:td>
+                  <xsl:apply-templates select="*" mode="content"/>
+                </db:td>
+              </xsl:for-each>
+            </db:tr>
+          </db:tbody>
+        </db:informaltable>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates select="*" mode="content"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="html:hr">
     <!-- Due to lack of proper separator in DocBook… -->
@@ -1837,10 +1831,13 @@
           </xsl:when>
         </xsl:choose>
 
-        <!-- Handle title then subsections. -->
+        <!-- Handle title then subsections. In rare occasions, some sections are empty, and are directly followed by another title. -->
         <db:title>
           <xsl:copy-of select="./text()"/>
         </db:title>
+        <xsl:if test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h2 or self::html:h3])">
+          <db:para/>
+        </xsl:if>
         <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
@@ -1848,6 +1845,9 @@
                 <db:title>
                   <xsl:copy-of select="./text()"/>
                 </db:title>
+                <xsl:if test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h3 or self::html:h4])">
+                  <db:para/>
+                </xsl:if>
 
                 <xsl:for-each-group select="current-group()" group-starting-with="html:h4">
                   <xsl:choose>
@@ -1856,6 +1856,9 @@
                         <db:title>
                           <xsl:copy-of select="./text()"/>
                         </db:title>
+                        <xsl:if test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h4 or self::html:h5])">
+                          <db:para/>
+                        </xsl:if>
 
                         <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
                           <xsl:choose>
@@ -1864,6 +1867,9 @@
                                 <db:title>
                                   <xsl:copy-of select="./text()"/>
                                 </db:title>
+                                <xsl:if test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h5 or self::html:h6])">
+                                  <db:para/>
+                                </xsl:if>
   
                                 <xsl:for-each-group select="current-group()"
                                   group-starting-with="html:h6">
@@ -1873,6 +1879,9 @@
                                         <db:title>
                                           <xsl:copy-of select="./text()"/>
                                         </db:title>
+                                        <xsl:if test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h6])">
+                                          <db:para/>
+                                        </xsl:if>
   
                                         <xsl:apply-templates select="current-group()" mode="content"/>
                                       </db:section>
