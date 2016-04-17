@@ -91,7 +91,7 @@ std::string Parameter::serialise() const {
 		return "...";
 	}
 	std::string constness_str = "";
-	if (constness == MiddleConst) {
+	if (constnessMiddle) {
 		constness_str += "const ";
 	}
 	return *type + ' ' + constness_str + pointersReferencesStr();
@@ -111,12 +111,12 @@ std::string AST::serialise() const {
 			retval += "volatile ";
 		}
 
-		if (p->constness == FrontConst) {
+		if (p->constnessFront) {
 			retval += "const ";
 		}
 
-		retval += p->serialise() + ' ';
-		if (p->constness == RearConst) {
+		retval += p->serialise() + ' '; // The whole type is included in p->serialise(). 
+		if (p->constnessRear) {
 			retval += "const ";
 		}
 		if (p->identifier != nullptr) { // In rare occasions, there is no identifier! 

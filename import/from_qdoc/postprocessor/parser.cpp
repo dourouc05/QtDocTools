@@ -107,17 +107,17 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	});
 	auto parameterConstFront = axe::e_ref([&currentParameter](const char * i1, const char * i2) { 
 		if (std::distance(i1, i2) > 2) {
-			currentParameter->constness = FrontConst;
+			currentParameter->constnessFront = true;
 		}
 	});
 	auto parameterConstMiddle = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
 		if (std::distance(i1, i2) > 2) {
-			currentParameter->constness = MiddleConst;
+			currentParameter->constnessMiddle = true;
 		}
 	});
 	auto parameterConstRear = axe::e_ref([&currentParameter](const char * i1, const char * i2) { 
 		if (std::distance(i1, i2) > 2) {
-			currentParameter->constness = RearConst;
+			currentParameter->constnessRear = true;
 		}
 	});
 	auto parameterType = axe::e_ref([&currentParameter, &currentIdentifier](const char * i1, const char * i2) {
@@ -192,7 +192,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
 	auto raw_identifier = ((alpha & *alphanum)) >> valueIdentifier;
 	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & raw_identifier >> valueIdentifierAddCharacters;
-	auto identifier = raw_identifier & *type_namespace;
+	auto identifier = (!kw_const & raw_identifier) & *type_namespace;
 	auto identifier_nowrite = (alpha & *alphanum) % kw_namespace;
 	auto type_template = (tpl_open >> valueIdentifierAddCharacters)
 		& *space
@@ -248,7 +248,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
 	// As a consequence, this would be a waste of both time and memory. 
 
-	auto parameter = 
+	auto parameter =  // const  char  * const  xpm
 		~(kw_volatile >> parameterAllocator >> parameterVolatile) // volatile
 		& *space
 		& ~(kw_const >> parameterAllocator >> parameterConstFront) // const

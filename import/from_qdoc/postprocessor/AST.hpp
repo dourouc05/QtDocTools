@@ -26,17 +26,12 @@ public:
 	std::string serialise() const;
 };
 
-typedef enum {
-	FrontConst, 
-	MiddleConst, 
-	RearConst, 
-	NoConst
-} Constness;
-
 class Parameter {
 public: 
 	bool volatility = false; 
-	Constness constness = NoConst;
+	bool constnessFront = false;
+	bool constnessMiddle = false;
+	bool constnessRear = false;
 	std::string* type;
 	std::string* pointersReferences = nullptr;
 	std::string* identifier;

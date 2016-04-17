@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
@@ -86,6 +86,11 @@ void test() {
 	total++; count += test_match("( volatile bool  *  flag ,  int  msecs  = 0)", "QQmlIncubationController::incubateWhile: volatile keyword");
 	total++; count += test_match("(const  QGeoCoordinate  &  center ,  qreal  radius  =  1.0)", "QGeoCircle::QGeoCircle: real numbers, simplified");
 	total++; count += test_match("(const  QGeoCoordinate  &  center ,  qreal  radius  = -1.0)", "QGeoCircle::QGeoCircle: real numbers");
+	total++; count += test_match("(const  char  * const  xpm )", "QImage::QImage: simplified, multiple const for a given parameter");
+	total++; count += test_match("(const  char  * const[]  xpm )", "QImage::QImage: array after const");
+	total++; count += test_match("( GLenum  mode , const  GLsizei  *  count ,  GLenum  type , const  GLvoid  * const *  indices ,  GLsizei  drawcount )", "QOpenGLFunctions_1_4::glMultiDrawElements: ");
+	total++; count += test_match("( int  location , const  GLfloat [ 2 ][ 2 ]  value )", "QGLShaderProgram::setUniformValue: ");
+	total++; count += test_match("( int  role  = Qt::UserRole + 1) const", "QStandardItem::data: ");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
@@ -133,7 +138,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 					param.append_child("db:modifier").text().set("volatile");
 				}
 
-				if (p->constness == FrontConst) {
+				if (p->constnessFront) {
 					param.append_child("db:modifier").text().set("const");
 				}
 
@@ -141,7 +146,7 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 				std::string type = trim(sub_type + ' ' + p->pointersReferencesStr());
 				param.append_child("db:type").text().set(type.c_str());
 
-				if (p->constness == RearConst) {
+				if (p->constnessRear) {
 					param.append_child("db:modifier").text().set("const");
 				}
 
@@ -155,10 +160,10 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 
 			++paramsCounter;
 		}
-	}
 
-	if (ast->isConst) {
-		methodsynopsis.append_child("db:modifier").text().set("const");
+		if (ast->isConst) {
+			methodsynopsis.append_child("db:modifier").text().set("const");
+		}
 	}
 }
 
