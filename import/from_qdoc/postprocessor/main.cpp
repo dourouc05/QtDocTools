@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;

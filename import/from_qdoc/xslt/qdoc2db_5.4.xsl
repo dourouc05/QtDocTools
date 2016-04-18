@@ -1205,7 +1205,17 @@
       </db:funcprototype>
     </db:funcsynopsis>
   </xsl:template>
-
+  <xsl:template mode="functionListing" match="html:h3[not(@class = 'fn')][starts-with(normalize-space(.), 'class')]">
+    <db:classsynopsis>
+      <db:ooclass>
+        <db:classname>
+          <xsl:attribute name="xlink:href" select="./html:a/@href"/>
+          <xsl:value-of select="./html:a"/>
+        </db:classname>
+      </db:ooclass>
+    </db:classsynopsis>
+  </xsl:template>
+  
   <!-- Handle QML types: type structure. -->
   <xsl:template name="qmlTypeListing">
     <xsl:param name="qmlTypeName" as="xs:string"/>
