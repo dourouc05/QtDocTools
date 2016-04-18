@@ -166,6 +166,10 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto underscore = axe::r_lit('_');
 	auto kw_and = axe::r_lit('&');
 	auto kw_or = axe::r_lit('|');
+	auto kw_plus = axe::r_lit('+');
+	auto kw_minus = axe::r_lit('-');
+	auto kw_times = axe::r_lit('*');
+	auto kw_divides = axe::r_lit('/');
 	auto kw_array_begin = axe::r_lit('[');
 	auto kw_array_end = axe::r_lit(']');
 	auto alpha = axe::r_alpha() | underscore;
@@ -232,8 +236,11 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto value_litteral = value_string | value_number | value_boolean;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;
 	auto value_constant = value_constant_nowrite >> valueAllocator >> valueConstant;
-	auto value_expression = (value_constant_nowrite & *(*space & (kw_and | kw_or) & *space & value_constant_nowrite & *space))
-		>> valueAllocator >> valueConstant;
+	auto value_expression = (
+			(value_constant_nowrite | value_litteral) 
+			& *(*space & (kw_and | kw_or | kw_plus | kw_minus | kw_times | kw_divides) 
+				& *space & (value_constant_nowrite | value_litteral) & *space)
+		) >> valueAllocator >> valueConstant;
 
 	auto value_object_simple = (identifier >> innerObjectIdentifier)
 		& *space

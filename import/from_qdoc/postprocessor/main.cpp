@@ -88,9 +88,10 @@ void test() {
 	total++; count += test_match("(const  QGeoCoordinate  &  center ,  qreal  radius  = -1.0)", "QGeoCircle::QGeoCircle: real numbers");
 	total++; count += test_match("(const  char  * const  xpm )", "QImage::QImage: simplified, multiple const for a given parameter");
 	total++; count += test_match("(const  char  * const[]  xpm )", "QImage::QImage: array after const");
-	total++; count += test_match("( GLenum  mode , const  GLsizei  *  count ,  GLenum  type , const  GLvoid  * const *  indices ,  GLsizei  drawcount )", "QOpenGLFunctions_1_4::glMultiDrawElements: ");
-	total++; count += test_match("( int  location , const  GLfloat [ 2 ][ 2 ]  value )", "QGLShaderProgram::setUniformValue: ");
-	total++; count += test_match("( int  role  = Qt::UserRole + 1) const", "QStandardItem::data: ");
+	total++; count += test_match("( GLenum  mode , const  GLsizei  *  count ,  GLenum  type , const  GLvoid  * const *  indices ,  GLsizei  drawcount )", "QOpenGLFunctions_1_4::glMultiDrawElements: const between pointers");
+	total++; count += test_match("( int  location , const  GLfloat [ 2 ][ 2 ]  value )", "QGLShaderProgram::setUniformValue: sized arrays");
+	total++; count += test_match("( int  role  = Qt::UserRole + identifier) const", "QStandardItem::data, simplified: complex expression (sum between identifiers)");
+	total++; count += test_match("( int  role  = Qt::UserRole + 1) const", "QStandardItem::data: complex expression (identifier and integer)");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
