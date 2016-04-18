@@ -119,6 +119,9 @@ std::string AST::serialise() const {
 		if (p->constnessRear) {
 			retval += "const ";
 		}
+		if (p->pointersReferencesAfterRear != nullptr) {
+			retval += *p->pointersReferencesAfterRear;
+		}
 		if (p->identifier != nullptr) { // In rare occasions, there is no identifier! 
 			retval += *p->identifier;
 		}

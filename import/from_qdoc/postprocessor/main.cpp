@@ -149,6 +149,9 @@ void ast_to_xml(pugi::xml_node methodsynopsis, AST* ast) {
 				if (p->constnessRear) {
 					param.append_child("db:modifier").text().set("const");
 				}
+				if (p->pointersReferencesAfterRear != nullptr) {
+					param.append_child("db:modifier").text().set(p->pointersReferencesAfterRear->c_str());
+				}
 
 				auto id = p->identifier;
 				param.append_child("db:parameter").text().set((id != nullptr) ? id->c_str() : std::string("arg" + paramsCounter).c_str());

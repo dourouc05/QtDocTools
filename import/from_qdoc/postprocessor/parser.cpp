@@ -127,6 +127,9 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto parameterPointersReferences = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
 		currentParameter->pointersReferences = new std::string(i1, i2);
 	});
+	auto parameterPointersReferencesAfterRear = axe::e_ref([&currentParameter](const char * i1, const char * i2) {
+		currentParameter->pointersReferencesAfterRear = new std::string(i1, i2);
+	}); 
 	auto parameterIdentifier = axe::e_ref([&currentParameter, &currentIdentifier](const char * i1, const char * i2) {
 		currentParameter->identifier = currentIdentifier;
 		currentIdentifier = nullptr;
@@ -163,6 +166,8 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto underscore = axe::r_lit('_');
 	auto kw_and = axe::r_lit('&');
 	auto kw_or = axe::r_lit('|');
+	auto kw_array_begin = axe::r_lit('[');
+	auto kw_array_end = axe::r_lit(']');
 	auto alpha = axe::r_alpha() | underscore;
 	auto alphanum = axe::r_alnumstr() | underscore;
 
@@ -260,6 +265,8 @@ AST* cpp_prototype(const char * begin, char const * end) {
 		& ~(((kw_pointer | kw_reference) & *(*space & (kw_pointer | kw_reference))) >> parameterPointersReferences) // Pointers and references in type.
 		& *space
 		& ~(kw_const >> parameterAllocator >> parameterConstRear) // const
+		& *space
+		& ~((*(*space & (kw_pointer | kw_reference)) & *(*space & kw_array_begin & *space & ~axe::r_decimal() & *space & kw_array_end)) >> parameterPointersReferencesAfterRear) // Pointers and references in type.
 		& *space
 		& ~(identifier >> parameterIdentifier) // Identifier (sometimes omitted). 
 		& *space

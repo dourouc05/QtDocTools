@@ -34,6 +34,7 @@ public:
 	bool constnessRear = false;
 	std::string* type;
 	std::string* pointersReferences = nullptr;
+	std::string* pointersReferencesAfterRear = nullptr;
 	std::string* identifier;
 	Value* initialiser = nullptr;
 	bool isEllipsis = false; 
