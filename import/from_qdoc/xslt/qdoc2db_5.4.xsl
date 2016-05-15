@@ -1402,7 +1402,14 @@
 
     <db:section>
       <db:title>Member Type Documentation</db:title>
-      <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+      
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
   <!-- 
@@ -1440,7 +1447,14 @@
     
     <db:section>
       <db:title>Property Documentation</db:title>
-      <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+      
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
 
@@ -1453,7 +1467,14 @@
       <db:title>
         <xsl:value-of select="$title"/>
       </db:title>
-      <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
+      
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_class" match="html:h3[@class = 'fn']">
@@ -1494,7 +1515,14 @@
     
     <db:section>
       <db:title>Macro Documentation</db:title>
-      <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
+      
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
   
@@ -1504,13 +1532,14 @@
     
     <db:section>
       <db:title>Related Non-Members</db:title>
-      <xsl:variable name="relnonmems_translated">
+      
+      <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
       </xsl:variable>
-      <xsl:if test="not(count($relnonmems_translated/db:section) = count($data/html:h3))">
-        <xsl:message>WARNING: Missed at least one related non-member!</xsl:message>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
       </xsl:if>
-      <xsl:copy-of select="$relnonmems_translated"/>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_nonmems" match="html:h3[not(@class)]">
@@ -1554,7 +1583,14 @@
     
     <db:section>
       <db:title>Member Variable Documentation</db:title>
-      <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+      
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
   
@@ -1573,7 +1609,13 @@
         </xsl:otherwise>
       </xsl:choose>
       
-      <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:div[@class = 'qmlitem']))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
@@ -1629,7 +1671,14 @@
     
     <db:section>
       <db:title>Methods Documentation</db:title>
-      <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+      
+      <xsl:variable name="elts_translated">
+        <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+      </xsl:variable>
+      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:div[@class = 'qmlitem']))">
+        <xsl:message>WARNING: Missed at least one element!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
 

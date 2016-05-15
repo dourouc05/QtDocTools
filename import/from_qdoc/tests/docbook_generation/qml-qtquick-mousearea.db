@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0"
+            xml:lang="en">
+   <db:title>MouseArea QML Type</db:title>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>MouseArea</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="import">import QtQuick 2.4</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="inherits"/>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:type>
+         <db:varname>acceptedButtons</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>containsMouse</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>containsPress</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:type>
+         <db:varname>cursorShape</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
+         <db:varname>drag.target</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>drag.active</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>enumeration</db:type>
+         <db:varname>drag.axis</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>drag.minimumX</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>drag.maximumX</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>drag.minimumY</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>drag.maximumY</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>drag.filterChildren</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>drag.threshold</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>enabled</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>hoverEnabled</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>mouseX</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>real</db:type>
+         <db:varname>mouseY</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>pressed</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>MouseButtons</db:type>
+         <db:varname>pressedButtons</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>preventStealing</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>propagateComposedEvents</db:varname>
+      </db:fieldsynopsis>
+   </db:classsynopsis>
+   <db:section>
+      <db:title>Detailed Description</db:title>
+      <db:para>A <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
+                                is an invisible item that is typically used in conjunction with a
+                                visible item in order to provide mouse handling for that item. By
+                                effectively acting as a proxy, the logic for mouse handling can be
+                                contained within a <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> item.</db:para>
+      <db:para>The <db:link xlink:href="qml-qtquick-mousearea.html#enabled-prop">enabled</db:link> property is used to enable and disable mouse
+                                handling for the proxied item. When disabled, the mouse area becomes
+                                transparent to mouse events.</db:para>
+      <db:para>The <db:link xlink:href="qml-qtquick-mousearea.html#pressed-prop">pressed</db:link> read-only property indicates whether or not
+                                the user is holding down a mouse button over the mouse area. This
+                                property is often used in bindings between properties in a user
+                                interface. The <db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> read-only property indicates the
+                                presence of the mouse cursor over the mouse area but, by default,
+                                only when a mouse button is held down; see the <db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> documentation for details.</db:para>
+      <db:para>Information about the mouse position and button clicks are
+                                provided via signals for which event handler properties are defined.
+                                The most commonly used involved handling mouse presses and clicks:
+                                onClicked, onDoubleClicked, onPressed, onReleased and
+                                onPressAndHold. It's also possible to handle mouse wheel events via
+                                the onWheel signal.</db:para>
+      <db:para>If a <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> overlaps with the area of other <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> items, you
+                                can choose to propagate <db:code>clicked</db:code>,
+                                    <db:code>doubleClicked</db:code> and
+                                    <db:code>pressAndHold</db:code> events to these other items
+                                by setting <db:link xlink:href="qml-qtquick-mousearea.html#propagateComposedEvents-prop">propagateComposedEvents</db:link> to true and rejecting events
+                                that should be propagated. See the <db:link xlink:href="qml-qtquick-mousearea.html#propagateComposedEvents-prop">propagateComposedEvents</db:link> documentation for
+                                details.</db:para>
+      <db:para>By default, <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> items only report mouse clicks and not
+                                changes to the position of the mouse cursor. Setting the <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link> property ensures that handlers defined
+                                for onPositionChanged, onEntered and onExited are used and that the
+                                    <db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> property is updated even when no mouse
+                                buttons are pressed.</db:para>
+      <db:section>
+         <db:title>Example Usage</db:title>
+         <db:para>The following example uses a <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> in a
+                                    <db:link xlink:href="qml-qtquick-rectangle.html">Rectangle</db:link>
+                                that changes the <db:link xlink:href="qml-qtquick-rectangle.html">Rectangle</db:link> color to red when clicked:</db:para>
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 100;
+                                    height: 100color: "green"MouseArea { anchors.fill: parentonClicked: { parent.color='red' } } }</db:programlisting>
+         <db:para>Many <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> signals
+                                pass a <db:link xlink:href="qml-qtquick-mouseevent.html">mouse</db:link>
+                                parameter that contains additional information about the mouse
+                                event, such as the position, button, and any key modifiers.</db:para>
+         <db:para>Here is an extension of the previous example that produces a
+                                different color when the area is right clicked:</db:para>
+         <db:programlisting language="qml">Rectangle { width: 100;
+                                    height: 100color: "green"MouseArea { anchors.fill: parentacceptedButtons: Qt.LeftButton|Qt.RightButtononClicked: { if (mouse.button==Qt.RightButton) parent.color='blue'; elseparent.color='red'; } } }</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qtquick-mousearea-example.html">MouseArea
+                                example</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qtquick-input-topic.html">Important Concepts In Qt Quick - User Input</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Properties Documentation</db:title>
+      <db:section xml:id="acceptedButtons-prop">
+         <db:title>acceptedButtons :
+                                                  &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link>&lt;/db:code&gt;</db:title>
+         <db:para>This property holds the mouse buttons that the
+                                        mouse area reacts to.</db:para>
+         <db:para>To specify that the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
+                                        will react to multiple buttons, &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link>&lt;/db:code&gt; flag values are combined
+                                        using the "|" (or) operator:</db:para>
+         <db:programlisting>MouseArea { acceptedButtons: Qt.LeftButton |Qt.RightButton }</db:programlisting>
+         <db:para>To indicate that all possible mouse buttons are to be
+                                        accepted, the special value 'Qt.AllButtons' may be
+                                        used:</db:para>
+         <db:programlisting>MouseArea { acceptedButtons: Qt.AllButtons }</db:programlisting>
+         <db:para>The default value is
+                                            <db:code>Qt.LeftButton</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="containsMouse-prop">
+         <db:title>containsMouse :
+                                                  bool</db:title>
+         <db:para>This property holds whether the mouse is currently
+                                        inside the mouse area.</db:para>
+         <db:warning>
+            <db:para> This property is not updated
+                                        if the area moves under the mouse:
+                                            <db:emphasis>containsMouse</db:emphasis> will not change. In
+                                        addition, if <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link> is false, containsMouse will only
+                                        be valid when the mouse is pressed while the mouse cursor is
+                                        inside the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>.</db:para>
+         </db:warning>
+      </db:section>
+      <db:section xml:id="containsPress-prop">
+         <db:title>containsPress :
+                                                  bool</db:title>
+         <db:para>This is a convenience property equivalent to
+                                            <db:code>pressed &amp;&amp; containsMouse</db:code>,
+                                        i.e. it holds whether any of the <db:link xlink:href="qml-qtquick-mousearea.html#acceptedButtons-prop">acceptedButtons</db:link> are currently pressed and the
+                                        mouse is currently within the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>.</db:para>
+         <db:para>This property is particularly useful for highlighting an
+                                        item while the mouse is pressed within its bounds.</db:para>
+         <db:para>This QML property was introduced in Qt 5.4.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="qml-qtquick-mousearea.html#pressed-prop">pressed</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="cursorShape-prop">
+         <db:title>cursorShape : &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link>&lt;/db:code&gt;</db:title>
+         <db:para>This property holds the cursor shape for this mouse
+                                        area. Note that on platforms that do not display a mouse
+                                        cursor this may have no effect.</db:para>
+         <db:para>The available cursor shapes are:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>Qt.ArrowCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.UpArrowCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.CrossCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.WaitCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.IBeamCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SizeVerCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SizeHorCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SizeBDiagCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SizeFDiagCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SizeAllCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.BlankCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SplitVCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.SplitHCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.PointingHandCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.ForbiddenCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.WhatsThisCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.BusyCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.OpenHandCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.ClosedHandCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.DragCopyCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.DragMoveCursor</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.DragLinkCursor</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>In order to only set a mouse cursor shape for a region
+                                        without reacting to mouse events set the <db:link xlink:href="qml-qtquick-mousearea.html#acceptedButtons-prop">acceptedButtons</db:link> to none:</db:para>
+         <db:programlisting>MouseArea { cursorShape: Qt.IBeamCursor; acceptedButtons: Qt.NoButton }</db:programlisting>
+         <db:para>The default value is
+                                            <db:code>Qt.ArrowCursor</db:code>.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link>&lt;/db:code&gt;</db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="drag-prop">
+         <db:title/>
+         <db:bridgehead renderas="sect3">drag.target : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+         </db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.active : bool</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.axis : enumeration</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.minimumX : real</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.maximumX : real</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.minimumY : real</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.maximumY : real</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.filterChildren : bool</db:bridgehead>
+         <db:bridgehead renderas="sect3">drag.threshold : real</db:bridgehead>
+         <db:para>
+            <db:code>drag</db:code> provides a
+                                        convenient way to make an item draggable.</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>
+                  <db:code>drag.target</db:code> specifies the id
+                                            of the item to drag.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:code>drag.active</db:code> specifies if the
+                                            target item is currently being dragged.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:code>drag.axis</db:code> specifies whether
+                                            dragging can be done horizontally
+                                                (<db:code>Drag.XAxis</db:code>), vertically
+                                                (<db:code>Drag.YAxis</db:code>), or both
+                                                (<db:code>Drag.XAndYAxis</db:code>)</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:code>drag.minimum</db:code> and
+                                                <db:code>drag.maximum</db:code> limit how far
+                                            the target can be dragged along the corresponding
+                                            axes.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>The following example displays a <db:link xlink:href="qml-qtquick-rectangle.html">Rectangle</db:link>
+                                        that can be dragged along the X-axis. The opacity of the
+                                        rectangle is reduced when it is dragged to the
+                                        right.</db:para>
+         <db:programlisting language="qml">Rectangle { id: containerwidth: 600; height: 200Rectangle { id: rectwidth: 50; height: 50color: "red"opacity: (600.0-rect.x) /600MouseArea { anchors.fill: parentdrag.target: rectdrag.axis: Drag.XAxisdrag.minimumX:
+                                            0drag.maximumX:
+                                            container.width-rect.width } } }</db:programlisting>
+         <db:note>
+            <db:para>Items cannot be dragged if they
+                                        are anchored for the requested
+                                            <db:code>drag.axis</db:code>. For example, if
+                                            <db:code>anchors.left</db:code> or
+                                            <db:code>anchors.right</db:code> was set for
+                                            <db:code>rect</db:code> in the above example, it
+                                        cannot be dragged along the X-axis. This can be avoided by
+                                        settng the anchor value to <db:code>undefined</db:code>
+                                        in an <db:link xlink:href="qml-qtquick-mousearea.html#pressed-prop">onPressed</db:link> handler.</db:para>
+         </db:note>
+         <db:para>If
+                                            <db:code>drag.filterChildren</db:code> is set to
+                                        true, a drag can override descendant MouseAreas. This
+                                        enables a parent <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> to handle drags, for example, while
+                                        descendants handle clicks:</db:para>
+         <db:para>
+            <db:code>drag.threshold</db:code> determines the
+                                        threshold in pixels of when the drag operation should start.
+                                        By default this is bound to a platform dependent value. This
+                                        property was added in Qt Quick 2.2.</db:para>
+         <db:para>If <db:code>drag.smoothed</db:code> is
+                                            <db:code>true</db:code>, the target will be moved
+                                        only after the drag operation has started. If set to
+                                            <db:code>false</db:code>, the target will be moved
+                                        straight to the current mouse position. By default, this
+                                        property is <db:code>true</db:code>. This property was
+                                        added in Qt Quick 2.4</db:para>
+         <db:para>See the <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link> attached property and <db:link xlink:href="qml-qtquick-droparea.html">DropArea</db:link> if
+                                        you want to make a drop.</db:para>
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 480height: 320Rectangle { x: 30; y:
+                                            30width: 300; height: 240color: "lightsteelblue"MouseArea { anchors.fill: parentdrag.target: parent; drag.axis: "XAxis"drag.minimumX:
+                                            30drag.maximumX:
+                                            150drag.filterChildren:
+                                            trueRectangle { color: "yellow"x: 50; y : 50width: 100; height: 100MouseArea { anchors.fill: parentonClicked: console.log("Clicked") } } } } }</db:programlisting>
+      </db:section>
+      <db:section xml:id="enabled-prop">
+         <db:title>enabled : bool</db:title>
+         <db:para>This property holds whether the item accepts mouse
+                                        events.</db:para>
+         <db:note>
+            <db:para>Due to historical reasons, this
+                                        property is not equivalent to Item.enabled. It only affects
+                                        mouse events, and its effect does not propagate to child
+                                        items.</db:para>
+         </db:note>
+         <db:para>By default, this property is
+                                        true.</db:para>
+      </db:section>
+      <db:section xml:id="hoverEnabled-prop">
+         <db:title>hoverEnabled : bool</db:title>
+         <db:para>This property holds whether hover events are
+                                        handled.</db:para>
+         <db:para>By default, mouse events are only handled in response to
+                                        a button event, or when a button is pressed. Hover enables
+                                        handling of all mouse events even when no mouse button is
+                                        pressed.</db:para>
+         <db:para>This property affects the <db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> property and the onEntered,
+                                        onExited and onPositionChanged signals.</db:para>
+      </db:section>
+      <db:section xml:id="mouseX-prop">
+         <db:title>mouseX : real</db:title>
+         <db:para>These properties hold the coordinates of the mouse
+                                        cursor.</db:para>
+         <db:para>If the <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link> property is false then these
+                                        properties will only be valid while a button is pressed, and
+                                        will remain valid as long as the button is held down even if
+                                        the mouse is moved outside the area.</db:para>
+         <db:para>By default, this property is false.</db:para>
+         <db:para>If <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link> is true then these properties
+                                        will be valid when:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>no button is pressed, but the mouse is within the
+                                                <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> (<db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> is true).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>a button is pressed and held, even if it has since
+                                            moved out of the area.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>The coordinates are relative to the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>.</db:para>
+      </db:section>
+      <db:section xml:id="mouseY-prop">
+         <db:title>mouseY : real</db:title>
+         <db:para>These properties hold the coordinates of the mouse
+                                        cursor.</db:para>
+         <db:para>If the <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link> property is false then these
+                                        properties will only be valid while a button is pressed, and
+                                        will remain valid as long as the button is held down even if
+                                        the mouse is moved outside the area.</db:para>
+         <db:para>By default, this property is false.</db:para>
+         <db:para>If <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link> is true then these properties
+                                        will be valid when:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>no button is pressed, but the mouse is within the
+                                                <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> (<db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> is true).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>a button is pressed and held, even if it has since
+                                            moved out of the area.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>The coordinates are relative to the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>.</db:para>
+      </db:section>
+      <db:section xml:id="pressed-prop">
+         <db:title>pressed : bool</db:title>
+         <db:para>This property holds whether any of the <db:link xlink:href="qml-qtquick-mousearea.html#acceptedButtons-prop">acceptedButtons</db:link> are currently
+                                        pressed.</db:para>
+      </db:section>
+      <db:section xml:id="pressedButtons-prop">
+         <db:title>pressedButtons :
+                                                  MouseButtons</db:title>
+         <db:para>This property holds the mouse buttons currently
+                                        pressed.</db:para>
+         <db:para>It contains a bitwise combination of:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>Qt.LeftButton</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.RightButton</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Qt.MiddleButton</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>The code below displays "right" when the right mouse
+                                        buttons is pressed:</db:para>
+         <db:programlisting language="qml">Text { text: mouseArea.pressedButtons&amp;Qt.RightButton ? "right" : ""horizontalAlignment:
+                                            Text.AlignHCenterverticalAlignment:
+                                            Text.AlignVCenterMouseArea { id: mouseAreaanchors.fill: parentacceptedButtons:
+                                            Qt.LeftButton|Qt.RightButton } }</db:programlisting>
+         <db:note>
+            <db:para>this property only handles
+                                        buttons specified in <db:link xlink:href="qml-qtquick-mousearea.html#acceptedButtons-prop">acceptedButtons</db:link>.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See
+                                            also </db:emphasis>
+            <db:link xlink:href="qml-qtquick-mousearea.html#acceptedButtons-prop">acceptedButtons</db:link>.</db:para>
+      </db:section>
+      <db:section xml:id="preventStealing-prop">
+         <db:title>preventStealing :
+                                                  bool</db:title>
+         <db:para>This property holds whether the mouse events may be
+                                        stolen from this <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>.</db:para>
+         <db:para>If a <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> is placed within an item that
+                                        filters child mouse events, such as Flickable, the mouse
+                                        events may be stolen from the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> if
+                                        a gesture is recognized by the parent item, e.g. a flick
+                                        gesture. If preventStealing is set to true, no item will
+                                        steal the mouse events.</db:para>
+         <db:para>Note that setting preventStealing to true once an item
+                                        has started stealing events will have no effect until the
+                                        next press event.</db:para>
+         <db:para>By default this property is false.</db:para>
+      </db:section>
+      <db:section xml:id="propagateComposedEvents-prop">
+         <db:title>propagateComposedEvents : bool</db:title>
+         <db:para>This property holds whether composed mouse events
+                                        will automatically propagate to other MouseAreas that
+                                        overlap with this <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> but are lower in the visual stacking
+                                        order. By default, this property is false.</db:para>
+         <db:para>
+            <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> contains several composed events:
+                                            <db:code>clicked</db:code>,
+                                            <db:code>doubleClicked</db:code> and
+                                            <db:code>pressAndHold</db:code>. These are composed
+                                        of basic mouse events, like <db:code>pressed</db:code>,
+                                        and can be propagated differently in comparison to basic
+                                        events.</db:para>
+         <db:para>If propagateComposedEvents is set to true, then composed
+                                        events will be automatically propagated to other MouseAreas
+                                        in the same location in the scene. Each event is propagated
+                                        to the next <db:link xlink:href="qml-qtquick-mousearea.html#enabled-prop">enabled</db:link>
+            <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
+                                        beneath it in the stacking order, propagating down this
+                                        visual hierarchy until a <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
+                                        accepts the event. Unlike <db:code>pressed</db:code>
+                                        events, composed events will not be automatically accepted
+                                        if no handler is present.</db:para>
+         <db:para>For example, below is a yellow <db:link xlink:href="qml-qtquick-rectangle.html">Rectangle</db:link>
+                                        that contains a blue <db:link xlink:href="qml-qtquick-rectangle.html">Rectangle</db:link>.
+                                        The blue rectangle is the top-most item in the hierarchy of
+                                        the visual stacking order; it will visually rendered above
+                                        the yellow rectangle. Since the blue rectangle sets
+                                        propagateComposedEvents to true, and also sets <db:link xlink:href="qml-qtquick-mouseevent.html#accepted-prop">MouseEvent::accepted</db:link> to false for all received
+                                            <db:code>clicked</db:code> events, any
+                                            <db:code>clicked</db:code> events it receives are
+                                        propagated to the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> of the yellow rectangle beneath
+                                        it.</db:para>
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { color: "yellow"width: 100; height: 100MouseArea { anchors.fill: parentonClicked: console.log("clicked
+                                            yellow") } Rectangle { color: "blue"width: 50; height: 50MouseArea { anchors.fill: parentpropagateComposedEvents:
+                                            trueonClicked: { console.log("clicked
+                                            blue") mouse.accepted=false } } }
+                                        }</db:programlisting>
+         <db:para>Clicking on the blue rectangle will cause the
+                                            <db:code>onClicked</db:code> handler of its child
+                                            <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> to be invoked; the event will then
+                                        be propagated to the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> of
+                                        the yellow rectangle, causing its own
+                                            <db:code>onClicked</db:code> handler to be
+                                        invoked.</db:para>
+         <db:para>This property greatly simplifies the usecase of when you
+                                        want to have overlapping MouseAreas handling the composed
+                                        events together. For example: if you want one <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> to
+                                        handle <db:code>clicked</db:code> signals and the other
+                                        to handle <db:code>pressAndHold</db:code>, or if you
+                                        want one <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link> to handle
+                                            <db:code>clicked</db:code> most of the time, but
+                                        pass it through when certain conditions are met.</db:para>
+      </db:section>
+   </db:section>
+</db:article>
