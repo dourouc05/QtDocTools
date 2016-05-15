@@ -239,13 +239,36 @@ def generate_module_xml(module_name):
     logging.info('Parsing as XML: done with module %s' % module_name)
 
 
-# Call an XSLT 2 engine to convert a single XHTML5 file into DocBook.
+# Call an XSLT 2 engine to convert a single XHTML5 file into DocBook. If there is a comment issue (something like
+# <!-- -- -->), then deal with it.
 # Here, specific to one XSLT2 engine: Saxon 9. Displays errors to the user.
 def call_xslt(file_in, file_out, stylesheet):
-    result = subprocess.run(['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out],
-                            stderr=subprocess.PIPE)
+    command_line = ['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out]
+
+    result = subprocess.run(command_line, stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, result.stderr.decode('utf-8')))
+        error_msg = result.stderr.decode('utf-8')
+        if "SXXP0003: Error reported by XML parser: The string \"--\" is not permitted within comments." in error_msg:
+            # Try to rewrite the comments before retrying.
+            def remove_comments(line):
+                l = line.strip()
+                if l.startswith("<!--") and l.endswith("-->"):
+                    return ""
+                return line
+
+            with open(file_in, 'r') as file:
+                lines = file.readlines()
+            lines = [remove_comments(l) for l in lines]
+            with open(file_in, 'w') as file:
+                file.write("\n".join(lines))
+
+            # Restart the SXLT engine.
+            result = subprocess.run(command_line, stderr=subprocess.PIPE)
+            if len(result.stderr) == 0:
+                return
+
+        # Not a comment issue, nothing you can do. .
+        logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
 
 
 # Call the C++ parser for prototypes.
@@ -337,8 +360,9 @@ if __name__ == '__main__':
     time_xml = time.perf_counter()
 
     if generate_db:
-        for moduleName, conf in configs.items():
-            generate_module_db(module_name=moduleName)
+        # for moduleName, conf in configs.items():
+        #     generate_module_db(module_name=moduleName)
+            generate_module_db(module_name="qtcore")
     time_db = time.perf_counter()
 
     print("Total time: %f s" % (time_db - time_beginning))
