@@ -1208,30 +1208,41 @@
                     $functionName
                   else
                     $commas[$index - 1]"/>
+              <xsl:variable name="firstNode_noComma" select="normalize-space(translate($firstNode, ',', ''))"/>
               <xsl:variable name="types"
                 select="$firstNode/following-sibling::html:span[@class = 'type']"/>
               <xsl:variable name="type" select="$types[1]"/>
               <xsl:variable name="textAfterType"
                 select="normalize-space($type/following-sibling::text()[1])"/>
 
-              <db:paramdef choice="req">
-                <!-- Maybe this parameter is const. -->
-                <xsl:if test="normalize-space($textAfterName) = '(const'">
-                  <!-- DocBook does not allow <db:modifier>!? -->
-                  <db:type>const</db:type>
-                </xsl:if>
-
-                <!-- Output the type. -->
-                <xsl:call-template name="classListing_methodBody_analyseType">
-                  <xsl:with-param name="typeNodes" select="$types"/>
-                </xsl:call-template>
-
-                <!-- Then the name. -->
-                <xsl:variable name="names" select="$type/following-sibling::html:i"/>
-                <db:parameter>
-                  <xsl:value-of select="normalize-space($names[1])"/>
-                </db:parameter>
-              </db:paramdef>
+              <xsl:choose>
+                <xsl:when test="starts-with($firstNode_noComma, '...')">
+                  <db:varargs/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <db:paramdef choice="req">
+                    <!-- Maybe this parameter is const. -->
+                    <xsl:if test="normalize-space($textAfterName) = '(const'">
+                      <!-- DocBook does not allow <db:modifier>!? -->
+                      <db:type>const</db:type>
+                    </xsl:if>
+                    
+                    <!-- Output the type. -->
+                    <xsl:if test="not($types)">
+                      <xsl:message>WARNING</xsl:message>
+                    </xsl:if>
+                    <xsl:call-template name="classListing_methodBody_analyseType">
+                      <xsl:with-param name="typeNodes" select="$types"/>
+                    </xsl:call-template>
+                    
+                    <!-- Then the name. -->
+                    <xsl:variable name="names" select="$type/following-sibling::html:i"/>
+                    <db:parameter>
+                      <xsl:value-of select="normalize-space($names[1])"/>
+                    </db:parameter>
+                  </db:paramdef>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:for-each>
           </xsl:otherwise>
         </xsl:choose>
