@@ -1768,6 +1768,43 @@
           </db:tbody>
         </db:informaltable>
       </xsl:when>
+      <xsl:when test="@class = 'flowListDiv'">
+        <!-- 
+          Used to present lots of content sorted alphabetically:  
+          
+          <html:div class="flowListDiv">
+            <html:dl class="flowList odd">
+              <html:dt class="alphaChar"><html:a name="a" /><html:b>A</html:b></html:dt>
+              <html:dd><html:a href="qtcore/qabstractanimation.html">QAbstractAnimation</html:a></html:dd>
+              <html:dd><html:a href="qtwidgets/qabstractbutton.html">QAbstractButton</html:a></html:dd>
+            </html:dl>
+            <html:dl class="flowList even">
+             <html:dt class="alphaChar"><html:a name="b" /><html:b>B</html:b></html:dt>
+             <html:dd><html:a href="qtgui/qbackingstore.html">QBackingStore</html:a></html:dd>
+             <html:dd><html:a href="qtcore/qbasictimer.html">QBasicTimer</html:a></html:dd>
+            </html:dl>
+        -->
+        <db:variablelist>
+          <xsl:for-each select="html:dl">
+            <db:varlistentry>
+              <db:term>
+                <xsl:value-of select="html:dt/html:b"/>
+              </db:term>
+              <db:listitem>
+                <db:itemizedlist>
+                  <xsl:for-each select="html:dd">
+                    <db:listitem>
+                      <db:para>
+                        <xsl:apply-templates mode="content_paragraph"/>
+                      </db:para>
+                    </db:listitem>
+                  </xsl:for-each>
+                </db:itemizedlist>
+              </db:listitem>
+            </db:varlistentry>
+          </xsl:for-each>
+        </db:variablelist>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:apply-templates select="*" mode="content"/>
       </xsl:otherwise>
