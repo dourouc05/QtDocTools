@@ -245,7 +245,8 @@ AST* cpp_prototype(const char * begin, char const * end) {
 			| ((kw_short | kw_long | kw_signed | kw_unsigned) & *space & base_types_kw)
 			| base_types_kw
 		) >> valueIdentifier; // The parser has problems with potentially missing parts of the type, i.e. ~(kw_signed | kw_unsigned). 
-	auto type = type_primitive | (identifier & *space & ~(type_template | type_template_complex));
+	auto type_complex = type_primitive | (identifier & *space & ~(type_template | type_template_complex));
+	auto type = type_complex & ~((*space & kw_namespace & *space & identifier_nowrite) >> valueIdentifierAddCharacters);
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = axe::r_double() >> valueAllocator >> valueDouble;

@@ -98,6 +98,8 @@ void test() {
 	total++; count += test_match("(signed short  i)", "QDebug::operator<<: signed short");
 	total++; count += test_match("( std::initializer_list < std::pair < K > > list )", "QHash::QHash (modified): template within template");
 	total++; count += test_match("( std::initializer_list < std::pair < Key ,  T > >  list )", "QHash::QHash: templates within template");
+	total++; count += test_match("( QMap < Key ,  T >  , const  Key  &  key , const  T  &  value )", "QHash::QHash: templates within template");
+	total++; count += test_match("( QMap < Key ,  T > ::const_iterator  pos , const  Key  &  key , const  T  &  value )", "QMultimap::insert: member type");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
