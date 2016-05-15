@@ -339,6 +339,26 @@
         </html:div>
       </xsl:if>
     </xsl:variable>
+    
+    <xsl:variable name="qmlSignalsTitleText" select="'Signal Documentation'" as="xs:string"/>
+    <xsl:variable name="qmlSignalsTitle" select="$content/html:h2[text() = $qmlSignalsTitleText]" as="element()?"/>
+    <xsl:variable name="qmlSignalsTitleId" select="generate-id($qmlSignalsTitle)"/>
+    <xsl:variable name="hasQmlSignals" select="$isQmlType and boolean($qmlSignalsTitle)" as="xs:boolean"/>
+    <xsl:variable name="qmlSignals" as="element(html:div)?">
+      <xsl:if test="$isQmlType and $hasQmlSignals">
+        <html:div class="qml-signals">
+          <xsl:for-each
+            select="
+              $qmlSignalsTitle
+              /following-sibling::html:div[
+                @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlSignalsTitleId
+              ]"
+            >
+            <xsl:copy-of select="current()"></xsl:copy-of>
+          </xsl:for-each>
+        </html:div>
+      </xsl:if>
+    </xsl:variable>
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
@@ -586,6 +606,7 @@
           <xsl:with-param name="props" select="$qmlProps"/>
           <xsl:with-param name="attachedProps" select="$qmlAttachedProps"/>
           <xsl:with-param name="meths" select="$qmlMeths"/>
+          <xsl:with-param name="signals" select="$qmlSignals"></xsl:with-param>
         </xsl:call-template>
       </xsl:if>
 
@@ -655,6 +676,13 @@
       <xsl:if test="$hasQmlMeths">
         <xsl:call-template name="content_qmlMeths">
           <xsl:with-param name="data" select="$qmlMeths"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$hasQmlSignals">
+        <xsl:call-template name="content_qmlMeths">
+          <xsl:with-param name="data" select="$qmlSignals"/>
+          <xsl:with-param name="type" select="'signal'"/>
         </xsl:call-template>
       </xsl:if>
       
@@ -1235,6 +1263,7 @@
     <xsl:param name="props" as="element()?"/> 
     <xsl:param name="attachedProps" as="element()?"/> 
     <xsl:param name="meths" as="element()?"/>
+    <xsl:param name="signals" as="element()?"/>
     
     <db:classsynopsis>
       <db:ooclass>
@@ -1287,6 +1316,12 @@
       <xsl:if test="$meths">
         <xsl:apply-templates mode="qmlMethodsListing" select="$meths/html:div[@class = 'qmlitem']"/>
       </xsl:if>
+      
+      <xsl:if test="$signals">
+        <xsl:apply-templates mode="qmlMethodsListing" select="$signals/html:div[@class = 'qmlitem']">
+          <xsl:with-param name="type" select="'signal'"></xsl:with-param>
+        </xsl:apply-templates>
+      </xsl:if>
     </db:classsynopsis>
   </xsl:template>
   <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
@@ -1317,11 +1352,19 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template mode="qmlMethodsListing" match="html:div[@class = 'qmlitem']">
+    <xsl:param name="type" as="xs:string" select="''"/>
+    
     <xsl:variable name="row" select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
     <xsl:variable name="title" select="$row/html:td/html:p"/>
     <xsl:variable name="anchor" select="$row/@id"/>
     
     <db:methodsynopsis>
+      <xsl:if test="string-length($type)">
+        <db:modifier>
+          <xsl:value-of select="$type"/>
+        </db:modifier>
+      </xsl:if>
+      
       <!-- Return type. -->
       <xsl:choose>
         <xsl:when test="$title/html:*[2][self::html:span][@class = 'type']">
@@ -1668,9 +1711,19 @@
   <!-- Handle QML methods. -->
   <xsl:template name="content_qmlMeths">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="type" as="xs:string" select="''"/>
     
     <db:section>
-      <db:title>Methods Documentation</db:title>
+      <db:title>
+        <xsl:choose>
+          <xsl:when test="$type = 'signal'">
+            Signals Documentation
+          </xsl:when>
+          <xsl:otherwise>
+            Methods Documentation
+          </xsl:otherwise>
+        </xsl:choose>
+      </db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
