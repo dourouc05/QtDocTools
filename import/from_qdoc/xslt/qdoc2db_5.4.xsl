@@ -7,6 +7,11 @@
   
   To check: types and arrays []. 
   How to retrieve base class?
+  
+  
+  
+  What about QML signal handlers? Always the same presentation in signals: 
+    The corresponding handler is onExited.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
@@ -1493,16 +1498,34 @@
     </db:section>
   </xsl:template>
   
-  <!-- Handle C++ classes: non-member related functions. -->
+  <!-- Handle C++ classes: non-member related functions, typedefs, classes. -->
   <xsl:template name="content_nonmems">
     <xsl:param name="data" as="element(html:div)"/>
     
     <db:section>
       <db:title>Related Non-Members</db:title>
-      <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
+      <xsl:variable name="relnonmems_translated">
+        <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
+      </xsl:variable>
+      <xsl:if test="not(count($relnonmems_translated/db:section) = count($data/html:h3))">
+        <xsl:message>WARNING: Missed at least one related non-member!</xsl:message>
+      </xsl:if>
+      <xsl:copy-of select="$relnonmems_translated"/>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_nonmems" match="html:h3[not(@class)]">
+    <!-- Classes (they have no anchor!) -->
+    <xsl:variable name="functionAnchor" select="./@id"/>
+    <db:section>
+      <xsl:call-template name="content_title"/>
+      
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_nonmems" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
+    <!-- Classes -->
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>

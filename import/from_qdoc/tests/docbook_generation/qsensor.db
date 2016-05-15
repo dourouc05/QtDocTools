@@ -1938,3 +1938,62 @@
    </db:section>
    <db:section>
       <db:title>Related Non-Members</db:title>
+      <db:section>
+         <db:title>class qoutputrange</db:title>
+         <db:para/>
+         <db:para>The qoutputrange class holds the specifics of an output
+                                    range. <db:link xlink:href="qsensor.html#details">More...</db:link>
+         </db:para>
+      </db:section>
+      <db:section xml:id="qoutputrangelist-typedef">
+         <db:title>typedef qoutputrangelist</db:title>
+         <db:para>This type is defined as a list of qoutputrange
+                                    values.</db:para>
+         <db:programlisting>typedefQList&lt;qoutputrange&gt; qoutputrangelist;</db:programlisting>
+         <db:para>This typedef was introduced in Qt 5.1.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qlist.html">QList</db:link>&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:link xlink:href="qsensor.html">qoutputrange</db:link>
+               </db:member>
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qsensor.html#outputRanges-prop">QSensor::outputRanges</db:link>&lt;/db:code&gt;</db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qrange-typedef">
+         <db:title>typedef qrange</db:title>
+         <db:para>This type is defined as a &lt;db:code&gt;<db:link xlink:href="qtcore/qpair.html">QPair</db:link>&lt;/db:code&gt;.</db:para>
+         <db:programlisting>typedefQPair&lt;int,int&gt;
+                                    qrange;</db:programlisting>
+         <db:para>This typedef was introduced in Qt 5.1.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qpair.html">QPair</db:link>&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:link xlink:href="qsensor.html#qrangelist-typedef">qrangelist</db:link>
+               </db:member>
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link>&lt;/db:code&gt;</db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qrangelist-typedef">
+         <db:title>typedef qrangelist</db:title>
+         <db:para>This type is defined as a list of qrange values.</db:para>
+         <db:programlisting>typedefQList&lt;qrange&gt; qrangelist;</db:programlisting>
+         <db:para>This typedef was introduced in Qt 5.1.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qlist.html">QList</db:link>&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:link xlink:href="qsensor.html#qrange-typedef">qrange</db:link>
+               </db:member>
+               <db:member>&lt;db:code&gt;<db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link>&lt;/db:code&gt;</db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+   </db:section>
+</db:article>
