@@ -224,13 +224,28 @@ AST* cpp_prototype(const char * begin, char const * end) {
 			& *space
 			)
 		& (tpl_close >> valueIdentifierAddCharacters);
+	auto type_template_complex = tpl_open
+		& *space
+		& identifier_nowrite
+		& *space
+		& *type_template
+		& *space
+		& *(
+		    (comma >> valueIdentifierAddCharacters)
+			& *space
+			& (identifier_nowrite)
+			& *space
+			& *(type_template >> valueIdentifierAddCharacters)
+			& *space
+			)
+		& (tpl_close >> valueIdentifierAddCharacters);
 	auto type_primitive = (
 			((kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
 			| ((kw_signed | kw_unsigned | kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
 			| ((kw_short | kw_long | kw_signed | kw_unsigned) & *space & base_types_kw)
 			| base_types_kw
 		) >> valueIdentifier; // The parser has problems with potentially missing parts of the type, i.e. ~(kw_signed | kw_unsigned). 
-	auto type = type_primitive | (identifier & *space & ~type_template);
+	auto type = type_primitive | (identifier & *space & ~(type_template | type_template_complex));
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = axe::r_double() >> valueAllocator >> valueDouble;
@@ -255,7 +270,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 		& paren_close;
 	auto value_simple = value_litteral | (value_object_simple >> valueAllocator >> valueInnerObject) | value_expression;
 
-	auto value_object_compound = ((identifier >> valueIdentifier) & *space & ~type_template) >> outerObjectIdentifier
+	auto value_object_compound = ((identifier >> valueIdentifier) & *space & ~(type_template | type_template_complex)) >> outerObjectIdentifier
 		& *space
 		& paren_open & *space & ~((value_simple >> outerObjectNewValue) % spaced_comma) & *space & paren_close;
 	auto value = value_litteral | (value_object_compound >> valueAllocator >> valueOuterObject) | value_expression;

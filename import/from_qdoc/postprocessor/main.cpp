@@ -96,6 +96,8 @@ void test() {
 	total++; count += test_match("( char  c  = \"\\\"\")", "QDebug::maybeQuote (modified): quote as value");
 	total++; count += test_match("( char  c  = '\"')", "QDebug::maybeQuote: simple quotes for value and quote as value"); 
 	total++; count += test_match("(signed short  i)", "QDebug::operator<<: signed short");
+	total++; count += test_match("( std::initializer_list < std::pair < K > > list )", "QHash::QHash (modified): template within template");
+	total++; count += test_match("( std::initializer_list < std::pair < Key ,  T > >  list )", "QHash::QHash: templates within template");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
