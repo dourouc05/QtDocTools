@@ -163,6 +163,8 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto tpl_open = axe::r_lit('<');
 	auto tpl_close = axe::r_lit('>');
 	auto quote = axe::r_lit('"');
+	auto simple_quote = axe::r_lit('\'');
+	auto escape = axe::r_lit('\\');
 	auto underscore = axe::r_lit('_');
 	auto kw_and = axe::r_lit('&');
 	auto kw_or = axe::r_lit('|');
@@ -194,7 +196,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto kw_float = axe::r_lit("float");
 	auto kw_double = axe::r_lit("double");
 	auto all_types_kw = kw_signed | kw_unsigned | kw_short | kw_long | kw_bool | kw_char | kw_int | kw_long | kw_float | kw_double;
-	auto base_types_kw = kw_bool | kw_char | kw_int | kw_unsigned | kw_long | kw_float | kw_double; // Those that can be used independently
+	auto base_types_kw = kw_bool | kw_char | kw_int | kw_unsigned | kw_short | kw_long | kw_float | kw_double; // Those that can be used independently
 
 	/// Grammar rules. 
 	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
@@ -224,7 +226,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 		& (tpl_close >> valueIdentifierAddCharacters);
 	auto type_primitive = (
 			((kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
-			| ((kw_signed | kw_unsigned | kw_signed | kw_unsigned) & *space & (kw_short | kw_long) & *space & base_types_kw)
+			| ((kw_signed | kw_unsigned | kw_short | kw_long) & *space & (kw_short | kw_long) & *space & base_types_kw)
 			| ((kw_short | kw_long | kw_signed | kw_unsigned) & *space & base_types_kw)
 			| base_types_kw
 		) >> valueIdentifier; // The parser has problems with potentially missing parts of the type, i.e. ~(kw_signed | kw_unsigned). 
@@ -232,7 +234,9 @@ AST* cpp_prototype(const char * begin, char const * end) {
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = axe::r_double() >> valueAllocator >> valueDouble;
-	auto value_string = (quote & *(axe::r_any() - quote) & quote) >> valueAllocator >> valueString;
+	auto value_string_double_quote = (quote & *((escape & quote) | (axe::r_any() - quote)) & quote);
+	auto value_string_simple_quote = (simple_quote & *((escape & simple_quote) | (axe::r_any() - simple_quote)) & simple_quote);
+	auto value_string = (value_string_double_quote | value_string_simple_quote) >> valueAllocator >> valueString;
 	auto value_litteral = value_string | value_number | value_boolean;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;
 	auto value_constant = value_constant_nowrite >> valueAllocator >> valueConstant;

@@ -92,6 +92,10 @@ void test() {
 	total++; count += test_match("( int  location , const  GLfloat [ 2 ][ 2 ]  value )", "QGLShaderProgram::setUniformValue: sized arrays");
 	total++; count += test_match("( int  role  = Qt::UserRole + identifier) const", "QStandardItem::data, simplified: complex expression (sum between identifiers)");
 	total++; count += test_match("( int  role  = Qt::UserRole + 1) const", "QStandardItem::data: complex expression (identifier and integer)");
+	total++; count += test_match("( char  c  = 'a')", "QDebug::maybeQuote (modified): simple quotes for value");
+	total++; count += test_match("( char  c  = \"\\\"\")", "QDebug::maybeQuote (modified): quote as value");
+	total++; count += test_match("( char  c  = '\"')", "QDebug::maybeQuote: simple quotes for value and quote as value"); 
+	total++; count += test_match("(signed short  i)", "QDebug::operator<<: signed short");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
