@@ -61,7 +61,7 @@
     </xsl:variable>
     
     <xsl:variable name="isNamespace" as="xs:boolean"
-      select=" ends-with($title, ' Namespace') and count(contains($title, ' ')) = 1"/>
+      select="ends-with($title, ' Namespace') and count(contains($title, ' ')) = 1"/>
     <xsl:variable name="namespaceName">
       <xsl:if test="$isNamespace">
         <xsl:value-of select="substring-before($title, ' Namespace')"/>
@@ -70,6 +70,8 @@
     <xsl:if test="$isNamespace and $warnVocabularyUnsupportedFeatures">
       <xsl:message>WARNING: No summary output for namespaces (actually replaced by classes).</xsl:message>
     </xsl:if>
+    
+    <xsl:variable name="isFunctions" as="xs:boolean" select="ends-with($title, ' Functions')"/>
 
     <xsl:variable name="isQmlType" as="xs:boolean" select="ends-with($title, ' QML Type')"/>
     <xsl:variable name="qmlTypeName">
@@ -78,7 +80,7 @@
       </xsl:if>
     </xsl:variable>
     
-    <xsl:variable name="isConcept" select="not($isClass) and not($isNamespace) and not($isQmlType)" as="xs:boolean"/>
+    <xsl:variable name="isConcept" select="not($isClass) and not($isNamespace) and not($isFunctions) and not($isQmlType)" as="xs:boolean"/>
 
     <!-- Extract the various parts of the prologue. -->
     <xsl:variable name="prologueTable"
@@ -181,12 +183,24 @@
         </xsl:if>
     </xsl:variable>
     <xsl:variable name="hasActuallyNoDescription" as="xs:boolean" select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))"/>
-    <xsl:variable name="description" as="element()?" select="if(not($isQmlType)) then $content/html:div[@class = 'descr'] else $descriptionRawQml"/>
+    <xsl:variable name="descriptionInHeader" as="element()?">
+      <!-- If there is no actual detailed description, take what is available in the header part. -->
+      <xsl:if test="count($content/html:div[@class = 'descr']/child::html:*[not(self::html:a)]) = 0">
+        <html:div class="descr">
+          <html:h2>Detailed Description</html:h2>
+          <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
+        </html:div>
+      </xsl:if>
+    </xsl:variable>
+    
+    <xsl:variable name="descriptionUsualPlace" as="element()?" select="$content/html:div[@class = 'descr']"/>
+    <xsl:variable name="descriptNonQml" as="element()?" select="if ($descriptionInHeader) then $descriptionInHeader else $descriptionUsualPlace"/>
+    <xsl:variable name="description" as="element()?" select="if(not($isQmlType)) then $descriptNonQml else $descriptionRawQml"/>
     <xsl:if test="not($hasActuallyNoDescription) and not($description)">
       <xsl:message>WARNING: Found no description, while there should be one. </xsl:message>
     </xsl:if>
     <xsl:variable name="siblingAfterDescription" as="element()?"
-      select="$description/following-sibling::*[1]"/>
+      select="$descriptionUsualPlace/following-sibling::*[1]"/>
     <xsl:if test="$siblingAfterDescription and $isQmlType">
       <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in the style sheets!</xsl:message>
     </xsl:if>
@@ -220,6 +234,18 @@
       select="$remainingAfterIndex[self::html:div][@class = 'macros']"/>
     <xsl:variable name="vars" as="element(html:div)?"
       select="$remainingAfterIndex[self::html:div][@class = 'vars']"/>
+    
+    <xsl:variable name="funcs_outside" as="element(html:div)?">
+      <xsl:variable name="funcs_strange_title" as="element(html:h2)?"
+        select="$descriptionUsualPlace/following-sibling::html:h2[text() = 'Function Documentation']"/>
+      <xsl:variable name="funcs_strange_title_id" select="generate-id($funcs_strange_title)"/>
+      <html:div class="func">
+        <xsl:copy-of select="$funcs_strange_title"/>
+        <xsl:for-each select="$descriptionUsualPlace/following-sibling::node()[./preceding-sibling::html:h2[1][generate-id(.) = $funcs_strange_title_id]]">
+          <xsl:copy-of select="."/>
+        </xsl:for-each>
+      </html:div>
+    </xsl:variable>
     
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
@@ -506,10 +532,15 @@
         <xsl:if test="$nonmems">
           <xsl:call-template name="functionListing">
             <xsl:with-param name="data" select="$nonmems"/>
-            <xsl:with-param name="className" select="$className"/>
             <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
           </xsl:call-template>
         </xsl:if>
+      </xsl:if>
+      
+      <xsl:if test="$isFunctions">
+        <xsl:call-template name="functionListing">
+          <xsl:with-param name="data" select="$funcs_outside"/>
+        </xsl:call-template>
       </xsl:if>
       
       <xsl:if test="$isNamespace">
@@ -596,6 +627,12 @@
       <xsl:if test="$vars">
         <xsl:call-template name="content_vars">
           <xsl:with-param name="data" select="$vars"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$isFunctions">
+        <xsl:call-template name="content_class">
+          <xsl:with-param name="data" select="$funcs_outside"/>
         </xsl:call-template>
       </xsl:if>
       
@@ -1085,15 +1122,11 @@
 
   <xsl:template name="functionListing">
     <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="className" as="xs:string"/>
     <xsl:param name="obsoleteData" as="element(html:div)?"/>
 
-    <xsl:apply-templates mode="functionListing" select="$data/html:h3">
-      <xsl:with-param name="className" select="$className"/>
-    </xsl:apply-templates>
+    <xsl:apply-templates mode="functionListing" select="$data/html:h3"/>
     <xsl:if test="boolean($obsoleteData)">
       <xsl:apply-templates mode="functionListing" select="$obsoleteData/html:h3">
-        <xsl:with-param name="className" select="$className"/>
         <xsl:with-param name="obsolete" select="true()"/>
       </xsl:apply-templates>
     </xsl:if>
