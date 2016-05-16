@@ -120,46 +120,61 @@
       QML types have a description without outer <div>; complexity to deal with this.
       The following code will look after siblings of $description for classes, no copy allowed in this case!
     -->
-    <!-- 
-      TODO: copy anchors into DocBook! E.g.: 
-      <html:a name="key-handling"></html:a>
-      <html:h3>Key Handling</html:h3> 
-      Must be done afterwards, when $description is used. 
-    -->
-    <xsl:variable name="descriptionRawQml" as="element()?">
-        <xsl:if test="$isQmlType">
+    <xsl:variable name="hasActuallyNoDescription" as="xs:boolean" select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))"/>
+
+    <xsl:variable name="descriptionUsualPlace" as="element()?" select="$content/html:div[@class = 'descr']"/>
+    <xsl:variable name="description" as="element()?">
+      <xsl:variable name="descriptionInHeader"
+        select="count($content/html:div[@class = 'descr']/child::html:*[not(self::html:a)]) = 0"/>
+      <xsl:choose>
+        <xsl:when test="not($isQmlType) and not($descriptionInHeader)">
+          <!-- Easiest case: everything is at its own place. -->
+          <xsl:copy-of select="$descriptionUsualPlace"/>
+        </xsl:when>
+        <xsl:when test="not($isQmlType) and $descriptionInHeader">
+          <!-- If there is no actual detailed description, take what is available in the header part. -->
+          <html:div class="descr">
+            <html:h2>Detailed Description</html:h2>
+            <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
+          </html:div>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- Deal with QML descriptions. -->
           <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
-          <xsl:variable name="attachedPropText" select="'Attached Property Documentation'" as="xs:string"/>
+          <xsl:variable name="attachedPropText" select="'Attached Property Documentation'"
+            as="xs:string"/>
           <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
-          
+
           <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
           <xsl:variable name="descTitleId" select="generate-id($descTitle)"/>
-          <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]" as="element()?"/>
+          <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]"
+            as="element()?"/>
           <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
-          <xsl:variable name="attachedPropTitle" select="$content/html:h2[text() = $attachedPropText]" as="element()?"/>
+          <xsl:variable name="attachedPropTitle"
+            select="$content/html:h2[text() = $attachedPropText]" as="element()?"/>
           <xsl:variable name="attachedPropTitleId" select="generate-id($attachedPropTitle)"/>
-          <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]" as="element()?"/>
+          <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]"
+            as="element()?"/>
           <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
-          
+
           <html:div class="descr">
             <html:h2>Detailed Description</html:h2>
             <xsl:for-each
               select="
                 $descTitle
                 /following-sibling::html:*[
-                  text() != '' 
-                  and text() != $propText
-                  and text() != $attachedPropText
-                  and text() != $methText
-                  and not(
-                    generate-id(preceding-sibling::html:h2[1]) = $propTitleId
-                    or
-                    generate-id(preceding-sibling::html:h2[1]) = $attachedPropTitleId
-                    or
-                    generate-id(preceding-sibling::html:h2[1]) = $methTitleId
-                  )
-                ]"
-              >
+                text() != ''
+                and text() != $propText
+                and text() != $attachedPropText
+                and text() != $methText
+                and not(
+                generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+                or
+                generate-id(preceding-sibling::html:h2[1]) = $attachedPropTitleId
+                or
+                generate-id(preceding-sibling::html:h2[1]) = $methTitleId
+                )
+                ]">
               <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
               <xsl:choose>
                 <xsl:when test="current()[self::html:h2]">
@@ -168,34 +183,23 @@
                     <xsl:value-of select="current()"/>
                   </html:h3>
                 </xsl:when>
-                <xsl:when test="current()[self::html:h3][generate-id(preceding-sibling::html:h2[1]) != $descTitleId]">
+                <xsl:when
+                  test="current()[self::html:h3][generate-id(preceding-sibling::html:h2[1]) != $descTitleId]">
                   <html:h4>
                     <xsl:attribute name="id" select="current()[@id]"/>
                     <xsl:value-of select="current()"/>
                   </html:h4>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:copy-of select="current()"></xsl:copy-of>
+                  <xsl:copy-of select="current()"/>
                 </xsl:otherwise>
               </xsl:choose>
             </xsl:for-each>
           </html:div>
-        </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
-    <xsl:variable name="hasActuallyNoDescription" as="xs:boolean" select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))"/>
-    <xsl:variable name="descriptionInHeader" as="element()?">
-      <!-- If there is no actual detailed description, take what is available in the header part. -->
-      <xsl:if test="count($content/html:div[@class = 'descr']/child::html:*[not(self::html:a)]) = 0">
-        <html:div class="descr">
-          <html:h2>Detailed Description</html:h2>
-          <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
-        </html:div>
-      </xsl:if>
-    </xsl:variable>
-    
-    <xsl:variable name="descriptionUsualPlace" as="element()?" select="$content/html:div[@class = 'descr']"/>
-    <xsl:variable name="descriptNonQml" as="element()?" select="if ($descriptionInHeader) then $descriptionInHeader else $descriptionUsualPlace"/>
-    <xsl:variable name="description" as="element()?" select="if(not($isQmlType)) then $descriptNonQml else $descriptionRawQml"/>
+
     <xsl:if test="not($hasActuallyNoDescription) and not($description)">
       <xsl:message>WARNING: Found no description, while there should be one. </xsl:message>
     </xsl:if>
@@ -247,11 +251,13 @@
       </html:div>
     </xsl:variable>
     
-    <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
-    <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
-    <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
+    <xsl:variable name="qmlPropsTitle" as="element()?">
+      <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
+      <xsl:copy-of select="$content/html:h2[text() = $qmlPropsTitleText]"/>
+    </xsl:variable>
     <xsl:variable name="hasQmlProps" select="$isQmlType and boolean($qmlPropsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlProps" as="element(html:div)?">
+      <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
       <xsl:if test="$isQmlType and $hasQmlProps">
         <html:div class="qml-props">
           <xsl:for-each
@@ -267,11 +273,13 @@
       </xsl:if>
     </xsl:variable>
     
-    <xsl:variable name="qmlAttachedPropsTitleText" select="'Attached Property Documentation'" as="xs:string"/>
-    <xsl:variable name="qmlAttachedPropsTitle" select="$content/html:h2[text() = $qmlAttachedPropsTitleText]" as="element()?"/>
-    <xsl:variable name="qmlAttachedPropsTitleId" select="generate-id($qmlAttachedPropsTitle)"/>
+    <xsl:variable name="qmlAttachedPropsTitle" as="element()?">
+      <xsl:variable name="qmlAttachedPropsTitleText" select="'Attached Property Documentation'" as="xs:string"/>
+      <xsl:copy-of select="$content/html:h2[text() = $qmlAttachedPropsTitleText]"/>
+    </xsl:variable>
     <xsl:variable name="hasQmlAttachedProps" select="$isQmlType and boolean($qmlAttachedPropsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlAttachedProps" as="element(html:div)?">
+      <xsl:variable name="qmlAttachedPropsTitleId" select="generate-id($qmlAttachedPropsTitle)"/>
       <xsl:if test="$isQmlType and $hasQmlAttachedProps">
         <html:div class="qml-attached-props">
           <xsl:for-each
@@ -287,12 +295,14 @@
       </xsl:if>
     </xsl:variable>
     
-    <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
-    <xsl:variable name="qmlMethsTitle" select="$content/html:h2[text() = $qmlMethsTitleText]" as="element()?"/>
-    <xsl:variable name="qmlMethsTitleId" select="generate-id($qmlMethsTitle)"/>
+    <xsl:variable name="qmlMethsTitle" as="element()?">
+      <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
+      <xsl:copy-of select="$content/html:h2[text() = $qmlMethsTitleText]"/>
+    </xsl:variable>
     <xsl:variable name="hasQmlMeths" select="$isQmlType and boolean($qmlMethsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlMeths" as="element(html:div)?">
       <xsl:if test="$isQmlType and $hasQmlMeths">
+        <xsl:variable name="qmlMethsTitleId" select="generate-id($qmlMethsTitle)"/>
         <html:div class="qml-meths">
           <xsl:for-each
             select="
@@ -307,11 +317,13 @@
       </xsl:if>
     </xsl:variable>
     
-    <xsl:variable name="qmlSignalsTitleText" select="'Signal Documentation'" as="xs:string"/>
-    <xsl:variable name="qmlSignalsTitle" select="$content/html:h2[text() = $qmlSignalsTitleText]" as="element()?"/>
-    <xsl:variable name="qmlSignalsTitleId" select="generate-id($qmlSignalsTitle)"/>
+    <xsl:variable name="qmlSignalsTitle" as="element()?">
+      <xsl:variable name="qmlSignalsTitleText" select="'Signal Documentation'" as="xs:string"/>
+      <xsl:copy-of select="$content/html:h2[text() = $qmlSignalsTitleText]"/>
+    </xsl:variable>
     <xsl:variable name="hasQmlSignals" select="$isQmlType and boolean($qmlSignalsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlSignals" as="element(html:div)?">
+      <xsl:variable name="qmlSignalsTitleId" select="generate-id($qmlSignalsTitle)"/>
       <xsl:if test="$isQmlType and $hasQmlSignals">
         <html:div class="qml-signals">
           <xsl:for-each
@@ -346,11 +358,6 @@
       <!-- Ignore the subtitles for example pages, with only source code (it is redundant with the title). -->
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
-    <!--<xsl:if test="boolean($siblingAfterVars) and not($legitVarsFollower)">
-      <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
-        select="name($siblingAfterVars)"/>
-      </xsl:message>
-    </xsl:if>-->
     <!-- A C++ class can perfectly have no functions! Example: QQuickItem::ItemChangedData. -->
     <xsl:if test="$isClass and boolean($hasQmlProps)">
       <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
@@ -387,29 +394,25 @@
     </xsl:if>
 
     <!-- Do the same with linked documents (only for C++ classes). -->
-    <xsl:variable name="linkedDocumentsList"
-      select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
-    <xsl:variable name="hasLinkedDocumentsList" select="boolean($linkedDocumentsList)"
-      as="xs:boolean"/>
-    <xsl:variable name="linkedDocumentsFileNames" as="xs:string*"
-      select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
     <xsl:variable name="linkedDocuments" as="element()*">
-      <xsl:choose>
-        <xsl:when test="$linkedDocumentsFileNames">
-          <xsl:for-each select="$linkedDocumentsFileNames">
-            <entry>
-              <xsl:attribute name="file-name">
-                <xsl:value-of select="."/>
-              </xsl:attribute>
-              <xsl:attribute name="type">
-                <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
-              </xsl:attribute>
-              <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
-            </entry>
-          </xsl:for-each>
-        </xsl:when>
-        <xsl:otherwise/>
-      </xsl:choose>
+      <xsl:variable name="linkedDocumentsList"
+        select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
+      <xsl:variable name="linkedDocumentsFileNames" as="xs:string*">
+        <xsl:value-of select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
+      </xsl:variable>
+      <xsl:if test="$linkedDocumentsFileNames">
+        <xsl:for-each select="$linkedDocumentsFileNames">
+          <entry>
+            <xsl:attribute name="file-name">
+              <xsl:value-of select="."/>
+            </xsl:attribute>
+            <xsl:attribute name="type">
+              <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
+            </xsl:attribute>
+            <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
+          </entry>
+        </xsl:for-each>
+      </xsl:if>
     </xsl:variable>
     <xsl:if test="count($linkedDocuments) > 1">
       <xsl:message>WARNING: More than one linked document. Unsupported.</xsl:message>
