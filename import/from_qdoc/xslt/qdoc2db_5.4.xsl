@@ -426,66 +426,60 @@
         /html:div[@class = 'content mainContent']"/>
     <xsl:variable name="hasObsolete" select="boolean($obsolete)" as="xs:boolean"/>
 
-    <xsl:variable name="obsolete_types_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Member Type Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_types" as="element(html:div)?">
-      <html:div class="types">
-        <xsl:copy-of select="$obsolete_types_title"/>
-        <xsl:copy-of
-          select="$obsolete_types_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_types_title]"
-        />
-      </html:div>
+      <xsl:variable name="title" as="element(html:h2)?"
+        select="$obsolete/html:h2[text() = 'Member Type Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
+      <xsl:if test="$title">
+        <html:div class="types">
+          <xsl:copy-of select="$title"/>
+          <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]" />
+        </html:div>
+      </xsl:if>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types_title)" as="xs:boolean"/>
 
-    <xsl:variable name="obsolete_properties_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Property Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_properties" as="element(html:div)?">
-      <html:div class="prop">
-        <xsl:copy-of select="$obsolete_properties_title"/>
-        <xsl:copy-of
-          select="$obsolete_properties_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_properties_title]"
-        />
-      </html:div>
+      <xsl:variable name="title" as="element(html:h2)?"
+        select="$obsolete/html:h2[text() = 'Property Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
+      <xsl:if test="$title">
+        <html:div class="prop">
+          <xsl:copy-of select="$title"/>
+          <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]" />
+        </html:div>
+      </xsl:if>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)" as="xs:boolean"/>
       
-    <xsl:variable name="obsolete_memfuncs_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Member Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_memfuncs" as="element(html:div)?">
-      <html:div class="func">
-        <xsl:copy-of select="$obsolete_memfuncs_title"/>
-        <xsl:copy-of
-          select="$obsolete_memfuncs_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_memfuncs_title]"
-        />
-      </html:div>
+      <xsl:variable name="title" as="element(html:h2)?"
+        select="$obsolete/html:h2[text() = 'Member Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
+      <xsl:if test="$title">
+        <html:div class="func">
+          <xsl:copy-of select="$title"/>
+          <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
+        </html:div>
+      </xsl:if>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasMemfuncs" select="boolean($obsolete_memfuncs_title)" as="xs:boolean"/>
     
-    <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
-      <html:div class="func">
-        <xsl:copy-of select="$obsolete_funcs_title"/>
-        <xsl:copy-of
-          select="$obsolete_funcs_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_funcs_title]"
-        />
-      </html:div>
+      <xsl:variable name="title" as="element(html:h2)?"
+        select="$obsolete/html:h2[text() = 'Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
+      <xsl:if test="$title">
+       <html:div class="func">
+         <xsl:copy-of select="$title"/>
+         <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]" />
+       </html:div>
+      </xsl:if>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasFuncs" select="boolean($obsolete_funcs_title)" as="xs:boolean"/>
 
-    <xsl:variable name="obsolete_nonmems_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Related Non-Members'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_nonmems" as="element(html:div)?">
-      <html:div class="types">
-        <xsl:copy-of select="$obsolete_nonmems_title"/>
-        <xsl:copy-of
-          select="$obsolete_nonmems_title/following-sibling::node()[preceding-sibling::html:h2 = $obsolete_nonmems_title]"
-        />
-      </html:div>
+      <xsl:variable name="title" as="element(html:h2)?"
+        select="$obsolete/html:h2[text() = 'Related Non-Members'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
+      <xsl:if test="$title">
+       <html:div class="types">
+         <xsl:copy-of select="$title"/>
+         <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
+       </html:div>
+      </xsl:if>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasNonmems" select="boolean($obsolete_nonmems_title)"
-      as="xs:boolean"/>
 
     <!-- Actually output something. -->
     <db:article version="5.0">
@@ -670,26 +664,26 @@
             <xsl:text>Obsolete Members</xsl:text>
           </db:title>
 
-          <xsl:if test="$obsolete_hasTypes">
+          <xsl:if test="$obsolete_types">
             <xsl:call-template name="content_types">
               <xsl:with-param name="data" select="$obsolete_types"/>
             </xsl:call-template>
           </xsl:if>
 
-          <xsl:if test="$obsolete_hasMemfuncs">
+          <xsl:if test="$obsolete_memfuncs">
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_memfuncs"/>
             </xsl:call-template>
           </xsl:if>
           
-          <xsl:if test="$obsolete_hasFuncs">
+          <xsl:if test="$obsolete_funcs">
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_funcs"/>
               <xsl:with-param name="title" select="'Function Documentation'"></xsl:with-param>
             </xsl:call-template>
           </xsl:if>
 
-          <xsl:if test="$obsolete_hasNonmems">
+          <xsl:if test="$obsolete_nonmems">
             <xsl:call-template name="content_nonmems">
               <xsl:with-param name="data" select="$obsolete_nonmems"/>
             </xsl:call-template>
