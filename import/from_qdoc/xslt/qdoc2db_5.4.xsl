@@ -53,9 +53,7 @@
     <xsl:variable name="hasSubtitle" as="xs:boolean" select="not($subtitle = '')"/>
 
     <xsl:variable name="isClass" as="xs:boolean"
-      select="
-        ends-with($title, ' Class')
-        and count(contains($title, ' ')) = 1"/>
+      select="ends-with($title, ' Class') and count(contains($title, ' ')) = 1"/>
     <xsl:variable name="className">
       <xsl:if test="$isClass">
         <xsl:value-of select="substring-before($title, ' Class')"/>
@@ -63,9 +61,7 @@
     </xsl:variable>
     
     <xsl:variable name="isNamespace" as="xs:boolean"
-      select="
-      ends-with($title, ' Namespace')
-      and count(contains($title, ' ')) = 1"/>
+      select=" ends-with($title, ' Namespace') and count(contains($title, ' ')) = 1"/>
     <xsl:variable name="namespaceName">
       <xsl:if test="$isNamespace">
         <xsl:value-of select="substring-before($title, ' Namespace')"/>
@@ -196,10 +192,9 @@
     </xsl:if>
 
     <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/> <!-- For QML types: "see also" handled naturally as a paragraph. -->
-    <xsl:variable name="hasSeeAlso" select="boolean($seeAlso)" as="xs:boolean"/>
     <xsl:variable name="siblingAfterSeeAlso" as="element()?"
       select="
-        if ($hasSeeAlso) then
+        if ($seeAlso) then
           $siblingAfterDescription/following-sibling::*[1]
         else
           $siblingAfterDescription"/>
@@ -207,78 +202,24 @@
     <xsl:variable name="index" as="element()?"
       select="$siblingAfterSeeAlso[self::html:div][@class = 'table'][html:table[@class = 'annotated']]"/> <!-- For pages that contain only an index, like accessibility -->
     <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterIndex" as="element()?"
-      select="
-        if ($hasIndex) then
-          $siblingAfterSeeAlso/following-sibling::*[1]
-        else
-          $siblingAfterSeeAlso"/>
     <xsl:if test="$isQmlType and //html:*[self::html:div][@class = 'table'][html:table[@class = 'annotated']]">
       <xsl:message>WARNING: QML type seems to have an index page; not implemented. </xsl:message>
       <!-- In this case, would need to find a way back in the page (cannot use the $sibling variables). -->
     </xsl:if>
     
+    <xsl:variable name="remainingAfterIndex" as="element(html:div)*" select="$siblingAfterSeeAlso/following-sibling::html:div"/>
     <xsl:variable name="types" as="element()?"
-      select="$siblingAfterIndex[self::html:div][@class = 'types']"/>
-    <xsl:variable name="hasTypes" select="boolean($types)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterTypes" as="element()?"
-      select="
-        if ($hasTypes) then
-          $siblingAfterIndex/following-sibling::*[1]
-        else
-          $siblingAfterIndex"/>
-
+      select="$remainingAfterIndex[self::html:div][@class = 'types']"/>
     <xsl:variable name="properties" as="element()?"
-      select="$siblingAfterTypes[self::html:div][@class = 'prop']"/>
-    <xsl:variable name="hasProperties" select="boolean($properties)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterProperties" as="element()?"
-      select="
-        if ($hasProperties) then
-          $siblingAfterTypes/following-sibling::*[1]
-        else
-          $siblingAfterTypes"/>
-
+      select="$remainingAfterIndex[self::html:div][@class = 'prop']"/>
     <xsl:variable name="funcs" as="element(html:div)?"
-      select="$siblingAfterProperties[self::html:div][@class = 'func']"/>
-    <xsl:variable name="hasFuncs" select="boolean($funcs)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterFuncs" as="element()?"
-      select="
-        if ($hasFuncs) then
-          $siblingAfterProperties/following-sibling::*[1]
-        else
-          $siblingAfterProperties"/>
-
+      select="$remainingAfterIndex[self::html:div][@class = 'func']"/>
     <xsl:variable name="nonmems" as="element(html:div)?"
-      select="$siblingAfterFuncs[self::html:div][@class = 'relnonmem']"/>
-    <xsl:variable name="hasNonmems" select="boolean($nonmems)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterNonmems" as="element()?"
-      select="
-        if ($hasNonmems) then
-          $siblingAfterFuncs/following-sibling::*[1]
-        else
-          $siblingAfterFuncs"/>
-    
+      select="$remainingAfterIndex[self::html:div][@class = 'relnonmem']"/>
     <xsl:variable name="macros" as="element(html:div)?"
-      select="$siblingAfterNonmems[self::html:div][@class = 'macros']"/>
-    <xsl:variable name="hasMacros" select="boolean($macros)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterMacros" as="element()?"
-      select="
-        if ($hasMacros) then
-          $siblingAfterNonmems/following-sibling::*[1]
-        else
-          $siblingAfterNonmems"/>
-    
+      select="$remainingAfterIndex[self::html:div][@class = 'macros']"/>
     <xsl:variable name="vars" as="element(html:div)?"
-      select="$siblingAfterMacros[self::html:div][@class = 'vars']"/>
-    <xsl:variable name="hasVars" select="boolean($vars)" as="xs:boolean"/>
-    <xsl:variable name="siblingAfterVars" as="element()?"
-      select="
-        if ($hasVars) then
-          $siblingAfterMacros/following-sibling::*[1]
-        else
-          $siblingAfterMacros"/>
-    
-    <xsl:variable name="legitVarsFollower" as="xs:boolean" select="boolean($siblingAfterVars[self::html:p and contains(@class, 'navi')])"/>
+      select="$remainingAfterIndex[self::html:div][@class = 'vars']"/>
     
     <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
     <xsl:variable name="qmlPropsTitle" select="$content/html:h2[text() = $qmlPropsTitleText]" as="element()?"/>
@@ -379,11 +320,11 @@
       <!-- Ignore the subtitles for example pages, with only source code (it is redundant with the title). -->
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
-    <xsl:if test="boolean($siblingAfterVars) and not($legitVarsFollower)">
+    <!--<xsl:if test="boolean($siblingAfterVars) and not($legitVarsFollower)">
       <xsl:message terminate="no">WARNING: Unmatched element: <xsl:value-of
         select="name($siblingAfterVars)"/>
       </xsl:message>
-    </xsl:if>
+    </xsl:if>-->
     <!-- A C++ class can perfectly have no functions! Example: QQuickItem::ItemChangedData. -->
     <xsl:if test="$isClass and boolean($hasQmlProps)">
       <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
@@ -460,7 +401,7 @@
     <xsl:variable name="hasObsolete" select="boolean($obsolete)" as="xs:boolean"/>
 
     <xsl:variable name="obsolete_types_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Member Type Documentation']"/>
+      select="$obsolete/html:h2[text() = 'Member Type Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_types" as="element(html:div)?">
       <html:div class="types">
         <xsl:copy-of select="$obsolete_types_title"/>
@@ -472,7 +413,7 @@
     <xsl:variable name="obsolete_hasTypes" select="boolean($obsolete_types_title)" as="xs:boolean"/>
 
     <xsl:variable name="obsolete_properties_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Property Documentation']"/>
+      select="$obsolete/html:h2[text() = 'Property Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_properties" as="element(html:div)?">
       <html:div class="prop">
         <xsl:copy-of select="$obsolete_properties_title"/>
@@ -481,11 +422,10 @@
         />
       </html:div>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)"
-      as="xs:boolean"/>
-    
+    <xsl:variable name="obsolete_hasProperties" select="boolean($obsolete_properties_title)" as="xs:boolean"/>
+      
     <xsl:variable name="obsolete_memfuncs_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Member Function Documentation']"/>
+      select="$obsolete/html:h2[text() = 'Member Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_memfuncs" as="element(html:div)?">
       <html:div class="func">
         <xsl:copy-of select="$obsolete_memfuncs_title"/>
@@ -494,10 +434,10 @@
         />
       </html:div>
     </xsl:variable>
-    <xsl:variable name="obsolete_hasMemFuncs" select="boolean($obsolete_memfuncs_title)" as="xs:boolean"/>
+    <xsl:variable name="obsolete_hasMemfuncs" select="boolean($obsolete_memfuncs_title)" as="xs:boolean"/>
     
     <xsl:variable name="obsolete_funcs_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Function Documentation']"/>
+      select="$obsolete/html:h2[text() = 'Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
       <html:div class="func">
         <xsl:copy-of select="$obsolete_funcs_title"/>
@@ -509,7 +449,7 @@
     <xsl:variable name="obsolete_hasFuncs" select="boolean($obsolete_funcs_title)" as="xs:boolean"/>
 
     <xsl:variable name="obsolete_nonmems_title" as="element(html:h2)?"
-      select="$obsolete/html:h2[text() = 'Related Non-Members']"/>
+      select="$obsolete/html:h2[text() = 'Related Non-Members'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:variable name="obsolete_nonmems" as="element(html:div)?">
       <html:div class="types">
         <xsl:copy-of select="$obsolete_nonmems_title"/>
@@ -532,10 +472,10 @@
       </db:title>
 
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
-      <xsl:if test="$hasTypes and $warnVocabularyUnsupportedFeatures">
+      <xsl:if test="$types and $warnVocabularyUnsupportedFeatures">
         <xsl:message>WARNING: No summary output for types.</xsl:message>
       </xsl:if>
-      <xsl:if test="$obsolete_hasTypes and $warnVocabularyUnsupportedFeatures">
+      <xsl:if test="$obsolete_types and $warnVocabularyUnsupportedFeatures">
         <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
       
@@ -556,14 +496,14 @@
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
         
-        <xsl:if test="$hasMacros">
+        <xsl:if test="$macros">
           <xsl:call-template name="macroListing">
             <xsl:with-param name="data" select="$macros"/>
             <xsl:with-param name="className" select="$className"/>
           </xsl:call-template>
         </xsl:if>
         
-        <xsl:if test="$hasNonmems">
+        <xsl:if test="$nonmems">
           <xsl:call-template name="functionListing">
             <xsl:with-param name="data" select="$nonmems"/>
             <xsl:with-param name="className" select="$className"/>
@@ -613,7 +553,7 @@
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
       <xsl:call-template name="content_withTitles">
         <xsl:with-param name="data" select="$description"/>
-        <xsl:with-param name="hasSeeAlso" select="$hasSeeAlso"/>
+        <xsl:with-param name="hasSeeAlso" select="boolean($seeAlso)"/>
         <xsl:with-param name="seeAlso" select="$seeAlso"/>
       </xsl:call-template>
 
@@ -623,37 +563,37 @@
       </xsl:if>
 
       <!-- There may be types, properties, functions, and macros for C++ classes. -->
-      <xsl:if test="$hasTypes">
+      <xsl:if test="$types">
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$types"/>
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$hasProperties">
+      <xsl:if test="$properties">
         <xsl:call-template name="content_props">
           <xsl:with-param name="data" select="$properties"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$hasFuncs">
+      <xsl:if test="$funcs">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$funcs"/>
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$hasMacros">
+      <xsl:if test="$macros">
         <xsl:call-template name="content_macros">
           <xsl:with-param name="data" select="$macros"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$hasNonmems">
+      <xsl:if test="$nonmems">
         <xsl:call-template name="content_nonmems">
           <xsl:with-param name="data" select="$nonmems"/>
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$hasVars">
+      <xsl:if test="$vars">
         <xsl:call-template name="content_vars">
           <xsl:with-param name="data" select="$vars"/>
         </xsl:call-template>
@@ -699,7 +639,7 @@
             </xsl:call-template>
           </xsl:if>
 
-          <xsl:if test="$obsolete_hasMemFuncs">
+          <xsl:if test="$obsolete_hasMemfuncs">
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_memfuncs"/>
             </xsl:call-template>
@@ -778,16 +718,18 @@
   <xsl:template name="content_seealso">
     <xsl:param name="seeAlso" as="element(html:p)"/>
 
-    <db:section>
-      <db:title>See Also</db:title>
-      <db:simplelist>
-        <xsl:for-each select="$seeAlso/html:a">
-          <db:member>
-            <xsl:apply-templates mode="content_paragraph" select="."/>
-          </db:member>
-        </xsl:for-each>
-      </db:simplelist>
-    </db:section>
+    <xsl:if test="count($seeAlso/html:a) &gt;= 1">
+     <db:section>
+       <db:title>See Also</db:title>
+       <db:simplelist>
+         <xsl:for-each select="$seeAlso/html:a">
+           <db:member>
+             <xsl:apply-templates mode="content_paragraph" select="."/>
+           </db:member>
+         </xsl:for-each>
+       </db:simplelist>
+     </db:section>
+    </xsl:if>
   </xsl:template>
 
   <!-- Handle table of content sections. -->
@@ -1120,14 +1062,21 @@
             <db:void/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:for-each select="./html:i">
-              <db:paramdef choice="req">
-                <!-- A macro only has a name. -->
-                <db:parameter>
-                  <xsl:value-of select="normalize-space(.)"/>
-                </db:parameter>
-              </db:paramdef>
-            </xsl:for-each>
+            <xsl:choose>
+              <xsl:when test="count(./html:i) &gt;= 1">
+                <xsl:for-each select="./html:i">
+                  <db:paramdef choice="req">
+                    <!-- A macro only has a name. -->
+                    <db:parameter>
+                      <xsl:value-of select="normalize-space(.)"/>
+                    </db:parameter>
+                  </db:paramdef>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:otherwise>
+                <db:varargs/>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
       </db:funcprototype>
@@ -1622,9 +1571,7 @@
   <xsl:template mode="content_nonmems" match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
     <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
-      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
@@ -1901,7 +1848,7 @@
               </db:para>
             </db:warning>
           </xsl:when>
-          <xsl:when test="starts-with(./html:b[1]/text(), 'See also')">
+          <xsl:when test="starts-with(./html:b[1]/text(), 'See also') and count(./html:a) &gt;= 1">
             <xsl:call-template name="content_seealso">
               <xsl:with-param name="seeAlso" select="."/>
             </xsl:call-template>

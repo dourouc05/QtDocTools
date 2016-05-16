@@ -1,0 +1,72 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en"><html:head>
+  <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- qobject.cpp -->
+  <html:title>Obsolete Members for QObject | Qt Core 5.4</html:title>
+  <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+</html:head>
+<html:body>
+<html:div class="header" id="qtdocheader">
+    <html:div class="main">
+    <html:div class="main-rounded">
+        <html:div class="navigationbar">
+        <html:ul>
+<html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+<html:li><html:a href="qtcore-index.html">Qt Core</html:a></html:li>
+<html:li><html:a href="qtcore-module.html">C++ Classes</html:a></html:li>
+<html:li>QObject</html:li>
+<html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+    </html:ul>
+    </html:div>
+</html:div>
+<html:div class="content">
+<html:div class="line">
+<html:div class="content mainContent">
+<html:div class="sidebar"><html:div class="sidebar-content" id="sidebar-content" /></html:div>
+<html:h1 class="title">Obsolete Members for QObject</html:h1>
+<html:p><html:b>The following members of class <html:a href="qobject.html">QObject</html:a> are obsolete.</html:b> They are provided to keep old source code working. We strongly advise against using them in new code.</html:p>
+<html:h2>Static Public Members</html:h2>
+<html:div class="table"><html:table class="alignedsummary">
+<html:tbody><html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>QString </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qobject-obsolete.html#trUtf8">trUtf8</html:a></html:b>(const char *<html:i> sourceText</html:i>, const char *<html:i> disambiguation</html:i> = 0, int<html:i> n</html:i> = -1)</html:td></html:tr>
+</html:tbody></html:table></html:div>
+<html:h2>Related Non-Members</html:h2>
+<html:div class="table"><html:table class="alignedsummary">
+<html:tbody><html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>T </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qobject-obsolete.html#qFindChild-2">qFindChild</html:a></html:b>(const QObject *<html:i> obj</html:i>, const QString &amp;<html:i> name</html:i> = QString())</html:td></html:tr>
+<html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>QList&lt;T&gt; </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qobject-obsolete.html#qFindChildren-3">qFindChildren</html:a></html:b>(const QObject *<html:i> obj</html:i>, const QString &amp;<html:i> name</html:i> = QString())</html:td></html:tr>
+</html:tbody></html:table></html:div>
+<html:h2>Member Function Documentation</html:h2>
+<!-- $$$trUtf8[overload1]$$$trUtf8constchar*constchar*int -->
+<html:h3 class="fn" id="trUtf8"><html:a name="trUtf8" /><html:code>[static] </html:code><html:span class="type"><html:a href="qstring.html">QString</html:a></html:span> QObject::<html:span class="name">trUtf8</html:span>(const <html:span class="type">char</html:span> *<html:i> sourceText</html:i>, const <html:span class="type">char</html:span> *<html:i> disambiguation</html:i> = 0, <html:span class="type">int</html:span><html:i> n</html:i> = -1)</html:h3>
+<html:p>Returns a translated version of <html:i>sourceText</html:i>, or <html:a href="qstring.html#fromUtf8">QString::fromUtf8</html:a>(<html:i>sourceText</html:i>) if there is no appropriate version. It is otherwise identical to tr(<html:i>sourceText</html:i>, <html:i>disambiguation</html:i>, <html:i>n</html:i>).</html:p>
+<html:p><html:b>Warning:</html:b> This method is reentrant only if all translators are installed <html:i>before</html:i> calling this method. Installing or removing translators while performing translations is not supported. Doing so will probably result in crashes or other undesirable behavior.</html:p>
+<html:p><html:b>Warning:</html:b> For portability reasons, we recommend that you use escape sequences for specifying non-ASCII characters in string literals to trUtf8(). For example:</html:p>
+<html:pre class="cpp">label<html:span class="operator">-</html:span><html:span class="operator">&gt;</html:span>setText(<html:a href="qobject.html#tr">tr</html:a>(<html:span class="string">"F\374r \310lise"</html:span>));</html:pre>
+<html:p><html:b>See also </html:b><html:a href="qobject.html#tr">tr</html:a>(), <html:a href="qcoreapplication.html#translate">QCoreApplication::translate</html:a>(), and <html:a href="qtdoc/internationalization.html">Internationalization with Qt</html:a>.</html:p>
+<!-- @@@trUtf8 -->
+<html:h2>Related Non-Members</html:h2>
+<!-- $$$qFindChild$$$qFindChildconstQObject*constQString& -->
+<html:h3 class="fn" id="qFindChild-2"><html:a name="qFindChild-2" /><html:span class="type">T</html:span> <html:span class="name">qFindChild</html:span>(const <html:span class="type"><html:a href="qobject.html#QObject">QObject</html:a></html:span> *<html:i> obj</html:i>, const <html:span class="type"><html:a href="qstring.html">QString</html:a></html:span> &amp;<html:i> name</html:i> = QString())</html:h3>
+<html:p>This function overloads <html:a href="qobject.html#qFindChildren">qFindChildren</html:a>().</html:p>
+<html:p>This function is equivalent to <html:i>obj</html:i>-&gt;<html:a href="qobject.html#findChild">findChild</html:a>&lt;T&gt;(<html:i>name</html:i>).</html:p>
+<html:p><html:b>Note: </html:b>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</html:p><html:p><html:b>See also </html:b><html:a href="qobject.html#findChild">QObject::findChild</html:a>().</html:p>
+<!-- @@@qFindChild -->
+<!-- $$$qFindChildren$$$qFindChildrenconstQObject*constQString& -->
+<html:h3 class="fn" id="qFindChildren-3"><html:a name="qFindChildren-3" /><html:span class="type"><html:a href="qlist.html">QList</html:a></html:span>&lt;<html:span class="type">T</html:span>&gt; <html:span class="name">qFindChildren</html:span>(const <html:span class="type"><html:a href="qobject.html#QObject">QObject</html:a></html:span> *<html:i> obj</html:i>, const <html:span class="type"><html:a href="qstring.html">QString</html:a></html:span> &amp;<html:i> name</html:i> = QString())</html:h3>
+<html:p>This function overloads <html:a href="qobject.html#qFindChildren">qFindChildren</html:a>().</html:p>
+<html:p>This function is equivalent to <html:i>obj</html:i>-&gt;<html:a href="qobject.html#findChildren">findChildren</html:a>&lt;T&gt;(<html:i>name</html:i>).</html:p>
+<html:p><html:b>Note: </html:b>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</html:p><html:p><html:b>See also </html:b><html:a href="qobject.html#findChildren">QObject::findChildren</html:a>().</html:p>
+<!-- @@@qFindChildren -->
+        </html:div>
+       </html:div>
+   </html:div>
+   </html:div>
+</html:div>
+<html:div class="footer">
+   <html:p>
+   <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<html:br />    The documentation provided herein is licensed under the terms of the    <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</html:a> as published by the Free Software Foundation.<html:br />    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </html:p>
+</html:div>
+
+
+</html:body></html:html>
