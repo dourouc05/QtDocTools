@@ -1,0 +1,643 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qpair.qdoc -->
+        <html:title>QPair Class | Qt Core 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtcore-index.html">Qt Core</html:a></html:li>
+                            <html:li><html:a href="qtcore-module.html">C++
+                                Classes</html:a></html:li>
+                            <html:li>QPair</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#public-types">Public
+                                                Types</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#public-functions"
+                                                >Public Functions</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#public-variables"
+                                                >Public Variables</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#related-non-members"
+                                                >Related Non-Members</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#details">Detailed
+                                                Description</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">QPair Class</html:h1>
+                            <!-- $$$QPair-brief -->
+                            <html:p>The <html:a href="qpair.html">QPair</html:a> class is a template
+                                class that stores a pair of items. <html:a href="#details"
+                                    >More...</html:a></html:p>
+                            <!-- @@@QPair -->
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Header:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:span class="preprocessor">#include
+                                                  &lt;QPair&gt;</html:span>
+                                            </html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                qmake:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> QT +=
+                                                core</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div><html:ul>
+                                <html:li><html:a href="qpair-members.html">List of all members,
+                                        including inherited members</html:a></html:li>
+                            </html:ul>
+                            <html:a name="public-types"></html:a>
+                            <html:h2 id="public-types">Public Types</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                typedef </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#first_type-typedef"
+                                                  >first_type</html:a></html:b></html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                typedef </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#second_type-typedef"
+                                                  >second_type</html:a></html:b></html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:a name="public-functions"></html:a>
+                            <html:h2 id="public-functions">Public Functions</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#QPair"
+                                                  >QPair</html:a></html:b>()</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#QPair-2"
+                                                  >QPair</html:a></html:b>(const T1 &amp;<html:i>
+                                                  value1</html:i>, const T2 &amp;<html:i>
+                                                  value2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#QPair-3"
+                                                  >QPair</html:a></html:b>(const QPair&lt;TT1,
+                                                TT2&gt; &amp;<html:i> p</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#QPair-4"
+                                                  >QPair</html:a></html:b>(QPair&lt;TT1, TT2&gt;
+                                                  &amp;&amp;<html:i> p</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> QPair
+                                                &amp; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#operator-eq"
+                                                  >operator=</html:a></html:b>(const QPair&lt;TT1,
+                                                TT2&gt; &amp;<html:i> p</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> QPair
+                                                &amp; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#operator-eq-2"
+                                                  >operator=</html:a></html:b>(QPair&lt;TT1, TT2&gt;
+                                                  &amp;&amp;<html:i> p</html:i>)</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:a name="public-variables"></html:a>
+                            <html:h2 id="public-variables">Public Variables</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> T1 </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#first-var"
+                                                  >first</html:a></html:b></html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> T2 </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#second-var"
+                                                  >second</html:a></html:b></html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:a name="related-non-members"></html:a>
+                            <html:h2 id="related-non-members">Related Non-Members</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QPair&lt;T1, T2&gt; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#qMakePair"
+                                                  >qMakePair</html:a></html:b>(const T1
+                                                  &amp;<html:i> value1</html:i>, const T2
+                                                  &amp;<html:i> value2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#operator-not-eq-17"
+                                                  >operator!=</html:a></html:b>(const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p1</html:i>, const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#operator-lt-5"
+                                                  >operator&lt;</html:a></html:b>(const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p1</html:i>, const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QDataStream &amp; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#operator-lt-lt-11"
+                                                  >operator&lt;&lt;</html:a></html:b>(QDataStream
+                                                  &amp;<html:i> out</html:i>, const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> pair</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#operator-lt-eq-2"
+                                                  >operator&lt;=</html:a></html:b>(const
+                                                QPair&lt;T1, T2&gt; &amp;<html:i> p1</html:i>, const
+                                                QPair&lt;T1, T2&gt; &amp;<html:i>
+                                                p2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#operator-eq-eq-25"
+                                                  >operator==</html:a></html:b>(const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p1</html:i>, const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qpair.html#operator-gt-2"
+                                                  >operator&gt;</html:a></html:b>(const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p1</html:i>, const QPair&lt;T1,
+                                                T2&gt; &amp;<html:i> p2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#operator-gt-eq-2"
+                                                  >operator&gt;=</html:a></html:b>(const
+                                                QPair&lt;T1, T2&gt; &amp;<html:i> p1</html:i>, const
+                                                QPair&lt;T1, T2&gt; &amp;<html:i>
+                                                p2</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QDataStream &amp; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qpair.html#operator-gt-gt-11"
+                                                  >operator&gt;&gt;</html:a></html:b>(QDataStream
+                                                  &amp;<html:i> in</html:i>, QPair&lt;T1, T2&gt;
+                                                  &amp;<html:i> pair</html:i>)</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:a name="details"></html:a>
+                            <!-- $$$QPair-description -->
+                            <html:div class="descr">
+                                <html:h2 id="details">Detailed Description</html:h2>
+                                <html:p>The <html:a href="qpair.html">QPair</html:a> class is a
+                                    template class that stores a pair of items.</html:p>
+                                <html:p><html:a href="qpair.html">QPair</html:a>&lt;T1, T2&gt; can
+                                    be used in your application if the STL
+                                        <html:code>pair</html:code> type is not available. It stores
+                                    one value of type T1 and one value of type T2. It can be used as
+                                    a return value for a function that needs to return two values,
+                                    or as the value type of a <html:a href="containers.html">generic
+                                        container</html:a>.</html:p>
+                                <html:p>Here's an example of a <html:a href="qpair.html"
+                                        >QPair</html:a> that stores one <html:a href="qstring.html"
+                                        >QString</html:a> and one <html:code>double</html:code>
+                                    value:</html:p>
+                                <html:pre class="cpp"><html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span><html:span class="operator"
+                                        >&lt;</html:span><html:span class="type"><html:a
+                                            href="qstring.html"
+                                        >QString</html:a></html:span><html:span class="operator"
+                                        >,</html:span>
+                                    <html:span class="type">double</html:span><html:span
+                                        class="operator">&gt;</html:span> pair;</html:pre>
+                                <html:p>The components are accessible as public data members called
+                                        <html:a href="qpair.html#first-var">first</html:a> and
+                                        <html:a href="qpair.html#second-var">second</html:a>. For
+                                    example:</html:p>
+                                <html:pre class="cpp">pair<html:span class="operator"
+                                    >.</html:span>first <html:span class="operator">=</html:span>
+                                    <html:span class="string">"pi"</html:span>; pair<html:span
+                                        class="operator">.</html:span>second <html:span
+                                        class="operator">=</html:span>
+                                    <html:span class="number"
+                                    >3.14159265358979323846</html:span>;</html:pre>
+                                <html:p><html:a href="qpair.html">QPair</html:a>'s template data
+                                    types (T1 and T2) must be <html:a
+                                        href="containers.html#assignable-data-types">assignable data
+                                        types</html:a>. You cannot, for example, store a <html:a
+                                        href="qtwidgets/qwidget.html">QWidget</html:a> as a value;
+                                    instead, store a <html:a href="qtwidgets/qwidget.html"
+                                        >QWidget</html:a> *. A few functions have additional
+                                    requirements; these requirements are documented on a
+                                    per-function basis.</html:p>
+                            </html:div>
+                            <html:p><html:b>See also </html:b><html:a href="containers.html"
+                                    >Container Classes</html:a>.</html:p>
+                            <!-- @@@QPair -->
+                            <html:div class="types">
+                                <html:h2>Member Type Documentation</html:h2>
+                                <!-- $$$first_type -->
+                                <html:h3 class="fn" id="first_type-typedef"><html:a
+                                        name="first_type-typedef"></html:a>typedef QPair::<html:span
+                                        class="name">first_type</html:span></html:h3>
+                                <html:p>The type of the first element in the pair (T1).</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qpair.html#first-var">first</html:a>.</html:p>
+                                <!-- @@@first_type -->
+                                <!-- $$$second_type -->
+                                <html:h3 class="fn" id="second_type-typedef"><html:a
+                                        name="second_type-typedef"></html:a>typedef
+                                        QPair::<html:span class="name"
+                                    >second_type</html:span></html:h3>
+                                <html:p>The type of the second element in the pair (T2).</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qpair.html#second-var">second</html:a>.</html:p>
+                                <!-- @@@second_type -->
+                            </html:div>
+                            <html:div class="func">
+                                <html:h2>Member Function Documentation</html:h2>
+                                <!-- $$$QPair[overload1]$$$QPair -->
+                                <html:h3 class="fn" id="QPair"><html:a name="QPair"
+                                        ></html:a>QPair::<html:span class="name"
+                                    >QPair</html:span>()</html:h3>
+                                <html:p>Constructs an empty pair. The <html:code>first</html:code>
+                                    and <html:code>second</html:code> elements are initialized with
+                                        <html:a href="containers.html#default-constructed-value"
+                                        >default-constructed value</html:a>s.</html:p>
+                                <!-- @@@QPair -->
+                                <!-- $$$QPair$$$QPairconstT1&constT2& -->
+                                <html:h3 class="fn" id="QPair-2"><html:a name="QPair-2"
+                                        ></html:a>QPair::<html:span class="name"
+                                    >QPair</html:span>(const <html:span class="type">T1</html:span>
+                                        &amp;<html:i> value1</html:i>, const <html:span class="type"
+                                        >T2</html:span> &amp;<html:i> value2</html:i>)</html:h3>
+                                <html:p>Constructs a pair and initializes the
+                                        <html:code>first</html:code> element with
+                                        <html:i>value1</html:i> and the
+                                        <html:code>second</html:code> element with
+                                        <html:i>value2</html:i>.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qpair.html#qMakePair">qMakePair</html:a>().</html:p>
+                                <!-- @@@QPair -->
+                                <!-- $$$QPair$$$QPairconstQPair<TT1,TT2>& -->
+                                <html:h3 class="fn" id="QPair-3"><html:a name="QPair-3"
+                                        ></html:a>QPair::<html:span class="name"
+                                    >QPair</html:span>(const <html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >TT1</html:span>, <html:span class="type"
+                                    >TT2</html:span>&gt; &amp;<html:i> p</html:i>)</html:h3>
+                                <html:p>Constructs a pair from the other pair <html:i>p</html:i>, of
+                                    types TT1 and TT2. This constructor will fail if
+                                        <html:code>first</html:code> cannot be initialized from
+                                        <html:code>p.first</html:code> or if
+                                        <html:code>second</html:code> cannot be initialized from
+                                        <html:code>p.second</html:code>.</html:p>
+                                <html:p>This function was introduced in Qt 5.2.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qpair.html#qMakePair">qMakePair</html:a>().</html:p>
+                                <!-- @@@QPair -->
+                                <!-- $$$QPair$$$QPairQPair<TT1,TT2>&& -->
+                                <html:h3 class="fn" id="QPair-4"><html:a name="QPair-4"
+                                        ></html:a>QPair::<html:span class="name"
+                                        >QPair</html:span>(<html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >TT1</html:span>, <html:span class="type"
+                                    >TT2</html:span>&gt; &amp;&amp;<html:i> p</html:i>)</html:h3>
+                                <!-- @@@QPair -->
+                                <!-- $$$operator=[overload1]$$$operator=constQPair<TT1,TT2>& -->
+                                <html:h3 class="fn" id="operator-eq"><html:a name="operator-eq"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qpair.html#QPair">QPair</html:a></html:span> &amp;
+                                        QPair::<html:span class="name">operator=</html:span>(const
+                                        <html:span class="type"><html:a href="qpair.html#QPair"
+                                            >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >TT1</html:span>, <html:span class="type"
+                                    >TT2</html:span>&gt; &amp;<html:i> p</html:i>)</html:h3>
+                                <html:p>Copies the pair <html:i>p</html:i> onto this pair.</html:p>
+                                <html:p>This function was introduced in Qt 5.2.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qpair.html#qMakePair">qMakePair</html:a>().</html:p>
+                                <!-- @@@operator= -->
+                                <!-- $$$operator=$$$operator=QPair<TT1,TT2>&& -->
+                                <html:h3 class="fn" id="operator-eq-2"><html:a name="operator-eq-2"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qpair.html#QPair">QPair</html:a></html:span> &amp;
+                                        QPair::<html:span class="name"
+                                        >operator=</html:span>(<html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >TT1</html:span>, <html:span class="type"
+                                    >TT2</html:span>&gt; &amp;&amp;<html:i> p</html:i>)</html:h3>
+                                <!-- @@@operator= -->
+                            </html:div>
+                            <html:div class="vars">
+                                <html:h2>Member Variable Documentation</html:h2>
+                                <!-- $$$first -->
+                                <html:h3 class="fn" id="first-var"><html:a name="first-var"
+                                        ></html:a><html:span class="type">T1</html:span>
+                                        QPair::<html:span class="name">first</html:span></html:h3>
+                                <html:p>The first element in the pair.</html:p>
+                                <!-- @@@first -->
+                                <!-- $$$second -->
+                                <html:h3 class="fn" id="second-var"><html:a name="second-var"
+                                        ></html:a><html:span class="type">T2</html:span>
+                                        QPair::<html:span class="name">second</html:span></html:h3>
+                                <html:p>The second element in the pair.</html:p>
+                                <!-- @@@second -->
+                            </html:div>
+                            <html:div class="relnonmem">
+                                <html:h2>Related Non-Members</html:h2>
+                                <!-- $$$qMakePair[overload1]$$$qMakePairconstT1&constT2& -->
+                                <html:h3 class="fn" id="qMakePair"><html:a name="qMakePair"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        <html:span class="name">qMakePair</html:span>(const
+                                        <html:span class="type">T1</html:span> &amp;<html:i>
+                                        value1</html:i>, const <html:span class="type"
+                                        >T2</html:span> &amp;<html:i> value2</html:i>)</html:h3>
+                                <html:p>Returns a <html:a href="qpair.html">QPair</html:a>&lt;T1,
+                                    T2&gt; that contains <html:i>value1</html:i> and
+                                        <html:i>value2</html:i>. Example:</html:p>
+                                <html:pre class="cpp"><html:span class="type"><html:a
+                                            href="qlist.html">QList</html:a></html:span><html:span
+                                        class="operator">&lt;</html:span><html:span class="type"
+                                            ><html:a href="qpair.html"
+                                        >QPair</html:a></html:span><html:span class="operator"
+                                        >&lt;</html:span><html:span class="type"
+                                        >int</html:span><html:span class="operator">,</html:span>
+                                    <html:span class="type">double</html:span><html:span
+                                        class="operator">&gt;</html:span>
+                                    <html:span class="operator">&gt;</html:span> list;
+                                        list<html:span class="operator"
+                                        >.</html:span>append(qMakePair(<html:span class="number"
+                                        >66</html:span><html:span class="operator">,</html:span>
+                                    <html:span class="number">3.14159</html:span>));</html:pre>
+                                <html:p>This is equivalent to <html:a href="qpair.html"
+                                        >QPair</html:a>&lt;T1, T2&gt;(<html:i>value1</html:i>,
+                                        <html:i>value2</html:i>), but usually requires less
+                                    typing.</html:p>
+                                <!-- @@@qMakePair -->
+                                <!-- $$$operator!=$$$operator!=constQPair<T1,T2>&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-not-eq-17"><html:a
+                                        name="operator-not-eq-17"></html:a><html:span class="type"
+                                        >bool</html:span>
+                                    <html:span class="name">operator!=</html:span>(const <html:span
+                                        class="type"><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p1</html:i>, const <html:span class="type"
+                                            ><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p2</html:i>)</html:h3>
+                                <html:p>Returns <html:code>true</html:code> if <html:i>p1</html:i>
+                                    is not equal to <html:i>p2</html:i>; otherwise returns false.
+                                    Two pairs compare as not equal if their
+                                        <html:code>first</html:code> data members are not equal or
+                                    if their <html:code>second</html:code> data members are not
+                                    equal.</html:p>
+                                <html:p>This function requires the T1 and T2 types to have an
+                                    implementation of <html:code>operator==()</html:code>.</html:p>
+                                <!-- @@@operator!= -->
+                                <!-- $$$operator<$$$operator<constQPair<T1,T2>&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-lt-5"><html:a name="operator-lt-5"
+                                        ></html:a><html:span class="type">bool</html:span>
+                                    <html:span class="name">operator&lt;</html:span>(const
+                                        <html:span class="type"><html:a href="qpair.html#QPair"
+                                            >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p1</html:i>, const <html:span class="type"
+                                            ><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p2</html:i>)</html:h3>
+                                <html:p>Returns <html:code>true</html:code> if <html:i>p1</html:i>
+                                    is less than <html:i>p2</html:i>; otherwise returns false. The
+                                    comparison is done on the <html:code>first</html:code> members
+                                    of <html:i>p1</html:i> and <html:i>p2</html:i>; if they compare
+                                    equal, the <html:code>second</html:code> members are compared to
+                                    break the tie.</html:p>
+                                <html:p>This function requires the T1 and T2 types to have an
+                                    implementation of
+                                    <html:code>operator&lt;()</html:code>.</html:p>
+                                <!-- @@@operator< -->
+                                <!-- $$$operator<<$$$operator<<QDataStream&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-lt-lt-11"><html:a
+                                        name="operator-lt-lt-11"></html:a><html:span class="type"
+                                            ><html:a href="qdatastream.html"
+                                        >QDataStream</html:a></html:span> &amp; <html:span
+                                        class="name">operator&lt;&lt;</html:span>(<html:span
+                                        class="type"><html:a href="qdatastream.html"
+                                            >QDataStream</html:a></html:span> &amp;<html:i>
+                                        out</html:i>, const <html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> pair</html:i>)</html:h3>
+                                <html:p>Writes the pair <html:i>pair</html:i> to stream
+                                        <html:i>out</html:i>.</html:p>
+                                <html:p>This function requires the T1 and T2 types to implement
+                                        <html:code>operator&lt;&lt;()</html:code>.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="datastreamformat.html">Serializing Qt Data
+                                        Types</html:a>.</html:p>
+                                <!-- @@@operator<< -->
+                                <!-- $$$operator<=$$$operator<=constQPair<T1,T2>&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-lt-eq-2"><html:a
+                                        name="operator-lt-eq-2"></html:a><html:span class="type"
+                                        >bool</html:span>
+                                    <html:span class="name">operator&lt;=</html:span>(const
+                                        <html:span class="type"><html:a href="qpair.html#QPair"
+                                            >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p1</html:i>, const <html:span class="type"
+                                            ><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p2</html:i>)</html:h3>
+                                <html:p>Returns <html:code>true</html:code> if <html:i>p1</html:i>
+                                    is less than or equal to <html:i>p2</html:i>; otherwise returns
+                                        <html:code>false</html:code>. The comparison is done on the
+                                        <html:code>first</html:code> members of <html:i>p1</html:i>
+                                    and <html:i>p2</html:i>; if they compare equal, the
+                                        <html:code>second</html:code> members are compared to break
+                                    the tie.</html:p>
+                                <html:p>This function requires the T1 and T2 types to have an
+                                    implementation of
+                                    <html:code>operator&lt;()</html:code>.</html:p>
+                                <!-- @@@operator<= -->
+                                <!-- $$$operator==$$$operator==constQPair<T1,T2>&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-eq-eq-25"><html:a
+                                        name="operator-eq-eq-25"></html:a><html:span class="type"
+                                        >bool</html:span>
+                                    <html:span class="name">operator==</html:span>(const <html:span
+                                        class="type"><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p1</html:i>, const <html:span class="type"
+                                            ><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p2</html:i>)</html:h3>
+                                <html:p>Returns <html:code>true</html:code> if <html:i>p1</html:i>
+                                    is equal to <html:i>p2</html:i>; otherwise returns
+                                        <html:code>false</html:code>. Two pairs compare equal if
+                                    their <html:code>first</html:code> data members compare equal
+                                    and if their <html:code>second</html:code> data members compare
+                                    equal.</html:p>
+                                <html:p>This function requires the T1 and T2 types to have an
+                                    implementation of <html:code>operator==()</html:code>.</html:p>
+                                <!-- @@@operator== -->
+                                <!-- $$$operator>$$$operator>constQPair<T1,T2>&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-gt-2"><html:a name="operator-gt-2"
+                                        ></html:a><html:span class="type">bool</html:span>
+                                    <html:span class="name">operator&gt;</html:span>(const
+                                        <html:span class="type"><html:a href="qpair.html#QPair"
+                                            >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p1</html:i>, const <html:span class="type"
+                                            ><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p2</html:i>)</html:h3>
+                                <html:p>Returns <html:code>true</html:code> if <html:i>p1</html:i>
+                                    is greater than <html:i>p2</html:i>; otherwise returns false.
+                                    The comparison is done on the <html:code>first</html:code>
+                                    members of <html:i>p1</html:i> and <html:i>p2</html:i>; if they
+                                    compare equal, the <html:code>second</html:code> members are
+                                    compared to break the tie.</html:p>
+                                <html:p>This function requires the T1 and T2 types to have an
+                                    implementation of
+                                    <html:code>operator&lt;()</html:code>.</html:p>
+                                <!-- @@@operator> -->
+                                <!-- $$$operator>=$$$operator>=constQPair<T1,T2>&constQPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-gt-eq-2"><html:a
+                                        name="operator-gt-eq-2"></html:a><html:span class="type"
+                                        >bool</html:span>
+                                    <html:span class="name">operator&gt;=</html:span>(const
+                                        <html:span class="type"><html:a href="qpair.html#QPair"
+                                            >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p1</html:i>, const <html:span class="type"
+                                            ><html:a href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> p2</html:i>)</html:h3>
+                                <html:p>Returns <html:code>true</html:code> if <html:i>p1</html:i>
+                                    is greater than or equal to <html:i>p2</html:i>; otherwise
+                                    returns <html:code>false</html:code>. The comparison is done on
+                                    the <html:code>first</html:code> members of <html:i>p1</html:i>
+                                    and <html:i>p2</html:i>; if they compare equal, the
+                                        <html:code>second</html:code> members are compared to break
+                                    the tie.</html:p>
+                                <html:p>This function requires the T1 and T2 types to have an
+                                    implementation of
+                                    <html:code>operator&lt;()</html:code>.</html:p>
+                                <!-- @@@operator>= -->
+                                <!-- $$$operator>>$$$operator>>QDataStream&QPair<T1,T2>& -->
+                                <html:h3 class="fn" id="operator-gt-gt-11"><html:a
+                                        name="operator-gt-gt-11"></html:a><html:span class="type"
+                                            ><html:a href="qdatastream.html"
+                                        >QDataStream</html:a></html:span> &amp; <html:span
+                                        class="name">operator&gt;&gt;</html:span>(<html:span
+                                        class="type"><html:a href="qdatastream.html"
+                                            >QDataStream</html:a></html:span> &amp;<html:i>
+                                        in</html:i>, <html:span class="type"><html:a
+                                            href="qpair.html#QPair"
+                                        >QPair</html:a></html:span>&lt;<html:span class="type"
+                                        >T1</html:span>, <html:span class="type">T2</html:span>&gt;
+                                        &amp;<html:i> pair</html:i>)</html:h3>
+                                <html:p>Reads a pair from stream <html:i>in</html:i> into
+                                        <html:i>pair</html:i>.</html:p>
+                                <html:p>This function requires the T1 and T2 types to implement
+                                        <html:code>operator&gt;&gt;()</html:code>.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="datastreamformat.html">Serializing Qt Data
+                                        Types</html:a>.</html:p>
+                                <!-- @@@operator>> -->
+                            </html:div>
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

@@ -1128,7 +1128,7 @@
 
         <db:funcdef>
           <!-- Unhappily, DocBook does not allow <db:void> here… -->
-          <xsl:if test="$returnTypes and not(contains($returnTypes/text(), 'void'))">
+          <xsl:if test="$returnTypes and not(contains($returnTypes[1]/text(), 'void'))">
             <xsl:call-template name="classListing_methodBody_analyseType">
               <xsl:with-param name="typeNodes" select="$returnTypes"/>
             </xsl:call-template>
