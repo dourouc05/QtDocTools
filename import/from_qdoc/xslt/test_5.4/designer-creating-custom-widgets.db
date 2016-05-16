@@ -142,12 +142,12 @@
                      <db:para>A <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> pointer to an instance of the
                                                   custom widget, constructed with the parent
                                                   supplied.</db:para>
-                     <db:para>
-                        <db:emphasis role="bold">Note:
-                                                  </db:emphasis>createWidget() is a factory function
+                     <db:note>
+                        <db:para>createWidget() is a factory function
                                                   responsible for creating the widget only. The
                                                   custom widget's properties will not be available
                                                   until load() returns.</db:para>
+                     </db:note>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -233,7 +233,7 @@
                                         <db:code>AnalogClockPlugin</db:code> provided by the
                                         <db:link xlink:href="qtdesigner-customwidgetplugin-example.html">Custom Widget Plugin</db:link> example, defines a default
                                     widgetgeometry in the following way:</db:para>
-         <db:programlisting> ... " &lt;property
+         <db:programlisting language="qml"> ... " &lt;property
                                         name=\"geometry\"&gt;\n"" &lt;rect&gt;\n"" &lt;x&gt;0&lt;/x&gt;\n"" &lt;y&gt;0&lt;/y&gt;\n""
                                         &lt;width&gt;100&lt;/width&gt;\n""
                                         &lt;height&gt;100&lt;/height&gt;\n"" &lt;/rect&gt;\n"" &lt;/property&gt;\n"
@@ -470,7 +470,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
             </db:member>
@@ -494,7 +494,7 @@
                                         Designer</db:emphasis> will instantiate.</db:para>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
             </db:member>
@@ -524,7 +524,7 @@
                                     plugin's createWidget() function.</db:para>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
             </db:member>
@@ -538,6 +538,7 @@
    <db:section xml:id="building-and-installing-the-plugin">
       <db:title>Building and
                                     Installing the Plugin</db:title>
+      <db:para/>
       <db:section>
          <db:title>A Simple Plugin</db:title>
          <db:para>The <db:link xlink:href="qtdesigner-customwidgetplugin-example.html">Custom
@@ -574,11 +575,12 @@
                                     in other locations by setting the
                                         <db:code>QT_PLUGIN_PATH</db:code> environment variable
                                     before running the application.</db:para>
-         <db:para>
-            <db:emphasis role="bold">Note: </db:emphasis>
-            <db:emphasis>Qt Designer</db:emphasis> will
+         <db:note>
+            <db:para>
+               <db:emphasis>Qt Designer</db:emphasis> will
                                     look for a <db:code>designer</db:code> subdirectory in each
                                     path supplied.</db:para>
+         </db:note>
          <db:para>See <db:code><db:link xlink:href="qtcore/qcoreapplication.html#libraryPaths">QCoreApplication::libraryPaths</db:link>()</db:code> for more
                                     information about customizing paths for libraries and plugins
                                     with Qt applications.</db:para>
@@ -620,7 +622,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
             </db:member>
@@ -642,7 +644,7 @@
                                     combine several custom widgets into a single library.</db:para>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
             </db:member>
