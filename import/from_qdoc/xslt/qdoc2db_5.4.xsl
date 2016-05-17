@@ -61,7 +61,7 @@
         <xsl:value-of select="substring-before($title, ' Class')"/>
       </xsl:if>
     </xsl:variable>
-    
+
     <xsl:variable name="isNamespace" as="xs:boolean"
       select="ends-with($title, ' Namespace') and count(contains($title, ' ')) = 1"/>
     <xsl:variable name="namespaceName">
@@ -70,9 +70,10 @@
       </xsl:if>
     </xsl:variable>
     <xsl:if test="$isNamespace and $warnVocabularyUnsupportedFeatures">
-      <xsl:message>WARNING: No summary output for namespaces (actually replaced by classes).</xsl:message>
+      <xsl:message>WARNING: No summary output for namespaces (actually replaced by
+        classes).</xsl:message>
     </xsl:if>
-    
+
     <xsl:variable name="isFunctions" as="xs:boolean" select="ends-with($title, ' Functions')"/>
 
     <xsl:variable name="isQmlType" as="xs:boolean" select="ends-with($title, ' QML Type')"/>
@@ -81,14 +82,16 @@
         <xsl:value-of select="substring-before($title, ' QML Type')"/>
       </xsl:if>
     </xsl:variable>
-    
-    <xsl:variable name="isConcept" select="not($isClass) and not($isNamespace) and not($isFunctions) and not($isQmlType)" as="xs:boolean"/>
+
+    <xsl:variable name="isConcept"
+      select="not($isClass) and not($isNamespace) and not($isFunctions) and not($isQmlType)"
+      as="xs:boolean"/>
 
     <!-- Extract the various parts of the prologue. -->
     <xsl:variable name="prologueTable"
       select="
         $content
-        /html:div[@class = 'table'][preceding-sibling::node()[self::html:p]][1]
+        /html:div[@class = 'table'][preceding-sibling::html:*[1][self::html:p]][1]
         /html:table[@class = 'alignedsummary']/html:tbody/html:tr"/>
     <!-- C++ classes. -->
     <xsl:variable name="prologueHeader" as="element(html:span)?"
@@ -112,8 +115,7 @@
     <!-- Check all lines have been used. -->
     <xsl:variable name="prologueCount" as="xs:integer"
       select="
-      count((boolean($prologueHeader), boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInstantiatedBy), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"
-    />
+        count((boolean($prologueHeader), boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInstantiatedBy), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"/>
     <xsl:if test="count($prologueTable) != $prologueCount">
       <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
     </xsl:if>
@@ -122,84 +124,89 @@
       QML types have a description without outer <div>; complexity to deal with this.
       The following code will look after siblings of $description for classes, no copy allowed in this case!
     -->
-    <xsl:variable name="hasActuallyNoDescription" as="xs:boolean" select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))"/>
+    <xsl:variable name="hasActuallyNoDescription" as="xs:boolean"
+      select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))
+      and not(boolean(//html:span[@class = 'subtitle']))"/>
 
-    <xsl:variable name="descriptionUsualPlace" as="element()?" select="$content/html:div[@class = 'descr']"/>
+    <xsl:variable name="descriptionUsualPlace" as="element()?"
+      select="$content/html:div[@class = 'descr']"/>
     <xsl:variable name="description" as="element()?">
-      <xsl:variable name="descriptionInHeader"
-        select="count($content/html:div[@class = 'descr']/child::html:*[not(self::html:a)]) = 0"/>
-      <xsl:choose>
-        <xsl:when test="not($isQmlType) and not($descriptionInHeader)">
-          <!-- Easiest case: everything is at its own place. -->
-          <xsl:copy-of select="$descriptionUsualPlace"/>
-        </xsl:when>
-        <xsl:when test="not($isQmlType) and $descriptionInHeader">
-          <!-- If there is no actual detailed description, take what is available in the header part. -->
-          <html:div class="descr">
-            <html:h2>Detailed Description</html:h2>
-            <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
-          </html:div>
-        </xsl:when>
-        <xsl:otherwise>
-          <!-- Deal with QML descriptions. -->
-          <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
-          <xsl:variable name="attachedPropText" select="'Attached Property Documentation'"
-            as="xs:string"/>
-          <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
+      <xsl:if test="not($hasActuallyNoDescription)">
+        <xsl:variable name="descriptionInHeader"
+          select="count($content/html:div[@class = 'descr']/child::html:*[not(self::html:a)]) = 0"/>
+        <xsl:choose>
+          <xsl:when test="not($isQmlType) and not($descriptionInHeader)">
+            <!-- Easiest case: everything is at its own place. -->
+            <xsl:copy-of select="$descriptionUsualPlace"/>
+          </xsl:when>
+          <xsl:when test="not($isQmlType) and $descriptionInHeader">
+            <!-- If there is no actual detailed description, take what is available in the header part. -->
+            <html:div class="descr">
+              <html:h2>Detailed Description</html:h2>
+              <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
+            </html:div>
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- Deal with QML descriptions. -->
+            <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
+            <xsl:variable name="attachedPropText" select="'Attached Property Documentation'"
+              as="xs:string"/>
+            <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
 
-          <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
-          <xsl:variable name="descTitleId" select="generate-id($descTitle)"/>
-          <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]"
-            as="element()?"/>
-          <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
-          <xsl:variable name="attachedPropTitle"
-            select="$content/html:h2[text() = $attachedPropText]" as="element()?"/>
-          <xsl:variable name="attachedPropTitleId" select="generate-id($attachedPropTitle)"/>
-          <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]"
-            as="element()?"/>
-          <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
+            <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
+            <xsl:variable name="descTitleId" select="generate-id($descTitle)"/>
+            <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]"
+              as="element()?"/>
+            <xsl:variable name="propTitleId" select="generate-id($propTitle)"/>
+            <xsl:variable name="attachedPropTitle"
+              select="$content/html:h2[text() = $attachedPropText]" as="element()?"/>
+            <xsl:variable name="attachedPropTitleId" select="generate-id($attachedPropTitle)"/>
+            <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]"
+              as="element()?"/>
+            <xsl:variable name="methTitleId" select="generate-id($methTitle)"/>
 
-          <html:div class="descr">
-            <html:h2>Detailed Description</html:h2>
-            <xsl:for-each
-              select="
-                $descTitle
-                /following-sibling::html:*[
-                text() != ''
-                and text() != $propText
-                and text() != $attachedPropText
-                and text() != $methText
-                and not(
-                generate-id(preceding-sibling::html:h2[1]) = $propTitleId
-                or
-                generate-id(preceding-sibling::html:h2[1]) = $attachedPropTitleId
-                or
-                generate-id(preceding-sibling::html:h2[1]) = $methTitleId
-                )
-                ]">
-              <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
-              <xsl:choose>
-                <xsl:when test="current()[self::html:h2]">
-                  <html:h3>
-                    <xsl:attribute name="id" select="current()[@id]"/>
-                    <xsl:value-of select="current()"/>
-                  </html:h3>
-                </xsl:when>
-                <xsl:when
-                  test="current()[self::html:h3][generate-id(preceding-sibling::html:h2[1]) != $descTitleId]">
-                  <html:h4>
-                    <xsl:attribute name="id" select="current()[@id]"/>
-                    <xsl:value-of select="current()"/>
-                  </html:h4>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:copy-of select="current()"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:for-each>
-          </html:div>
-        </xsl:otherwise>
-      </xsl:choose>
+            <html:div class="descr">
+              <html:h2>Detailed Description</html:h2>
+              <xsl:for-each
+                select="
+                  $descTitle
+                  /following-sibling::html:*[
+                  text() != ''
+                  and text() != $propText
+                  and text() != $attachedPropText
+                  and text() != $methText
+                  and not(
+                  generate-id(preceding-sibling::html:h2[1]) = $propTitleId
+                  or
+                  generate-id(preceding-sibling::html:h2[1]) = $attachedPropTitleId
+                  or
+                  generate-id(preceding-sibling::html:h2[1]) = $methTitleId
+                  )
+                  ]">
+                <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
+                <xsl:choose>
+                  <xsl:when test="current()[self::html:h2]">
+                    <html:h3>
+                      <xsl:attribute name="id" select="current()[@id]"/>
+                      <xsl:value-of select="current()"/>
+                    </html:h3>
+                  </xsl:when>
+                  <xsl:when
+                    test="current()[self::html:h3][generate-id(preceding-sibling::html:h2[1]) != $descTitleId]">
+                    <html:h4>
+                      <xsl:attribute name="id" select="current()[@id]"/>
+                      <xsl:value-of select="current()"/>
+                    </html:h4>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:copy-of select="current()"/>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
+            </html:div>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
     </xsl:variable>
 
     <xsl:if test="not($hasActuallyNoDescription) and not($description)">
@@ -208,26 +215,31 @@
     <xsl:variable name="siblingAfterDescription" as="element()?"
       select="$descriptionUsualPlace/following-sibling::*[1]"/>
     <xsl:if test="$siblingAfterDescription and $isQmlType">
-      <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in the style sheets!</xsl:message>
+      <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in
+        the style sheets!</xsl:message>
     </xsl:if>
 
-    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/> <!-- For QML types: "see also" handled naturally as a paragraph. -->
+    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
+    <!-- For QML types: "see also" handled naturally as a paragraph. -->
     <xsl:variable name="siblingAfterSeeAlso" as="element()?"
       select="
         if ($seeAlso) then
           $siblingAfterDescription/following-sibling::*[1]
         else
           $siblingAfterDescription"/>
-    
+
     <xsl:variable name="index" as="element()?"
-      select="$siblingAfterSeeAlso[self::html:div][@class = 'table'][html:table[@class = 'annotated']]"/> <!-- For pages that contain only an index, like accessibility -->
+      select="$siblingAfterSeeAlso[self::html:div][@class = 'table'][html:table[@class = 'annotated']]"/>
+    <!-- For pages that contain only an index, like accessibility -->
     <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
-    <xsl:if test="$isQmlType and //html:*[self::html:div][@class = 'table'][html:table[@class = 'annotated']]">
+    <xsl:if
+      test="$isQmlType and //html:*[self::html:div][@class = 'table'][html:table[@class = 'annotated']]">
       <xsl:message>WARNING: QML type seems to have an index page; not implemented. </xsl:message>
       <!-- In this case, would need to find a way back in the page (cannot use the $sibling variables). -->
     </xsl:if>
-    
-    <xsl:variable name="remainingAfterIndex" as="element(html:div)*" select="$siblingAfterSeeAlso[self::html:div] | $siblingAfterSeeAlso/following-sibling::html:div"/>
+
+    <xsl:variable name="remainingAfterIndex" as="element(html:div)*"
+      select="$siblingAfterSeeAlso[self::html:div] | $siblingAfterSeeAlso/following-sibling::html:div"/>
     <xsl:variable name="types" as="element()?"
       select="$remainingAfterIndex[self::html:div][@class = 'types']"/>
     <xsl:variable name="properties" as="element()?"
@@ -240,19 +252,20 @@
       select="$remainingAfterIndex[self::html:div][@class = 'macros']"/>
     <xsl:variable name="vars" as="element(html:div)?"
       select="$remainingAfterIndex[self::html:div][@class = 'vars']"/>
-    
+
     <xsl:variable name="funcs_outside" as="element(html:div)?">
       <xsl:variable name="funcs_strange_title" as="element(html:h2)?"
         select="$descriptionUsualPlace/following-sibling::html:h2[text() = 'Function Documentation']"/>
       <xsl:variable name="funcs_strange_title_id" select="generate-id($funcs_strange_title)"/>
       <html:div class="func">
         <xsl:copy-of select="$funcs_strange_title"/>
-        <xsl:for-each select="$descriptionUsualPlace/following-sibling::node()[./preceding-sibling::html:h2[1][generate-id(.) = $funcs_strange_title_id]]">
+        <xsl:for-each
+          select="$descriptionUsualPlace/following-sibling::node()[./preceding-sibling::html:h2[1][generate-id(.) = $funcs_strange_title_id]]">
           <xsl:copy-of select="."/>
         </xsl:for-each>
       </html:div>
     </xsl:variable>
-    
+
     <xsl:variable name="qmlPropsTitle" as="element()?">
       <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
       <xsl:copy-of select="$content/html:h2[text() = $qmlPropsTitleText]"/>
@@ -265,38 +278,38 @@
           <xsl:for-each
             select="
               $qmlPropsTitle
-                /following-sibling::html:div[
-                  @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
-                ]"
-            >
-            <xsl:copy-of select="current()"></xsl:copy-of>
+              /following-sibling::html:div[
+              @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
+              ]">
+            <xsl:copy-of select="current()"/>
           </xsl:for-each>
         </html:div>
       </xsl:if>
     </xsl:variable>
-    
+
     <xsl:variable name="qmlAttachedPropsTitle" as="element()?">
-      <xsl:variable name="qmlAttachedPropsTitleText" select="'Attached Property Documentation'" as="xs:string"/>
+      <xsl:variable name="qmlAttachedPropsTitleText" select="'Attached Property Documentation'"
+        as="xs:string"/>
       <xsl:copy-of select="$content/html:h2[text() = $qmlAttachedPropsTitleText]"/>
     </xsl:variable>
-    <xsl:variable name="hasQmlAttachedProps" select="$isQmlType and boolean($qmlAttachedPropsTitle)" as="xs:boolean"/>
+    <xsl:variable name="hasQmlAttachedProps" select="$isQmlType and boolean($qmlAttachedPropsTitle)"
+      as="xs:boolean"/>
     <xsl:variable name="qmlAttachedProps" as="element(html:div)?">
       <xsl:variable name="qmlAttachedPropsTitleId" select="generate-id($qmlAttachedPropsTitle)"/>
       <xsl:if test="$isQmlType and $hasQmlAttachedProps">
         <html:div class="qml-attached-props">
           <xsl:for-each
             select="
-            $qmlAttachedPropsTitle
-            /following-sibling::html:div[
-            @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlAttachedPropsTitleId
-            ]"
-            >
-            <xsl:copy-of select="current()"></xsl:copy-of>
+              $qmlAttachedPropsTitle
+              /following-sibling::html:div[
+              @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlAttachedPropsTitleId
+              ]">
+            <xsl:copy-of select="current()"/>
           </xsl:for-each>
         </html:div>
       </xsl:if>
     </xsl:variable>
-    
+
     <xsl:variable name="qmlMethsTitle" as="element()?">
       <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
       <xsl:copy-of select="$content/html:h2[text() = $qmlMethsTitleText]"/>
@@ -308,22 +321,22 @@
         <html:div class="qml-meths">
           <xsl:for-each
             select="
-            $qmlMethsTitle
-            /following-sibling::html:div[
-            @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlMethsTitleId
-            ]"
-            >
-            <xsl:copy-of select="current()"></xsl:copy-of>
+              $qmlMethsTitle
+              /following-sibling::html:div[
+              @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlMethsTitleId
+              ]">
+            <xsl:copy-of select="current()"/>
           </xsl:for-each>
         </html:div>
       </xsl:if>
     </xsl:variable>
-    
+
     <xsl:variable name="qmlSignalsTitle" as="element()?">
       <xsl:variable name="qmlSignalsTitleText" select="'Signal Documentation'" as="xs:string"/>
       <xsl:copy-of select="$content/html:h2[text() = $qmlSignalsTitleText]"/>
     </xsl:variable>
-    <xsl:variable name="hasQmlSignals" select="$isQmlType and boolean($qmlSignalsTitle)" as="xs:boolean"/>
+    <xsl:variable name="hasQmlSignals" select="$isQmlType and boolean($qmlSignalsTitle)"
+      as="xs:boolean"/>
     <xsl:variable name="qmlSignals" as="element(html:div)?">
       <xsl:variable name="qmlSignalsTitleId" select="generate-id($qmlSignalsTitle)"/>
       <xsl:if test="$isQmlType and $hasQmlSignals">
@@ -332,10 +345,9 @@
             select="
               $qmlSignalsTitle
               /following-sibling::html:div[
-                @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlSignalsTitleId
-              ]"
-            >
-            <xsl:copy-of select="current()"></xsl:copy-of>
+              @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlSignalsTitleId
+              ]">
+            <xsl:copy-of select="current()"/>
           </xsl:for-each>
         </html:div>
       </xsl:if>
@@ -347,10 +359,9 @@
     <xsl:variable name="isBareExamplePage" as="xs:boolean"
       select="
         $isExamplePage
-          and count($description/child::*) = 2
-          and $description/child::*[1][self::html:a][@name = 'details']
-          and $description/child::*[2][self::html:pre]"
-    />
+        and count($description/child::*) = 2
+        and $description/child::*[1][self::html:a][@name = 'details']
+        and $description/child::*[2][self::html:pre]"/>
     <!-- 
       TODO: is the distinction with $isExamplePage required? It seems only pages with source code 
       (and not the "main" page for each example) have a nonempty subtitle and require this. 
@@ -400,7 +411,9 @@
       <xsl:variable name="linkedDocumentsList"
         select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
       <xsl:variable name="linkedDocumentsFileNames" as="xs:string*">
-        <xsl:value-of select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"/>
+        <xsl:value-of
+          select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"
+        />
       </xsl:variable>
       <xsl:if test="$linkedDocumentsFileNames">
         <xsl:for-each select="$linkedDocumentsFileNames">
@@ -437,7 +450,8 @@
       <xsl:if test="$title">
         <html:div class="types">
           <xsl:copy-of select="$title"/>
-          <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]" />
+          <xsl:copy-of
+            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
         </html:div>
       </xsl:if>
     </xsl:variable>
@@ -448,30 +462,33 @@
       <xsl:if test="$title">
         <html:div class="prop">
           <xsl:copy-of select="$title"/>
-          <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]" />
+          <xsl:copy-of
+            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
         </html:div>
       </xsl:if>
     </xsl:variable>
-      
+
     <xsl:variable name="obsolete_memfuncs" as="element(html:div)?">
       <xsl:variable name="title" as="element(html:h2)?"
         select="$obsolete/html:h2[text() = 'Member Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
       <xsl:if test="$title">
         <html:div class="func">
           <xsl:copy-of select="$title"/>
-          <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
+          <xsl:copy-of
+            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
         </html:div>
       </xsl:if>
     </xsl:variable>
-    
+
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
       <xsl:variable name="title" as="element(html:h2)?"
         select="$obsolete/html:h2[text() = 'Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
       <xsl:if test="$title">
-       <html:div class="func">
-         <xsl:copy-of select="$title"/>
-         <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]" />
-       </html:div>
+        <html:div class="func">
+          <xsl:copy-of select="$title"/>
+          <xsl:copy-of
+            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
+        </html:div>
       </xsl:if>
     </xsl:variable>
 
@@ -479,10 +496,11 @@
       <xsl:variable name="title" as="element(html:h2)?"
         select="$obsolete/html:h2[text() = 'Related Non-Members'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
       <xsl:if test="$title">
-       <html:div class="types">
-         <xsl:copy-of select="$title"/>
-         <xsl:copy-of select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
-       </html:div>
+        <html:div class="types">
+          <xsl:copy-of select="$title"/>
+          <xsl:copy-of
+            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
+        </html:div>
       </xsl:if>
     </xsl:variable>
 
@@ -503,31 +521,31 @@
       <xsl:if test="$obsolete_types and $warnVocabularyUnsupportedFeatures">
         <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
-      
+
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
           <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
-          
+
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
-          
+
           <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
-        
+
         <xsl:if test="$macros">
           <xsl:call-template name="macroListing">
             <xsl:with-param name="data" select="$macros"/>
             <xsl:with-param name="className" select="$className"/>
           </xsl:call-template>
         </xsl:if>
-        
+
         <xsl:if test="$nonmems">
           <xsl:call-template name="functionListing">
             <xsl:with-param name="data" select="$nonmems"/>
@@ -535,48 +553,48 @@
           </xsl:call-template>
         </xsl:if>
       </xsl:if>
-      
+
       <xsl:if test="$isFunctions">
         <xsl:call-template name="functionListing">
           <xsl:with-param name="data" select="$funcs_outside"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$isNamespace">
         <xsl:call-template name="classListing">
           <xsl:with-param name="className" select="$namespaceName"/>
           <xsl:with-param name="isNamespace" select="true()"/>
-          
+
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
-          
+
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
-          
+
           <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$isQmlType">
         <xsl:call-template name="qmlTypeListing">
           <xsl:with-param name="qmlTypeName" select="$qmlTypeName"/>
-          
+
           <xsl:with-param name="import" select="$prologueImport"/>
           <xsl:with-param name="instantiates" select="$prologueInstantiates"/>
           <xsl:with-param name="instantiatedBy" select="$prologueInstantiatedBy"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
-          
+
           <xsl:with-param name="props" select="$qmlProps"/>
           <xsl:with-param name="attachedProps" select="$qmlAttachedProps"/>
           <xsl:with-param name="meths" select="$qmlMeths"/>
-          <xsl:with-param name="signals" select="$qmlSignals"></xsl:with-param>
+          <xsl:with-param name="signals" select="$qmlSignals"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -598,7 +616,7 @@
           <xsl:with-param name="data" select="$types"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$properties">
         <xsl:call-template name="content_props">
           <xsl:with-param name="data" select="$properties"/>
@@ -610,7 +628,7 @@
           <xsl:with-param name="data" select="$funcs"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$macros">
         <xsl:call-template name="content_macros">
           <xsl:with-param name="data" select="$macros"/>
@@ -622,46 +640,46 @@
           <xsl:with-param name="data" select="$nonmems"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$vars">
         <xsl:call-template name="content_vars">
           <xsl:with-param name="data" select="$vars"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$isFunctions">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$funcs_outside"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <!-- There may be properties and methods for QML types. -->
       <xsl:if test="$hasQmlProps">
         <xsl:call-template name="content_qmlProps">
           <xsl:with-param name="data" select="$qmlProps"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$hasQmlAttachedProps">
         <xsl:call-template name="content_qmlProps">
           <xsl:with-param name="data" select="$qmlAttachedProps"/>
           <xsl:with-param name="attached" select="true()"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$hasQmlMeths">
         <xsl:call-template name="content_qmlMeths">
           <xsl:with-param name="data" select="$qmlMeths"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <xsl:if test="$hasQmlSignals">
         <xsl:call-template name="content_qmlMeths">
           <xsl:with-param name="data" select="$qmlSignals"/>
           <xsl:with-param name="type" select="'signal'"/>
         </xsl:call-template>
       </xsl:if>
-      
+
       <!-- There may be obsolete things for C++ classes. -->
       <xsl:if test="$hasObsolete">
         <db:section>
@@ -680,11 +698,11 @@
               <xsl:with-param name="data" select="$obsolete_memfuncs"/>
             </xsl:call-template>
           </xsl:if>
-          
+
           <xsl:if test="$obsolete_funcs">
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_funcs"/>
-              <xsl:with-param name="title" select="'Function Documentation'"></xsl:with-param>
+              <xsl:with-param name="title" select="'Function Documentation'"/>
             </xsl:call-template>
           </xsl:if>
 
