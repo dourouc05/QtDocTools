@@ -16,8 +16,10 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-  exclude-result-prefixes="xsl xs html" version="2.0">
-  <xsl:output method="xml" indent="yes"/>
+  xmlns:saxon="http://saxon.sf.net/"
+  exclude-result-prefixes="xsl xs html saxon" version="2.0">
+  <xsl:output method="xml" indent="yes" 
+    saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting"/>
   <xsl:strip-space elements="*"/>
   
   <xsl:param name="vocabulary" select="'docbook'"/> <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for Boost's variant (TODO). -->
@@ -2209,59 +2211,52 @@
   <xsl:template mode="content_paragraph" match="html:a">
     <!-- 
       Output a link, maybe enclosing its content with <db:code> when it's a method (followed by parentheses) or a class. 
-      
-      Strange things to output <db:code> (output it as pure text, but unescaped), just to ensure there is no whitespace 
-      between this tag and the link, i.e. visible space to the user!
+      Don't output the <db:code> if the element is already wrapped in some such tag. 
       
       The content may have multiple text values, such as: 
           <html:a href="qtqml-syntax-objectattributes.html#the-id-attribute">The <html:i>id</html:i> Attribute</html:a>
     -->
     <xsl:choose>
+      <!-- First case: followed by parentheses. -->
       <xsl:when test="starts-with(./following-sibling::text()[1], '()')">
-        <xsl:if test="not(ancestor::node()[self::html:code])">
-          <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
-        </xsl:if>
-        <db:link>
-          <xsl:attribute name="xlink:href" select="@href"/>
-          <xsl:apply-templates mode="content_paragraph"/>
-        </db:link>
-
-        <xsl:variable name="toEndList"
-          select="substring-before(./following-sibling::text()[1], ')')[1]"/>
-        <xsl:variable name="justList" select="substring-after($toEndList, '(')"/>
-
-        <xsl:text>(</xsl:text>
-        <xsl:value-of select="$justList"/>
-        <xsl:text>)</xsl:text>
+        <!-- Prepare to conditionnally output a <db:code> tag around the link (only if not yet done). -->
+        <xsl:variable name="link">
+          <db:link>
+            <xsl:attribute name="xlink:href" select="@href"/>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:link>
+          <xsl:variable name="toEndList" as="xs:string" select="substring-before(./following-sibling::text()[1], ')')[1]"/>
+          <xsl:value-of select="concat('(', substring-after($toEndList, '('), ')')"/>
+        </xsl:variable>
         
-        <xsl:if test="not(ancestor::node()[self::html:code])">
-          <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
-        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="ancestor::node()[self::html:code]"><xsl:copy-of select="$link"></xsl:copy-of></xsl:when>
+          <xsl:otherwise><db:code><xsl:copy-of select="$link"></xsl:copy-of></db:code></xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
+      <!-- Second case: only text, starts with a Q (hence a Qt C++ class). -->
       <xsl:when test="count(./text()) = 1 and starts-with(./text(), 'Q') and not(contains(./text(), ' '))">
-        <xsl:if test="not(ancestor::node()[self::html:code])">
-          <xsl:text disable-output-escaping="yes">&lt;db:code&gt;</xsl:text>
-        </xsl:if>
-        <db:link>
-          <xsl:attribute name="xlink:href" select="@href"/>
-          <xsl:apply-templates mode="content_paragraph"/>
-        </db:link>
-
-        <!-- Maybe it's templated. -->
-        <xsl:if test="starts-with(./following-sibling::text()[1], '&lt;')">
-          <xsl:variable name="toEndTemplate"
-            select="substring-before(./following-sibling::text()[1], '>')[1]"/>
-          <xsl:variable name="templateArgument" select="substring-after($toEndTemplate, '&lt;')"/>
-
-          <xsl:text>&lt;</xsl:text>
-          <xsl:value-of select="$templateArgument"/>
-          <xsl:text>&gt;</xsl:text>
-        </xsl:if>
+        <xsl:variable name="link">
+          <db:link>
+            <xsl:attribute name="xlink:href" select="@href"/>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:link>
+          <!-- Maybe it's templated. -->
+          <xsl:if test="starts-with(./following-sibling::text()[1], '&lt;')">
+            <xsl:variable name="toEndTemplate" select="substring-before(./following-sibling::text()[1], '>')[1]"/>
+            
+            <xsl:text>&lt;</xsl:text>
+            <xsl:value-of select="substring-after($toEndTemplate, '&lt;')"/>
+            <xsl:text>&gt;</xsl:text>
+          </xsl:if>
+        </xsl:variable>
         
-        <xsl:if test="not(ancestor::node()[self::html:code])">
-          <xsl:text disable-output-escaping="yes">&lt;/db:code&gt;</xsl:text>
-        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="ancestor::node()[self::html:code]"><xsl:copy-of select="$link"></xsl:copy-of></xsl:when>
+          <xsl:otherwise><db:code><xsl:copy-of select="$link"></xsl:copy-of></db:code></xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
+      <!-- No <db:code> should be inferred here. -->
       <xsl:otherwise>
         <db:link>
           <xsl:attribute name="xlink:href" select="@href"/>

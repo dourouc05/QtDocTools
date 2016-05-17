@@ -8,6 +8,9 @@
       <db:ooclass>
          <db:classname>QWebSocketProtocol</db:classname>
       </db:ooclass>
+      <db:classsynopsisinfo role="isNamespace">
+          yes
+        </db:classsynopsisinfo>
       <db:classsynopsisinfo role="header">#include
                                                   &lt;QWebSocketProtocol&gt;</db:classsynopsisinfo>
       <db:classsynopsisinfo role="qmake"> QT +=
@@ -242,8 +245,10 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qwebsocket.html#close">QWebSocket::close</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qwebsocket.html#close">QWebSocket::close</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>

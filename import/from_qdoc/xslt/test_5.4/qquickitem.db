@@ -684,8 +684,7 @@
                                     custom content into the scene graph by setting the <db:code><db:link xlink:href="qquickitem.html#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> flag and
                                     reimplementing the <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> function.</db:para>
          <db:warning>
-            <db:para>
-               <db:emphasis role="bold">Warning:</db:emphasis> It is crucial that OpenGL
+            <db:para> It is crucial that OpenGL
                                     operations and interaction with the scene graph happens
                                     exclusively on the rendering thread, primarily during the
                                         <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">updatePaintNode</db:link>()</db:code> call. The best rule of thumb is
@@ -762,8 +761,7 @@
                                     provides a subclass, <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>, which allows the users to
                                     render content using <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code>.</db:para>
          <db:warning>
-            <db:para>
-               <db:emphasis role="bold">Warning:</db:emphasis> Using <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>
+            <db:para> Using <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>
                                     uses an indirect 2D surface to render its content, either using
                                     software rasterization or using an OpenGL framebuffer object
                                     (FBO), so the rendering is a two-step operation. First rasterize
@@ -785,9 +783,13 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
-            <db:member><db:code><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:code></db:member>
-            <db:member><db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code></db:member>
+         <db:simplelist>
+            <db:member>
+               <db:code><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>
@@ -901,10 +903,16 @@
                                     stores an OR combination of Flag values.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFlags">setFlags</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#flags">flags</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFlags">setFlags</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#flags">flags</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1230,9 +1238,13 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#transformOrigin-prop">transformOrigin</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#transformOrigin-prop">setTransformOrigin</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#transformOrigin-prop">transformOrigin</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#transformOrigin-prop">setTransformOrigin</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1273,7 +1285,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qquickitem.html#focus-prop">focus</db:link>
                </db:member>
@@ -1514,7 +1526,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qquickitem.html#visible-prop">visible</db:link>
                </db:member>
@@ -1578,7 +1590,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qquickitem.html#activeFocus-prop">activeFocus</db:link>
                </db:member>
@@ -1819,7 +1831,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qquickitem.html#visible-prop">visible</db:link>
                </db:member>
@@ -1927,7 +1939,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
                </db:member>
@@ -2004,7 +2016,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
                </db:member>
@@ -2093,7 +2105,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick
                                         States</db:link>
@@ -2207,7 +2219,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link>
                </db:member>
@@ -2470,8 +2482,10 @@
                                     events through the <db:code><db:link xlink:href="qquickitem.html#hoverEnterEvent">hoverEnterEvent</db:link>()</db:code>, <db:code><db:link xlink:href="qquickitem.html#hoverMoveEvent">hoverMoveEvent</db:link>()</db:code> and <db:code><db:link xlink:href="qquickitem.html#hoverLeaveEvent">hoverLeaveEvent</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setAcceptHoverEvents">setAcceptHoverEvents</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setAcceptHoverEvents">setAcceptHoverEvents</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2486,8 +2500,10 @@
                                     instead.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setAcceptedMouseButtons">setAcceptedMouseButtons</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setAcceptedMouseButtons">setAcceptedMouseButtons</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2512,8 +2528,10 @@
                                     and false otherwise.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2556,9 +2574,13 @@
                                     cursor.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setCursor">setCursor</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#unsetCursor">unsetCursor</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setCursor">setCursor</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#unsetCursor">unsetCursor</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2571,7 +2593,7 @@
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
                </db:member>
@@ -2591,7 +2613,7 @@
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
                </db:member>
@@ -2611,7 +2633,7 @@
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
                </db:member>
@@ -2631,7 +2653,7 @@
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
                </db:member>
@@ -2652,9 +2674,13 @@
                                     be filtered through this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#childMouseEventFilter">childMouseEventFilter</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#childMouseEventFilter">childMouseEventFilter</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2663,9 +2689,13 @@
          <db:para>Returns the item flags for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFlags">setFlags</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFlags">setFlags</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2704,8 +2734,7 @@
          <db:para>This item will receive all mouse events until <db:code><db:link xlink:href="qquickitem.html#ungrabMouse">ungrabMouse</db:link>()</db:code> is
                                     called.</db:para>
          <db:warning>
-            <db:para>
-               <db:emphasis role="bold">Warning:</db:emphasis> This function should be used with
+            <db:para> This function should be used with
                                     caution.</db:para>
          </db:warning>
       </db:section>
@@ -2727,7 +2756,8 @@
          </db:note>
          <db:para>
             <db:emphasis role="bold">See
-                                        also </db:emphasis><db:code><db:link xlink:href="qquickwindow.html#grabWindow">QQuickWindow::grabWindow</db:link>()</db:code>.</db:para>
+                                        also </db:emphasis>
+            <db:code><db:link xlink:href="qquickwindow.html#grabWindow">QQuickWindow::grabWindow</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="grabTouchPoints">
          <db:title>void QQuickItem::grabTouchPoints(const QVector &lt;int &gt; &amp; ids)</db:title>
@@ -2739,9 +2769,13 @@
                                     stolen.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#ungrabTouchPoints">ungrabTouchPoints</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#ungrabTouchPoints">ungrabTouchPoints</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2785,8 +2819,10 @@
                                     given <db:emphasis>query</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qtwidgets/qwidget.html#inputMethodQuery">QWidget::inputMethodQuery</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qtwidgets/qwidget.html#inputMethodQuery">QWidget::inputMethodQuery</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2798,8 +2834,10 @@
                                     component is completed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#componentComplete">componentComplete</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#componentComplete">componentComplete</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2833,8 +2871,10 @@
                                     this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2844,9 +2884,13 @@
                                     exclusively remain with this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2873,7 +2917,7 @@
                                     scene.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2888,7 +2932,7 @@
                                     coordinate system, and returns the mapped coordinate.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2907,7 +2951,7 @@
                                     scene.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2923,7 +2967,7 @@
                                     value.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2942,7 +2986,7 @@
                                     scene.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2958,7 +3002,7 @@
                                     value.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2977,7 +3021,7 @@
                                     scene.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -2992,7 +3036,7 @@
                                     coordinate system, and returns the mapped coordinate.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
@@ -3032,8 +3076,10 @@
                                     item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#ungrabMouse">ungrabMouse</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#ungrabMouse">ungrabMouse</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3067,7 +3113,7 @@
                                     cleanup using <db:code><db:link xlink:href="qquickwindow.html#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qquickitem.html#graphics-resource-handling">Graphics
                                         Resource Handling</db:link>
@@ -3088,8 +3134,10 @@
                                     this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3099,8 +3147,10 @@
                                         <db:emphasis>buttons</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#acceptedMouseButtons">acceptedMouseButtons</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#acceptedMouseButtons">acceptedMouseButtons</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3110,9 +3160,13 @@
                                     item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#cursor">cursor</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#unsetCursor">unsetCursor</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#cursor">cursor</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#unsetCursor">unsetCursor</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3124,8 +3178,10 @@
                                     mouse event is triggered for a child item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#filtersChildMouseEvents">filtersChildMouseEvents</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#filtersChildMouseEvents">filtersChildMouseEvents</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3146,9 +3202,13 @@
                                     item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#flags">flags</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#flags">flags</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3167,8 +3227,10 @@
                                     detects that the user has begun to move the viewport.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3188,9 +3250,13 @@
                                     viewport.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#keepTouchGrab">keepTouchGrab</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#keepTouchGrab">keepTouchGrab</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3202,7 +3268,7 @@
                                     item; that is, they must have the same immediate <db:link xlink:href="qquickitem.html#parent-prop">parent</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-visualparent.html">Concepts -
                                         Visual Parent in Qt Quick</db:link>
@@ -3219,7 +3285,7 @@
                                     item; that is, they must have the same immediate <db:link xlink:href="qquickitem.html#parent-prop">parent</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-visualcanvas-visualparent.html">Concepts -
                                         Visual Parent in Qt Quick</db:link>
@@ -3255,8 +3321,10 @@
          <db:para>Ungrabs the touch points owned by this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#grabTouchPoints">grabTouchPoints</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#grabTouchPoints">grabTouchPoints</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3265,9 +3333,13 @@
          <db:para>Clears the cursor shape for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qquickitem.html#cursor">cursor</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qquickitem.html#setCursor">setCursor</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#cursor">cursor</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qquickitem.html#setCursor">setCursor</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -3310,8 +3382,7 @@
                                     then the underlying implementation may decide to not render the
                                     scene again as the visual outcome is identical.</db:para>
          <db:warning>
-            <db:para>
-               <db:emphasis role="bold">Warning:</db:emphasis> It is crucial that OpenGL
+            <db:para> It is crucial that OpenGL
                                     operations and interaction with the scene graph happens
                                     exclusively on the render thread, primarily during the
                                     QQuickItem::updatePaintNode() call. The best rule of thumb is to
@@ -3319,8 +3390,7 @@
                                     QQuickItem::updatePaintNode() function.</db:para>
          </db:warning>
          <db:warning>
-            <db:para>
-               <db:emphasis role="bold">Warning:</db:emphasis> This function is called on the
+            <db:para> This function is called on the
                                     render thread. This means any QObjects or thread local storage
                                     that is created will have affinity to the render thread, so
                                     apply caution when doing anything other than rendering in this
@@ -3335,14 +3405,28 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsgmaterial.html">QSGMaterial</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsgsimplematerial.html">QSGSimpleMaterial</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsggeometrynode.html">QSGGeometryNode</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsggeometry.html">QSGGeometry</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsgflatcolormaterial.html">QSGFlatColorMaterial</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsgtexturematerial.html">QSGTextureMaterial</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsgnode.html#markDirty">QSGNode::markDirty</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsgmaterial.html">QSGMaterial</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsgsimplematerial.html">QSGSimpleMaterial</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsggeometrynode.html">QSGGeometryNode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsggeometry.html">QSGGeometry</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsgflatcolormaterial.html">QSGFlatColorMaterial</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsgtexturematerial.html">QSGTextureMaterial</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsgnode.html#markDirty">QSGNode::markDirty</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qquickitem.html#graphics-resource-handling">Graphics
                                         Resource Handling</db:link>

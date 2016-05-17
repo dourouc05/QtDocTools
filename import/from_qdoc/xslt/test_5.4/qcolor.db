@@ -840,16 +840,19 @@
       <db:para>The color components can be retrieved individually, e.g with <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>. The values of the color components can also be retrieved in one go using the <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code> functions. Using the RGB color model, the color components can in addition be accessed with <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>.</db:para>
       <db:para>There are several related non-members: <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> is a typdef for an unsigned int representing the RGB value triplet (r, g, b). Note that it also can hold a value for the alpha-channel (for more information, see the <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link> section). The <db:code><db:link xlink:href="qcolor.html#qRed">qRed</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()</db:code> functions return the respective component of the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value, while the <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#qRgba">qRgba</db:link>()</db:code> functions create and return the <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> triplet based on the given component values. Finally, the <db:code><db:link xlink:href="qcolor.html#qAlpha">qAlpha</db:link>()</db:code> function returns the alpha
                                     component of the provided <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code>, and the <db:code><db:link xlink:href="qcolor.html#qGray">qGray</db:link>()</db:code> function calculates and return a gray value based on the given value.</db:para>
-      <db:para><db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> is platform and device independent. The <db:code><db:link xlink:href="qtwidgets/qcolormap.html">QColormap</db:link></db:code> class maps the color to the hardware.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> is platform and device independent. The <db:code><db:link xlink:href="qtwidgets/qcolormap.html">QColormap</db:link></db:code> class maps the color to the hardware.</db:para>
       <db:para>For more information about painting in general, see the <db:link xlink:href="paintsystem.html">Paint System</db:link> documentation.</db:para>
       <db:section>
          <db:title>Integer vs. Floating Point Precision</db:title>
-         <db:para><db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> supports floating point precision and provides floating point versions of all the color components functions, e.g. <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#fromCmykF">fromCmykF</db:link>()</db:code>. Note that since the components are stored using 16-bit integers, there might be minor deviations between the values set using, for example, <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code> and the values returned by the <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code> function due to rounding.</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> supports floating point precision and provides floating point versions of all the color components functions, e.g. <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#fromCmykF">fromCmykF</db:link>()</db:code>. Note that since the components are stored using 16-bit integers, there might be minor deviations between the values set using, for example, <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code> and the values returned by the <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code> function due to rounding.</db:para>
          <db:para>While the integer based functions take values in the range 0-255 (except <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code> which must have values within the range 0-359), the floating point functions accept values in the range 0.0 - 1.0.</db:para>
       </db:section>
       <db:section>
          <db:title>Alpha-Blended Drawing</db:title>
-         <db:para><db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> also support alpha-blended outlining and filling. The alpha channel of a color specifies the transparency effect, 0 represents a fully transparent color, while 255 represents a fully opaque color. For example:</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> also support alpha-blended outlining and filling. The alpha channel of a color specifies the transparency effect, 0 represents a fully transparent color, while 255 represents a fully opaque color. For example:</db:para>
          <db:programlisting>// Specify semi-transparent red painter.setBrush(QColor(255,0,0,127)); painter.drawRect(0,0, width()/2, height()); // Specify semi-transparent blue painter.setBrush(QColor(0,0,255,127)); painter.drawRect(0,0, width(), height()/2);</db:programlisting>
          <db:para>The code above produces the following output:</db:para>
          <db:informalfigure>
@@ -873,8 +876,10 @@
             </db:mediaobject>
          </db:informalfigure>
          <db:para>Additionally, the <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color0</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color1</db:link></db:code> and <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::transparent</db:link></db:code> colors are used for special purposes.</db:para>
-         <db:para><db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color0</db:link></db:code> (zero pixel value) and <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color1</db:link></db:code> (non-zero pixel value) are special colors for drawing in QBitmaps. Painting with <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color0</db:link></db:code> sets the bitmap bits to 0 (transparent; i.e., background), and painting with <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color1</db:link></db:code> sets the bits to 1 (opaque; i.e., foreground).</db:para>
-         <db:para><db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::transparent</db:link></db:code> is used to indicate a transparent pixel. When painting with this value, a pixel value will be used that is appropriate for the underlying pixel format in use.</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color0</db:link></db:code> (zero pixel value) and <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color1</db:link></db:code> (non-zero pixel value) are special colors for drawing in QBitmaps. Painting with <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color0</db:link></db:code> sets the bitmap bits to 0 (transparent; i.e., background), and painting with <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::color1</db:link></db:code> sets the bits to 1 (opaque; i.e., foreground).</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::transparent</db:link></db:code> is used to indicate a transparent pixel. When painting with this value, a pixel value will be used that is appropriate for the underlying pixel format in use.</db:para>
       </db:section>
       <db:section>
          <db:title>The HSV Color Model</db:title>
@@ -945,9 +950,15 @@
       <db:section>
          <db:title>See Also</db:title>
          <db:simplelist>
-            <db:member><db:code><db:link xlink:href="qpalette.html">QPalette</db:link></db:code></db:member>
-            <db:member><db:code><db:link xlink:href="qbrush.html">QBrush</db:link></db:code></db:member>
-            <db:member><db:code><db:link xlink:href="qtwidgets/qapplication.html#setColorSpec">QApplication::setColorSpec</db:link>()</db:code></db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qpalette.html">QPalette</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qbrush.html">QBrush</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qtwidgets/qapplication.html#setColorSpec">QApplication::setColorSpec</db:link>()</db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>
@@ -955,7 +966,7 @@
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="NameFormat-enum">
          <db:title>enum QColor::​NameFormat</db:title>
-         <db:para>How to format the output of the &lt;db:code&gt;<db:link xlink:href="qcolor.html#name">name</db:link>()&lt;/db:code&gt; function</db:para>
+         <db:para>How to format the output of the <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code> function</db:para>
          <db:informaltable>
             <db:tbody>
                <db:tr>
@@ -1004,7 +1015,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#name">name</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1086,8 +1099,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#spec">spec</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#spec">spec</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1101,7 +1118,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1112,8 +1131,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1123,34 +1146,50 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="QColor-4">
          <db:title>QColor::​QColor(const QString &amp; name)</db:title>
-         <db:para>Constructs a named color in the same way as &lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt; using the given <db:emphasis>name</db:emphasis>.</db:para>
+         <db:para>Constructs a named color in the same way as <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code> using the given <db:emphasis>name</db:emphasis>.</db:para>
          <db:para>The color is left invalid if the <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#name">name</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="QColor-5">
          <db:title>QColor::​QColor(const char * name)</db:title>
-         <db:para>Constructs a named color in the same way as &lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt; using the given <db:emphasis>name</db:emphasis>.</db:para>
+         <db:para>Constructs a named color in the same way as <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code> using the given <db:emphasis>name</db:emphasis>.</db:para>
          <db:para>The color is left invalid if the <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#name">name</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1160,7 +1199,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1171,7 +1212,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#predefined-colors">Predefined Colors</db:link>
                </db:member>
@@ -1184,8 +1227,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setAlpha">setAlpha</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setAlpha">setAlpha</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>
                </db:member>
@@ -1198,8 +1245,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setAlphaF">setAlphaF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setAlphaF">setAlphaF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>
                </db:member>
@@ -1212,8 +1263,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blackF">blackF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blackF">blackF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1226,8 +1281,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#black">black</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#black">black</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1240,9 +1299,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setBlue">setBlue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blueF">blueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setBlue">setBlue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1252,15 +1317,21 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setBlueF">setBlueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blue">blue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setBlueF">setBlueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="colorNames">
          <db:title>[static] QStringList QColor::​colorNames()</db:title>
-         <db:para>Returns a &lt;db:code&gt;<db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link>&lt;/db:code&gt; containing the color names Qt knows about.</db:para>
+         <db:para>Returns a <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> containing the color names Qt knows about.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
@@ -1276,11 +1347,21 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#spec">spec</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#spec">spec</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1290,8 +1371,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1304,8 +1389,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#cyan">cyan</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1315,27 +1404,37 @@
       <db:section xml:id="darker">
          <db:title>QColor QColor::​darker(int factor = 200) const</db:title>
          <db:para>Returns a darker (or lighter) color, but does not change this object.</db:para>
-         <db:para>If the <db:emphasis>factor</db:emphasis> is greater than 100, this functions returns a darker color. Setting <db:emphasis>factor</db:emphasis> to 300 returns a color that has one-third the brightness. If the <db:emphasis>factor</db:emphasis> is less than 100, the return color is lighter, but we recommend using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#lighter">lighter</db:link>()&lt;/db:code&gt; function for this purpose. If the <db:emphasis>factor</db:emphasis> is 0 or negative, the return value is unspecified.</db:para>
+         <db:para>If the <db:emphasis>factor</db:emphasis> is greater than 100, this functions returns a darker color. Setting <db:emphasis>factor</db:emphasis> to 300 returns a color that has one-third the brightness. If the <db:emphasis>factor</db:emphasis> is less than 100, the return color is lighter, but we recommend using the <db:code><db:link xlink:href="qcolor.html#lighter">lighter</db:link>()</db:code> function for this purpose. If the <db:emphasis>factor</db:emphasis> is 0 or negative, the return value is unspecified.</db:para>
          <db:para>The function converts the current RGB color to HSV, divides the value (V) component by <db:emphasis>factor</db:emphasis> and converts the color back to RGB.</db:para>
          <db:para>This function was introduced in Qt 4.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#lighter">lighter</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#lighter">lighter</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="fromCmyk">
          <db:title>[static] QColor QColor::​fromCmyk(int c, int m, int y, int k, int a = 255)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the given CMYK color values: <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given CMYK color values: <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromCmykF">fromCmykF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromCmykF">fromCmykF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1345,14 +1444,20 @@
       <db:section xml:id="fromCmykF">
          <db:title>[static] QColor QColor::​fromCmykF(qreal c, qreal m, qreal y, qreal k, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the given CMYK color values: <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given CMYK color values: <db:emphasis>c</db:emphasis> (cyan), <db:emphasis>m</db:emphasis> (magenta), <db:emphasis>y</db:emphasis> (yellow), <db:emphasis>k</db:emphasis> (black), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1361,43 +1466,61 @@
       </db:section>
       <db:section xml:id="fromHsl">
          <db:title>[static] QColor QColor::​fromHsl(int h, int s, int l, int a = 255)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>l</db:emphasis> (lightness), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>l</db:emphasis> (lightness), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>The value of <db:emphasis>s</db:emphasis>, <db:emphasis>l</db:emphasis>, and <db:emphasis>a</db:emphasis> must all be in the range 0-255; the value of <db:emphasis>h</db:emphasis> must be in the range 0-359.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromHslF">fromHslF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromHslF">fromHslF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="fromHslF">
          <db:title>[static] QColor QColor::​fromHslF(qreal h, qreal s, qreal l, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>l</db:emphasis> (lightness), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>l</db:emphasis> (lightness), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="fromHsv">
          <db:title>[static] QColor QColor::​fromHsv(int h, int s, int v, int a = 255)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>v</db:emphasis> (value), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>v</db:emphasis> (value), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>The value of <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis> must all be in the range 0-255; the value of <db:emphasis>h</db:emphasis> must be in the range 0-359.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromHsvF">fromHsvF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromHsvF">fromHsvF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1407,14 +1530,20 @@
       <db:section xml:id="fromHsvF">
          <db:title>[static] QColor QColor::​fromHsvF(qreal h, qreal s, qreal v, qreal a = 1.0)</db:title>
          <db:para>This is an overloaded function.</db:para>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>v</db:emphasis> (value), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the HSV color values, <db:emphasis>h</db:emphasis> (hue), <db:emphasis>s</db:emphasis> (saturation), <db:emphasis>v</db:emphasis> (value), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1423,64 +1552,90 @@
       </db:section>
       <db:section xml:id="fromRgb">
          <db:title>[static] QColor QColor::​fromRgb(QRgb rgb)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the given &lt;db:code&gt;<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link>&lt;/db:code&gt; value <db:emphasis>rgb</db:emphasis>.</db:para>
-         <db:para>The alpha component of <db:emphasis>rgb</db:emphasis> is ignored (i.e. it is automatically set to 255), use the &lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()&lt;/db:code&gt; function to include the alpha-channel specified by the given &lt;db:code&gt;<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link>&lt;/db:code&gt; value.</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value <db:emphasis>rgb</db:emphasis>.</db:para>
+         <db:para>The alpha component of <db:emphasis>rgb</db:emphasis> is ignored (i.e. it is automatically set to 255), use the <db:code><db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()</db:code> function to include the alpha-channel specified by the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgbF">fromRgbF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgbF">fromRgbF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="fromRgb-2">
          <db:title>[static] QColor QColor::​fromRgb(int r, int g, int b, int a = 255)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the RGB color values, <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the RGB color values, <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgbF">fromRgbF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgbF">fromRgbF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="fromRgbF">
          <db:title>[static] QColor QColor::​fromRgbF(qreal r, qreal g, qreal b, qreal a = 1.0)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the RGB color values, <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the RGB color values, <db:emphasis>r</db:emphasis> (red), <db:emphasis>g</db:emphasis> (green), <db:emphasis>b</db:emphasis> (blue), and <db:emphasis>a</db:emphasis> (alpha-channel, i.e. transparency).</db:para>
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="fromRgba">
          <db:title>[static] QColor QColor::​fromRgba(QRgb rgba)</db:title>
-         <db:para>Static convenience function that returns a &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; constructed from the given &lt;db:code&gt;<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link>&lt;/db:code&gt; value <db:emphasis>rgba</db:emphasis>.</db:para>
-         <db:para>Unlike the &lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()&lt;/db:code&gt; function, the alpha-channel specified by the given &lt;db:code&gt;<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link>&lt;/db:code&gt; value is included.</db:para>
+         <db:para>Static convenience function that returns a <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> constructed from the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value <db:emphasis>rgba</db:emphasis>.</db:para>
+         <db:para>Unlike the <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code> function, the alpha-channel specified by the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value is included.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="getCmyk">
          <db:title>void QColor::​getCmyk(int * c, int * m, int * y, int * k, int * a = 0)</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>c</db:emphasis>, <db:emphasis>m</db:emphasis>, <db:emphasis>y</db:emphasis>, <db:emphasis>k</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color's CMYK value.</db:para>
-         <db:para>These components can be retrieved individually using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#cyan">cyan</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#magenta">magenta</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#yellow">yellow</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#black">black</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#magenta">magenta</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#yellow">yellow</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#black">black</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1490,11 +1645,13 @@
       <db:section xml:id="getCmykF">
          <db:title>void QColor::​getCmykF(qreal * c, qreal * m, qreal * y, qreal * k, qreal * a = 0)</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>c</db:emphasis>, <db:emphasis>m</db:emphasis>, <db:emphasis>y</db:emphasis>, <db:emphasis>k</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the cyan, magenta, yellow, black, and alpha-channel (transparency) components of the color's CMYK value.</db:para>
-         <db:para>These components can be retrieved individually using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#blackF">blackF</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blackF">blackF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1504,35 +1661,41 @@
       <db:section xml:id="getHsl">
          <db:title>void QColor::​getHsl(int * h, int * s, int * l, int * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>l</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, lightness, and alpha-channel (transparency) components of the color's HSL value.</db:para>
-         <db:para>These components can be retrieved individually using the hueHsl(), saturationHsl(), &lt;db:code&gt;<db:link xlink:href="qcolor.html#lightness">lightness</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the hueHsl(), saturationHsl(), <db:code><db:link xlink:href="qcolor.html#lightness">lightness</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="getHslF">
          <db:title>void QColor::​getHslF(qreal * h, qreal * s, qreal * l, qreal * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>l</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, lightness, and alpha-channel (transparency) components of the color's HSL value.</db:para>
-         <db:para>These components can be retrieved individually using the hueHslF(), saturationHslF(), &lt;db:code&gt;<db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the hueHslF(), saturationHslF(), <db:code><db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="getHsv">
          <db:title>void QColor::​getHsv(int * h, int * s, int * v, int * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, value, and alpha-channel (transparency) components of the color's HSV value.</db:para>
-         <db:para>These components can be retrieved individually using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#hue">hue</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#saturation">saturation</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#value">value</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1542,11 +1705,13 @@
       <db:section xml:id="getHsvF">
          <db:title>void QColor::​getHsvF(qreal * h, qreal * s, qreal * v, qreal * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>h</db:emphasis>, <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the hue, saturation, value, and alpha-channel (transparency) components of the color's HSV value.</db:para>
-         <db:para>These components can be retrieved individually using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#hueF">hueF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#valueF">valueF</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#valueF">valueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1556,24 +1721,32 @@
       <db:section xml:id="getRgb">
          <db:title>void QColor::​getRgb(int * r, int * g, int * b, int * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the red, green, blue, and alpha-channel (transparency) components of the color's RGB value.</db:para>
-         <db:para>These components can be retrieved individually using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#red">red</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#green">green</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#blue">blue</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">rgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="getRgbF">
          <db:title>void QColor::​getRgbF(qreal * r, qreal * g, qreal * b, qreal * a = 0) const</db:title>
          <db:para>Sets the contents pointed to by <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>, and <db:emphasis>a</db:emphasis>, to the red, green, blue, and alpha-channel (transparency) components of the color's RGB value.</db:para>
-         <db:para>These components can be retrieved individually using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#redF">redF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#greenF">greenF</db:link>()&lt;/db:code&gt;, &lt;db:code&gt;<db:link xlink:href="qcolor.html#blueF">blueF</db:link>()&lt;/db:code&gt; and &lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt; functions.</db:para>
+         <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">rgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1583,9 +1756,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setGreen">setGreen</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#greenF">greenF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setGreen">setGreen</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1595,9 +1774,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setGreenF">setGreenF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#green">green</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setGreenF">setGreenF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1608,8 +1793,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1620,8 +1809,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hue">hue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1632,8 +1825,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1647,8 +1844,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1658,8 +1859,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hueF">hueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1672,8 +1877,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hue">hue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1686,8 +1895,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1700,8 +1913,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#saturation">saturation</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1715,9 +1932,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hsvHue">hsvHue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hueF">hueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hsvHue">hsvHue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1731,9 +1954,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hsvHueF">hsvHueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hue">hue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hsvHueF">hsvHueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1746,27 +1975,33 @@
       </db:section>
       <db:section xml:id="isValidColor">
          <db:title>[static] bool QColor::​isValidColor(const QString &amp; name)</db:title>
-         <db:para>Returns <db:code>true</db:code> if the <db:emphasis>name</db:emphasis> is a valid color name and can be used to construct a valid &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; object, otherwise returns false.</db:para>
-         <db:para>It uses the same algorithm used in &lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt;.</db:para>
+         <db:para>Returns <db:code>true</db:code> if the <db:emphasis>name</db:emphasis> is a valid color name and can be used to construct a valid <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> object, otherwise returns false.</db:para>
+         <db:para>It uses the same algorithm used in <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>.</db:para>
          <db:para>This function was introduced in Qt 4.7.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="lighter">
          <db:title>QColor QColor::​lighter(int factor = 150) const</db:title>
          <db:para>Returns a lighter (or darker) color, but does not change this object.</db:para>
-         <db:para>If the <db:emphasis>factor</db:emphasis> is greater than 100, this functions returns a lighter color. Setting <db:emphasis>factor</db:emphasis> to 150 returns a color that is 50% brighter. If the <db:emphasis>factor</db:emphasis> is less than 100, the return color is darker, but we recommend using the &lt;db:code&gt;<db:link xlink:href="qcolor.html#darker">darker</db:link>()&lt;/db:code&gt; function for this purpose. If the <db:emphasis>factor</db:emphasis> is 0 or negative, the return value is unspecified.</db:para>
+         <db:para>If the <db:emphasis>factor</db:emphasis> is greater than 100, this functions returns a lighter color. Setting <db:emphasis>factor</db:emphasis> to 150 returns a color that is 50% brighter. If the <db:emphasis>factor</db:emphasis> is less than 100, the return color is darker, but we recommend using the <db:code><db:link xlink:href="qcolor.html#darker">darker</db:link>()</db:code> function for this purpose. If the <db:emphasis>factor</db:emphasis> is 0 or negative, the return value is unspecified.</db:para>
          <db:para>The function converts the current RGB color to HSV, multiplies the value (V) component by <db:emphasis>factor</db:emphasis> and converts the color back to RGB.</db:para>
          <db:para>This function was introduced in Qt 4.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#darker">darker</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#darker">darker</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1777,8 +2012,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1789,8 +2028,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#value">value</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1800,8 +2043,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1814,8 +2061,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#magenta">magenta</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#magenta">magenta</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -1828,7 +2079,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1839,7 +2092,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#NameFormat-enum">NameFormat</db:link>
                </db:member>
@@ -1852,9 +2107,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRed">setRed</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#redF">redF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRed">setRed</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1864,9 +2125,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRedF">setRedF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#red">red</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRedF">setRedF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1876,9 +2143,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgba">rgba</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgba">rgba</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1889,8 +2162,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">rgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1901,9 +2178,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hsvSaturation">hsvSaturation</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hsvSaturation">hsvSaturation</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1917,9 +2200,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#hsvSaturationF">hsvSaturationF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#saturation">saturation</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#hsvSaturationF">hsvSaturationF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -1932,8 +2221,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>
                </db:member>
@@ -1946,8 +2239,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">alpha</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link>
                </db:member>
@@ -1960,9 +2257,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blue">blue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blueF">blueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1972,9 +2275,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blueF">blueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blue">blue</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1985,8 +2294,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -2001,8 +2314,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -2015,9 +2332,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#green">green</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#greenF">greenF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2027,9 +2350,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#greenF">greenF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#green">green</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2041,8 +2370,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHslF">setHslF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHslF">setHslF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2054,8 +2387,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2066,8 +2403,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsvF">setHsvF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsvF">setHsvF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -2081,8 +2422,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -2091,7 +2436,7 @@
       </db:section>
       <db:section xml:id="setNamedColor">
          <db:title>void QColor::​setNamedColor(const QString &amp; name)</db:title>
-         <db:para>Sets the RGB value of this &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; to <db:emphasis>name</db:emphasis>, which may be in one of these formats:</db:para>
+         <db:para>Sets the RGB value of this <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> to <db:emphasis>name</db:emphasis>, which may be in one of these formats:</db:para>
          <db:itemizedlist>
             <db:listitem>
                <db:para>#RGB (each of R, G, and B is a single hex digit)</db:para>
@@ -2109,7 +2454,7 @@
                <db:para>#RRRRGGGGBBBB</db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>A name from the list of colors defined in the list of <db:link xlink:href="http://www.w3.org/TR/SVG/types.html#ColorKeywords">SVG color keyword names</db:link> provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are <db:emphasis>not</db:emphasis> the same as defined by the &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::GlobalColor</db:link>&lt;/db:code&gt; enums, e.g. "green" and &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::green</db:link>&lt;/db:code&gt; does not refer to the same color.</db:para>
+               <db:para>A name from the list of colors defined in the list of <db:link xlink:href="http://www.w3.org/TR/SVG/types.html#ColorKeywords">SVG color keyword names</db:link> provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are <db:emphasis>not</db:emphasis> the same as defined by the <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::GlobalColor</db:link></db:code> enums, e.g. "green" and <db:code><db:link xlink:href="qtcore/qt.html#GlobalColor-enum">Qt::green</db:link></db:code> does not refer to the same color.</db:para>
             </db:listitem>
             <db:listitem>
                <db:para>
@@ -2120,9 +2465,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#QColor">QColor</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#name">name</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#QColor">QColor</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2132,9 +2483,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#red">red</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#redF">redF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2144,9 +2501,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#redF">redF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#red">red</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2157,9 +2520,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">rgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgb">getRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgbF">setRgbF</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2175,9 +2544,15 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">rgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getRgbF">getRgbF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2187,8 +2562,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgba">rgba</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">rgb</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgba">rgba</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2201,19 +2580,27 @@
                <db:member>
                   <db:link xlink:href="qcolor.html#Spec-enum">Spec</db:link>
                </db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="toCmyk">
          <db:title>QColor QColor::​toCmyk() const</db:title>
-         <db:para>Creates and returns a CMYK &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; based on this color.</db:para>
+         <db:para>Creates and returns a CMYK <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -2222,25 +2609,37 @@
       </db:section>
       <db:section xml:id="toHsl">
          <db:title>QColor QColor::​toHsl() const</db:title>
-         <db:para>Creates and returns an HSL &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; based on this color.</db:para>
+         <db:para>Creates and returns an HSL <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="toHsv">
          <db:title>QColor QColor::​toHsv() const</db:title>
-         <db:para>Creates and returns an HSV &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; based on this color.</db:para>
+         <db:para>Creates and returns an HSV <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -2249,13 +2648,19 @@
       </db:section>
       <db:section xml:id="toRgb">
          <db:title>QColor QColor::​toRgb() const</db:title>
-         <db:para>Create and returns an RGB &lt;db:code&gt;<db:link xlink:href="qcolor.html">QColor</db:link>&lt;/db:code&gt; based on this color.</db:para>
+         <db:para>Create and returns an RGB <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#isValid">isValid</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#convertTo">convertTo</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2265,8 +2670,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#valueF">valueF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#valueF">valueF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -2279,8 +2688,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#value">value</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-hsv-color-model">The HSV Color Model</db:link>
                </db:member>
@@ -2293,8 +2706,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -2307,8 +2724,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#yellow">yellow</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#yellow">yellow</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qcolor.html#the-cmyk-color-model">The CMYK Color Model</db:link>
                </db:member>
@@ -2317,7 +2738,8 @@
       </db:section>
       <db:section xml:id="operator-QVariant">
          <db:title>QColor::​operator QVariant() const</db:title>
-         <db:para>Returns the color as a &lt;db:code&gt;<db:link xlink:href="qtcore/qvariant.html">QVariant</db:link>&lt;/db:code&gt;</db:para>
+         <db:para>Returns the color as a <db:code><db:link xlink:href="qtcore/qvariant.html">QVariant</db:link></db:code>
+         </db:para>
       </db:section>
       <db:section xml:id="operator-not-eq">
          <db:title>bool QColor::​operator!=(const QColor &amp; color) const</db:title>
@@ -2346,8 +2768,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgb">QColor::rgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#rgba">QColor::rgba</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgb">QColor::rgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#rgba">QColor::rgba</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2357,8 +2783,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#alpha">QColor::alpha</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#alpha">QColor::alpha</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2368,8 +2798,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#blue">QColor::blue</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#blue">QColor::blue</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2390,8 +2824,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#green">QColor::green</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#green">QColor::green</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2402,7 +2840,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qUnpremultiply">qUnpremultiply</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qUnpremultiply">qUnpremultiply</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2412,8 +2852,12 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#red">QColor::red</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#red">QColor::red</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2423,10 +2867,18 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRgba">qRgba</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRed">qRed</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRgba">qRgba</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRed">qRed</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2436,10 +2888,18 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qRed">qRed</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()&lt;/db:code&gt;</db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qRed">qRed</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qGreen">qGreen</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qBlue">qBlue</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -2450,7 +2910,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qcolor.html#qPremultiply">qPremultiply</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcolor.html#qPremultiply">qPremultiply</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>

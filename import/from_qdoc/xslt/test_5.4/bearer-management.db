@@ -42,7 +42,8 @@
                                     main purpose is to act as a configuration identifier through
                                     which link layer connections can be created, destroyed and
                                     monitored.</db:para>
-         <db:para><db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
+         <db:para>
+            <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
                                     provides two types of use cases. It enables the monitoring of
                                     physical network interfaces and management of network sessions.
                                     Network sessions are a common feature on mobile devices where
@@ -67,58 +68,86 @@
             <db:tbody>
                <db:tr>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#stop">QNetworkSession::stop</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#stop">QNetworkSession::stop</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#open">QNetworkSession::open</db:link>()</db:code></db:para>
-                  </db:td>
-               </db:tr>
-               <db:tr>
-                  <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#interface">QNetworkSession::interface</db:link>()</db:code></db:para>
-                  </db:td>
-                  <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#close">QNetworkSession::close</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#open">QNetworkSession::open</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#state">QNetworkSession::state</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#interface">QNetworkSession::interface</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#isOpen">QNetworkSession::isOpen</db:link>()</db:code></db:para>
-                  </db:td>
-               </db:tr>
-               <db:tr>
-                  <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#bytesWritten">QNetworkSession::bytesWritten</db:link>()</db:code></db:para>
-                  </db:td>
-                  <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#migrate">QNetworkSession::migrate</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#close">QNetworkSession::close</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#bytesReceived">QNetworkSession::bytesReceived</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#state">QNetworkSession::state</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#ignore">QNetworkSession::ignore</db:link>()</db:code></db:para>
-                  </db:td>
-               </db:tr>
-               <db:tr>
-                  <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#activeTime">QNetworkSession::activeTime</db:link>()</db:code></db:para>
-                  </db:td>
-                  <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#accept">QNetworkSession::accept</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#isOpen">QNetworkSession::isOpen</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#stateChanged">QNetworkSession::stateChanged</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#bytesWritten">QNetworkSession::bytesWritten</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#reject">QNetworkSession::reject</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#migrate">QNetworkSession::migrate</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#bytesReceived">QNetworkSession::bytesReceived</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#ignore">QNetworkSession::ignore</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#activeTime">QNetworkSession::activeTime</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#accept">QNetworkSession::accept</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#stateChanged">QNetworkSession::stateChanged</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#reject">QNetworkSession::reject</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -126,7 +155,9 @@
                      <db:para/>
                   </db:td>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#opened">QNetworkSession::opened</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#opened">QNetworkSession::opened</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -134,7 +165,9 @@
                      <db:para/>
                   </db:td>
                   <db:td>
-                     <db:para><db:code><db:link xlink:href="qnetworksession.html#closed">QNetworkSession::closed</db:link>()</db:code></db:para>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#closed">QNetworkSession::closed</db:link>()</db:code>
+                     </db:para>
                   </db:td>
                </db:tr>
             </db:tbody>
@@ -273,7 +306,8 @@
                                     any interruption. Forced roaming has the advantage that
                                     applications don't have to manage the entire roaming process by
                                     themselves.</db:para>
-            <db:para><db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
+            <db:para>
+               <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
                                     is the central class for managing roaming related
                                     issues.</db:para>
          </db:section>

@@ -291,7 +291,8 @@
       <db:title>Detailed Description</db:title>
       <db:para>The <db:code><db:link xlink:href="qpair.html">QPair</db:link></db:code> class is a
                                     template class that stores a pair of items.</db:para>
-      <db:para><db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1, T2&gt;</db:code> can
+      <db:para>
+         <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1, T2&gt;</db:code> can
                                     be used in your application if the STL
                                         <db:code>pair</db:code> type is not available. It stores
                                     one value of type T1 and one value of type T2. It can be used as
@@ -306,7 +307,8 @@
                                         <db:link xlink:href="qpair.html#second-var">second</db:link>. For
                                     example:</db:para>
       <db:programlisting>pair.first ="pi"; pair.second =3.14159265358979323846;</db:programlisting>
-      <db:para><db:code><db:link xlink:href="qpair.html">QPair</db:link></db:code>'s template data
+      <db:para>
+         <db:code><db:link xlink:href="qpair.html">QPair</db:link></db:code>'s template data
                                     types (T1 and T2) must be <db:link xlink:href="containers.html#assignable-data-types">assignable data
                                         types</db:link>. You cannot, for example, store a <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> as a value;
                                     instead, store a <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> *. A few functions have additional
@@ -366,7 +368,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -382,7 +386,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -397,7 +403,9 @@
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -410,12 +418,12 @@
       <db:title>Related Non-Members</db:title>
       <db:section>
          <db:title>QPair &lt;T1 , T2 &gt; qMakePair(const T1 &amp; value1, const T2 &amp; value2)</db:title>
-         <db:para>Returns a &lt;db:code&gt;<db:link xlink:href="qpair.html">QPair</db:link>&lt;T1,
-                                    T2&gt;&lt;/db:code&gt; that contains <db:emphasis>value1</db:emphasis> and
+         <db:para>Returns a <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1,
+                                    T2&gt;</db:code> that contains <db:emphasis>value1</db:emphasis> and
                                         <db:emphasis>value2</db:emphasis>. Example:</db:para>
          <db:programlisting>QList&lt;QPair&lt;int,double&gt;&gt; list;
                                         list.append(qMakePair(66,3.14159));</db:programlisting>
-         <db:para>This is equivalent to &lt;db:code&gt;<db:link xlink:href="qpair.html">QPair</db:link>&lt;T1, T2&gt;&lt;/db:code&gt;(<db:emphasis>value1</db:emphasis>,
+         <db:para>This is equivalent to <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1, T2&gt;</db:code>(<db:emphasis>value1</db:emphasis>,
                                         <db:emphasis>value2</db:emphasis>), but usually requires less
                                     typing.</db:para>
       </db:section>

@@ -174,7 +174,7 @@
       <db:para>A <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code>
                                     instance can be created from a QML file. For example, if there
                                     is a <db:code>main.qml</db:code> file like this:</db:para>
-      <db:programlisting>import QtQuick 2.0 Item { width: 200height: 200 }</db:programlisting>
+      <db:programlisting language="qml">import QtQuick 2.0 Item { width: 200height: 200 }</db:programlisting>
       <db:para>The following code loads this QML file as a component,
                                     creates an instance of this component using <db:code><db:link xlink:href="qqmlcomponent.html#create">create</db:link>()</db:code>, and then
                                     queries the <db:link xlink:href="qtquick/qml-qtquick-item.html">Item</db:link>'s <db:link xlink:href="qtquick/qml-qtquick-item.html#width-prop">width</db:link> value:</db:para>
@@ -483,8 +483,10 @@
                                     <db:emphasis>engine</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -497,8 +499,10 @@
                                     compiled asynchronously.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -512,8 +516,10 @@
                                     local filesystem.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -528,8 +534,10 @@
                                     local filesystem.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -572,9 +580,13 @@
                                     to the caller.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlcomponent.html#completeCreate">completeCreate</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#ObjectOwnership-enum">QQmlEngine::ObjectOwnership</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlcomponent.html#completeCreate">completeCreate</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#ObjectOwnership-enum">QQmlEngine::ObjectOwnership</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -588,8 +600,10 @@
                                     afterwards.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlcomponent.html#beginCreate">beginCreate</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlcomponent.html#beginCreate">beginCreate</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -609,8 +623,10 @@
                                     details.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#ObjectOwnership-enum">QQmlEngine::ObjectOwnership</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#ObjectOwnership-enum">QQmlEngine::ObjectOwnership</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -635,8 +651,10 @@
                                     the <db:emphasis>incubator</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlincubator.html">QQmlIncubator</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlincubator.html">QQmlIncubator</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>

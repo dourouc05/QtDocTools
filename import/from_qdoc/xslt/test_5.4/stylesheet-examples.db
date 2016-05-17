@@ -8,6 +8,7 @@
                                     Style Sheets.</db:para>
    <db:section xml:id="style-sheet-usage">
       <db:title>Style Sheet Usage</db:title>
+      <db:para/>
       <db:section>
          <db:title>Customizing the Foreground and Background Colors</db:title>
          <db:para>Let's start by setting yellow as the background color of all
@@ -199,7 +200,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="qtwidgets-widgets-stylesheet-example.html">Style Sheet
                                     Example</db:link>
@@ -207,7 +208,9 @@
             <db:member>
                <db:link xlink:href="qtgui/richtext-html-subset.html">Supported HTML Subset</db:link>
             </db:member>
-            <db:member><db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code></db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>
@@ -347,7 +350,8 @@
       </db:section>
       <db:section>
          <db:title>Customizing QHeaderView</db:title>
-         <db:para><db:code><db:link xlink:href="qheaderview.html">QHeaderView</db:link></db:code> is
+         <db:para>
+            <db:code><db:link xlink:href="qheaderview.html">QHeaderView</db:link></db:code> is
                                     customized as follows:</db:para>
          <db:programlisting>QHeaderView::section { background-color:
                                         qlineargradient(x1:0,
@@ -459,7 +463,8 @@
       </db:section>
       <db:section>
          <db:title>Customizing QMenuBar</db:title>
-         <db:para><db:code><db:link xlink:href="qmenubar.html">QMenuBar</db:link></db:code> is styled as
+         <db:para>
+            <db:code><db:link xlink:href="qmenubar.html">QMenuBar</db:link></db:code> is styled as
                                     follows:</db:para>
          <db:programlisting>QMenuBar {
                                         background-color:
@@ -647,7 +652,8 @@
       </db:section>
       <db:section>
          <db:title>Customizing QSizeGrip</db:title>
-         <db:para><db:code><db:link xlink:href="qsizegrip.html">QSizeGrip</db:link></db:code> is usually
+         <db:para>
+            <db:code><db:link xlink:href="qsizegrip.html">QSizeGrip</db:link></db:code> is usually
                                     styled by just setting an image.</db:para>
          <db:programlisting>QSizeGrip {
                                     image: url(:/images/sizegrip.png); width: 16px; height: 16px; }</db:programlisting>
@@ -679,7 +685,8 @@
       </db:section>
       <db:section>
          <db:title>Customizing QSpinBox</db:title>
-         <db:para><db:code><db:link xlink:href="qspinbox.html">QSpinBox</db:link></db:code> can be
+         <db:para>
+            <db:code><db:link xlink:href="qspinbox.html">QSpinBox</db:link></db:code> can be
                                     completely customized as below (the style sheet has commentary
                                     inline):</db:para>
          <db:programlisting>QSpinBox {
@@ -931,7 +938,8 @@
       </db:section>
       <db:section>
          <db:title>Customizing QToolTip</db:title>
-         <db:para><db:code><db:link xlink:href="qtooltip.html">QToolTip</db:link></db:code> is customized
+         <db:para>
+            <db:code><db:link xlink:href="qtooltip.html">QToolTip</db:link></db:code> is customized
                                     exactly like a <db:code><db:link xlink:href="qlabel.html">QLabel</db:link></db:code>. In
                                     addition, for platforms that support it, the opacity property
                                     may be set to adjust the opacity.</db:para>
@@ -1061,7 +1069,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="qtwidgets-widgets-stylesheet-example.html">Style Sheet
                                     Example</db:link>
@@ -1069,7 +1077,9 @@
             <db:member>
                <db:link xlink:href="qtgui/richtext-html-subset.html">Supported HTML Subset</db:link>
             </db:member>
-            <db:member><db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code></db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>
@@ -1155,7 +1165,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member>
                <db:link xlink:href="qtwidgets-widgets-stylesheet-example.html">Style Sheet
                                     Example</db:link>
@@ -1163,7 +1173,9 @@
             <db:member>
                <db:link xlink:href="qtgui/richtext-html-subset.html">Supported HTML Subset</db:link>
             </db:member>
-            <db:member><db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code></db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>

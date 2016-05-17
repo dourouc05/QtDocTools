@@ -701,9 +701,13 @@
                                         1</db:link> version is called QDeclarativeEngine.</db:para>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
-            <db:member><db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code></db:member>
-            <db:member><db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code></db:member>
+         <db:simplelist>
+            <db:member>
+               <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>
@@ -866,10 +870,16 @@
                                     before any QML sources files are loaded.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#removeImageProvider">removeImageProvider</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qtquick/qquickimageprovider.html">QQuickImageProvider</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlimageproviderbase.html">QQmlImageProviderBase</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#removeImageProvider">removeImageProvider</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtquick/qquickimageprovider.html">QQuickImageProvider</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlimageproviderbase.html">QQmlImageProviderBase</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -889,8 +899,10 @@
                                         <db:code><db:link xlink:href="qqmlengine.html#importPathList">importPathList</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setImportPathList">setImportPathList</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setImportPathList">setImportPathList</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qtqml-modules-topic.html">QML
                                     Modules</db:link>
@@ -914,8 +926,10 @@
                                         <db:code><db:link xlink:href="qqmlengine.html#pluginPathList">pluginPathList</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setPluginPathList">setPluginPathList</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setPluginPathList">setPluginPathList</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -929,8 +943,10 @@
                                     returns the application's current working directory.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setBaseUrl">setBaseUrl</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setBaseUrl">setBaseUrl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -951,8 +967,10 @@
                                     be loaded before any new objects can be created.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#trimComponentCache">trimComponentCache</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#trimComponentCache">trimComponentCache</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -965,10 +983,16 @@
                                     automatically.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setContextForObject">setContextForObject</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlContext">qmlContext</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlEngine">qmlEngine</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setContextForObject">setContextForObject</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlContext">qmlContext</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlEngine">qmlEngine</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -984,8 +1008,10 @@
                                     0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qtquick/qquickimageprovider.html">QQuickImageProvider</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qtquick/qquickimageprovider.html">QQuickImageProvider</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1012,9 +1038,13 @@
                                     from <db:code><db:link xlink:href="qtcore/qlibraryinfo.html">QLibraryInfo</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#addImportPath">addImportPath</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setImportPathList">setImportPathList</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#addImportPath">addImportPath</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setImportPathList">setImportPathList</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1034,8 +1064,10 @@
                                     controller has been set.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setIncubationController">setIncubationController</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setIncubationController">setIncubationController</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1049,8 +1081,10 @@
                                     QNetworkAccessManager will have no proxy or cache set.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setNetworkAccessManagerFactory">setNetworkAccessManagerFactory</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setNetworkAccessManagerFactory">setNetworkAccessManagerFactory</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1059,8 +1093,10 @@
          <db:para>Returns the current <db:code><db:link xlink:href="qqmlnetworkaccessmanagerfactory.html">QQmlNetworkAccessManagerFactory</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setNetworkAccessManagerFactory">setNetworkAccessManagerFactory</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setNetworkAccessManagerFactory">setNetworkAccessManagerFactory</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1069,8 +1105,10 @@
          <db:para>Returns the ownership of <db:emphasis>object</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setObjectOwnership">setObjectOwnership</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setObjectOwnership">setObjectOwnership</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1082,8 +1120,10 @@
          <db:para>The default value is true.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setOutputWarningsToStandardError">setOutputWarningsToStandardError</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setOutputWarningsToStandardError">setOutputWarningsToStandardError</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1097,9 +1137,13 @@
                                         <db:code>qmldir</db:code> file itself.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#addPluginPath">addPluginPath</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#setPluginPathList">setPluginPathList</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#addPluginPath">addPluginPath</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#setPluginPathList">setPluginPathList</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1114,9 +1158,13 @@
                                     <db:emphasis>providerId</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#addImageProvider">addImageProvider</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qtquick/qquickimageprovider.html">QQuickImageProvider</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#addImageProvider">addImageProvider</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtquick/qquickimageprovider.html">QQuickImageProvider</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1136,8 +1184,10 @@
                                     <db:emphasis>url</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#baseUrl">baseUrl</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#baseUrl">baseUrl</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1152,8 +1202,10 @@
                                     automatically.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#contextForObject">contextForObject</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#contextForObject">contextForObject</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1169,9 +1221,13 @@
                                     from <db:code><db:link xlink:href="qtcore/qlibraryinfo.html">QLibraryInfo</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#importPathList">importPathList</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#addImportPath">addImportPath</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#importPathList">importPathList</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#addImportPath">addImportPath</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1182,8 +1238,10 @@
                                     take ownership of it.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#incubationController">incubationController</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#incubationController">incubationController</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1199,8 +1257,10 @@
                                     engine.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#networkAccessManagerFactory">networkAccessManagerFactory</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#networkAccessManagerFactory">networkAccessManagerFactory</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1210,8 +1270,10 @@
                                         <db:emphasis>object</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#objectOwnership">objectOwnership</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#objectOwnership">objectOwnership</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1228,8 +1290,10 @@
          <db:para>The default value is true.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#outputWarningsToStandardError">outputWarningsToStandardError</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#outputWarningsToStandardError">outputWarningsToStandardError</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1244,9 +1308,13 @@
                                         <db:code>qmldir</db:code> file itself.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#pluginPathList">pluginPathList</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#addPluginPath">addPluginPath</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#pluginPathList">pluginPathList</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#addPluginPath">addPluginPath</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1262,8 +1330,10 @@
                                     by any of those components.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#clearComponentCache">clearComponentCache</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#clearComponentCache">clearComponentCache</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1275,7 +1345,7 @@
    </db:section>
    <db:section>
       <db:title>Macro Documentation</db:title>
-      <db:section xml:id="QML_DECLARE_TYPE">
+      <db:section>
          <db:title>QML_DECLARE_TYPE()</db:title>
          <db:para>Equivalent to <db:code>Q_DECLARE_METATYPE(TYPE
                                         *)</db:code> and
@@ -1283,7 +1353,7 @@
          </db:para>
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this macro.</db:para>
       </db:section>
-      <db:section xml:id="QML_DECLARE_TYPEINFO">
+      <db:section>
          <db:title>QML_DECLARE_TYPEINFO( Type, Flags)</db:title>
          <db:para>Declares additional properties of the given
                                         <db:emphasis>Type</db:emphasis> as described by the specified
@@ -1296,7 +1366,7 @@
    </db:section>
    <db:section>
       <db:title>Related Non-Members</db:title>
-      <db:section xml:id="qmlAttachedPropertiesObject">
+      <db:section>
          <db:title>QObject * qmlAttachedPropertiesObject(const QObject * attachee, bool create = true)</db:title>
          <db:para>The form of this template function is:</db:para>
          <db:programlisting>template&lt;typename T&gt;QObject*qmlAttachedPropertiesObject(constQObject*attachee, bool create =true)</db:programlisting>
@@ -1312,7 +1382,7 @@
                                         <db:emphasis>attachee</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtqml-cppintegration-definetypes.html#providing-attached-objects-for-data-annotations">Providing Attached Objects for Data
                                     Annotations</db:link>
@@ -1320,7 +1390,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qmlClearTypeRegistrations">
+      <db:section>
          <db:title>void qmlClearTypeRegistrations()</db:title>
          <db:para>Clears all stored type registrations, such as those produced
                                     with <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType">qmlRegisterType</db:link>()</db:code>.</db:para>
@@ -1331,33 +1401,41 @@
                                     cached data relating to that engine.</db:para>
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this method.</db:para>
       </db:section>
-      <db:section xml:id="qmlContext">
+      <db:section>
          <db:title>QQmlContext * qmlContext(const QObject * object)</db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code> associated with
                                         <db:emphasis>object</db:emphasis>, if any. This is equivalent to
                                         <db:code><db:link xlink:href="qqmlengine.html#contextForObject">QQmlEngine::contextForObject</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#contextForObject">contextForObject</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlEngine">qmlEngine</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#contextForObject">contextForObject</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlEngine">qmlEngine</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qmlEngine">
+      <db:section>
          <db:title>QQmlEngine * qmlEngine(const QObject * object)</db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qqmlengine.html">QQmlEngine</db:link></db:code> associated with
                                     <db:emphasis>object</db:emphasis>, if any. This is equivalent to <db:code><db:link xlink:href="qqmlengine.html#contextForObject">QQmlEngine::contextForObject</db:link></db:code>-&gt;engine(),
                                     but more efficient.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#contextForObject">contextForObject</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlContext">qmlContext</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#contextForObject">contextForObject</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlContext">qmlContext</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qmlProtectModule">
+      <db:section>
          <db:title>bool qmlProtectModule(const char * uri, int majVersion)</db:title>
          <db:para>This function protects a module from having types registered
                                     into it. This can be used to prevent other plugins from
@@ -1382,7 +1460,7 @@
                                     false. The module must contain exported types in order to be
                                     found.</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterExtendedType">
+      <db:section>
          <db:title>int qmlRegisterExtendedType(const char * uri, int versionMajor, int versionMinor, const char * qmlName)</db:title>
          <db:para>This template function registers the C++ type and its
                                     extension object in the QML system with the name
@@ -1396,15 +1474,17 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType">qmlRegisterType</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType">qmlRegisterType</db:link>()</db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qtqml-cppintegration-definetypes.html#registering-extension-objects">Registering Extension Objects</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qmlRegisterExtendedUncreatableType">
+      <db:section>
          <db:title>int qmlRegisterExtendedUncreatableType(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const QString &amp; reason)</db:title>
          <db:para>This template function registers the C++ type and its
                                     extension in the QML system with the name
@@ -1422,19 +1502,21 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlRegisterUncreatableType">qmlRegisterUncreatableType</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterUncreatableType">qmlRegisterUncreatableType</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qmlRegisterInterface">
+      <db:section>
          <db:title>int qmlRegisterInterface(const char * typeName)</db:title>
          <db:para>This template function registers the C++ type in the QML
                                     system under the name <db:emphasis>typeName</db:emphasis>.</db:para>
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:para>Returns the QML type id.</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterRevision">
+      <db:section>
          <db:title>int qmlRegisterRevision(const char * uri, int versionMajor, int versionMinor)</db:title>
          <db:para>This template function registers the specified revision of a
                                     C++ type in the QML system with the library imported from
@@ -1450,7 +1532,7 @@
                                     a base class to use for the specified version of the type (see
                                         <db:link xlink:href="qtqml-cppintegration-definetypes.html#type-revisions-and-versions">Type Revisions and Versions</db:link>).</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterSingletonType">
+      <db:section>
          <db:title>int qmlRegisterSingletonType(const char * uri, int versionMajor, int versionMinor, const char * typeName, QJSValue(* )( QQmlEngine *, QJSEngine * ) callback)</db:title>
          <db:para>This function may be used to register a singleton type
                                     provider <db:emphasis>callback</db:emphasis> in a particular
@@ -1466,7 +1548,8 @@
                                     returns a <db:code><db:link xlink:href="qjsvalue.html">QJSValue</db:link></db:code> as a
                                     singleton type.</db:para>
          <db:para>
-            <db:emphasis role="bold">NOTE:</db:emphasis><db:code><db:link xlink:href="qjsvalue.html">QJSValue</db:link></db:code> singleton type
+            <db:emphasis role="bold">NOTE:</db:emphasis>
+            <db:code><db:link xlink:href="qjsvalue.html">QJSValue</db:link></db:code> singleton type
                                     properties will <db:emphasis role="bold">not</db:emphasis> trigger binding
                                     re-evaluation if changed.</db:para>
          <db:para>Usage:</db:para>
@@ -1485,7 +1568,7 @@
                                     Qt.example.qjsvalueApi 1.0 as ExampleApi Item { id: root
                                     property intsomeValue: ExampleApi.MyApi.someProperty }</db:programlisting>
       </db:section>
-      <db:section xml:id="qmlRegisterSingletonType-2">
+      <db:section>
          <db:title>int qmlRegisterSingletonType(const char * uri, int versionMajor, int versionMinor, const char * typeName, QObject *(* )( QQmlEngine *, QJSEngine * ) callback)</db:title>
          <db:para>This function may be used to register a singleton type
                                     provider <db:emphasis>callback</db:emphasis> in a particular
@@ -1561,7 +1644,7 @@
                                         Q_ASSERT(qmlEngine(this) ==0); } ...
                                     }</db:programlisting>
       </db:section>
-      <db:section xml:id="qmlRegisterSingletonType-3">
+      <db:section>
          <db:title>int qmlRegisterSingletonType(const QUrl &amp; url, const char * uri, int versionMajor, int versionMinor, const char * qmlName)</db:title>
          <db:para>This function may be used to register a singleton type with
                                     the name <db:emphasis>qmlName</db:emphasis>, in the library imported from
@@ -1599,7 +1682,7 @@
                                     qmldir file with a singleton keyword and the qmldir must be
                                     imported by the QML files using the singleton.</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterType">
+      <db:section>
          <db:title>int qmlRegisterType(const char * uri, int versionMajor, int versionMinor, const char * qmlName)</db:title>
          <db:para>This template function registers the C++ type in the QML
                                     system with the name <db:emphasis>qmlName</db:emphasis>, in the library
@@ -1633,7 +1716,7 @@
                                     written to previous versions to continue to work, even if more
                                     advanced versions of some of its types are available.</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterType-3">
+      <db:section>
          <db:title>int qmlRegisterType(const QUrl &amp; url, const char * uri, int versionMajor, int versionMinor, const char * qmlName)</db:title>
          <db:para>This function registers a type in the QML system with the
                                     name <db:emphasis>qmlName</db:emphasis>, in the library imported from
@@ -1650,7 +1733,7 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:para>Returns non-zero if the registration was sucessful.</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterType-4">
+      <db:section>
          <db:title>int qmlRegisterType()</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This template function registers the C++ type in the QML
@@ -1659,7 +1742,7 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:para>Returns the QML type id.</db:para>
       </db:section>
-      <db:section xml:id="qmlRegisterTypeNotAvailable">
+      <db:section>
          <db:title>int qmlRegisterTypeNotAvailable(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const QString &amp; message)</db:title>
          <db:para>This function registers a type in the QML system with the
                                     name <db:emphasis>qmlName</db:emphasis>, in the type namespace imported
@@ -1687,12 +1770,14 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlRegisterUncreatableType">qmlRegisterUncreatableType</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterUncreatableType">qmlRegisterUncreatableType</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qmlRegisterUncreatableType">
+      <db:section>
          <db:title>int qmlRegisterUncreatableType(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const QString &amp; message)</db:title>
          <db:para>This template function registers the C++ type in the QML
                                     system with the name <db:emphasis>qmlName</db:emphasis>, in the library
@@ -1708,8 +1793,10 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qqmlengine.html#qmlRegisterTypeNotAvailable">qmlRegisterTypeNotAvailable</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterTypeNotAvailable">qmlRegisterTypeNotAvailable</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>

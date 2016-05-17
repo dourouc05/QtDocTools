@@ -346,8 +346,10 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
-            <db:member><db:code><db:link xlink:href="qsensorreading.html">QSensorReading</db:link></db:code></db:member>
+         <db:simplelist>
+            <db:member>
+               <db:code><db:link xlink:href="qsensorreading.html">QSensorReading</db:link></db:code>
+            </db:member>
          </db:simplelist>
       </db:section>
    </db:section>
@@ -424,8 +426,10 @@
          <db:para>This enum was introduced or modified in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#axesOrientationMode-prop">QSensor::axesOrientationMode</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#axesOrientationMode-prop">QSensor::axesOrientationMode</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -670,8 +674,10 @@
          <db:para>This enum was introduced or modified in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#isFeatureSupported">QSensor::isFeatureSupported</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#isFeatureSupported">QSensor::isFeatureSupported</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -822,8 +828,10 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#dataRate-prop">QSensor::dataRate</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#dataRate-prop">QSensor::dataRate</db:link></db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qsensor.html#qrangelist-typedef">qrangelist</db:link>
                </db:member>
@@ -999,9 +1007,13 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#maxBufferSize-prop">QSensor::maxBufferSize</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsensor.html#efficientBufferSize-prop">QSensor::efficientBufferSize</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#maxBufferSize-prop">QSensor::maxBufferSize</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#efficientBufferSize-prop">QSensor::efficientBufferSize</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1035,8 +1047,10 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#busyChanged">busyChanged</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#busyChanged">busyChanged</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1194,8 +1208,10 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1267,9 +1283,13 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#bufferSize-prop">QSensor::bufferSize</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsensor.html#maxBufferSize-prop">QSensor::maxBufferSize</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#bufferSize-prop">QSensor::bufferSize</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#maxBufferSize-prop">QSensor::maxBufferSize</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1357,7 +1377,8 @@
          <db:title>maxBufferSize : const int</db:title>
          <db:para>The property holds the maximum buffer size.</db:para>
          <db:para>Note that this may be 1, in which case the sensor does not
-                                    support any form of buffering. In that case, <db:link xlink:href="qsensor.html#isFeatureSupported">isFeatureSupported</db:link><db:code><db:link xlink:href="qsensor.html#Feature-enum">QSensor::Buffering</db:link></db:code>) will also return false.</db:para>
+                                    support any form of buffering. In that case, <db:link xlink:href="qsensor.html#isFeatureSupported">isFeatureSupported</db:link>
+            <db:code><db:link xlink:href="qsensor.html#Feature-enum">QSensor::Buffering</db:link></db:code>) will also return false.</db:para>
          <db:para>
             <db:emphasis role="bold">Access functions:</db:emphasis>
          </db:para>
@@ -1396,9 +1417,13 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#bufferSize-prop">QSensor::bufferSize</db:link></db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsensor.html#efficientBufferSize-prop">QSensor::efficientBufferSize</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#bufferSize-prop">QSensor::bufferSize</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#efficientBufferSize-prop">QSensor::efficientBufferSize</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1446,8 +1471,10 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#outputRanges-prop">QSensor::outputRanges</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#outputRanges-prop">QSensor::outputRanges</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1482,8 +1509,10 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#outputRange-prop">QSensor::outputRange</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#outputRange-prop">QSensor::outputRange</db:link></db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qsensor.html#qoutputrangelist-typedef">qoutputrangelist</db:link>
                </db:member>
@@ -1541,9 +1570,13 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#connectedToBackend-prop">isConnectedToBackend</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsensor.html#start">start</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#connectedToBackend-prop">isConnectedToBackend</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#start">start</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1737,8 +1770,10 @@
                                     the sensor if it is destroyed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1753,9 +1788,13 @@
                                     when it was off.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#sensorTypes">QSensor::sensorTypes</db:link>()</db:code></db:member>
-               <db:member><db:code><db:link xlink:href="qsensor.html#sensorsForType">QSensor::sensorsForType</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#sensorTypes">QSensor::sensorTypes</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#sensorsForType">QSensor::sensorsForType</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1779,8 +1818,10 @@
                                     directly.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#connectedToBackend-prop">isConnectedToBackend</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#connectedToBackend-prop">isConnectedToBackend</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1800,7 +1841,7 @@
                                         <db:code>Sensors.conf</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="determining-the-default-sensor-for-a-type.html">Determining the default sensor for a
                                     type</db:link>
@@ -1814,8 +1855,10 @@
                                     sensor.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1823,7 +1866,8 @@
          <db:title>bool QSensor::isFeatureSupported(Feature feature) const</db:title>
          <db:para>Checks if a specific feature is supported by the
                                     backend.</db:para>
-         <db:para><db:code><db:link xlink:href="qtsensors-module.html">QtSensors</db:link></db:code>
+         <db:para>
+            <db:code><db:link xlink:href="qtsensors-module.html">QtSensors</db:link></db:code>
                                     supports a rich API for controlling and providing information
                                     about sensors. Naturally, not all of this functionality can be
                                     supported by all of the backends.</db:para>
@@ -1844,8 +1888,10 @@
          <db:para>Remove <db:emphasis>filter</db:emphasis> from the sensor.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1867,8 +1913,10 @@
          <db:para>This function was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#currentOrientation-prop">currentOrientation</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#currentOrientation-prop">currentOrientation</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1880,8 +1928,10 @@
          <db:para>This function was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#efficientBufferSize-prop">efficientBufferSize</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#efficientBufferSize-prop">efficientBufferSize</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1893,8 +1943,10 @@
          <db:para>This function was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#maxBufferSize-prop">maxBufferSize</db:link>()</db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#maxBufferSize-prop">maxBufferSize</db:link>()</db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1918,8 +1970,10 @@
                                         sensor-&gt;reading()-&gt;x();</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#busy-prop">QSensor::busy</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#busy-prop">QSensor::busy</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1930,8 +1984,10 @@
                                     it.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member><db:code><db:link xlink:href="qsensor.html#busy-prop">QSensor::busy</db:link></db:code></db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#busy-prop">QSensor::busy</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1940,7 +1996,6 @@
       <db:title>Related Non-Members</db:title>
       <db:section>
          <db:title>class qoutputrange</db:title>
-         <db:para/>
          <db:para>The qoutputrange class holds the specifics of an output
                                     range. <db:link xlink:href="qsensor.html#details">More...</db:link>
          </db:para>
@@ -1953,29 +2008,37 @@
          <db:para>This typedef was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qlist.html">QList</db:link>&lt;/db:code&gt;</db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qtcore/qlist.html">QList</db:link></db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qsensor.html">qoutputrange</db:link>
                </db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qsensor.html#outputRanges-prop">QSensor::outputRanges</db:link>&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#outputRanges-prop">QSensor::outputRanges</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qrange-typedef">
          <db:title>typedef qrange</db:title>
-         <db:para>This type is defined as a &lt;db:code&gt;<db:link xlink:href="qtcore/qpair.html">QPair</db:link>&lt;/db:code&gt;.</db:para>
+         <db:para>This type is defined as a <db:code><db:link xlink:href="qtcore/qpair.html">QPair</db:link></db:code>.</db:para>
          <db:programlisting>typedefQPair&lt;int,int&gt;
                                     qrange;</db:programlisting>
          <db:para>This typedef was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qpair.html">QPair</db:link>&lt;/db:code&gt;</db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qtcore/qpair.html">QPair</db:link></db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qsensor.html#qrangelist-typedef">qrangelist</db:link>
                </db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link>&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1986,12 +2049,16 @@
          <db:para>This typedef was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qlist.html">QList</db:link>&lt;/db:code&gt;</db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qtcore/qlist.html">QList</db:link></db:code>
+               </db:member>
                <db:member>
                   <db:link xlink:href="qsensor.html#qrange-typedef">qrange</db:link>
                </db:member>
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link>&lt;/db:code&gt;</db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsensor.html#availableDataRates-prop">QSensor::availableDataRates</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
