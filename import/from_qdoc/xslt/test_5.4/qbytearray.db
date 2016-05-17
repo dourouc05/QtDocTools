@@ -1983,7 +1983,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist type="vert">
+         <db:simplelist>
             <db:member><db:code><db:link xlink:href="qstring.html">QString</db:link></db:code></db:member>
             <db:member><db:code><db:link xlink:href="qbitarray.html">QBitArray</db:link></db:code></db:member>
          </db:simplelist>
@@ -2097,7 +2097,7 @@
          <db:para>Constructs an empty byte array.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#isEmpty">isEmpty</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2117,7 +2117,7 @@
                                     deep copy of the string data.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2128,7 +2128,7 @@
                                     every byte set to character <db:emphasis>ch</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fill">fill</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2144,7 +2144,7 @@
                                     time</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#operator-eq">operator=</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2185,7 +2185,7 @@
                                     append operation.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#operator-2b-eq">operator+=</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#prepend">prepend</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#insert">insert</db:link>()&lt;/db:code&gt;</db:member>
@@ -2239,7 +2239,7 @@
                                     byte array (i.e., 0 &lt;= <db:emphasis>i</db:emphasis> &lt; &lt;db:code&gt;<db:link xlink:href="qbytearray.html#size">size</db:link>()&lt;/db:code&gt;).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#operator-5b-5d">operator[]</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2255,7 +2255,7 @@
                                     array, call &lt;db:code&gt;<db:link xlink:href="qbytearray.html#size">size</db:link>()&lt;/db:code&gt;.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#reserve">reserve</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#squeeze">squeeze</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2272,7 +2272,7 @@
                                         "STARTTLS"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#truncate">truncate</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#resize">resize</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#left">left</db:link>()&lt;/db:code&gt;</db:member>
@@ -2285,7 +2285,7 @@
                                     empty.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#resize">resize</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#isEmpty">isEmpty</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2307,7 +2307,7 @@
                                     the data ends at the first '\0' they encounter.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#data">data</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#operator-5b-5d">operator[]</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
@@ -2321,7 +2321,7 @@
                                     otherwise returns <db:code>false</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#indexOf">indexOf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#count">count</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2347,7 +2347,7 @@
                                     of byte array <db:emphasis>ba</db:emphasis> in this byte array.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#contains">contains</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#indexOf">indexOf</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2366,7 +2366,7 @@
                                         <db:emphasis>ch</db:emphasis> in the byte array.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#contains">contains</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#indexOf">indexOf</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2407,7 +2407,7 @@
                                     the data ends at the first '\0' they encounter.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#constData">constData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#operator-5b-5d">operator[]</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2427,7 +2427,7 @@
                                         if (url.endsWith(".html")) ...</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#startsWith">startsWith</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#right">right</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2458,7 +2458,7 @@
                                         "oooooooo" ba.fill('X',2); // ba == "XX"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#resize">resize</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2478,7 +2478,7 @@
                                         4648</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toBase64">toBase64</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2501,7 +2501,7 @@
          <db:para>This function was introduced in Qt 5.2.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toBase64">toBase64</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2513,7 +2513,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawCFData">fromRawCFData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toRawCFData">toRawCFData</db:link>()&lt;/db:code&gt;</db:member>
@@ -2533,7 +2533,7 @@
                                     great!"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toHex">toHex</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2545,7 +2545,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawNSData">fromRawNSData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toNSData">toNSData</db:link>()&lt;/db:code&gt;</db:member>
@@ -2565,7 +2565,7 @@
          <db:para>This function was introduced in Qt 4.4.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toPercentEncoding">toPercentEncoding</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qurl.html#fromPercentEncoding">QUrl::fromPercentEncoding</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2581,7 +2581,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromCFData">fromCFData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toRawCFData">toRawCFData</db:link>()&lt;/db:code&gt;</db:member>
@@ -2629,7 +2629,7 @@
          </db:warning>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#setRawData">setRawData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#data">data</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#constData">constData</db:link>()&lt;/db:code&gt;</db:member>
@@ -2646,7 +2646,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromNSData">fromNSData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toRawNSData">toRawNSData</db:link>()&lt;/db:code&gt;</db:member>
@@ -2661,7 +2661,7 @@
          <db:para>This function was introduced in Qt 5.4.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toStdString">toStdString</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qstring.html#fromStdString">QString::fromStdString</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2677,7 +2677,7 @@
          <db:programlisting>QByteArray x("sticky question"); QByteArray y("sti"); x.indexOf(y); // returns 0 x.indexOf(y,1); // returns 10 x.indexOf(y,10); // returns 10 x.indexOf(y,11); // returns -1</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#lastIndexOf">lastIndexOf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#contains">contains</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#count">count</db:link>()&lt;/db:code&gt;</db:member>
@@ -2719,7 +2719,7 @@
          <db:programlisting>QByteArray ba("ABCBA"); ba.indexOf("B"); // returns 1 ba.indexOf("B",1); // returns 1 ba.indexOf("B",2); // returns 3 ba.indexOf("X"); // returns -1</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#lastIndexOf">lastIndexOf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#contains">contains</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2735,7 +2735,7 @@
                                         "Montreal"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#append">append</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#prepend">prepend</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#replace">replace</db:link>()&lt;/db:code&gt;</db:member>
@@ -2793,7 +2793,7 @@
                                         false</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#size">size</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2812,7 +2812,7 @@
                                     this can be determined using &lt;db:code&gt;<db:link xlink:href="qbytearray.html#isEmpty">isEmpty</db:link>()&lt;/db:code&gt;.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#isEmpty">isEmpty</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2829,7 +2829,7 @@
          <db:programlisting>QByteArray x("crazy azimuths"); QByteArray y("az"); x.lastIndexOf(y); // returns 6 x.lastIndexOf(y,6); // returns 6 x.lastIndexOf(y,5); // returns 2 x.lastIndexOf(y,1); // returns -1</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#indexOf">indexOf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#contains">contains</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#count">count</db:link>()&lt;/db:code&gt;</db:member>
@@ -2880,7 +2880,7 @@
          <db:programlisting>QByteArray ba("ABCBA"); ba.lastIndexOf("B"); // returns 3 ba.lastIndexOf("B",3); // returns 3 ba.lastIndexOf("B",2); // returns 1 ba.lastIndexOf("X"); // returns -1</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#indexOf">indexOf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#contains">contains</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2898,7 +2898,7 @@
                                     "Pine"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#right">right</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#mid">mid</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#startsWith">startsWith</db:link>()&lt;/db:code&gt;</db:member>
@@ -2922,7 +2922,7 @@
          <db:programlisting>QByteArray x("apple"); QByteArray y = x.leftJustified(8,'.'); // y == "apple..."</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#rightJustified">rightJustified</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2947,7 +2947,7 @@
                                     "pineapples"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#left">left</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#right">right</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2969,7 +2969,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#setNum">setNum</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toInt">toInt</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -2980,7 +2980,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toUInt">toUInt</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -2990,7 +2990,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toLongLong">toLongLong</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3000,7 +3000,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toULongLong">toULongLong</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3095,7 +3095,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toDouble">toDouble</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3121,7 +3121,7 @@
                                     time</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#append">append</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#insert">insert</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3190,7 +3190,7 @@
          <db:programlisting>QByteArray ba("Montreal"); ba.remove(1,4); // ba == "Meal"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#insert">insert</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#replace">replace</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3217,7 +3217,7 @@
          <db:programlisting>QByteArray x("Say yes!"); QByteArray y("no"); x.replace(4,3, y); // x == "Say no!"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#insert">insert</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#remove">remove</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3355,7 +3355,7 @@
                                         &lt;db:code&gt;<db:link xlink:href="qbytearray.html#resize">resize</db:link>()&lt;/db:code&gt;.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#squeeze">squeeze</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#capacity">capacity</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3373,7 +3373,7 @@
                                     bytes are removed from the end.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#size">size</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#truncate">truncate</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3390,7 +3390,7 @@
                                         "apple"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#endsWith">endsWith</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#left">left</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#mid">mid</db:link>()&lt;/db:code&gt;</db:member>
@@ -3413,7 +3413,7 @@
          <db:programlisting>QByteArray x("apple"); QByteArray y = x.rightJustified(8,'.'); // y == "...apple"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#leftJustified">leftJustified</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3435,7 +3435,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toInt">toInt</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3446,7 +3446,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toUInt">toUInt</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3456,7 +3456,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toShort">toShort</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3466,7 +3466,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toUShort">toUShort</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3476,7 +3476,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toLongLong">toLongLong</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3486,7 +3486,7 @@
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toULongLong">toULongLong</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3579,7 +3579,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toDouble">toDouble</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3598,7 +3598,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toFloat">toFloat</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3618,7 +3618,7 @@
          <db:para>This function was introduced in Qt 4.7.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#data">data</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#constData">constData</db:link>()&lt;/db:code&gt;</db:member>
@@ -3642,7 +3642,7 @@
                                     whitespace";</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#trimmed">trimmed</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3673,7 +3673,7 @@
                                     '\0'</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#isEmpty">isEmpty</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#resize">resize</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3697,7 +3697,7 @@
                                     function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#reserve">reserve</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#capacity">capacity</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3713,7 +3713,7 @@
                                         if (url.startsWith("ftp:")) ...</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#endsWith">endsWith</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#left">left</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -3750,7 +3750,7 @@
                                         4648</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromBase64">fromBase64</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3772,7 +3772,7 @@
          <db:para>This function was introduced in Qt 5.2.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromBase64">fromBase64</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3784,7 +3784,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toRawCFData">toRawCFData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromCFData">fromCFData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawCFData">fromRawCFData</db:link>()&lt;/db:code&gt;</db:member>
@@ -3808,7 +3808,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3828,7 +3828,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3839,7 +3839,7 @@
                                     encoding uses the numbers 0-9 and the letters a-f.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromHex">fromHex</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3868,7 +3868,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3899,7 +3899,7 @@
                                     4.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3925,7 +3925,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -3939,7 +3939,7 @@
                                         "qt by digia"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toUpper">toUpper</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>
                   <db:link xlink:href="qbytearray.html#8-bit-character-comparisons">8-bit Character Comparisons</db:link>
@@ -3954,7 +3954,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromNSData">fromNSData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawNSData">fromRawNSData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
@@ -3985,7 +3985,7 @@
          <db:para>This function was introduced in Qt 4.4.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromPercentEncoding">fromPercentEncoding</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qurl.html#toPercentEncoding">QUrl::toPercentEncoding</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -4002,7 +4002,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toCFData">toCFData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawCFData">fromRawCFData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromCFData">fromCFData</db:link>()&lt;/db:code&gt;</db:member>
@@ -4021,7 +4021,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawNSData">fromRawNSData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromNSData">fromNSData</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromRawData">fromRawData</db:link>()&lt;/db:code&gt;</db:member>
@@ -4051,7 +4051,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4065,7 +4065,7 @@
          <db:para>This function was introduced in Qt 5.4.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#fromStdString">fromStdString</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qstring.html#toStdString">QString::toStdString</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -4092,7 +4092,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4120,7 +4120,7 @@
                                     4.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4147,7 +4147,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4173,7 +4173,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#number">number</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4187,7 +4187,7 @@
                                         "QT BY DIGIA"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#toLower">toLower</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>
                   <db:link xlink:href="qbytearray.html#8-bit-character-comparisons">8-bit Character Comparisons</db:link>
@@ -4212,7 +4212,7 @@
                                     alone.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#simplified">simplified</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4228,7 +4228,7 @@
                                         ba == "Stock"</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#chop">chop</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#resize">resize</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#left">left</db:link>()&lt;/db:code&gt;</db:member>
@@ -4275,7 +4275,7 @@
                                     append operation.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#append">append</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#prepend">prepend</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -4410,7 +4410,7 @@
                                     reference.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#at">at</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
@@ -4431,13 +4431,13 @@
    </db:section>
    <db:section>
       <db:title>Macro Documentation</db:title>
-      <db:section xml:id="QT_NO_CAST_FROM_BYTEARRAY">
+      <db:section>
          <db:title>QT_NO_CAST_FROM_BYTEARRAY</db:title>
          <db:para>Disables automatic conversions from &lt;db:code&gt;<db:link xlink:href="qbytearray.html">QByteArray</db:link>&lt;/db:code&gt; to const char *
                                     or const void *.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qstring.html#QT_NO_CAST_TO_ASCII">QT_NO_CAST_TO_ASCII</db:link>&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qstring.html#QT_NO_CAST_FROM_ASCII">QT_NO_CAST_FROM_ASCII</db:link>&lt;/db:code&gt;</db:member>
             </db:simplelist>
@@ -4446,7 +4446,7 @@
    </db:section>
    <db:section>
       <db:title>Related Non-Members</db:title>
-      <db:section xml:id="qChecksum">
+      <db:section>
          <db:title>quint16 qChecksum(const char * data, uint len)</db:title>
          <db:para>Returns the CRC-16 checksum of the first
                                         <db:emphasis>len</db:emphasis> bytes of
@@ -4459,7 +4459,7 @@
                                     algorithm.</db:para>
          </db:note>
       </db:section>
-      <db:section xml:id="qCompress">
+      <db:section>
          <db:title>QByteArray qCompress(const QByteArray &amp; data, int compressionLevel = -1)</db:title>
          <db:para>Compresses the <db:emphasis>data</db:emphasis> byte array and returns
                                     the compressed data in a new byte array.</db:para>
@@ -4473,19 +4473,19 @@
                                     which specifies zlib's default compression.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qUncompress">qUncompress</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qCompress-2">
+      <db:section>
          <db:title>QByteArray qCompress(const uchar * data, int nbytes, int compressionLevel = -1)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Compresses the first <db:emphasis>nbytes</db:emphasis> of
                                         <db:emphasis>data</db:emphasis> and returns the compressed data in a
                                     new byte array.</db:para>
       </db:section>
-      <db:section xml:id="qUncompress">
+      <db:section>
          <db:title>QByteArray qUncompress(const QByteArray &amp; data)</db:title>
          <db:para>Uncompresses the <db:emphasis>data</db:emphasis> byte array and
                                     returns a new byte array with the uncompressed data.</db:para>
@@ -4503,19 +4503,19 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qCompress">qCompress</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qUncompress-2">
+      <db:section>
          <db:title>QByteArray qUncompress(const uchar * data, int nbytes)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Uncompresses the first <db:emphasis>nbytes</db:emphasis> of
                                         <db:emphasis>data</db:emphasis> and returns a new byte array with the
                                     uncompressed data.</db:para>
       </db:section>
-      <db:section xml:id="qsnprintf">
+      <db:section>
          <db:title>int qsnprintf(char * str, size_t n, const char * fmt, ...)</db:title>
          <db:para>A portable
                                     snprintf() function, calls qvsnprintf.</db:para>
@@ -4531,13 +4531,13 @@
          </db:warning>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qvsnprintf">qvsnprintf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qstring.html#sprintf">QString::sprintf</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrcmp">
+      <db:section>
          <db:title>int qstrcmp(const char * str1, const char * str2)</db:title>
          <db:para>A safe <db:code>strcmp()</db:code> function.</db:para>
          <db:para>Compares <db:emphasis>str1</db:emphasis> and <db:emphasis>str2</db:emphasis>.
@@ -4553,7 +4553,7 @@
                                     (but not both).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrncmp">qstrncmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstricmp">qstricmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrnicmp">qstrnicmp</db:link>()&lt;/db:code&gt;</db:member>
@@ -4563,7 +4563,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrcpy">
+      <db:section>
          <db:title>char * qstrcpy(char * dst, const char * src)</db:title>
          <db:para>Copies all the characters up to and including the '\0' from
                                         <db:emphasis>src</db:emphasis> into <db:emphasis>dst</db:emphasis> and returns a
@@ -4573,12 +4573,12 @@
                                     enough to hold the contents of <db:emphasis>src</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrncpy">qstrncpy</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrdup">
+      <db:section>
          <db:title>char * qstrdup(const char * src)</db:title>
          <db:para>Returns a duplicate string.</db:para>
          <db:para>Allocates space for a copy of <db:emphasis>src</db:emphasis>, copies
@@ -4587,7 +4587,7 @@
          <db:para>Ownership is passed to the caller, so the returned string
                                     must be deleted using <db:code>delete[]</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="qstricmp">
+      <db:section>
          <db:title>int qstricmp(const char * str1, const char * str2)</db:title>
          <db:para>A safe <db:code>stricmp()</db:code> function.</db:para>
          <db:para>Compares <db:emphasis>str1</db:emphasis> and <db:emphasis>str2</db:emphasis>
@@ -4605,7 +4605,7 @@
                                     (but not both).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrcmp">qstrcmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrncmp">qstrncmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrnicmp">qstrnicmp</db:link>()&lt;/db:code&gt;</db:member>
@@ -4615,19 +4615,19 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrlen">
+      <db:section>
          <db:title>uint qstrlen(const char * str)</db:title>
          <db:para>A safe <db:code>strlen()</db:code> function.</db:para>
          <db:para>Returns the number of characters that precede the
                                     terminating '\0', or 0 if <db:emphasis>str</db:emphasis> is 0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrnlen">qstrnlen</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrncmp">
+      <db:section>
          <db:title>int qstrncmp(const char * str1, const char * str2, uint len)</db:title>
          <db:para>A safe <db:code>strncmp()</db:code> function.</db:para>
          <db:para>Compares at most <db:emphasis>len</db:emphasis> bytes of
@@ -4644,7 +4644,7 @@
                                     (but not both).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrcmp">qstrcmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstricmp">qstricmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrnicmp">qstrnicmp</db:link>()&lt;/db:code&gt;</db:member>
@@ -4654,7 +4654,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrncpy">
+      <db:section>
          <db:title>char * qstrncpy(char * dst, const char * src, uint len)</db:title>
          <db:para>A safe <db:code>strncpy()</db:code> function.</db:para>
          <db:para>Copies at most <db:emphasis>len</db:emphasis> bytes from
@@ -4675,7 +4675,7 @@
             <db:emphasis role="bold">See
                                         also </db:emphasis>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrcpy">qstrcpy</db:link>()&lt;/db:code&gt;.</db:para>
       </db:section>
-      <db:section xml:id="qstrnicmp">
+      <db:section>
          <db:title>int qstrnicmp(const char * str1, const char * str2, uint len)</db:title>
          <db:para>A safe <db:code>strnicmp()</db:code> function.</db:para>
          <db:para>Compares at most <db:emphasis>len</db:emphasis> bytes of
@@ -4694,7 +4694,7 @@
                                     (but not both).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrcmp">qstrcmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrncmp">qstrncmp</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstricmp">qstricmp</db:link>()&lt;/db:code&gt;</db:member>
@@ -4704,7 +4704,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qstrnlen">
+      <db:section>
          <db:title>uint qstrnlen(const char * str, uint maxlen)</db:title>
          <db:para>A safe <db:code>strnlen()</db:code> function.</db:para>
          <db:para>Returns the number of characters that precede the
@@ -4713,12 +4713,12 @@
          <db:para>This function was introduced in Qt 4.2.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qstrlen">qstrlen</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="qvsnprintf">
+      <db:section>
          <db:title>int qvsnprintf(char * str, size_t n, const char * fmt, va_list ap)</db:title>
          <db:para>A portable <db:code>vsnprintf()</db:code> function. Will
                                     call <db:code>::vsnprintf()</db:code>,
@@ -4742,13 +4742,13 @@
                                     instead.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#qsnprintf">qsnprintf</db:link>()&lt;/db:code&gt;</db:member>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qstring.html#sprintf">QString::sprintf</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="operator-not-eq-54">
+      <db:section>
          <db:title>bool operator!=(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4756,7 +4756,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-not-eq-55">
+      <db:section>
          <db:title>bool operator!=(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4764,7 +4764,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-not-eq-56">
+      <db:section>
          <db:title>bool operator!=(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
@@ -4772,47 +4772,47 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-2b">
+      <db:section>
          <db:title>const QByteArray operator+(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>Returns a byte array that is the result of concatenating
                                     byte array <db:emphasis>a1</db:emphasis> and byte array
                                         <db:emphasis>a2</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#operator-2b-eq">QByteArray::operator+=</db:link>()&lt;/db:code&gt;</db:member>
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="operator-2b-29">
+      <db:section>
          <db:title>const QByteArray operator+(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     byte array <db:emphasis>a1</db:emphasis> and string
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
-      <db:section xml:id="operator-2b-30">
+      <db:section>
          <db:title>const QByteArray operator+(const QByteArray &amp; a1, char a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     byte array <db:emphasis>a1</db:emphasis> and character
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
-      <db:section xml:id="operator-2b-31">
+      <db:section>
          <db:title>const QByteArray operator+(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     string <db:emphasis>a1</db:emphasis> and byte array
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
-      <db:section xml:id="operator-2b-32">
+      <db:section>
          <db:title>const QByteArray operator+(char a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     character <db:emphasis>a1</db:emphasis> and byte array
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
-      <db:section xml:id="operator-lt-19">
+      <db:section>
          <db:title>bool operator&lt;(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4820,7 +4820,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-lt-20">
+      <db:section>
          <db:title>bool operator&lt;(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4828,7 +4828,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-lt-21">
+      <db:section>
          <db:title>bool operator&lt;(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
@@ -4836,14 +4836,14 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-lt-lt-46">
+      <db:section>
          <db:title>QDataStream &amp; operator&lt;&lt;(QDataStream &amp; out, const QByteArray &amp; ba)</db:title>
          <db:para>Writes byte array <db:emphasis>ba</db:emphasis> to the stream
                                         <db:emphasis>out</db:emphasis> and returns a reference to the
                                     stream.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="datastreamformat.html">Serializing Qt Data
                                         Types</db:link>
@@ -4851,7 +4851,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section xml:id="operator-lt-eq-16">
+      <db:section>
          <db:title>bool operator&lt;=(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4859,7 +4859,7 @@
                                     array <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-lt-eq-17">
+      <db:section>
          <db:title>bool operator&lt;=(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4867,7 +4867,7 @@
                                     string <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-lt-eq-18">
+      <db:section>
          <db:title>bool operator&lt;=(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
@@ -4875,7 +4875,7 @@
                                     array <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-eq-eq-62">
+      <db:section>
          <db:title>bool operator==(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4883,14 +4883,14 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-eq-eq-63">
+      <db:section>
          <db:title>bool operator==(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is equal to string <db:emphasis>a2</db:emphasis>;
                                     otherwise returns <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-eq-eq-64">
+      <db:section>
          <db:title>bool operator==(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
@@ -4898,7 +4898,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-16">
+      <db:section>
          <db:title>bool operator&gt;(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4906,7 +4906,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-17">
+      <db:section>
          <db:title>bool operator&gt;(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4914,7 +4914,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-18">
+      <db:section>
          <db:title>bool operator&gt;(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
@@ -4922,7 +4922,7 @@
                                         <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-eq-16">
+      <db:section>
          <db:title>bool operator&gt;=(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4930,7 +4930,7 @@
                                     byte array <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-eq-17">
+      <db:section>
          <db:title>bool operator&gt;=(const QByteArray &amp; a1, const char * a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
@@ -4938,7 +4938,7 @@
                                     string <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-eq-18">
+      <db:section>
          <db:title>bool operator&gt;=(const char * a1, const QByteArray &amp; a2)</db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
@@ -4946,14 +4946,14 @@
                                     byte array <db:emphasis>a2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
       </db:section>
-      <db:section xml:id="operator-gt-gt-18">
+      <db:section>
          <db:title>QDataStream &amp; operator&gt;&gt;(QDataStream &amp; in, QByteArray &amp; ba)</db:title>
          <db:para>Reads a byte array into <db:emphasis>ba</db:emphasis> from the stream
                                         <db:emphasis>in</db:emphasis> and returns a reference to the
                                     stream.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="datastreamformat.html">Serializing Qt Data
                                         Types</db:link>
@@ -4974,7 +4974,7 @@
             <db:para>Note: A &lt;db:code&gt;<db:link xlink:href="qbytearray.html">QByteArray</db:link>&lt;/db:code&gt; can store any byte values including '\0's, but most functions that take <db:code>char *</db:code> arguments assume that the data ends at the first '\0' they encounter.</db:para>
             <db:section>
                <db:title>See Also</db:title>
-               <db:simplelist type="vert">
+               <db:simplelist>
                   <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#constData">constData</db:link>()&lt;/db:code&gt;</db:member>
                </db:simplelist>
             </db:section>
@@ -4987,7 +4987,7 @@
             <db:para>Note: A &lt;db:code&gt;<db:link xlink:href="qbytearray.html">QByteArray</db:link>&lt;/db:code&gt; can store any byte values including '\0's, but most functions that take <db:code>char *</db:code> arguments assume that the data ends at the first '\0' they encounter.</db:para>
             <db:section>
                <db:title>See Also</db:title>
-               <db:simplelist type="vert">
+               <db:simplelist>
                   <db:member>&lt;db:code&gt;<db:link xlink:href="qbytearray.html#constData">constData</db:link>()&lt;/db:code&gt;</db:member>
                </db:simplelist>
             </db:section>

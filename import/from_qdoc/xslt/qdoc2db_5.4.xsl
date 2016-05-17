@@ -225,7 +225,7 @@
       <!-- In this case, would need to find a way back in the page (cannot use the $sibling variables). -->
     </xsl:if>
     
-    <xsl:variable name="remainingAfterIndex" as="element(html:div)*" select="$siblingAfterSeeAlso/following-sibling::html:div"/>
+    <xsl:variable name="remainingAfterIndex" as="element(html:div)*" select="$siblingAfterSeeAlso[self::html:div] | $siblingAfterSeeAlso/following-sibling::html:div"/>
     <xsl:variable name="types" as="element()?"
       select="$remainingAfterIndex[self::html:div][@class = 'types']"/>
     <xsl:variable name="properties" as="element()?"
