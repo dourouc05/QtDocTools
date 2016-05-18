@@ -241,17 +241,17 @@
     <xsl:variable name="remainingAfterIndex" as="element(html:div)*"
       select="$siblingAfterSeeAlso[self::html:div] | $siblingAfterSeeAlso/following-sibling::html:div"/>
     <xsl:variable name="types" as="element()?"
-      select="$remainingAfterIndex[self::html:div][@class = 'types']"/>
+      select="$remainingAfterIndex[@class = 'types']"/>
     <xsl:variable name="properties" as="element()?"
-      select="$remainingAfterIndex[self::html:div][@class = 'prop']"/>
+      select="$remainingAfterIndex[@class = 'prop']"/>
     <xsl:variable name="funcs" as="element(html:div)?"
-      select="$remainingAfterIndex[self::html:div][@class = 'func']"/>
+      select="$remainingAfterIndex[@class = 'func']"/>
     <xsl:variable name="nonmems" as="element(html:div)?"
-      select="$remainingAfterIndex[self::html:div][@class = 'relnonmem']"/>
+      select="$remainingAfterIndex[@class = 'relnonmem']"/>
     <xsl:variable name="macros" as="element(html:div)?"
-      select="$remainingAfterIndex[self::html:div][@class = 'macros']"/>
+      select="$remainingAfterIndex[@class = 'macros']"/>
     <xsl:variable name="vars" as="element(html:div)?"
-      select="$remainingAfterIndex[self::html:div][@class = 'vars']"/>
+      select="$remainingAfterIndex[@class = 'vars']"/>
 
     <xsl:variable name="funcs_outside" as="element(html:div)?">
       <xsl:variable name="funcs_strange_title" as="element(html:h2)?"
@@ -266,32 +266,22 @@
       </html:div>
     </xsl:variable>
 
-    <xsl:variable name="qmlPropsTitle" as="element()?">
-      <xsl:variable name="qmlPropsTitleText" select="'Property Documentation'" as="xs:string"/>
-      <xsl:copy-of select="$content/html:h2[text() = $qmlPropsTitleText]"/>
-    </xsl:variable>
+    <xsl:variable name="qmlPropsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Property Documentation']"/>
     <xsl:variable name="hasQmlProps" select="$isQmlType and boolean($qmlPropsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlProps" as="element(html:div)?">
       <xsl:variable name="qmlPropsTitleId" select="generate-id($qmlPropsTitle)"/>
-      <xsl:if test="$isQmlType and $hasQmlProps">
+      <xsl:if test="$hasQmlProps">
         <html:div class="qml-props">
           <xsl:for-each
             select="
-              $qmlPropsTitle
-              /following-sibling::html:div[
-              @class = 'qmlitem' and generate-id(preceding-sibling::html:h2[1]) = $qmlPropsTitleId
-              ]">
+            $qmlPropsTitle/following-sibling::html:div[@class = 'qmlitem'][generate-id(./preceding-sibling::html:h2[1]) = $qmlPropsTitleId]">
             <xsl:copy-of select="current()"/>
           </xsl:for-each>
         </html:div>
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="qmlAttachedPropsTitle" as="element()?">
-      <xsl:variable name="qmlAttachedPropsTitleText" select="'Attached Property Documentation'"
-        as="xs:string"/>
-      <xsl:copy-of select="$content/html:h2[text() = $qmlAttachedPropsTitleText]"/>
-    </xsl:variable>
+    <xsl:variable name="qmlAttachedPropsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Attached Property Documentation']"/>
     <xsl:variable name="hasQmlAttachedProps" select="$isQmlType and boolean($qmlAttachedPropsTitle)"
       as="xs:boolean"/>
     <xsl:variable name="qmlAttachedProps" as="element(html:div)?">
@@ -310,10 +300,7 @@
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="qmlMethsTitle" as="element()?">
-      <xsl:variable name="qmlMethsTitleText" select="'Method Documentation'" as="xs:string"/>
-      <xsl:copy-of select="$content/html:h2[text() = $qmlMethsTitleText]"/>
-    </xsl:variable>
+    <xsl:variable name="qmlMethsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Method Documentation']"/>
     <xsl:variable name="hasQmlMeths" select="$isQmlType and boolean($qmlMethsTitle)" as="xs:boolean"/>
     <xsl:variable name="qmlMeths" as="element(html:div)?">
       <xsl:if test="$isQmlType and $hasQmlMeths">
@@ -331,10 +318,7 @@
       </xsl:if>
     </xsl:variable>
 
-    <xsl:variable name="qmlSignalsTitle" as="element()?">
-      <xsl:variable name="qmlSignalsTitleText" select="'Signal Documentation'" as="xs:string"/>
-      <xsl:copy-of select="$content/html:h2[text() = $qmlSignalsTitleText]"/>
-    </xsl:variable>
+    <xsl:variable name="qmlSignalsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Signal Documentation']"/>
     <xsl:variable name="hasQmlSignals" select="$isQmlType and boolean($qmlSignalsTitle)"
       as="xs:boolean"/>
     <xsl:variable name="qmlSignals" as="element(html:div)?">

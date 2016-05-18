@@ -20,7 +20,7 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>append</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>jsobject</db:type>
             <db:parameter>dict</db:parameter>
          </db:methodparam>
@@ -33,11 +33,11 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>get</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>object</db:type>
             <db:parameter>get</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
@@ -45,11 +45,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>insert</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>jsobject</db:type>
             <db:parameter>dict</db:parameter>
          </db:methodparam>
@@ -57,15 +57,15 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>move</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>from</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>to</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>n</db:parameter>
          </db:methodparam>
@@ -73,11 +73,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>remove</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>count</db:parameter>
          </db:methodparam>
@@ -85,11 +85,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>set</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>jsobject</db:type>
             <db:parameter>dict</db:parameter>
          </db:methodparam>
@@ -97,15 +97,15 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>setProperty</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>string</db:type>
             <db:parameter>property</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-variant.html">variant</db:type>
             <db:parameter>value</db:parameter>
          </db:methodparam>
@@ -133,7 +133,7 @@
          <db:para>The following example shows a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link>
                                 containing three elements, with the roles "name" and
                                 "cost".</db:para>
-         <db:programlisting>import QtQuick 2.0 ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45 } ListElement { name: "Orange"cost: 3.25 } ListElement { name: "Banana"cost: 1.95 } }</db:programlisting>
+         <db:programlisting language="qml">import QtQuick 2.0 ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45 } ListElement { name: "Orange"cost: 3.25 } ListElement { name: "Banana"cost: 1.95 } }</db:programlisting>
          <db:para>Roles (properties) in each element must begin with a lower-case
                                 letter and should be common to all elements in a model. The <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link>
                                 documentation provides more guidelines for how elements should be
@@ -141,15 +141,15 @@
          <db:para>Since the example model contains an <db:code>id</db:code>
                                 property, it can be referenced by views, such as the <db:link xlink:href="qtquick/qml-qtquick-listview.html">ListView</db:link> in
                                 this example:</db:para>
-         <db:programlisting>import QtQuick 2.0 Rectangle { width: 200;
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 200;
                                     height: 200ListModel { id: fruitModel
                                 ... } Component { id: fruitDelegateRow { spacing: 10Text { text: name }
                                     Text { text: '$'+cost } } } ListView { anchors.fill: parentmodel: fruitModeldelegate: fruitDelegate } }</db:programlisting>
          <db:para>It is possible for roles to contain list data. In the following
                                 example we create a list of fruit attributes:</db:para>
-         <db:programlisting>ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45attributes: [ ListElement { description: "Core" }, ListElement { description: "Deciduous" } ] } ListElement { name: "Orange"cost: 3.25attributes: [ ListElement { description: "Citrus" } ] } ListElement { name: "Banana"cost: 1.95attributes: [ ListElement { description: "Tropical" }, ListElement { description: "Seedless" } ] } }</db:programlisting>
+         <db:programlisting language="qml">ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45attributes: [ ListElement { description: "Core" }, ListElement { description: "Deciduous" } ] } ListElement { name: "Orange"cost: 3.25attributes: [ ListElement { description: "Citrus" } ] } ListElement { name: "Banana"cost: 1.95attributes: [ ListElement { description: "Tropical" }, ListElement { description: "Seedless" } ] } }</db:programlisting>
          <db:para>The delegate displays all the fruit attributes:</db:para>
-         <db:programlisting>Component { id: fruitDelegateItem { width: 200;
+         <db:programlisting language="qml">Component { id: fruitDelegateItem { width: 200;
                                     height: 50Text { id: nameField;
                                     text: name } Text { text: '$'+cost; anchors.left: nameField.right
                                 } Row
@@ -159,7 +159,7 @@
          <db:title>Modifying List Models</db:title>
          <db:para>The content of a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> may be created and modified using the
                                     <db:link xlink:href="qml-qtqml-models-listmodel.html#clear-method">clear()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#insert-method">insert()</db:link> and <db:link xlink:href="qml-qtqml-models-listmodel.html#setProperty-method">setProperty()</db:link> methods. For example:</db:para>
-         <db:programlisting>Component { id: fruitDelegateItem { width: 200;
+         <db:programlisting language="qml">Component { id: fruitDelegateItem { width: 200;
                                     height: 50Text { text: name }
                                     Text { text: '$'+cost; anchors.right: parent.right }
                                     // Double the price when
@@ -180,11 +180,11 @@
                                 thread.</db:para>
          <db:para>Here is an example that uses <db:link xlink:href="qml-workerscript.html">WorkerScript</db:link> to
                                 periodically append the current time to a list model:</db:para>
-         <db:programlisting>Timer { id: timerinterval: 2000; repeat: truerunning: truetriggeredOnStart: trueonTriggered: { var msg = {'action': 'appendCurrentTime', 'model':
+         <db:programlisting language="qml">Timer { id: timerinterval: 2000; repeat: truerunning: truetriggeredOnStart: trueonTriggered: { var msg = {'action': 'appendCurrentTime', 'model':
                                     listModel}; worker.sendMessage(msg); } }</db:programlisting>
          <db:para>The included file, <db:code>dataloader.js</db:code>, looks
                                 like this:</db:para>
-         <db:programlisting>WorkerScript.onMessage=function(msg) { if (msg.action=='appendCurrentTime') { var
+         <db:programlisting language="js">WorkerScript.onMessage=function(msg) { if (msg.action=='appendCurrentTime') { var
                                     data = {'time': new
                                     Date().toTimeString()}; msg.model.append(data);
                                     msg.model.sync();
@@ -200,7 +200,7 @@
                                 thread.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick/qtquick-modelviewsdata-modelview.html#qml-data-models">Data Models</db:link>
                </db:member>
@@ -245,7 +245,9 @@
       </db:section>
    </db:section>
    <db:section>
-      <db:title>Methods Documentation</db:title>
+      <db:title>
+            Methods Documentation
+          </db:title>
       <db:section xml:id="append-method">
          <db:title>append(jsobject<db:emphasis>
                                                   dict</db:emphasis>)</db:title>
@@ -254,7 +256,7 @@
          <db:programlisting>fruitModel.append({"cost": 5.95,"name":"Pizza"})</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>
                </db:member>
@@ -269,7 +271,7 @@
          <db:para>Deletes all content from the model.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -295,9 +297,14 @@
          <db:programlisting> fruitModel.append(...,"attributes":
                                             [{"name":"spikes","value":"7mm"}, {"name":"color","value":"green"}]); fruitModel.get(0).attributes.get(1).value; // ==
                                             "green"</db:programlisting>
+         <db:warning>
+            <db:para> The returned object is not
+                                        guaranteed to remain valid. It should not be used in <db:link xlink:href="qtqml-syntax-propertybinding.html">property
+                                            bindings</db:link>.</db:para>
+         </db:warning>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -319,7 +326,7 @@
                                         append).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>
                </db:member>
@@ -343,7 +350,7 @@
                                             -3,3)</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -358,7 +365,7 @@
                                         the model.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#clear-method">clear()</db:link>
                </db:member>
@@ -382,7 +389,7 @@
                                         list.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -403,7 +410,7 @@
                                         list.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>

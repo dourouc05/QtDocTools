@@ -11,6 +11,38 @@
       <db:classsynopsisinfo role="import">import QtWinExtras 1.0</db:classsynopsisinfo>
       <db:classsynopsisinfo role="since"> QtWinExtras
                                                 1.0</db:classsynopsisinfo>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>blurBehindEnabled</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>int</db:type>
+         <db:varname>bottomGlassMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>excludedFromPeek</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type xlink:href="qtwin.html#WindowFlip3DPolicy-enum">QtWin::WindowFlip3DPolicy</db:type>
+         <db:varname>flip3DPolicy</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>int</db:type>
+         <db:varname>leftGlassMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>bool</db:type>
+         <db:varname>peekDisallowed</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>int</db:type>
+         <db:varname>rightGlassMargin</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis>
+         <db:type>int</db:type>
+         <db:varname>topGlassMargin</db:varname>
+      </db:fieldsynopsis>
    </db:classsynopsis>
    <db:section>
       <db:title>Detailed Description</db:title>
@@ -20,5 +52,53 @@
    </db:section>
    <db:section>
       <db:title>Properties Documentation</db:title>
+      <db:section xml:id="blurBehindEnabled-prop">
+         <db:title>blurBehindEnabled :
+                                                  bool</db:title>
+         <db:para>Specifies whether the blur behind the window client
+                                        area is enabled.</db:para>
+      </db:section>
+      <db:section xml:id="bottomGlassMargin-prop">
+         <db:title>bottomGlassMargin :
+                                                  int</db:title>
+         <db:para>The bottom glass frame margin. The default value is
+                                        0.</db:para>
+      </db:section>
+      <db:section xml:id="excludedFromPeek-prop">
+         <db:title>excludedFromPeek :
+                                                  bool</db:title>
+         <db:para>Specifies whether the window is excluded from Aero
+                                        Peek. The default value is false.</db:para>
+      </db:section>
+      <db:section xml:id="flip3DPolicy-prop">
+         <db:title>flip3DPolicy : <db:code><db:link xlink:href="qtwin.html#WindowFlip3DPolicy-enum">QtWin::WindowFlip3DPolicy</db:link></db:code>
+         </db:title>
+         <db:para>The current Flip3D policy for the window.</db:para>
+      </db:section>
+      <db:section xml:id="leftGlassMargin-prop">
+         <db:title>leftGlassMargin :
+                                                  int</db:title>
+         <db:para>The left glass frame margin. The default value is
+                                        0.</db:para>
+      </db:section>
+      <db:section xml:id="peekDisallowed-prop">
+         <db:title>peekDisallowed :
+                                                  bool</db:title>
+         <db:para>Set this value to true if you want to forbid Aero
+                                        Peek when the user hovers the mouse over the window
+                                        thumbnail. The default value is false.</db:para>
+      </db:section>
+      <db:section xml:id="rightGlassMargin-prop">
+         <db:title>rightGlassMargin :
+                                                  int</db:title>
+         <db:para>The right glass frame margin. The default value is
+                                        0.</db:para>
+      </db:section>
+      <db:section xml:id="topGlassMargin-prop">
+         <db:title>topGlassMargin :
+                                                  int</db:title>
+         <db:para>The top glass frame margin. The default value is
+                                        0.</db:para>
+      </db:section>
    </db:section>
 </db:article>

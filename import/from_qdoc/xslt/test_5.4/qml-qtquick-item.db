@@ -255,11 +255,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>childAt</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
@@ -267,11 +267,11 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>contains</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>object</db:type>
             <db:parameter>contains</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>point</db:type>
             <db:parameter>point</db:parameter>
          </db:methodparam>
@@ -279,7 +279,7 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>forceActiveFocus</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:type>
             <db:parameter>reason</db:parameter>
          </db:methodparam>
@@ -292,41 +292,41 @@
       <db:methodsynopsis>
          <db:type>bool</db:type>
          <db:methodname>grabToImage</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>bool</db:type>
             <db:parameter>grabToImage</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:parameter>callback</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:parameter>targetSize</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapFromItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>object</db:type>
             <db:parameter>mapFromItem</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>width</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>height</db:parameter>
          </db:methodparam>
@@ -334,19 +334,19 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapFromItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>object</db:type>
             <db:parameter>mapFromItem</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
@@ -354,27 +354,27 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapToItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>object</db:type>
             <db:parameter>mapToItem</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>width</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>height</db:parameter>
          </db:methodparam>
@@ -382,19 +382,19 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapToItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>object</db:type>
             <db:parameter>mapToItem</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
@@ -402,7 +402,7 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>nextItemInFocusChain</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type>bool</db:type>
             <db:parameter>forward</db:parameter>
          </db:methodparam>
@@ -418,7 +418,7 @@
                                 height, <db:link xlink:href="qtquick-positioning-anchors.html">anchoring</db:link> and key handling support.</db:para>
       <db:para>The Item type can be useful for grouping several items under a
                                 single root visual item. For example:</db:para>
-      <db:programlisting>import QtQuick 2.0 Item {
+      <db:programlisting language="qml">import QtQuick 2.0 Item {
                                     Image { source: "tile.png" } Image {
                                     x: 80width: 100height: 100source: "tile.png" } Image { x: 190width: 100height: 100fillMode: Image.Tilesource: "tile.png" } }</db:programlisting>
       <db:section>
@@ -431,7 +431,7 @@
                                 item and handles the left key via the general
                                     <db:code>onPressed</db:code> handler and the return key via
                                 the <db:code>onReturnPressed</db:code> handler:</db:para>
-         <db:programlisting>import QtQuick 2.0 Item {
+         <db:programlisting language="qml">import QtQuick 2.0 Item {
                                     focus: trueKeys.onPressed: { if (event.key==Qt.Key_Left) { console.log("move
                                     left"); event.accepted=true; } } Keys.onReturnPressed: console.log("Pressed
                                     return"); }</db:programlisting>
@@ -485,7 +485,7 @@
                                 type.</db:para>
             <db:para>It is possible to apply an effect on a layer at runtime using
                                 layer.effect:</db:para>
-            <db:programlisting>Item {
+            <db:programlisting language="qml">Item {
                                     id: layerRootlayer.enabled: truelayer.effect: ShaderEffect { fragmentShader: " uniform
                                     lowp sampler2D source; // this item uniform lowp float
                                     qt_Opacity; // inherited opacity of this item varying highp vec2
@@ -546,10 +546,10 @@
                                             <db:code>focusScope</db:code> objects will have
                                         active focus, while the root rectangle object will
                                         not.</db:para>
-         <db:programlisting>import QtQuick 2.0 Rectangle { width: 100; height: 100FocusScope { id: focusScopefocus: trueTextInput { id: inputfocus: true } } }</db:programlisting>
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 100; height: 100FocusScope { id: focusScopefocus: trueTextInput { id: inputfocus: true } } }</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>
                </db:member>
@@ -623,10 +623,13 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Image { id: pic// ... }
+                     <db:para>Text anchored to Image, horizontally
+                                                  centered and vertically below, with a
+                                                  margin.<db:programlisting>Item { Image { id: pic// ... }
                                                   Text { id: labelanchors.horizontalCenter: pic.horizontalCenteranchors.top:
                                                   pic.bottomanchors.topMargin: 5// ... }
                                                   }</db:programlisting>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -640,10 +643,13 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Image { id: pic// ... }
+                     <db:para>Left of Text anchored to right of Image,
+                                                  with a margin. The y property of both defaults to
+                                                  0.<db:programlisting>Item { Image { id: pic// ... }
                                                   Text { id: labelanchors.left:
                                                   pic.rightanchors.leftMargin: 5// ... }
                                                   }</db:programlisting>
+                     </db:para>
                   </db:td>
                </db:tr>
             </db:tbody>
@@ -733,9 +739,9 @@
                                         item to the data list it becomes a child and if you assign
                                         any other object type, it is added as a resource.</db:para>
          <db:para>So you can write:</db:para>
-         <db:programlisting>Item { Text {} Rectangle {} Timer {} }</db:programlisting>
+         <db:programlisting language="qml">Item { Text {} Rectangle {} Timer {} }</db:programlisting>
          <db:para>instead of:</db:para>
-         <db:programlisting>Item { children: [ Text {}, Rectangle {} ] resources: [ Timer {} ] }</db:programlisting>
+         <db:programlisting language="qml">Item { children: [ Text {}, Rectangle {} ] resources: [ Timer {} ] }</db:programlisting>
          <db:para>It should not generally be necessary to refer to the
                                             <db:code>data</db:code> property, as it is the
                                         default property for Item and thus all child items are
@@ -761,7 +767,7 @@
                                         receive keyboard events.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link>
                </db:member>
@@ -777,15 +783,15 @@
          <db:para>In the following example, <db:code>input</db:code>
                                         will be given active focus when <db:code>scope</db:code>
                                         gains active focus:</db:para>
-         <db:programlisting>import QtQuick 2.0 Rectangle { width: 100; height: 100FocusScope { id: scopeTextInput { id: inputfocus: true } } }</db:programlisting>
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 100; height: 100FocusScope { id: scopeTextInput { id: inputfocus: true } } }</db:programlisting>
          <db:para>For the purposes of this property, the scene as a whole
                                         is assumed to act like a focus scope. On a practical level,
                                         that means the following QML will give active focus to
                                             <db:code>input</db:code> on startup.</db:para>
-         <db:programlisting>Rectangle { width: 100; height: 100TextInput { id: inputfocus: true } }</db:programlisting>
+         <db:programlisting language="qml">Rectangle { width: 100; height: 100TextInput { id: inputfocus: true } }</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
                </db:member>
@@ -800,7 +806,7 @@
          <db:title>height : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
-         <db:programlisting>Item { x: 100; y:
+         <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="implicitHeight-prop">
@@ -815,7 +821,7 @@
          <db:para>Setting the implicit size is useful for defining
                                         components that have a preferred size based on their
                                         content, for example:</db:para>
-         <db:programlisting>//
+         <db:programlisting language="qml">//
                                             Label.qml import QtQuick 2.0 Item { property aliasicon: image.source property aliaslabel: text.textimplicitWidth:
                                             text.implicitWidth+image.implicitWidthimplicitHeight:
                                             Math.max(text.implicitHeight, image.implicitHeight) Image { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
@@ -838,7 +844,7 @@
          <db:para>Setting the implicit size is useful for defining
                                         components that have a preferred size based on their
                                         content, for example:</db:para>
-         <db:programlisting>//
+         <db:programlisting language="qml">//
                                             Label.qml import QtQuick 2.0 Item { property aliasicon: image.source property aliaslabel: text.textimplicitWidth:
                                             text.implicitWidth+image.implicitWidthimplicitHeight:
                                             Math.max(text.implicitHeight, image.implicitHeight) Image { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
@@ -860,7 +866,7 @@
                                         property with a name matching <db:link xlink:href="qml-qtquick-item.html#layer.samplerName-prop">layer.samplerName</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#layer.samplerName-prop">layer.samplerName</db:link>
                </db:member>
@@ -930,7 +936,7 @@
                                         offscreen surface to the effect correctly.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#layer.effect-prop">layer.effect</db:link>
                </db:member>
@@ -1032,7 +1038,7 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Rectangle { color: "red"width:
+                     <db:programlisting language="qml">Item { Rectangle { color: "red"width:
                                                   100;
                                                   height:
                                                   100Rectangle { color: "blue"x: 50; y: 50; width: 100; height: 100 } } }</db:programlisting>
@@ -1049,7 +1055,7 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Rectangle { opacity: 0.5color:
+                     <db:programlisting language="qml">Item { Rectangle { opacity: 0.5color:
                                                   "red"width:
                                                   100;
                                                   height:
@@ -1068,7 +1074,7 @@
                                         item.)</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link>
                </db:member>
@@ -1122,7 +1128,7 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Rectangle { color: "blue"width:
+                     <db:programlisting language="qml">Rectangle { color: "blue"width:
                                                   100;
                                                   height:
                                                   100Rectangle { color: "red"x: 25; y: 25; width: 50; height: 50rotation:
@@ -1134,7 +1140,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
                </db:member>
@@ -1167,7 +1173,7 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>import QtQuick 2.0
+                     <db:programlisting language="qml">import QtQuick 2.0
                                                   Rectangle { color: "blue"width:
                                                   100;
                                                   height:
@@ -1184,7 +1190,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
                </db:member>
@@ -1215,7 +1221,7 @@
                                         string.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick
                                             States</db:link>
@@ -1233,12 +1239,12 @@
          <db:para>This property is specified as a list of <db:link xlink:href="qml-qtquick-state.html">State</db:link> objects.
                                         For example, below is an item with "red_color" and
                                         "blue_color" states:</db:para>
-         <db:programlisting>import QtQuick 2.0 Rectangle { id: rootwidth: 100; height: 100states: [ State { name: "red_color"PropertyChanges { target: root; color: "red" } }, State { name: "blue_color"PropertyChanges { target: root; color: "blue" } } ] }</db:programlisting>
+         <db:programlisting language="qml">import QtQuick 2.0 Rectangle { id: rootwidth: 100; height: 100states: [ State { name: "red_color"PropertyChanges { target: root; color: "red" } }, State { name: "blue_color"PropertyChanges { target: root; color: "blue" } } ] }</db:programlisting>
          <db:para>See <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick States</db:link> and <db:link xlink:href="qtquick-statesanimations-animations.html">Animation and Transitions in Qt Quick</db:link> for more
                                         details on using states and transitions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-topic.html#transitions">transitions</db:link>
                </db:member>
@@ -1268,7 +1274,7 @@
          </db:informalfigure>
          <db:para>This example rotates an image around its
                                         bottom-right corner.</db:para>
-         <db:programlisting>Image { source: "myimage.png"transformOrigin:
+         <db:programlisting language="qml">Image { source: "myimage.png"transformOrigin:
                                             Item.BottomRightrotation: 45 }</db:programlisting>
          <db:para>To set an arbitrary transform origin point use the
                                             <db:link xlink:href="qml-qtquick-scale.html">Scale</db:link> or
@@ -1280,12 +1286,12 @@
                                         this item. These define the transitions to be applied to the
                                         item whenever it changes its <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>.</db:para>
          <db:para>This property is specified as a list of <db:link xlink:href="qmlexampletoggleswitch.html#transition">Transition</db:link> objects. For example:</db:para>
-         <db:programlisting>import QtQuick 2.0 Item { transitions: [ Transition { //... }, Transition { //... } ] }</db:programlisting>
+         <db:programlisting language="qml">import QtQuick 2.0 Item { transitions: [ Transition { //... }, Transition { //... } ] }</db:programlisting>
          <db:para>See <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick States</db:link> and <db:link xlink:href="qtquick-statesanimations-animations.html">Animation and Transitions in Qt Quick</db:link> for more
                                         details on using states and transitions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-topic.html#states">states</db:link>
                </db:member>
@@ -1329,7 +1335,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link>
                </db:member>
@@ -1352,21 +1358,21 @@
          <db:title>width : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
-         <db:programlisting>Item { x: 100; y:
+         <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="x-prop">
          <db:title>x : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
-         <db:programlisting>Item { x: 100; y:
+         <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="y-prop">
          <db:title>y : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
          <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
-         <db:programlisting>Item { x: 100; y:
+         <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="z-prop">
@@ -1393,11 +1399,13 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Rectangle { color: "red"width:
+                     <db:para>Same <db:code>z</db:code> - later
+                                                  children above earlier children:<db:programlisting>Item { Rectangle { color: "red"width:
                                                   100;
                                                   height:
                                                   100 }
                                                   Rectangle { color: "blue"x: 50; y: 50; width: 100; height: 100 } }</db:programlisting>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1411,12 +1419,14 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Rectangle { z: 1color:
+                     <db:para>Higher <db:code>z</db:code> on
+                                                  top:<db:programlisting>Item { Rectangle { z: 1color:
                                                   "red"width:
                                                   100;
                                                   height:
                                                   100 }
                                                   Rectangle { color: "blue"x: 50; y: 50; width: 100; height: 100 } }</db:programlisting>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1430,10 +1440,12 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Rectangle { color: "red"width:
+                     <db:para>Same <db:code>z</db:code> - children
+                                                  above parents:<db:programlisting>Item { Rectangle { color: "red"width:
                                                   100;
                                                   height:
                                                   100Rectangle { color: "blue"x: 50; y: 50; width: 100; height: 100 } } }</db:programlisting>
+                     </db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1447,11 +1459,13 @@
                      </db:informalfigure>
                   </db:td>
                   <db:td>
-                     <db:programlisting>Item { Rectangle { color: "red"width:
+                     <db:para>Lower <db:code>z</db:code>
+                                                  below:<db:programlisting>Item { Rectangle { color: "red"width:
                                                   100;
                                                   height:
                                                   100Rectangle { z: -1color:
                                                   "blue"x: 50; y: 50; width: 100; height: 100 } } }</db:programlisting>
+                     </db:para>
                   </db:td>
                </db:tr>
             </db:tbody>
@@ -1459,7 +1473,9 @@
       </db:section>
    </db:section>
    <db:section>
-      <db:title>Methods Documentation</db:title>
+      <db:title>
+            Methods Documentation
+          </db:title>
       <db:section xml:id="childAt-method">
          <db:title>childAt(real<db:emphasis> x</db:emphasis>,
                                                   real<db:emphasis>
@@ -1478,7 +1494,8 @@
                                         returns false otherwise.</db:para>
       </db:section>
       <db:section xml:id="forceActiveFocus-method-2">
-         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code><db:emphasis>
+         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code>
+            <db:emphasis>
                                                   reason</db:emphasis>)</db:title>
          <db:para>Forces active focus on the item with the given
                                             <db:emphasis>reason</db:emphasis>.</db:para>
@@ -1488,11 +1505,13 @@
          <db:para>This QML method was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
                </db:member>
-               <db:member><db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code></db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -1509,7 +1528,7 @@
                                         better handling of the focus change.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
                </db:member>
@@ -1529,11 +1548,11 @@
                                             <db:code>false</db:code>.</db:para>
          <db:para>The following snippet shows how to grab an item and
                                         store the results to a file.</db:para>
-         <db:programlisting>Rectangle { id: sourcewidth: 100height: 100gradient: Gradient { GradientStop { position: 0; color: "steelblue" } GradientStop { position: 1; color: "black" } } } //
+         <db:programlisting language="qml">Rectangle { id: sourcewidth: 100height: 100gradient: Gradient { GradientStop { position: 0; color: "steelblue" } GradientStop { position: 1; color: "black" } } } //
                                             ...source.grabToImage(function(result) { result.saveToFile("something.png"); });</db:programlisting>
          <db:para>The following snippet shows how to grab an item and use
                                         the results in another image element.</db:para>
-         <db:programlisting>Image { id: image } //
+         <db:programlisting language="qml">Image { id: image } //
                                             ...source.grabToImage(function(result) { image.source=result.url; }, Qt.size(50, 50));</db:programlisting>
          <db:note>
             <db:para>This function will render the

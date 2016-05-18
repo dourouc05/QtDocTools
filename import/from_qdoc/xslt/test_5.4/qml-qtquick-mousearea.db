@@ -104,7 +104,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>clicked</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:type>
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
@@ -113,7 +113,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>doubleClicked</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:type>
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
@@ -134,7 +134,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>positionChanged</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:type>
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
@@ -143,7 +143,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>pressAndHold</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:type>
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
@@ -152,7 +152,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>pressed</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:type>
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
@@ -161,7 +161,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>released</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:type>
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
@@ -170,7 +170,7 @@
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>wheel</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
+         <db:methodparam>
             <db:type xlink:href="qml-qtquick-wheelevent.html">WheelEvent</db:type>
             <db:parameter>wheel</db:parameter>
          </db:methodparam>
@@ -227,7 +227,7 @@
                                     height: 100color: "green"MouseArea { anchors.fill: parentacceptedButtons: Qt.LeftButton|Qt.RightButtononClicked: { if (mouse.button==Qt.RightButton) parent.color='blue'; elseparent.color='red'; } } }</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
                </db:member>
@@ -246,11 +246,12 @@
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="acceptedButtons-prop">
          <db:title>acceptedButtons :
-                                                  &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link>&lt;/db:code&gt;</db:title>
+                                                  <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:code>
+         </db:title>
          <db:para>This property holds the mouse buttons that the
                                         mouse area reacts to.</db:para>
          <db:para>To specify that the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
-                                        will react to multiple buttons, &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link>&lt;/db:code&gt; flag values are combined
+                                        will react to multiple buttons, <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:code> flag values are combined
                                         using the "|" (or) operator:</db:para>
          <db:programlisting>MouseArea { acceptedButtons: Qt.LeftButton |Qt.RightButton }</db:programlisting>
          <db:para>To indicate that all possible mouse buttons are to be
@@ -286,7 +287,7 @@
          <db:para>This QML property was introduced in Qt 5.4.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-mousearea.html#pressed-prop">pressed</db:link>
                </db:member>
@@ -297,7 +298,8 @@
          </db:section>
       </db:section>
       <db:section xml:id="cursorShape-prop">
-         <db:title>cursorShape : &lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link>&lt;/db:code&gt;</db:title>
+         <db:title>cursorShape : <db:code><db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link></db:code>
+         </db:title>
          <db:para>This property holds the cursor shape for this mouse
                                         area. Note that on platforms that do not display a mouse
                                         cursor this may have no effect.</db:para>
@@ -377,8 +379,10 @@
                                             <db:code>Qt.ArrowCursor</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>&lt;db:code&gt;<db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link>&lt;/db:code&gt;</db:member>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link></db:code>
+               </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
@@ -714,7 +718,7 @@
                                             <db:code>onEntered</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link>
                </db:member>
@@ -750,7 +754,7 @@
                                             <db:code>onExited</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-mousearea.html#hoverEnabled-prop">hoverEnabled</db:link>
                </db:member>
@@ -821,7 +825,7 @@
                                             <db:code>onReleased</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qml-qtquick-mousearea.html#canceled-signal">canceled</db:link>
                </db:member>
