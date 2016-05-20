@@ -125,7 +125,7 @@
       The following code will look after siblings of $description for classes, no copy allowed in this case!
     -->
     <xsl:variable name="hasActuallyNoDescription" as="xs:boolean"
-      select="not(boolean(//html:a[@name = 'details']/following-sibling::node()[1]))
+      select="not(boolean(//html:a[@name = 'details']/following-sibling::html:div[@class = 'descr']))
       and not(boolean(//html:span[@class = 'subtitle']))"/>
 
     <xsl:variable name="descriptionUsualPlace" as="element()?"
@@ -213,7 +213,12 @@
       <xsl:message>WARNING: Found no description, while there should be one. </xsl:message>
     </xsl:if>
     <xsl:variable name="siblingAfterDescription" as="element()?"
-      select="$descriptionUsualPlace/following-sibling::*[1]"/>
+      select="
+        if (not($hasActuallyNoDescription)) then
+          $descriptionUsualPlace/following-sibling::*[1]
+        else
+          //html:a[@name = 'details']/following-sibling::html:*[1]"
+    />
     <xsl:if test="$siblingAfterDescription and $isQmlType">
       <xsl:message>WARNING: QML types are not supposed to have siblings after description. Bug in
         the style sheets!</xsl:message>
@@ -512,7 +517,8 @@
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
-
+          <!-- <xsl:with-param name="publicFuncs" select="$publicFuncs"/> -->
+          
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
           <xsl:with-param name="inherits" select="$prologueInherits"/>
