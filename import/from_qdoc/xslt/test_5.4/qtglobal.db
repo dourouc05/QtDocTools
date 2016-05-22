@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0"
+    xml:lang="en">
+    <db:title>&lt;QtGlobal&gt; - Global Qt
+        Declarations</db:title>
+    <db:classsynopsis>
+        <db:ooclass>
+            <db:classname>QtGlobal</db:classname>
+        </db:ooclass>
+        <db:classsynopsisinfo role="isNamespace">
+            yes
+        </db:classsynopsisinfo>
+    </db:classsynopsis>
+    <db:para>The global declarations include <db:link xlink:href="qtglobal.html#types">types</db:link>, <db:link xlink:href="qtglobal.html#functions">functions</db:link> and
+        <db:link xlink:href="qtglobal.html#macros">macros</db:link>.</db:para>
+    <db:para>The type definitions are partly convenience definitions for
+        basic types (some of which guarantee certain bit-sizes on all
+        platforms supported by Qt), partly types related to Qt message
+        handling. The functions are related to generating messages, Qt
+        version handling and comparing and adjusting object values. And
+        finally, some of the declared macros enable programmers to add
+        compiler or platform specific code to their applications, while
+        others are convenience macros for larger operations.</db:para>
+    <db:section xml:id="types">
+        <db:title>Types</db:title>
+        <db:para>The header file declares several type definitions that
+            guarantee a specified bit-size on all platforms supported by Qt
+            for various basic types, for example <db:link xlink:href="qtglobal.html#qint8-typedef">qint8</db:link> which is a
+            signed char guaranteed to be 8-bit on all platforms supported by
+            Qt. The header file also declares the <db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link>
+            type definition for <db:code>long long int</db:code>
+            (<db:code>__int64</db:code> on Windows).</db:para>
+        <db:para>Several convenience type definitions are declared: <db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link> for
+            <db:code>double</db:code>, <db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link> for
+            <db:code>unsigned</db:code> char, <db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link> for
+            <db:code>unsigned</db:code> int, <db:link xlink:href="qtglobal.html#ulong-typedef">ulong</db:link> for
+            <db:code>unsigned</db:code> long and <db:link xlink:href="qtglobal.html#ushort-typedef">ushort</db:link> for
+            <db:code>unsigned</db:code> short.</db:para>
+        <db:para>Finally, the <db:code><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:code> definition identifies the various
+            messages that can be generated and sent to a Qt message handler;
+            <db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code> is a type definition for a
+            pointer to a function with the signature <db:code>void
+                myMessageHandler(QtMsgType, const QMessageLogContext &amp;,
+                const char *)</db:code>. <db:code><db:link xlink:href="qmessagelogcontext.html">QMessageLogContext</db:link></db:code>
+            class contains the line, file, and function the message was
+            logged at. This information is created by the <db:code><db:link xlink:href="qmessagelogger.html">QMessageLogger</db:link></db:code>
+            class.</db:para>
+        <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+                <db:member>
+                    <db:link xlink:href="qtalgorithms.html">&lt;QtAlgorithms&gt;</db:link>
+                </db:member>
+                <db:member>
+                    <db:code><db:link xlink:href="qsysinfo.html">QSysInfo</db:link></db:code>
+                </db:member>
+            </db:simplelist>
+        </db:section>
+    </db:section>
+    <db:section xml:id="functions">
+        <db:title>Functions</db:title>
+        <db:para>The &lt;QtGlobal&gt; header file contains several functions
+            comparing and adjusting an object's value. These functions take
+            a template type as argument: You can retrieve the absolute value
+            of an object using the <db:code><db:link xlink:href="qtglobal.html#qAbsx">qAbs</db:link>()</db:code> function, and you can bound a given
+            object's value by given minimum and maximum values using the
+            <db:code><db:link xlink:href="qtglobal.html#qBound">qBound</db:link>()</db:code>
+            function. You can retrieve the minimum and maximum of two given
+            objects using <db:code><db:link xlink:href="qtglobal.html#qMinx">qMin</db:link>()</db:code>
+            and <db:code><db:link xlink:href="qtglobal.html#qMaxx">qMax</db:link>()</db:code>
+            respectively. All these functions return a corresponding
+            template type; the template types can be replaced by any other
+            type.</db:para>
+        <db:para>Example:</db:para>
+        <db:programlisting>int
+            myValue =10; int minValue =2; int maxValue =6; int boundedValue =qBound(minValue, myValue, maxValue); //
+            boundedValue == 6</db:programlisting>
+        <db:para>&lt;QtGlobal&gt; also contains functions that generate
+            messages from the given string argument: <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>. These
+            functions call the message handler with the given
+            message.</db:para>
+        <db:para>Example:</db:para>
+        <db:programlisting>if
+            (!driver()-&gt;isOpen() ||
+            driver()-&gt;isOpenError()) { qWarning("QSqlQuery::exec: database not
+            open"); returnfalse; }</db:programlisting>
+        <db:para>The remaining functions are <db:code><db:link xlink:href="qtglobal.html#qRound">qRound</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qRound64">qRound64</db:link>()</db:code>, which
+            both accept a <db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link> value as their argument returning the value
+            rounded up to the nearest integer and 64-bit integer
+            respectively, the <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code> function which installs
+            the given <db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>, and the <db:code><db:link xlink:href="qtglobal.html#qVersion">qVersion</db:link>()</db:code> function
+            which returns the version number of Qt at run-time as a
+            string.</db:para>
+        <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+                <db:member>
+                    <db:link xlink:href="qtalgorithms.html">&lt;QtAlgorithms&gt;</db:link>
+                </db:member>
+                <db:member>
+                    <db:code><db:link xlink:href="qsysinfo.html">QSysInfo</db:link></db:code>
+                </db:member>
+            </db:simplelist>
+        </db:section>
+    </db:section>
+    <db:section xml:id="macros">
+        <db:title>Macros</db:title>
+        <db:para>The &lt;QtGlobal&gt; header file provides a range of macros
+            (Q_CC_*) that are defined if the application is compiled using
+            the specified platforms. For example, the <db:code><db:link xlink:href="qtglobal.html#Q_CC_SUN">Q_CC_SUN</db:link></db:code> macro is
+            defined if the application is compiled using Forte Developer, or
+            Sun Studio C++. The header file also declares a range of macros
+            (Q_OS_*) that are defined for the specified platforms. For
+            example, <db:code><db:link xlink:href="qtglobal.html#Q_OS_UNIX">Q_OS_UNIX</db:link></db:code> which is defined for the Unix-based
+            systems.</db:para>
+        <db:para>The purpose of these macros is to enable programmers to add
+            compiler or platform specific code to their
+            application.</db:para>
+        <db:para>The remaining macros are convenience macros for larger
+            operations: The <db:code><db:link xlink:href="qtglobal.html#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code> macros
+            provide the possibility of marking text for dynamic translation,
+            i.e. translation without changing the stored source text. The
+            <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
+            and <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code> enables warning messages of various level
+            of refinement. The <db:code><db:link xlink:href="qtglobal.html#Q_FOREACH">Q_FOREACH</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#foreach">foreach</db:link>()</db:code> macros
+            implement Qt's foreach loop.</db:para>
+        <db:para>The <db:code><db:link xlink:href="qtglobal.html#Q_INT64_C">Q_INT64_C</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code> macros
+            wrap signed and unsigned 64-bit integer literals in a
+            platform-independent way. The <db:code><db:link xlink:href="qtglobal.html#Q_CHECK_PTRx">Q_CHECK_PTR</db:link>()</db:code>
+            macro prints a warning containing the source code's file name
+            and line number, saying that the program ran out of memory, if
+            the pointer is 0. The <db:code><db:link xlink:href="qtglobal.html#qPrintable">qPrintable</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qUtf8Printable">qUtf8Printable</db:link>()</db:code> macros represent an easy way of
+            printing text.</db:para>
+        <db:para>Finally, the <db:code><db:link xlink:href="qtglobal.html#QT_POINTER_SIZE">QT_POINTER_SIZE</db:link></db:code> macro expands to the size of a
+            pointer in bytes, and the <db:code><db:link xlink:href="qtglobal.html#QT_VERSION">QT_VERSION</db:link></db:code> and
+            <db:code><db:link xlink:href="qtglobal.html#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code> macros expand to a numeric value or
+            a string, respectively, specifying Qt's version number, i.e the
+            version the application is compiled against.</db:para>
+        <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+                <db:member>
+                    <db:link xlink:href="qtalgorithms.html">&lt;QtAlgorithms&gt;</db:link>
+                </db:member>
+                <db:member>
+                    <db:code><db:link xlink:href="qsysinfo.html">QSysInfo</db:link></db:code>
+                </db:member>
+            </db:simplelist>
+        </db:section>
+    </db:section>
+</db:article>

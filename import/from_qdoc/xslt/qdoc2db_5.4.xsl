@@ -61,6 +61,9 @@
         <xsl:value-of select="substring-before($title, ' Class')"/>
       </xsl:if>
     </xsl:variable>
+    
+    <xsl:variable name="isGlobal" as="xs:boolean"
+      select="ends-with($title, ' Declarations') and starts-with($title, '&lt;QtGlobal&gt;')"/>
 
     <xsl:variable name="isNamespace" as="xs:boolean"
       select="ends-with($title, ' Namespace') and count(contains($title, ' ')) = 1"/>
@@ -258,8 +261,22 @@
       select="$remainingAfterIndex[@class = 'func']"/>
     <xsl:variable name="nonmems" as="element(html:div)?"
       select="$remainingAfterIndex[@class = 'relnonmem']"/>
-    <xsl:variable name="macros" as="element(html:div)?"
-      select="$remainingAfterIndex[@class = 'macros']"/>
+    <xsl:variable name="macros" as="element(html:div)?">
+      <xsl:choose>
+        <xsl:when test="$remainingAfterIndex[@class = 'macros']">
+          <xsl:copy-of select="$remainingAfterIndex[@class = 'macros']"/>
+        </xsl:when>
+        <xsl:when test="//html:h2[text() = 'Macro Documentation']">
+          <xsl:message>TODO: generic handling for macros and the like!</xsl:message>
+          <xsl:variable name="title" select="//html:h2[text() = 'Macro Documentation']"/>
+          <html:div class="macros">
+            <xsl:for-each select="./following::node()[preceding-sibling::html:h2 != $title]">
+              <xsl:copy-of select="."/>
+            </xsl:for-each>
+          </html:div>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="vars" as="element(html:div)?"
       select="$remainingAfterIndex[@class = 'vars']"/>
 
@@ -555,14 +572,17 @@
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$isNamespace">
+      <xsl:if test="$isNamespace or $isGlobal">
+        <xsl:message>TODO: macros!</xsl:message>
+        <xsl:message>TODO: obsoletes!</xsl:message>
         <xsl:call-template name="classListing">
-          <xsl:with-param name="className" select="$namespaceName"/>
+          <xsl:with-param name="className" select="if ($isGlobal) then 'QtGlobal' else $namespaceName"/>
           <xsl:with-param name="isNamespace" select="true()"/>
 
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
+          <!-- <xsl:with-param name="macros" select="$macros"/> -->
 
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
