@@ -53,6 +53,40 @@
                                 softened. For use cases that require faster rendering speed and the
                                 highest possible visual quality is not necessary, property <db:link xlink:href="qml-qtgraphicaleffects-glow.html#fast-prop">fast</db:link>
                                 can be set to true.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Source</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Effect applied</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:informalfigure>
+                     <db:mediaobject>
+                        <db:imageobject>
+                           <db:imagedata fileref="images/Original_butterfly_black.png"/>
+                        </db:imageobject>
+                     </db:mediaobject>
+                  </db:informalfigure>
+               </db:td>
+               <db:td>
+                  <db:informalfigure>
+                     <db:mediaobject>
+                        <db:imageobject>
+                           <db:imagedata fileref="images/Glow_butterfly.png"/>
+                        </db:imageobject>
+                     </db:mediaobject>
+                  </db:informalfigure>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
       <db:section>
          <db:title>Example</db:title>
          <db:para>The following example shows how to apply the effect.</db:para>

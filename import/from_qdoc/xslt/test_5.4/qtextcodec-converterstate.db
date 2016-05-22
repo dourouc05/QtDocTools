@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0"
+            xml:lang="en">
+   <db:title>ConverterState Class</db:title>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>ConverterState</db:classname>
+      </db:ooclass>
+      <db:constructorsynopsis xlink:href="#ConverterState">
+         <db:methodname>ConverterState</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( ConversionFlags 
+                                        flags  = DefaultConversion)</db:exceptionname>
+      </db:constructorsynopsis>
+      <db:destructorsynopsis xlink:href="dtor.ConverterState">
+         <db:methodname>~ConverterState</db:methodname>
+         <db:void/>
+      </db:destructorsynopsis>
+   </db:classsynopsis>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section xml:id="ConverterState">
+         <db:title>ConverterState::ConverterState(ConversionFlags flags = DefaultConversion)</db:title>
+         <db:para>Constructs a <db:link xlink:href="qtextcodec-converterstate.html">ConverterState</db:link> object initialized with the given
+                                        <db:emphasis>flags</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="dtor.ConverterState">
+         <db:title>ConverterState::~ConverterState()</db:title>
+         <db:para>Destroys the <db:link xlink:href="qtextcodec-converterstate.html">ConverterState</db:link> object.</db:para>
+      </db:section>
+   </db:section>
+</db:article>

@@ -167,14 +167,19 @@
 
             <html:div class="descr">
               <html:h2>Detailed Description</html:h2>
+              <!-- 
+                For each interesting element: 
+                  * for paragraphs: cannot be empty, except if there are children
+                  * for titles: avoid those that are not part of the description
+                  * for everything: not attached to another title than the description's 
+              -->
               <xsl:for-each
                 select="
                   $descTitle
                   /following-sibling::html:*[
-                  text() != ''
-                  and text() != $propText
-                  and text() != $attachedPropText
-                  and text() != $methText
+                  (not(self::html:p) or (text() != '' or child::html:*))
+                  and (not(self::html:h2) or (text() != $propText and text() != $attachedPropText and text() != $methText))
+                  and not(self::html:a and @name)
                   and not(
                   generate-id(preceding-sibling::html:h2[1]) = $propTitleId
                   or

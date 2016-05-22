@@ -469,12 +469,61 @@
                                 each item individually. This can lead to undesired visual results
                                 when the opacity is applied to a subtree. Consider the following
                                 example:</db:para>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>
+                        <db:para>
+                           <db:inlinemediaobject>
+                              <db:imageobject>
+                                 <db:imagedata fileref="images/qml-blending-nonlayered.png"/>
+                              </db:imageobject>
+                           </db:inlinemediaobject>
+                        </db:para>
+                     </db:td>
+                     <db:td>
+                        <db:para>
+                           <db:emphasis role="bold">Non-layered Opacity</db:emphasis>
+                           <db:programlisting>Item { id: nonLayeredopacity:
+                                                  0.5width:
+                                                  100height:
+                                                  100Rectangle { width: 80; height: 80; border.width: 1 } Rectangle { x: 20; y: 20; width: 80; height: 80; border.width: 1 } }</db:programlisting>
+                        </db:para>
+                     </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
             <db:para>A layer is rendered with the root item's opacity being 1, and
                                 then the root item's opacity is applied to the texture when it is
                                 drawn. This means that fading in a large item hierarchy from
                                 transparent to opaque, or vice versa, can be done without the
                                 overlap artifacts that the normal item by item alpha blending has.
                                 Here is the same example with layer enabled:</db:para>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>
+                        <db:informalfigure>
+                           <db:mediaobject>
+                              <db:imageobject>
+                                 <db:imagedata fileref="images/qml-blending-layered.png"/>
+                              </db:imageobject>
+                           </db:mediaobject>
+                        </db:informalfigure>
+                     </db:td>
+                     <db:td>
+                        <db:para>
+                           <db:emphasis role="bold">Layered Opacity</db:emphasis>
+                           <db:programlisting>Item { id: layeredopacity:
+                                                  0.5layer.enabled:
+                                                  truewidth:
+                                                  100height:
+                                                  100Rectangle { width: 80; height: 80; border.width: 1 } Rectangle { x: 20; y: 20; width: 80; height: 80; border.width: 1 } }</db:programlisting>
+                        </db:para>
+                     </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
          </db:section>
          <db:section>
             <db:title>Combined with ShaderEffects</db:title>

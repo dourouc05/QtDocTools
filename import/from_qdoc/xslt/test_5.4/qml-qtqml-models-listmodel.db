@@ -133,6 +133,13 @@
          <db:para>The following example shows a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link>
                                 containing three elements, with the roles "name" and
                                 "cost".</db:para>
+         <db:informalfigure>
+            <db:mediaobject>
+               <db:imageobject>
+                  <db:imagedata fileref="images/listmodel.png"/>
+               </db:imageobject>
+            </db:mediaobject>
+         </db:informalfigure>
          <db:programlisting language="qml">import QtQuick 2.0 ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45 } ListElement { name: "Orange"cost: 3.25 } ListElement { name: "Banana"cost: 1.95 } }</db:programlisting>
          <db:para>Roles (properties) in each element must begin with a lower-case
                                 letter and should be common to all elements in a model. The <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link>
@@ -149,6 +156,13 @@
                                 example we create a list of fruit attributes:</db:para>
          <db:programlisting language="qml">ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45attributes: [ ListElement { description: "Core" }, ListElement { description: "Deciduous" } ] } ListElement { name: "Orange"cost: 3.25attributes: [ ListElement { description: "Citrus" } ] } ListElement { name: "Banana"cost: 1.95attributes: [ ListElement { description: "Tropical" }, ListElement { description: "Seedless" } ] } }</db:programlisting>
          <db:para>The delegate displays all the fruit attributes:</db:para>
+         <db:informalfigure>
+            <db:mediaobject>
+               <db:imageobject>
+                  <db:imagedata fileref="images/listmodel-nested.png"/>
+               </db:imageobject>
+            </db:mediaobject>
+         </db:informalfigure>
          <db:programlisting language="qml">Component { id: fruitDelegateItem { width: 200;
                                     height: 50Text { id: nameField;
                                     text: name } Text { text: '$'+cost; anchors.left: nameField.right
