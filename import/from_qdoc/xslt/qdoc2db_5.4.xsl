@@ -294,7 +294,7 @@
         <xsl:with-param name="title" select="'Member Type Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="properties" as="element(html:div)?">
+    <xsl:variable name="properties" as="element(html:div)?"><!-- Both C++ and QML properties! -->
       <xsl:call-template name="lookupSection">
         <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
         <xsl:with-param name="anchor" select="'prop'"/>
@@ -342,19 +342,6 @@
         <xsl:with-param name="anchor" select="'vars'"/>
         <xsl:with-param name="title" select="'Member Variable Documentation'"/>
       </xsl:call-template>
-    </xsl:variable>
-
-    <xsl:variable name="qmlProps" as="element(html:div)?">
-      <xsl:variable name="qmlPropsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Property Documentation']"/>
-      <xsl:if test="$isQmlType and boolean($qmlPropsTitle)">
-        <html:div class="qml-props">
-          <xsl:for-each
-            select="
-            $qmlPropsTitle/following-sibling::html:div[@class = 'qmlitem'][./preceding-sibling::html:h2[1] = $qmlPropsTitle]">
-            <xsl:copy-of select="current()"/>
-          </xsl:for-each>
-        </html:div>
-      </xsl:if>
     </xsl:variable>
 
     <xsl:variable name="qmlAttachedProps" as="element(html:div)?">
@@ -424,9 +411,6 @@
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
     <!-- A C++ class can perfectly have no functions! Example: QQuickItem::ItemChangedData. -->
-    <xsl:if test="$isClass and boolean($qmlProps)">
-      <xsl:message terminate="no">WARNING: A C++ class has QML properties.</xsl:message>
-    </xsl:if>
     <xsl:if test="$isClass and boolean($qmlAttachedProps)">
       <xsl:message terminate="no">WARNING: A C++ class has QML attached properties.</xsl:message>
     </xsl:if>
@@ -450,9 +434,6 @@
     </xsl:if>
     <xsl:if test="$isQmlType and boolean($types)">
       <xsl:message terminate="no">WARNING: A QML type has C++ types.</xsl:message>
-    </xsl:if>
-    <xsl:if test="$isQmlType and boolean($properties)">
-      <xsl:message terminate="no">WARNING: A QML type has C++ properties.</xsl:message>
     </xsl:if>
     <xsl:if test="$isQmlType and boolean($vars)">
       <xsl:message terminate="no">WARNING: A QML type has C++ variables.</xsl:message>
@@ -653,7 +634,7 @@
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
 
-          <xsl:with-param name="props" select="$qmlProps"/>
+          <xsl:with-param name="props" select="$properties"/>
           <xsl:with-param name="attachedProps" select="$qmlAttachedProps"/>
           <xsl:with-param name="meths" select="$qmlMeths"/>
           <xsl:with-param name="signals" select="$qmlSignals"/>
@@ -678,7 +659,7 @@
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$properties">
+      <xsl:if test="$properties and not($isQmlType)">
         <xsl:call-template name="content_props">
           <xsl:with-param name="data" select="$properties"/>
         </xsl:call-template>
@@ -721,9 +702,9 @@
       </xsl:if>
 
       <!-- There may be properties and methods for QML types. -->
-      <xsl:if test="$qmlProps">
+      <xsl:if test="$properties and $isQmlType">
         <xsl:call-template name="content_qmlProps">
-          <xsl:with-param name="data" select="$qmlProps"/>
+          <xsl:with-param name="data" select="$properties"/>
         </xsl:call-template>
       </xsl:if>
 
