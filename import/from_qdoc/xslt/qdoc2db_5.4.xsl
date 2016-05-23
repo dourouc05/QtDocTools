@@ -343,53 +343,26 @@
         <xsl:with-param name="title" select="'Member Variable Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
-
     <xsl:variable name="qmlAttachedProps" as="element(html:div)?">
-      <xsl:variable name="qmlAttachedPropsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Attached Property Documentation']"/>
-      <xsl:if test="$isQmlType and boolean($qmlAttachedPropsTitle)">
-        <html:div class="qml-attached-props">
-          <xsl:for-each
-            select="
-              $qmlAttachedPropsTitle
-              /following-sibling::html:div[
-              @class = 'qmlitem' and preceding-sibling::html:h2[1] = $qmlAttachedPropsTitle
-              ]">
-            <xsl:copy-of select="current()"/>
-          </xsl:for-each>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'qml-attached-props'"/><!-- No anchor! -->
+        <xsl:with-param name="title" select="'Attached Property Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
-
     <xsl:variable name="qmlMeths" as="element(html:div)?">
-      <xsl:variable name="qmlMethsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Method Documentation']"/>
-      <xsl:if test="$isQmlType and boolean($qmlMethsTitle)">
-        <html:div class="qml-meths">
-          <xsl:for-each
-            select="
-              $qmlMethsTitle
-              /following-sibling::html:div[
-              @class = 'qmlitem' and preceding-sibling::html:h2[1] = $qmlMethsTitle
-              ]">
-            <xsl:copy-of select="current()"/>
-          </xsl:for-each>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'qml-meths'"/><!-- No anchor! -->
+        <xsl:with-param name="title" select="'Method Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
-
     <xsl:variable name="qmlSignals" as="element(html:div)?">
-      <xsl:variable name="qmlSignalsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Signal Documentation']"/>
-      <xsl:if test="$isQmlType and boolean($qmlSignalsTitle)">
-        <html:div class="qml-signals">
-          <xsl:for-each
-            select="
-              $qmlSignalsTitle
-              /following-sibling::html:div[
-              @class = 'qmlitem' and preceding-sibling::html:h2[1] = $qmlSignalsTitle
-              ]">
-            <xsl:copy-of select="current()"/>
-          </xsl:for-each>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'qml-signals'"/><!-- No anchor! -->
+        <xsl:with-param name="title" select="'Signal Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <!-- Error checks. -->
