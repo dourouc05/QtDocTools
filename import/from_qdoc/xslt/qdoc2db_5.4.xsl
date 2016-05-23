@@ -145,8 +145,35 @@
                 <xsl:copy-of select="$descriptionUsualPlace"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:message>WARNING: no title for detailed description! </xsl:message>
-                <xsl:copy-of select="$descriptionUsualPlace"/>
+                <html:div class="descr">
+                  <xsl:copy-of select="$descriptionUsualPlace/html:a[1]"/>
+                  <html:h2>Detailed description</html:h2>
+                  <xsl:for-each select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*">
+                    <!-- 
+                       For each interesting element: 
+                         * for paragraphs: cannot be empty, except if there are children
+                         * for titles: avoid those that are not part of the description
+                         * for everything: not attached to another title than the description's 
+                    -->
+                    <xsl:choose>
+                      <xsl:when test="current()[self::html:h2]">
+                        <html:h3>
+                          <xsl:attribute name="id" select="current()/@id"/>
+                          <xsl:value-of select="current()"/>
+                        </html:h3>
+                      </xsl:when>
+                      <xsl:when test="current()[self::html:h3]">
+                        <html:h4>
+                          <xsl:attribute name="id" select="current()/@id"/>
+                          <xsl:value-of select="current()"/>
+                        </html:h4>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:copy-of select="current()"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </xsl:for-each>
+                </html:div>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:when>
@@ -199,14 +226,14 @@
                 <xsl:choose>
                   <xsl:when test="current()[self::html:h2]">
                     <html:h3>
-                      <xsl:attribute name="id" select="current()[@id]"/>
+                      <xsl:attribute name="id" select="current()/@id"/>
                       <xsl:value-of select="current()"/>
                     </html:h3>
                   </xsl:when>
                   <xsl:when
                     test="current()[self::html:h3][preceding-sibling::html:h2[1] != $descTitle]">
                     <html:h4>
-                      <xsl:attribute name="id" select="current()[@id]"/>
+                      <xsl:attribute name="id" select="current()/@id"/>
                       <xsl:value-of select="current()"/>
                     </html:h4>
                   </xsl:when>
@@ -2051,18 +2078,9 @@
     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
       <db:section>
         <!-- Handle anchors. -->
-        <xsl:choose>
-          <xsl:when test=".[@id]">
-            <xsl:attribute name="xml:id">
-              <xsl:value-of select="./@id"/>
-            </xsl:attribute>
-          </xsl:when>
-          <xsl:when test="./preceding-sibling::html:a[@name]">
-            <xsl:attribute name="xml:id">
-              <xsl:value-of select="./preceding-sibling::html:a[@name][last()]/@name"/>
-            </xsl:attribute>
-          </xsl:when>
-        </xsl:choose>
+        <xsl:attribute name="xml:id">
+          <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+        </xsl:attribute>
 
         <!-- Handle title then subsections. In rare occasions, some sections are empty, and are directly followed by another title. -->
         <db:title>
@@ -2075,6 +2093,9 @@
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
               <db:section>
+                <xsl:attribute name="xml:id">
+                  <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                </xsl:attribute>
                 <db:title>
                   <xsl:copy-of select="./text()"/>
                 </db:title>
@@ -2086,6 +2107,9 @@
                   <xsl:choose>
                     <xsl:when test="current-group()[self::html:h4]">
                       <db:section>
+                        <xsl:attribute name="xml:id">
+                          <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                        </xsl:attribute>
                         <db:title>
                           <xsl:copy-of select="./text()"/>
                         </db:title>
@@ -2097,6 +2121,9 @@
                           <xsl:choose>
                             <xsl:when test="current-group()[self::html:h5]">
                               <db:section>
+                                <xsl:attribute name="xml:id">
+                                  <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                                </xsl:attribute>
                                 <db:title>
                                   <xsl:copy-of select="./text()"/>
                                 </db:title>
@@ -2109,6 +2136,9 @@
                                   <xsl:choose>
                                     <xsl:when test="current-group()[self::html:h6]">
                                       <db:section>
+                                        <xsl:attribute name="xml:id">
+                                          <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                                        </xsl:attribute>
                                         <db:title>
                                           <xsl:copy-of select="./text()"/>
                                         </db:title>
