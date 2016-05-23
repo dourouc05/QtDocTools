@@ -1455,7 +1455,7 @@
       </db:orderedlist>
       <db:para>
          <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> has many member functions, but some of them have little direct functionality; for example, <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> has a font property, but never uses this itself. There are many subclasses which provide real functionality, such as <db:code><db:link xlink:href="qlabel.html">QLabel</db:link></db:code>, <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>, <db:code><db:link xlink:href="qlistwidget.html">QListWidget</db:link></db:code>, and <db:code><db:link xlink:href="qtabwidget.html">QTabWidget</db:link></db:code>.</db:para>
-      <db:section>
+      <db:section xml:id="top-level-and-child-widgets">
          <db:title>Top-Level and Child Widgets</db:title>
          <db:para>A widget without a parent widget is always an independent window (top-level widget). For these widgets, <db:code><db:link xlink:href="qwidget.html#windowTitle-prop">setWindowTitle</db:link>()</db:code> and <db:code><db:link xlink:href="qwidget.html#windowIcon-prop">setWindowIcon</db:link>()</db:code> set the title bar and icon respectively.</db:para>
          <db:para>Non-window widgets are child widgets, displayed within their parent widgets. Most widgets in Qt are mainly useful as child widgets. For example, it is possible to display a button as a top-level window, but most people prefer to put their buttons inside other widgets, such as <db:code><db:link xlink:href="qdialog.html">QDialog</db:link></db:code>.</db:para>
@@ -1470,18 +1470,18 @@
          <db:para>The diagram above shows a <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code> widget being used to hold various child widgets in a layout provided by <db:code><db:link xlink:href="qgridlayout.html">QGridLayout</db:link></db:code>. The <db:code><db:link xlink:href="qlabel.html">QLabel</db:link></db:code> child widgets have been outlined to indicate their full sizes.</db:para>
          <db:para>If you want to use a <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> to hold child widgets you will usually want to add a layout to the parent <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code>. See <db:link xlink:href="layout.html">Layout Management</db:link> for more information.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="composite-widgets">
          <db:title>Composite Widgets</db:title>
          <db:para>When a widget is used as a container to group a number of child widgets, it is known as a composite widget. These can be created by constructing a widget with the required visual properties - a <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code>, for example - and adding child widgets to it, usually managed by a layout. The above diagram shows such a composite widget that was created using Qt Designer.</db:para>
          <db:para>Composite widgets can also be created by subclassing a standard widget, such as <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> or <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code>, and adding the necessary layout and child widgets in the constructor of the subclass. Many of the <db:link xlink:href="qtdoc/install-wince.html#qt-examples">examples provided with Qt</db:link> use this approach, and it is also covered in the Qt <db:link xlink:href="qtwidgets-index.html#tutorials">Tutorials</db:link>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="custom-widgets-and-painting">
          <db:title>Custom Widgets and Painting</db:title>
          <db:para>Since <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> is a subclass of <db:code><db:link xlink:href="qtgui/qpaintdevice.html">QPaintDevice</db:link></db:code>, subclasses can be used to display custom content that is composed using a series of painting operations with an instance of the <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code> class. This approach contrasts with the canvas-style approach used by the <db:link xlink:href="graphicsview.html#graphics-view">Graphics View Framework</db:link> where items are added to a scene by the application and are rendered by the framework itself.</db:para>
          <db:para>Each widget performs all painting operations from within its <db:code><db:link xlink:href="qwidget.html#paintEvent">paintEvent</db:link>()</db:code> function. This is called whenever the widget needs to be redrawn, either as a result of some external change or when requested by the application.</db:para>
          <db:para>The <db:link xlink:href="qtwidgets-widgets-analogclock-example.html">Analog Clock example</db:link> shows how a simple widget can handle paint events.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="size-hints-and-size-policies">
          <db:title>Size Hints and Size Policies</db:title>
          <db:para>When implementing a new widget, it is almost always useful to reimplement <db:code><db:link xlink:href="qwidget.html#sizeHint-prop">sizeHint</db:link>()</db:code> to provide a reasonable default size for the widget and to set the correct size policy with <db:code><db:link xlink:href="qwidget.html#sizePolicy-prop">setSizePolicy</db:link>()</db:code>.</db:para>
          <db:para>By default, composite widgets which do not provide a size hint will be sized according to the space requirements of their child widgets.</db:para>
@@ -1490,7 +1490,7 @@
             <db:para>The size of top-level widgets are constrained to 2/3 of the desktop's height and width. You can <db:code><db:link xlink:href="qwidget.html#size-prop">resize</db:link>()</db:code> the widget manually if these bounds are inadequate.</db:para>
          </db:note>
       </db:section>
-      <db:section>
+      <db:section xml:id="events">
          <db:title>Events</db:title>
          <db:para>Widgets respond to events that are typically caused by user actions. Qt delivers events to widgets by calling specific event handler functions with instances of <db:code><db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:code> subclasses containing information about each event.</db:para>
          <db:para>If your widget only contains child widgets, you probably do not need to implement any event handlers. If you want to detect a mouse click in a child widget call the child's <db:code><db:link xlink:href="qwidget.html#underMouse">underMouse</db:link>()</db:code> function inside the widget's <db:code><db:link xlink:href="qwidget.html#mousePressEvent">mousePressEvent</db:link>()</db:code>.</db:para>
@@ -1568,7 +1568,7 @@
          <db:para>The default implementation of <db:code><db:link xlink:href="qwidget.html#event">event</db:link>()</db:code> handles <db:emphasis role="bold">Tab</db:emphasis> and <db:emphasis role="bold">Shift+Tab</db:emphasis> (to move the keyboard focus), and passes on most of the other events to one of the more specialized handlers above.</db:para>
          <db:para>Events and the mechanism used to deliver them are covered in <db:link xlink:href="qtcore/eventsandfilters.html">The Event System</db:link>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="groups-of-functions-and-properties">
          <db:title>Groups of Functions and Properties</db:title>
          <db:informaltable>
             <db:thead>
@@ -1687,12 +1687,12 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="widget-style-sheets">
          <db:title>Widget Style Sheets</db:title>
          <db:para>In addition to the standard widget styles for each platform, widgets can also be styled according to rules specified in a <db:link xlink:href="stylesheet.html#stylesheet">style sheet</db:link>. This feature enables you to customize the appearance of specific widgets to provide visual cues to users about their purpose. For example, a button could be styled in a particular way to indicate that it performs a destructive action.</db:para>
          <db:para>The use of widget style sheets is described in more detail in the <db:link xlink:href="stylesheet.html">Qt Style Sheets</db:link> document.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="transparency-and-double-buffering">
          <db:title>Transparency and Double Buffering</db:title>
          <db:para>Since Qt 4.0, <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> automatically double-buffers its painting, so there is no need to write double-buffering code in <db:code><db:link xlink:href="qwidget.html#paintEvent">paintEvent</db:link>()</db:code> to avoid flicker.</db:para>
          <db:para>Since Qt 4.1, the <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_ContentsPropagated</db:link></db:code> widget attribute has been deprecated. Instead, the contents of parent widgets are propagated by default to each of their children as long as <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_PaintOnScreen</db:link></db:code> is not set. Custom widgets can be written to take advantage of this feature by updating irregular regions (to create non-rectangular child widgets), or painting with colors that have less than full alpha component. The following diagram shows how attributes and properties of a custom widget can be fine-tuned to achieve different effects.</db:para>
@@ -1728,7 +1728,7 @@
          </db:informalfigure>
          <db:para>The scope for customizing the painting behavior of standard Qt widgets, without resorting to subclassing, is slightly less than that possible for custom widgets. Usually, the desired appearance of a standard widget can be achieved by setting its <db:link xlink:href="qwidget.html#autoFillBackground-prop">autoFillBackground</db:link> property.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="creating-translucent-windows">
          <db:title>Creating Translucent Windows</db:title>
          <db:para>Since Qt 4.5, it has been possible to create windows with translucent regions on window systems that support compositing.</db:para>
          <db:para>To enable this feature in a top-level widget, set its <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_TranslucentBackground</db:link></db:code> attribute with <db:code><db:link xlink:href="qwidget.html#setAttribute">setAttribute</db:link>()</db:code> and ensure that its background is painted with non-opaque colors in the regions you want to be partially transparent.</db:para>
@@ -1742,7 +1742,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="native-widgets-vs-alien-widgets">
          <db:title>Native Widgets vs Alien Widgets</db:title>
          <db:para>Introduced in Qt 4.4, alien widgets are widgets unknown to the windowing system. They do not have a native window handle associated with them. This feature significantly speeds up widget painting, resizing, and removes flicker.</db:para>
          <db:para>Should you require the old behavior with native windows, you can choose one of the following options:</db:para>

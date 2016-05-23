@@ -1956,17 +1956,17 @@
                                     null byte array (<db:emphasis>not</db:emphasis> a null pointer), and
                                         <db:code><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link>()</db:code> compares equal to <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code>. We recommend
                                     that you always use <db:code><db:link xlink:href="qbytearray.html#isEmpty">isEmpty</db:link>()</db:code> and avoid <db:code><db:link xlink:href="qbytearray.html#isNull">isNull</db:link>()</db:code>.</db:para>
-      <db:section>
+      <db:section xml:id="notes-on-locale">
          <db:title>Notes on Locale</db:title>
          <db:para/>
-         <db:section>
+         <db:section xml:id="number-string-conversions">
             <db:title>Number-String Conversions</db:title>
             <db:para>Functions that perform conversions between numeric data
                                     types and strings are performed in the C locale, irrespective of
                                     the user's locale settings. Use <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> to perform locale-aware conversions
                                     between numbers and strings.</db:para>
          </db:section>
-         <db:section>
+         <db:section xml:id="8-bit-character-comparisons">
             <db:title>8-bit Character Comparisons</db:title>
             <db:para>In <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code>, the
                                     notion of uppercase and lowercase and of which character is
@@ -4759,25 +4759,6 @@
       </db:section>
    </db:section>
    <db:section>
-      <db:title>Macro Documentation</db:title>
-      <db:section>
-         <db:title>QT_NO_CAST_FROM_BYTEARRAY</db:title>
-         <db:para>Disables automatic conversions from <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> to const char *
-                                    or const void *.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist>
-               <db:member>
-                  <db:code><db:link xlink:href="qstring.html#QT_NO_CAST_TO_ASCII">QT_NO_CAST_TO_ASCII</db:link></db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qstring.html#QT_NO_CAST_FROM_ASCII">QT_NO_CAST_FROM_ASCII</db:link></db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-   </db:section>
-   <db:section>
       <db:title>Related Non-Members</db:title>
       <db:section>
          <db:title>quint16 qChecksum(const char * data, uint len)</db:title>
@@ -5335,6 +5316,25 @@
                <db:member>
                   <db:link xlink:href="datastreamformat.html">Serializing Qt Data
                                         Types</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Macro Documentation</db:title>
+      <db:section>
+         <db:title>QT_NO_CAST_FROM_BYTEARRAY</db:title>
+         <db:para>Disables automatic conversions from <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> to const char *
+                                    or const void *.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist>
+               <db:member>
+                  <db:code><db:link xlink:href="qstring.html#QT_NO_CAST_TO_ASCII">QT_NO_CAST_TO_ASCII</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qstring.html#QT_NO_CAST_FROM_ASCII">QT_NO_CAST_FROM_ASCII</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>

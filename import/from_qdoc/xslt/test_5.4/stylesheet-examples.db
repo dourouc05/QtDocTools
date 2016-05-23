@@ -9,7 +9,7 @@
    <db:section xml:id="style-sheet-usage">
       <db:title>Style Sheet Usage</db:title>
       <db:para/>
-      <db:section>
+      <db:section xml:id="customizing-the-foreground-and-background-colors">
          <db:title>Customizing the Foreground and Background Colors</db:title>
          <db:para>Let's start by setting yellow as the background color of all
                                         <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>s in an
@@ -40,7 +40,7 @@
                                         yellow;""selection-color: yellow;""selection-background-color:
                                         blue;");</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-using-dynamic-properties">
          <db:title>Customizing Using Dynamic Properties</db:title>
          <db:para>There are many situations where we need to present a form
                                     that has mandatory fields. To indicate to the user that the
@@ -60,7 +60,7 @@
                                     fly and set it to true. For example:</db:para>
          <db:programlisting>QLineEdit*nameEdit =newQLineEdit(this); nameEdit-&gt;setProperty("mandatoryField",true); QLineEdit*emailEdit =newQLineEdit(this); emailEdit-&gt;setProperty("mandatoryField",true); QSpinBox*ageSpinBox =newQSpinBox(this); ageSpinBox-&gt;setProperty("mandatoryField",true);</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-a-qpushbutton-using-the-box-model">
          <db:title>Customizing a QPushButton Using the Box Model</db:title>
          <db:para>This time, we will show how to create a red <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>. This <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> would
                                     presumably be connected to a very destructive piece of
@@ -142,7 +142,7 @@
                                         background-color:
                                         rgb(224,0,0); border-style: inset; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-the-qpushbutton-s-menu-indicator-sub-control">
          <db:title>Customizing the QPushButton's Menu Indicator
                                     Sub-Control</db:title>
          <db:para>Subcontrols give access to the sub-elements of a widget. For
@@ -165,7 +165,7 @@
          <db:para>This positions the <db:code>myindicator.png</db:code> to
                                     the center right of the <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>'s <db:link xlink:href="stylesheet-reference.html#padding-prop">padding</db:link> rectangle (see <db:link xlink:href="stylesheet-reference.html#subcontrol-origin-prop">subcontrol-origin</db:link> for more information).</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="complex-selector-example">
          <db:title>Complex Selector Example</db:title>
          <db:para>Since red seems to be our favorite color, let's make the
                                     text in <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> red by
@@ -219,7 +219,7 @@
                                     Widgets</db:title>
       <db:para>This section provides examples to customize specific widgets
                                     using Style Sheets.</db:para>
-      <db:section>
+      <db:section xml:id="customizing-qabstractscrollarea">
          <db:title>Customizing QAbstractScrollArea</db:title>
          <db:para>The background of any <db:code><db:link xlink:href="qabstractscrollarea.html">QAbstractScrollArea</db:link></db:code>
                                     (Item views, <db:code><db:link xlink:href="qtextedit.html">QTextEdit</db:link></db:code>
@@ -237,7 +237,7 @@
                                         url(draft.png);
                                         background-attachment: fixed; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qcheckbox">
          <db:title>Customizing QCheckBox</db:title>
          <db:para>Styling of a <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code> is almost identical to styling a <db:code><db:link xlink:href="qradiobutton.html">QRadioButton</db:link></db:code>. The main
                                     difference is that a tristate <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code> has an indeterminate state.</db:para>
@@ -251,7 +251,7 @@
                                     { image: url(:/images/checkbox_indeterminate_hover.png); } QCheckBox::indicator:indeterminate:pressed { image:
                                         url(:/images/checkbox_indeterminate_pressed.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qcombobox">
          <db:title>Customizing QComboBox</db:title>
          <db:para>We will look at an example where the drop down button of a
                                         <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> appears
@@ -289,7 +289,7 @@
                                         2px solid darkgray;
                                         selection-background-color: lightgray; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qdockwidget">
          <db:title>Customizing QDockWidget</db:title>
          <db:para>The title bar and the buttons of a <db:code><db:link xlink:href="qdockwidget.html">QDockWidget</db:link></db:code> can be
                                     customized as follows:</db:para>
@@ -318,14 +318,14 @@
                                     QMainWindow::separator.</db:para>
          </db:note>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qframe">
          <db:title>Customizing QFrame</db:title>
          <db:para>A <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code> is styled using
                                     the <db:link xlink:href="stylesheet-customizing.html#the-box-model">The
                                         Box Model</db:link>.</db:para>
          <db:programlisting>QFrame,QLabel,QToolTip { border: 2px solid green; border-radius: 4px; padding: 2px; background-image: url(images/welcome.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qgroupbox">
          <db:title>Customizing QGroupBox</db:title>
          <db:para>Let us look at an example that moves the <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code>'s title to the
                                     center.</db:para>
@@ -348,7 +348,7 @@
          <db:programlisting>QGroupBox::indicator { width: 13px; height: 13px; } QGroupBox::indicator:unchecked { image: url(:/images/checkbox_unchecked.png); } /* proceed with styling just like QCheckBox
                                         */</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qheaderview">
          <db:title>Customizing QHeaderView</db:title>
          <db:para>
             <db:code><db:link xlink:href="qheaderview.html">QHeaderView</db:link></db:code> is
@@ -365,7 +365,7 @@
                                         url(down_arrow.png);
                                     } QHeaderView::up-arrow { image: url(up_arrow.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qlineedit">
          <db:title>Customizing QLineEdit</db:title>
          <db:para>The frame of a <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> is styled using the <db:link xlink:href="stylesheet-customizing.html#the-box-model">The Box
                                         Model</db:link>. To create a line edit with rounded corners,
@@ -384,7 +384,7 @@
          <db:programlisting>QLineEdit:read-only { background:
                                     lightblue;</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qlistview">
          <db:title>Customizing QListView</db:title>
          <db:para>The background color of alternating rows can be customized
                                     using the following style sheet:</db:para>
@@ -412,7 +412,7 @@
                                     stop: 0#FAFBFE, stop: 1
                                         #DCDEF1); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qmainwindow">
          <db:title>Customizing QMainWindow</db:title>
          <db:para>The separator of a <db:code><db:link xlink:href="qmainwindow.html">QMainWindow</db:link></db:code> can be styled as follows:</db:para>
          <db:programlisting>QMainWindow::separator { background: yellow; width:
@@ -421,7 +421,7 @@
                                         QMainWindow::separator:hover { background:
                                     red; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qmenu">
          <db:title>Customizing QMenu</db:title>
          <db:para>Individual items of a <db:code><db:link xlink:href="qmenu.html">QMenu</db:link></db:code> are styled using the 'item' subcontrol as
                                     follows:</db:para>
@@ -461,7 +461,7 @@
                                         url(:/images/radiobutton_checked.png); } QMenu::indicator:exclusive:checked:selected { image:
                                         url(:/images/radiobutton_checked_hover.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qmenubar">
          <db:title>Customizing QMenuBar</db:title>
          <db:para>
             <db:code><db:link xlink:href="qmenubar.html">QMenuBar</db:link></db:code> is styled as
@@ -476,7 +476,7 @@
                                     } QMenuBar::item:selected { /* when selected using mouse or keyboard
                                         */ background: #a8a8a8; } QMenuBar::item:pressed { background: #888888; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qprogressbar">
          <db:title>Customizing QProgressBar</db:title>
          <db:para>The <db:code><db:link xlink:href="qprogressbar.html">QProgressBar</db:link></db:code>'s
                                         <db:link xlink:href="stylesheet-reference.html#border-prop">border</db:link>, <db:link xlink:href="stylesheet-reference.html#chunk-sub">chunk</db:link>,
@@ -511,7 +511,7 @@
                                     of 0.5 pixels.</db:para>
          <db:programlisting>QProgressBar::chunk { background-color: #CD96CD; width: 10px; margin: 0.5px; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qpushbutton">
          <db:title>Customizing QPushButton</db:title>
          <db:para>A <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> is
                                     styled as follows:</db:para>
@@ -547,7 +547,7 @@
                                     }</db:programlisting>
          <db:para>Checkable <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> have the <db:link xlink:href="stylesheet-reference.html#checked-ps">:checked</db:link> pseudo state set.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qradiobutton">
          <db:title>Customizing QRadioButton</db:title>
          <db:para>The indicator of a <db:code><db:link xlink:href="qradiobutton.html">QRadioButton</db:link></db:code> can be changed using:</db:para>
          <db:programlisting>QRadioButton::indicator { width: 13px; height: 13px; } QRadioButton::indicator::unchecked { image:
@@ -558,7 +558,7 @@
                                     image: url(:/images/radiobutton_checked_hover.png); } QRadioButton::indicator:checked:pressed {
                                     image: url(:/images/radiobutton_checked_pressed.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qscrollbar">
          <db:title>Customizing QScrollBar</db:title>
          <db:para>The <db:code><db:link xlink:href="qscrollbar.html">QScrollBar</db:link></db:code> can
                                     be styled using its subcontrols like <db:link xlink:href="stylesheet-reference.html#handle-sub">handle</db:link>,
@@ -650,7 +650,7 @@
                                     white; } QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical { background:
                                     none; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qsizegrip">
          <db:title>Customizing QSizeGrip</db:title>
          <db:para>
             <db:code><db:link xlink:href="qsizegrip.html">QSizeGrip</db:link></db:code> is usually
@@ -658,7 +658,7 @@
          <db:programlisting>QSizeGrip {
                                     image: url(:/images/sizegrip.png); width: 16px; height: 16px; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qslider">
          <db:title>Customizing QSlider</db:title>
          <db:para>You can style horizontal slider as below:</db:para>
          <db:programlisting>QSlider::groove:horizontal { border: 1px solid #999999; height: 8px; /* the groove expands to the size of the slider by default.
@@ -683,7 +683,7 @@
                                         4px; right: 4px; } QSlider::handle:vertical { height: 10px; background: green; margin:
                                         0-4px; /* expand outside the groove */ } QSlider::add-page:vertical { background: white; } QSlider::sub-page:vertical { background: pink; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qspinbox">
          <db:title>Customizing QSpinBox</db:title>
          <db:para>
             <db:code><db:link xlink:href="qspinbox.html">QSpinBox</db:link></db:code> can be
@@ -715,7 +715,7 @@
                                     } QSpinBox::down-arrow { image: url(:/images/down_arrow.png); width: 7px; height: 7px; } QSpinBox::down-arrow:disabled,QSpinBox::down-arrow:off { /* off state when value in min
                                         */ image: url(:/images/down_arrow_disabled.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qsplitter">
          <db:title>Customizing QSplitter</db:title>
          <db:para>A <db:code><db:link xlink:href="qsplitter.html">QSplitter</db:link></db:code> derives
                                     from a <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code> and hence can
@@ -726,7 +726,7 @@
                                         2px; } QSplitter::handle:pressed {
                                         url(images/splitter_pressed.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qstatusbar">
          <db:title>Customizing QStatusBar</db:title>
          <db:para>We can provide a background for the status bar and a border
                                     for items inside the status bar as follows:</db:para>
@@ -736,7 +736,7 @@
                                     using the descendant declaration (i.e)</db:para>
          <db:programlisting>QStatusBarQLabel { border: 3px solid white; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtabwidget-and-qtabbar">
          <db:title>Customizing QTabWidget and QTabBar</db:title>
          <db:informalfigure>
             <db:mediaobject>
@@ -850,7 +850,7 @@
                                     follow:</db:para>
          <db:programlisting>QTabBar::close-button { image: url(close.png) subcontrol-position: left; } QTabBar::close-button:hover { image: url(close-hover.png) }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtableview">
          <db:title>Customizing QTableView</db:title>
          <db:para>Suppose we'd like our selected item in <db:code><db:link xlink:href="qtableview.html">QTableView</db:link></db:code> to have bubblegum
                                     pink fade to white as its background.</db:para>
@@ -874,7 +874,7 @@
                                     border: 2px outset red;
                                     }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtoolbar">
          <db:title>Customizing QToolBar</db:title>
          <db:para>The background and the handle of a <db:code><db:link xlink:href="qtoolbar.html">QToolBar</db:link></db:code> is customized as
                                     below:</db:para>
@@ -882,7 +882,7 @@
                                     background: red; spacing: 3px; /* spacing
                                         between items in the tool bar */ } QToolBar::handle { image: url(handle.png); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtoolbox">
          <db:title>Customizing QToolBox</db:title>
          <db:para>The tabs of the <db:code><db:link xlink:href="qtoolbox.html">QToolBox</db:link></db:code> are customized using the 'tab'
                                     subcontrol.</db:para>
@@ -895,7 +895,7 @@
                                         italicize selected tabs */ font: italic; color:
                                     white; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtoolbutton">
          <db:title>Customizing QToolButton</db:title>
          <db:para>There are three types of QToolButtons.</db:para>
          <db:itemizedlist>
@@ -936,7 +936,7 @@
                                         /* 16px width + 4px for border =
                                         20px allocated above */ width: 16px; } QToolButton::menu-arrow { image: url(downarrow.png); } QToolButton::menu-arrow:open { top: 1px; left: 1px; /* shift it a bit */ }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtooltip">
          <db:title>Customizing QToolTip</db:title>
          <db:para>
             <db:code><db:link xlink:href="qtooltip.html">QToolTip</db:link></db:code> is customized
@@ -951,7 +951,7 @@
                                         3px; opacity:
                                         200; }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="customizing-qtreeview">
          <db:title>Customizing QTreeView</db:title>
          <db:para>The background color of alternating rows can be customized
                                     using the following style sheet:</db:para>
@@ -1087,7 +1087,7 @@
       <db:title>Common Mistakes</db:title>
       <db:para>This section lists some common mistakes when using
                                     stylesheets.</db:para>
-      <db:section>
+      <db:section xml:id="qpushbutton-and-images">
          <db:title>QPushButton and images</db:title>
          <db:para>When styling a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>, it is often desirable to use an image
                                     as the button graphic. It is common to try the <db:link xlink:href="stylesheet-reference.html#background-image-prop">background-image</db:link> property, but this has a number

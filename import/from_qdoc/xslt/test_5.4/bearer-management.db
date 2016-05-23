@@ -22,7 +22,7 @@
                                     configurations themselves. It is up to the platform to provide
                                     infrastructure which enables to user to create, edit or delete
                                     network configurations.</db:para>
-      <db:section>
+      <db:section xml:id="the-api-in-detail">
          <db:title>The API in Detail</db:title>
          <db:para>Computer systems manage their network interfaces via a set
                                     of configurations. Each configuration describes a set of
@@ -182,7 +182,7 @@
                                     themselves. Any application wanting to open a socket to a remote
                                     address will typically use session management related
                                     functionality.</db:para>
-         <db:section>
+         <db:section xml:id="service-networks">
             <db:title>Service networks</db:title>
             <db:para>Some mobile platforms use the concept of grouped access
                                     points (also called SNAP or Service Network Access Point). In
@@ -244,7 +244,7 @@
                                     dialog which is populated based on what <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#allConfigurations">QNetworkConfigurationManager::allConfigurations</db:link>()</db:code>
                                     returns.</db:para>
          </db:section>
-         <db:section>
+         <db:section xml:id="managing-network-sessions">
             <db:title>Managing network sessions</db:title>
             <db:para>A <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code> object separates a <db:link xlink:href="qnetworksession.html#state">state()</db:link> and an
                                         <db:link xlink:href="qnetworksession.html#isOpen">isOpen()</db:link>
@@ -275,7 +275,7 @@
                                     If the system does not support global session calling <db:link xlink:href="qnetworksession.html#close">close()</db:link> never
                                     stops the interface.</db:para>
          </db:section>
-         <db:section>
+         <db:section xml:id="roaming">
             <db:title>Roaming</db:title>
             <db:para>Roaming is the process of reconnecting a device from one
                                     network to another while minimizing the impact on the
@@ -311,7 +311,7 @@
                                     is the central class for managing roaming related
                                     issues.</db:para>
          </db:section>
-         <db:section>
+         <db:section xml:id="platform-capabilities">
             <db:title>Platform capabilities</db:title>
             <db:para>Some API features are not available on all platforms. The
                                         <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::Capability</db:link></db:code> should be

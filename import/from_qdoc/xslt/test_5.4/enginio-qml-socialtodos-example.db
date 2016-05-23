@@ -181,7 +181,7 @@
             </db:tr>
          </db:tbody>
       </db:informaltable>
-      <db:section>
+      <db:section xml:id="1-create-allusers-usergroup">
          <db:title>1. Create 'allUsers' Usergroup</db:title>
          <db:para>Create a new usergroup <db:code>allUsers</db:code>. The
                                     usergroup will be used to restrict that only registered
@@ -293,7 +293,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="2-create-todolists-object-type">
          <db:title>2. Create 'todoLists' Object Type</db:title>
          <db:para>Create a new object type
                                         <db:code>objects.todoLists</db:code>. The object type
@@ -425,7 +425,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="3-create-todos-object-type">
          <db:title>3. Create 'todos' Object Type</db:title>
          <db:para>Create a new object type
                                         <db:code>objects.todos</db:code>. The object type
@@ -611,7 +611,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="4-configure-users-object-type">
          <db:title>4. Configure 'users' Object Type</db:title>
          <db:para>Configure built-in <db:code>users</db:code> object type
                                     with needed security permissions. The
@@ -719,7 +719,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="5-configure-usergroups-object-type">
          <db:title>5. Configure 'usergroups' Object Type</db:title>
          <db:para>Configure built-in <db:code>usergroups</db:code> object
                                     type with needed security permissions. The

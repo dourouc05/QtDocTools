@@ -133,6 +133,8 @@
 
     <xsl:variable name="descriptionUsualPlace" as="element()?"
       select="$content/html:div[@class = 'descr']"/>
+    <xsl:variable name="doesNotNeedDescriptionTitle" as="xs:boolean"
+      select="$isConcept"/>
     <xsl:variable name="description" as="element()?">
       <xsl:if test="not($hasActuallyNoDescription)">
         <xsl:variable name="descriptionInHeader" as="xs:boolean"
@@ -141,13 +143,13 @@
           <xsl:when test="not($isQmlType) and not($descriptionInHeader)">
             <!-- Easiest case: everything is at its own place. A distinction: add a title if there is none. -->
             <xsl:choose>
-              <xsl:when test="$descriptionUsualPlace/html:h2[text() = 'Detailed Description']">
+              <xsl:when test="$descriptionUsualPlace/html:h2[text() = 'Detailed Description'] or $isConcept">
                 <xsl:copy-of select="$descriptionUsualPlace"/>
               </xsl:when>
               <xsl:otherwise>
                 <html:div class="descr">
                   <xsl:copy-of select="$descriptionUsualPlace/html:a[1]"/>
-                  <html:h2>Detailed description</html:h2>
+                  <html:h2 id="details">Detailed description</html:h2>
                   <xsl:for-each select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*">
                     <!-- 
                        For each interesting element: 
@@ -180,7 +182,7 @@
           <xsl:when test="not($isQmlType) and $descriptionInHeader">
             <!-- If there is no actual detailed description, take what is available in the header part. -->
             <html:div class="descr">
-              <html:h2>Detailed Description</html:h2>
+              <html:h2 id="details">Detailed Description</html:h2>
               <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
             </html:div>
           </xsl:when>
@@ -200,7 +202,7 @@
               as="element()?"/>
 
             <html:div class="descr">
-              <html:h2>Detailed Description</html:h2>
+              <html:h2 id="details">Detailed Description</html:h2>
               <!-- 
                 For each interesting element: 
                   * for paragraphs: cannot be empty, except if there are children

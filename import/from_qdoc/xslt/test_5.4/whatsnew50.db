@@ -7,7 +7,7 @@
    <db:section xml:id="qt-core-changes">
       <db:title>Qt Core Changes</db:title>
       <db:para/>
-      <db:section>
+      <db:section xml:id="qstandardpaths">
          <db:title>QStandardPaths</db:title>
          <db:para>
             <db:code><db:link xlink:href="whatsnew50.html#qstandardpaths">QStandardPaths</db:link></db:code> is a more powerful version of
@@ -16,7 +16,7 @@
                                     features such as searching for all occurrences of a given file
                                     in the storage locations.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="compile-time-checks-for-signal-slot-connections">
          <db:title>Compile-time Checks for Signal-slot Connections</db:title>
          <db:para>
             <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code> now
@@ -32,7 +32,7 @@
                                         between String-Based and Functor-Based Connections</db:link>
                                     for more details.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="perl-compatible-regular-expressions">
          <db:title>Perl-Compatible Regular Expressions</db:title>
          <db:para>
             <db:code><db:link xlink:href="qtcore/qregularexpression.html">QRegularExpression</db:link></db:code> is introduced to provide better
@@ -46,7 +46,7 @@
    <db:section xml:id="qt-gui-changes">
       <db:title>Qt GUI Changes</db:title>
       <db:para/>
-      <db:section>
+      <db:section xml:id="new-classes-for-windowing-and-rendering">
          <db:title>New Classes for Windowing and Rendering</db:title>
          <db:para>A new set of enabler classes have been added, most
                                     importantly <db:code><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:code>,
@@ -55,7 +55,7 @@
                                     the <db:link xlink:href="qtwidgets/qtwidgets-index.html">Qt
                                         Widgets</db:link> module and by l{Qt Quick} 2.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="opengl-classes">
          <db:title>OpenGL Classes</db:title>
          <db:para>Most of the useful l{Qt OpenGL} classes have been polished
                                     and moved into <db:link xlink:href="qtgui/qtgui-index.html">Qt
@@ -67,7 +67,7 @@
                                     generic and decoupled from <db:code><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:code>, making it to support more use cases such
                                     as using the same context for multiple surfaces.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="qopenglpaintdevice">
          <db:title>QOpenGLPaintDevice</db:title>
          <db:para>Instead of having <db:code><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:code> and <db:code><db:link xlink:href="qtgui/qopenglframebufferobject.html">QOpenGLFramebufferObject</db:link></db:code> be subclasses of <db:code><db:link xlink:href="qtgui/qpaintdevice.html">QPaintDevice</db:link></db:code>, you
                                     can now use <db:code><db:link xlink:href="whatsnew50.html#qopenglpaintdevice">QOpenGLPaintDevice</db:link></db:code>. This new alternative can be
@@ -78,7 +78,7 @@
    <db:section xml:id="qt-network-changes">
       <db:title>Qt Network Changes</db:title>
       <db:para/>
-      <db:section>
+      <db:section xml:id="qdnslookup">
          <db:title>QDnsLookup</db:title>
          <db:para>It is now possible to lookup DNS records using the new
                                         <db:code><db:link xlink:href="whatsnew50.html#qdnslookup">QDnsLookup</db:link></db:code> API. This does not replace <db:code><db:link xlink:href="qtnetwork/qhostinfo.html">QHostInfo</db:link></db:code>, which is
@@ -90,7 +90,7 @@
                                     API, which is removed in Qt 5.</db:para>
          </db:note>
       </db:section>
-      <db:section>
+      <db:section xml:id="better-support-for-ipv6-and-dual-mode-networks">
          <db:title>Better Support for IPv6 and Dual-mode Networks</db:title>
          <db:para>Most applications using host names and network layer
                                     transparent protocols, will now gain IPv6 support transparently.
@@ -102,7 +102,7 @@
                                     and IPv6 connections in parallel, and use the one that succeeds
                                     first.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="binding-tcp-sockets">
          <db:title>Binding TCP Sockets</db:title>
          <db:para>
             <db:code><db:link xlink:href="qtnetwork/qtcpsocket.html">QTcpSocket</db:link></db:code>
@@ -110,14 +110,14 @@
                                     for limiting connection to a specific interface in a multi-homed
                                     environment.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="ssl-certificates">
          <db:title>SSL Certificates</db:title>
          <db:para>SSL certificate extensions can now be accessed to enable
                                     further development of SSL support in Qt.</db:para>
          <db:para>Developers can also verify an SSL certificate chain
                                     programatically now.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="workarounds-for-buggy-ssl-servers">
          <db:title>Workarounds for Buggy SSL Servers</db:title>
          <db:para>The <db:code><db:link xlink:href="qtnetwork/qssl.html#SslOption-enum">QSsl::SslOption</db:link></db:code> enum now allows a <db:code><db:link xlink:href="qtnetwork/qsslsocket.html">QSslSocket</db:link></db:code>-based
                                     code to access legacy systems by enabling bug
@@ -127,7 +127,7 @@
                                     4.8.</db:para>
          </db:note>
       </db:section>
-      <db:section>
+      <db:section xml:id="support-for-opaque-private-keys">
          <db:title>Support for Opaque Private Keys</db:title>
          <db:para>This allows applications to read private keys from devices
                                     such as PKCS#11 dongles, as illustrated by the <db:link xlink:href="http://git.iksaif.net/?p=qsslkey-p11.git">qsslkey
@@ -139,7 +139,7 @@
       <db:title>Qt QML Changes</db:title>
       <db:para>This is a new module in Qt 5 that provides the QML engine
                                     and the backend infrastructure.</db:para>
-      <db:section>
+      <db:section xml:id="qml-engine">
          <db:title>QML Engine</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -162,7 +162,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="type-system">
          <db:title>Type System</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -202,7 +202,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="other">
          <db:title>Other</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -257,7 +257,7 @@
       <db:para>The <db:code><db:link xlink:href="qtquick/qtquick-qmlmodule.html">QtQuick</db:link></db:code> 2.0 QML module is a major update, and the
                                     following sections outline the features that come with
                                     it:</db:para>
-      <db:section>
+      <db:section xml:id="new-graphics-architecture">
          <db:title>New Graphics Architecture</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -267,7 +267,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="visual-and-graphic-types">
          <db:title>Visual and Graphic Types</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -316,7 +316,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="animations">
          <db:title>Animations</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -333,7 +333,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="text">
          <db:title>Text</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -395,7 +395,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="user-input">
          <db:title>User Input</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -429,7 +429,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="specialized-containers">
          <db:title>Specialized Containers</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -466,7 +466,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="positioners">
          <db:title>Positioners</db:title>
          <db:para>The following features are related to Row, Column, Grid, and
                                     Flow types:</db:para>
@@ -495,7 +495,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="models-and-views">
          <db:title>Models and Views</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -553,14 +553,14 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="particles-system-support">
          <db:title>Particles System Support</db:title>
          <db:para>The new <db:code><db:link xlink:href="qtquick/qtquick-qmlmodule.html">QtQuick</db:link></db:code>.Particles 2.0 module provides support for
                                     the composition of a variety of 2D particle systems. See
                                         <db:code>Using the Qt Quick Particle System</db:code>
                                     for more details.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="utility-types">
          <db:title>Utility Types</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -707,7 +707,7 @@
             </db:para>
          </db:listitem>
       </db:itemizedlist>
-      <db:section>
+      <db:section xml:id="new-classes">
          <db:title> New Classes</db:title>
          <db:variablelist>
             <db:varlistentry>
@@ -1139,7 +1139,7 @@
             </db:varlistentry>
          </db:variablelist>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-member-functions">
          <db:title> New Member Functions</db:title>
          <db:para>Class <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>:</db:para>
          <db:informaltable>
@@ -4501,7 +4501,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-functions-in-namespaces">
          <db:title> New Functions in Namespaces</db:title>
          <db:informaltable>
             <db:tbody>
@@ -4725,7 +4725,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-global-functions">
          <db:title> New Global Functions</db:title>
          <db:informaltable>
             <db:tbody>
@@ -5090,7 +5090,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-macros">
          <db:title> New Macros</db:title>
          <db:informaltable>
             <db:tbody>
@@ -5258,7 +5258,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-enum-types">
          <db:title> New Enum Types</db:title>
          <db:informaltable>
             <db:tbody>
@@ -5381,7 +5381,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-typedefs">
          <db:title> New Typedefs</db:title>
          <db:informaltable>
             <db:tbody>
@@ -5421,7 +5421,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-properties">
          <db:title> New Properties</db:title>
          <db:itemizedlist>
             <db:listitem>
@@ -5438,7 +5438,7 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-qml-types">
          <db:title> New QML Types</db:title>
          <db:variablelist>
             <db:varlistentry>
@@ -5558,7 +5558,7 @@
             </db:varlistentry>
          </db:variablelist>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-qml-properties">
          <db:title> New QML Properties</db:title>
          <db:informaltable>
             <db:tbody>
@@ -5595,7 +5595,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="new-qml-methods">
          <db:title> New QML Methods</db:title>
          <db:informaltable>
             <db:tbody>

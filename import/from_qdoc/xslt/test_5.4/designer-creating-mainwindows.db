@@ -81,7 +81,7 @@
             </db:tr>
          </db:tbody>
       </db:informaltable>
-      <db:section>
+      <db:section xml:id="creating-a-menu">
          <db:title>Creating a Menu</db:title>
          <db:para>Double-click the placeholder item to begin editing. The menu
                                     text, displayed using a line edit, can be modified.</db:para>
@@ -145,7 +145,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="creating-a-menu-entry">
          <db:title>Creating a Menu Entry</db:title>
          <db:para>Double-click the <db:emphasis role="bold">Type Here</db:emphasis> placeholder to
                                     begin editing, or double-click <db:emphasis role="bold">Add Separator</db:emphasis> to
@@ -192,7 +192,7 @@
             </db:imageobject>
          </db:mediaobject>
       </db:informalfigure>
-      <db:section>
+      <db:section xml:id="creating-and-removing-a-toolbar">
          <db:title>Creating and Removing a Toolbar</db:title>
          <db:para>Toolbars are added to a main window in a similar way to the
                                     menu bar: Select the <db:emphasis role="bold">Add Tool Bar</db:emphasis> option from
@@ -202,7 +202,7 @@
          <db:para>Toolbars are removed from the form via an entry in the
                                     toolbar's context menu.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="adding-and-removing-toolbar-buttons">
          <db:title>Adding and Removing Toolbar Buttons</db:title>
          <db:para>Toolbar buttons are created as actions in the <db:link xlink:href="designer-creating-mainwindows.html#theactioneditor">Action Editor</db:link> and dragged onto the toolbar. Since
                                     actions can be represented by menu entries and toolbar buttons,
@@ -265,7 +265,7 @@
             </db:imageobject>
          </db:mediaobject>
       </db:informalfigure>
-      <db:section>
+      <db:section xml:id="the-action-editor">
          <db:title>The Action Editor</db:title>
          <db:para>Enable the action editor by opening the
                                         <db:emphasis role="bold">Tools</db:emphasis> menu, and switching on the
@@ -281,7 +281,7 @@
                                     in <db:emphasis role="bold">Detailed View</db:emphasis>. You can also copy and paste
                                     actions between menus, toolbars and forms.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="creating-an-action">
          <db:title>Creating an Action</db:title>
          <db:para>To create an action, use the action editor's
                                         <db:emphasis role="bold">New</db:emphasis> button, which will then pop up an input
@@ -320,7 +320,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="adding-an-action">
          <db:title>Adding an Action</db:title>
          <db:para>To add an action to a menu or a toolbar, simply press the
                                     left mouse button over the action in the action editor, and drag
@@ -361,7 +361,7 @@
             </db:imageobject>
          </db:mediaobject>
       </db:informalfigure>
-      <db:section>
+      <db:section xml:id="adding-a-dock-widget">
          <db:title>Adding a Dock Widget</db:title>
          <db:para>To add a dock widget to a form, drag one from the
                                         <db:emphasis role="bold">Containers</db:emphasis> section of the widget box, and

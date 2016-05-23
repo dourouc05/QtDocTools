@@ -676,7 +676,7 @@
                                     height, <db:link xlink:href="qtquick-positioning-anchors.html">anchoring</db:link> and key handling support.</db:para>
       <db:para>You can subclass <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> to provide your own custom visual item
                                     that inherits these features.</db:para>
-      <db:section>
+      <db:section xml:id="custom-scene-graph-items">
          <db:title>Custom Scene Graph Items</db:title>
          <db:para>All visual QML items are rendered using the scene graph, a
                                     low-level, high-performance rendering stack, closely tied to
@@ -695,7 +695,7 @@
                                     used solely on the scene graph's rendering thread. See <db:link xlink:href="qtquick-visualcanvas-scenegraph.html#scene-graph-and-rendering">Scene Graph and Rendering</db:link> for more
                                     information.</db:para>
          </db:note>
-         <db:section>
+         <db:section xml:id="graphics-resource-handling">
             <db:title>Graphics Resource Handling</db:title>
             <db:para>The preferred way to handle cleanup of graphics resources
                                     used in the scene graph, is to rely on the automatic cleanup of
@@ -755,7 +755,7 @@
             </db:note>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="custom-qpainter-items">
          <db:title>Custom QPainter Items</db:title>
          <db:para>The <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code>
                                     provides a subclass, <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>, which allows the users to
@@ -769,7 +769,7 @@
                                     directly is always significantly faster.</db:para>
          </db:warning>
       </db:section>
-      <db:section>
+      <db:section xml:id="behavior-animations">
          <db:title>Behavior Animations</db:title>
          <db:para>If your Item uses the <db:link xlink:href="qml-qtquick-behavior.html">Behavior</db:link> type to
                                     define animations for property changes, you should always use

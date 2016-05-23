@@ -28,7 +28,7 @@
                                         Designer</db:emphasis>, you require a suitable description for
                                     the widget and an appropriate <db:code>.pro</db:code>
                                     file.</db:para>
-      <db:section>
+      <db:section xml:id="providing-an-interface-description">
          <db:title>Providing an Interface Description</db:title>
          <db:para>To inform <db:emphasis>Qt Designer</db:emphasis> about the type of
                                     widget you want to provide, create a subclass of <db:code><db:link xlink:href="qdesignercustomwidgetinterface.html">QDesignerCustomWidgetInterface</db:link></db:code> that describes the
@@ -211,7 +211,7 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
+      <db:section xml:id="notes-on-the-func-target-domxml-domxml-func-function">
          <db:title>Notes on the 
                                     Function</db:title>
          <db:para>The <db:code>domXml()</db:code> function returns a UI
@@ -539,7 +539,7 @@
       <db:title>Building and
                                     Installing the Plugin</db:title>
       <db:para/>
-      <db:section>
+      <db:section xml:id="a-simple-plugin">
          <db:title>A Simple Plugin</db:title>
          <db:para>The <db:link xlink:href="qtdesigner-customwidgetplugin-example.html">Custom
                                         Widget Plugin Example</db:link> demonstrates a simple
@@ -585,7 +585,7 @@
                                     information about customizing paths for libraries and plugins
                                     with Qt applications.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="splitting-up-the-plugin">
          <db:title>Splitting up the Plugin</db:title>
          <db:para>In a real world scenario, you do not want to have
                                     dependencies of the application making use of the custom widgets

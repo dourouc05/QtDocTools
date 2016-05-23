@@ -1344,27 +1344,6 @@
       </db:section>
    </db:section>
    <db:section>
-      <db:title>Macro Documentation</db:title>
-      <db:section>
-         <db:title>QML_DECLARE_TYPE()</db:title>
-         <db:para>Equivalent to <db:code>Q_DECLARE_METATYPE(TYPE
-                                        *)</db:code> and
-                                        <db:code>Q_DECLARE_METATYPE(QQmlListProperty&lt;TYPE&gt;)</db:code>
-         </db:para>
-         <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this macro.</db:para>
-      </db:section>
-      <db:section>
-         <db:title>QML_DECLARE_TYPEINFO( Type, Flags)</db:title>
-         <db:para>Declares additional properties of the given
-                                        <db:emphasis>Type</db:emphasis> as described by the specified
-                                        <db:emphasis>Flags</db:emphasis>.</db:para>
-         <db:para>Current the only supported type info is
-                                        <db:code>QML_HAS_ATTACHED_PROPERTIES</db:code> which
-                                    declares that the <db:emphasis>Type</db:emphasis> supports <db:link xlink:href="qtqml-syntax-objectattributes.html#attached-properties-and-attached-signal-handlers">attached properties</db:link>.</db:para>
-         <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this macro.</db:para>
-      </db:section>
-   </db:section>
-   <db:section>
       <db:title>Related Non-Members</db:title>
       <db:section>
          <db:title>QObject * qmlAttachedPropertiesObject(const QObject * attachee, bool create = true)</db:title>
@@ -1799,6 +1778,27 @@
                </db:member>
             </db:simplelist>
          </db:section>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Macro Documentation</db:title>
+      <db:section>
+         <db:title>QML_DECLARE_TYPE()</db:title>
+         <db:para>Equivalent to <db:code>Q_DECLARE_METATYPE(TYPE
+                                        *)</db:code> and
+                                        <db:code>Q_DECLARE_METATYPE(QQmlListProperty&lt;TYPE&gt;)</db:code>
+         </db:para>
+         <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this macro.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QML_DECLARE_TYPEINFO( Type, Flags)</db:title>
+         <db:para>Declares additional properties of the given
+                                        <db:emphasis>Type</db:emphasis> as described by the specified
+                                        <db:emphasis>Flags</db:emphasis>.</db:para>
+         <db:para>Current the only supported type info is
+                                        <db:code>QML_HAS_ATTACHED_PROPERTIES</db:code> which
+                                    declares that the <db:emphasis>Type</db:emphasis> supports <db:link xlink:href="qtqml-syntax-objectattributes.html#attached-properties-and-attached-signal-handlers">attached properties</db:link>.</db:para>
+         <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this macro.</db:para>
       </db:section>
    </db:section>
 </db:article>

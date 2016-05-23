@@ -32,14 +32,14 @@
          </db:listitem>
       </db:itemizedlist>
       <db:para>The first semantic is conceptually correct, given that a particular script might be imported by any number of QML files. The second semantic is retained for the purposes of backwards-compatibility. The third semantic remains unchanged from the current semantics for shared scripts, but is clarified here in respect to the newly possible case (where the script imports other scripts or modules).</db:para>
-      <db:section>
+      <db:section xml:id="importing-a-javascript-resource-from-another-javascript-resource">
          <db:title>Importing a JavaScript Resource from Another JavaScript Resource</db:title>
          <db:para>A JavaScript resource may import another in the following fashion:</db:para>
          <db:programlisting>.import "filename.js" as Qualifier</db:programlisting>
          <db:para>For example:</db:para>
          <db:programlisting>.import "factorial.js" as MathFunctions</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="importing-a-qml-module-from-a-javascript-resource">
          <db:title>Importing a QML Module from a JavaScript Resource</db:title>
          <db:para>A JavaScript resource may import a QML module in the following fashion:</db:para>
          <db:programlisting>.import TypeNamespace MajorVersion.MinorVersion as Qualifier</db:programlisting>
