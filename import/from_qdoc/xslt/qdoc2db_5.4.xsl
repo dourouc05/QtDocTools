@@ -135,12 +135,20 @@
       select="$content/html:div[@class = 'descr']"/>
     <xsl:variable name="description" as="element()?">
       <xsl:if test="not($hasActuallyNoDescription)">
-        <xsl:variable name="descriptionInHeader"
+        <xsl:variable name="descriptionInHeader" as="xs:boolean"
           select="count($content/html:div[@class = 'descr']/child::html:*[not(self::html:a)]) = 0"/>
         <xsl:choose>
           <xsl:when test="not($isQmlType) and not($descriptionInHeader)">
-            <!-- Easiest case: everything is at its own place. -->
-            <xsl:copy-of select="$descriptionUsualPlace"/>
+            <!-- Easiest case: everything is at its own place. A distinction: add a title if there is none. -->
+            <xsl:choose>
+              <xsl:when test="$descriptionUsualPlace/html:h2[text() = 'Detailed Description']">
+                <xsl:copy-of select="$descriptionUsualPlace"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:message>WARNING: no title for detailed description! </xsl:message>
+                <xsl:copy-of select="$descriptionUsualPlace"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:when>
           <xsl:when test="not($isQmlType) and $descriptionInHeader">
             <!-- If there is no actual detailed description, take what is available in the header part. -->
@@ -1206,8 +1214,13 @@
       <xsl:message terminate="no">WARNING: No summary output for typedefs. </xsl:message>
     </xsl:if>
   </xsl:template>
+  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-enum')]">
+    <xsl:if test="$warnVocabularyUnsupportedFeatures">
+      <xsl:message terminate="no">WARNING: No summary output for enums. </xsl:message>
+    </xsl:if>
+  </xsl:template>
   <xsl:template mode="functionListing"
-    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
+    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef')) and not(ends-with(@id, '-enum'))]">
     <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
     <db:funcsynopsis>
       <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
