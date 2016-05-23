@@ -253,44 +253,61 @@
 
     <xsl:variable name="remainingAfterIndex" as="element(html:div)*"
       select="$siblingAfterSeeAlso[self::html:div] | $siblingAfterSeeAlso/following-sibling::html:div"/>
-    <xsl:variable name="types" as="element()?"
-      select="$remainingAfterIndex[@class = 'types']"/>
-    <xsl:variable name="properties" as="element()?"
-      select="$remainingAfterIndex[@class = 'prop']"/>
-    <xsl:variable name="funcs" as="element(html:div)?"
-      select="$remainingAfterIndex[@class = 'func']"/>
-    <xsl:variable name="nonmems" as="element(html:div)?"
-      select="$remainingAfterIndex[@class = 'relnonmem']"/>
-    <xsl:variable name="macros" as="element(html:div)?">
-      <xsl:choose>
-        <xsl:when test="$remainingAfterIndex[@class = 'macros']">
-          <xsl:copy-of select="$remainingAfterIndex[@class = 'macros']"/>
-        </xsl:when>
-        <xsl:when test="//html:h2[text() = 'Macro Documentation']">
-          <xsl:message>TODO: generic handling for macros and the like!</xsl:message>
-          <xsl:variable name="title" select="//html:h2[text() = 'Macro Documentation']"/>
-          <html:div class="macros">
-            <xsl:for-each select="./following::node()[preceding-sibling::html:h2 != $title]">
-              <xsl:copy-of select="."/>
-            </xsl:for-each>
-          </html:div>
-        </xsl:when>
-      </xsl:choose>
+    <xsl:variable name="types" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'types'"/>
+        <xsl:with-param name="title" select="'Member Type Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="vars" as="element(html:div)?"
-      select="$remainingAfterIndex[@class = 'vars']"/>
-
-    <xsl:variable name="funcs_outside" as="element(html:div)?">
-      <xsl:variable name="funcs_strange_title" as="element(html:h2)?"
-        select="$descriptionUsualPlace/following-sibling::html:h2[text() = 'Function Documentation']"/>
-      <xsl:variable name="funcs_strange_title_id" select="generate-id($funcs_strange_title)"/>
-      <html:div class="func">
-        <xsl:copy-of select="$funcs_strange_title"/>
-        <xsl:for-each
-          select="$descriptionUsualPlace/following-sibling::node()[./preceding-sibling::html:h2[1][generate-id(.) = $funcs_strange_title_id]]">
-          <xsl:copy-of select="."/>
-        </xsl:for-each>
-      </html:div>
+    <xsl:variable name="properties" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'prop'"/>
+        <xsl:with-param name="title" select="'Property Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="funcs" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'func'"/>
+        <xsl:with-param name="title" select="'Member Function Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="nonmems" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'relnonmem'"/>
+        <xsl:with-param name="title" select="'Related Non-Members'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="nonmemtypes" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'typenonmem'"/><!-- No known anchor! -->
+        <xsl:with-param name="title" select="'Type Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="nonmemfuncs" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'funcnonmem'"/><!-- No known anchor! -->
+        <xsl:with-param name="title" select="'Function Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="macros" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'macros'"/>
+        <xsl:with-param name="title" select="'Macro Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="vars" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'vars'"/>
+        <xsl:with-param name="title" select="'Member Variable Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="qmlPropsTitle" as="element(html:h2)?" select="$content/html:h2[text() = 'Property Documentation']"/>
@@ -546,29 +563,35 @@
           <xsl:with-param name="inherits" select="$prologueInherits"/>
           <xsl:with-param name="inheritedBy" select="$prologueInheritedBy"/>
           <xsl:with-param name="since" select="$prologueSince"/>
-
+  
           <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
         </xsl:call-template>
-
-        <xsl:if test="$macros">
-          <xsl:call-template name="macroListing">
-            <xsl:with-param name="data" select="$macros"/>
-            <xsl:with-param name="className" select="$className"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$nonmems">
-          <xsl:call-template name="functionListing">
-            <xsl:with-param name="data" select="$nonmems"/>
-            <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
-          </xsl:call-template>
-        </xsl:if>
       </xsl:if>
 
-      <xsl:if test="$isFunctions">
+      <xsl:if test="$macros">
+        <xsl:call-template name="macroListing">
+          <xsl:with-param name="data" select="$macros"/>
+          <xsl:with-param name="className" select="$className"/>
+        </xsl:call-template>
+      </xsl:if>
+
+      <xsl:if test="$nonmems">
         <xsl:call-template name="functionListing">
-          <xsl:with-param name="data" select="$funcs_outside"/>
+          <xsl:with-param name="data" select="$nonmems"/>
+          <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$nonmemtypes">
+        <xsl:call-template name="functionListing">
+          <xsl:with-param name="data" select="$nonmemtypes"/>
+        </xsl:call-template>
+      </xsl:if>
+
+      <xsl:if test="$nonmemfuncs">
+        <xsl:call-template name="functionListing">
+          <xsl:with-param name="data" select="$nonmemfuncs"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -644,12 +667,6 @@
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$macros">
-        <xsl:call-template name="content_macros">
-          <xsl:with-param name="data" select="$macros"/>
-        </xsl:call-template>
-      </xsl:if>
-
       <xsl:if test="$nonmems">
         <xsl:call-template name="content_nonmems">
           <xsl:with-param name="data" select="$nonmems"/>
@@ -661,10 +678,22 @@
           <xsl:with-param name="data" select="$vars"/>
         </xsl:call-template>
       </xsl:if>
+      
+      <xsl:if test="$nonmemtypes">
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$nonmemtypes"/>
+        </xsl:call-template>
+      </xsl:if>
 
-      <xsl:if test="$isFunctions">
+      <xsl:if test="$nonmemfuncs">
         <xsl:call-template name="content_class">
-          <xsl:with-param name="data" select="$funcs_outside"/>
+          <xsl:with-param name="data" select="$nonmemfuncs"/>
+        </xsl:call-template>
+      </xsl:if>
+      
+      <xsl:if test="$macros">
+        <xsl:call-template name="content_macros">
+          <xsl:with-param name="data" select="$macros"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -729,6 +758,28 @@
         </db:section>
       </xsl:if>
     </db:article>
+  </xsl:template>
+  
+  <!-- Utility templates, useable only in the main template. -->
+  <xsl:template name="lookupSection">
+    <xsl:param name="globalList" as="element(html:div)*"/>
+    <xsl:param name="anchor" as="xs:string"/>
+    <xsl:param name="title" as="xs:string"/>
+    
+    <xsl:choose>
+      <xsl:when test="$globalList[@class = $anchor]">
+        <xsl:copy-of select="$globalList[@class = $anchor]"/>
+      </xsl:when>
+      <xsl:when test="//html:h2[text() = $title]">
+        <xsl:variable name="titleNode" select="//html:h2[text() = $title]"/>
+        <html:div>
+          <xsl:attribute name="class" select="$anchor"/>
+          <xsl:for-each select="$titleNode/following-sibling::html:*[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleNode]">
+            <xsl:copy-of select="."/>
+          </xsl:for-each>
+        </html:div>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Utility templates, to be used everywhere. -->
