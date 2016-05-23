@@ -408,7 +408,7 @@
          </db:methodparam>
       </db:methodsynopsis>
    </db:classsynopsis>
-   <db:section>
+   <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>The Item type is the base type for all visual items in Qt
                                 Quick.</db:para>
@@ -421,7 +421,7 @@
       <db:programlisting language="qml">import QtQuick 2.0 Item {
                                     Image { source: "tile.png" } Image {
                                     x: 80width: 100height: 100source: "tile.png" } Image { x: 190width: 100height: 100fillMode: Image.Tilesource: "tile.png" } }</db:programlisting>
-      <db:section>
+      <db:section xml:id="">
          <db:title>Key Handling</db:title>
          <db:para>Key handling is available to all Item-based visual types via the
                                     <db:link xlink:href="qml-qtquick-keys.html">Keys</db:link> attached
@@ -438,7 +438,7 @@
          <db:para>See the <db:link xlink:href="qml-qtquick-keys.html">Keys</db:link>
                                 attached property for detailed documentation.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="">
          <db:title>Layout Mirroring</db:title>
          <db:para>Item layouts can be mirrored using the <db:link xlink:href="qml-qtquick-layoutmirroring.html">LayoutMirroring</db:link>
                                 attached property. This causes <db:link xlink:href="qml-qtquick-item.html#anchors.top-prop">anchors</db:link>
@@ -447,7 +447,7 @@
                                 horizontally reverse the direction of their layouts.</db:para>
          <db:para>See <db:link xlink:href="qml-qtquick-layoutmirroring.html">LayoutMirroring</db:link> for more details.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="item-layers">
          <db:title>Item Layers</db:title>
          <db:para>An Item will normally be rendered directly into the window it
                                 belongs to. However, by setting <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link>, it is possible to delegate the item and
@@ -463,7 +463,7 @@
                                 will use mipmap for downsampling if <db:link xlink:href="qml-qtquick-item.html#layer.mipmap-prop">layer.mipmap</db:link> is set to <db:code>true</db:code>.
                                 Mipmapping may improve visual quality of downscaled items. For
                                 mipmapping of single Image items, prefer <db:link xlink:href="qml-qtquick-image.html#mipmap-prop">Image::mipmap</db:link>.</db:para>
-         <db:section>
+         <db:section xml:id="">
             <db:title>Layer Opacity vs Item Opacity</db:title>
             <db:para>When applying <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link> to an item hierarchy the opacity is applied to
                                 each item individually. This can lead to undesired visual results
@@ -525,7 +525,7 @@
                </db:tbody>
             </db:informaltable>
          </db:section>
-         <db:section>
+         <db:section xml:id="">
             <db:title>Combined with ShaderEffects</db:title>
             <db:para>Setting <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link> to true will turn the item into a
                                     <db:link xlink:href="qquickitem.html#isTextureProvider">texture
@@ -553,7 +553,7 @@
                                 of using <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.</db:para>
             </db:note>
          </db:section>
-         <db:section>
+         <db:section xml:id="">
             <db:title>Memory and Performance</db:title>
             <db:para>When an item's layer is enabled, the scene graph will allocate
                                 memory in the GPU equal to <db:code>width x height x
@@ -577,6 +577,9 @@
                                 disabled afterwards.</db:para>
          </db:section>
       </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Property Documentation</db:title>
    </db:section>
    <db:section>
       <db:title>Properties Documentation</db:title>

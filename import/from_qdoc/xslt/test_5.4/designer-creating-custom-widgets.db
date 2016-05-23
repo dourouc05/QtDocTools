@@ -468,18 +468,6 @@
             </db:tbody>
          </db:informaltable>
       </db:section>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="designer-creating-custom-widgets-extensions.html">Creating
-                                    Custom Widget Extensions</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="plugin-requirements">
       <db:title>Plugin Requirements</db:title>
@@ -492,18 +480,6 @@
                                         <db:code><db:link xlink:href="qdesignercustomwidgetinterface.html#QDESIGNER_WIDGET_EXPORT">QDESIGNER_WIDGET_EXPORT</db:link></db:code> macro must be used to
                                     define each custom widget class within a plugin, that <db:emphasis>Qt
                                         Designer</db:emphasis> will instantiate.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="designer-creating-custom-widgets-extensions.html">Creating
-                                    Custom Widget Extensions</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="creating-well-behaved-widgets">
       <db:title>Creating Well Behaved
@@ -522,18 +498,6 @@
                                     createWidget() and could perhaps set an internal flag that can
                                     be tested later when <db:emphasis>Qt Designer</db:emphasis> calls the
                                     plugin's createWidget() function.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="designer-creating-custom-widgets-extensions.html">Creating
-                                    Custom Widget Extensions</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="building-and-installing-the-plugin">
       <db:title>Building and
@@ -620,18 +584,6 @@
             </db:listitem>
          </db:itemizedlist>
       </db:section>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="designer-creating-custom-widgets-extensions.html">Creating
-                                    Custom Widget Extensions</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="related-examples">
       <db:title>Related Examples</db:title>
@@ -642,17 +594,5 @@
                                     about using custom widgets in <db:emphasis>Qt Designer</db:emphasis>.
                                     Also, you can use the <db:code><db:link xlink:href="qdesignercustomwidgetcollectioninterface.html">QDesignerCustomWidgetCollectionInterface</db:link></db:code> class to
                                     combine several custom widgets into a single library.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="designer-using-custom-widgets.html">Using Custom Widgets with Qt Designer</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="designer-creating-custom-widgets-extensions.html">Creating
-                                    Custom Widget Extensions</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
 </db:article>

@@ -45,7 +45,7 @@
          <db:varname>transparentBorder</db:varname>
       </db:fieldsynopsis>
    </db:classsynopsis>
-   <db:section>
+   <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>By default effect produces a high quality glow image, thus the
                                 rendering speed of the effect may not be the highest possible. The
@@ -87,13 +87,16 @@
             </db:tr>
          </db:tbody>
       </db:informaltable>
-      <db:section>
+      <db:section xml:id="example">
          <db:title>Example</db:title>
          <db:para>The following example shows how to apply the effect.</db:para>
          <db:programlisting language="qml">import QtQuick 2.0 import QtGraphicalEffects 1.0
                                     Item { width: 300height: 300Rectangle { anchors.fill: parentcolor: "black" } Image { id: butterflysource: "images/butterfly.png"sourceSize: Qt.size(parent.width,
                                     parent.height) smooth: truevisible: false } Glow { anchors.fill: butterflyradius: 8samples: 16color: "white"source: butterfly } }</db:programlisting>
       </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Property Documentation</db:title>
    </db:section>
    <db:section>
       <db:title>Properties Documentation</db:title>

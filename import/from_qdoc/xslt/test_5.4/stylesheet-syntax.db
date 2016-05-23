@@ -49,19 +49,6 @@
       <db:para>See the <db:link xlink:href="stylesheet-reference.html#list-of-properties">List of
                                         Properties</db:link> section below for the list of properties
                                     provided by Qt widgets.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="selector-types">
       <db:title>Selector Types</db:title>
@@ -209,19 +196,6 @@
             </db:tr>
          </db:tbody>
       </db:informaltable>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="sub-controls">
       <db:title>Sub-Controls</db:title>
@@ -283,19 +257,6 @@
                                     properties or sub-controls must be customized as
                                     well.</db:para>
       </db:note>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="pseudo-states">
       <db:title>Pseudo-States</db:title>
@@ -332,19 +293,6 @@
       <db:para>See the <db:link xlink:href="stylesheet-reference.html#list-of-pseudo-states">List
                                         of Pseudo-States</db:link> section below for the list of
                                     pseudo-states provided by Qt widgets.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="conflict-resolution">
       <db:title>Conflict Resolution</db:title>
@@ -457,19 +405,6 @@
                                             */#x34y {} /* a=1 b=0 c=0
                                             -&gt; specificity = 100 */</db:programlisting>
       </db:blockquote>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="cascading">
       <db:title>Cascading</db:title>
@@ -506,19 +441,6 @@
                                         Specification</db:link> for the gory details. Be aware that
                                     Qt currently doesn't implement
                                     <db:code>!important</db:code>.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="inheritance">
       <db:title>Inheritance</db:title>
@@ -538,19 +460,6 @@
       <db:para>In contrast, setting a font and propagate using <db:code><db:link xlink:href="qwidget.html#font-prop">QWidget::setFont</db:link>()</db:code>
                                     and <db:code><db:link xlink:href="qwidget.html#palette-prop">QWidget::setPalette</db:link>()</db:code> propagates to child
                                     widgets.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="widgets-inside-c-namespaces">
       <db:title>Widgets Inside C++
@@ -569,19 +478,6 @@
                                     the "::" with "--". For example,</db:para>
       <db:programlisting>namespace ns { class MyPushButton : publicQPushButton { // ... } } // ... qApp-&gt;setStyleSheet("ns--MyPushButton { background: yellow;
                                     }");</db:programlisting>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
    <db:section xml:id="setting-qobject-properties">
       <db:title>Setting QObject
@@ -594,18 +490,5 @@
       <db:para>If the property references an enum declared with <db:code><db:link xlink:href="qtcore/qobject.html#Q_ENUMS">Q_ENUMS</db:link></db:code>, you
                                     should reference its constants by name, i.e., not their numeric
                                     value.</db:para>
-      <db:section>
-         <db:title>See Also</db:title>
-         <db:simplelist>
-            <db:member>
-               <db:link xlink:href="stylesheet.html">Qt Style
-                                    Sheets</db:link>
-            </db:member>
-            <db:member>
-               <db:link xlink:href="stylesheet-designer.html">Qt Designer
-                                    Integration</db:link>
-            </db:member>
-         </db:simplelist>
-      </db:section>
    </db:section>
 </db:article>

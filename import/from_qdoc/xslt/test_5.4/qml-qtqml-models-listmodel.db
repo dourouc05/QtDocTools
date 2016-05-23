@@ -116,7 +116,7 @@
          <db:void/>
       </db:methodsynopsis>
    </db:classsynopsis>
-   <db:section>
+   <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>The <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> is a simple container of <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link>
                                 definitions, each containing data roles. The contents can be defined
@@ -128,7 +128,7 @@
                                 objects by the model.</db:para>
       <db:para>Elements can be manipulated via the model using the <db:link xlink:href="qml-qtqml-models-listmodel.html#setProperty-method">setProperty()</db:link> method, which allows the roles of the
                                 specified element to be set and changed.</db:para>
-      <db:section>
+      <db:section xml:id="example-usage">
          <db:title>Example Usage</db:title>
          <db:para>The following example shows a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link>
                                 containing three elements, with the roles "name" and
@@ -169,7 +169,7 @@
                                 } Row
                                 { anchors.top: nameField.bottomspacing: 5Text { text: "Attributes:" } Repeater { model: attributesText { text: description } } } } }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="modifying-list-models">
          <db:title>Modifying List Models</db:title>
          <db:para>The content of a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> may be created and modified using the
                                     <db:link xlink:href="qml-qtqml-models-listmodel.html#clear-method">clear()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#insert-method">insert()</db:link> and <db:link xlink:href="qml-qtqml-models-listmodel.html#setProperty-method">setProperty()</db:link> methods. For example:</db:para>
@@ -183,7 +183,7 @@
                                 added to the model are the only permitted properties in the
                                 model.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="using-threaded-list-models-with-workerscript">
          <db:title>Using
                                 Threaded List Models with WorkerScript</db:title>
          <db:para>
@@ -229,6 +229,9 @@
             </db:simplelist>
          </db:section>
       </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Property Documentation</db:title>
    </db:section>
    <db:section>
       <db:title>Properties Documentation</db:title>

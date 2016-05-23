@@ -87,7 +87,7 @@
     </xsl:variable>
 
     <xsl:variable name="isConcept"
-      select="not($isClass) and not($isNamespace) and not($isFunctions) and not($isQmlType)"
+      select="not($isClass) and not($isNamespace) and not($isFunctions) and not($isQmlType) and not($isGlobal)"
       as="xs:boolean"/>
 
     <!-- Extract the various parts of the prologue. -->
@@ -158,6 +158,7 @@
                          * for everything: not attached to another title than the description's 
                     -->
                     <xsl:choose>
+                      <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
                       <xsl:when test="current()[self::html:h2]">
                         <html:h3>
                           <xsl:attribute name="id" select="current()/@id"/>
@@ -224,7 +225,7 @@
                   preceding-sibling::html:h2[1] = $methTitle
                   )
                   ]">
-                <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
+                <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
                 <xsl:choose>
                   <xsl:when test="current()[self::html:h2]">
                     <html:h3>
@@ -265,7 +266,7 @@
         the style sheets!</xsl:message>
     </xsl:if>
 
-    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p]" as="element()?"/>
+    <xsl:variable name="seeAlso" select="$siblingAfterDescription[self::html:p and not(contains(@class, 'navi'))]" as="element()?"/>
     <!-- For QML types: "see also" handled naturally as a paragraph. -->
     <xsl:variable name="siblingAfterSeeAlso" as="element()?"
       select="
@@ -662,7 +663,6 @@
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
       <xsl:call-template name="content_withTitles">
         <xsl:with-param name="data" select="$description"/>
-        <xsl:with-param name="hasSeeAlso" select="boolean($seeAlso)"/>
         <xsl:with-param name="seeAlso" select="$seeAlso"/>
       </xsl:call-template>
 
@@ -2067,7 +2067,6 @@
   </xsl:template>
   <xsl:template name="content_withTitles">
     <xsl:param name="data"/>
-    <xsl:param name="hasSeeAlso"/>
     <xsl:param name="seeAlso"/>
 
     <xsl:call-template name="content_withTitles_before">
@@ -2177,8 +2176,8 @@
             </xsl:otherwise>
           </xsl:choose>
         </xsl:for-each-group>
-
-        <xsl:if test="$hasSeeAlso">
+        
+        <xsl:if test="$seeAlso and current() = $firstTitle">
           <xsl:call-template name="content_seealso">
             <xsl:with-param name="seeAlso" select="$seeAlso"/>
           </xsl:call-template>

@@ -35,11 +35,11 @@
          <db:varname>radius</db:varname>
       </db:fieldsynopsis>
    </db:classsynopsis>
-   <db:section>
+   <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>Rectangle items are used to fill areas with solid color or
                                 gradients, and/or to provide a rectangular border.</db:para>
-      <db:section>
+      <db:section xml:id="appearance">
          <db:title>Appearance</db:title>
          <db:para>Each Rectangle item is painted using either a solid fill color,
                                 specified using the <db:link xlink:href="qml-qtquick-rectangle.html#color-prop">color</db:link>
@@ -54,7 +54,7 @@
                                 rectangle, it may be appropriate to set the <db:link xlink:href="qml-qtquick-item.html#antialiasing-prop">Item::antialiasing</db:link> property to improve its
                                 appearance.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="example-usage">
          <db:title>Example Usage</db:title>
          <db:informalfigure>
             <db:mediaobject>
@@ -68,7 +68,7 @@
                                 used to create a square:</db:para>
          <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 100height: 100color: "red"border.color: "black"border.width: 5radius: 10 }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="performance">
          <db:title>Performance</db:title>
          <db:para>Using the <db:link xlink:href="qml-qtquick-item.html#antialiasing-prop">Item::antialiasing</db:link> property improves the appearance of
                                 a rounded rectangle at the cost of rendering performance. You should
@@ -83,6 +83,9 @@
             </db:simplelist>
          </db:section>
       </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Property Documentation</db:title>
    </db:section>
    <db:section>
       <db:title>Properties Documentation</db:title>

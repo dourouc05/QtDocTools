@@ -176,7 +176,7 @@
          </db:methodparam>
       </db:methodsynopsis>
    </db:classsynopsis>
-   <db:section>
+   <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>A <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
                                 is an invisible item that is typically used in conjunction with a
@@ -210,7 +210,7 @@
                                 for onPositionChanged, onEntered and onExited are used and that the
                                     <db:link xlink:href="qml-qtquick-mousearea.html#containsMouse-prop">containsMouse</db:link> property is updated even when no mouse
                                 buttons are pressed.</db:para>
-      <db:section>
+      <db:section xml:id="example-usage">
          <db:title>Example Usage</db:title>
          <db:informalfigure>
             <db:mediaobject>
@@ -509,6 +509,9 @@
          <db:para>The corresponding handler is
                                             <db:code>onWheel</db:code>.</db:para>
       </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Property Documentation</db:title>
    </db:section>
    <db:section>
       <db:title>Properties Documentation</db:title>
