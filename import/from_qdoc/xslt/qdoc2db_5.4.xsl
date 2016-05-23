@@ -2369,6 +2369,19 @@
           <xsl:otherwise><db:code><xsl:copy-of select="$link"></xsl:copy-of></db:code></xsl:otherwise>
         </xsl:choose>
       </xsl:when>
+      <xsl:when test="count(./text()) = 1 and starts-with(./text(), '&lt;') and ends-with(./text(), '&gt;')">
+        <xsl:variable name="link">
+          <db:link>
+            <xsl:attribute name="xlink:href" select="@href"/>
+            <xsl:apply-templates mode="content_paragraph"/>
+          </db:link>
+        </xsl:variable>
+        
+        <xsl:choose>
+          <xsl:when test="ancestor::node()[self::html:code]"><xsl:copy-of select="$link"></xsl:copy-of></xsl:when>
+          <xsl:otherwise><db:code><xsl:copy-of select="$link"></xsl:copy-of></db:code></xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
       <!-- No <db:code> should be inferred here. -->
       <xsl:otherwise>
         <db:link>
