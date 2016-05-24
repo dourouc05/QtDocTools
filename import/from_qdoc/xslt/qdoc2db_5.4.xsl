@@ -677,6 +677,7 @@
       <xsl:if test="$nonmemfuncs">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$nonmemfuncs"/>
+          <xsl:with-param name="title" select="'Function Documentation'"/>
         </xsl:call-template>
       </xsl:if>
       
