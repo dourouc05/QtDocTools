@@ -10,8 +10,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:saxon="http://saxon.sf.net/"
-  exclude-result-prefixes="xsl xs html saxon" version="2.0">
+  xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier"
+  exclude-result-prefixes="xsl xs html saxon tc" version="2.0">
   <xsl:output method="xml" indent="yes" 
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting"/>
   <xsl:strip-space elements="*"/>
@@ -286,6 +286,13 @@
         <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
         <xsl:with-param name="anchor" select="'types'"/>
         <xsl:with-param name="title" select="'Member Type Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="classes" as="element(html:div)?"><!-- Only for namespaces. -->
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'classes'"/>
+        <xsl:with-param name="title" select="'Classes'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="properties" as="element(html:div)?"><!-- Both C++ and QML properties! -->
@@ -571,7 +578,6 @@
       </xsl:if>
 
       <xsl:if test="$isNamespace or $isGlobal">
-        <xsl:message>TODO: obsoletes!</xsl:message>
         <xsl:if test="$warnVocabularyUnsupportedFeatures">
           <xsl:message>WARNING: No precise output for namespaces.</xsl:message>
         </xsl:if>
@@ -579,7 +585,10 @@
           <xsl:message>WARNING: No precise output for namespace functions.</xsl:message>
         </xsl:if>
         <xsl:if test="$macros and $warnVocabularyUnsupportedFeatures">
-          <xsl:message>WARNING: No precise output for namespace macros (outside the namespace).</xsl:message>
+          <xsl:message>WARNING: No precise output for namespace macros (fpr now, outside the namespace).</xsl:message>
+        </xsl:if>
+        <xsl:if test="$classes and $warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No precise output for namespace classes.</xsl:message>
         </xsl:if>
         <xsl:call-template name="classListing">
           <xsl:with-param name="className" select="if ($isGlobal) then 'QtGlobal' else $namespaceName"/>
@@ -630,7 +639,15 @@
         <xsl:apply-templates mode="indexTable" select="$index"/>
       </xsl:if>
 
-      <!-- There may be types, properties, functions, and macros for C++ classes. -->
+      <!-- There may be types, properties, functions, and macros for C++ classes and namespaces. -->
+      <xsl:if test="$classes">
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$classes"/>
+          <xsl:with-param name="title" select="'Classes'"/>
+          <xsl:with-param name="anchor" select="'classes'"/>
+        </xsl:call-template>
+      </xsl:if>
+      
       <xsl:if test="$types">
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$types"/>
@@ -1558,11 +1575,13 @@
     </db:section>
   </xsl:template>
   <!-- 
-    Two types of types: either class="fn", just an enum; or class="flags". 
-    In the latter case, the title mentions both an enum and a flags, separated with a <br/>. 
+    Three types of types: either class="fn", just an enum; or class="flags"; or no class, probably a C++ class. 
+    Peculiarities: 
+     - For flags, the title mentions both an enum and a flags, separated with a <br/>. 
+     - C++ classes have no anchor. 
   -->
   <xsl:template mode="content_types" match="html:h3[@class = 'fn']">
-    <xsl:variable name="functionAnchor" select="./@id"/>
+    <xsl:variable name="functionAnchor" select="@id"/>
 
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
@@ -1574,12 +1593,21 @@
     </db:section>
   </xsl:template>
   <xsl:template mode="content_types" match="html:h3[@class = 'flags']">
-    <xsl:variable name="functionAnchor" select="./@id"/>
+    <xsl:variable name="functionAnchor" select="@id"/>
 
     <db:section>
       <xsl:attribute name="xml:id" select="$functionAnchor"/>
       <xsl:call-template name="content_title"/>
 
+      <xsl:call-template name="content_class_content">
+        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+      </xsl:call-template>
+    </db:section>
+  </xsl:template>
+  <xsl:template mode="content_types" match="html:h3[not(@class)]">
+    <db:section>
+      <xsl:call-template name="content_title"/>
+      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
