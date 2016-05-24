@@ -1614,34 +1614,13 @@
      - For flags, the title mentions both an enum and a flags, separated with a <br/>. 
      - C++ classes have no anchor. 
   -->
-  <xsl:template mode="content_types" match="html:h3[@class = 'fn']">
-    <xsl:variable name="functionAnchor" select="@id"/>
-
+  <xsl:template mode="content_types" match="html:h3">
     <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:if test="@id">
+        <xsl:attribute name="xml:id" select="@id"/>
+      </xsl:if>
       <xsl:call-template name="content_title"/>
 
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
-    </db:section>
-  </xsl:template>
-  <xsl:template mode="content_types" match="html:h3[@class = 'flags']">
-    <xsl:variable name="functionAnchor" select="@id"/>
-
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
-      <xsl:call-template name="content_title"/>
-
-      <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
-      </xsl:call-template>
-    </db:section>
-  </xsl:template>
-  <xsl:template mode="content_types" match="html:h3[not(@class)]">
-    <db:section>
-      <xsl:call-template name="content_title"/>
-      
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
       </xsl:call-template>
