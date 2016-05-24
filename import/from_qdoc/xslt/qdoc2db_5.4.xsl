@@ -13,7 +13,7 @@
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier"
   exclude-result-prefixes="xsl xs html saxon tc" version="2.0">
   <xsl:output method="xml" indent="yes" 
-    saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting"/>
+    saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
   
   <xsl:param name="vocabulary" select="'docbook'"/> <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for Boost's variant (TODO). -->
@@ -815,6 +815,7 @@
 
   <!-- Utility templates, to be used everywhere. -->
   <xsl:template name="content_title">
+    <!-- This utility normalises titles, mainly dealing with spaces everywhere and line breaks. -->
     <xsl:variable name="title_raw">
       <xsl:apply-templates mode="content_title_hidden">
         <xsl:with-param name="what" select="."/>
@@ -826,17 +827,46 @@
         <xsl:when test="starts-with($title, .)">
           <!-- This is the first (and often only) title of the list. -->
           <db:title>
-            <xsl:value-of select="normalize-space(.)"/>
+            <xsl:sequence select="tc:content_title_inverse(normalize-space(.))"/>
           </db:title>
         </xsl:when>
         <xsl:otherwise>
+          <!-- This is another title in the list, cannot output it as a <db:title>. -->
           <db:bridgehead renderas="sect2">
-            <xsl:value-of select="normalize-space(.)"/>
+            <xsl:sequence select="tc:content_title_inverse(normalize-space(.))"/>
           </db:bridgehead>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:for-each>
   </xsl:template>
+  <xsl:function name="tc:content_title_inverse" as="node()*">
+    <xsl:param name="in" as="xs:string"/>
+    
+    <!-- 
+      Here, deal with links within one title (no line breaks). Just decodes links (i.e. create <db:link>). 
+      A link is between ||||[ and ||||]. The URL comes first, then |-|, then the text.
+    -->
+    <xsl:for-each select="tokenize($in, '\|\|\|\|\[')">
+      <xsl:choose>
+        <xsl:when test="starts-with($in, .)">
+          <!-- This is the first part, no link yet. -->
+          <xsl:value-of select="."/>
+        </xsl:when>
+        <xsl:otherwise>
+          <!-- There is a link encoded at the beginning! -->
+          <xsl:variable name="part1" select="tokenize(., '\|\-\|')"/>
+          <xsl:variable name="url" select="$part1[1]"/>
+          <xsl:variable name="part2" select="tokenize($part1[2], '\|\|\|\|\]')"/>
+          <xsl:variable name="text" select="$part2[1]"/>
+          
+          <db:link>
+            <xsl:attribute name="xlink:href" select="$url"/>
+            <xsl:value-of select="$text"/>
+          </db:link>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:for-each>
+  </xsl:function>
   <xsl:template mode="content_title_hidden" match="html:br">
     <xsl:text>|\|/|</xsl:text>
   </xsl:template>
@@ -852,11 +882,15 @@
     <xsl:value-of select="."/>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="html:code">
-    <xsl:value-of select="./text()"/>
+    <xsl:value-of select="text()"/>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="html:a[@name]"/>
   <xsl:template mode="content_title_hidden" match="html:a[@href]">
-    <xsl:value-of select="./text()"/>
+    <xsl:text>||||[</xsl:text>
+    <xsl:value-of select="@href"/>
+    <xsl:text>|-|</xsl:text>
+    <xsl:value-of select="text()"/>
+    <xsl:text>||||]</xsl:text>
   </xsl:template>
   <xsl:template mode="content_title_hidden" match="html:i">
     <xsl:apply-templates mode="content_title_hidden"/>
@@ -947,8 +981,8 @@
         <xsl:for-each select="$inherits/html:a">
           <db:classsynopsisinfo role="inherits">
             <db:link>
-              <xsl:attribute name="xlink:href" select="./@href"/>
-              <xsl:value-of select="./text()"/>
+              <xsl:attribute name="xlink:href" select="@href"/>
+              <xsl:value-of select="text()"/>
             </db:link>
           </db:classsynopsisinfo>
         </xsl:for-each>
@@ -957,8 +991,8 @@
         <xsl:for-each select="$inheritedBy/html:p/html:a">
           <db:classsynopsisinfo role="inheritedBy">
             <db:link>
-              <xsl:attribute name="xlink:href" select="./@href"/>
-              <xsl:value-of select="./text()"/>
+              <xsl:attribute name="xlink:href" select="@href"/>
+              <xsl:value-of select="text()"/>
             </db:link>
           </db:classsynopsisinfo>
         </xsl:for-each>

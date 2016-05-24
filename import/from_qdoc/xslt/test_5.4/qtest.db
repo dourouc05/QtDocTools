@@ -862,7 +862,7 @@
    <db:section xml:id="classes">
       <db:title>Classes</db:title>
       <db:section>
-         <db:title>class QTouchEventSequence</db:title>
+         <db:title>class <db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:title>
          <db:para>The <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> class is used to simulate a
                                     sequence of touch events. <db:link xlink:href="qtest-qtoucheventsequence.html#details">More...</db:link>
          </db:para>
@@ -2570,7 +2570,7 @@
       <db:section xml:id="obsolete_func">
          <db:title>Function Documentation</db:title>
          <db:section xml:id="qWaitForWindowShown">
-            <db:title>[static] bool QTest::qWaitForWindowShown(QWidget * widget, int timeout = 1000)</db:title>
+            <db:title>[static] bool QTest::qWaitForWindowShown(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
             <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the <db:emphasis>widget</db:emphasis>'s window is exposed. Returns <db:code>true</db:code> if <db:code>widget</db:code>'s window is exposed within <db:emphasis>timeout</db:emphasis> milliseconds, otherwise returns <db:code>false</db:code>.</db:para>
             <db:para>This function does the same as <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">qWaitForWindowExposed</db:link>()</db:code>.</db:para>
             <db:para>Example:</db:para>
