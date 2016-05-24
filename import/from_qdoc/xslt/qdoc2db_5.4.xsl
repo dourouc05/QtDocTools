@@ -5,13 +5,7 @@
   
   
   
-  To check: types and arrays []. 
   How to retrieve base class?
-  
-  
-  
-  What about QML signal handlers? Always the same presentation in signals: 
-    The corresponding handler is onExited.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
@@ -764,9 +758,7 @@
         <xsl:variable name="titleNode" select="//html:h2[text() = $title]"/>
         <html:div>
           <xsl:attribute name="class" select="$anchor"/>
-          <html:h2>
-            <xsl:value-of select="$title"/>
-          </html:h2>
+          <html:h2><xsl:value-of select="$title"/></html:h2>
           
           <xsl:for-each select="$titleNode/following-sibling::html:*[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleNode]">
             <xsl:copy-of select="."/>
