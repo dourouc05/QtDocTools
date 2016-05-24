@@ -578,7 +578,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="activeFocus-prop">
          <db:title>activeFocus : bool</db:title>
@@ -906,8 +906,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="layer.effect-prop">
-         <db:title>layer.effect : <db:link xlink:href="qtqml/qml-qtqml-component.html">Component</db:link>
-         </db:title>
+         <db:title>layer.effect : <db:link xlink:href="qtqml/qml-qtqml-component.html">Component</db:link></db:title>
          <db:para>Holds the effect that is applied to this
                                         layer.</db:para>
          <db:para>The effect is typically a <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link> component, although any <db:link xlink:href="qml-qtquick-item.html">Item</db:link> component can
@@ -1002,8 +1001,7 @@
       </db:section>
       <db:section xml:id="layer.sourceRect-prop">
          <db:title>layer.sourceRect :
-                                                  <db:link xlink:href="qtqml/qml-rect.html">rect</db:link>
-         </db:title>
+                                                  <db:link xlink:href="qtqml/qml-rect.html">rect</db:link></db:title>
          <db:para>This property defines the rectangular area of the
                                         item that should be rendered into the texture. The source
                                         rectangle can be larger than the item itself. If the
@@ -1131,8 +1129,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="parent-prop">
-         <db:title>parent : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
-         </db:title>
+         <db:title>parent : <db:link xlink:href="qml-qtquick-item.html">Item</db:link></db:title>
          <db:para>This property holds the visual parent of the
                                         item.</db:para>
          <db:note>
@@ -1521,10 +1518,8 @@
          </db:informaltable>
       </db:section>
    </db:section>
-   <db:section>
-      <db:title>
-            Methods Documentation
-          </db:title>
+   <db:section xml:id="qml-meths">
+      <db:title>Methods Documentation</db:title>
       <db:section xml:id="childAt-method">
          <db:title>childAt(real<db:emphasis> x</db:emphasis>,
                                                   real<db:emphasis>
@@ -1543,8 +1538,7 @@
                                         returns false otherwise.</db:para>
       </db:section>
       <db:section xml:id="forceActiveFocus-method-2">
-         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code>
-            <db:emphasis>
+         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code><db:emphasis>
                                                   reason</db:emphasis>)</db:title>
          <db:para>Forces active focus on the item with the given
                                             <db:emphasis>reason</db:emphasis>.</db:para>
@@ -1611,8 +1605,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="mapFromItem-method-2">
-         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
-            <db:emphasis> item</db:emphasis>,
+         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis> y</db:emphasis>, real<db:emphasis>
                                                   width</db:emphasis>, real<db:emphasis>
@@ -1633,8 +1626,7 @@
                                         view.</db:para>
       </db:section>
       <db:section xml:id="mapFromItem-method">
-         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
-            <db:emphasis> item</db:emphasis>,
+         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis>
                                                   y</db:emphasis>)</db:title>
@@ -1654,8 +1646,7 @@
                                         view.</db:para>
       </db:section>
       <db:section xml:id="mapToItem-method-2">
-         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
-            <db:emphasis> item</db:emphasis>,
+         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis> y</db:emphasis>, real<db:emphasis>
                                                   width</db:emphasis>, real<db:emphasis>
@@ -1676,8 +1667,7 @@
                                         view.</db:para>
       </db:section>
       <db:section xml:id="mapToItem-method">
-         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link>
-            <db:emphasis> item</db:emphasis>,
+         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis>
                                                   y</db:emphasis>)</db:title>

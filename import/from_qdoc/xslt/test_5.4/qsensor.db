@@ -353,7 +353,7 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="types">
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="AxesOrientationMode-enum">
          <db:title>enum QSensor::AxesOrientationMode</db:title>
@@ -682,7 +682,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Property Documentation</db:title>
       <db:section xml:id="active-prop">
          <db:title>active : bool</db:title>
@@ -795,7 +795,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="availableDataRates-prop">
-         <db:title>availableDataRates : const qrangelist</db:title>
+         <db:title>availableDataRates : const <db:link xlink:href="qsensor.html#qrangelist-typedef">qrangelist</db:link></db:title>
          <db:para>This property holds the data rates that the sensor
                                     supports.</db:para>
          <db:para>This is a list of the data rates that the sensor supports.
@@ -839,7 +839,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="axesOrientationMode-prop">
-         <db:title>axesOrientationMode : AxesOrientationMode</db:title>
+         <db:title>axesOrientationMode : <db:link xlink:href="qsensor.html#AxesOrientationMode-enum">AxesOrientationMode</db:link></db:title>
          <db:para>This property holds the mode that affects how the screen
                                     orientation changes reading values.</db:para>
          <db:para>When set to <db:link xlink:href="qsensor.html#AxesOrientationMode-enum">FixedOrientation</db:link>, which is the default mode, no
@@ -1216,7 +1216,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="description-prop">
-         <db:title>description : const QString</db:title>
+         <db:title>description : const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds a descriptive string for the
                                     sensor.</db:para>
          <db:para>
@@ -1336,7 +1336,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="identifier-prop">
-         <db:title>identifier : QByteArray</db:title>
+         <db:title>identifier : <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>This property holds the backend identifier for the
                                     sensor.</db:para>
          <db:para>Note that the identifier is filled out automatically when
@@ -1479,7 +1479,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="outputRanges-prop">
-         <db:title>outputRanges : const qoutputrangelist</db:title>
+         <db:title>outputRanges : const <db:link xlink:href="qsensor.html#qoutputrangelist-typedef">qoutputrangelist</db:link></db:title>
          <db:para>This property holds a list of output ranges the sensor
                                     supports.</db:para>
          <db:para>A sensor may have more than one output range. Typically this
@@ -1520,7 +1520,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="reading-prop">
-         <db:title>reading : QSensorReading * const</db:title>
+         <db:title>reading : <db:link xlink:href="qsensorreading.html">QSensorReading</db:link></db:title>
          <db:para>This property holds the reading class.</db:para>
          <db:para>The reading class provides access to sensor readings. The
                                     reading object is a volatile cache of the most recent sensor
@@ -1650,7 +1650,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="type-prop">
-         <db:title>type : const QByteArray</db:title>
+         <db:title>type : const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>This property holds the type of the sensor.</db:para>
          <db:para>
             <db:emphasis role="bold">Access functions:</db:emphasis>
@@ -1732,10 +1732,10 @@
          </db:informaltable>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QSensor">
-         <db:title>QSensor::QSensor(const QByteArray &amp; type, QObject * parent = 0)</db:title>
+         <db:title>QSensor::QSensor(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Construct the <db:emphasis>type</db:emphasis> sensor as a child of
                                         <db:emphasis>parent</db:emphasis>.</db:para>
          <db:para>Do not use this constructor if a derived class exists for
@@ -1764,7 +1764,7 @@
                                     been stopped.</db:para>
       </db:section>
       <db:section xml:id="addFilter">
-         <db:title>void QSensor::addFilter(QSensorFilter * filter)</db:title>
+         <db:title>void QSensor::addFilter(<db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:title>
          <db:para>Add a <db:emphasis>filter</db:emphasis> to the sensor.</db:para>
          <db:para>The sensor does not take ownership of the filter. <db:code><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:code> will inform
                                     the sensor if it is destroyed.</db:para>
@@ -1826,7 +1826,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="defaultSensorForType">
-         <db:title>[static] QByteArray QSensor::defaultSensorForType(const QByteArray &amp; type)</db:title>
+         <db:title>[static] <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Returns the default sensor identifier for
                                         <db:emphasis>type</db:emphasis>. This is set in a config file and can
                                     be overridden if required. If no default is available the system
@@ -1850,7 +1850,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="filters">
-         <db:title>QList &lt;QSensorFilter *&gt; QSensor::filters() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:title>
          <db:para>Returns the filters currently attached to the
                                     sensor.</db:para>
          <db:section>
@@ -1863,7 +1863,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="isFeatureSupported">
-         <db:title>bool QSensor::isFeatureSupported(Feature feature) const</db:title>
+         <db:title>bool QSensor::isFeatureSupported(<db:link xlink:href="qsensor.html#Feature-enum">Feature</db:link></db:title>
          <db:para>Checks if a specific feature is supported by the
                                     backend.</db:para>
          <db:para>
@@ -1884,7 +1884,7 @@
          <db:para>This function was introduced in Qt 5.0.</db:para>
       </db:section>
       <db:section xml:id="removeFilter">
-         <db:title>void QSensor::removeFilter(QSensorFilter * filter)</db:title>
+         <db:title>void QSensor::removeFilter(<db:link xlink:href="qsensorfilter.html">QSensorFilter</db:link></db:title>
          <db:para>Remove <db:emphasis>filter</db:emphasis> from the sensor.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -1896,11 +1896,11 @@
          </db:section>
       </db:section>
       <db:section xml:id="sensorTypes">
-         <db:title>[static] QList &lt;QByteArray &gt; QSensor::sensorTypes()</db:title>
+         <db:title>[static] <db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Returns a list of all sensor types.</db:para>
       </db:section>
       <db:section xml:id="sensorsForType">
-         <db:title>[static] QList &lt;QByteArray &gt; QSensor::sensorsForType(const QByteArray &amp; type)</db:title>
+         <db:title>[static] <db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Returns a list of ids for each of the sensors for
                                         <db:emphasis>type</db:emphasis>. If there are no sensors of that type
                                     available the list will be empty.</db:para>
@@ -1992,10 +1992,10 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="relnonmem">
       <db:title>Related Non-Members</db:title>
       <db:section>
-         <db:title>class qoutputrange</db:title>
+         <db:title>class <db:link xlink:href="qsensor.html">qoutputrange</db:link></db:title>
          <db:para>The qoutputrange class holds the specifics of an output
                                     range. <db:link xlink:href="qsensor.html#details">More...</db:link>
          </db:para>

@@ -711,7 +711,7 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="types">
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="ObjectOwnership-enum">
          <db:title>enum QQmlEngine::ObjectOwnership</db:title>
@@ -795,10 +795,10 @@
                                     ownership heuristic used by QML.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Property Documentation</db:title>
       <db:section xml:id="offlineStoragePath-prop">
-         <db:title>offlineStoragePath : QString</db:title>
+         <db:title>offlineStoragePath : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the directory for storing offline user
                                     data.</db:para>
          <db:para>Returns the directory where SQL and other offline storage is
@@ -841,10 +841,10 @@
          </db:informaltable>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QQmlEngine">
-         <db:title>QQmlEngine::QQmlEngine(QObject * parent = 0)</db:title>
+         <db:title>QQmlEngine::QQmlEngine(<db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Create a new <db:code><db:link xlink:href="qqmlengine.html">QQmlEngine</db:link></db:code> with the given
                                     <db:emphasis>parent</db:emphasis>.</db:para>
       </db:section>
@@ -858,7 +858,7 @@
                                     for details on cleaning up the JS engine.</db:para>
       </db:section>
       <db:section xml:id="addImageProvider">
-         <db:title>void QQmlEngine::addImageProvider(const QString &amp; providerId, QQmlImageProviderBase * provider)</db:title>
+         <db:title>void QQmlEngine::addImageProvider(const <db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qqmlimageproviderbase.html">QQmlImageProviderBase</db:link></db:title>
          <db:para>Sets the <db:emphasis>provider</db:emphasis> to use for images
                                     requested via the <db:emphasis>image</db:emphasis>: url scheme, with host
                                         <db:emphasis>providerId</db:emphasis>. The <db:code><db:link xlink:href="qqmlengine.html">QQmlEngine</db:link></db:code> takes ownership
@@ -884,7 +884,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="addImportPath">
-         <db:title>void QQmlEngine::addImportPath(const QString &amp; path)</db:title>
+         <db:title>void QQmlEngine::addImportPath(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>Adds <db:emphasis>path</db:emphasis> as a directory where the engine
                                     searches for installed modules in a URL-based directory
                                     structure.</db:para>
@@ -911,11 +911,11 @@
          </db:section>
       </db:section>
       <db:section xml:id="addNamedBundle">
-         <db:title>bool QQmlEngine::addNamedBundle(const QString &amp; name, const QString &amp; fileName)</db:title>
+         <db:title>bool QQmlEngine::addNamedBundle(const <db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="addPluginPath">
-         <db:title>void QQmlEngine::addPluginPath(const QString &amp; path)</db:title>
+         <db:title>void QQmlEngine::addPluginPath(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>Adds <db:emphasis>path</db:emphasis> as a directory where the engine
                                     searches for native plugins for imported modules (referenced in
                                     the <db:code>qmldir</db:code> file).</db:para>
@@ -934,7 +934,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="baseUrl">
-         <db:title>QUrl QQmlEngine::baseUrl() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>Return the base URL for this engine. The base URL is only
                                     used to resolve components when a relative URL is passed to the
                                         <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code>
@@ -975,7 +975,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="contextForObject">
-         <db:title>[static] QQmlContext * QQmlEngine::contextForObject(const QObject * object)</db:title>
+         <db:title>[static] <db:link xlink:href="qqmlcontext.html">QQmlContext</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code> for the <db:emphasis>object</db:emphasis>, or 0
                                     if no context has been set.</db:para>
          <db:para>When the <db:code><db:link xlink:href="qqmlengine.html">QQmlEngine</db:link></db:code>
@@ -997,11 +997,11 @@
          </db:section>
       </db:section>
       <db:section xml:id="event">
-         <db:title>[virtual protected] bool QQmlEngine::event(QEvent *)</db:title>
+         <db:title>[virtual protected] bool QQmlEngine::event(<db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="imageProvider">
-         <db:title>QQmlImageProviderBase * QQmlEngine::imageProvider(const QString &amp; providerId) const</db:title>
+         <db:title><db:link xlink:href="qqmlimageproviderbase.html">QQmlImageProviderBase</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>Returns the image provider set for
                                         <db:emphasis>providerId</db:emphasis>.</db:para>
          <db:para>Returns the provider if it was found; otherwise returns
@@ -1016,7 +1016,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="importPathList">
-         <db:title>QStringList QQmlEngine::importPathList() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
          <db:para>Returns the list of directories where the engine searches
                                     for installed modules in a URL-based directory
                                     structure.</db:para>
@@ -1049,7 +1049,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="importPlugin">
-         <db:title>bool QQmlEngine::importPlugin(const QString &amp; filePath, const QString &amp; uri, QList &lt;QQmlError &gt; * errors)</db:title>
+         <db:title>bool QQmlEngine::importPlugin(const <db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qqmlerror.html">QQmlError</db:link></db:title>
          <db:para>Imports the plugin named <db:emphasis>filePath</db:emphasis> with the
                                         <db:emphasis>uri</db:emphasis> provided. Returns true if the plugin
                                     was successfully imported; otherwise returns false.</db:para>
@@ -1059,7 +1059,7 @@
                                         <db:code><db:link xlink:href="qqmlextensionplugin.html">QQmlExtensionPlugin</db:link></db:code> interface.</db:para>
       </db:section>
       <db:section xml:id="incubationController">
-         <db:title>QQmlIncubationController * QQmlEngine::incubationController() const</db:title>
+         <db:title><db:link xlink:href="qqmlincubationcontroller.html">QQmlIncubationController</db:link></db:title>
          <db:para>Returns the currently set incubation controller, or 0 if no
                                     controller has been set.</db:para>
          <db:section>
@@ -1089,7 +1089,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="networkAccessManagerFactory">
-         <db:title>QQmlNetworkAccessManagerFactory * QQmlEngine::networkAccessManagerFactory() const</db:title>
+         <db:title><db:link xlink:href="qqmlnetworkaccessmanagerfactory.html">QQmlNetworkAccessManagerFactory</db:link></db:title>
          <db:para>Returns the current <db:code><db:link xlink:href="qqmlnetworkaccessmanagerfactory.html">QQmlNetworkAccessManagerFactory</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -1101,7 +1101,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="objectOwnership">
-         <db:title>[static] ObjectOwnership QQmlEngine::objectOwnership(QObject * object)</db:title>
+         <db:title>[static] <db:link xlink:href="qqmlengine.html#ObjectOwnership-enum">ObjectOwnership</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns the ownership of <db:emphasis>object</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -1128,7 +1128,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="pluginPathList">
-         <db:title>QStringList QQmlEngine::pluginPathList() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
          <db:para>Returns the list of directories where the engine searches
                                     for native plugins for imported modules (referenced in the
                                         <db:code>qmldir</db:code> file).</db:para>
@@ -1153,7 +1153,7 @@
                                     would like to quit.</db:para>
       </db:section>
       <db:section xml:id="removeImageProvider">
-         <db:title>void QQmlEngine::removeImageProvider(const QString &amp; providerId)</db:title>
+         <db:title>void QQmlEngine::removeImageProvider(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>Removes the image provider for
                                     <db:emphasis>providerId</db:emphasis>.</db:para>
          <db:section>
@@ -1169,7 +1169,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="rootContext">
-         <db:title>QQmlContext * QQmlEngine::rootContext() const</db:title>
+         <db:title><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:title>
          <db:para>Returns the engine's root context.</db:para>
          <db:para>The root context is automatically created by the <db:code><db:link xlink:href="qqmlengine.html">QQmlEngine</db:link></db:code>. Data that should
                                     be available to all QML component instances instantiated by the
@@ -1179,7 +1179,7 @@
                                     the root context.</db:para>
       </db:section>
       <db:section xml:id="setBaseUrl">
-         <db:title>void QQmlEngine::setBaseUrl(const QUrl &amp; url)</db:title>
+         <db:title>void QQmlEngine::setBaseUrl(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>Set the base URL for this engine to
                                     <db:emphasis>url</db:emphasis>.</db:para>
          <db:section>
@@ -1192,7 +1192,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setContextForObject">
-         <db:title>[static] void QQmlEngine::setContextForObject(QObject * object, QQmlContext * context)</db:title>
+         <db:title>[static] void QQmlEngine::setContextForObject(<db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:title>
          <db:para>Sets the <db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code> for the <db:emphasis>object</db:emphasis> to
                                         <db:emphasis>context</db:emphasis>. If the <db:emphasis>object</db:emphasis>
                                     already has a context, a warning is output, but the context is
@@ -1210,7 +1210,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setImportPathList">
-         <db:title>void QQmlEngine::setImportPathList(const QStringList &amp; paths)</db:title>
+         <db:title>void QQmlEngine::setImportPathList(const <db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
          <db:para>Sets <db:emphasis>paths</db:emphasis> as the list of directories where
                                     the engine searches for installed modules in a URL-based
                                     directory structure.</db:para>
@@ -1232,7 +1232,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setIncubationController">
-         <db:title>void QQmlEngine::setIncubationController(QQmlIncubationController * controller)</db:title>
+         <db:title>void QQmlEngine::setIncubationController(<db:link xlink:href="qqmlincubationcontroller.html">QQmlIncubationController</db:link></db:title>
          <db:para>Sets the engine's incubation <db:emphasis>controller</db:emphasis>.
                                     The engine can only have one active controller and it does not
                                     take ownership of it.</db:para>
@@ -1246,7 +1246,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNetworkAccessManagerFactory">
-         <db:title>void QQmlEngine::setNetworkAccessManagerFactory(QQmlNetworkAccessManagerFactory * factory)</db:title>
+         <db:title>void QQmlEngine::setNetworkAccessManagerFactory(<db:link xlink:href="qqmlnetworkaccessmanagerfactory.html">QQmlNetworkAccessManagerFactory</db:link></db:title>
          <db:para>Sets the <db:emphasis>factory</db:emphasis> to use for creating
                                     QNetworkAccessManager(s).</db:para>
          <db:para>QNetworkAccessManager is used for all network access by QML.
@@ -1265,7 +1265,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setObjectOwnership">
-         <db:title>[static] void QQmlEngine::setObjectOwnership(QObject * object, ObjectOwnership ownership)</db:title>
+         <db:title>[static] void QQmlEngine::setObjectOwnership(<db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link><db:link xlink:href="qqmlengine.html#ObjectOwnership-enum">ObjectOwnership</db:link></db:title>
          <db:para>Sets the <db:emphasis>ownership</db:emphasis> of
                                         <db:emphasis>object</db:emphasis>.</db:para>
          <db:section>
@@ -1298,7 +1298,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setPluginPathList">
-         <db:title>void QQmlEngine::setPluginPathList(const QStringList &amp; paths)</db:title>
+         <db:title>void QQmlEngine::setPluginPathList(const <db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
          <db:para>Sets the list of directories where the engine searches for
                                     native plugins for imported modules (referenced in the
                                         <db:code>qmldir</db:code> file) to
@@ -1338,15 +1338,15 @@
          </db:section>
       </db:section>
       <db:section xml:id="warnings">
-         <db:title>[signal] void QQmlEngine::warnings(const QList &lt;QQmlError &gt; &amp; warnings)</db:title>
+         <db:title>[signal] void QQmlEngine::warnings(const <db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qqmlerror.html">QQmlError</db:link></db:title>
          <db:para>This signal is emitted when <db:emphasis>warnings</db:emphasis>
                                     messages are generated by QML.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="relnonmem">
       <db:title>Related Non-Members</db:title>
       <db:section>
-         <db:title>QObject * qmlAttachedPropertiesObject(const QObject * attachee, bool create = true)</db:title>
+         <db:title><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>The form of this template function is:</db:para>
          <db:programlisting>template&lt;typename T&gt;QObject*qmlAttachedPropertiesObject(constQObject*attachee, bool create =true)</db:programlisting>
          <db:para>This returns the attached object instance that has been
@@ -1381,7 +1381,7 @@
          <db:para>#include &lt;<db:code><db:link xlink:href="qtqml-qmlmodule.html">QtQml</db:link></db:code>&gt; to use this method.</db:para>
       </db:section>
       <db:section>
-         <db:title>QQmlContext * qmlContext(const QObject * object)</db:title>
+         <db:title><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code> associated with
                                         <db:emphasis>object</db:emphasis>, if any. This is equivalent to
                                         <db:code><db:link xlink:href="qqmlengine.html#contextForObject">QQmlEngine::contextForObject</db:link></db:code>.</db:para>
@@ -1398,7 +1398,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>QQmlEngine * qmlEngine(const QObject * object)</db:title>
+         <db:title><db:link xlink:href="qqmlengine.html#QQmlEngine">QQmlEngine</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qqmlengine.html">QQmlEngine</db:link></db:code> associated with
                                     <db:emphasis>object</db:emphasis>, if any. This is equivalent to <db:code><db:link xlink:href="qqmlengine.html#contextForObject">QQmlEngine::contextForObject</db:link></db:code>-&gt;engine(),
                                     but more efficient.</db:para>
@@ -1464,7 +1464,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterExtendedUncreatableType(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const QString &amp; reason)</db:title>
+         <db:title>int qmlRegisterExtendedUncreatableType(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This template function registers the C++ type and its
                                     extension in the QML system with the name
                                         <db:emphasis>qmlName</db:emphasis> in the library imported from
@@ -1512,7 +1512,7 @@
                                         <db:link xlink:href="qtqml-cppintegration-definetypes.html#type-revisions-and-versions">Type Revisions and Versions</db:link>).</db:para>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterSingletonType(const char * uri, int versionMajor, int versionMinor, const char * typeName, QJSValue(* )( QQmlEngine *, QJSEngine * ) callback)</db:title>
+         <db:title>int qmlRegisterSingletonType(const char * uri, int versionMajor, int versionMinor, const char * typeName, <db:link xlink:href="qjsvalue.html">QJSValue</db:link><db:link xlink:href="qqmlengine.html#QQmlEngine">QQmlEngine</db:link><db:link xlink:href="qjsengine.html#QJSEngine">QJSEngine</db:link></db:title>
          <db:para>This function may be used to register a singleton type
                                     provider <db:emphasis>callback</db:emphasis> in a particular
                                         <db:emphasis>uri</db:emphasis> and <db:emphasis>typeName</db:emphasis> with a
@@ -1548,7 +1548,7 @@
                                     property intsomeValue: ExampleApi.MyApi.someProperty }</db:programlisting>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterSingletonType(const char * uri, int versionMajor, int versionMinor, const char * typeName, QObject *(* )( QQmlEngine *, QJSEngine * ) callback)</db:title>
+         <db:title>int qmlRegisterSingletonType(const char * uri, int versionMajor, int versionMinor, const char * typeName, <db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link><db:link xlink:href="qqmlengine.html#QQmlEngine">QQmlEngine</db:link><db:link xlink:href="qjsengine.html#QJSEngine">QJSEngine</db:link></db:title>
          <db:para>This function may be used to register a singleton type
                                     provider <db:emphasis>callback</db:emphasis> in a particular
                                         <db:emphasis>uri</db:emphasis> and <db:emphasis>typeName</db:emphasis> with a
@@ -1624,7 +1624,7 @@
                                     }</db:programlisting>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterSingletonType(const QUrl &amp; url, const char * uri, int versionMajor, int versionMinor, const char * qmlName)</db:title>
+         <db:title>int qmlRegisterSingletonType(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>This function may be used to register a singleton type with
                                     the name <db:emphasis>qmlName</db:emphasis>, in the library imported from
                                         <db:emphasis>uri</db:emphasis> having the version number composed from
@@ -1696,7 +1696,7 @@
                                     advanced versions of some of its types are available.</db:para>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterType(const QUrl &amp; url, const char * uri, int versionMajor, int versionMinor, const char * qmlName)</db:title>
+         <db:title>int qmlRegisterType(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>This function registers a type in the QML system with the
                                     name <db:emphasis>qmlName</db:emphasis>, in the library imported from
                                         <db:emphasis>uri</db:emphasis> having the version number composed from
@@ -1722,7 +1722,7 @@
          <db:para>Returns the QML type id.</db:para>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterTypeNotAvailable(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const QString &amp; message)</db:title>
+         <db:title>int qmlRegisterTypeNotAvailable(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This function registers a type in the QML system with the
                                     name <db:emphasis>qmlName</db:emphasis>, in the type namespace imported
                                     from <db:emphasis>uri</db:emphasis> having the version number composed
@@ -1757,7 +1757,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>int qmlRegisterUncreatableType(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const QString &amp; message)</db:title>
+         <db:title>int qmlRegisterUncreatableType(const char * uri, int versionMajor, int versionMinor, const char * qmlName, const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This template function registers the C++ type in the QML
                                     system with the name <db:emphasis>qmlName</db:emphasis>, in the library
                                     imported from <db:emphasis>uri</db:emphasis> having the version number
@@ -1780,7 +1780,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
       <db:section>
          <db:title>QML_DECLARE_TYPE()</db:title>

@@ -47,7 +47,7 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="vars">
       <db:title>Member Variable Documentation</db:title>
       <db:section xml:id="boolValue-var">
          <db:title>bool ItemChangeData::boolValue</db:title>
@@ -62,7 +62,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="item-var">
-         <db:title>QQuickItem * ItemChangeData::item</db:title>
+         <db:title><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>Contains supplimentary information to the <db:code><db:link xlink:href="qquickitem.html#itemChange">QQuickItem::itemChange</db:link>()</db:code> function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -74,7 +74,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="realValue-var">
-         <db:title>qreal ItemChangeData::realValue</db:title>
+         <db:title><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
          <db:para>Contains supplimentary information to the <db:code><db:link xlink:href="qquickitem.html#itemChange">QQuickItem::itemChange</db:link>()</db:code> function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -86,7 +86,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="window-var">
-         <db:title>QQuickWindow * ItemChangeData::window</db:title>
+         <db:title><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:title>
          <db:para>Contains supplimentary information to the <db:code><db:link xlink:href="qquickitem.html#itemChange">QQuickItem::itemChange</db:link>()</db:code> function.</db:para>
          <db:section>
             <db:title>See Also</db:title>

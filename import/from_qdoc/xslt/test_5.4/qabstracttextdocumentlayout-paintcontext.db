@@ -50,10 +50,10 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="vars">
       <db:title>Member Variable Documentation</db:title>
       <db:section xml:id="clip-var">
-         <db:title>QRectF PaintContext::clip</db:title>
+         <db:title><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
          <db:para>This variable holds a hint to the layout specifying the area
                                     around paragraphs, frames or text require painting.</db:para>
          <db:para>Everything outside of this rectangle does not need to be
@@ -73,14 +73,14 @@
          <db:para>The default value is -1.</db:para>
       </db:section>
       <db:section xml:id="palette-var">
-         <db:title>QPalette PaintContext::palette</db:title>
+         <db:title><db:link xlink:href="qpalette.html">QPalette</db:link></db:title>
          <db:para>This variable holds the default color that is used for the
                                     text, when no color is specified.</db:para>
          <db:para>The default value is the application's default
                                     palette.</db:para>
       </db:section>
       <db:section xml:id="selections-var">
-         <db:title>QVector &lt;Selection &gt; PaintContext::selections</db:title>
+         <db:title><db:link xlink:href="qtcore/qvector.html">QVector</db:link><db:link xlink:href="qabstracttextdocumentlayout-selection.html">Selection</db:link></db:title>
          <db:para>This variable holds the collection of selections that will
                                     be rendered when passing this paint context to
                                     QAbstractTextDocumentLayout's draw() function.</db:para>

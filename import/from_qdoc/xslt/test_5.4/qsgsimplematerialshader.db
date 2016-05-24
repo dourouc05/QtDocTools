@@ -135,10 +135,10 @@ public:
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="attributes">
-         <db:title>[pure virtual] QList &lt;QByteArray &gt; QSGSimpleMaterialShader::attributes() const</db:title>
+         <db:title>[pure virtual] <db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Returns a list of names, declaring the vertex attributes in the vertex shader.</db:para>
       </db:section>
       <db:section xml:id="resolveUniforms">
@@ -156,12 +156,12 @@ public:
          <db:para>If the shader program does not implement the item opacity, the implemented function should return a null pointer.</db:para>
       </db:section>
       <db:section xml:id="updateState">
-         <db:title>[pure virtual] void QSGSimpleMaterialShader::updateState(const State * newState, const State * oldState)</db:title>
+         <db:title>[pure virtual] void QSGSimpleMaterialShader::updateState(const <db:link xlink:href="qml-qtquick-state.html">State</db:link><db:link xlink:href="qml-qtquick-state.html">State</db:link></db:title>
          <db:para>Called whenever the state of this shader should be updated from <db:emphasis>oldState</db:emphasis> to <db:emphasis>newState</db:emphasis>, typical for each new set of geometries being drawn.</db:para>
          <db:para>Both the old and the new state are passed in so that the implementation can compare and minimize the state changes when applicable.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
       <db:section>
          <db:title>QSG_DECLARE_SIMPLE_COMPARABLE_SHADER( Shader, State)</db:title>

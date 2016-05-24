@@ -218,7 +218,7 @@
       <db:para>Note that the <db:link xlink:href="qtdoc/qtquick-porting-qt5.html#qt-quick-1">Qt Quick
                                         1</db:link> version is named QDeclarativeComponent.</db:para>
    </db:section>
-   <db:section>
+   <db:section xml:id="types">
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="CompilationMode-enum">
          <db:title>enum QQmlComponent::CompilationMode</db:title>
@@ -359,10 +359,10 @@
          </db:informaltable>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Property Documentation</db:title>
       <db:section xml:id="progress-prop">
-         <db:title>progress : const qreal</db:title>
+         <db:title>progress : const <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
          <db:para>The progress of loading the component, from 0.0 (nothing
                                     loaded) to 1.0 (finished).</db:para>
          <db:para>
@@ -403,7 +403,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="status-prop">
-         <db:title>status : const Status</db:title>
+         <db:title>status : const <db:link xlink:href="qqmlcomponent.html#Status-enum">Status</db:link></db:title>
          <db:para>The component's current <db:link xlink:href="qqmlcomponent.html#Status-enum">status</db:link>.</db:para>
          <db:para>
             <db:emphasis role="bold">Access functions:</db:emphasis>
@@ -443,7 +443,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="url-prop">
-         <db:title>url : const QUrl</db:title>
+         <db:title>url : const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>The component URL. This is the URL passed to either the
                                     constructor, or the <db:code><db:link xlink:href="qqmlcomponent.html#loadUrl">loadUrl</db:link>()</db:code>, or <db:code><db:link xlink:href="qqmlcomponent.html#setData">setData</db:link>()</db:code>
                                     methods.</db:para>
@@ -467,16 +467,16 @@
          </db:informaltable>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QQmlComponent">
-         <db:title>QQmlComponent::QQmlComponent(QQmlEngine * engine, QObject * parent = 0)</db:title>
+         <db:title>QQmlComponent::QQmlComponent(<db:link xlink:href="qqmlengine.html">QQmlEngine</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Create a <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> with no data and give it the
                                     specified <db:emphasis>engine</db:emphasis> and <db:emphasis>parent</db:emphasis>.
                                     Set the data with <db:code><db:link xlink:href="qqmlcomponent.html#setData">setData</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="QQmlComponent-3">
-         <db:title>QQmlComponent::QQmlComponent(QQmlEngine * engine, const QString &amp; fileName, QObject * parent = 0)</db:title>
+         <db:title>QQmlComponent::QQmlComponent(<db:link xlink:href="qqmlengine.html">QQmlEngine</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Create a <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> from the given
                                         <db:emphasis>fileName</db:emphasis> and give it the specified
                                         <db:emphasis>parent</db:emphasis> and
@@ -491,7 +491,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="QQmlComponent-4">
-         <db:title>QQmlComponent::QQmlComponent(QQmlEngine * engine, const QString &amp; fileName, CompilationMode mode, QObject * parent = 0)</db:title>
+         <db:title>QQmlComponent::QQmlComponent(<db:link xlink:href="qqmlengine.html">QQmlEngine</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qqmlcomponent.html#CompilationMode-enum">CompilationMode</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Create a <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> from the given
                                         <db:emphasis>fileName</db:emphasis> and give it the specified
                                         <db:emphasis>parent</db:emphasis> and <db:emphasis>engine</db:emphasis>. If
@@ -507,7 +507,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="QQmlComponent-5">
-         <db:title>QQmlComponent::QQmlComponent(QQmlEngine * engine, const QUrl &amp; url, QObject * parent = 0)</db:title>
+         <db:title>QQmlComponent::QQmlComponent(<db:link xlink:href="qqmlengine.html">QQmlEngine</db:link><db:link xlink:href="qtcore/qurl.html">QUrl</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Create a <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> from the given <db:emphasis>url</db:emphasis>
                                     and give it the specified <db:emphasis>parent</db:emphasis> and
                                         <db:emphasis>engine</db:emphasis>.</db:para>
@@ -524,7 +524,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="QQmlComponent-6">
-         <db:title>QQmlComponent::QQmlComponent(QQmlEngine * engine, const QUrl &amp; url, CompilationMode mode, QObject * parent = 0)</db:title>
+         <db:title>QQmlComponent::QQmlComponent(<db:link xlink:href="qqmlengine.html">QQmlEngine</db:link><db:link xlink:href="qtcore/qurl.html">QUrl</db:link><db:link xlink:href="qqmlcomponent.html#CompilationMode-enum">CompilationMode</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Create a <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> from the given <db:emphasis>url</db:emphasis>
                                     and give it the specified <db:emphasis>parent</db:emphasis> and
                                         <db:emphasis>engine</db:emphasis>. If <db:emphasis>mode</db:emphasis> is <db:link xlink:href="qqmlcomponent.html#CompilationMode-enum">Asynchronous</db:link>, the component will be loaded and
@@ -546,7 +546,7 @@
          <db:para>Destruct the <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="beginCreate">
-         <db:title>[virtual] QObject * QQmlComponent::beginCreate(QQmlContext * publicContext)</db:title>
+         <db:title>[virtual] <db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:title>
          <db:para>This method provides advanced control over component
                                     instance creation. In general, programmers should use <db:code><db:link xlink:href="qqmlcomponent.html#create">QQmlComponent::create</db:link>()</db:code> to create a
                                     component.</db:para>
@@ -608,7 +608,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="create">
-         <db:title>[virtual] QObject * QQmlComponent::create(QQmlContext * context = 0)</db:title>
+         <db:title>[virtual] <db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:title>
          <db:para>Create an object instance from this component. Returns 0 if
                                     creation failed. <db:emphasis>context</db:emphasis> specifies the context
                                     within which to create the object instance.</db:para>
@@ -631,7 +631,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="create-2">
-         <db:title>void QQmlComponent::create(QQmlIncubator &amp; incubator, QQmlContext * context = 0, QQmlContext * forContext = 0)</db:title>
+         <db:title>void QQmlComponent::create(<db:link xlink:href="qqmlincubator.html">QQmlIncubator</db:link><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:title>
          <db:para>Create an object instance from this component using the
                                     provided <db:emphasis>incubator</db:emphasis>. <db:emphasis>context</db:emphasis>
                                     specifies the context within which to create the object
@@ -659,12 +659,12 @@
          </db:section>
       </db:section>
       <db:section xml:id="creationContext">
-         <db:title>QQmlContext * QQmlComponent::creationContext() const</db:title>
+         <db:title><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qqmlcontext.html">QQmlContext</db:link></db:code> the component was created in. This is
                                     only valid for components created directly from QML.</db:para>
       </db:section>
       <db:section xml:id="errors">
-         <db:title>QList &lt;QQmlError &gt; QQmlComponent::errors() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qqmlerror.html">QQmlError</db:link></db:title>
          <db:para>Return the list of errors that occurred during the last
                                     compile or create operation. An empty list is returned if
                                         <db:code><db:link xlink:href="qqmlcomponent.html#isError">isError</db:link>()</db:code>
@@ -691,7 +691,7 @@
                                         <db:code><db:link xlink:href="qqmlcomponent.html#Status-enum">QQmlComponent::Ready</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="loadUrl">
-         <db:title>[slot] void QQmlComponent::loadUrl(const QUrl &amp; url)</db:title>
+         <db:title>[slot] void QQmlComponent::loadUrl(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>Load the <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> from the provided
                                         <db:emphasis>url</db:emphasis>.</db:para>
          <db:para>Ensure that the URL provided is full and correct, in
@@ -699,7 +699,7 @@
                                     local filesystem.</db:para>
       </db:section>
       <db:section xml:id="loadUrl-2">
-         <db:title>[slot] void QQmlComponent::loadUrl(const QUrl &amp; url, CompilationMode mode)</db:title>
+         <db:title>[slot] void QQmlComponent::loadUrl(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link><db:link xlink:href="qqmlcomponent.html#CompilationMode-enum">CompilationMode</db:link></db:title>
          <db:para>Load the <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> from the provided
                                         <db:emphasis>url</db:emphasis>. If <db:emphasis>mode</db:emphasis> is <db:link xlink:href="qqmlcomponent.html#CompilationMode-enum">Asynchronous</db:link>, the component will be loaded and
                                     compiled asynchronously.</db:para>
@@ -708,7 +708,7 @@
                                     local filesystem.</db:para>
       </db:section>
       <db:section xml:id="setData">
-         <db:title>[slot] void QQmlComponent::setData(const QByteArray &amp; data, const QUrl &amp; url)</db:title>
+         <db:title>[slot] void QQmlComponent::setData(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link><db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
          <db:para>Sets the <db:code><db:link xlink:href="qqmlcomponent.html">QQmlComponent</db:link></db:code> to use the given QML
                                         <db:emphasis>data</db:emphasis>. If <db:emphasis>url</db:emphasis> is provided,
                                     it is used to set the component name and to provide a base path

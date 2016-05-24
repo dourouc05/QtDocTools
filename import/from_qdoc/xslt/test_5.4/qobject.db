@@ -927,10 +927,10 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Property Documentation</db:title>
       <db:section xml:id="objectName-prop">
-         <db:title>objectName : QString</db:title>
+         <db:title>objectName : <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This property holds the name of this object.</db:para>
          <db:para>You can find an object by name (and type) using <db:code><db:link xlink:href="qobject.html#findChild">findChild</db:link>()</db:code>. You can
                                     find a set of objects with <db:code><db:link xlink:href="qobject.html#findChildren">findChildren</db:link>()</db:code>.</db:para>
@@ -998,10 +998,10 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QObject">
-         <db:title>QObject::QObject(QObject * parent = 0)</db:title>
+         <db:title>QObject::QObject(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Constructs an object with parent object
                                         <db:emphasis>parent</db:emphasis>.</db:para>
          <db:para>The parent of an object may be viewed as the object's owner.
@@ -1083,7 +1083,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="childEvent">
-         <db:title>[virtual protected] void QObject::childEvent(QChildEvent * event)</db:title>
+         <db:title>[virtual protected] void QObject::childEvent(<db:link xlink:href="qchildevent.html">QChildEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive child events. The event is passed in the
                                         <db:emphasis>event</db:emphasis> parameter.</db:para>
@@ -1120,7 +1120,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="children">
-         <db:title>const QObjectList &amp; QObject::children() const</db:title>
+         <db:title>const <db:link xlink:href="qobject.html#QObjectList-typedef">QObjectList</db:link></db:title>
          <db:para>Returns a list of child objects. The <db:code><db:link xlink:href="qobject.html#QObjectList-typedef">QObjectList</db:link></db:code>
                                     class is defined in the <db:code>&lt;QObject&gt;</db:code>
                                     header file as the following:</db:para>
@@ -1153,7 +1153,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="connect">
-         <db:title>[static] QMetaObject::Connection QObject::connect(const QObject * sender, const char * signal, const QObject * receiver, const char * method, Qt::ConnectionType type = Qt::AutoConnection)</db:title>
+         <db:title>[static] <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qt.html#ConnectionType-enum">Qt::ConnectionType</db:link></db:title>
          <db:para>Creates a connection of the given <db:emphasis>type</db:emphasis> from
                                     the <db:emphasis>signal</db:emphasis> in the <db:emphasis>sender</db:emphasis>
                                     object to the <db:emphasis>method</db:emphasis> in the
@@ -1238,7 +1238,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="connect-2">
-         <db:title>[static] QMetaObject::Connection QObject::connect(const QObject * sender, const QMetaMethod &amp; signal, const QObject * receiver, const QMetaMethod &amp; method, Qt::ConnectionType type = Qt::AutoConnection)</db:title>
+         <db:title>[static] <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qmetamethod.html">QMetaMethod</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qmetamethod.html">QMetaMethod</db:link><db:link xlink:href="qt.html#ConnectionType-enum">Qt::ConnectionType</db:link></db:title>
          <db:para>Creates a connection of the given <db:emphasis>type</db:emphasis> from
                                     the <db:emphasis>signal</db:emphasis> in the <db:emphasis>sender</db:emphasis>
                                     object to the <db:emphasis>method</db:emphasis> in the
@@ -1256,7 +1256,7 @@
          <db:para>This function was introduced in Qt 4.8.</db:para>
       </db:section>
       <db:section xml:id="connect-3">
-         <db:title>QMetaObject::Connection QObject::connect(const QObject * sender, const char * signal, const char * method, Qt::ConnectionType type = Qt::AutoConnection) const</db:title>
+         <db:title><db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qt.html#ConnectionType-enum">Qt::ConnectionType</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#connect">connect</db:link>()</db:code>.</db:para>
          <db:para>Connects <db:emphasis>signal</db:emphasis> from the
                                         <db:emphasis>sender</db:emphasis> object to this object's
@@ -1280,7 +1280,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="connect-4">
-         <db:title>[static] QMetaObject::Connection QObject::connect(const QObject * sender, PointerToMemberFunction signal, const QObject * receiver, PointerToMemberFunction method, Qt::ConnectionType type = Qt::AutoConnection)</db:title>
+         <db:title>[static] <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qt.html#ConnectionType-enum">Qt::ConnectionType</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#connect">connect</db:link>()</db:code>.</db:para>
          <db:para>Creates a connection of the given <db:emphasis>type</db:emphasis> from
                                     the <db:emphasis>signal</db:emphasis> in the <db:emphasis>sender</db:emphasis>
@@ -1342,7 +1342,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="connect-5">
-         <db:title>[static] QMetaObject::Connection QObject::connect(const QObject * sender, PointerToMemberFunction signal, Functor functor)</db:title>
+         <db:title>[static] <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#connect">connect</db:link>()</db:code>.</db:para>
          <db:para>Creates a connection from <db:emphasis>signal</db:emphasis> in
                                         <db:emphasis>sender</db:emphasis> object to <db:emphasis>functor</db:emphasis>,
@@ -1380,7 +1380,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="connect-6">
-         <db:title>[static] QMetaObject::Connection QObject::connect(const QObject * sender, PointerToMemberFunction signal, const QObject * context, Functor functor, Qt::ConnectionType type = Qt::AutoConnection)</db:title>
+         <db:title>[static] <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qt.html#ConnectionType-enum">Qt::ConnectionType</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#connect">connect</db:link>()</db:code>.</db:para>
          <db:para>Creates a connection of a given <db:emphasis>type</db:emphasis> from
                                         <db:emphasis>signal</db:emphasis> in <db:emphasis>sender</db:emphasis> object to
@@ -1421,7 +1421,7 @@
          <db:para>This function was introduced in Qt 5.2.</db:para>
       </db:section>
       <db:section xml:id="connectNotify">
-         <db:title>[virtual protected] void QObject::connectNotify(const QMetaMethod &amp; signal)</db:title>
+         <db:title>[virtual protected] void QObject::connectNotify(const <db:link xlink:href="qmetamethod.html">QMetaMethod</db:link></db:title>
          <db:para>This virtual function is called when something has been
                                     connected to <db:emphasis>signal</db:emphasis> in this object.</db:para>
          <db:para>If you want to compare <db:emphasis>signal</db:emphasis> with a
@@ -1454,7 +1454,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="customEvent">
-         <db:title>[virtual protected] void QObject::customEvent(QEvent * event)</db:title>
+         <db:title>[virtual protected] void QObject::customEvent(<db:link xlink:href="qevent.html">QEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive custom events. Custom events are user-defined events
                                     with a type value at least as large as the <db:code><db:link xlink:href="qevent.html#Type-enum">QEvent::User</db:link></db:code> item of
@@ -1508,7 +1508,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="destroyed">
-         <db:title>[signal] void QObject::destroyed(QObject * obj = 0)</db:title>
+         <db:title>[signal] void QObject::destroyed(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>This signal is emitted immediately before the object
                                         <db:emphasis>obj</db:emphasis> is destroyed, and can not be
                                     blocked.</db:para>
@@ -1527,7 +1527,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="disconnect">
-         <db:title>[static] bool QObject::disconnect(const QObject * sender, const char * signal, const QObject * receiver, const char * method)</db:title>
+         <db:title>[static] bool QObject::disconnect(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Disconnects <db:emphasis>signal</db:emphasis> in object
                                         <db:emphasis>sender</db:emphasis> from <db:emphasis>method</db:emphasis> in
                                     object <db:emphasis>receiver</db:emphasis>. Returns
@@ -1596,7 +1596,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="disconnect-2">
-         <db:title>[static] bool QObject::disconnect(const QObject * sender, const QMetaMethod &amp; signal, const QObject * receiver, const QMetaMethod &amp; method)</db:title>
+         <db:title>[static] bool QObject::disconnect(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qmetamethod.html">QMetaMethod</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qmetamethod.html">QMetaMethod</db:link></db:title>
          <db:para>Disconnects <db:emphasis>signal</db:emphasis> in object
                                         <db:emphasis>sender</db:emphasis> from <db:emphasis>method</db:emphasis> in
                                     object <db:emphasis>receiver</db:emphasis>. Returns
@@ -1636,7 +1636,7 @@
          <db:para>This function was introduced in Qt 4.8.</db:para>
       </db:section>
       <db:section xml:id="disconnect-3">
-         <db:title>[static] bool QObject::disconnect(const QMetaObject::Connection &amp; connection)</db:title>
+         <db:title>[static] bool QObject::disconnect(const <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link></db:title>
          <db:para>Disconnect a connection.</db:para>
          <db:para>If the <db:emphasis>connection</db:emphasis> is invalid or has already
                                     been disconnected, do nothing and return false.</db:para>
@@ -1650,7 +1650,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="disconnect-4">
-         <db:title>bool QObject::disconnect(const char * signal = 0, const QObject * receiver = 0, const char * method = 0) const</db:title>
+         <db:title>bool QObject::disconnect(const char * signal = 0, const <db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#disconnect">disconnect</db:link>()</db:code>.</db:para>
          <db:para>Disconnects <db:emphasis>signal</db:emphasis> from
                                         <db:emphasis>method</db:emphasis> of
@@ -1662,7 +1662,7 @@
          </db:note>
       </db:section>
       <db:section xml:id="disconnect-5">
-         <db:title>bool QObject::disconnect(const QObject * receiver, const char * method = 0) const</db:title>
+         <db:title>bool QObject::disconnect(const <db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#disconnect">disconnect</db:link>()</db:code>.</db:para>
          <db:para>Disconnects all signals in this object from
                                         <db:emphasis>receiver</db:emphasis>'s
@@ -1671,7 +1671,7 @@
                                     objects involved are destroyed.</db:para>
       </db:section>
       <db:section xml:id="disconnect-6">
-         <db:title>[static] bool QObject::disconnect(const QObject * sender, PointerToMemberFunction signal, const QObject * receiver, PointerToMemberFunction method)</db:title>
+         <db:title>[static] bool QObject::disconnect(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>This function overloads diconnect().</db:para>
          <db:para>Disconnects <db:emphasis>signal</db:emphasis> in object
                                         <db:emphasis>sender</db:emphasis> from <db:emphasis>method</db:emphasis> in
@@ -1747,7 +1747,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="disconnectNotify">
-         <db:title>[virtual protected] void QObject::disconnectNotify(const QMetaMethod &amp; signal)</db:title>
+         <db:title>[virtual protected] void QObject::disconnectNotify(const <db:link xlink:href="qmetamethod.html">QMetaMethod</db:link></db:title>
          <db:para>This virtual function is called when something has been
                                     disconnected from <db:emphasis>signal</db:emphasis> in this
                                     object.</db:para>
@@ -1820,13 +1820,13 @@
          </db:section>
       </db:section>
       <db:section xml:id="dynamicPropertyNames">
-         <db:title>QList &lt;QByteArray &gt; QObject::dynamicPropertyNames() const</db:title>
+         <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Returns the names of all properties that were dynamically
                                     added to the object using <db:code><db:link xlink:href="qobject.html#setProperty">setProperty</db:link>()</db:code>.</db:para>
          <db:para>This function was introduced in Qt 4.2.</db:para>
       </db:section>
       <db:section xml:id="event">
-         <db:title>[virtual] bool QObject::event(QEvent * e)</db:title>
+         <db:title>[virtual] bool QObject::event(<db:link xlink:href="qevent.html">QEvent</db:link></db:title>
          <db:para>This virtual function receives events to an object and
                                     should return true if the event <db:emphasis>e</db:emphasis> was
                                     recognized and processed.</db:para>
@@ -1851,7 +1851,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="eventFilter">
-         <db:title>[virtual] bool QObject::eventFilter(QObject * watched, QEvent * event)</db:title>
+         <db:title>[virtual] bool QObject::eventFilter(<db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qevent.html">QEvent</db:link></db:title>
          <db:para>Filters events if this object has been installed as an event
                                     filter for the <db:emphasis>watched</db:emphasis> object.</db:para>
          <db:para>In your reimplementation of this function, if you want to
@@ -1885,7 +1885,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="findChild">
-         <db:title>T QObject::findChild(const QString &amp; name = QString(), Qt::FindChildOptions options = Qt::FindChildrenRecursively) const</db:title>
+         <db:title>T QObject::findChild(const <db:link xlink:href="qstring.html">QString</db:link><db:link xlink:href="qt.html#FindChildOption-enum">Qt::FindChildOptions</db:link></db:title>
          <db:para>Returns the child of this object that can be cast into type
                                     T and that is called <db:emphasis>name</db:emphasis>, or 0 if there is no
                                     such object. Omitting the <db:emphasis>name</db:emphasis> argument causes
@@ -1924,7 +1924,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="findChildren">
-         <db:title>QList &lt;T &gt; QObject::findChildren(const QString &amp; name = QString(), Qt::FindChildOptions options = Qt::FindChildrenRecursively) const</db:title>
+         <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qstring.html">QString</db:link><db:link xlink:href="qt.html#FindChildOption-enum">Qt::FindChildOptions</db:link></db:title>
          <db:para>Returns all children of this object with the given
                                         <db:emphasis>name</db:emphasis> that can be cast to type T, or an
                                     empty list if there are no such objects. Omitting the
@@ -1955,7 +1955,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="findChildren-2">
-         <db:title>QList &lt;T &gt; QObject::findChildren(const QRegExp &amp; regExp, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const</db:title>
+         <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qregexp.html">QRegExp</db:link><db:link xlink:href="qt.html#FindChildOption-enum">Qt::FindChildOptions</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#findChildren">findChildren</db:link>()</db:code>.</db:para>
          <db:para>Returns the children of this object that can be cast to type
                                     T and that have names matching the regular expression
@@ -1965,7 +1965,7 @@
                                     FindDirectChildrenOnly.</db:para>
       </db:section>
       <db:section xml:id="findChildren-3">
-         <db:title>QList &lt;T &gt; QObject::findChildren(const QRegularExpression &amp; re, Qt::FindChildOptions options = Qt::FindChildrenRecursively) const</db:title>
+         <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qregularexpression.html">QRegularExpression</db:link><db:link xlink:href="qt.html#FindChildOption-enum">Qt::FindChildOptions</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#findChildren">findChildren</db:link>()</db:code>.</db:para>
          <db:para>Returns the children of this object that can be cast to type
                                     T and that have names matching the regular expression
@@ -2008,7 +2008,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="installEventFilter">
-         <db:title>void QObject::installEventFilter(QObject * filterObj)</db:title>
+         <db:title>void QObject::installEventFilter(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Installs an event filter <db:emphasis>filterObj</db:emphasis> on this
                                     object. For example:</db:para>
          <db:programlisting>monitoredObj-&gt;installEventFilter(filterObj);</db:programlisting>
@@ -2063,7 +2063,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="isSignalConnected">
-         <db:title>[protected] bool QObject::isSignalConnected(const QMetaMethod &amp; signal) const</db:title>
+         <db:title>[protected] bool QObject::isSignalConnected(const <db:link xlink:href="qmetamethod.html">QMetaMethod</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if the
                                         <db:emphasis>signal</db:emphasis> is connected to at least one
                                     receiver, otherwise returns
@@ -2121,7 +2121,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="metaObject">
-         <db:title>[virtual] const QMetaObject * QObject::metaObject() const</db:title>
+         <db:title>[virtual] const <db:link xlink:href="qmetaobject.html">QMetaObject</db:link></db:title>
          <db:para>Returns a pointer to the meta-object of this
                                     object.</db:para>
          <db:para>A meta-object contains information about a class that
@@ -2149,7 +2149,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="moveToThread">
-         <db:title>void QObject::moveToThread(QThread * targetThread)</db:title>
+         <db:title>void QObject::moveToThread(<db:link xlink:href="qthread.html">QThread</db:link></db:title>
          <db:para>Changes the thread affinity for this object and its
                                     children. The object cannot be moved if it has a parent. Event
                                     processing will continue in the
@@ -2189,7 +2189,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="parent">
-         <db:title>QObject * QObject::parent() const</db:title>
+         <db:title><db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns a pointer to the parent object.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -2204,7 +2204,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="property">
-         <db:title>QVariant QObject::property(const char * name) const</db:title>
+         <db:title><db:link xlink:href="qvariant.html">QVariant</db:link></db:title>
          <db:para>Returns the value of the object's <db:emphasis>name</db:emphasis>
                                     property.</db:para>
          <db:para>If no such property exists, the returned variant is
@@ -2261,7 +2261,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="removeEventFilter">
-         <db:title>void QObject::removeEventFilter(QObject * obj)</db:title>
+         <db:title>void QObject::removeEventFilter(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Removes an event filter object <db:emphasis>obj</db:emphasis> from
                                     this object. The request is ignored if such an event filter has
                                     not been installed.</db:para>
@@ -2286,7 +2286,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="sender">
-         <db:title>[protected] QObject * QObject::sender() const</db:title>
+         <db:title>[protected] <db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns a pointer to the object that sent the signal, if
                                     called in a slot activated by a signal; otherwise it returns 0.
                                     The pointer is valid only during the execution of the slot that
@@ -2362,7 +2362,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setParent">
-         <db:title>void QObject::setParent(QObject * parent)</db:title>
+         <db:title>void QObject::setParent(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Makes the object a child of
                                     <db:emphasis>parent</db:emphasis>.</db:para>
          <db:section>
@@ -2378,7 +2378,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setProperty">
-         <db:title>bool QObject::setProperty(const char * name, const QVariant &amp; value)</db:title>
+         <db:title>bool QObject::setProperty(const char * name, const <db:link xlink:href="qvariant.html">QVariant</db:link></db:title>
          <db:para>Sets the value of the object's <db:emphasis>name</db:emphasis>
                                     property to <db:emphasis>value</db:emphasis>.</db:para>
          <db:para>If the property is defined in the class using <db:code><db:link xlink:href="qobject.html#Q_PROPERTY">Q_PROPERTY</db:link></db:code> then true
@@ -2426,7 +2426,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="startTimer">
-         <db:title>int QObject::startTimer(int interval, Qt::TimerType timerType = Qt::CoarseTimer)</db:title>
+         <db:title>int QObject::startTimer(int interval, <db:link xlink:href="qt.html#TimerType-enum">Qt::TimerType</db:link></db:title>
          <db:para>Starts a timer and returns a timer identifier, or returns
                                     zero if it could not start a timer.</db:para>
          <db:para>A timer event will occur every <db:emphasis>interval</db:emphasis>
@@ -2479,7 +2479,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="thread">
-         <db:title>QThread * QObject::thread() const</db:title>
+         <db:title><db:link xlink:href="qthread.html">QThread</db:link></db:title>
          <db:para>Returns the thread in which the object lives.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -2491,7 +2491,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="timerEvent">
-         <db:title>[virtual protected] void QObject::timerEvent(QTimerEvent * event)</db:title>
+         <db:title>[virtual protected] void QObject::timerEvent(<db:link xlink:href="qtimerevent.html">QTimerEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive timer events for the object.</db:para>
          <db:para>
@@ -2515,7 +2515,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="tr">
-         <db:title>[static] QString QObject::tr(const char * sourceText, const char * disambiguation = 0, int n = -1)</db:title>
+         <db:title>[static] <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns a translated version of <db:emphasis>sourceText</db:emphasis>,
                                     optionally based on a <db:emphasis>disambiguation</db:emphasis> string and
                                     value of <db:emphasis>n</db:emphasis> for strings containing plurals;
@@ -2561,7 +2561,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="relnonmem">
       <db:title>Related Non-Members</db:title>
       <db:section xml:id="QObjectList-typedef">
          <db:title>typedef QObjectList</db:title>
@@ -2569,7 +2569,7 @@
             <db:code><db:link xlink:href="qobject.html">QObject</db:link></db:code> *&gt;.</db:para>
       </db:section>
       <db:section>
-         <db:title>QList &lt;T &gt; qFindChildren(const QObject * obj, const QRegExp &amp; regExp)</db:title>
+         <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qregexp.html">QRegExp</db:link></db:title>
          <db:para>This function overloads qFindChildren().</db:para>
          <db:para>This function is equivalent to
                                         <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChildren">findChildren</db:link>(<db:emphasis>regExp</db:emphasis>).</db:para>
@@ -2589,7 +2589,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>T qobject_cast(QObject * object)</db:title>
+         <db:title>T qobject_cast(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns the given <db:emphasis>object</db:emphasis> cast to type T if
                                     the object is of type T (or of a subclass); otherwise returns 0.
                                     If <db:emphasis>object</db:emphasis> is 0 then it will also return
@@ -2621,10 +2621,10 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="vars">
       <db:title>Member Variable Documentation</db:title>
       <db:section xml:id="staticMetaObject-var">
-         <db:title>const QMetaObject QObject::staticMetaObject</db:title>
+         <db:title>const <db:link xlink:href="qmetaobject.html">QMetaObject</db:link></db:title>
          <db:para>This variable stores the meta-object for the class.</db:para>
          <db:para>A meta-object contains information about a class that
                                     inherits <db:code><db:link xlink:href="qobject.html">QObject</db:link></db:code>, e.g.
@@ -2650,7 +2650,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
       <db:section>
          <db:title>Q_CLASSINFO( Name, Value)</db:title>
@@ -3055,10 +3055,10 @@
    </db:section>
    <db:section>
       <db:title>Obsolete Members</db:title>
-      <db:section>
+      <db:section xml:id="obsolete_memfunc">
          <db:title>Member Function Documentation</db:title>
          <db:section xml:id="trUtf8">
-            <db:title>[static] QString QObject::trUtf8(const char * sourceText, const char * disambiguation = 0, int n = -1)</db:title>
+            <db:title>[static] <db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>Returns a translated version of <db:emphasis>sourceText</db:emphasis>, or <db:code><db:link xlink:href="qstring.html#fromUtf8">QString::fromUtf8</db:link></db:code>
                <db:emphasis>sourceText</db:emphasis>) if there is no appropriate version. It is otherwise identical to tr(<db:emphasis>sourceText</db:emphasis>, <db:emphasis>disambiguation</db:emphasis>, <db:emphasis>n</db:emphasis>).</db:para>
             <db:warning>
@@ -3084,7 +3084,7 @@
             </db:section>
          </db:section>
          <db:section xml:id="qFindChild-2">
-            <db:title>T qFindChild(const QObject * obj, const QString &amp; name = QString())</db:title>
+            <db:title>T qFindChild(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
             <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChild">findChild</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
             <db:note>
@@ -3100,7 +3100,7 @@
             </db:section>
          </db:section>
          <db:section xml:id="qFindChildren-3">
-            <db:title>QList &lt;T &gt; qFindChildren(const QObject * obj, const QString &amp; name = QString())</db:title>
+            <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
             <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChildren">findChildren</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
             <db:note>
@@ -3116,10 +3116,10 @@
             </db:section>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="obsolete_nonmems">
          <db:title>Related Non-Members</db:title>
          <db:section>
-            <db:title>T qFindChild(const QObject * obj, const QString &amp; name = QString())</db:title>
+            <db:title>T qFindChild(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
             <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChild">findChild</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
             <db:note>
@@ -3135,7 +3135,7 @@
             </db:section>
          </db:section>
          <db:section>
-            <db:title>QList &lt;T &gt; qFindChildren(const QObject * obj, const QString &amp; name = QString())</db:title>
+            <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
             <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChildren">findChildren</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
             <db:note>

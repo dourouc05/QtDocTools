@@ -1998,7 +1998,7 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="types">
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="Base64Option-enum">
          <db:title>enum QByteArray::Base64Option</db:title>
@@ -2100,7 +2100,7 @@
                                     stores an OR combination of Base64Option values.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QByteArray">
          <db:title>QByteArray::QByteArray()</db:title>
@@ -2151,7 +2151,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="QByteArray-5">
-         <db:title>QByteArray::QByteArray(const QByteArray &amp; other)</db:title>
+         <db:title>QByteArray::QByteArray(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Constructs a copy of <db:emphasis>other</db:emphasis>.</db:para>
          <db:para>This operation takes <db:link xlink:href="containers.html#constant-time">constant time</db:link>,
                                     because <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> is
@@ -2169,7 +2169,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="QByteArray-6">
-         <db:title>QByteArray::QByteArray(QByteArray &amp;&amp; other)</db:title>
+         <db:title>QByteArray::QByteArray(<db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Move-constructs a <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> instance, making it point at the same
                                     object that <db:emphasis>other</db:emphasis> was pointing to.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
@@ -2179,7 +2179,7 @@
          <db:para>Destroys the byte array.</db:para>
       </db:section>
       <db:section xml:id="append">
-         <db:title>QByteArray &amp; QByteArray::append(const QByteArray &amp; ba)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Appends the byte array <db:emphasis>ba</db:emphasis> onto the end of
                                     this byte array.</db:para>
          <db:para>Example:</db:para>
@@ -2218,7 +2218,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="append-2">
-         <db:title>QByteArray &amp; QByteArray::append(const QString &amp; str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Appends the string <db:emphasis>str</db:emphasis> to this byte array.
                                     The Unicode data is converted into 8-bit characters using
@@ -2231,13 +2231,13 @@
                                     *</db:code>.</db:para>
       </db:section>
       <db:section xml:id="append-3">
-         <db:title>QByteArray &amp; QByteArray::append(const char * str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Appends the string <db:emphasis>str</db:emphasis> to this byte
                                     array.</db:para>
       </db:section>
       <db:section xml:id="append-4">
-         <db:title>QByteArray &amp; QByteArray::append(const char * str, int len)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qbytearray.html#append">append</db:link>()</db:code>.</db:para>
          <db:para>Appends the first <db:emphasis>len</db:emphasis> characters of the
                                     string <db:emphasis>str</db:emphasis> to this byte array and returns a
@@ -2250,7 +2250,7 @@
                                         <db:emphasis>str</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="append-5">
-         <db:title>QByteArray &amp; QByteArray::append(char ch)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Appends the character <db:emphasis>ch</db:emphasis> to this byte
                                     array.</db:para>
@@ -2362,7 +2362,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="contains">
-         <db:title>bool QByteArray::contains(const QByteArray &amp; ba) const</db:title>
+         <db:title>bool QByteArray::contains(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if the byte array
                                     contains an occurrence of the byte array <db:emphasis>ba</db:emphasis>;
                                     otherwise returns <db:code>false</db:code>.</db:para>
@@ -2393,7 +2393,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section xml:id="count">
-         <db:title>int QByteArray::count(const QByteArray &amp; ba) const</db:title>
+         <db:title>int QByteArray::count(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns the number of (potentially overlapping) occurrences
                                     of byte array <db:emphasis>ba</db:emphasis> in this byte array.</db:para>
          <db:section>
@@ -2481,7 +2481,7 @@
          <db:para>This is an overloaded function.</db:para>
       </db:section>
       <db:section xml:id="endsWith">
-         <db:title>bool QByteArray::endsWith(const QByteArray &amp; ba) const</db:title>
+         <db:title>bool QByteArray::endsWith(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array ends
                                     with byte array <db:emphasis>ba</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
@@ -2515,7 +2515,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section xml:id="fill">
-         <db:title>QByteArray &amp; QByteArray::fill(char ch, int size = -1)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Sets every byte in the byte array to character
                                         <db:emphasis>ch</db:emphasis>. If <db:emphasis>size</db:emphasis> is different
                                     from -1 (the default), the byte array is resized to size
@@ -2533,7 +2533,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromBase64">
-         <db:title>[static] QByteArray QByteArray::fromBase64(const QByteArray &amp; base64)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a decoded copy of the Base64 array
                                         <db:emphasis>base64</db:emphasis>. Input is not checked for validity;
                                     invalid characters in the input are skipped, enabling the
@@ -2555,7 +2555,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromBase64-2">
-         <db:title>[static] QByteArray QByteArray::fromBase64(const QByteArray &amp; base64, Base64Options options)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#Base64Option-enum">Base64Options</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a decoded copy of the Base64 array
                                         <db:emphasis>base64</db:emphasis>, using the alphabet defined by
@@ -2580,7 +2580,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromCFData">
-         <db:title>[static] QByteArray QByteArray::fromCFData(CFDataRef data)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Constructs a new <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> containing a copy of the CFData
                                         <db:emphasis>data</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 5.3.</db:para>
@@ -2603,7 +2603,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromHex">
-         <db:title>[static] QByteArray QByteArray::fromHex(const QByteArray &amp; hexEncoded)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a decoded copy of the hex encoded array
                                         <db:emphasis>hexEncoded</db:emphasis>. Input is not checked for
                                     validity; invalid characters in the input are skipped, enabling
@@ -2622,7 +2622,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromNSData">
-         <db:title>[static] QByteArray QByteArray::fromNSData(const NSData * data)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Constructs a new <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> containing a copy of the NSData
                                         <db:emphasis>data</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 5.3.</db:para>
@@ -2645,7 +2645,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromPercentEncoding">
-         <db:title>[static] QByteArray QByteArray::fromPercentEncoding(const QByteArray &amp; input, char percent = '%')</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a decoded copy of the URI/URL-style percent-encoded
                                         <db:emphasis>input</db:emphasis>. The <db:emphasis>percent</db:emphasis>
                                     parameter allows you to replace the '%' character for another
@@ -2667,7 +2667,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromRawCFData">
-         <db:title>[static] QByteArray QByteArray::fromRawCFData(CFDataRef data)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Constructs a <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> that uses the bytes of the CFData
                                         <db:emphasis>data</db:emphasis>.</db:para>
          <db:para>The <db:emphasis>data</db:emphasis>'s bytes are not copied.</db:para>
@@ -2693,7 +2693,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromRawData">
-         <db:title>[static] QByteArray QByteArray::fromRawData(const char * data, int size)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Constructs a <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> that uses the first
                                         <db:emphasis>size</db:emphasis> bytes of the <db:emphasis>data</db:emphasis>
                                     array. The bytes are <db:emphasis>not</db:emphasis> copied. The <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> will contain the
@@ -2746,7 +2746,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromRawNSData">
-         <db:title>[static] QByteArray QByteArray::fromRawNSData(const NSData * data)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Constructs a <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> that uses the bytes of the NSData
                                         <db:emphasis>data</db:emphasis>.</db:para>
          <db:para>The <db:emphasis>data</db:emphasis>'s bytes are not copied.</db:para>
@@ -2772,7 +2772,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fromStdString">
-         <db:title>[static] QByteArray QByteArray::fromStdString(const std::string &amp; str)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a copy of the <db:emphasis>str</db:emphasis> string as a
                                         <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code>.</db:para>
          <db:para>This function was introduced in Qt 5.4.</db:para>
@@ -2789,7 +2789,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="indexOf">
-         <db:title>int QByteArray::indexOf(const QByteArray &amp; ba, int from = 0) const</db:title>
+         <db:title>int QByteArray::indexOf(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns the index position of the first occurrence of the
                                     byte array <db:emphasis>ba</db:emphasis> in this byte array, searching
                                     forward from index position <db:emphasis>from</db:emphasis>. Returns -1 if
@@ -2812,7 +2812,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="indexOf-2">
-         <db:title>int QByteArray::indexOf(const QString &amp; str, int from = 0) const</db:title>
+         <db:title>int QByteArray::indexOf(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns the index position of the first occurrence of the
                                     string <db:emphasis>str</db:emphasis> in the byte array, searching forward
@@ -2857,7 +2857,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="insert">
-         <db:title>QByteArray &amp; QByteArray::insert(int i, const QByteArray &amp; ba)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Inserts the byte array <db:emphasis>ba</db:emphasis> at index position
                                         <db:emphasis>i</db:emphasis> and returns a reference to this byte
                                     array.</db:para>
@@ -2883,7 +2883,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="insert-2">
-         <db:title>QByteArray &amp; QByteArray::insert(int i, const QString &amp; str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Inserts the string <db:emphasis>str</db:emphasis> at index position
                                         <db:emphasis>i</db:emphasis> in the byte array. The Unicode data is
@@ -2898,7 +2898,7 @@
                                     *</db:code>.</db:para>
       </db:section>
       <db:section xml:id="insert-3">
-         <db:title>QByteArray &amp; QByteArray::insert(int i, const char * str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Inserts the string <db:emphasis>str</db:emphasis> at position
                                         <db:emphasis>i</db:emphasis> in the byte array.</db:para>
@@ -2906,7 +2906,7 @@
                                     first extended using <db:code><db:link xlink:href="qbytearray.html#resize">resize</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="insert-4">
-         <db:title>QByteArray &amp; QByteArray::insert(int i, const char * str, int len)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Inserts <db:emphasis>len</db:emphasis> bytes of the string
                                         <db:emphasis>str</db:emphasis> at position <db:emphasis>i</db:emphasis> in the
@@ -2916,7 +2916,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
       </db:section>
       <db:section xml:id="insert-5">
-         <db:title>QByteArray &amp; QByteArray::insert(int i, char ch)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Inserts character <db:emphasis>ch</db:emphasis> at index position
                                         <db:emphasis>i</db:emphasis> in the byte array. If <db:emphasis>i</db:emphasis>
@@ -2961,7 +2961,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="lastIndexOf">
-         <db:title>int QByteArray::lastIndexOf(const QByteArray &amp; ba, int from = -1) const</db:title>
+         <db:title>int QByteArray::lastIndexOf(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns the index position of the last occurrence of the
                                     byte array <db:emphasis>ba</db:emphasis> in this byte array, searching
                                     backward from index position <db:emphasis>from</db:emphasis>. If
@@ -2986,7 +2986,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="lastIndexOf-2">
-         <db:title>int QByteArray::lastIndexOf(const QString &amp; str, int from = -1) const</db:title>
+         <db:title>int QByteArray::lastIndexOf(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns the index position of the last occurrence of the
                                     string <db:emphasis>str</db:emphasis> in the byte array, searching
@@ -3040,7 +3040,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="left">
-         <db:title>QByteArray QByteArray::left(int len) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array that contains the leftmost
                                         <db:emphasis>len</db:emphasis> bytes of this byte array.</db:para>
          <db:para>The entire byte array is returned if <db:emphasis>len</db:emphasis> is
@@ -3068,7 +3068,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="leftJustified">
-         <db:title>QByteArray QByteArray::leftJustified(int width, char fill = ' ', bool truncate = false) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array of size <db:emphasis>width</db:emphasis> that
                                     contains this byte array padded by the <db:emphasis>fill</db:emphasis>
                                     character.</db:para>
@@ -3095,7 +3095,7 @@
          <db:para>Same as <db:code><db:link xlink:href="qbytearray.html#size">size</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="mid">
-         <db:title>QByteArray QByteArray::mid(int pos, int len = -1) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array containing <db:emphasis>len</db:emphasis> bytes
                                     from this byte array, starting at position
                                     <db:emphasis>pos</db:emphasis>.</db:para>
@@ -3121,7 +3121,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="number">
-         <db:title>[static] QByteArray QByteArray::number(int n, int base = 10)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array containing the string equivalent of the
                                     number <db:emphasis>n</db:emphasis> to base <db:emphasis>base</db:emphasis> (10 by
                                     default). The <db:emphasis>base</db:emphasis> can be any value between 2
@@ -3147,7 +3147,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="number-2">
-         <db:title>[static] QByteArray QByteArray::number(uint n, int base = 10)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3159,7 +3159,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="number-3">
-         <db:title>[static] QByteArray QByteArray::number(qlonglong n, int base = 10)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3171,7 +3171,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="number-4">
-         <db:title>[static] QByteArray QByteArray::number(qulonglong n, int base = 10)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#qulonglong-typedef">qulonglong</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3183,7 +3183,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="number-5">
-         <db:title>[static] QByteArray QByteArray::number(double n, char f = 'g', int prec = 6)</db:title>
+         <db:title>[static] <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that contains the printed value of
                                         <db:emphasis>n</db:emphasis>, formatted in format <db:emphasis>f</db:emphasis>
@@ -3280,7 +3280,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="prepend">
-         <db:title>QByteArray &amp; QByteArray::prepend(const QByteArray &amp; ba)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Prepends the byte array <db:emphasis>ba</db:emphasis> to this byte
                                     array and returns a reference to this byte array.</db:para>
          <db:para>Example:</db:para>
@@ -3311,26 +3311,26 @@
          </db:section>
       </db:section>
       <db:section xml:id="prepend-2">
-         <db:title>QByteArray &amp; QByteArray::prepend(const char * str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Prepends the string <db:emphasis>str</db:emphasis> to this byte
                                     array.</db:para>
       </db:section>
       <db:section xml:id="prepend-3">
-         <db:title>QByteArray &amp; QByteArray::prepend(const char * str, int len)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Prepends <db:emphasis>len</db:emphasis> bytes of the string
                                         <db:emphasis>str</db:emphasis> to this byte array.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
       </db:section>
       <db:section xml:id="prepend-4">
-         <db:title>QByteArray &amp; QByteArray::prepend(char ch)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Prepends the character <db:emphasis>ch</db:emphasis> to this byte
                                     array.</db:para>
       </db:section>
       <db:section xml:id="push_back">
-         <db:title>void QByteArray::push_back(const QByteArray &amp; other)</db:title>
+         <db:title>void QByteArray::push_back(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This function is provided for STL compatibility. It is
                                     equivalent to append(<db:emphasis>other</db:emphasis>).</db:para>
       </db:section>
@@ -3345,7 +3345,7 @@
          <db:para>Same as append(<db:emphasis>ch</db:emphasis>).</db:para>
       </db:section>
       <db:section xml:id="push_front">
-         <db:title>void QByteArray::push_front(const QByteArray &amp; other)</db:title>
+         <db:title>void QByteArray::push_front(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This function is provided for STL compatibility. It is
                                     equivalent to prepend(<db:emphasis>other</db:emphasis>).</db:para>
       </db:section>
@@ -3360,7 +3360,7 @@
          <db:para>Same as prepend(<db:emphasis>ch</db:emphasis>).</db:para>
       </db:section>
       <db:section xml:id="remove">
-         <db:title>QByteArray &amp; QByteArray::remove(int pos, int len)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Removes <db:emphasis>len</db:emphasis> bytes from the array, starting
                                     at index position <db:emphasis>pos</db:emphasis>, and returns a reference
                                     to the array.</db:para>
@@ -3384,7 +3384,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="repeated">
-         <db:title>QByteArray QByteArray::repeated(int times) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a copy of this byte array repeated the specified
                                     number of <db:emphasis>times</db:emphasis>.</db:para>
          <db:para>If <db:emphasis>times</db:emphasis> is less than 1, an empty byte
@@ -3395,7 +3395,7 @@
          <db:para>This function was introduced in Qt 4.5.</db:para>
       </db:section>
       <db:section xml:id="replace">
-         <db:title>QByteArray &amp; QByteArray::replace(int pos, int len, const QByteArray &amp; after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Replaces <db:emphasis>len</db:emphasis> bytes from index position
                                         <db:emphasis>pos</db:emphasis> with the byte array
                                         <db:emphasis>after</db:emphasis>, and returns a reference to this byte
@@ -3415,7 +3415,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="replace-2">
-         <db:title>QByteArray &amp; QByteArray::replace(int pos, int len, const char * after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces <db:emphasis>len</db:emphasis> bytes from index position
                                         <db:emphasis>pos</db:emphasis> with the zero terminated string
@@ -3424,7 +3424,7 @@
                                     array.</db:para>
       </db:section>
       <db:section xml:id="replace-3">
-         <db:title>QByteArray &amp; QByteArray::replace(int pos, int len, const char * after, int alen)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces <db:emphasis>len</db:emphasis> bytes from index position
                                         <db:emphasis>pos</db:emphasis> with <db:emphasis>alen</db:emphasis> bytes from
@@ -3433,7 +3433,7 @@
          <db:para>This function was introduced in Qt 4.7.</db:para>
       </db:section>
       <db:section xml:id="replace-4">
-         <db:title>QByteArray &amp; QByteArray::replace(const QByteArray &amp; before, const QByteArray &amp; after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the byte array
                                         <db:emphasis>before</db:emphasis> with the byte array
@@ -3444,14 +3444,14 @@
                                         "color behavior flavor neighbor"</db:programlisting>
       </db:section>
       <db:section xml:id="replace-5">
-         <db:title>QByteArray &amp; QByteArray::replace(const char * before, const QByteArray &amp; after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the string
                                         <db:emphasis>before</db:emphasis> with the byte array
                                         <db:emphasis>after</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="replace-6">
-         <db:title>QByteArray &amp; QByteArray::replace(const char * before, int bsize, const char * after, int asize)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the string
                                         <db:emphasis>before</db:emphasis> with the string
@@ -3461,14 +3461,14 @@
                                     zero-terminated.</db:para>
       </db:section>
       <db:section xml:id="replace-7">
-         <db:title>QByteArray &amp; QByteArray::replace(const QByteArray &amp; before, const char * after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the byte array
                                         <db:emphasis>before</db:emphasis> with the string
                                         <db:emphasis>after</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="replace-8">
-         <db:title>QByteArray &amp; QByteArray::replace(const QString &amp; before, const QByteArray &amp; after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qstring.html">QString</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the string
                                         <db:emphasis>before</db:emphasis> with the byte array
@@ -3482,28 +3482,28 @@
                                     *</db:code>.</db:para>
       </db:section>
       <db:section xml:id="replace-9">
-         <db:title>QByteArray &amp; QByteArray::replace(const QString &amp; before, const char * after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the string
                                         <db:emphasis>before</db:emphasis> with the string
                                         <db:emphasis>after</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="replace-10">
-         <db:title>QByteArray &amp; QByteArray::replace(const char * before, const char * after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the string
                                         <db:emphasis>before</db:emphasis> with the string
                                         <db:emphasis>after</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="replace-11">
-         <db:title>QByteArray &amp; QByteArray::replace(char before, const QByteArray &amp; after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the character
                                         <db:emphasis>before</db:emphasis> with the byte array
                                         <db:emphasis>after</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="replace-12">
-         <db:title>QByteArray &amp; QByteArray::replace(char before, const QString &amp; after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the character
                                         <db:emphasis>before</db:emphasis> with the string
@@ -3517,14 +3517,14 @@
                                     *</db:code>.</db:para>
       </db:section>
       <db:section xml:id="replace-13">
-         <db:title>QByteArray &amp; QByteArray::replace(char before, const char * after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the character
                                         <db:emphasis>before</db:emphasis> with the string
                                         <db:emphasis>after</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="replace-14">
-         <db:title>QByteArray &amp; QByteArray::replace(char before, char after)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Replaces every occurrence of the character
                                         <db:emphasis>before</db:emphasis> with the character
@@ -3579,7 +3579,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="right">
-         <db:title>QByteArray QByteArray::right(int len) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array that contains the rightmost
                                         <db:emphasis>len</db:emphasis> bytes of this byte array.</db:para>
          <db:para>The entire byte array is returned if <db:emphasis>len</db:emphasis> is
@@ -3603,7 +3603,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="rightJustified">
-         <db:title>QByteArray QByteArray::rightJustified(int width, char fill = ' ', bool truncate = false) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array of size <db:emphasis>width</db:emphasis> that
                                     contains the <db:emphasis>fill</db:emphasis> character followed by this
                                     byte array.</db:para>
@@ -3626,7 +3626,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum">
-         <db:title>QByteArray &amp; QByteArray::setNum(int n, int base = 10)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Sets the byte array to the printed value of
                                         <db:emphasis>n</db:emphasis> in base <db:emphasis>base</db:emphasis> (10 by
                                     default) and returns a reference to the byte array. The
@@ -3653,7 +3653,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-2">
-         <db:title>QByteArray &amp; QByteArray::setNum(uint n, int base = 10)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3665,7 +3665,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-3">
-         <db:title>QByteArray &amp; QByteArray::setNum(short n, int base = 10)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3677,7 +3677,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-4">
-         <db:title>QByteArray &amp; QByteArray::setNum(ushort n, int base = 10)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#ushort-typedef">ushort</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3689,7 +3689,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-5">
-         <db:title>QByteArray &amp; QByteArray::setNum(qlonglong n, int base = 10)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3701,7 +3701,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-6">
-         <db:title>QByteArray &amp; QByteArray::setNum(qulonglong n, int base = 10)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#qulonglong-typedef">qulonglong</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -3713,7 +3713,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-7">
-         <db:title>QByteArray &amp; QByteArray::setNum(double n, char f = 'g', int prec = 6)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sets the byte array to the printed value of
                                         <db:emphasis>n</db:emphasis>, formatted in format <db:emphasis>f</db:emphasis>
@@ -3808,7 +3808,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setNum-8">
-         <db:title>QByteArray &amp; QByteArray::setNum(float n, char f = 'g', int prec = 6)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sets the byte array to the printed value of
                                         <db:emphasis>n</db:emphasis>, formatted in format <db:emphasis>f</db:emphasis>
@@ -3829,7 +3829,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setRawData">
-         <db:title>QByteArray &amp; QByteArray::setRawData(const char * data, uint size)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>Resets the <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> to use the first <db:emphasis>size</db:emphasis>
                                     bytes of the <db:emphasis>data</db:emphasis> array. The bytes are
                                         <db:emphasis>not</db:emphasis> copied. The <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> will contain the
@@ -3857,7 +3857,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="simplified">
-         <db:title>QByteArray QByteArray::simplified() const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array that has whitespace removed from the
                                     start and the end, and which has each sequence of internal
                                     whitespace replaced with a single space.</db:para>
@@ -3917,7 +3917,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="split">
-         <db:title>QList &lt;QByteArray &gt; QByteArray::split(char sep) const</db:title>
+         <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Splits the byte array into subarrays wherever
                                         <db:emphasis>sep</db:emphasis> occurs, and returns the list of those
                                     arrays. If <db:emphasis>sep</db:emphasis> does not match anywhere in the
@@ -3945,7 +3945,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="startsWith">
-         <db:title>bool QByteArray::startsWith(const QByteArray &amp; ba) const</db:title>
+         <db:title>bool QByteArray::startsWith(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array
                                     starts with byte array <db:emphasis>ba</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
@@ -3979,13 +3979,13 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section xml:id="swap">
-         <db:title>void QByteArray::swap(QByteArray &amp; other)</db:title>
+         <db:title>void QByteArray::swap(<db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Swaps byte array <db:emphasis>other</db:emphasis> with this byte
                                     array. This operation is very fast and never fails.</db:para>
          <db:para>This function was introduced in Qt 4.8.</db:para>
       </db:section>
       <db:section xml:id="toBase64">
-         <db:title>QByteArray QByteArray::toBase64() const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a copy of the byte array, encoded as
                                     Base64.</db:para>
          <db:programlisting>QByteArray text("Qt is great!"); text.toBase64(); // returns
@@ -4003,7 +4003,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toBase64-2">
-         <db:title>QByteArray QByteArray::toBase64(Base64Options options) const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#Base64Option-enum">Base64Options</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a copy of the byte array, encoded using the options
                                         <db:emphasis>options</db:emphasis>.</db:para>
@@ -4095,7 +4095,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toHex">
-         <db:title>QByteArray QByteArray::toHex() const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a hex encoded copy of the byte array. The hex
                                     encoding uses the numbers 0-9 and the letters a-f.</db:para>
          <db:section>
@@ -4172,7 +4172,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toLongLong">
-         <db:title>qlonglong QByteArray::toLongLong(bool * ok = 0, int base = 10) const</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link></db:title>
          <db:para>Returns the byte array converted to a <db:code>long
                                         long</db:code> using base <db:emphasis>base</db:emphasis>, which is
                                     10 by default and must be between 2 and 36, or 0.</db:para>
@@ -4200,7 +4200,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toLower">
-         <db:title>QByteArray QByteArray::toLower() const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a lowercase copy of the byte array. The bytearray is
                                     interpreted as a Latin-1 encoded string.</db:para>
          <db:para>Example:</db:para>
@@ -4242,7 +4242,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toPercentEncoding">
-         <db:title>QByteArray QByteArray::toPercentEncoding(const QByteArray &amp; exclude = QByteArray(), const QByteArray &amp; include = QByteArray(), char percent = '%') const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a URI/URL-style percent-encoded copy of this byte
                                     array. The <db:emphasis>percent</db:emphasis> parameter allows you to
                                     override the default '%' character for another.</db:para>
@@ -4377,7 +4377,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toUInt">
-         <db:title>uint QByteArray::toUInt(bool * ok = 0, int base = 10) const</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>Returns the byte array converted to an <db:code>unsigned
                                         int</db:code> using base <db:emphasis>base</db:emphasis>, which is
                                     10 by default and must be between 2 and 36, or 0.</db:para>
@@ -4405,7 +4405,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toULong">
-         <db:title>ulong QByteArray::toULong(bool * ok = 0, int base = 10) const</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#ulong-typedef">ulong</db:link></db:title>
          <db:para>Returns the byte array converted to an <db:code>unsigned
                                         long int</db:code> using base <db:emphasis>base</db:emphasis>, which
                                     is 10 by default and must be between 2 and 36, or 0.</db:para>
@@ -4435,7 +4435,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toULongLong">
-         <db:title>qulonglong QByteArray::toULongLong(bool * ok = 0, int base = 10) const</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#qulonglong-typedef">qulonglong</db:link></db:title>
          <db:para>Returns the byte array converted to an <db:code>unsigned
                                         long long</db:code> using base <db:emphasis>base</db:emphasis>,
                                     which is 10 by default and must be between 2 and 36, or
@@ -4464,7 +4464,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toUShort">
-         <db:title>ushort QByteArray::toUShort(bool * ok = 0, int base = 10) const</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#ushort-typedef">ushort</db:link></db:title>
          <db:para>Returns the byte array converted to an <db:code>unsigned
                                         short</db:code> using base <db:emphasis>base</db:emphasis>, which is
                                     10 by default and must be between 2 and 36, or 0.</db:para>
@@ -4492,7 +4492,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toUpper">
-         <db:title>QByteArray QByteArray::toUpper() const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns an uppercase copy of the byte array. The bytearray
                                     is interpreted as a Latin-1 encoded string.</db:para>
          <db:para>Example:</db:para>
@@ -4511,7 +4511,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="trimmed">
-         <db:title>QByteArray QByteArray::trimmed() const</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array that has whitespace removed from the
                                     start and the end.</db:para>
          <db:para>Whitespace means any character for which the standard C++
@@ -4559,7 +4559,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="operator-not-eq">
-         <db:title>bool QByteArray::operator!=(const QString &amp; str) const</db:title>
+         <db:title>bool QByteArray::operator!=(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array is
                                     not equal to string <db:emphasis>str</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
@@ -4573,7 +4573,7 @@
                                     convert the byte array to a <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> before doing the comparison.</db:para>
       </db:section>
       <db:section xml:id="operator-2b-eq">
-         <db:title>QByteArray &amp; QByteArray::operator+=(const QByteArray &amp; ba)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Appends the byte array <db:emphasis>ba</db:emphasis> onto the end of
                                     this byte array and returns a reference to this byte
                                     array.</db:para>
@@ -4609,7 +4609,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="operator-2b-eq-2">
-         <db:title>QByteArray &amp; QByteArray::operator+=(const QString &amp; str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Appends the string <db:emphasis>str</db:emphasis> onto the end of this
                                     byte array and returns a reference to this byte array. The
@@ -4622,20 +4622,20 @@
                                     *</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-2b-eq-3">
-         <db:title>QByteArray &amp; QByteArray::operator+=(const char * str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Appends the string <db:emphasis>str</db:emphasis> onto the end of this
                                     byte array and returns a reference to this byte array.</db:para>
       </db:section>
       <db:section xml:id="operator-2b-eq-4">
-         <db:title>QByteArray &amp; QByteArray::operator+=(char ch)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Appends the character <db:emphasis>ch</db:emphasis> onto the end of
                                     this byte array and returns a reference to this byte
                                     array.</db:para>
       </db:section>
       <db:section xml:id="operator-lt">
-         <db:title>bool QByteArray::operator&lt;(const QString &amp; str) const</db:title>
+         <db:title>bool QByteArray::operator&lt;(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array is
                                     lexically less than string <db:emphasis>str</db:emphasis>; otherwise
                                     returns <db:code>false</db:code>.</db:para>
@@ -4649,7 +4649,7 @@
                                     convert the byte array to a <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> before doing the comparison.</db:para>
       </db:section>
       <db:section xml:id="operator-lt-eq">
-         <db:title>bool QByteArray::operator&lt;=(const QString &amp; str) const</db:title>
+         <db:title>bool QByteArray::operator&lt;=(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array is
                                     lexically less than or equal to string <db:emphasis>str</db:emphasis>;
                                     otherwise returns <db:code>false</db:code>.</db:para>
@@ -4663,23 +4663,23 @@
                                     convert the byte array to a <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> before doing the comparison.</db:para>
       </db:section>
       <db:section xml:id="operator-eq">
-         <db:title>QByteArray &amp; QByteArray::operator=(const QByteArray &amp; other)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Assigns <db:emphasis>other</db:emphasis> to this byte array and
                                     returns a reference to this byte array.</db:para>
       </db:section>
       <db:section xml:id="operator-eq-2">
-         <db:title>QByteArray &amp; QByteArray::operator=(QByteArray &amp;&amp; other)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Move-assigns <db:emphasis>other</db:emphasis> to this <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code>
                                     instance.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
       </db:section>
       <db:section xml:id="operator-eq-3">
-         <db:title>QByteArray &amp; QByteArray::operator=(const char * str)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Assigns <db:emphasis>str</db:emphasis> to this byte array.</db:para>
       </db:section>
       <db:section xml:id="operator-eq-eq">
-         <db:title>bool QByteArray::operator==(const QString &amp; str) const</db:title>
+         <db:title>bool QByteArray::operator==(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array is
                                     equal to string <db:emphasis>str</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>.</db:para>
@@ -4693,7 +4693,7 @@
                                     convert the byte array to a <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> before doing the comparison.</db:para>
       </db:section>
       <db:section xml:id="operator-gt">
-         <db:title>bool QByteArray::operator&gt;(const QString &amp; str) const</db:title>
+         <db:title>bool QByteArray::operator&gt;(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array is
                                     lexically greater than string <db:emphasis>str</db:emphasis>; otherwise
                                     returns <db:code>false</db:code>.</db:para>
@@ -4707,7 +4707,7 @@
                                     convert the byte array to a <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> before doing the comparison.</db:para>
       </db:section>
       <db:section xml:id="operator-gt-eq">
-         <db:title>bool QByteArray::operator&gt;=(const QString &amp; str) const</db:title>
+         <db:title>bool QByteArray::operator&gt;=(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this byte array is
                                     greater than or equal to string <db:emphasis>str</db:emphasis>; otherwise
                                     returns <db:code>false</db:code>.</db:para>
@@ -4750,18 +4750,18 @@
          <db:para>Same as at(<db:emphasis>i</db:emphasis>).</db:para>
       </db:section>
       <db:section xml:id="operator-5b-5d-3">
-         <db:title>QByteRef QByteArray::operator[](uint i)</db:title>
+         <db:title>QByteRef QByteArray::operator[](<db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
       </db:section>
       <db:section xml:id="operator-5b-5d-4">
-         <db:title>char QByteArray::operator[](uint i) const</db:title>
+         <db:title>char QByteArray::operator[](<db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="relnonmem">
       <db:title>Related Non-Members</db:title>
       <db:section>
-         <db:title>quint16 qChecksum(const char * data, uint len)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#quint16-typedef">quint16</db:link><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>Returns the CRC-16 checksum of the first
                                         <db:emphasis>len</db:emphasis> bytes of
                                     <db:emphasis>data</db:emphasis>.</db:para>
@@ -4774,7 +4774,7 @@
          </db:note>
       </db:section>
       <db:section>
-         <db:title>QByteArray qCompress(const QByteArray &amp; data, int compressionLevel = -1)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Compresses the <db:emphasis>data</db:emphasis> byte array and returns
                                     the compressed data in a new byte array.</db:para>
          <db:para>The <db:emphasis>compressionLevel</db:emphasis> parameter specifies
@@ -4795,14 +4795,14 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>QByteArray qCompress(const uchar * data, int nbytes, int compressionLevel = -1)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Compresses the first <db:emphasis>nbytes</db:emphasis> of
                                         <db:emphasis>data</db:emphasis> and returns the compressed data in a
                                     new byte array.</db:para>
       </db:section>
       <db:section>
-         <db:title>QByteArray qUncompress(const QByteArray &amp; data)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Uncompresses the <db:emphasis>data</db:emphasis> byte array and
                                     returns a new byte array with the uncompressed data.</db:para>
          <db:para>Returns an empty <db:code><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:code> if the input data was corrupt.</db:para>
@@ -4827,7 +4827,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>QByteArray qUncompress(const uchar * data, int nbytes)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Uncompresses the first <db:emphasis>nbytes</db:emphasis> of
                                         <db:emphasis>data</db:emphasis> and returns a new byte array with the
@@ -4952,7 +4952,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>uint qstrlen(const char * str)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>A safe <db:code>strlen()</db:code> function.</db:para>
          <db:para>Returns the number of characters that precede the
                                     terminating '\0', or 0 if <db:emphasis>str</db:emphasis> is 0.</db:para>
@@ -4966,7 +4966,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>int qstrncmp(const char * str1, const char * str2, uint len)</db:title>
+         <db:title>int qstrncmp(const char * str1, const char * str2, <db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>A safe <db:code>strncmp()</db:code> function.</db:para>
          <db:para>Compares at most <db:emphasis>len</db:emphasis> bytes of
                                         <db:emphasis>str1</db:emphasis> and <db:emphasis>str2</db:emphasis>.</db:para>
@@ -4999,7 +4999,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>char * qstrncpy(char * dst, const char * src, uint len)</db:title>
+         <db:title>char * qstrncpy(char * dst, const char * src, <db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>A safe <db:code>strncpy()</db:code> function.</db:para>
          <db:para>Copies at most <db:emphasis>len</db:emphasis> bytes from
                                         <db:emphasis>src</db:emphasis> (stopping at <db:emphasis>len</db:emphasis> or
@@ -5021,7 +5021,7 @@
             <db:code><db:link xlink:href="qbytearray.html#qstrcpy">qstrcpy</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>int qstrnicmp(const char * str1, const char * str2, uint len)</db:title>
+         <db:title>int qstrnicmp(const char * str1, const char * str2, <db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>A safe <db:code>strnicmp()</db:code> function.</db:para>
          <db:para>Compares at most <db:emphasis>len</db:emphasis> bytes of
                                         <db:emphasis>str1</db:emphasis> and <db:emphasis>str2</db:emphasis> ignoring the
@@ -5056,7 +5056,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>uint qstrnlen(const char * str, uint maxlen)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link><db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>A safe <db:code>strnlen()</db:code> function.</db:para>
          <db:para>Returns the number of characters that precede the
                                     terminating '\0', but at most <db:emphasis>maxlen</db:emphasis>. If
@@ -5106,7 +5106,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>bool operator!=(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator!=(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is not equal to byte array
@@ -5114,7 +5114,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator!=(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>bool operator!=(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is not equal to string
@@ -5122,7 +5122,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator!=(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator!=(const char * a1, const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
                                         <db:emphasis>a1</db:emphasis> is not equal to byte array
@@ -5130,7 +5130,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>const QByteArray operator+(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Returns a byte array that is the result of concatenating
                                     byte array <db:emphasis>a1</db:emphasis> and byte array
                                         <db:emphasis>a2</db:emphasis>.</db:para>
@@ -5144,35 +5144,35 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>const QByteArray operator+(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     byte array <db:emphasis>a1</db:emphasis> and string
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
       <db:section>
-         <db:title>const QByteArray operator+(const QByteArray &amp; a1, char a2)</db:title>
+         <db:title>const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     byte array <db:emphasis>a1</db:emphasis> and character
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
       <db:section>
-         <db:title>const QByteArray operator+(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     string <db:emphasis>a1</db:emphasis> and byte array
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
       <db:section>
-         <db:title>const QByteArray operator+(char a1, const QByteArray &amp; a2)</db:title>
+         <db:title>const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a byte array that is the result of concatenating
                                     character <db:emphasis>a1</db:emphasis> and byte array
                                     <db:emphasis>a2</db:emphasis>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&lt;(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&lt;(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically less than byte array
@@ -5180,7 +5180,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&lt;(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>bool operator&lt;(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically less than string
@@ -5188,7 +5188,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&lt;(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&lt;(const char * a1, const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
                                         <db:emphasis>a1</db:emphasis> is lexically less than byte array
@@ -5196,7 +5196,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>QDataStream &amp; operator&lt;&lt;(QDataStream &amp; out, const QByteArray &amp; ba)</db:title>
+         <db:title><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Writes byte array <db:emphasis>ba</db:emphasis> to the stream
                                         <db:emphasis>out</db:emphasis> and returns a reference to the
                                     stream.</db:para>
@@ -5211,7 +5211,7 @@
          </db:section>
       </db:section>
       <db:section>
-         <db:title>bool operator&lt;=(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&lt;=(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically less than or equal to byte
@@ -5219,7 +5219,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&lt;=(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>bool operator&lt;=(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically less than or equal to
@@ -5227,7 +5227,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&lt;=(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&lt;=(const char * a1, const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
                                         <db:emphasis>a1</db:emphasis> is lexically less than or equal to byte
@@ -5235,7 +5235,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator==(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator==(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is equal to byte array
@@ -5243,14 +5243,14 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator==(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>bool operator==(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is equal to string <db:emphasis>a2</db:emphasis>;
                                     otherwise returns <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator==(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator==(const char * a1, const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
                                         <db:emphasis>a1</db:emphasis> is equal to byte array
@@ -5258,7 +5258,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&gt;(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&gt;(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically greater than byte array
@@ -5266,7 +5266,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&gt;(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>bool operator&gt;(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically greater than string
@@ -5274,7 +5274,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&gt;(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&gt;(const char * a1, const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
                                         <db:emphasis>a1</db:emphasis> is lexically greater than byte array
@@ -5282,7 +5282,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&gt;=(const QByteArray &amp; a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&gt;=(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically greater than or equal to
@@ -5290,7 +5290,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&gt;=(const QByteArray &amp; a1, const char * a2)</db:title>
+         <db:title>bool operator&gt;=(const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if byte array
                                         <db:emphasis>a1</db:emphasis> is lexically greater than or equal to
@@ -5298,7 +5298,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>bool operator&gt;=(const char * a1, const QByteArray &amp; a2)</db:title>
+         <db:title>bool operator&gt;=(const char * a1, const <db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns <db:code>true</db:code> if string
                                         <db:emphasis>a1</db:emphasis> is lexically greater than or equal to
@@ -5306,7 +5306,7 @@
                                         <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section>
-         <db:title>QDataStream &amp; operator&gt;&gt;(QDataStream &amp; in, QByteArray &amp; ba)</db:title>
+         <db:title><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qbytearray.html#QByteArray">QByteArray</db:link></db:title>
          <db:para>Reads a byte array into <db:emphasis>ba</db:emphasis> from the stream
                                         <db:emphasis>in</db:emphasis> and returns a reference to the
                                     stream.</db:para>
@@ -5321,7 +5321,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
       <db:section>
          <db:title>QT_NO_CAST_FROM_BYTEARRAY</db:title>
@@ -5342,7 +5342,7 @@
    </db:section>
    <db:section>
       <db:title>Obsolete Members</db:title>
-      <db:section>
+      <db:section xml:id="obsolete_memfunc">
          <db:title>Member Function Documentation</db:title>
          <db:section xml:id="operator-const-char--2a">
             <db:title>QByteArray::operator const char *() const</db:title>

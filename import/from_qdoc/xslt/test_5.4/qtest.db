@@ -1879,7 +1879,7 @@
          <db:para>This enum was introduced or modified in Qt 4.7.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#benchmarkMetricName">QTest::benchmarkMetricName</db:link>()</db:code>
                </db:member>
@@ -1944,7 +1944,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QEXPECT_FAIL">QEXPECT_FAIL</db:link>()</db:code>
                </db:member>
@@ -1971,7 +1971,7 @@
                                         str1.localeAwareCompare(str2); } }</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtest-overview.html#creating-a-benchmark">Creating a
                                         Benchmark</db:link>
@@ -1997,7 +1997,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:link xlink:href="qtest-overview.html#creating-a-benchmark">Creating a
                                         Benchmark</db:link>
@@ -2039,7 +2039,7 @@
          <db:programlisting>QCOMPARE(QString("hello").toUpper(),QString("HELLO"));</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
                </db:member>
@@ -2091,7 +2091,7 @@
                                     test data entry <db:code>data27</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#TestFailMode-enum">QTest::TestFailMode</db:link></db:code>
                </db:member>
@@ -2269,7 +2269,7 @@
          <db:programlisting>QTEST(QString("hello").toUpper(),"myString");</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
                </db:member>
@@ -2285,7 +2285,7 @@
                                     tests.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
                </db:member>
@@ -2305,7 +2305,7 @@
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
                </db:member>
@@ -2346,7 +2346,7 @@
                                     QTEST_MAIN(TestQString)</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTEST_APPLESS_MAIN">QTEST_APPLESS_MAIN</db:link>()</db:code>
                </db:member>
@@ -2376,7 +2376,7 @@
                                     5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE_WITH_TIMEOUT">QTRY_COMPARE_WITH_TIMEOUT</db:link>()</db:code>
                </db:member>
@@ -2410,7 +2410,7 @@
                                     5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
                </db:member>
@@ -2439,7 +2439,7 @@
                                     5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY_WITH_TIMEOUT">QTRY_VERIFY_WITH_TIMEOUT</db:link>()</db:code>
                </db:member>
@@ -2472,7 +2472,7 @@
                                     5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
                </db:member>
@@ -2499,7 +2499,7 @@
                                         occurred.");</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
                </db:member>
@@ -2523,7 +2523,7 @@
          <db:programlisting>QVERIFY(1+1==2);</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist type="vert">
+            <db:simplelist>
                <db:member>
                   <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
                </db:member>
@@ -2580,7 +2580,7 @@ QTest::qWaitForWindowShown(&amp;widget);</db:programlisting>
             <db:para>This function was introduced in  Qt 5.0.</db:para>
             <db:section>
                <db:title>See Also</db:title>
-               <db:simplelist type="vert">
+               <db:simplelist>
                   <db:member>
                      <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
                   </db:member>

@@ -230,7 +230,7 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="count-prop">
          <db:title>count : int</db:title>
@@ -258,10 +258,8 @@
                                         are disabled by default.</db:para>
       </db:section>
    </db:section>
-   <db:section>
-      <db:title>
-            Methods Documentation
-          </db:title>
+   <db:section xml:id="qml-meths">
+      <db:title>Methods Documentation</db:title>
       <db:section xml:id="append-method">
          <db:title>append(jsobject<db:emphasis>
                                                   dict</db:emphasis>)</db:title>
@@ -413,8 +411,7 @@
       <db:section xml:id="setProperty-method">
          <db:title>setProperty(int<db:emphasis>
                                                   index</db:emphasis>, string<db:emphasis> property</db:emphasis>,
-                                                  <db:link xlink:href="qml-variant.html">variant</db:link>
-            <db:emphasis>
+                                                  <db:link xlink:href="qml-variant.html">variant</db:link><db:emphasis>
                                                   value</db:emphasis>)</db:title>
          <db:para>Changes the <db:emphasis>property</db:emphasis> of the item
                                         at <db:emphasis>index</db:emphasis> in the list model to

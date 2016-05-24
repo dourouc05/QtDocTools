@@ -50,7 +50,7 @@
                                 into the client area, as well as to control the behavior of Aero
                                 Peek and Flip3D.</db:para>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="blurBehindEnabled-prop">
          <db:title>blurBehindEnabled :
@@ -71,8 +71,7 @@
                                         Peek. The default value is false.</db:para>
       </db:section>
       <db:section xml:id="flip3DPolicy-prop">
-         <db:title>flip3DPolicy : <db:code><db:link xlink:href="qtwin.html#WindowFlip3DPolicy-enum">QtWin::WindowFlip3DPolicy</db:link></db:code>
-         </db:title>
+         <db:title>flip3DPolicy : <db:code><db:link xlink:href="qtwin.html#WindowFlip3DPolicy-enum">QtWin::WindowFlip3DPolicy</db:link></db:code></db:title>
          <db:para>The current Flip3D policy for the window.</db:para>
       </db:section>
       <db:section xml:id="leftGlassMargin-prop">

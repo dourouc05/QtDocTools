@@ -95,7 +95,7 @@
                                     parent.height) smooth: truevisible: false } Glow { anchors.fill: butterflyradius: 8samples: 16color: "white"source: butterfly } }</db:programlisting>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="cached-prop">
          <db:title>cached : bool</db:title>
@@ -467,8 +467,7 @@
                                         has no effect.</db:para>
       </db:section>
       <db:section xml:id="source-prop">
-         <db:title>source : <db:link xlink:href="qtqml/qml-variant.html">variant</db:link>
-         </db:title>
+         <db:title>source : <db:link xlink:href="qtqml/qml-variant.html">variant</db:link></db:title>
          <db:para>This property defines the source item that is going
                                         to be used as source for the generated glow.</db:para>
          <db:note>

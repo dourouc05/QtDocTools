@@ -1782,7 +1782,7 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="types">
       <db:title>Member Type Documentation</db:title>
       <db:section xml:id="RenderFlag-enum">
          <db:title>enum QWidget::​RenderFlag</db:title>
@@ -1852,7 +1852,7 @@
          <db:para>The RenderFlags type is a typedef for <db:code><db:link xlink:href="qtcore/qflags.html">QFlags</db:link>&lt;RenderFlag&gt;</db:code>. It stores an OR combination of RenderFlag values.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Property Documentation</db:title>
       <db:section xml:id="acceptDrops-prop">
          <db:title>acceptDrops : bool</db:title>
@@ -1898,7 +1898,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="accessibleDescription-prop">
-         <db:title>accessibleDescription : QString</db:title>
+         <db:title>accessibleDescription : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's description as seen by assistive technologies.</db:para>
          <db:para>The accessible description of a widget should convey what a widget does. While the <db:link xlink:href="qwidget.html#accessibleName-prop">accessibleName</db:link> should be a short and consise string (e.g. <db:emphasis role="bold">Save</db:emphasis>), the description should give more context, such as <db:emphasis role="bold">Saves the current document</db:emphasis>.</db:para>
          <db:para>This property has to be <db:link xlink:href="qtdoc/internationalization.html">localized</db:link>.</db:para>
@@ -1941,7 +1941,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="accessibleName-prop">
-         <db:title>accessibleName : QString</db:title>
+         <db:title>accessibleName : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's name as seen by assistive technologies.</db:para>
          <db:para>This is the primary name by which assistive technology such as screen readers announce this widget. For most widgets setting this property is not required. For example for <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> the button's text will be used.</db:para>
          <db:para>It is important to set this property when the widget does not provide any text. For example a button that only contains an icon needs to set this property to work with screen readers. The name should be short and equivalent to the visual information conveyed by the widget.</db:para>
@@ -2036,7 +2036,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="baseSize-prop">
-         <db:title>baseSize : QSize</db:title>
+         <db:title>baseSize : <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the base size of the widget.</db:para>
          <db:para>The base size is used to calculate a proper widget size if the widget defines <db:code><db:link xlink:href="qwidget.html#sizeIncrement-prop">sizeIncrement</db:link>()</db:code>.</db:para>
          <db:para>By default, for a newly-created widget, this property contains a size with zero width and height.</db:para>
@@ -2084,7 +2084,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="childrenRect-prop">
-         <db:title>childrenRect : const QRect</db:title>
+         <db:title>childrenRect : const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This property holds the bounding rectangle of the widget's children.</db:para>
          <db:para>Hidden children are excluded.</db:para>
          <db:para>By default, for a widget with no children, this property contains a rectangle with zero width and height located at the origin.</db:para>
@@ -2117,7 +2117,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="childrenRegion-prop">
-         <db:title>childrenRegion : const QRegion</db:title>
+         <db:title>childrenRegion : const <db:link xlink:href="qtgui/qregion.html">QRegion</db:link></db:title>
          <db:para>This property holds the combined region occupied by the widget's children.</db:para>
          <db:para>Hidden children are excluded.</db:para>
          <db:para>By default, for a widget with no children, this property contains an empty region.</db:para>
@@ -2153,7 +2153,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="contextMenuPolicy-prop">
-         <db:title>contextMenuPolicy : Qt::ContextMenuPolicy</db:title>
+         <db:title>contextMenuPolicy : <db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::ContextMenuPolicy</db:link></db:title>
          <db:para>This property holds how the widget shows a context menu.</db:para>
          <db:para>The default value of this property is <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::DefaultContextMenu</db:link></db:code>, which means the <db:code><db:link xlink:href="qwidget.html#contextMenuEvent">contextMenuEvent</db:link>()</db:code> handler is called. Other values are <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::NoContextMenu</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::PreventContextMenu</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::ActionsContextMenu</db:link></db:code>, and <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::CustomContextMenu</db:link></db:code>. With <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::CustomContextMenu</db:link></db:code>, the signal <db:code><db:link xlink:href="qwidget.html#customContextMenuRequested">customContextMenuRequested</db:link>()</db:code> is emitted.</db:para>
          <db:para>
@@ -2197,7 +2197,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="cursor-prop">
-         <db:title>cursor : QCursor</db:title>
+         <db:title>cursor : <db:link xlink:href="qtgui/qcursor.html">QCursor</db:link></db:title>
          <db:para>This property holds the cursor shape for this widget.</db:para>
          <db:para>The mouse cursor will assume this shape when it's over this widget. See the <db:link xlink:href="qtcore/qt.html#CursorShape-enum">list of predefined cursor objects</db:link> for a range of useful shapes.</db:para>
          <db:para>An editor widget might use an I-beam cursor:</db:para>
@@ -2340,7 +2340,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="focusPolicy-prop">
-         <db:title>focusPolicy : Qt::FocusPolicy</db:title>
+         <db:title>focusPolicy : <db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::FocusPolicy</db:link></db:title>
          <db:para>This property holds the way the widget accepts keyboard focus.</db:para>
          <db:para>The policy is <db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::TabFocus</db:link></db:code> if the widget accepts keyboard focus by tabbing, <db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::ClickFocus</db:link></db:code> if the widget accepts focus by clicking, <db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::StrongFocus</db:link></db:code> if it accepts both, and <db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::NoFocus</db:link></db:code> (the default) if it does not accept focus at all.</db:para>
          <db:para>You must enable keyboard focus for a widget if it processes keyboard events. This is normally done from the widget's constructor. For instance, the <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> constructor calls setFocusPolicy(<db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::StrongFocus</db:link></db:code>).</db:para>
@@ -2392,7 +2392,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="font-prop">
-         <db:title>font : QFont</db:title>
+         <db:title>font : <db:link xlink:href="qtgui/qfont.html">QFont</db:link></db:title>
          <db:para>This property holds the font currently set for the widget.</db:para>
          <db:para>This property describes the widget's requested font. The font is used by the widget's style when rendering standard components, and is available as a means to ensure that custom widgets can maintain consistency with the native platform's look and feel. It's common that different platforms, or different styles, define different fonts for an application.</db:para>
          <db:para>When you assign a new font to a widget, the properties from this font are combined with the widget's default font to form the widget's final font. You can call <db:code><db:link xlink:href="qwidget.html#fontInfo">fontInfo</db:link>()</db:code> to get a copy of the widget's final font. The final font is also used to initialize <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code>'s font.</db:para>
@@ -2443,7 +2443,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="frameGeometry-prop">
-         <db:title>frameGeometry : const QRect</db:title>
+         <db:title>frameGeometry : const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This property holds geometry of the widget relative to its parent including any window frame.</db:para>
          <db:para>See the <db:link xlink:href="application-windows.html#window-geometry">Window Geometry</db:link> documentation for an overview of geometry issues with windows.</db:para>
          <db:para>By default, this property contains a value that depends on the user's platform and screen geometry.</db:para>
@@ -2482,7 +2482,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="frameSize-prop">
-         <db:title>frameSize : const QSize</db:title>
+         <db:title>frameSize : const <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the size of the widget including any window frame.</db:para>
          <db:para>By default, this property contains a value that depends on the user's platform and screen geometry.</db:para>
          <db:para>
@@ -2539,7 +2539,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="geometry-prop">
-         <db:title>geometry : QRect</db:title>
+         <db:title>geometry : <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This property holds the geometry of the widget relative to its parent and excluding the window frame.</db:para>
          <db:para>When changing the geometry, the widget, if visible, receives a move event (<db:code><db:link xlink:href="qwidget.html#moveEvent">moveEvent</db:link>()</db:code>) and/or a resize event (<db:code><db:link xlink:href="qwidget.html#resizeEvent">resizeEvent</db:link>()</db:code>) immediately. If the widget is not currently visible, it is guaranteed to receive appropriate events before it is shown.</db:para>
          <db:para>The size component is adjusted if it lies outside the range defined by <db:code><db:link xlink:href="qwidget.html#minimumSize-prop">minimumSize</db:link>()</db:code> and <db:code><db:link xlink:href="qwidget.html#maximumSize-prop">maximumSize</db:link>()</db:code>.</db:para>
@@ -2652,7 +2652,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="inputMethodHints-prop">
-         <db:title>inputMethodHints : Qt::InputMethodHints</db:title>
+         <db:title>inputMethodHints : <db:link xlink:href="qtcore/qt.html#InputMethodHint-enum">Qt::InputMethodHints</db:link></db:title>
          <db:para>This property holds what input method specific hints the widget has.</db:para>
          <db:para>This is only relevant for input widgets. It is used by the input method to retrieve hints as to how the input method should operate. For example, if the <db:code><db:link xlink:href="qtcore/qt.html#InputMethodHint-enum">Qt::ImhFormattedNumbersOnly</db:link></db:code> flag is set, the input method may change its visual components to reflect that only numbers can be entered.</db:para>
          <db:warning>
@@ -2732,7 +2732,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="layoutDirection-prop">
-         <db:title>layoutDirection : Qt::LayoutDirection</db:title>
+         <db:title>layoutDirection : <db:link xlink:href="qtcore/qt.html#LayoutDirection-enum">Qt::LayoutDirection</db:link></db:title>
          <db:para>This property holds the layout direction for this widget.</db:para>
          <db:para>By default, this property is set to <db:code><db:link xlink:href="qtcore/qt.html#LayoutDirection-enum">Qt::LeftToRight</db:link></db:code>.</db:para>
          <db:para>When the layout direction is set on a widget, it will propagate to the widget's children, but not to a child that is a window and not to a child for which setLayoutDirection() has been explicitly called. Also, child widgets added <db:emphasis>after</db:emphasis> setLayoutDirection() has been called for the parent do not inherit the parent's layout direction.</db:para>
@@ -2781,7 +2781,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="locale-prop">
-         <db:title>locale : QLocale</db:title>
+         <db:title>locale : <db:link xlink:href="qtcore/qlocale.html">QLocale</db:link></db:title>
          <db:para>This property holds the widget's locale.</db:para>
          <db:para>As long as no special locale has been set, this is either the parent's locale or (if this widget is a top level widget), the default locale.</db:para>
          <db:para>If the widget displays dates or numbers, these should be formatted using the widget's locale.</db:para>
@@ -2929,7 +2929,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="maximumSize-prop">
-         <db:title>maximumSize : QSize</db:title>
+         <db:title>maximumSize : <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the widget's maximum size in pixels.</db:para>
          <db:para>The widget cannot be resized to a larger size than the maximum widget size.</db:para>
          <db:para>By default, this property contains a size in which both width and height have values of 16777215.</db:para>
@@ -3121,7 +3121,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="minimumSize-prop">
-         <db:title>minimumSize : QSize</db:title>
+         <db:title>minimumSize : <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the widget's minimum size.</db:para>
          <db:para>The widget cannot be resized to a smaller size than the minimum widget size. The widget's size is forced to the minimum size if the current size is smaller.</db:para>
          <db:para>The minimum size set by this function will override the minimum size defined by <db:code><db:link xlink:href="qlayout.html">QLayout</db:link></db:code>. In order to unset the minimum size, use a value of <db:code>QSize(0, 0)</db:code>.</db:para>
@@ -3179,7 +3179,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="minimumSizeHint-prop">
-         <db:title>minimumSizeHint : const QSize</db:title>
+         <db:title>minimumSizeHint : const <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the recommended minimum size for the widget.</db:para>
          <db:para>If the value of this property is an invalid size, no minimum size is recommended.</db:para>
          <db:para>The default implementation of minimumSizeHint() returns an invalid size if there is no layout for this widget, and returns the layout's minimum size otherwise. Most built-in widgets reimplement minimumSizeHint().</db:para>
@@ -3337,7 +3337,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="normalGeometry-prop">
-         <db:title>normalGeometry : const QRect</db:title>
+         <db:title>normalGeometry : const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This property holds the geometry of the widget as it will appear when shown as a normal (not maximized or full screen) top-level widget.</db:para>
          <db:para>For child widgets this property always holds an empty rectangle.</db:para>
          <db:para>By default, this property contains an empty rectangle.</db:para>
@@ -3370,7 +3370,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="palette-prop">
-         <db:title>palette : QPalette</db:title>
+         <db:title>palette : <db:link xlink:href="qtgui/qpalette.html">QPalette</db:link></db:title>
          <db:para>This property holds the widget's palette.</db:para>
          <db:para>This property describes the widget's palette. The palette is used by the widget's style when rendering standard components, and is available as a means to ensure that custom widgets can maintain consistency with the native platform's look and feel. It's common that different platforms, or different styles, have different palettes.</db:para>
          <db:para>When you assign a new palette to a widget, the color roles from this palette are combined with the widget's default palette to form the widget's final palette. The palette entry for the widget's background role is used to fill the widget's background (see <db:code><db:link xlink:href="qwidget.html#autoFillBackground-prop">QWidget::autoFillBackground</db:link></db:code>), and the foreground role initializes <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code>'s pen.</db:para>
@@ -3421,7 +3421,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="pos-prop">
-         <db:title>pos : QPoint</db:title>
+         <db:title>pos : <db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>This property holds the position of the widget within its parent widget.</db:para>
          <db:para>If the widget is a window, the position is that of the widget on the desktop, including its frame.</db:para>
          <db:para>When changing the position, the widget, if visible, receives a move event (<db:code><db:link xlink:href="qwidget.html#moveEvent">moveEvent</db:link>()</db:code>) immediately. If the widget is not currently visible, it is guaranteed to receive an event before it is shown.</db:para>
@@ -3483,7 +3483,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="rect-prop">
-         <db:title>rect : const QRect</db:title>
+         <db:title>rect : const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This property holds the internal geometry of the widget excluding any window frame.</db:para>
          <db:para>The rect property equals <db:code><db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:code>
             <db:code><db:link xlink:href="qwidget.html#width-prop">width</db:link>()</db:code>, <db:code><db:link xlink:href="qwidget.html#height-prop">height</db:link>()</db:code>).</db:para>
@@ -3515,7 +3515,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="size-prop">
-         <db:title>size : QSize</db:title>
+         <db:title>size : <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the size of the widget excluding any window frame.</db:para>
          <db:para>If the widget is visible when it is being resized, it receives a resize event (<db:code><db:link xlink:href="qwidget.html#resizeEvent">resizeEvent</db:link>()</db:code>) immediately. If the widget is not currently visible, it is guaranteed to receive an event before it is shown.</db:para>
          <db:para>The size is adjusted if it lies outside the range defined by <db:code><db:link xlink:href="qwidget.html#minimumSize-prop">minimumSize</db:link>()</db:code> and <db:code><db:link xlink:href="qwidget.html#maximumSize-prop">maximumSize</db:link>()</db:code>.</db:para>
@@ -3585,7 +3585,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="sizeHint-prop">
-         <db:title>sizeHint : const QSize</db:title>
+         <db:title>sizeHint : const <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the recommended size for the widget.</db:para>
          <db:para>If the value of this property is an invalid size, no size is recommended.</db:para>
          <db:para>The default implementation of sizeHint() returns an invalid size if there is no layout for this widget, and returns the layout's preferred size otherwise.</db:para>
@@ -3627,7 +3627,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="sizeIncrement-prop">
-         <db:title>sizeIncrement : QSize</db:title>
+         <db:title>sizeIncrement : <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>This property holds the size increment of the widget.</db:para>
          <db:para>When the user resizes the window, the size will move in steps of sizeIncrement().<db:code><db:link xlink:href="qwidget.html#width-prop">width</db:link>()</db:code> pixels horizontally and sizeIncrement.<db:code><db:link xlink:href="qwidget.html#height-prop">height</db:link>()</db:code> pixels vertically, with <db:code><db:link xlink:href="qwidget.html#baseSize-prop">baseSize</db:link>()</db:code> as the basis. Preferred widget sizes are for non-negative integers <db:emphasis>i</db:emphasis> and <db:emphasis>j</db:emphasis>:</db:para>
          <db:programlisting>width =baseSize().width() + i * sizeIncrement().width(); height =baseSize().height() + j * sizeIncrement().height();</db:programlisting>
@@ -3686,7 +3686,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="sizePolicy-prop">
-         <db:title>sizePolicy : QSizePolicy</db:title>
+         <db:title>sizePolicy : <db:link xlink:href="qsizepolicy.html">QSizePolicy</db:link></db:title>
          <db:para>This property holds the default layout behavior of the widget.</db:para>
          <db:para>If there is a <db:code><db:link xlink:href="qlayout.html">QLayout</db:link></db:code> that manages this widget's children, the size policy specified by that layout is used. If there is no such <db:code><db:link xlink:href="qlayout.html">QLayout</db:link></db:code>, the result of this function is used.</db:para>
          <db:para>The default policy is Preferred/Preferred, which means that the widget can be freely resized, but prefers to be the size <db:code><db:link xlink:href="qwidget.html#sizeHint-prop">sizeHint</db:link>()</db:code> returns. Button-like widgets set the size policy to specify that they may stretch horizontally, but are fixed vertically. The same applies to lineedit controls (such as <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>, <db:code><db:link xlink:href="qspinbox.html">QSpinBox</db:link></db:code> or an editable <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code>) and other horizontally orientated widgets (such as <db:code><db:link xlink:href="qprogressbar.html">QProgressBar</db:link></db:code>). <db:code><db:link xlink:href="qtoolbutton.html">QToolButton</db:link></db:code>'s are normally square, so they allow growth in both directions. Widgets that support different directions (such as <db:code><db:link xlink:href="qslider.html">QSlider</db:link></db:code>, <db:code><db:link xlink:href="qscrollbar.html">QScrollBar</db:link></db:code> or QHeader) specify stretching in the respective direction only. Widgets
@@ -3744,7 +3744,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="statusTip-prop">
-         <db:title>statusTip : QString</db:title>
+         <db:title>statusTip : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's status tip.</db:para>
          <db:para>By default, this property contains an empty string.</db:para>
          <db:para>
@@ -3785,7 +3785,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="styleSheet-prop">
-         <db:title>styleSheet : QString</db:title>
+         <db:title>styleSheet : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's style sheet.</db:para>
          <db:para>The style sheet contains a textual description of customizations to the widget's style, as described in the <db:link xlink:href="stylesheet.html">Qt Style Sheets</db:link> document.</db:para>
          <db:para>Since Qt 4.5, Qt style sheets fully supports Mac OS X.</db:para>
@@ -3834,7 +3834,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="toolTip-prop">
-         <db:title>toolTip : QString</db:title>
+         <db:title>toolTip : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's tooltip.</db:para>
          <db:para>Note that by default tooltips are only shown for widgets that are children of the active window. You can change this behavior by setting the attribute <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_AlwaysShowToolTips</db:link></db:code> on the <db:emphasis>window</db:emphasis>, not on the widget with the tooltip.</db:para>
          <db:para>If you want to control a tooltip's behavior, you can intercept the <db:code><db:link xlink:href="qwidget.html#event">event</db:link>()</db:code> function and catch the <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::ToolTip</db:link></db:code> event (e.g., if you want to customize the area for which the tooltip should be shown).</db:para>
@@ -4022,7 +4022,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="whatsThis-prop">
-         <db:title>whatsThis : QString</db:title>
+         <db:title>whatsThis : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's What's This help text.</db:para>
          <db:para>By default, this property contains an empty string.</db:para>
          <db:para>
@@ -4105,7 +4105,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowFilePath-prop">
-         <db:title>windowFilePath : QString</db:title>
+         <db:title>windowFilePath : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the file path associated with a widget.</db:para>
          <db:para>This property only makes sense for windows. It associates a file path with a window. If you set the file path, but have not set the window title, Qt sets the window title to the file name of the specified path, obtained using <db:code><db:link xlink:href="qtcore/qfileinfo.html#fileName">QFileInfo::fileName</db:link>()</db:code>.</db:para>
          <db:para>If the window title is set at any point, then the window title takes precedence and will be shown instead of the file path string.</db:para>
@@ -4151,7 +4151,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowFlags-prop">
-         <db:title>windowFlags : Qt::WindowFlags</db:title>
+         <db:title>windowFlags : <db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowFlags</db:link></db:title>
          <db:para>Window flags are a combination of a type (e.g. <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::Dialog</db:link></db:code>) and zero or more hints to the window system (e.g. <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::FramelessWindowHint</db:link></db:code>).</db:para>
          <db:para>If the widget had type <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::Widget</db:link></db:code> or <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::SubWindow</db:link></db:code> and becomes a window (<db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::Window</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::Dialog</db:link></db:code>, etc.), it is put at position (0, 0) on the desktop. If the widget is a window and becomes a <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::Widget</db:link></db:code> or <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::SubWindow</db:link></db:code>, it is put at position (0, 0) relative to its parent widget.</db:para>
          <db:note>
@@ -4195,7 +4195,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowIcon-prop">
-         <db:title>windowIcon : QIcon</db:title>
+         <db:title>windowIcon : <db:link xlink:href="qtgui/qicon.html">QIcon</db:link></db:title>
          <db:para>This property holds the widget's icon.</db:para>
          <db:para>This property only makes sense for windows. If no icon has been set, windowIcon() returns the application icon (<db:code><db:link xlink:href="qapplication.html#windowIcon-prop">QApplication::windowIcon</db:link>()</db:code>).</db:para>
          <db:para>
@@ -4252,7 +4252,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowIconText-prop">
-         <db:title>windowIconText : QString</db:title>
+         <db:title>windowIconText : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the widget's icon text.</db:para>
          <db:para>This property only makes sense for windows. If no icon text has been set, this functions returns an empty string.</db:para>
          <db:para>
@@ -4309,7 +4309,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowModality-prop">
-         <db:title>windowModality : Qt::WindowModality</db:title>
+         <db:title>windowModality : <db:link xlink:href="qtcore/qt.html#WindowModality-enum">Qt::WindowModality</db:link></db:title>
          <db:para>This property holds which windows are blocked by the modal widget.</db:para>
          <db:para>This property only makes sense for windows. A modal widget prevents widgets in other windows from getting input. The value of this property controls which windows are blocked when the widget is visible. Changing this property while the window is visible has no effect; you must <db:code><db:link xlink:href="qwidget.html#hide">hide</db:link>()</db:code> the widget first, then <db:code><db:link xlink:href="qwidget.html#show">show</db:link>()</db:code> it again.</db:para>
          <db:para>By default, this property is <db:code><db:link xlink:href="qtcore/qt.html#WindowModality-enum">Qt::NonModal</db:link></db:code>.</db:para>
@@ -4449,7 +4449,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowTitle-prop">
-         <db:title>windowTitle : QString</db:title>
+         <db:title>windowTitle : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>This property holds the window title (caption).</db:para>
          <db:para>This property only makes sense for top-level widgets, such as windows and dialogs. If no caption has been set, the title is based of the <db:link xlink:href="qwidget.html#windowFilePath-prop">windowFilePath</db:link>. If neither of these is set, then the title is an empty string.</db:para>
          <db:para>If you use the <db:link xlink:href="qwidget.html#windowModified-prop">windowModified</db:link> mechanism, the window title must contain a "[*]" placeholder, which indicates where the '*' should appear. Normally, it should appear right after the file name (e.g., "document1.txt[*] - Text Editor"). If the <db:link xlink:href="qwidget.html#windowModified-prop">windowModified</db:link> property is <db:code>false</db:code> (the default), the placeholder is simply removed.</db:para>
@@ -4586,10 +4586,10 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QWidget">
-         <db:title>QWidget::​QWidget(QWidget * parent = 0, Qt::WindowFlags f = 0)</db:title>
+         <db:title>QWidget::​QWidget(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowFlags</db:link></db:title>
          <db:para>Constructs a widget which is a child of <db:emphasis>parent</db:emphasis>, with widget flags set to <db:emphasis>f</db:emphasis>.</db:para>
          <db:para>If <db:emphasis>parent</db:emphasis> is 0, the new widget becomes a window. If <db:emphasis>parent</db:emphasis> is another widget, this widget becomes a child window inside <db:emphasis>parent</db:emphasis>. The new widget is deleted when its <db:emphasis>parent</db:emphasis> is deleted.</db:para>
          <db:para>The widget flags argument, <db:emphasis>f</db:emphasis>, is normally 0, but it can be set to customize the frame of a window (i.e. <db:emphasis>parent</db:emphasis> must be 0). To customize the frame, use a value composed from the bitwise OR of any of the <db:link xlink:href="qtcore/qt.html#WindowType-enum">window flags</db:link>.</db:para>
@@ -4610,7 +4610,7 @@
          <db:para>All this widget's children are deleted first. The application exits if this widget is the main widget.</db:para>
       </db:section>
       <db:section xml:id="actionEvent">
-         <db:title>[virtual protected] void QWidget::​actionEvent(QActionEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​actionEvent(<db:link xlink:href="qtgui/qactionevent.html">QActionEvent</db:link></db:title>
          <db:para>This event handler is called with the given <db:emphasis>event</db:emphasis> whenever the widget's actions are changed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -4634,7 +4634,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="actions">
-         <db:title>QList &lt;QAction *&gt; QWidget::​actions() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qaction.html">QAction</db:link></db:title>
          <db:para>Returns the (possibly empty) list of this widget's actions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -4673,7 +4673,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="addAction">
-         <db:title>void QWidget::​addAction(QAction * action)</db:title>
+         <db:title>void QWidget::​addAction(<db:link xlink:href="qaction.html">QAction</db:link></db:title>
          <db:para>Appends the action <db:emphasis>action</db:emphasis> to this widget's list of actions.</db:para>
          <db:para>All QWidgets have a list of <db:code><db:link xlink:href="qaction.html">QAction</db:link></db:code>s, however they can be represented graphically in many different ways. The default use of the <db:code><db:link xlink:href="qaction.html">QAction</db:link></db:code> list (as returned by <db:code><db:link xlink:href="qwidget.html#actions">actions</db:link>()</db:code>) is to create a context <db:code><db:link xlink:href="qmenu.html">QMenu</db:link></db:code>.</db:para>
          <db:para>A <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> should only have one of each action and adding an action it already has will not cause the same action to be in the widget twice.</db:para>
@@ -4697,7 +4697,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="addActions">
-         <db:title>void QWidget::​addActions(QList &lt;QAction *&gt; actions)</db:title>
+         <db:title>void QWidget::​addActions(<db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qaction.html">QAction</db:link></db:title>
          <db:para>Appends the actions <db:emphasis>actions</db:emphasis> to this widget's list of actions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -4732,7 +4732,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="backgroundRole">
-         <db:title>QPalette::ColorRole QWidget::​backgroundRole() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qpalette.html#ColorRole-enum">QPalette::ColorRole</db:link></db:title>
          <db:para>Returns the background role of the widget.</db:para>
          <db:para>The background role defines the brush from the widget's <db:link xlink:href="qwidget.html#palette-prop">palette</db:link> that is used to render the background.</db:para>
          <db:para>If no explicit background role is set, the widget inherts its parent widget's background role.</db:para>
@@ -4749,22 +4749,22 @@
          </db:section>
       </db:section>
       <db:section xml:id="backingStore">
-         <db:title>QBackingStore * QWidget::​backingStore() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qbackingstore.html">QBackingStore</db:link></db:title>
          <db:para>Returns the <db:code><db:link xlink:href="qtgui/qbackingstore.html">QBackingStore</db:link></db:code> this widget will be drawn into.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
       </db:section>
       <db:section xml:id="changeEvent">
-         <db:title>[virtual protected] void QWidget::​changeEvent(QEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​changeEvent(<db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented to handle state changes.</db:para>
          <db:para>The state being changed in this event can be retrieved through the <db:emphasis>event</db:emphasis> supplied.</db:para>
          <db:para>Change events include: <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::ToolBarChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::ActivationChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::EnabledChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::FontChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::StyleChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::PaletteChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::WindowTitleChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::IconTextChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::ModifiedChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::MouseTrackingChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::ParentChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::WindowStateChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::LanguageChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::LocaleChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::LayoutDirectionChange</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::ReadOnlyChange</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="childAt">
-         <db:title>QWidget * QWidget::​childAt(int x, int y) const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the visible child widget at the position (<db:emphasis>x</db:emphasis>, <db:emphasis>y</db:emphasis>) in the widget's coordinate system. If there is no visible child widget at the specified position, the function returns 0.</db:para>
       </db:section>
       <db:section xml:id="childAt-2">
-         <db:title>QWidget * QWidget::​childAt(const QPoint &amp; p) const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns the visible child widget at point <db:emphasis>p</db:emphasis> in the widget's own coordinate system.</db:para>
       </db:section>
@@ -4817,7 +4817,7 @@
          <db:para>The <db:code><db:link xlink:href="qtgui/qguiapplication.html#lastWindowClosed">QApplication::lastWindowClosed</db:link>()</db:code> signal is emitted when the last visible primary window (i.e. window with no parent) with the <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_QuitOnClose</db:link></db:code> attribute set is closed. By default this attribute is set for all widgets except transient windows such as splash screens, tool windows, and popup menus.</db:para>
       </db:section>
       <db:section xml:id="closeEvent">
-         <db:title>[virtual protected] void QWidget::​closeEvent(QCloseEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​closeEvent(<db:link xlink:href="qtgui/qcloseevent.html">QCloseEvent</db:link></db:title>
          <db:para>This event handler is called with the given <db:emphasis>event</db:emphasis> when Qt receives a window close request for a top-level widget from the window system.</db:para>
          <db:para>By default, the event is accepted and the widget is closed. You can reimplement this function to change the way the widget responds to window close requests. For example, you can prevent the window from closing by calling <db:link xlink:href="qtcore/qevent.html#ignore">ignore()</db:link> on all events.</db:para>
          <db:para>Main window applications typically use reimplementations of this function to check whether the user's work has been saved and ask for permission before closing. For example, the <db:link xlink:href="qtwidgets-mainwindows-application-example.html">Application Example</db:link> uses a helper function to determine whether or not to close the window:</db:para>
@@ -4844,7 +4844,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="contentsMargins">
-         <db:title>QMargins QWidget::​contentsMargins() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qmargins.html">QMargins</db:link></db:title>
          <db:para>The contentsMargins function returns the widget's contents margins.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
@@ -4863,7 +4863,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="contentsRect">
-         <db:title>QRect QWidget::​contentsRect() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>Returns the area inside the widget's margins.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -4878,7 +4878,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="contextMenuEvent">
-         <db:title>[virtual protected] void QWidget::​contextMenuEvent(QContextMenuEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​contextMenuEvent(<db:link xlink:href="qtgui/qcontextmenuevent.html">QContextMenuEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive widget context menu events.</db:para>
          <db:para>The handler is called when the widget's <db:link xlink:href="qwidget.html#contextMenuPolicy-prop">contextMenuPolicy</db:link> is <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::DefaultContextMenu</db:link></db:code>.</db:para>
          <db:para>The default implementation ignores the context event. See the <db:code><db:link xlink:href="qtgui/qcontextmenuevent.html">QContextMenuEvent</db:link></db:code> documentation for more details.</db:para>
@@ -4905,7 +4905,7 @@
          <db:para>The <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> constructor calls create(0,true,true) to create a window for this widget.</db:para>
       </db:section>
       <db:section xml:id="createWindowContainer">
-         <db:title>[static] QWidget * QWidget::​createWindowContainer(QWindow * window, QWidget * parent = 0, Qt::WindowFlags flags = 0)</db:title>
+         <db:title>[static] <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowFlags</db:link></db:title>
          <db:para>Creates a <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> that makes it possible to embed <db:emphasis>window</db:emphasis> into a <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code>-based application.</db:para>
          <db:para>The window container is created as a child of <db:emphasis>parent</db:emphasis> and with window flags <db:emphasis>flags</db:emphasis>.</db:para>
          <db:para>Once the window has been embedded into the container, the container will control the window's geometry and visibility. Explicit calls to <db:code><db:link xlink:href="qtgui/qwindow.html#setGeometry">QWindow::setGeometry</db:link>()</db:code>, <db:code><db:link xlink:href="qtgui/qwindow.html#show">QWindow::show</db:link>()</db:code> or <db:code><db:link xlink:href="qtgui/qwindow.html#hide">QWindow::hide</db:link>()</db:code> on an embedded window is not recommended.</db:para>
@@ -4928,7 +4928,7 @@
          </db:itemizedlist>
       </db:section>
       <db:section xml:id="customContextMenuRequested">
-         <db:title>[signal] void QWidget::​customContextMenuRequested(const QPoint &amp; pos)</db:title>
+         <db:title>[signal] void QWidget::​customContextMenuRequested(const <db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>This signal is emitted when the widget's <db:link xlink:href="qwidget.html#contextMenuPolicy-prop">contextMenuPolicy</db:link> is <db:code><db:link xlink:href="qtcore/qt.html#ContextMenuPolicy-enum">Qt::CustomContextMenu</db:link></db:code>, and the user has requested a context menu on the widget. The position <db:emphasis>pos</db:emphasis> is the position of the context menu event that the widget receives. Normally this is in widget coordinates. The exception to this rule is <db:code><db:link xlink:href="qabstractscrollarea.html">QAbstractScrollArea</db:link></db:code> and its subclasses that map the context menu event to coordinates of the <db:link xlink:href="qabstractscrollarea.html#viewport">viewport()</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -4952,7 +4952,7 @@
          <db:para>This function is usually called from the <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> destructor.</db:para>
       </db:section>
       <db:section xml:id="dragEnterEvent">
-         <db:title>[virtual protected] void QWidget::​dragEnterEvent(QDragEnterEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​dragEnterEvent(<db:link xlink:href="qtgui/qdragenterevent.html">QDragEnterEvent</db:link></db:title>
          <db:para>This event handler is called when a drag is in progress and the mouse enters this widget. The event is passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>If the event is ignored, the widget won't receive any <db:link xlink:href="qwidget.html#dragMoveEvent">drag move events</db:link>.</db:para>
          <db:para>See the <db:link xlink:href="qtgui/dnd.html">Drag-and-drop documentation</db:link> for an overview of how to provide drag-and-drop in your application.</db:para>
@@ -4969,7 +4969,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="dragLeaveEvent">
-         <db:title>[virtual protected] void QWidget::​dragLeaveEvent(QDragLeaveEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​dragLeaveEvent(<db:link xlink:href="qtgui/qdragleaveevent.html">QDragLeaveEvent</db:link></db:title>
          <db:para>This event handler is called when a drag is in progress and the mouse leaves this widget. The event is passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>See the <db:link xlink:href="qtgui/dnd.html">Drag-and-drop documentation</db:link> for an overview of how to provide drag-and-drop in your application.</db:para>
          <db:section>
@@ -4985,7 +4985,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="dragMoveEvent">
-         <db:title>[virtual protected] void QWidget::​dragMoveEvent(QDragMoveEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​dragMoveEvent(<db:link xlink:href="qtgui/qdragmoveevent.html">QDragMoveEvent</db:link></db:title>
          <db:para>This event handler is called if a drag is in progress, and when any of the following conditions occur: the cursor enters this widget, the cursor moves within this widget, or a modifier key is pressed on the keyboard while this widget has the focus. The event is passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>See the <db:link xlink:href="qtgui/dnd.html">Drag-and-drop documentation</db:link> for an overview of how to provide drag-and-drop in your application.</db:para>
          <db:section>
@@ -5001,7 +5001,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="dropEvent">
-         <db:title>[virtual protected] void QWidget::​dropEvent(QDropEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​dropEvent(<db:link xlink:href="qtgui/qdropevent.html">QDropEvent</db:link></db:title>
          <db:para>This event handler is called when the drag is dropped on this widget. The event is passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>See the <db:link xlink:href="qtgui/dnd.html">Drag-and-drop documentation</db:link> for an overview of how to provide drag-and-drop in your application.</db:para>
          <db:section>
@@ -5053,7 +5053,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="enterEvent">
-         <db:title>[virtual protected] void QWidget::​enterEvent(QEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​enterEvent(<db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive widget enter events which are passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>An event is sent to the widget when the mouse cursor enters the widget.</db:para>
          <db:section>
@@ -5072,7 +5072,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="event">
-         <db:title>[virtual protected] bool QWidget::​event(QEvent * event)</db:title>
+         <db:title>[virtual protected] bool QWidget::​event(<db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
          <db:para>Reimplemented from <db:code><db:link xlink:href="qtcore/qobject.html#event">QObject::event</db:link>()</db:code>.</db:para>
          <db:para>This is the main event handler; it handles event <db:emphasis>event</db:emphasis>. You can reimplement this function in a subclass, but we recommend using one of the specialized event handlers instead.</db:para>
          <db:para>Key press and release events are treated differently from other events. event() checks for Tab and Shift+Tab and tries to move the focus appropriately. If there is no widget to move the focus to (or the key press is not Tab or Shift+Tab), event() calls <db:code><db:link xlink:href="qwidget.html#keyPressEvent">keyPressEvent</db:link>()</db:code>.</db:para>
@@ -5133,12 +5133,12 @@
          </db:section>
       </db:section>
       <db:section xml:id="find">
-         <db:title>[static] QWidget * QWidget::​find(WId id)</db:title>
+         <db:title>[static] <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns a pointer to the widget with window identifer/handle <db:emphasis>id</db:emphasis>.</db:para>
          <db:para>The window identifier type depends on the underlying window system, see <db:code>qwindowdefs.h</db:code> for the actual definition. If there is no widget with this identifier, 0 is returned.</db:para>
       </db:section>
       <db:section xml:id="focusInEvent">
-         <db:title>[virtual protected] void QWidget::​focusInEvent(QFocusEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​focusInEvent(<db:link xlink:href="qtgui/qfocusevent.html">QFocusEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive keyboard focus events (focus received) for the widget. The event is passed in the <db:emphasis>event</db:emphasis> parameter</db:para>
          <db:para>A widget normally must <db:code><db:link xlink:href="qwidget.html#focusPolicy-prop">setFocusPolicy</db:link>()</db:code> to something other than <db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::NoFocus</db:link></db:code> in order to receive focus events. (Note that the application programmer can call <db:code><db:link xlink:href="qwidget.html#setFocus">setFocus</db:link>()</db:code> on any widget, even those that do not normally accept focus.)</db:para>
          <db:para>The default implementation updates the widget (except for windows that do not specify a <db:code><db:link xlink:href="qwidget.html#focusPolicy-prop">focusPolicy</db:link>()</db:code>).</db:para>
@@ -5197,7 +5197,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="focusOutEvent">
-         <db:title>[virtual protected] void QWidget::​focusOutEvent(QFocusEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​focusOutEvent(<db:link xlink:href="qtgui/qfocusevent.html">QFocusEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive keyboard focus events (focus lost) for the widget. The events is passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>A widget normally must <db:code><db:link xlink:href="qwidget.html#focusPolicy-prop">setFocusPolicy</db:link>()</db:code> to something other than <db:code><db:link xlink:href="qtcore/qt.html#FocusPolicy-enum">Qt::NoFocus</db:link></db:code> in order to receive focus events. (Note that the application programmer can call <db:code><db:link xlink:href="qwidget.html#setFocus">setFocus</db:link>()</db:code> on any widget, even those that do not normally accept focus.)</db:para>
          <db:para>The default implementation updates the widget (except for windows that do not specify a <db:code><db:link xlink:href="qwidget.html#focusPolicy-prop">focusPolicy</db:link>()</db:code>).</db:para>
@@ -5238,7 +5238,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="focusProxy">
-         <db:title>QWidget * QWidget::​focusProxy() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the focus proxy, or 0 if there is no focus proxy.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -5250,12 +5250,12 @@
          </db:section>
       </db:section>
       <db:section xml:id="focusWidget">
-         <db:title>QWidget * QWidget::​focusWidget() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the last child of this widget that <db:link xlink:href="qwidget.html#setFocus">setFocus</db:link> had been called on. For top level widgets this is the widget that will get focus in case this window gets activated</db:para>
          <db:para>This is not the same as <db:code><db:link xlink:href="qapplication.html#focusWidget">QApplication::focusWidget</db:link>()</db:code>, which returns the focus widget in the currently active window.</db:para>
       </db:section>
       <db:section xml:id="fontInfo">
-         <db:title>QFontInfo QWidget::​fontInfo() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qfontinfo.html">QFontInfo</db:link></db:title>
          <db:para>Returns the font info for the widget's current font. Equivalent to QFontInto(widget-&gt;<db:code><db:link xlink:href="qwidget.html#font-prop">font</db:link>()</db:code>).</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -5273,7 +5273,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="fontMetrics">
-         <db:title>QFontMetrics QWidget::​fontMetrics() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qfontmetrics.html">QFontMetrics</db:link></db:title>
          <db:para>Returns the font metrics for the widget's current font. Equivalent to <db:code><db:link xlink:href="qtgui/qfontmetrics.html">QFontMetrics</db:link></db:code>
             <db:code><db:link xlink:href="qwidget.html#font-prop">font</db:link>()</db:code>).</db:para>
          <db:section>
@@ -5292,7 +5292,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="foregroundRole">
-         <db:title>QPalette::ColorRole QWidget::​foregroundRole() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qpalette.html#ColorRole-enum">QPalette::ColorRole</db:link></db:title>
          <db:para>Returns the foreground role.</db:para>
          <db:para>The foreground role defines the color from the widget's <db:link xlink:href="qwidget.html#palette-prop">palette</db:link> that is used to draw the foreground.</db:para>
          <db:para>If no explicit foreground role is set, the function returns a role that contrasts with the background role.</db:para>
@@ -5324,7 +5324,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="grab">
-         <db:title>QPixmap QWidget::​grab(const QRect &amp; rectangle = QRect( QPoint( 0, 0 ), QSize( -1, -1 ) ))</db:title>
+         <db:title><db:link xlink:href="qtgui/qpixmap.html">QPixmap</db:link><db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>Renders the widget into a pixmap restricted by the given <db:emphasis>rectangle</db:emphasis>. If the widget has any children, then they are also painted in the appropriate positions.</db:para>
          <db:para>If a rectangle with an invalid size is specified (the default), the entire widget is painted.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
@@ -5341,7 +5341,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="grabGesture">
-         <db:title>void QWidget::​grabGesture(Qt::GestureType gesture, Qt::GestureFlags flags = Qt::GestureFlags())</db:title>
+         <db:title>void QWidget::​grabGesture(<db:link xlink:href="qtcore/qt.html#GestureType-enum">Qt::GestureType</db:link><db:link xlink:href="qtcore/qt.html#GestureFlag-enum">Qt::GestureFlags</db:link></db:title>
          <db:para>Subscribes the widget to a given <db:emphasis>gesture</db:emphasis> with specific <db:emphasis>flags</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
@@ -5410,7 +5410,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="grabMouse-2">
-         <db:title>void QWidget::​grabMouse(const QCursor &amp; cursor)</db:title>
+         <db:title>void QWidget::​grabMouse(const <db:link xlink:href="qtgui/qcursor.html">QCursor</db:link></db:title>
          <db:para>This function overloads <db:code><db:link xlink:href="qwidget.html#grabMouse">grabMouse</db:link>()</db:code>.</db:para>
          <db:para>Grabs the mouse input and changes the cursor shape.</db:para>
          <db:para>The cursor will assume shape <db:emphasis>cursor</db:emphasis> (for as long as the mouse focus is grabbed) and this widget will be the only one to receive mouse events until <db:code><db:link xlink:href="qwidget.html#releaseMouse">releaseMouse</db:link>()</db:code> is called().</db:para>
@@ -5439,7 +5439,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="grabShortcut">
-         <db:title>int QWidget::​grabShortcut(const QKeySequence &amp; key, Qt::ShortcutContext context = Qt::WindowShortcut)</db:title>
+         <db:title>int QWidget::​grabShortcut(const <db:link xlink:href="qtgui/qkeysequence.html">QKeySequence</db:link><db:link xlink:href="qtcore/qt.html#ShortcutContext-enum">Qt::ShortcutContext</db:link></db:title>
          <db:para>Adds a shortcut to Qt's shortcut system that watches for the given <db:emphasis>key</db:emphasis> sequence in the given <db:emphasis>context</db:emphasis>. If the <db:emphasis>context</db:emphasis> is <db:code><db:link xlink:href="qtcore/qt.html#ShortcutContext-enum">Qt::ApplicationShortcut</db:link></db:code>, the shortcut applies to the application as a whole. Otherwise, it is either local to this widget, <db:code><db:link xlink:href="qtcore/qt.html#ShortcutContext-enum">Qt::WidgetShortcut</db:link></db:code>, or to the window itself, <db:code><db:link xlink:href="qtcore/qt.html#ShortcutContext-enum">Qt::WindowShortcut</db:link></db:code>.</db:para>
          <db:para>If the same <db:emphasis>key</db:emphasis> sequence has been grabbed by several widgets, when the <db:emphasis>key</db:emphasis> sequence occurs a <db:code><db:link xlink:href="qtcore/qevent.html#Type-enum">QEvent::Shortcut</db:link></db:code> event is sent to all the widgets to which it applies in a non-deterministic order, but with the ``ambiguous'' flag set to true.</db:para>
          <db:warning>
@@ -5458,7 +5458,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="graphicsEffect">
-         <db:title>QGraphicsEffect * QWidget::​graphicsEffect() const</db:title>
+         <db:title><db:link xlink:href="qgraphicseffect.html">QGraphicsEffect</db:link></db:title>
          <db:para>The graphicsEffect function returns a pointer to the widget's graphics effect.</db:para>
          <db:para>If the widget has no graphics effect, 0 is returned.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
@@ -5472,7 +5472,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="graphicsProxyWidget">
-         <db:title>QGraphicsProxyWidget * QWidget::​graphicsProxyWidget() const</db:title>
+         <db:title><db:link xlink:href="qgraphicsproxywidget.html">QGraphicsProxyWidget</db:link></db:title>
          <db:para>Returns the proxy widget for the corresponding embedded widget in a graphics view; otherwise returns 0.</db:para>
          <db:para>This function was introduced in Qt 4.5.</db:para>
          <db:section>
@@ -5544,7 +5544,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="hideEvent">
-         <db:title>[virtual protected] void QWidget::​hideEvent(QHideEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​hideEvent(<db:link xlink:href="qtgui/qhideevent.html">QHideEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive widget hide events. The event is passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>Hide events are sent to widgets immediately after they have been hidden.</db:para>
          <db:para>Note: A widget receives spontaneous show and hide events when its mapping status is changed by the window system, e.g. a spontaneous hide event when the user minimizes the window, and a spontaneous show event when the window is restored again. After receiving a spontaneous hide event, a widget is still considered visible in the sense of <db:code><db:link xlink:href="qwidget.html#visible-prop">isVisible</db:link>()</db:code>.</db:para>
@@ -5564,11 +5564,11 @@
          </db:section>
       </db:section>
       <db:section xml:id="initPainter">
-         <db:title>[virtual protected] void QWidget::​initPainter(QPainter * painter) const</db:title>
+         <db:title>[virtual protected] void QWidget::​initPainter(<db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:title>
          <db:para>Initializes the <db:emphasis>painter</db:emphasis> pen, background and font to the same as the given widget's. This function is called automatically when the painter is opened on a <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="inputMethodEvent">
-         <db:title>[virtual protected] void QWidget::​inputMethodEvent(QInputMethodEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​inputMethodEvent(<db:link xlink:href="qtgui/qinputmethodevent.html">QInputMethodEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive Input Method composition events. This handler is called when the state of the input method changes.</db:para>
          <db:para>Note that when creating custom text editing widgets, the <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_InputMethodEnabled</db:link></db:code> window attribute must be set explicitly (using the <db:code><db:link xlink:href="qwidget.html#setAttribute">setAttribute</db:link>()</db:code> function) in order to receive input method events.</db:para>
          <db:para>The default implementation calls event-&gt;ignore(), which rejects the Input Method event. See the <db:code><db:link xlink:href="qtgui/qinputmethodevent.html">QInputMethodEvent</db:link></db:code> documentation for more details.</db:para>
@@ -5585,7 +5585,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="inputMethodQuery">
-         <db:title>[virtual] QVariant QWidget::​inputMethodQuery(Qt::InputMethodQuery query) const</db:title>
+         <db:title>[virtual] <db:link xlink:href="qtcore/qvariant.html">QVariant</db:link><db:link xlink:href="qtcore/qt.html#InputMethodQuery-enum">Qt::InputMethodQuery</db:link></db:title>
          <db:para>This method is only relevant for input widgets. It is used by the input method to query a set of properties of the widget to be able to support complex input method operations as support for surrounding text and reconversions.</db:para>
          <db:para>
             <db:emphasis>query</db:emphasis> specifies which property is queried.</db:para>
@@ -5608,7 +5608,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="insertAction">
-         <db:title>void QWidget::​insertAction(QAction * before, QAction * action)</db:title>
+         <db:title>void QWidget::​insertAction(<db:link xlink:href="qaction.html">QAction</db:link><db:link xlink:href="qaction.html">QAction</db:link></db:title>
          <db:para>Inserts the action <db:emphasis>action</db:emphasis> to this widget's list of actions, before the action <db:emphasis>before</db:emphasis>. It appends the action if <db:emphasis>before</db:emphasis> is 0 or <db:emphasis>before</db:emphasis> is not a valid action for this widget.</db:para>
          <db:para>A <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> should only have one of each action.</db:para>
          <db:section>
@@ -5633,7 +5633,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="insertActions">
-         <db:title>void QWidget::​insertActions(QAction * before, QList &lt;QAction *&gt; actions)</db:title>
+         <db:title>void QWidget::​insertActions(<db:link xlink:href="qaction.html">QAction</db:link><db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qaction.html">QAction</db:link></db:title>
          <db:para>Inserts the actions <db:emphasis>actions</db:emphasis> to this widget's list of actions, before the action <db:emphasis>before</db:emphasis>. It appends the action if <db:emphasis>before</db:emphasis> is 0 or <db:emphasis>before</db:emphasis> is not a valid action for this widget.</db:para>
          <db:para>A <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> can have at most one of each action.</db:para>
          <db:section>
@@ -5655,11 +5655,11 @@
          </db:section>
       </db:section>
       <db:section xml:id="isAncestorOf">
-         <db:title>bool QWidget::​isAncestorOf(const QWidget * child) const</db:title>
+         <db:title>bool QWidget::​isAncestorOf(const <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this widget is a parent, (or grandparent and so on to any level), of the given <db:emphasis>child</db:emphasis>, and both widgets are within the same window; otherwise returns <db:code>false</db:code>.</db:para>
       </db:section>
       <db:section xml:id="isEnabledTo">
-         <db:title>bool QWidget::​isEnabledTo(const QWidget * ancestor) const</db:title>
+         <db:title>bool QWidget::​isEnabledTo(const <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this widget would become enabled if <db:emphasis>ancestor</db:emphasis> is enabled; otherwise returns <db:code>false</db:code>.</db:para>
          <db:para>This is the case if neither the widget itself nor every parent up to but excluding <db:emphasis>ancestor</db:emphasis> has been explicitly disabled.</db:para>
          <db:para>isEnabledTo(0) returns false if this widget or any if its ancestors was explicitly disabled.</db:para>
@@ -5698,7 +5698,7 @@
          </db:itemizedlist>
       </db:section>
       <db:section xml:id="isVisibleTo">
-         <db:title>bool QWidget::​isVisibleTo(const QWidget * ancestor) const</db:title>
+         <db:title>bool QWidget::​isVisibleTo(const <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if this widget would become visible if <db:emphasis>ancestor</db:emphasis> is shown; otherwise returns <db:code>false</db:code>.</db:para>
          <db:para>The true case occurs if neither the widget itself nor any parent up to but excluding <db:emphasis>ancestor</db:emphasis> has been explicitly hidden.</db:para>
          <db:para>This function will still return true if the widget is obscured by other windows on the screen, but could be physically visible if it or they were to be moved.</db:para>
@@ -5741,7 +5741,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="keyPressEvent">
-         <db:title>[virtual protected] void QWidget::​keyPressEvent(QKeyEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​keyPressEvent(<db:link xlink:href="qtgui/qkeyevent.html">QKeyEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive key press events for the widget.</db:para>
          <db:para>A widget must call <db:code><db:link xlink:href="qwidget.html#focusPolicy-prop">setFocusPolicy</db:link>()</db:code> to accept focus initially and have focus in order to receive a key press event.</db:para>
          <db:para>If you reimplement this handler, it is very important that you call the base class implementation if you do not act upon the key.</db:para>
@@ -5775,7 +5775,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="keyReleaseEvent">
-         <db:title>[virtual protected] void QWidget::​keyReleaseEvent(QKeyEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​keyReleaseEvent(<db:link xlink:href="qtgui/qkeyevent.html">QKeyEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive key release events for the widget.</db:para>
          <db:para>A widget must <db:link xlink:href="qwidget.html#focusPolicy-prop">accept focus</db:link> initially and <db:link xlink:href="qwidget.html#focus-prop">have focus</db:link> in order to receive a key release event.</db:para>
          <db:para>If you reimplement this handler, it is very important that you call the base class implementation if you do not act upon the key.</db:para>
@@ -5806,7 +5806,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="keyboardGrabber">
-         <db:title>[static] QWidget * QWidget::​keyboardGrabber()</db:title>
+         <db:title>[static] <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the widget that is currently grabbing the keyboard input.</db:para>
          <db:para>If no widget in this application is currently grabbing the keyboard, 0 is returned.</db:para>
          <db:section>
@@ -5822,7 +5822,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="layout">
-         <db:title>QLayout * QWidget::​layout() const</db:title>
+         <db:title><db:link xlink:href="qlayout.html">QLayout</db:link></db:title>
          <db:para>Returns the layout manager that is installed on this widget, or 0 if no layout manager is installed.</db:para>
          <db:para>The layout manager sets the geometry of the widget's children that have been added to the layout.</db:para>
          <db:section>
@@ -5841,7 +5841,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="leaveEvent">
-         <db:title>[virtual protected] void QWidget::​leaveEvent(QEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​leaveEvent(<db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive widget leave events which are passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>A leave event is sent to the widget when the mouse cursor leaves the widget.</db:para>
          <db:section>
@@ -5876,15 +5876,15 @@
          </db:section>
       </db:section>
       <db:section xml:id="macCGHandle">
-         <db:title>Qt::HANDLE QWidget::​macCGHandle() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qt.html#HANDLE-typedef">Qt::HANDLE</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="macQDHandle">
-         <db:title>Qt::HANDLE QWidget::​macQDHandle() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qt.html#HANDLE-typedef">Qt::HANDLE</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="mapFrom">
-         <db:title>QPoint QWidget::​mapFrom(const QWidget * parent, const QPoint &amp; pos) const</db:title>
+         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>Translates the widget coordinate <db:emphasis>pos</db:emphasis> from the coordinate system of <db:emphasis>parent</db:emphasis> to this widget's coordinate system. The <db:emphasis>parent</db:emphasis> must not be 0 and must be a parent of the calling widget.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -5905,7 +5905,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mapFromGlobal">
-         <db:title>QPoint QWidget::​mapFromGlobal(const QPoint &amp; pos) const</db:title>
+         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>Translates the global screen coordinate <db:emphasis>pos</db:emphasis> to widget coordinates.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -5923,7 +5923,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mapFromParent">
-         <db:title>QPoint QWidget::​mapFromParent(const QPoint &amp; pos) const</db:title>
+         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>Translates the parent widget coordinate <db:emphasis>pos</db:emphasis> to widget coordinates.</db:para>
          <db:para>Same as <db:code><db:link xlink:href="qwidget.html#mapFromGlobal">mapFromGlobal</db:link>()</db:code> if the widget has no parent.</db:para>
          <db:section>
@@ -5945,7 +5945,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mapTo">
-         <db:title>QPoint QWidget::​mapTo(const QWidget * parent, const QPoint &amp; pos) const</db:title>
+         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>Translates the widget coordinate <db:emphasis>pos</db:emphasis> to the coordinate system of <db:emphasis>parent</db:emphasis>. The <db:emphasis>parent</db:emphasis> must not be 0 and must be a parent of the calling widget.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -5966,7 +5966,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mapToGlobal">
-         <db:title>QPoint QWidget::​mapToGlobal(const QPoint &amp; pos) const</db:title>
+         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>Translates the widget coordinate <db:emphasis>pos</db:emphasis> to global screen coordinates. For example, <db:code>mapToGlobal(QPoint(0,0))</db:code> would give the global coordinates of the top-left pixel of the widget.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -5984,7 +5984,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mapToParent">
-         <db:title>QPoint QWidget::​mapToParent(const QPoint &amp; pos) const</db:title>
+         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para>Translates the widget coordinate <db:emphasis>pos</db:emphasis> to a coordinate in the parent widget.</db:para>
          <db:para>Same as <db:code><db:link xlink:href="qwidget.html#mapToGlobal">mapToGlobal</db:link>()</db:code> if the widget has no parent.</db:para>
          <db:section>
@@ -6006,7 +6006,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mask">
-         <db:title>QRegion QWidget::​mask() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qregion.html">QRegion</db:link></db:title>
          <db:para>Returns the mask currently set on a widget. If no mask is set the return value will be an empty region.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -6027,14 +6027,14 @@
          </db:section>
       </db:section>
       <db:section xml:id="metric">
-         <db:title>[virtual protected] int QWidget::​metric(PaintDeviceMetric m) const</db:title>
+         <db:title>[virtual protected] int QWidget::​metric(<db:link xlink:href="qtgui/qpaintdevice.html#PaintDeviceMetric-enum">PaintDeviceMetric</db:link></db:title>
          <db:para>Reimplemented from <db:code><db:link xlink:href="qtgui/qpaintdevice.html#metric">QPaintDevice::metric</db:link>()</db:code>.</db:para>
          <db:para>Internal implementation of the virtual <db:code><db:link xlink:href="qtgui/qpaintdevice.html#metric">QPaintDevice::metric</db:link>()</db:code> function.</db:para>
          <db:para>
             <db:emphasis>m</db:emphasis> is the metric to get.</db:para>
       </db:section>
       <db:section xml:id="mouseDoubleClickEvent">
-         <db:title>[virtual protected] void QWidget::​mouseDoubleClickEvent(QMouseEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​mouseDoubleClickEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive mouse double click events for the widget.</db:para>
          <db:para>The default implementation calls <db:code><db:link xlink:href="qwidget.html#mousePressEvent">mousePressEvent</db:link>()</db:code>.</db:para>
          <db:note>
@@ -6062,7 +6062,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mouseGrabber">
-         <db:title>[static] QWidget * QWidget::​mouseGrabber()</db:title>
+         <db:title>[static] <db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the widget that is currently grabbing the mouse input.</db:para>
          <db:para>If no widget in this application is currently grabbing the mouse, 0 is returned.</db:para>
          <db:section>
@@ -6078,7 +6078,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mouseMoveEvent">
-         <db:title>[virtual protected] void QWidget::​mouseMoveEvent(QMouseEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​mouseMoveEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive mouse move events for the widget.</db:para>
          <db:para>If mouse tracking is switched off, mouse move events only occur if a mouse button is pressed while the mouse is being moved. If mouse tracking is switched on, mouse move events occur even if no mouse button is pressed.</db:para>
          <db:para>
@@ -6112,7 +6112,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mousePressEvent">
-         <db:title>[virtual protected] void QWidget::​mousePressEvent(QMouseEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​mousePressEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive mouse press events for the widget.</db:para>
          <db:para>If you create new widgets in the mousePressEvent() the <db:code><db:link xlink:href="qwidget.html#mouseReleaseEvent">mouseReleaseEvent</db:link>()</db:code> may not end up where you expect, depending on the underlying window system (or X11 window manager), the widgets' location and maybe more.</db:para>
          <db:para>The default implementation implements the closing of popup widgets when you click outside the window. For other widget types it does nothing.</db:para>
@@ -6141,7 +6141,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="mouseReleaseEvent">
-         <db:title>[virtual protected] void QWidget::​mouseReleaseEvent(QMouseEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​mouseReleaseEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive mouse release events for the widget.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -6168,7 +6168,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="moveEvent">
-         <db:title>[virtual protected] void QWidget::​moveEvent(QMoveEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​moveEvent(<db:link xlink:href="qtgui/qmoveevent.html">QMoveEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive widget move events which are passed in the <db:emphasis>event</db:emphasis> parameter. When the widget receives this event, it is already at the new position.</db:para>
          <db:para>The old position is accessible through <db:code><db:link xlink:href="qtgui/qmoveevent.html#oldPos">QMoveEvent::oldPos</db:link>()</db:code>.</db:para>
          <db:section>
@@ -6190,7 +6190,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="nativeEvent">
-         <db:title>[virtual protected] bool QWidget::​nativeEvent(const QByteArray &amp; eventType, void * message, long * result)</db:title>
+         <db:title>[virtual protected] bool QWidget::​nativeEvent(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>This special event handler can be reimplemented in a subclass to receive native platform events identified by <db:emphasis>eventType</db:emphasis> which are passed in the <db:emphasis>message</db:emphasis> parameter.</db:para>
          <db:para>In your reimplementation of this function, if you want to stop the event being handled by Qt, return true and set <db:emphasis>result</db:emphasis>. If you return false, this native event is passed back to Qt, which translates the event into a Qt event and sends it to the widget.</db:para>
          <db:note>
@@ -6235,7 +6235,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="nativeParentWidget">
-         <db:title>QWidget * QWidget::​nativeParentWidget() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the native parent for this widget, i.e. the next ancestor widget that has a system identifier, or 0 if it does not have any native parent.</db:para>
          <db:para>This function was introduced in Qt 4.4.</db:para>
          <db:section>
@@ -6248,7 +6248,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="nextInFocusChain">
-         <db:title>QWidget * QWidget::​nextInFocusChain() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the next widget in this widget's focus chain.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -6260,7 +6260,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="overrideWindowFlags">
-         <db:title>void QWidget::​overrideWindowFlags(Qt::WindowFlags flags)</db:title>
+         <db:title>void QWidget::​overrideWindowFlags(<db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowFlags</db:link></db:title>
          <db:para>Sets the window flags for the widget to <db:emphasis>flags</db:emphasis>, <db:emphasis>without</db:emphasis> telling the window system.</db:para>
          <db:warning>
             <db:para> Do not call this function unless you really know what you're doing.</db:para>
@@ -6275,13 +6275,13 @@
          </db:section>
       </db:section>
       <db:section xml:id="paintEngine">
-         <db:title>[virtual] QPaintEngine * QWidget::​paintEngine() const</db:title>
+         <db:title>[virtual] <db:link xlink:href="qtgui/qpaintengine.html">QPaintEngine</db:link></db:title>
          <db:para>Reimplemented from <db:code><db:link xlink:href="qtgui/qpaintdevice.html#paintEngine">QPaintDevice::paintEngine</db:link>()</db:code>.</db:para>
          <db:para>Returns the widget's paint engine.</db:para>
          <db:para>Note that this function should not be called explicitly by the user, since it's meant for reimplementation purposes only. The function is called by Qt internally, and the default implementation may not always return a valid pointer.</db:para>
       </db:section>
       <db:section xml:id="paintEvent">
-         <db:title>[virtual protected] void QWidget::​paintEvent(QPaintEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​paintEvent(<db:link xlink:href="qtgui/qpaintevent.html">QPaintEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive paint events passed in <db:emphasis>event</db:emphasis>.</db:para>
          <db:para>A paint event is a request to repaint all or part of a widget. It can happen for one of the following reasons:</db:para>
          <db:itemizedlist>
@@ -6339,11 +6339,11 @@
          </db:section>
       </db:section>
       <db:section xml:id="parentWidget">
-         <db:title>QWidget * QWidget::​parentWidget() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the parent of this widget, or 0 if it does not have any parent widget.</db:para>
       </db:section>
       <db:section xml:id="previousInFocusChain">
-         <db:title>QWidget * QWidget::​previousInFocusChain() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>The previousInFocusChain function returns the previous widget in this widget's focus chain.</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
@@ -6375,7 +6375,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="redirected">
-         <db:title>[virtual protected] QPaintDevice * QWidget::​redirected(QPoint * offset) const</db:title>
+         <db:title>[virtual protected] <db:link xlink:href="qtgui/qpaintdevice.html#QPaintDevice">QPaintDevice</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="releaseKeyboard">
@@ -6433,7 +6433,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="removeAction">
-         <db:title>void QWidget::​removeAction(QAction * action)</db:title>
+         <db:title>void QWidget::​removeAction(<db:link xlink:href="qaction.html">QAction</db:link></db:title>
          <db:para>Removes the action <db:emphasis>action</db:emphasis> from this widget's list of actions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -6451,7 +6451,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="render">
-         <db:title>void QWidget::​render(QPaintDevice * target, const QPoint &amp; targetOffset = QPoint(), const QRegion &amp; sourceRegion = QRegion(), RenderFlags renderFlags = RenderFlags( DrawWindowBackground | DrawChildren ))</db:title>
+         <db:title>void QWidget::​render(<db:link xlink:href="qtgui/qpaintdevice.html#QPaintDevice">QPaintDevice</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qtgui/qregion.html">QRegion</db:link><db:link xlink:href="qwidget.html#RenderFlag-enum">RenderFlags</db:link></db:title>
          <db:para>Renders the <db:emphasis>sourceRegion</db:emphasis> of this widget into the <db:emphasis>target</db:emphasis> using <db:emphasis>renderFlags</db:emphasis> to determine how to render. Rendering starts at <db:emphasis>targetOffset</db:emphasis> in the <db:emphasis>target</db:emphasis>. For example:</db:para>
          <db:programlisting>QPixmap pixmap(widget-&gt;size()); widget-&gt;render(&amp;pixmap);</db:programlisting>
          <db:para>If <db:emphasis>sourceRegion</db:emphasis> is a null region, this function will use <db:code><db:link xlink:href="qwidget.html#rect-prop">QWidget::rect</db:link>()</db:code> as the region, i.e. the entire widget.</db:para>
@@ -6463,7 +6463,7 @@
          <db:para>This function was introduced in Qt 4.3.</db:para>
       </db:section>
       <db:section xml:id="render-2">
-         <db:title>void QWidget::​render(QPainter * painter, const QPoint &amp; targetOffset = QPoint(), const QRegion &amp; sourceRegion = QRegion(), RenderFlags renderFlags = RenderFlags( DrawWindowBackground | DrawChildren ))</db:title>
+         <db:title>void QWidget::​render(<db:link xlink:href="qtgui/qpainter.html">QPainter</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link><db:link xlink:href="qtgui/qregion.html">QRegion</db:link><db:link xlink:href="qwidget.html#RenderFlag-enum">RenderFlags</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Renders the widget into the <db:emphasis>painter</db:emphasis>'s <db:code><db:link xlink:href="qtgui/qpainter.html#device">QPainter::device</db:link>()</db:code>.</db:para>
          <db:para>Transformations and settings applied to the <db:emphasis>painter</db:emphasis> will be used when rendering.</db:para>
@@ -6508,17 +6508,17 @@
          <db:para>If <db:emphasis>w</db:emphasis> is negative, it is replaced with <db:code>width() - x</db:code>, and if <db:emphasis>h</db:emphasis> is negative, it is replaced width <db:code>height() - y</db:code>.</db:para>
       </db:section>
       <db:section xml:id="repaint-3">
-         <db:title>void QWidget::​repaint(const QRect &amp; rect)</db:title>
+         <db:title>void QWidget::​repaint(const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This version repaints a rectangle <db:emphasis>rect</db:emphasis> inside the widget.</db:para>
       </db:section>
       <db:section xml:id="repaint-4">
-         <db:title>void QWidget::​repaint(const QRegion &amp; rgn)</db:title>
+         <db:title>void QWidget::​repaint(const <db:link xlink:href="qtgui/qregion.html">QRegion</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This version repaints a region <db:emphasis>rgn</db:emphasis> inside the widget.</db:para>
       </db:section>
       <db:section xml:id="resizeEvent">
-         <db:title>[virtual protected] void QWidget::​resizeEvent(QResizeEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​resizeEvent(<db:link xlink:href="qtgui/qresizeevent.html">QResizeEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive widget resize events which are passed in the <db:emphasis>event</db:emphasis> parameter. When resizeEvent() is called, the widget already has its new geometry. The old size is accessible through <db:code><db:link xlink:href="qtgui/qresizeevent.html#oldSize">QResizeEvent::oldSize</db:link>()</db:code>.</db:para>
          <db:para>The widget will be erased and receive a paint event immediately after processing the resize event. No drawing need be (or should be) done inside this handler.</db:para>
          <db:section>
@@ -6546,7 +6546,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="restoreGeometry">
-         <db:title>bool QWidget::​restoreGeometry(const QByteArray &amp; geometry)</db:title>
+         <db:title>bool QWidget::​restoreGeometry(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Restores the geometry and state top-level widgets stored in the byte array <db:emphasis>geometry</db:emphasis>. Returns <db:code>true</db:code> on success; otherwise returns <db:code>false</db:code>.</db:para>
          <db:para>If the restored geometry is off-screen, it will be modified to be inside the available screen geometry.</db:para>
          <db:para>To restore geometry saved using <db:code><db:link xlink:href="qtcore/qsettings.html">QSettings</db:link></db:code>, you can use code like this:</db:para>
@@ -6573,7 +6573,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="saveGeometry">
-         <db:title>QByteArray QWidget::​saveGeometry() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Saves the current geometry and state for top-level widgets.</db:para>
          <db:para>To save the geometry when the window closes, you can implement a close event like this:</db:para>
          <db:programlisting>void MyWidget::closeEvent(QCloseEvent*event) { QSettings settings("MyCompany","MyApp"); settings.setValue("geometry", saveGeometry()); QWidget::closeEvent(event); }</db:programlisting>
@@ -6611,7 +6611,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="scroll-2">
-         <db:title>void QWidget::​scroll(int dx, int dy, const QRect &amp; r)</db:title>
+         <db:title>void QWidget::​scroll(int dx, int dy, const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This version only scrolls <db:emphasis>r</db:emphasis> and does not move the children of the widget.</db:para>
          <db:para>If <db:emphasis>r</db:emphasis> is empty or invalid, the result is undefined.</db:para>
@@ -6625,7 +6625,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setAttribute">
-         <db:title>void QWidget::​setAttribute(Qt::WidgetAttribute attribute, bool on = true)</db:title>
+         <db:title>void QWidget::​setAttribute(<db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WidgetAttribute</db:link></db:title>
          <db:para>Sets the attribute <db:emphasis>attribute</db:emphasis> on this widget if <db:emphasis>on</db:emphasis> is true; otherwise clears the attribute.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -6637,7 +6637,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setBackgroundRole">
-         <db:title>void QWidget::​setBackgroundRole(QPalette::ColorRole role)</db:title>
+         <db:title>void QWidget::​setBackgroundRole(<db:link xlink:href="qtgui/qpalette.html#ColorRole-enum">QPalette::ColorRole</db:link></db:title>
          <db:para>Sets the background role of the widget to <db:emphasis>role</db:emphasis>.</db:para>
          <db:para>The background role defines the brush from the widget's <db:link xlink:href="qwidget.html#palette-prop">palette</db:link> that is used to render the background.</db:para>
          <db:para>If <db:emphasis>role</db:emphasis> is <db:code><db:link xlink:href="qtgui/qpalette.html#ColorRole-enum">QPalette::NoRole</db:link></db:code>, then the widget inherits its parent's background role.</db:para>
@@ -6674,7 +6674,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setContentsMargins-2">
-         <db:title>void QWidget::​setContentsMargins(const QMargins &amp; margins)</db:title>
+         <db:title>void QWidget::​setContentsMargins(const <db:link xlink:href="qtcore/qmargins.html">QMargins</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>The <db:link xlink:href="qwidget.html#setContentsMargins">setContentsMargins</db:link> function sets the margins around the widget's contents.</db:para>
          <db:para>Sets the margins around the contents of the widget to have the sizes determined by <db:emphasis>margins</db:emphasis>. The margins are used by the layout system, and may be used by subclasses to specify the area to draw in (e.g. excluding the frame).</db:para>
@@ -6752,7 +6752,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setFixedSize">
-         <db:title>void QWidget::​setFixedSize(const QSize &amp; s)</db:title>
+         <db:title>void QWidget::​setFixedSize(const <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
          <db:para>Sets both the minimum and maximum sizes of the widget to <db:emphasis>s</db:emphasis>, thereby preventing it from ever growing or shrinking.</db:para>
          <db:para>This will override the default size constraints set by <db:code><db:link xlink:href="qlayout.html">QLayout</db:link></db:code>.</db:para>
          <db:para>To remove constraints, set the size to <db:code><db:link xlink:href="qwidget.html#QWIDGETSIZE_MAX">QWIDGETSIZE_MAX</db:link></db:code>.</db:para>
@@ -6797,7 +6797,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setFocus">
-         <db:title>void QWidget::​setFocus(Qt::FocusReason reason)</db:title>
+         <db:title>void QWidget::​setFocus(<db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:title>
          <db:para>Gives the keyboard input focus to this widget (or its focus proxy) if this widget or one of its parents is the <db:link xlink:href="qwidget.html#isActiveWindow-prop">active window</db:link>. The <db:emphasis>reason</db:emphasis> argument will be passed into any focus event sent from this function, it is used to give an explanation of what caused the widget to get focus. If the window is not active, the widget will be given the focus when the window becomes active.</db:para>
          <db:para>First, a focus about to change event is sent to the focus widget (if any) to tell it that it is about to lose the focus. Then focus is changed, a focus out event is sent to the previous focus item and a focus in event is sent to the new item to tell it that it just received the focus. (Nothing happens if the focus in and focus out widgets are the same.)</db:para>
          <db:note>
@@ -6853,7 +6853,7 @@
          <db:para>Gives the keyboard input focus to this widget (or its focus proxy) if this widget or one of its parents is the <db:link xlink:href="qwidget.html#isActiveWindow-prop">active window</db:link>.</db:para>
       </db:section>
       <db:section xml:id="setFocusProxy">
-         <db:title>void QWidget::​setFocusProxy(QWidget * w)</db:title>
+         <db:title>void QWidget::​setFocusProxy(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Sets the widget's focus proxy to widget <db:emphasis>w</db:emphasis>. If <db:emphasis>w</db:emphasis> is 0, the function resets this widget to have no focus proxy.</db:para>
          <db:para>Some widgets can "have focus", but create a child widget, such as <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>, to actually handle the focus. In this case, the widget can set the line edit to be its focus proxy.</db:para>
          <db:para>setFocusProxy() sets the widget which will actually get focus when "this widget" gets it. If there is a focus proxy, <db:code><db:link xlink:href="qwidget.html#setFocus">setFocus</db:link>()</db:code> and <db:code><db:link xlink:href="qwidget.html#focus-prop">hasFocus</db:link>()</db:code> operate on the focus proxy.</db:para>
@@ -6867,7 +6867,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setForegroundRole">
-         <db:title>void QWidget::​setForegroundRole(QPalette::ColorRole role)</db:title>
+         <db:title>void QWidget::​setForegroundRole(<db:link xlink:href="qtgui/qpalette.html#ColorRole-enum">QPalette::ColorRole</db:link></db:title>
          <db:para>Sets the foreground role of the widget to <db:emphasis>role</db:emphasis>.</db:para>
          <db:para>The foreground role defines the color from the widget's <db:link xlink:href="qwidget.html#palette-prop">palette</db:link> that is used to draw the foreground.</db:para>
          <db:para>If <db:emphasis>role</db:emphasis> is <db:code><db:link xlink:href="qtgui/qpalette.html#ColorRole-enum">QPalette::NoRole</db:link></db:code>, the widget uses a foreground role that contrasts with the background role.</db:para>
@@ -6885,7 +6885,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setGraphicsEffect">
-         <db:title>void QWidget::​setGraphicsEffect(QGraphicsEffect * effect)</db:title>
+         <db:title>void QWidget::​setGraphicsEffect(<db:link xlink:href="qgraphicseffect.html">QGraphicsEffect</db:link></db:title>
          <db:para>The setGraphicsEffect function is for setting the widget's graphics effect.</db:para>
          <db:para>Sets <db:emphasis>effect</db:emphasis> as the widget's effect. If there already is an effect installed on this widget, <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> will delete the existing effect before installing the new <db:emphasis>effect</db:emphasis>.</db:para>
          <db:para>If <db:emphasis>effect</db:emphasis> is the installed effect on a different widget, setGraphicsEffect() will remove the effect from the widget and install it on this widget.</db:para>
@@ -6918,7 +6918,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setLayout">
-         <db:title>void QWidget::​setLayout(QLayout * layout)</db:title>
+         <db:title>void QWidget::​setLayout(<db:link xlink:href="qlayout.html">QLayout</db:link></db:title>
          <db:para>Sets the layout manager for this widget to <db:emphasis>layout</db:emphasis>.</db:para>
          <db:para>If there already is a layout manager installed on this widget, <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> won't let you install another. You must first delete the existing layout manager (returned by <db:code><db:link xlink:href="qwidget.html#layout">layout</db:link>()</db:code>) before you can call setLayout() with the new layout.</db:para>
          <db:para>If <db:emphasis>layout</db:emphasis> is the layout manager on a different widget, setLayout() will reparent the layout and make it the layout manager for this widget.</db:para>
@@ -6939,7 +6939,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setMask">
-         <db:title>void QWidget::​setMask(const QBitmap &amp; bitmap)</db:title>
+         <db:title>void QWidget::​setMask(const <db:link xlink:href="qtgui/qbitmap.html">QBitmap</db:link></db:title>
          <db:para>Causes only the pixels of the widget for which <db:emphasis>bitmap</db:emphasis> has a corresponding 1 bit to be visible. If the region includes pixels outside the <db:code><db:link xlink:href="qwidget.html#rect-prop">rect</db:link>()</db:code> of the widget, window system controls in that area may or may not be visible, depending on the platform.</db:para>
          <db:para>Note that this effect can be slow if the region is particularly complex.</db:para>
          <db:para>The following code shows how an image with an alpha channel can be used to generate a mask for a widget:</db:para>
@@ -6965,7 +6965,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setMask-2">
-         <db:title>void QWidget::​setMask(const QRegion &amp; region)</db:title>
+         <db:title>void QWidget::​setMask(const <db:link xlink:href="qtgui/qregion.html">QRegion</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Causes only the parts of the widget which overlap <db:emphasis>region</db:emphasis> to be visible. If the region includes pixels outside the <db:code><db:link xlink:href="qwidget.html#rect-prop">rect</db:link>()</db:code> of the widget, window system controls in that area may or may not be visible, depending on the platform.</db:para>
          <db:para>Note that this effect can be slow if the region is particularly complex.</db:para>
@@ -6979,7 +6979,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setParent">
-         <db:title>void QWidget::​setParent(QWidget * parent)</db:title>
+         <db:title>void QWidget::​setParent(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Sets the parent of the widget to <db:emphasis>parent</db:emphasis>, and resets the window flags. The widget is moved to position (0, 0) in its new parent.</db:para>
          <db:para>If the new parent widget is in a different window, the reparented widget and its children are appended to the end of the <db:link xlink:href="qwidget.html#focusPolicy-prop">tab chain</db:link> of the new parent widget, in the same internal order as before. If one of the moved widgets had keyboard focus, setParent() calls <db:code><db:link xlink:href="qwidget.html#clearFocus">clearFocus</db:link>()</db:code> for that widget.</db:para>
          <db:para>If the new parent widget is in the same window as the old parent, setting the parent doesn't change the tab order or keyboard focus.</db:para>
@@ -7000,7 +7000,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setParent-2">
-         <db:title>void QWidget::​setParent(QWidget * parent, Qt::WindowFlags f)</db:title>
+         <db:title>void QWidget::​setParent(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowFlags</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This function also takes widget flags, <db:emphasis>f</db:emphasis> as an argument.</db:para>
       </db:section>
@@ -7039,7 +7039,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setStyle">
-         <db:title>void QWidget::​setStyle(QStyle * style)</db:title>
+         <db:title>void QWidget::​setStyle(<db:link xlink:href="qstyle.html">QStyle</db:link></db:title>
          <db:para>Sets the widget's GUI style to <db:emphasis>style</db:emphasis>. The ownership of the style object is not transferred.</db:para>
          <db:para>If no style is set, the widget uses the application's style, <db:code><db:link xlink:href="qapplication.html#style">QApplication::style</db:link>()</db:code> instead.</db:para>
          <db:para>Setting a widget's style has no effect on existing or future child widgets.</db:para>
@@ -7068,7 +7068,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setTabOrder">
-         <db:title>[static] void QWidget::​setTabOrder(QWidget * first, QWidget * second)</db:title>
+         <db:title>[static] void QWidget::​setTabOrder(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Puts the <db:emphasis>second</db:emphasis> widget after the <db:emphasis>first</db:emphasis> widget in the focus order.</db:para>
          <db:para>Note that since the tab order of the <db:emphasis>second</db:emphasis> widget is changed, you should order a chain like this:</db:para>
          <db:programlisting>setTabOrder(a, b); // a to b setTabOrder(b, c); // a to b to c setTabOrder(c, d); // a to b to c to d</db:programlisting>
@@ -7092,7 +7092,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setWindowRole">
-         <db:title>void QWidget::​setWindowRole(const QString &amp; role)</db:title>
+         <db:title>void QWidget::​setWindowRole(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>Sets the window's role to <db:emphasis>role</db:emphasis>. This only makes sense for windows on X11.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -7104,7 +7104,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setWindowState">
-         <db:title>void QWidget::​setWindowState(Qt::WindowStates windowState)</db:title>
+         <db:title>void QWidget::​setWindowState(<db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowStates</db:link></db:title>
          <db:para>Sets the window state to <db:emphasis>windowState</db:emphasis>. The window state is a OR'ed combination of <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowState</db:link></db:code>: <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowMinimized</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowMaximized</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowFullScreen</db:link></db:code>, and <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowActive</db:link></db:code>.</db:para>
          <db:para>If the window is not visible (i.e. <db:code><db:link xlink:href="qwidget.html#visible-prop">isVisible</db:link>()</db:code> returns <db:code>false</db:code>), the window state will take effect when <db:code><db:link xlink:href="qwidget.html#show">show</db:link>()</db:code> is called. For visible windows, the change is immediate. For example, to toggle between full-screen and normal mode, use the following code:</db:para>
          <db:programlisting>w-&gt;setWindowState(w-&gt;windowState() ^Qt::WindowFullScreen);</db:programlisting>
@@ -7128,7 +7128,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setupUi">
-         <db:title>void QWidget::​setupUi(QWidget * widget)</db:title>
+         <db:title>void QWidget::​setupUi(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Sets up the user interface for the specified <db:emphasis>widget</db:emphasis>.</db:para>
          <db:note>
             <db:para>This function is available with widgets that derive from user interface descriptions created using <db:link xlink:href="qtdoc/uic.html#uic">uic</db:link>.</db:para>
@@ -7143,7 +7143,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="sharedPainter">
-         <db:title>[virtual protected] QPainter * QWidget::​sharedPainter() const</db:title>
+         <db:title>[virtual protected] <db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="show">
@@ -7184,7 +7184,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="showEvent">
-         <db:title>[virtual protected] void QWidget::​showEvent(QShowEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​showEvent(<db:link xlink:href="qtgui/qshowevent.html">QShowEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to receive widget show events which are passed in the <db:emphasis>event</db:emphasis> parameter.</db:para>
          <db:para>Non-spontaneous show events are sent to widgets immediately before they are shown. The spontaneous show events of windows are delivered afterwards.</db:para>
          <db:para>Note: A widget receives spontaneous show and hide events when its mapping status is changed by the window system, e.g. a spontaneous hide event when the user minimizes the window, and a spontaneous show event when the window is restored again. After receiving a spontaneous hide event, a widget is still considered visible in the sense of <db:code><db:link xlink:href="qwidget.html#visible-prop">isVisible</db:link>()</db:code>.</db:para>
@@ -7318,7 +7318,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="stackUnder">
-         <db:title>void QWidget::​stackUnder(QWidget * w)</db:title>
+         <db:title>void QWidget::​stackUnder(<db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Places the widget under <db:emphasis>w</db:emphasis> in the parent widget's stack.</db:para>
          <db:para>To make this work, the widget itself and <db:emphasis>w</db:emphasis> must be siblings.</db:para>
          <db:section>
@@ -7334,7 +7334,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="style">
-         <db:title>QStyle * QWidget::​style() const</db:title>
+         <db:title><db:link xlink:href="qstyle.html">QStyle</db:link></db:title>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
@@ -7351,7 +7351,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="tabletEvent">
-         <db:title>[virtual protected] void QWidget::​tabletEvent(QTabletEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​tabletEvent(<db:link xlink:href="qtgui/qtabletevent.html">QTabletEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive tablet events for the widget.</db:para>
          <db:para>If you reimplement this handler, it is very important that you <db:link xlink:href="qtgui/qtabletevent.html">ignore()</db:link> the event if you do not handle it, so that the widget's parent can interpret it.</db:para>
          <db:para>The default implementation ignores the event.</db:para>
@@ -7368,7 +7368,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="testAttribute">
-         <db:title>bool QWidget::​testAttribute(Qt::WidgetAttribute attribute) const</db:title>
+         <db:title>bool QWidget::​testAttribute(<db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WidgetAttribute</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if attribute <db:emphasis>attribute</db:emphasis> is set on this widget; otherwise returns <db:code>false</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -7396,7 +7396,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="ungrabGesture">
-         <db:title>void QWidget::​ungrabGesture(Qt::GestureType gesture)</db:title>
+         <db:title>void QWidget::​ungrabGesture(<db:link xlink:href="qtcore/qt.html#GestureType-enum">Qt::GestureType</db:link></db:title>
          <db:para>Unsubscribes the widget from a given <db:emphasis>gesture</db:emphasis> type</db:para>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
@@ -7441,12 +7441,12 @@
          <db:para>This version updates a rectangle (<db:emphasis>x</db:emphasis>, <db:emphasis>y</db:emphasis>, <db:emphasis>w</db:emphasis>, <db:emphasis>h</db:emphasis>) inside the widget.</db:para>
       </db:section>
       <db:section xml:id="update-3">
-         <db:title>void QWidget::​update(const QRect &amp; rect)</db:title>
+         <db:title>void QWidget::​update(const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This version updates a rectangle <db:emphasis>rect</db:emphasis> inside the widget.</db:para>
       </db:section>
       <db:section xml:id="update-4">
-         <db:title>void QWidget::​update(const QRegion &amp; rgn)</db:title>
+         <db:title>void QWidget::​update(const <db:link xlink:href="qtgui/qregion.html">QRegion</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>This version repaints a region <db:emphasis>rgn</db:emphasis> inside the widget.</db:para>
       </db:section>
@@ -7461,13 +7461,13 @@
          <db:para>Updates the widget's micro focus.</db:para>
       </db:section>
       <db:section xml:id="visibleRegion">
-         <db:title>QRegion QWidget::​visibleRegion() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qregion.html">QRegion</db:link></db:title>
          <db:para>Returns the unobscured region where paint events can occur.</db:para>
          <db:para>For visible widgets, this is an approximation of the area not covered by other widgets; otherwise, this is an empty region.</db:para>
          <db:para>The <db:code><db:link xlink:href="qwidget.html#repaint">repaint</db:link>()</db:code> function calls this function if necessary, so in general you do not need to call it.</db:para>
       </db:section>
       <db:section xml:id="wheelEvent">
-         <db:title>[virtual protected] void QWidget::​wheelEvent(QWheelEvent * event)</db:title>
+         <db:title>[virtual protected] void QWidget::​wheelEvent(<db:link xlink:href="qtgui/qwheelevent.html">QWheelEvent</db:link></db:title>
          <db:para>This event handler, for event <db:emphasis>event</db:emphasis>, can be reimplemented in a subclass to receive wheel events for the widget.</db:para>
          <db:para>If you reimplement this handler, it is very important that you <db:link xlink:href="qtgui/qwheelevent.html">ignore()</db:link> the event if you do not handle it, so that the widget's parent can interpret it.</db:para>
          <db:para>The default implementation ignores the event.</db:para>
@@ -7500,7 +7500,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="window">
-         <db:title>QWidget * QWidget::​window() const</db:title>
+         <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
          <db:para>Returns the window for this widget, i.e. the next ancestor widget that has (or could have) a window-system frame.</db:para>
          <db:para>If the widget is a window, the widget itself is returned.</db:para>
          <db:para>Typical usage is changing the window title:</db:para>
@@ -7515,7 +7515,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowHandle">
-         <db:title>QWindow * QWidget::​windowHandle() const</db:title>
+         <db:title><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:title>
          <db:para>If this is a native widget, return the associated <db:code><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:code>. Otherwise return null.</db:para>
          <db:para>Native widgets include toplevel widgets, QGLWidget, and child widgets on which <db:code><db:link xlink:href="qwidget.html#winId">winId</db:link>()</db:code> was called.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
@@ -7529,7 +7529,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowRole">
-         <db:title>QString QWidget::​windowRole() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:para>Returns the window's role, or an empty string.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -7547,7 +7547,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowState">
-         <db:title>Qt::WindowStates QWidget::​windowState() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowStates</db:link></db:title>
          <db:para>Returns the current window state. The window state is a OR'ed combination of <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowState</db:link></db:code>: <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowMinimized</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowMaximized</db:link></db:code>, <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowFullScreen</db:link></db:code>, and <db:code><db:link xlink:href="qtcore/qt.html#WindowState-enum">Qt::WindowActive</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -7562,7 +7562,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="windowType">
-         <db:title>Qt::WindowType QWidget::​windowType() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowType</db:link></db:title>
          <db:para>Returns the window type of this widget. This is identical to <db:code><db:link xlink:href="qwidget.html#windowFlags-prop">windowFlags</db:link>()</db:code> &amp; <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowType_Mask</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
@@ -7578,11 +7578,11 @@
          <db:para/>
       </db:section>
       <db:section xml:id="x11PictureHandle">
-         <db:title>Qt::HANDLE QWidget::​x11PictureHandle() const</db:title>
+         <db:title><db:link xlink:href="qtcore/qt.html#HANDLE-typedef">Qt::HANDLE</db:link></db:title>
          <db:para/>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
       <db:section>
          <db:title>QWIDGETSIZE_MAX</db:title>
@@ -7600,7 +7600,7 @@
    </db:section>
    <db:section>
       <db:title>Obsolete Members</db:title>
-      <db:section>
+      <db:section xml:id="obsolete_memfunc">
          <db:title>Member Function Documentation</db:title>
          <db:section xml:id="isEnabledToTLW">
             <db:title>bool QWidget::​isEnabledToTLW() const</db:title>
@@ -7612,7 +7612,7 @@
             <db:para>Use <db:code><db:link xlink:href="qwidget.html#isWindow">isWindow</db:link>()</db:code> instead.</db:para>
          </db:section>
          <db:section xml:id="topLevelWidget">
-            <db:title>QWidget * QWidget::​topLevelWidget() const</db:title>
+            <db:title><db:link xlink:href="qwidget.html#QWidget">QWidget</db:link></db:title>
             <db:para>Use <db:code><db:link xlink:href="qwidget.html#window">window</db:link>()</db:code> instead.</db:para>
          </db:section>
       </db:section>

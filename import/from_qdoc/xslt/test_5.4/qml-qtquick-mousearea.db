@@ -510,12 +510,11 @@
                                             <db:code>onWheel</db:code>.</db:para>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="prop">
       <db:title>Properties Documentation</db:title>
       <db:section xml:id="acceptedButtons-prop">
          <db:title>acceptedButtons :
-                                                  <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:code>
-         </db:title>
+                                                  <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:code></db:title>
          <db:para>This property holds the mouse buttons that the
                                         mouse area reacts to.</db:para>
          <db:para>To specify that the <db:link xlink:href="qml-qtquick-mousearea.html">MouseArea</db:link>
@@ -566,8 +565,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="cursorShape-prop">
-         <db:title>cursorShape : <db:code><db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link></db:code>
-         </db:title>
+         <db:title>cursorShape : <db:code><db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:link></db:code></db:title>
          <db:para>This property holds the cursor shape for this mouse
                                         area. Note that on platforms that do not display a mouse
                                         cursor this may have no effect.</db:para>
@@ -918,10 +916,8 @@
                                         pass it through when certain conditions are met.</db:para>
       </db:section>
    </db:section>
-   <db:section>
-      <db:title>
-            Signals Documentation
-          </db:title>
+   <db:section xml:id="qml-signals">
+      <db:title>Signals Documentation</db:title>
       <db:section xml:id="canceled-signal">
          <db:title>canceled()</db:title>
          <db:para>This signal is emitted when mouse events have been
@@ -941,8 +937,7 @@
                                             <db:code>onCanceled</db:code>.</db:para>
       </db:section>
       <db:section xml:id="clicked-signal">
-         <db:title>clicked(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
-            <db:emphasis>
+         <db:title>clicked(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link><db:emphasis>
                                                   mouse</db:emphasis>)</db:title>
          <db:para>This signal is emitted when there is a click. A
                                         click is defined as a press followed by a release, both
@@ -958,8 +953,7 @@
                                             <db:code>onClicked</db:code>.</db:para>
       </db:section>
       <db:section xml:id="doubleClicked-signal">
-         <db:title>doubleClicked(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
-            <db:emphasis>
+         <db:title>doubleClicked(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link><db:emphasis>
                                                   mouse</db:emphasis>)</db:title>
          <db:para>This signal is emitted when there is a double-click
                                         (a press followed by a release followed by a press). The
@@ -1030,8 +1024,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="positionChanged-signal">
-         <db:title>positionChanged(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
-            <db:emphasis>
+         <db:title>positionChanged(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link><db:emphasis>
                                                   mouse</db:emphasis>)</db:title>
          <db:para>This signal is emitted when the mouse position
                                         changes.</db:para>
@@ -1047,8 +1040,7 @@
                                             <db:code>onPositionChanged</db:code>.</db:para>
       </db:section>
       <db:section xml:id="pressAndHold-signal">
-         <db:title>pressAndHold(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
-            <db:emphasis>
+         <db:title>pressAndHold(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link><db:emphasis>
                                                   mouse</db:emphasis>)</db:title>
          <db:para>This signal is emitted when there is a long press
                                         (currently 800ms). The <db:link xlink:href="qml-qtquick-mouseevent.html">mouse</db:link>
@@ -1061,8 +1053,7 @@
                                             <db:code>onPressAndHold</db:code>.</db:para>
       </db:section>
       <db:section xml:id="pressed-signal">
-         <db:title>pressed(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
-            <db:emphasis>
+         <db:title>pressed(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link><db:emphasis>
                                                   mouse</db:emphasis>)</db:title>
          <db:para>This signal is emitted when there is a press. The
                                             <db:link xlink:href="qml-qtquick-mouseevent.html">mouse</db:link> parameter provides information about the
@@ -1080,8 +1071,7 @@
                                             <db:code>onPressed</db:code>.</db:para>
       </db:section>
       <db:section xml:id="released-signal">
-         <db:title>released(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link>
-            <db:emphasis>
+         <db:title>released(<db:link xlink:href="qml-qtquick-mouseevent.html">MouseEvent</db:link><db:emphasis>
                                                   mouse</db:emphasis>)</db:title>
          <db:para>This signal is emitted when there is a release. The
                                             <db:link xlink:href="qml-qtquick-mouseevent.html">mouse</db:link> parameter provides information about the
@@ -1101,8 +1091,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="wheel-signal">
-         <db:title>wheel(<db:link xlink:href="qml-qtquick-wheelevent.html">WheelEvent</db:link>
-            <db:emphasis>
+         <db:title>wheel(<db:link xlink:href="qml-qtquick-wheelevent.html">WheelEvent</db:link><db:emphasis>
                                                   wheel</db:emphasis>)</db:title>
          <db:para>This signal is emitted in response to both mouse
                                         wheel and trackpad scroll gestures.</db:para>
