@@ -692,7 +692,7 @@
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$nonmemtypes"/>
           <xsl:with-param name="title" select="'Type Documentation'"/>
-          <xsl:with-param name="anchor" select="'types'"/>
+          <xsl:with-param name="anchor" select="'nonmemtypes'"/><!-- Normally, 'types', but avoid clash. -->
         </xsl:call-template>
       </xsl:if>
 
@@ -700,6 +700,7 @@
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$nonmemfuncs"/>
           <xsl:with-param name="title" select="'Function Documentation'"/>
+          <xsl:with-param name="anchor" select="'nonmemfunc'"/><!-- Normally, 'func', but avoid clash. -->
         </xsl:call-template>
       </xsl:if>
       
@@ -812,6 +813,24 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:function name="tc:rewrite-xml-id" as="xs:string">
+    <!-- 
+      Some sections use an already-used xml:id (used for generic sections, such as function doc), 
+      rewrite it. 
+      Should not be used for the main use of these IDs, i.e. those generic sections. 
+    -->
+    <xsl:param name="in" as="xs:string"/>
+    
+    <xsl:choose>
+      <xsl:when test="$in = ('types', 'classes', 'prop', 'func', 'relnonmem', 'funcnonmem', 'typenonmem', 'macros', 'vars', 'qml-attached-props', 'qml-meths', 'qml-signals')">
+        <xsl:value-of select="concat($in, '-sect')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$in"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
   <!-- Utility templates, to be used everywhere. -->
   <xsl:template name="content_title">
@@ -1750,9 +1769,8 @@
   </xsl:template>
   <xsl:template mode="content_nonmems" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
     <!-- Classes -->
-    <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:attribute name="xml:id" select="tc:rewrite-xml-id(@id)"/>
       <xsl:call-template name="content_title"/>
       
       <xsl:call-template name="content_class_content">
@@ -1761,8 +1779,8 @@
     </db:section>
   </xsl:template>
   <xsl:template mode="content_nonmems" match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
-    <xsl:variable name="functionAnchor" select="./@id"/>
     <db:section>
+      <xsl:attribute name="xml:id" select="tc:rewrite-xml-id(@id)"/>
       <xsl:call-template name="content_title"/>
       <xsl:call-template name="content_class_content">
         <xsl:with-param name="node" select="./following-sibling::*[1]"/>
@@ -1812,9 +1830,9 @@
   <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
     <xsl:variable name="table" select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody" as="element(html:tbody)"/>
     <xsl:variable name="row" select="$table/html:tr[1]" as="element(html:tr)"/>
-    <xsl:variable name="functionAnchor" select="$row/@id"/>
+    
     <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+      <xsl:attribute name="xml:id" select="tc:rewrite-xml-id($row/@id)"/>
       
       <!-- 
         Output the title. Either only one (single property) or a sequence of titles (property group).
@@ -2120,7 +2138,7 @@
       <db:section>
         <!-- Handle anchors. -->
         <xsl:attribute name="xml:id">
-          <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+          <xsl:value-of select="tc:rewrite-xml-id(if (@id) then @id else ./preceding-sibling::node()[1]/@name)"/>
         </xsl:attribute>
 
         <!-- Handle title then subsections. In rare occasions, some sections are empty, and are directly followed by another title. -->
@@ -2135,7 +2153,7 @@
             <xsl:when test="current-group()[self::html:h3]">
               <db:section>
                 <xsl:attribute name="xml:id">
-                  <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                  <xsl:value-of select="tc:rewrite-xml-id(if (@id) then @id else ./preceding-sibling::node()[1]/@name)"/>
                 </xsl:attribute>
                 <db:title>
                   <xsl:copy-of select="./text()"/>
@@ -2149,7 +2167,7 @@
                     <xsl:when test="current-group()[self::html:h4]">
                       <db:section>
                         <xsl:attribute name="xml:id">
-                          <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                          <xsl:value-of select="tc:rewrite-xml-id(if (@id) then @id else ./preceding-sibling::node()[1]/@name)"/>
                         </xsl:attribute>
                         <db:title>
                           <xsl:copy-of select="./text()"/>
@@ -2163,7 +2181,7 @@
                             <xsl:when test="current-group()[self::html:h5]">
                               <db:section>
                                 <xsl:attribute name="xml:id">
-                                  <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                                  <xsl:value-of select="tc:rewrite-xml-id(if (@id) then @id else ./preceding-sibling::node()[1]/@name)"/>
                                 </xsl:attribute>
                                 <db:title>
                                   <xsl:copy-of select="./text()"/>
@@ -2178,7 +2196,7 @@
                                     <xsl:when test="current-group()[self::html:h6]">
                                       <db:section>
                                         <xsl:attribute name="xml:id">
-                                          <xsl:value-of select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
+                                          <xsl:value-of select="tc:rewrite-xml-id(if (@id) then @id else ./preceding-sibling::node()[1]/@name)"/>
                                         </xsl:attribute>
                                         <db:title>
                                           <xsl:copy-of select="./text()"/>

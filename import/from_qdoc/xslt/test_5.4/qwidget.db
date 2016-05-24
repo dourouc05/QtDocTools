@@ -7584,7 +7584,7 @@
    </db:section>
    <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
-      <db:section>
+      <db:section xml:id="QWIDGETSIZE_MAX">
          <db:title>QWIDGETSIZE_MAX</db:title>
          <db:para>Defines the maximum size for a <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> object.</db:para>
          <db:para>The largest allowed size for a widget is <db:code><db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:code>, i.e. <db:code><db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:code> (16777215,16777215).</db:para>

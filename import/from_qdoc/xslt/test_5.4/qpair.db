@@ -416,7 +416,7 @@
    </db:section>
    <db:section xml:id="relnonmem">
       <db:title>Related Non-Members</db:title>
-      <db:section>
+      <db:section xml:id="qMakePair">
          <db:title><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns a <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1,
                                     T2&gt;</db:code> that contains <db:emphasis>value1</db:emphasis> and
@@ -427,7 +427,7 @@
                                         <db:emphasis>value2</db:emphasis>), but usually requires less
                                     typing.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-not-eq-17">
          <db:title>bool operator!=(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is not equal to <db:emphasis>p2</db:emphasis>; otherwise returns false.
@@ -438,7 +438,7 @@
          <db:para>This function requires the T1 and T2 types to have an
                                     implementation of <db:code>operator==()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-lt-5">
          <db:title>bool operator&lt;(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is less than <db:emphasis>p2</db:emphasis>; otherwise returns false. The
@@ -450,7 +450,7 @@
                                     implementation of
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-lt-lt-11">
          <db:title><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Writes the pair <db:emphasis>pair</db:emphasis> to stream
                                         <db:emphasis>out</db:emphasis>.</db:para>
@@ -466,7 +466,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-lt-eq-2">
          <db:title>bool operator&lt;=(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is less than or equal to <db:emphasis>p2</db:emphasis>; otherwise returns
@@ -479,7 +479,7 @@
                                     implementation of
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-eq-eq-25">
          <db:title>bool operator==(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is equal to <db:emphasis>p2</db:emphasis>; otherwise returns
@@ -490,7 +490,7 @@
          <db:para>This function requires the T1 and T2 types to have an
                                     implementation of <db:code>operator==()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-gt-2">
          <db:title>bool operator&gt;(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is greater than <db:emphasis>p2</db:emphasis>; otherwise returns false.
@@ -502,7 +502,7 @@
                                     implementation of
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-gt-eq-2">
          <db:title>bool operator&gt;=(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is greater than or equal to <db:emphasis>p2</db:emphasis>; otherwise
@@ -515,7 +515,7 @@
                                     implementation of
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-gt-gt-11">
          <db:title><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
          <db:para>Reads a pair from stream <db:emphasis>in</db:emphasis> into
                                         <db:emphasis>pair</db:emphasis>.</db:para>

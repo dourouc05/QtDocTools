@@ -2777,7 +2777,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qAlpha">
          <db:title>int qAlpha(<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Returns the alpha component of the ARGB quadruplet <db:emphasis>rgba</db:emphasis>.</db:para>
          <db:section>
@@ -2792,7 +2792,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qBlue">
          <db:title>int qBlue(<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Returns the blue component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:section>
@@ -2807,18 +2807,18 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qGray">
          <db:title>int qGray(int r, int g, int b)</db:title>
          <db:para>Returns a gray value (0 to 255) from the (<db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>) triplet.</db:para>
          <db:para>The gray value is calculated using the formula (<db:emphasis>r</db:emphasis> * 11 + <db:emphasis>g</db:emphasis> * 16 + <db:emphasis>b</db:emphasis> * 5)/32.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="qGray-2">
          <db:title>int qGray(<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a gray value (0 to 255) from the given ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:para>The gray value is calculated using the formula (R * 11 + G * 16 + B * 5)/32; the alpha-channel is ignored.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="qGreen">
          <db:title>int qGreen(<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Returns the green component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:section>
@@ -2833,7 +2833,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qPremultiply">
          <db:title><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Converts an unpremultiplied ARGB quadruplet <db:emphasis>rgb</db:emphasis> into a premultiplied ARGB quadruplet.</db:para>
          <db:para>This function was introduced in Qt 5.3.</db:para>
@@ -2846,7 +2846,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qRed">
          <db:title>int qRed(<db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Returns the red component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:section>
@@ -2861,7 +2861,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qRgb">
          <db:title><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Returns the ARGB quadruplet (255, <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>).</db:para>
          <db:section>
@@ -2882,7 +2882,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qRgba">
          <db:title><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Returns the ARGB quadruplet (<db:emphasis>a</db:emphasis>, <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>).</db:para>
          <db:section>
@@ -2903,7 +2903,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qUnpremultiply">
          <db:title><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:title>
          <db:para>Converts a premultiplied ARGB quadruplet <db:emphasis>rgb</db:emphasis> into an unpremultiplied ARGB quadruplet.</db:para>
          <db:para>This function was introduced in Qt 5.3.</db:para>
@@ -2916,7 +2916,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-lt-lt-41">
          <db:title><db:link xlink:href="qtcore/qdatastream.html">QDataStream</db:link><db:link xlink:href="qtcore/qdatastream.html">QDataStream</db:link><db:link xlink:href="qcolor.html#QColor">QColor</db:link></db:title>
          <db:para>Writes the <db:emphasis>color</db:emphasis> to the <db:emphasis>stream</db:emphasis>.</db:para>
          <db:section>
@@ -2928,7 +2928,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="operator-gt-gt-17">
          <db:title><db:link xlink:href="qtcore/qdatastream.html">QDataStream</db:link><db:link xlink:href="qtcore/qdatastream.html">QDataStream</db:link><db:link xlink:href="qcolor.html#QColor">QColor</db:link></db:title>
          <db:para>Reads the <db:emphasis>color</db:emphasis> from the <db:emphasis>stream</db:emphasis>.</db:para>
          <db:section>

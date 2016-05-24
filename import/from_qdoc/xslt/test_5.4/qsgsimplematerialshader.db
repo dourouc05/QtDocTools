@@ -163,12 +163,12 @@ public:
    </db:section>
    <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
-      <db:section>
+      <db:section xml:id="QSG_DECLARE_SIMPLE_COMPARABLE_SHADER">
          <db:title>QSG_DECLARE_SIMPLE_COMPARABLE_SHADER( Shader, State)</db:title>
          <db:para>This macro is used to declare a <db:code><db:link xlink:href="qsgmaterialtype.html">QSGMaterialType</db:link></db:code> and a <db:code>createMaterial()</db:code> function for <db:emphasis>Shader</db:emphasis> with the given <db:emphasis>State</db:emphasis>, where the <db:emphasis>State</db:emphasis> class must define a compare function on the form:</db:para>
          <db:programlisting>int compare(const State *other) const;</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="QSG_DECLARE_SIMPLE_SHADER">
          <db:title>QSG_DECLARE_SIMPLE_SHADER( Shader, State)</db:title>
          <db:para>This macro is used to declare a <db:code><db:link xlink:href="qsgmaterialtype.html">QSGMaterialType</db:link></db:code> and a <db:code>createMaterial()</db:code> function for <db:emphasis>Shader</db:emphasis> with the given <db:emphasis>State</db:emphasis>.</db:para>
       </db:section>

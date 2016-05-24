@@ -1688,7 +1688,7 @@
                                     finally, some of the declared macros enable programmers to add
                                     compiler or platform specific code to their applications, while
                                     others are convenience macros for larger operations.</db:para>
-      <db:section xml:id="types">
+      <db:section xml:id="types-sect">
          <db:title>Types</db:title>
          <db:para>The header file declares several type definitions that
                                     guarantee a specified bit-size on all platforms supported by Qt
@@ -1748,7 +1748,7 @@
                                     which returns the version number of Qt at run-time as a
                                     string.</db:para>
       </db:section>
-      <db:section xml:id="macros">
+      <db:section xml:id="macros-sect">
          <db:title>Macros</db:title>
          <db:para>The &lt;QtGlobal&gt; header file provides a range of macros
                                     (Q_CC_*) that are defined if the application is compiled using
@@ -1794,7 +1794,7 @@
          </db:simplelist>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="nonmemtypes">
       <db:title>Type Documentation</db:title>
       <db:section xml:id="QFunctionPointer-typedef">
          <db:title>typedef QFunctionPointer</db:title>
@@ -2150,8 +2150,8 @@
                                 short</db:code>.</db:para>
       </db:section>
    </db:section>
-   <db:section>
-      <db:title>Member Function Documentation</db:title>
+   <db:section xml:id="nonmemfunc">
+      <db:title>Function Documentation</db:title>
       <db:section xml:id="qAbsx">
          <db:title>T qAbs(const T &amp; value)</db:title>
          <db:para>Compares <db:emphasis>value</db:emphasis> to the 0 of type T and returns
@@ -2232,7 +2232,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="qFloatDistance">
-         <db:title>quint32 qFloatDistance(float a, float b)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#quint32-typedef">quint32</db:link></db:title>
          <db:para>Returns the number of representable floating-point numbers
                                 between <db:emphasis>a</db:emphasis> and <db:emphasis>b</db:emphasis>.</db:para>
          <db:para>This function provides an alternative way of doing approximated
@@ -2271,7 +2271,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="qFloatDistance-2">
-         <db:title>quint64 qFloatDistance(double a, double b)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link></db:title>
          <db:para>Returns the number of representable floating-point numbers
                                 between <db:emphasis>a</db:emphasis> and <db:emphasis>b</db:emphasis>.</db:para>
          <db:para>This function serves the same purpose as
@@ -2291,7 +2291,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="qFormatLogMessage">
-         <db:title>QString qFormatLogMessage(QtMsgType type, const QMessageLogContext &amp; context, const QString &amp; str)</db:title>
+         <db:title><db:link xlink:href="qstring.html">QString</db:link><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtMsgType</db:link><db:link xlink:href="qmessagelogcontext.html">QMessageLogContext</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Generates a formatted string out of the <db:emphasis>type</db:emphasis>,
                                     <db:emphasis>context</db:emphasis>, <db:emphasis>str</db:emphasis>
                                 arguments.</db:para>
@@ -2352,7 +2352,7 @@
                                 double.</db:para>
       </db:section>
       <db:section xml:id="qInstallMessageHandler">
-         <db:title>QtMessageHandler qInstallMessageHandler(QtMessageHandler handler)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:title>
          <db:para>Installs a Qt message <db:emphasis>handler</db:emphasis> which has been
                                 defined previously. Returns a pointer to the previous message
                                 handler.</db:para>
@@ -2492,7 +2492,7 @@
          <db:para>Returns the bit pattern of a quiet NaN as a double.</db:para>
       </db:section>
       <db:section xml:id="qRound64">
-         <db:title>qint64 qRound64(qreal value)</db:title>
+         <db:title><db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link><db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link></db:title>
          <db:para>Rounds <db:emphasis>value</db:emphasis> to the nearest 64-bit
                                 integer.</db:para>
          <db:para>Example:</db:para>
@@ -2500,7 +2500,7 @@
                                 42949672961</db:programlisting>
       </db:section>
       <db:section xml:id="qRound">
-         <db:title>int qRound(qreal value)</db:title>
+         <db:title>int qRound(<db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link></db:title>
          <db:para>Rounds <db:emphasis>value</db:emphasis> to the nearest integer.</db:para>
          <db:para>Example:</db:para>
          <db:programlisting>qreal valueA =2.3; qreal valueB =2.7; int roundedValueA = qRound(valueA); //
@@ -2512,7 +2512,7 @@
                                 double.</db:para>
       </db:section>
       <db:section xml:id="qSetMessagePattern">
-         <db:title>void qSetMessagePattern(const QString &amp; pattern)</db:title>
+         <db:title>void qSetMessagePattern(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Changes the output of the default message handler.</db:para>
          <db:para>Allows to tweak the output of <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>.</db:para>
          <db:para>Following placeholders are supported:</db:para>
@@ -2733,7 +2733,7 @@
          <db:para>This can be used as an inline version of <db:code><db:link xlink:href="qtglobal.html#Q_CHECK_PTRx">Q_CHECK_PTR</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="qgetenv">
-         <db:title>QByteArray qgetenv(const char * varName)</db:title>
+         <db:title><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:title>
          <db:para>Returns the value of the environment variable with name
                                     <db:emphasis>varName</db:emphasis>. To get the variable string, use
                                     <db:code><db:link xlink:href="qbytearray.html#constData">QByteArray::constData</db:link>()</db:code>.</db:para>
@@ -2760,7 +2760,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="qputenv">
-         <db:title>bool qputenv(const char * varName, const QByteArray &amp; value)</db:title>
+         <db:title>bool qputenv(const char * varName, const <db:link xlink:href="qbytearray.html">QByteArray</db:link></db:title>
          <db:para>This function sets the <db:emphasis>value</db:emphasis> of the environment
                                 variable named <db:emphasis>varName</db:emphasis>. It will create the variable
                                 if it does not exist. It returns 0 if the variable could not be
@@ -2806,7 +2806,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="qsrand">
-         <db:title>void qsrand(uint seed)</db:title>
+         <db:title>void qsrand(<db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
          <db:para>Thread-safe version of the standard C++
                                     <db:code>srand()</db:code> function.</db:para>
          <db:para>Sets the argument <db:emphasis>seed</db:emphasis> to be used to generate a
@@ -2827,7 +2827,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="qtTrId">
-         <db:title>QString qtTrId(const char * id, int n = -1)</db:title>
+         <db:title><db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>The qtTrId function finds and returns a translated
                                 string.</db:para>
          <db:para>Returns a translated string identified by <db:emphasis>id</db:emphasis>.
@@ -2901,9 +2901,9 @@
          </db:section>
       </db:section>
    </db:section>
-   <db:section>
+   <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
-      <db:section>
+      <db:section xml:id="QT_DISABLE_DEPRECATED_BEFORE">
          <db:title>QT_DISABLE_DEPRECATED_BEFORE</db:title>
          <db:para>This macro can be defined in the project file to disable
                                 functions deprecated in a specified version of Qt or any earlier
@@ -2915,13 +2915,13 @@
                                 QT_DISABLE_DEPRECATED_BEFORE=0x000000 to enable any functions,
                                 including the ones deprecated in Qt 5.0</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_POINTER_SIZE">
          <db:title>QT_POINTER_SIZE</db:title>
          <db:para>Expands to the size of a pointer in bytes (4 or 8). This is
                                 equivalent to <db:code>sizeof(void *)</db:code> but can be used
                                 in a preprocessor directive.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_REQUIRE_VERSION">
          <db:title>QT_REQUIRE_VERSION(int argc, char ** argv, const char * version)</db:title>
          <db:para>This macro can be used to ensure that the application is run
                                 against a recent enough version of Qt. This is especially useful if
@@ -2938,7 +2938,7 @@
                                     &lt;QApplication&gt;#include
                                     &lt;QMessageBox&gt;int main(int argc,char*argv[]) { QT_REQUIRE_VERSION(argc, argv,"4.0.2") QApplication app(argc, argv); ...return app.exec(); }</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_TRANSLATE_NOOP3">
          <db:title>QT_TRANSLATE_NOOP3( context, sourceText, comment)</db:title>
          <db:para>Marks the string literal <db:emphasis>sourceText</db:emphasis> for dynamic
                                 translation in the given <db:emphasis>context</db:emphasis> and with
@@ -2980,7 +2980,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_TRANSLATE_NOOP">
          <db:title>QT_TRANSLATE_NOOP( context, sourceText)</db:title>
          <db:para>Marks the string literal <db:emphasis>sourceText</db:emphasis> for dynamic
                                 translation in the given <db:emphasis>context</db:emphasis>; i.e, the stored
@@ -3010,7 +3010,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_TRID_NOOP">
          <db:title>QT_TRID_NOOP( id)</db:title>
          <db:para>The QT_TRID_NOOP macro marks an id for dynamic
                                 translation.</db:para>
@@ -3037,7 +3037,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_TR_NOOP">
          <db:title>QT_TR_NOOP( sourceText)</db:title>
          <db:para>Marks the string literal <db:emphasis>sourceText</db:emphasis> for dynamic
                                 translation in the current context (class), i.e the stored
@@ -3063,7 +3063,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_VERSION">
          <db:title>QT_VERSION</db:title>
          <db:para>This macro expands a numeric value of the form 0xMMNNPP (MM =
                                 major, NN = minor, PP = patch) that specifies Qt's version number.
@@ -3087,7 +3087,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_VERSION_CHECK">
          <db:title>QT_VERSION_CHECK</db:title>
          <db:para>Turns the major, minor and patch numbers of a version into an
                                 integer, 0xMMNNPP (MM = major, NN = minor, PP = patch). This can be
@@ -3106,7 +3106,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QT_VERSION_STR">
          <db:title>QT_VERSION_STR</db:title>
          <db:para>This macro expands to a string that specifies Qt's version
                                 number (for example, "4.1.2"). This is the version against which the
@@ -3123,7 +3123,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_ASSERT">
          <db:title>void Q_ASSERT(bool test)</db:title>
          <db:para>Prints a warning message containing the source code file name
                                 and line number if <db:emphasis>test</db:emphasis> is
@@ -3156,7 +3156,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_ASSERT_X">
          <db:title>void Q_ASSERT_X(bool test, const char * where, const char * what)</db:title>
          <db:para>Prints the message <db:emphasis>what</db:emphasis> together with the
                                 location <db:emphasis>where</db:emphasis>, the source file name and line
@@ -3188,7 +3188,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_ASSUME">
          <db:title>void Q_ASSUME(bool expr)</db:title>
          <db:para>Causes the compiler to assume that <db:emphasis>expr</db:emphasis> is
                                     <db:code>true</db:code>. This macro is useful for improving
@@ -3231,7 +3231,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_BIG_ENDIAN">
          <db:title>Q_BIG_ENDIAN</db:title>
          <db:para>This macro represents a value you can compare to the macro
                                     <db:code><db:link xlink:href="qtglobal.html#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
@@ -3252,7 +3252,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_BYTE_ORDER">
          <db:title>Q_BYTE_ORDER</db:title>
          <db:para>This macro can be used to determine the byte order your system
                                 uses for storing data in memory. i.e., whether your system is
@@ -3279,98 +3279,98 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_BOR">
          <db:title>Q_CC_BOR</db:title>
          <db:para>Defined if the application is compiled using Borland/Turbo
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_CDS">
          <db:title>Q_CC_CDS</db:title>
          <db:para>Defined if the application is compiled using Reliant
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_COMEAU">
          <db:title>Q_CC_COMEAU</db:title>
          <db:para>Defined if the application is compiled using Comeau
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_DEC">
          <db:title>Q_CC_DEC</db:title>
          <db:para>Defined if the application is compiled using DEC C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_EDG">
          <db:title>Q_CC_EDG</db:title>
          <db:para>Defined if the application is compiled using Edison Design Group
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_GHS">
          <db:title>Q_CC_GHS</db:title>
          <db:para>Defined if the application is compiled using Green Hills
                                 Optimizing C++ Compilers.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_GNU">
          <db:title>Q_CC_GNU</db:title>
          <db:para>Defined if the application is compiled using GNU C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_HIGHC">
          <db:title>Q_CC_HIGHC</db:title>
          <db:para>Defined if the application is compiled using MetaWare High
                                 C/C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_HPACC">
          <db:title>Q_CC_HPACC</db:title>
          <db:para>Defined if the application is compiled using HP aC++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_INTEL">
          <db:title>Q_CC_INTEL</db:title>
          <db:para>Defined if the application is compiled using Intel C++ for
                                 Linux, Intel C++ for Windows.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_KAI">
          <db:title>Q_CC_KAI</db:title>
          <db:para>Defined if the application is compiled using KAI C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_MIPS">
          <db:title>Q_CC_MIPS</db:title>
          <db:para>Defined if the application is compiled using MIPSpro
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_MSVC">
          <db:title>Q_CC_MSVC</db:title>
          <db:para>Defined if the application is compiled using Microsoft Visual
                                 C/C++, Intel C++ for Windows.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_OC">
          <db:title>Q_CC_OC</db:title>
          <db:para>Defined if the application is compiled using CenterLine
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_PGI">
          <db:title>Q_CC_PGI</db:title>
          <db:para>Defined if the application is compiled using Portland Group
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_SUN">
          <db:title>Q_CC_SUN</db:title>
          <db:para>Defined if the application is compiled using Forte Developer, or
                                 Sun Studio C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_SYM">
          <db:title>Q_CC_SYM</db:title>
          <db:para>Defined if the application is compiled using Digital Mars C/C++
                                 (used to be Symantec C++).</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_USLC">
          <db:title>Q_CC_USLC</db:title>
          <db:para>Defined if the application is compiled using SCO OUDK and
                                 UDK.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CC_WAT">
          <db:title>Q_CC_WAT</db:title>
          <db:para>Defined if the application is compiled using Watcom
                                 C++.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_CHECK_PTRx">
          <db:title>void Q_CHECK_PTR(void * pointer)</db:title>
          <db:para>If <db:emphasis>pointer</db:emphasis> is 0, prints a warning message
                                 containing the source code's file name and line number, saying that
@@ -3393,7 +3393,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECLARE_TYPEINFO">
          <db:title>Q_DECLARE_TYPEINFO( Type, Flags)</db:title>
          <db:para>You can use this macro to specify information about a custom
                                 type <db:emphasis>Type</db:emphasis>. With accurate type information, Qt's
@@ -3443,7 +3443,7 @@
                                     int y() const { return data[1]; } private: int*data; };
                                     Q_DECLARE_TYPEINFO(Point2D, Q_MOVABLE_TYPE);</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_CONSTEXPR">
          <db:title>Q_DECL_CONSTEXPR</db:title>
          <db:para>This macro can be used to declare variable that should be
                                 constructed at compile-time, or an inline function that can be
@@ -3451,7 +3451,7 @@
          <db:para>It expands to "constexpr" if your compiler supports that C++11
                                 keyword, or to nothing otherwise.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_EXPORT">
          <db:title>Q_DECL_EXPORT</db:title>
          <db:para>This macro marks a symbol for shared library export (see <db:link xlink:href="qtdoc/sharedlibrary.html">Creating Shared
                                     Libraries</db:link>).</db:para>
@@ -3464,7 +3464,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_FINAL">
          <db:title>Q_DECL_FINAL</db:title>
          <db:para>This macro can be used to declare an overriding virtual or a
                                 class as "final", with Java semantics. Further-derived classes can
@@ -3491,7 +3491,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_IMPORT">
          <db:title>Q_DECL_IMPORT</db:title>
          <db:para>This macro declares a symbol to be an import from a shared
                                 library (see <db:link xlink:href="qtdoc/sharedlibrary.html">Creating Shared
@@ -3505,7 +3505,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_NOEXCEPT">
          <db:title>Q_DECL_NOEXCEPT</db:title>
          <db:para>This macro marks a function as never throwing. If the function
                                 does nevertheless throw, the behaviour is defined: std::terminate()
@@ -3529,7 +3529,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_NOEXCEPT_EXPR">
          <db:title>Q_DECL_NOEXCEPT_EXPR( x)</db:title>
          <db:para>This macro marks a function as non-throwing if
                                     <db:emphasis>x</db:emphasis> is <db:code>true</db:code>. If the
@@ -3555,7 +3555,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_NOTHROW">
          <db:title>Q_DECL_NOTHROW</db:title>
          <db:para>This macro marks a function as never throwing, under no
                                 circumstances. If the function does nevertheless throw, the
@@ -3578,7 +3578,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DECL_OVERRIDE">
          <db:title>Q_DECL_OVERRIDE</db:title>
          <db:para>This macro can be used to declare an overriding virtual
                                 function. Use of this markup will allow the compiler to generate an
@@ -3600,7 +3600,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FOREACH">
          <db:title>Q_FOREACH( variable, container)</db:title>
          <db:para>Same as foreach(<db:emphasis>variable</db:emphasis>,
                                     <db:emphasis>container</db:emphasis>).</db:para>
@@ -3617,7 +3617,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FOREVER">
          <db:title>Q_FOREVER</db:title>
          <db:para>Same as <db:link xlink:href="qtglobal.html#forever">forever</db:link>.</db:para>
          <db:para>This macro is available even when
@@ -3633,7 +3633,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FORWARD_DECLARE_CF_TYPE">
          <db:title>Q_FORWARD_DECLARE_CF_TYPE( type)</db:title>
          <db:para>Forward-declares a Core Foundation <db:emphasis>type</db:emphasis>. This
                                 includes the actual type and the ref type. For example,
@@ -3641,7 +3641,7 @@
                                 CFStringRef.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FORWARD_DECLARE_MUTABLE_CF_TYPE">
          <db:title>Q_FORWARD_DECLARE_MUTABLE_CF_TYPE( type)</db:title>
          <db:para>Forward-declares a mutable Core Foundation
                                 <db:emphasis>type</db:emphasis>. This includes the actual type and the ref
@@ -3650,7 +3650,7 @@
                                 __CFMutableString and CFMutableStringRef.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FORWARD_DECLARE_OBJC_CLASS">
          <db:title>Q_FORWARD_DECLARE_OBJC_CLASS( classname)</db:title>
          <db:para>Forward-declares an Objective-C <db:emphasis>classname</db:emphasis> in a
                                 manner such that it can be compiled as either Objective-C or
@@ -3659,7 +3659,7 @@
                                 included by both Objective-C and C++ source files.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FUNC_INFO">
          <db:title>const char * Q_FUNC_INFO()</db:title>
          <db:para>Expands to a string that describe the function the macro resides
                                 in. How this string looks more specifically is compiler dependent.
@@ -3679,8 +3679,8 @@
          <db:para>If this macro is used outside a function, the behavior is
                                 undefined.</db:para>
       </db:section>
-      <db:section>
-         <db:title>qint64 Q_INT64_C( literal)</db:title>
+      <db:section xml:id="Q_INT64_C">
+         <db:title><db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link></db:title>
          <db:para>Wraps the signed 64-bit integer <db:emphasis>literal</db:emphasis> in a
                                 platform-independent way.</db:para>
          <db:para>Example:</db:para>
@@ -3697,7 +3697,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_LIKELY">
          <db:title>Q_LIKELY( expr)</db:title>
          <db:para>Hints to the compiler that the enclosed condition,
                                     <db:emphasis>expr</db:emphasis>, is likely to evaluate to
@@ -3719,7 +3719,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_LITTLE_ENDIAN">
          <db:title>Q_LITTLE_ENDIAN</db:title>
          <db:para>This macro represents a value you can compare to the macro
                                     <db:code><db:link xlink:href="qtglobal.html#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
@@ -3740,127 +3740,127 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_AIX">
          <db:title>Q_OS_AIX</db:title>
          <db:para>Defined on AIX.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_ANDROID">
          <db:title>Q_OS_ANDROID</db:title>
          <db:para>Defined on Android.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_BSD4">
          <db:title>Q_OS_BSD4</db:title>
          <db:para>Defined on Any BSD 4.4 system.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_BSDI">
          <db:title>Q_OS_BSDI</db:title>
          <db:para>Defined on BSD/OS.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_CYGWIN">
          <db:title>Q_OS_CYGWIN</db:title>
          <db:para>Defined on Cygwin.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_DARWIN">
          <db:title>Q_OS_DARWIN</db:title>
          <db:para>Defined on Darwin-based operating systems such as OS X and iOS,
                                 including any open source version(s) of Darwin.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_DGUX">
          <db:title>Q_OS_DGUX</db:title>
          <db:para>Defined on DG/UX.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_DYNIX">
          <db:title>Q_OS_DYNIX</db:title>
          <db:para>Defined on DYNIX/ptx.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_FREEBSD">
          <db:title>Q_OS_FREEBSD</db:title>
          <db:para>Defined on FreeBSD.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_HPUX">
          <db:title>Q_OS_HPUX</db:title>
          <db:para>Defined on HP-UX.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_HURD">
          <db:title>Q_OS_HURD</db:title>
          <db:para>Defined on GNU Hurd.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_IOS">
          <db:title>Q_OS_IOS</db:title>
          <db:para>Defined on iOS.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_IRIX">
          <db:title>Q_OS_IRIX</db:title>
          <db:para>Defined on SGI Irix.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_LINUX">
          <db:title>Q_OS_LINUX</db:title>
          <db:para>Defined on Linux.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_LYNX">
          <db:title>Q_OS_LYNX</db:title>
          <db:para>Defined on LynxOS.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_MAC">
          <db:title>Q_OS_MAC</db:title>
          <db:para>Defined on Darwin-based operating systems distributed by Apple,
                                 which currently includes OS X and iOS, but not the open source
                                 version.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_NETBSD">
          <db:title>Q_OS_NETBSD</db:title>
          <db:para>Defined on NetBSD.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_OPENBSD">
          <db:title>Q_OS_OPENBSD</db:title>
          <db:para>Defined on OpenBSD.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_OSF">
          <db:title>Q_OS_OSF</db:title>
          <db:para>Defined on HP Tru64 UNIX.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_OSX">
          <db:title>Q_OS_OSX</db:title>
          <db:para>Defined on OS X.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_QNX">
          <db:title>Q_OS_QNX</db:title>
          <db:para>Defined on QNX Neutrino.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_RELIANT">
          <db:title>Q_OS_RELIANT</db:title>
          <db:para>Defined on Reliant UNIX.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_SCO">
          <db:title>Q_OS_SCO</db:title>
          <db:para>Defined on SCO OpenServer 5.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_SOLARIS">
          <db:title>Q_OS_SOLARIS</db:title>
          <db:para>Defined on Sun Solaris.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_ULTRIX">
          <db:title>Q_OS_ULTRIX</db:title>
          <db:para>Defined on DEC Ultrix.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_UNIX">
          <db:title>Q_OS_UNIX</db:title>
          <db:para>Defined on Any UNIX BSD/SYSV system.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_UNIXWARE">
          <db:title>Q_OS_UNIXWARE</db:title>
          <db:para>Defined on UnixWare 7, Open UNIX 8.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_WIN32">
          <db:title>Q_OS_WIN32</db:title>
          <db:para>Defined on 32-bit and 64-bit versions of Windows (not on Windows
                                 CE).</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_WIN64">
          <db:title>Q_OS_WIN64</db:title>
          <db:para>Defined on 64-bit versions of Windows.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_WIN">
          <db:title>Q_OS_WIN</db:title>
          <db:para>Defined on all supported versions of Windows. That is, if
                                     <db:code><db:link xlink:href="qtglobal.html#Q_OS_WIN32">Q_OS_WIN32</db:link></db:code>,
@@ -3868,20 +3868,20 @@
                                     <db:code><db:link xlink:href="qtglobal.html#Q_OS_WINCE">Q_OS_WINCE</db:link></db:code> is
                                 defined.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_WINCE">
          <db:title>Q_OS_WINCE</db:title>
          <db:para>Defined on Windows CE.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_WINPHONE">
          <db:title>Q_OS_WINPHONE</db:title>
          <db:para>Defined on Windows Phone 8.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OS_WINRT">
          <db:title>Q_OS_WINRT</db:title>
          <db:para>Defined for Windows Runtime (Windows Store apps) on Windows 8,
                                 Windows RT, and Windows Phone 8.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_X86">
          <db:title>Q_PROCESSOR_X86</db:title>
          <db:para>Defined if the application is compiled for x86 processors. Qt
                                 currently supports two x86 variants: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_X86_32">Q_PROCESSOR_X86_32</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_X86_64">Q_PROCESSOR_X86_64</db:link></db:code>.</db:para>
@@ -3894,7 +3894,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_S390">
          <db:title>Q_PROCESSOR_S390</db:title>
          <db:para>Defined if the application is compiled for S/390 processors. Qt
                                 supports one optional variant of S/390: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_S390_X">Q_PROCESSOR_S390_X</db:link></db:code>.</db:para>
@@ -3907,7 +3907,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_ALPHA">
          <db:title>Q_PROCESSOR_ALPHA</db:title>
          <db:para>Defined if the application is compiled for Alpha
                                 processors.</db:para>
@@ -3920,7 +3920,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_ARM">
          <db:title>Q_PROCESSOR_ARM</db:title>
          <db:para>Defined if the application is compiled for ARM processors. Qt
                                 currently supports three optional ARM revisions: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V6">Q_PROCESSOR_ARM_V6</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V7">Q_PROCESSOR_ARM_V7</db:link></db:code>.</db:para>
@@ -3933,7 +3933,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_ARM_V5">
          <db:title>Q_PROCESSOR_ARM_V5</db:title>
          <db:para>Defined if the application is compiled for ARMv5 processors. The
                                     <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code> macro is also defined when
@@ -3947,7 +3947,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_ARM_V6">
          <db:title>Q_PROCESSOR_ARM_V6</db:title>
          <db:para>Defined if the application is compiled for ARMv6 processors. The
                                     <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code> macros are also defined when
@@ -3961,7 +3961,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_ARM_V7">
          <db:title>Q_PROCESSOR_ARM_V7</db:title>
          <db:para>Defined if the application is compiled for ARMv7 processors. The
                                     <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V6">Q_PROCESSOR_ARM_V6</db:link></db:code> macros are also defined when
@@ -3975,7 +3975,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_AVR32">
          <db:title>Q_PROCESSOR_AVR32</db:title>
          <db:para>Defined if the application is compiled for AVR32
                                 processors.</db:para>
@@ -3988,7 +3988,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_BLACKFIN">
          <db:title>Q_PROCESSOR_BLACKFIN</db:title>
          <db:para>Defined if the application is compiled for Blackfin
                                 processors.</db:para>
@@ -4001,7 +4001,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_IA64">
          <db:title>Q_PROCESSOR_IA64</db:title>
          <db:para>Defined if the application is compiled for IA-64 processors.
                                 This includes all Itanium and Itanium 2 processors.</db:para>
@@ -4014,7 +4014,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS">
          <db:title>Q_PROCESSOR_MIPS</db:title>
          <db:para>Defined if the application is compiled for MIPS processors. Qt
                                 currently supports seven MIPS revisions: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_V">Q_PROCESSOR_MIPS_V</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_32">Q_PROCESSOR_MIPS_32</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_64">Q_PROCESSOR_MIPS_64</db:link></db:code>.</db:para>
@@ -4027,7 +4027,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_32">
          <db:title>Q_PROCESSOR_MIPS_32</db:title>
          <db:para>Defined if the application is compiled for MIPS32 processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code> macros are also defined when
@@ -4041,7 +4041,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_64">
          <db:title>Q_PROCESSOR_MIPS_64</db:title>
          <db:para>Defined if the application is compiled for MIPS64 processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_V">Q_PROCESSOR_MIPS_V</db:link></db:code> macros are also defined when
@@ -4055,7 +4055,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_I">
          <db:title>Q_PROCESSOR_MIPS_I</db:title>
          <db:para>Defined if the application is compiled for MIPS-I processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code> macro is also defined when
@@ -4069,7 +4069,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_II">
          <db:title>Q_PROCESSOR_MIPS_II</db:title>
          <db:para>Defined if the application is compiled for MIPS-II processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code> macros are also defined when
@@ -4083,7 +4083,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_III">
          <db:title>Q_PROCESSOR_MIPS_III</db:title>
          <db:para>Defined if the application is compiled for MIPS-III processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code> macros are also defined when
@@ -4097,7 +4097,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_IV">
          <db:title>Q_PROCESSOR_MIPS_IV</db:title>
          <db:para>Defined if the application is compiled for MIPS-IV processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code> macros are also defined when
@@ -4111,7 +4111,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_MIPS_V">
          <db:title>Q_PROCESSOR_MIPS_V</db:title>
          <db:para>Defined if the application is compiled for MIPS-V processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code> macros are also defined when
@@ -4125,7 +4125,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_POWER">
          <db:title>Q_PROCESSOR_POWER</db:title>
          <db:para>Defined if the application is compiled for POWER processors. Qt
                                 currently supports two Power variants: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER_32">Q_PROCESSOR_POWER_32</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER_64">Q_PROCESSOR_POWER_64</db:link></db:code>.</db:para>
@@ -4138,7 +4138,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_POWER_32">
          <db:title>Q_PROCESSOR_POWER_32</db:title>
          <db:para>Defined if the application is compiled for 32-bit Power
                                 processors. The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER">Q_PROCESSOR_POWER</db:link></db:code> macro is also defined when
@@ -4152,7 +4152,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_POWER_64">
          <db:title>Q_PROCESSOR_POWER_64</db:title>
          <db:para>Defined if the application is compiled for 64-bit Power
                                 processors. The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER">Q_PROCESSOR_POWER</db:link></db:code> macro is also defined when
@@ -4166,7 +4166,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_S390_X">
          <db:title>Q_PROCESSOR_S390_X</db:title>
          <db:para>Defined if the application is compiled for S/390x processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_S390">Q_PROCESSOR_S390</db:link></db:code> macro is also defined when
@@ -4180,7 +4180,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_SH">
          <db:title>Q_PROCESSOR_SH</db:title>
          <db:para>Defined if the application is compiled for SuperH processors. Qt
                                 currently supports one SuperH revision: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SH_4A">Q_PROCESSOR_SH_4A</db:link></db:code>.</db:para>
@@ -4193,7 +4193,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_SH_4A">
          <db:title>Q_PROCESSOR_SH_4A</db:title>
          <db:para>Defined if the application is compiled for SuperH 4A processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SH">Q_PROCESSOR_SH</db:link></db:code> macro is also defined when
@@ -4207,7 +4207,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_SPARC">
          <db:title>Q_PROCESSOR_SPARC</db:title>
          <db:para>Defined if the application is compiled for SPARC processors. Qt
                                 currently supports one optional SPARC revision: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SPARC_V9">Q_PROCESSOR_SPARC_V9</db:link></db:code>.</db:para>
@@ -4220,7 +4220,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_SPARC_V9">
          <db:title>Q_PROCESSOR_SPARC_V9</db:title>
          <db:para>Defined if the application is compiled for SPARC V9 processors.
                                 The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SPARC">Q_PROCESSOR_SPARC</db:link></db:code> macro is also defined when
@@ -4234,7 +4234,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_X86_32">
          <db:title>Q_PROCESSOR_X86_32</db:title>
          <db:para>Defined if the application is compiled for 32-bit x86
                                 processors. This includes all i386, i486, i586, and i686 processors.
@@ -4249,7 +4249,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROCESSOR_X86_64">
          <db:title>Q_PROCESSOR_X86_64</db:title>
          <db:para>Defined if the application is compiled for 64-bit x86
                                 processors. This includes all AMD64, Intel 64, and other x86_64/x64
@@ -4264,8 +4264,8 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
-         <db:title>quint64 Q_UINT64_C( literal)</db:title>
+      <db:section xml:id="Q_UINT64_C">
+         <db:title><db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link></db:title>
          <db:para>Wraps the unsigned 64-bit integer <db:emphasis>literal</db:emphasis> in a
                                 platform-independent way.</db:para>
          <db:para>Example:</db:para>
@@ -4282,7 +4282,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_UNLIKELY">
          <db:title>Q_UNLIKELY( expr)</db:title>
          <db:para>Hints to the compiler that the enclosed condition,
                                     <db:emphasis>expr</db:emphasis>, is likely to evaluate to
@@ -4302,7 +4302,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_UNREACHABLE">
          <db:title>void Q_UNREACHABLE()</db:title>
          <db:para>Tells the compiler that the current point cannot be reached by
                                 any execution, so it may optimize any code paths leading here as
@@ -4343,7 +4343,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_UNUSED">
          <db:title>Q_UNUSED( name)</db:title>
          <db:para>Indicates to the compiler that the parameter with the specified
                                     <db:emphasis>name</db:emphasis> is not used in the body of a function.
@@ -4351,7 +4351,7 @@
                                 functions to be defined with meaningful parameter names in their
                                 signatures.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="foreach">
          <db:title>foreach( variable, container)</db:title>
          <db:para>This macro is used to implement Qt's
                                     <db:code>foreach</db:code> loop. The
@@ -4374,7 +4374,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="forever">
          <db:title>forever</db:title>
          <db:para>This macro is provided for convenience for writing infinite
                                 loops.</db:para>
@@ -4396,7 +4396,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qCritical">
          <db:title>qCritical(const char * message, ...)</db:title>
          <db:para>Calls the message handler with the critical message
                                     <db:emphasis>message</db:emphasis>. If no message handler has been
@@ -4440,7 +4440,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qDebug">
          <db:title>qDebug(const char * message, ...)</db:title>
          <db:para>Calls the message handler with the debug message
                                     <db:emphasis>message</db:emphasis>. If no message handler has been
@@ -4487,7 +4487,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qFatal">
          <db:title>qFatal(const char * message, ...)</db:title>
          <db:para>Calls the message handler with the fatal message
                                     <db:emphasis>message</db:emphasis>. If no message handler has been
@@ -4526,15 +4526,15 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qMove">
          <db:title>qMove( x)</db:title>
          <db:para>It expands to "std::move" if your compiler supports that C++11
                                 function, or to nothing otherwise.</db:para>
          <db:para>qMove takes an rvalue reference to its parameter
                                     <db:emphasis>x</db:emphasis>, and converts it to an xvalue.</db:para>
       </db:section>
-      <db:section>
-         <db:title>const char * qPrintable(const QString &amp; str)</db:title>
+      <db:section xml:id="qPrintable">
+         <db:title>const char * qPrintable(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:emphasis>str</db:emphasis> as a <db:code>const char
                                     *</db:code>. This is equivalent to
                                 <db:emphasis>str</db:emphasis>.toLocal8Bit().constData().</db:para>
@@ -4557,8 +4557,8 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
-         <db:title>const char * qUtf8Printable(const QString &amp; str)</db:title>
+      <db:section xml:id="qUtf8Printable">
+         <db:title>const char * qUtf8Printable(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
          <db:para>Returns <db:emphasis>str</db:emphasis> as a <db:code>const char
                                     *</db:code>. This is equivalent to
                                 <db:emphasis>str</db:emphasis>.toUtf8().constData().</db:para>
@@ -4593,7 +4593,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qWarning">
          <db:title>qWarning(const char * message, ...)</db:title>
          <db:para>Calls the message handler with the warning message
                                     <db:emphasis>message</db:emphasis>. If no message handler has been

@@ -2568,7 +2568,7 @@
          <db:para>Synonym for <db:code><db:link xlink:href="qlist.html">QList</db:link>&lt;&gt;</db:code>
             <db:code><db:link xlink:href="qobject.html">QObject</db:link></db:code> *&gt;.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="qFindChildren">
          <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qregexp.html">QRegExp</db:link></db:title>
          <db:para>This function overloads qFindChildren().</db:para>
          <db:para>This function is equivalent to
@@ -2588,7 +2588,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="qobject_cast">
          <db:title>T qobject_cast(<db:link xlink:href="qobject.html#QObject">QObject</db:link></db:title>
          <db:para>Returns the given <db:emphasis>object</db:emphasis> cast to type T if
                                     the object is of type T (or of a subclass); otherwise returns 0.
@@ -2652,7 +2652,7 @@
    </db:section>
    <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
-      <db:section>
+      <db:section xml:id="Q_CLASSINFO">
          <db:title>Q_CLASSINFO( Name, Value)</db:title>
          <db:para>This macro associates extra information to the class, which
                                     is available using <db:code><db:link xlink:href="qobject.html#metaObject">QObject::metaObject</db:link>()</db:code>. Qt makes only limited use
@@ -2688,7 +2688,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_DISABLE_COPY">
          <db:title>Q_DISABLE_COPY( Class)</db:title>
          <db:para>Disables the use of copy constructors and assignment
                                     operators for the given <db:emphasis>Class</db:emphasis>.</db:para>
@@ -2727,7 +2727,7 @@
                                     application would probably crash when you called a member
                                     function of <db:code>w</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_EMIT">
          <db:title>Q_EMIT</db:title>
          <db:para>Use this macro to replace the <db:code>emit</db:code>
                                     keyword for emitting signals, when you want to use Qt Signals
@@ -2740,7 +2740,7 @@
                                     when <db:code>no_keywords</db:code> is <db:emphasis>not</db:emphasis>
                                     specified.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_ENUMS">
          <db:title>Q_ENUMS(...)</db:title>
          <db:para>This macro registers one or several enum types to the
                                     meta-object system.</db:para>
@@ -2765,7 +2765,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_FLAGS">
          <db:title>Q_FLAGS(...)</db:title>
          <db:para>This macro registers one or several <db:link xlink:href="qflags.html">flags types</db:link> to the meta-object
                                     system. It is typically used in a class definition to declare
@@ -2798,7 +2798,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_INTERFACES">
          <db:title>Q_INTERFACES(...)</db:title>
          <db:para>This macro tells Qt which interfaces the class implements.
                                     This is used when implementing plugins.</db:para>
@@ -2830,7 +2830,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_INVOKABLE">
          <db:title>Q_INVOKABLE</db:title>
          <db:para>Apply this macro to declarations of member functions to
                                     allow them to be invoked via the meta-object system. The macro
@@ -2847,7 +2847,7 @@
                                         <db:code>normalMethod()</db:code> function is not
                                     registered in this way, it cannot be invoked using <db:code><db:link xlink:href="qmetaobject.html#invokeMethod">QMetaObject::invokeMethod</db:link>()</db:code>.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_OBJECT">
          <db:title>Q_OBJECT</db:title>
          <db:para>The Q_OBJECT macro must appear in the private section of a
                                     class definition that declares its own signals and slots or that
@@ -2886,7 +2886,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_PROPERTY">
          <db:title>Q_PROPERTY(...)</db:title>
          <db:para>This macro is used for declaring properties in classes that
                                     inherit <db:code><db:link xlink:href="qobject.html">QObject</db:link></db:code>. Properties
@@ -2927,7 +2927,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_REVISION">
          <db:title>Q_REVISION</db:title>
          <db:para>Apply this macro to declarations of member functions to tag
                                     them with a revision number in the meta-object system. The macro
@@ -2974,7 +2974,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_SET_OBJECT_NAME">
          <db:title>Q_SET_OBJECT_NAME( Object)</db:title>
          <db:para>This macro assigns <db:emphasis>Object</db:emphasis> the objectName
                                     "Object".</db:para>
@@ -2990,7 +2990,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_SIGNAL">
          <db:title>Q_SIGNAL</db:title>
          <db:para>This is an additional macro that allows you to mark a single
                                     function as a signal. It can be quite useful, especially when
@@ -3008,7 +3008,7 @@
                                     when <db:code>no_keywords</db:code> is <db:emphasis>not</db:emphasis>
                                     specified.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_SIGNALS">
          <db:title>Q_SIGNALS</db:title>
          <db:para>Use this macro to replace the <db:code>signals</db:code>
                                     keyword in class declarations, when you want to use Qt Signals
@@ -3021,7 +3021,7 @@
                                     when <db:code>no_keywords</db:code> is <db:emphasis>not</db:emphasis>
                                     specified.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_SLOT">
          <db:title>Q_SLOT</db:title>
          <db:para>This is an additional macro that allows you to mark a single
                                     function as a slot. It can be quite useful, especially when you
@@ -3039,7 +3039,7 @@
                                     when <db:code>no_keywords</db:code> is <db:emphasis>not</db:emphasis>
                                     specified.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="Q_SLOTS">
          <db:title>Q_SLOTS</db:title>
          <db:para>Use this macro to replace the <db:code>slots</db:code>
                                     keyword in class declarations, when you want to use Qt Signals
@@ -3118,7 +3118,7 @@
       </db:section>
       <db:section xml:id="obsolete_nonmems">
          <db:title>Related Non-Members</db:title>
-         <db:section>
+         <db:section xml:id="qFindChild-2">
             <db:title>T qFindChild(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
             <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChild">findChild</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
@@ -3134,7 +3134,7 @@
                </db:simplelist>
             </db:section>
          </db:section>
-         <db:section>
+         <db:section xml:id="qFindChildren-3">
             <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
             <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
             <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChildren">findChildren</db:link>(<db:emphasis>name</db:emphasis>).</db:para>

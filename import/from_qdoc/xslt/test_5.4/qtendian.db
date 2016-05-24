@@ -115,10 +115,10 @@
                                 between little and big endian representations of numbers. <db:link xlink:href="#details">More...</db:link>
       </db:para>
    </db:section>
-   <db:section>
-      <db:title>Member Function Documentation</db:title>
+   <db:section xml:id="nonmemfunc">
+      <db:title>Function Documentation</db:title>
       <db:section xml:id="qFromBigEndian">
-         <db:title>T qFromBigEndian(const uchar * src)</db:title>
+         <db:title>T qFromBigEndian(const <db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link></db:title>
          <db:para>Reads a big-endian number from memory location
                                     <db:emphasis>src</db:emphasis> and returns the number in the host byte
                                 order representation. On CPU architectures where the host byte order
@@ -159,7 +159,7 @@
          <db:para>This function was introduced in Qt 4.3.</db:para>
       </db:section>
       <db:section xml:id="qFromLittleEndian">
-         <db:title>T qFromLittleEndian(const uchar * src)</db:title>
+         <db:title>T qFromLittleEndian(const <db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link></db:title>
          <db:para>Reads a little-endian number from memory location
                                     <db:emphasis>src</db:emphasis> and returns the number in the host byte
                                 order representation. On CPU architectures where the host byte order
@@ -200,7 +200,7 @@
          <db:para>This function was introduced in Qt 4.3.</db:para>
       </db:section>
       <db:section xml:id="qToBigEndian">
-         <db:title>void qToBigEndian(T src, uchar * dest)</db:title>
+         <db:title>void qToBigEndian(T src, <db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link></db:title>
          <db:para>Writes the number <db:emphasis>src</db:emphasis> with template type
                                     <db:code>T</db:code> to the memory location at
                                     <db:emphasis>dest</db:emphasis> in big-endian byte order.</db:para>
@@ -236,7 +236,7 @@
          <db:para>This function was introduced in Qt 4.3.</db:para>
       </db:section>
       <db:section xml:id="qToLittleEndian">
-         <db:title>void qToLittleEndian(T src, uchar * dest)</db:title>
+         <db:title>void qToLittleEndian(T src, <db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link></db:title>
          <db:para>Writes the number <db:emphasis>src</db:emphasis> with template type
                                     <db:code>T</db:code> to the memory location at
                                     <db:emphasis>dest</db:emphasis> in little-endian byte order.</db:para>

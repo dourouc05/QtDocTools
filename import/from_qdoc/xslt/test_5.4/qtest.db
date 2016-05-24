@@ -868,7 +868,7 @@
          </db:para>
       </db:section>
    </db:section>
-   <db:section xml:id="types">
+   <db:section xml:id="nonmemtypes">
       <db:title>Type Documentation</db:title>
       <db:section xml:id="AttributeIndex-enum">
          <db:title>enum QTest::AttributeIndex</db:title>
@@ -1954,7 +1954,7 @@
    </db:section>
    <db:section xml:id="macros">
       <db:title>Macro Documentation</db:title>
-      <db:section>
+      <db:section xml:id="QBENCHMARK">
          <db:title>QBENCHMARK</db:title>
          <db:para>This macro is used to measure the performance of code within
                                     a test. The code to be benchmarked is contained within a code
@@ -1983,7 +1983,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QBENCHMARK_ONCE">
          <db:title>QBENCHMARK_ONCE</db:title>
          <db:para>The QBENCHMARK_ONCE macro is for measuring performance of a
                                     code block by running it once.</db:para>
@@ -2009,7 +2009,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QCOMPARE">
          <db:title>QCOMPARE( actual, expected)</db:title>
          <db:para>The QCOMPARE macro compares an <db:emphasis>actual</db:emphasis> value
                                     to an <db:emphasis>expected</db:emphasis> value using the equals operator.
@@ -2052,7 +2052,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QEXPECT_FAIL">
          <db:title>QEXPECT_FAIL( dataIndex, comment, mode)</db:title>
          <db:para>The QEXPECT_FAIL() macro marks the next <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> or <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> as an expected
                                     failure. Instead of adding a failure to the test log, an
@@ -2104,7 +2104,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QFAIL">
          <db:title>QFAIL( message)</db:title>
          <db:para>This macro can be used to force a test failure. The test
                                     stops executing and the failure <db:emphasis>message</db:emphasis> is
@@ -2118,7 +2118,7 @@
                                         (sizeof(int) !=4) QFAIL("This test has not been ported to this
                                         platform yet.");</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="QFETCH">
          <db:title>QFETCH( type, name)</db:title>
          <db:para>The fetch macro creates a local variable named
                                         <db:emphasis>name</db:emphasis> with the type <db:emphasis>type</db:emphasis> on
@@ -2147,7 +2147,7 @@
                                     function must have a _data function.</db:para>
          </db:note>
       </db:section>
-      <db:section>
+      <db:section xml:id="QFINDTESTDATA">
          <db:title>QFINDTESTDATA( filename)</db:title>
          <db:para>Returns a <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> for the testdata file referred to by
                                         <db:emphasis>filename</db:emphasis>, or an empty <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> if the testdata
@@ -2229,7 +2229,7 @@
          </db:note>
          <db:para>This function was introduced in Qt 5.0.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="QSKIP">
          <db:title>QSKIP( description)</db:title>
          <db:para>If called from a test function, the QSKIP() macro stops
                                     execution of the test without adding a failure to the test log.
@@ -2256,7 +2256,7 @@
                                         (!QSqlDatabase::drivers().contains("SQLITE")) QSKIP("This test requires the SQLITE database
                                         driver");</db:programlisting>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTEST">
          <db:title>QTEST( actual, testElement)</db:title>
          <db:para>QTEST() is a convenience macro for <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> that compares
                                     the value <db:emphasis>actual</db:emphasis> with the element
@@ -2276,7 +2276,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTEST_APPLESS_MAIN">
          <db:title>QTEST_APPLESS_MAIN( TestClass)</db:title>
          <db:para>Implements a main() function that executes all tests in
                                         <db:emphasis>TestClass</db:emphasis>.</db:para>
@@ -2292,7 +2292,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTEST_GUILESS_MAIN">
          <db:title>QTEST_GUILESS_MAIN( TestClass)</db:title>
          <db:para>Implements a main() function that instantiates a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> object and the
                                         <db:emphasis>TestClass</db:emphasis>, and executes all tests in the
@@ -2312,7 +2312,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTEST_MAIN">
          <db:title>QTEST_MAIN( TestClass)</db:title>
          <db:para>Implements a main() function that instantiates an
                                     application object and the <db:emphasis>TestClass</db:emphasis>, and
@@ -2362,7 +2362,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTRY_COMPARE">
          <db:title>QTRY_COMPARE( actual, expected)</db:title>
          <db:para>Performs a comparison of the <db:emphasis>actual</db:emphasis> and
                                         <db:emphasis>expected</db:emphasis> values by invoking <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE_WITH_TIMEOUT">QTRY_COMPARE_WITH_TIMEOUT</db:link>()</db:code> with a timeout of five
@@ -2392,7 +2392,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTRY_COMPARE_WITH_TIMEOUT">
          <db:title>QTRY_COMPARE_WITH_TIMEOUT( actual, expected, timeout)</db:title>
          <db:para>The QTRY_COMPARE_WITH_TIMEOUT() macro is similar to <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>, but performs
                                     the comparison of the <db:emphasis>actual</db:emphasis> and
@@ -2426,7 +2426,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTRY_VERIFY">
          <db:title>QTRY_VERIFY( condition)</db:title>
          <db:para>Checks the <db:emphasis>condition</db:emphasis> by invoking <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY_WITH_TIMEOUT">QTRY_VERIFY_WITH_TIMEOUT</db:link>()</db:code> with a timeout of five
                                     seconds.</db:para>
@@ -2455,7 +2455,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QTRY_VERIFY_WITH_TIMEOUT">
          <db:title>QTRY_VERIFY_WITH_TIMEOUT( condition, timeout)</db:title>
          <db:para>The QTRY_VERIFY_WITH_TIMEOUT() macro is similar to <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>, but checks the
                                         <db:emphasis>condition</db:emphasis> repeatedly, until either the
@@ -2488,7 +2488,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QVERIFY2">
          <db:title>QVERIFY2( condition, message)</db:title>
          <db:para>The QVERIFY2() macro behaves exactly like <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>, except that it
                                     outputs a verbose <db:emphasis>message</db:emphasis> when
@@ -2509,7 +2509,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QVERIFY">
          <db:title>QVERIFY( condition)</db:title>
          <db:para>The QVERIFY() macro checks whether the
                                         <db:emphasis>condition</db:emphasis> is true or not. If it is true,
@@ -2533,7 +2533,7 @@
             </db:simplelist>
          </db:section>
       </db:section>
-      <db:section>
+      <db:section xml:id="QVERIFY_EXCEPTION_THROWN">
          <db:title>QVERIFY_EXCEPTION_THROWN( expression, exceptiontype)</db:title>
          <db:para>The QVERIFY_EXCEPTION_THROWN macro executes an
                                         <db:emphasis>expression</db:emphasis> and tries to catch an exception
@@ -2556,7 +2556,7 @@
          <db:para>This function was introduced in Qt
                                     5.3.</db:para>
       </db:section>
-      <db:section>
+      <db:section xml:id="QWARN">
          <db:title>QWARN( message)</db:title>
          <db:para>Appends <db:emphasis>message</db:emphasis> as a warning to the test
                                     log. This macro can be used anywhere in your tests.</db:para>
