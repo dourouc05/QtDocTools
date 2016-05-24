@@ -315,18 +315,18 @@
         <xsl:with-param name="title" select="'Related Non-Members'"/>
       </xsl:call-template>
     </xsl:variable>
-    <xsl:variable name="nonmemtypes" as="element(html:div)?">
-      <xsl:call-template name="lookupSection">
-        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
-        <xsl:with-param name="anchor" select="'typenonmem'"/><!-- No known anchor! -->
-        <xsl:with-param name="title" select="'Type Documentation'"/>
-      </xsl:call-template>
-    </xsl:variable>
     <xsl:variable name="nonmemfuncs" as="element(html:div)?">
       <xsl:call-template name="lookupSection">
         <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
         <xsl:with-param name="anchor" select="'funcnonmem'"/><!-- No known anchor! -->
         <xsl:with-param name="title" select="'Function Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="nonmemtypes" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'typenonmem'"/><!-- No known anchor! -->
+        <xsl:with-param name="title" select="'Type Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
     <xsl:variable name="macros" as="element(html:div)?">
@@ -655,10 +655,11 @@
           <xsl:with-param name="data" select="$vars"/>
         </xsl:call-template>
       </xsl:if>
-      
+        
       <xsl:if test="$nonmemtypes">
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$nonmemtypes"/>
+          <xsl:with-param name="title" select="'Type Documentation'"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -1500,9 +1501,12 @@
   <!-- Handle C++ types: detailed description. -->
   <xsl:template name="content_types">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="title" as="xs:string" select="'Member Type Documentatio'"/>
 
     <db:section>
-      <db:title>Member Type Documentation</db:title>
+      <db:title>
+        <xsl:value-of select="$title"/>
+      </db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
