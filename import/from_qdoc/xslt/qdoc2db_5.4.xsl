@@ -411,6 +411,9 @@
     <xsl:if test="$isQmlType and boolean($vars)">
       <xsl:message terminate="no">WARNING: A QML type has C++ variables.</xsl:message>
     </xsl:if>
+    <xsl:if test="$isNamespace and $funcs">
+      <xsl:message terminate="no">WARNING: A namespace has C++ member functions.</xsl:message>
+    </xsl:if>
 
     <!-- Do the same with linked documents (only for C++ classes). -->
     <xsl:variable name="linkedDocuments" as="element()*">
@@ -561,26 +564,34 @@
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$nonmemtypes">
+      <xsl:if test="not($isNamespace) and $nonmemtypes">
         <xsl:call-template name="functionListing">
           <xsl:with-param name="data" select="$nonmemtypes"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$nonmemfuncs">
+      <xsl:if test="not($isNamespace) and $nonmemfuncs">
         <xsl:call-template name="functionListing">
           <xsl:with-param name="data" select="$nonmemfuncs"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$isNamespace or $isGlobal">
-        <xsl:message>TODO: macros!</xsl:message>
         <xsl:message>TODO: obsoletes!</xsl:message>
+        <xsl:if test="$warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No precise output for namespaces.</xsl:message>
+        </xsl:if>
+        <xsl:if test="$nonmemfuncs and $warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No precise output for namespace functions.</xsl:message>
+        </xsl:if>
+        <xsl:if test="$macros and $warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No precise output for namespace macros (outside the namespace).</xsl:message>
+        </xsl:if>
         <xsl:call-template name="classListing">
           <xsl:with-param name="className" select="if ($isGlobal) then 'QtGlobal' else $namespaceName"/>
           <xsl:with-param name="isNamespace" select="true()"/>
 
-          <xsl:with-param name="functions" select="$funcs"/>
+          <xsl:with-param name="functions" select="if(not($isGlobal)) then $nonmemfuncs else /.."/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
           <!-- <xsl:with-param name="macros" select="$macros"/> -->
@@ -669,7 +680,7 @@
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$macros">
+      <xsl:if test="$macros"> <!--  and not($isNamespace) -->
         <xsl:call-template name="content_macros">
           <xsl:with-param name="data" select="$macros"/>
         </xsl:call-template>
@@ -861,6 +872,7 @@
     <xsl:param name="functions" as="element(html:div)?"/>
     <xsl:param name="properties" as="element(html:div)?"/>
     <xsl:param name="vars" as="element(html:div)?"/>
+    <xsl:param name="macros" as="element(html:div)?"/>
     
     <xsl:param name="obsoleteMemberFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
@@ -933,7 +945,7 @@
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
 
-      <!-- Deal with functions. -->
+      <!-- Deal with functions, then macros. -->
       <xsl:apply-templates mode="classListing" select="$functions/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
@@ -945,6 +957,9 @@
           </xsl:with-param>
         </xsl:apply-templates>
       </xsl:if>
+      <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
     </db:classsynopsis>
   </xsl:template>
   
