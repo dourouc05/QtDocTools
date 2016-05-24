@@ -745,13 +745,17 @@
     <xsl:param name="title" as="xs:string"/>
     
     <xsl:choose>
-      <xsl:when test="$globalList[@class = $anchor]">
+      <xsl:when test="$globalList[@class = $anchor] and $globalList[@class = $anchor]/html:h2[text() = $title]">
         <xsl:copy-of select="$globalList[@class = $anchor]"/>
       </xsl:when>
       <xsl:when test="//html:h2[text() = $title]">
         <xsl:variable name="titleNode" select="//html:h2[text() = $title]"/>
         <html:div>
           <xsl:attribute name="class" select="$anchor"/>
+          <html:h2>
+            <xsl:value-of select="$title"/>
+          </html:h2>
+          
           <xsl:for-each select="$titleNode/following-sibling::html:*[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleNode]">
             <xsl:copy-of select="."/>
           </xsl:for-each>
@@ -1501,7 +1505,7 @@
   <!-- Handle C++ types: detailed description. -->
   <xsl:template name="content_types">
     <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="title" as="xs:string" select="'Member Type Documentatio'"/>
+    <xsl:param name="title" as="xs:string" select="'Member Type Documentation'"/>
 
     <db:section>
       <db:title>
