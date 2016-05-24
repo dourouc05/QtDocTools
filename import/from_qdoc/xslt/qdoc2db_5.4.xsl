@@ -634,30 +634,40 @@
       <xsl:if test="$types">
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$types"/>
+          <xsl:with-param name="title" select="'Member Type Documentation'"/>
+          <xsl:with-param name="anchor" select="'types'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$properties and not($isQmlType)">
         <xsl:call-template name="content_props">
           <xsl:with-param name="data" select="$properties"/>
+          <xsl:with-param name="title" select="'Property Documentation'"/>
+          <xsl:with-param name="anchor" select="'prop'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$funcs">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$funcs"/>
+          <xsl:with-param name="title" select="'Member Function Documentation'"/>
+          <xsl:with-param name="anchor" select="'func'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$nonmems">
         <xsl:call-template name="content_nonmems">
           <xsl:with-param name="data" select="$nonmems"/>
+          <xsl:with-param name="title" select="'Related Non-Members'"/>
+          <xsl:with-param name="anchor" select="'relnonmem'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$vars">
         <xsl:call-template name="content_vars">
           <xsl:with-param name="data" select="$vars"/>
+          <xsl:with-param name="title" select="'Member Variable Documentation'"/>
+          <xsl:with-param name="anchor" select="'vars'"/>
         </xsl:call-template>
       </xsl:if>
         
@@ -665,19 +675,22 @@
         <xsl:call-template name="content_types">
           <xsl:with-param name="data" select="$nonmemtypes"/>
           <xsl:with-param name="title" select="'Type Documentation'"/>
+          <xsl:with-param name="anchor" select="'types'"/>
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$nonmemfuncs">
+      <xsl:if test="$nonmemfuncs and not($isNamespace)">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$nonmemfuncs"/>
           <xsl:with-param name="title" select="'Function Documentation'"/>
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$macros"> <!--  and not($isNamespace) -->
+      <xsl:if test="$macros"> <!--  and not($isNamespace): but macros cannot be put inside NSs! -->
         <xsl:call-template name="content_macros">
           <xsl:with-param name="data" select="$macros"/>
+          <xsl:with-param name="title" select="'Macro Documentation'"/>
+          <xsl:with-param name="anchor" select="'macros'"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -685,45 +698,57 @@
       <xsl:if test="$properties and $isQmlType">
         <xsl:call-template name="content_qmlProps">
           <xsl:with-param name="data" select="$properties"/>
+          <xsl:with-param name="title" select="'Properties Documentation'"/>
+          <xsl:with-param name="anchor" select="'prop'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$qmlAttachedProps">
         <xsl:call-template name="content_qmlProps">
           <xsl:with-param name="data" select="$qmlAttachedProps"/>
-          <xsl:with-param name="attached" select="true()"/>
+          <xsl:with-param name="title" select="'Attached Properties Documentation'"/>
+          <xsl:with-param name="anchor" select="'qml-attached-props'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$qmlMeths">
         <xsl:call-template name="content_qmlMeths">
           <xsl:with-param name="data" select="$qmlMeths"/>
+          <xsl:with-param name="title" select="'Methods Documentation'"/>
+          <xsl:with-param name="anchor" select="'qml-meths'"/>
         </xsl:call-template>
       </xsl:if>
 
       <xsl:if test="$qmlSignals">
         <xsl:call-template name="content_qmlMeths">
           <xsl:with-param name="data" select="$qmlSignals"/>
+          <xsl:with-param name="title" select="'Signals Documentation'"/>
+          <xsl:with-param name="anchor" select="'qml-signals'"/>
           <xsl:with-param name="type" select="'signal'"/>
         </xsl:call-template>
       </xsl:if>
-
+      
       <!-- There may be obsolete things for C++ classes. -->
+      <!-- Prefix anchors with obsolete_. -->
       <xsl:if test="$hasObsolete">
         <db:section>
           <db:title>
             <xsl:text>Obsolete Members</xsl:text>
           </db:title>
 
-          <xsl:if test="$obsolete_types">
+          <xsl:if test="$obsolete_types"><!-- No example found in test suite. -->
             <xsl:call-template name="content_types">
               <xsl:with-param name="data" select="$obsolete_types"/>
+              <xsl:with-param name="title" select="'Type Documentation'"/>
+              <xsl:with-param name="anchor" select="'obsolete_types'"/>
             </xsl:call-template>
           </xsl:if>
 
           <xsl:if test="$obsolete_memfuncs">
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_memfuncs"/>
+              <xsl:with-param name="title" select="'Member Function Documentation'"/>
+              <xsl:with-param name="anchor" select="'obsolete_memfunc'"/><!-- Actually, func, but avoid mismatch with non-member functions. -->
             </xsl:call-template>
           </xsl:if>
 
@@ -731,12 +756,15 @@
             <xsl:call-template name="content_class">
               <xsl:with-param name="data" select="$obsolete_funcs"/>
               <xsl:with-param name="title" select="'Function Documentation'"/>
+              <xsl:with-param name="anchor" select="'obsolete_func'"/>
             </xsl:call-template>
           </xsl:if>
 
           <xsl:if test="$obsolete_nonmems">
             <xsl:call-template name="content_nonmems">
               <xsl:with-param name="data" select="$obsolete_nonmems"/>
+              <xsl:with-param name="title" select="'Related Non-Members'"/>
+              <xsl:with-param name="anchor" select="'obsolete_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
             </xsl:call-template>
           </xsl:if>
         </db:section>
@@ -1513,12 +1541,12 @@
   <!-- Handle C++ types: detailed description. -->
   <xsl:template name="content_types">
     <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="title" as="xs:string" select="'Member Type Documentation'"/>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
 
     <db:section>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+      <xsl:attribute name="xml:id" select="$anchor"></xsl:attribute>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
@@ -1561,9 +1589,12 @@
   <!-- Handle C++ properties: detailed description. -->
   <xsl:template name="content_props">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
     
     <db:section>
-      <db:title>Property Documentation</db:title>
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
@@ -1578,12 +1609,12 @@
   <!-- Handle C++ classes: detailed description. -->
   <xsl:template name="content_class">
     <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="title" as="xs:string" select="'Member Function Documentation'"></xsl:param>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
 
     <db:section>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
@@ -1629,9 +1660,12 @@
   <!-- Handle C++ macros. -->
   <xsl:template name="content_macros">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
     
     <db:section>
-      <db:title>Macro Documentation</db:title>
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
@@ -1646,9 +1680,12 @@
   <!-- Handle C++ classes: non-member related functions, typedefs, classes. -->
   <xsl:template name="content_nonmems">
     <xsl:param name="data" as="element(html:div)"/>
-    
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
+  
     <db:section>
-      <db:title>Related Non-Members</db:title>
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
@@ -1695,9 +1732,12 @@
   <!-- Handle C++ classes: member variables. -->
   <xsl:template name="content_vars">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
     
     <db:section>
-      <db:title>Member Variable Documentation</db:title>
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
@@ -1712,18 +1752,13 @@
   <!-- Handle QML properties. -->
   <xsl:template name="content_qmlProps">
     <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="attached" select="false()" as="xs:boolean"></xsl:param>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
     
     <db:section>
-      <xsl:choose>
-        <xsl:when test="$attached">
-          <db:title>Attached Properties Documentation</db:title>
-        </xsl:when>
-        <xsl:otherwise>
-          <db:title>Properties Documentation</db:title>
-        </xsl:otherwise>
-      </xsl:choose>
-      
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
+    
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
       </xsl:variable>
@@ -1783,19 +1818,13 @@
   <!-- Handle QML methods. -->
   <xsl:template name="content_qmlMeths">
     <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="title" as="xs:string"/>
+    <xsl:param name="anchor" as="xs:string"/>
     <xsl:param name="type" as="xs:string" select="''"/>
     
     <db:section>
-      <db:title>
-        <xsl:choose>
-          <xsl:when test="$type = 'signal'">
-            Signals Documentation
-          </xsl:when>
-          <xsl:otherwise>
-            Methods Documentation
-          </xsl:otherwise>
-        </xsl:choose>
-      </db:title>
+      <xsl:attribute name="xml:id" select="$anchor"/>
+      <db:title><xsl:value-of select="$title"/></db:title>
       
       <xsl:variable name="elts_translated">
         <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
