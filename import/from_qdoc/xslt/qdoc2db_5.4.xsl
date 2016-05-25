@@ -517,12 +517,10 @@
     <!-- Actually output something. -->
     <db:article version="5.0">
       <xsl:attribute name="xml:lang">
-        <xsl:value-of select="./@lang"/>
+        <xsl:value-of select="@lang"/>
       </xsl:attribute>
 
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+      <db:title><xsl:value-of select="$title"/></db:title>
 
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
       <xsl:if test="$types and $warnVocabularyUnsupportedFeatures">
@@ -696,7 +694,7 @@
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$nonmemfuncs and not($isNamespace)">
+      <xsl:if test="$nonmemfuncs">
         <xsl:call-template name="content_class">
           <xsl:with-param name="data" select="$nonmemfuncs"/>
           <xsl:with-param name="title" select="'Function Documentation'"/>
@@ -1043,9 +1041,7 @@
       <xsl:if test="boolean($obsoleteMemberFunctions)">
         <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
           <xsl:with-param name="className" select="$className"/>
-          <xsl:with-param name="obsolete">
-            <xsl:value-of select="true()"/>
-          </xsl:with-param>
+          <xsl:with-param name="obsolete" select="true()"/>
         </xsl:apply-templates>
       </xsl:if>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
@@ -1079,7 +1075,7 @@
   </xsl:template>
   
   <xsl:template mode="classListing" match="text()"/>
-  <xsl:template mode="classListing" match="html:h3[@class = 'fn']">
+  <xsl:template mode="classListing" match="html:h3">
     <xsl:param name="className" as="xs:string"/>
     <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
 

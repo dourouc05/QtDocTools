@@ -81,8 +81,8 @@
                                     contains miscellaneous functionality specific to the OS X
                                     operating system.</db:para>
    </db:section>
-   <db:section>
-      <db:title>Member Function Documentation</db:title>
+   <db:section xml:id="nonmemfunc">
+      <db:title>Function Documentation</db:title>
       <db:section xml:id="applicationIconBadgeNumber">
          <db:title>int QtMac::applicationIconBadgeNumber()</db:title>
          <db:section>
@@ -95,7 +95,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="badgeLabelText">
-         <db:title>QString QtMac::badgeLabelText()</db:title>
+         <db:title><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
@@ -110,11 +110,11 @@
          <db:para/>
       </db:section>
       <db:section xml:id="fromCGImageRef">
-         <db:title>QPixmap QtMac::fromCGImageRef(CGImageRef image)</db:title>
+         <db:title><db:link xlink:href="qtgui/qpixmap.html">QPixmap</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="isMainWindow">
-         <db:title>bool QtMac::isMainWindow(QWindow * window)</db:title>
+         <db:title>bool QtMac::isMainWindow(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="setApplicationIconBadgeNumber">
@@ -129,7 +129,7 @@
          </db:section>
       </db:section>
       <db:section xml:id="setBadgeLabelText">
-         <db:title>void QtMac::setBadgeLabelText(const QString &amp; text)</db:title>
+         <db:title>void QtMac::setBadgeLabelText(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist>
@@ -140,24 +140,24 @@
          </db:section>
       </db:section>
       <db:section xml:id="toCGImageRef">
-         <db:title>CGImageRef QtMac::toCGImageRef(const QPixmap &amp; pixmap)</db:title>
+         <db:title>CGImageRef QtMac::toCGImageRef(const <db:link xlink:href="qtgui/qpixmap.html">QPixmap</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="toNSImage">
-         <db:title>NSImage * QtMac::toNSImage(const QPixmap &amp; pixmap)</db:title>
+         <db:title>NSImage * QtMac::toNSImage(const <db:link xlink:href="qtgui/qpixmap.html">QPixmap</db:link></db:title>
          <db:para/>
       </db:section>
    </db:section>
    <db:section>
       <db:title>Obsolete Members</db:title>
-      <db:section>
+      <db:section xml:id="obsolete_func">
          <db:title>Function Documentation</db:title>
          <db:section xml:id="fromNSData">
-            <db:title>QByteArray QtMac::fromNSData(const NSData * data)</db:title>
+            <db:title><db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
             <db:para/>
          </db:section>
          <db:section xml:id="toNSData">
-            <db:title>NSData * QtMac::toNSData(const QByteArray &amp; data)</db:title>
+            <db:title>NSData * QtMac::toNSData(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
             <db:para/>
          </db:section>
       </db:section>
