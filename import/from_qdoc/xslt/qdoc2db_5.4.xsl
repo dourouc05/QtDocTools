@@ -210,7 +210,6 @@
                   /following-sibling::html:*[
                   (not(self::html:p) or (text() != '' or child::html:*))
                   and (not(self::html:h2) or (text() != $propText and text() != $attachedPropText and text() != $methText))
-                  and not(self::html:a and @name)
                   and not(
                   preceding-sibling::html:h2[1] = $propTitle
                   or
@@ -223,14 +222,14 @@
                 <xsl:choose>
                   <xsl:when test="current()[self::html:h2]">
                     <html:h3>
-                      <xsl:attribute name="id" select="current()/@id"/>
+                      <xsl:attribute name="id" select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
                       <xsl:value-of select="current()"/>
                     </html:h3>
                   </xsl:when>
                   <xsl:when
                     test="current()[self::html:h3][preceding-sibling::html:h2[1] != $descTitle]">
                     <html:h4>
-                      <xsl:attribute name="id" select="current()/@id"/>
+                      <xsl:attribute name="id" select="if (@id) then @id else ./preceding-sibling::node()[1]/@name"/>
                       <xsl:value-of select="current()"/>
                     </html:h4>
                   </xsl:when>
@@ -702,7 +701,7 @@
         </xsl:call-template>
       </xsl:if>
       
-      <xsl:if test="$macros"> <!--  and not($isNamespace): but macros cannot be put inside NSs! -->
+      <xsl:if test="$macros"> <!--  and not($isNamespace): but macros cannot be put inside NSs currently! -->
         <xsl:call-template name="content_macros">
           <xsl:with-param name="data" select="$macros"/>
           <xsl:with-param name="title" select="'Macro Documentation'"/>
