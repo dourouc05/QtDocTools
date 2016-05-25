@@ -209,14 +209,8 @@
                   $descTitle
                   /following-sibling::html:*[
                   (not(self::html:p) or (text() != '' or child::html:*))
-                  and (not(self::html:h2) or (text() != $propText and text() != $attachedPropText and text() != $methText))
-                  and not(
-                  preceding-sibling::html:h2[1] = $propTitle
-                  or
-                  preceding-sibling::html:h2[1] = $attachedPropTitle
-                  or
-                  preceding-sibling::html:h2[1] = $methTitle
-                  )
+                  and (not(self::html:h2) or not(text() = ($propText, $attachedPropText, $methText)))
+                  and not(preceding-sibling::html:h2[1] = ($propTitle, $attachedPropTitle, $methTitle))
                   ]">
                 <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
                 <xsl:choose>
