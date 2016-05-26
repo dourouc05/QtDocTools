@@ -154,7 +154,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	});
 
 	/// Lexer. 
-	auto space = axe::r_any(" \t");
+	auto space = axe::r_any(" \t\n\r");
 	auto comma = axe::r_lit(',');
 	auto spaced_comma = *space & comma & *space;
 	auto equal = axe::r_lit('=');

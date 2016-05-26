@@ -8,13 +8,22 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
+
+std::string sanitise_spaces(const std::string str_) {
+	std::string str = str_;
+	const char toRemove[] = " \t\n\r";
+	for (unsigned i = 0; i < strlen(toRemove); ++i) {
+		str.erase(std::remove(str.begin(), str.end(), toRemove[i]), str.end());
+	}
+	return str;
+}
 
 bool test_differ(const AST* const ast, const std::string & str) {
 	std::string original = str;
 	std::string serialised = ast->serialise();
-	original.erase(std::remove(original.begin(), original.end(), ' '), original.end());
-	serialised.erase(std::remove(serialised.begin(), serialised.end(), ' '), serialised.end());
+	original = sanitise_spaces(original);
+	serialised = sanitise_spaces(serialised);
 	return original.compare(serialised) != 0;
 }
 
@@ -100,6 +109,9 @@ void test() {
 	total++; count += test_match("( std::initializer_list < std::pair < Key ,  T > >  list )", "QHash::QHash: templates within template");
 	total++; count += test_match("( QMap < Key ,  T >  , const  Key  &  key , const  T  &  value )", "QHash::QHash: templates within template");
 	total++; count += test_match("( QMap < Key ,  T > ::const_iterator  pos , const  Key  &  key , const  T  &  value )", "QMultimap::insert: member type");
+	total++; count += test_match("(const  State  *  newState ,\n"
+		"	const  State\n"
+		"	*  oldState)", "QSGSimpleMaterialShader::updateState: line feeds");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;
