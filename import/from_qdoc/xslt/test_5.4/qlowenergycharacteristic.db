@@ -103,7 +103,7 @@
       </db:note>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist>
+         <db:simplelist type="vert">
             <db:member>
                <db:code><db:link xlink:href="qlowenergyservice.html">QLowEnergyService</db:link></db:code>
             </db:member>
@@ -272,7 +272,7 @@
          <db:para>The PropertyTypes type is a typedef for <db:code><db:link xlink:href="qtcore/qflags.html">QFlags</db:link>&lt;PropertyType&gt;</db:code>. It stores an OR combination of PropertyType values.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qlowenergycharacteristic.html#properties">properties</db:link>()</db:code>
                </db:member>
@@ -287,7 +287,7 @@
          <db:para>Construct a new <db:code><db:link xlink:href="qlowenergycharacteristic.html">QLowEnergyCharacteristic</db:link></db:code>. A default-constructed instance of this class is always invalid.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qlowenergycharacteristic.html#isValid">isValid</db:link>()</db:code>
                </db:member>
@@ -308,7 +308,7 @@
          <db:para>Returns the descriptor for <db:emphasis>uuid</db:emphasis> or an invalid <db:code>QLowEnergyDescriptor</db:code> instance.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptors">descriptors</db:link>()</db:code>
                </db:member>
@@ -320,7 +320,7 @@
          <db:para>Returns the list of descriptors belonging to this characteristic; otherwise an empty list.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qlowenergycharacteristic.html#descriptor">descriptor</db:link>()</db:code>
                </db:member>
@@ -346,7 +346,7 @@
          <db:para>The returned string is empty if the <db:code><db:link xlink:href="qlowenergycharacteristic.html#uuid">uuid</db:link>()</db:code> is unknown.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qbluetoothuuid.html#characteristicToString">QBluetoothUuid::characteristicToString</db:link>()</db:code>
                </db:member>

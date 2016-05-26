@@ -916,7 +916,7 @@
     <xsl:if test="count($seeAlso/html:a) &gt;= 1">
      <db:section>
        <db:title>See Also</db:title>
-       <db:simplelist>
+       <db:simplelist type="vert">
          <xsl:for-each select="$seeAlso/html:a">
            <db:member>
              <xsl:apply-templates mode="content_paragraph" select="."/>
@@ -1583,7 +1583,7 @@
               </xsl:choose>
             </xsl:variable>
             
-            <db:methodparam>
+            <db:methodparam rep="norepeat" choice="req">
               <xsl:if test="$hasType">
                 <xsl:call-template name="classListing_methodBody_analyseType">
                   <xsl:with-param name="typeNodes" select="$type"/>

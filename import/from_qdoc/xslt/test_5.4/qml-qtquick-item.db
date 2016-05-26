@@ -255,11 +255,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>childAt</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
@@ -267,11 +267,11 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>contains</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
             <db:parameter>contains</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>point</db:type>
             <db:parameter>point</db:parameter>
          </db:methodparam>
@@ -279,7 +279,7 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>forceActiveFocus</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:type>
             <db:parameter>reason</db:parameter>
          </db:methodparam>
@@ -292,41 +292,41 @@
       <db:methodsynopsis>
          <db:type>bool</db:type>
          <db:methodname>grabToImage</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>bool</db:type>
             <db:parameter>grabToImage</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:parameter>callback</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:parameter>targetSize</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapFromItem</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
             <db:parameter>mapFromItem</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>width</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>height</db:parameter>
          </db:methodparam>
@@ -334,19 +334,19 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapFromItem</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
             <db:parameter>mapFromItem</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
@@ -354,27 +354,27 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapToItem</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
             <db:parameter>mapToItem</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>width</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>height</db:parameter>
          </db:methodparam>
@@ -382,19 +382,19 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapToItem</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
             <db:parameter>mapToItem</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>x</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>real</db:type>
             <db:parameter>y</db:parameter>
          </db:methodparam>
@@ -402,7 +402,7 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>nextItemInFocusChain</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>bool</db:type>
             <db:parameter>forward</db:parameter>
          </db:methodparam>
@@ -598,7 +598,7 @@
          <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 100; height: 100FocusScope { id: focusScopefocus: trueTextInput { id: inputfocus: true } } }</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>
                </db:member>
@@ -816,7 +816,7 @@
                                         receive keyboard events.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link>
                </db:member>
@@ -840,7 +840,7 @@
          <db:programlisting language="qml">Rectangle { width: 100; height: 100TextInput { id: inputfocus: true } }</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
                </db:member>
@@ -914,7 +914,7 @@
                                         property with a name matching <db:link xlink:href="qml-qtquick-item.html#layer.samplerName-prop">layer.samplerName</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#layer.samplerName-prop">layer.samplerName</db:link>
                </db:member>
@@ -984,7 +984,7 @@
                                         offscreen surface to the effect correctly.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#layer.effect-prop">layer.effect</db:link>
                </db:member>
@@ -1121,7 +1121,7 @@
                                         item.)</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link>
                </db:member>
@@ -1186,7 +1186,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
                </db:member>
@@ -1236,7 +1236,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
                </db:member>
@@ -1267,7 +1267,7 @@
                                         string.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick
                                             States</db:link>
@@ -1290,7 +1290,7 @@
                                         details on using states and transitions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-topic.html#transitions">transitions</db:link>
                </db:member>
@@ -1337,7 +1337,7 @@
                                         details on using states and transitions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtquick-statesanimations-topic.html#states">states</db:link>
                </db:member>
@@ -1381,7 +1381,7 @@
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link>
                </db:member>
@@ -1548,7 +1548,7 @@
          <db:para>This QML method was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
                </db:member>
@@ -1571,7 +1571,7 @@
                                         better handling of the focus change.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
                </db:member>

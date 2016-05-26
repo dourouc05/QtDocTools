@@ -360,9 +360,8 @@ if __name__ == '__main__':
     time_xml = time.perf_counter()
 
     if generate_db:
-        # for moduleName, conf in configs.items():
-        #     generate_module_db(module_name=moduleName)
-            generate_module_db(module_name="qtcore")
+        for moduleName, conf in configs.items():
+            generate_module_db(module_name=moduleName)
     time_db = time.perf_counter()
 
     print("Total time: %f s" % (time_db - time_beginning))

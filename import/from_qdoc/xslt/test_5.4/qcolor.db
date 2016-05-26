@@ -949,7 +949,7 @@
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
-         <db:simplelist>
+         <db:simplelist type="vert">
             <db:member>
                <db:code><db:link xlink:href="qpalette.html">QPalette</db:link></db:code>
             </db:member>
@@ -1014,7 +1014,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#name">name</db:link>()</db:code>
                </db:member>
@@ -1098,7 +1098,7 @@
          </db:informaltable>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#spec">spec</db:link>()</db:code>
                </db:member>
@@ -1117,7 +1117,7 @@
          <db:para>The alpha value of an invalid color is unspecified.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
                </db:member>
@@ -1130,7 +1130,7 @@
          <db:para>The color is left invalid if any of the arguments are invalid.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()</db:code>
                </db:member>
@@ -1145,7 +1145,7 @@
          <db:para>Constructs a color with the value <db:emphasis>color</db:emphasis>. The alpha component is ignored and set to solid.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
                </db:member>
@@ -1161,7 +1161,7 @@
          <db:para>The color is left invalid if the <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
                </db:member>
@@ -1180,7 +1180,7 @@
          <db:para>The color is left invalid if the <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
                </db:member>
@@ -1198,7 +1198,7 @@
          <db:para>Constructs a color that is a copy of <db:emphasis>color</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
                </db:member>
@@ -1211,7 +1211,7 @@
          <db:para>Constructs a new color with a color value of <db:emphasis>color</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#isValid">isValid</db:link>()</db:code>
                </db:member>
@@ -1226,7 +1226,7 @@
          <db:para>Returns the alpha color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setAlpha">setAlpha</db:link>()</db:code>
                </db:member>
@@ -1244,7 +1244,7 @@
          <db:para>Returns the alpha color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setAlphaF">setAlphaF</db:link>()</db:code>
                </db:member>
@@ -1262,7 +1262,7 @@
          <db:para>Returns the black color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#blackF">blackF</db:link>()</db:code>
                </db:member>
@@ -1280,7 +1280,7 @@
          <db:para>Returns the black color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#black">black</db:link>()</db:code>
                </db:member>
@@ -1298,7 +1298,7 @@
          <db:para>Returns the blue color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setBlue">setBlue</db:link>()</db:code>
                </db:member>
@@ -1316,7 +1316,7 @@
          <db:para>Returns the blue color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setBlueF">setBlueF</db:link>()</db:code>
                </db:member>
@@ -1334,7 +1334,7 @@
          <db:para>Returns a <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> containing the color names Qt knows about.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qcolor.html#predefined-colors">Predefined Colors</db:link>
                </db:member>
@@ -1346,7 +1346,7 @@
          <db:para>Creates a copy of <db:emphasis>this</db:emphasis> color in the format specified by <db:emphasis>colorSpec</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#spec">spec</db:link>()</db:code>
                </db:member>
@@ -1370,7 +1370,7 @@
          <db:para>Returns the cyan color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()</db:code>
                </db:member>
@@ -1388,7 +1388,7 @@
          <db:para>Returns the cyan color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>
                </db:member>
@@ -1409,7 +1409,7 @@
          <db:para>This function was introduced in Qt 4.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#lighter">lighter</db:link>()</db:code>
                </db:member>
@@ -1425,7 +1425,7 @@
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>
                </db:member>
@@ -1448,7 +1448,7 @@
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toCmyk">toCmyk</db:link>()</db:code>
                </db:member>
@@ -1471,7 +1471,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()</db:code>
                </db:member>
@@ -1492,7 +1492,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toHsl">toHsl</db:link>()</db:code>
                </db:member>
@@ -1511,7 +1511,7 @@
          <db:para>The value of <db:emphasis>s</db:emphasis>, <db:emphasis>v</db:emphasis>, and <db:emphasis>a</db:emphasis> must all be in the range 0-255; the value of <db:emphasis>h</db:emphasis> must be in the range 0-359.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>
                </db:member>
@@ -1534,7 +1534,7 @@
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toHsv">toHsv</db:link>()</db:code>
                </db:member>
@@ -1556,7 +1556,7 @@
          <db:para>The alpha component of <db:emphasis>rgb</db:emphasis> is ignored (i.e. it is automatically set to 255), use the <db:code><db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()</db:code> function to include the alpha-channel specified by the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromRgba">fromRgba</db:link>()</db:code>
                </db:member>
@@ -1578,7 +1578,7 @@
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#toRgb">toRgb</db:link>()</db:code>
                </db:member>
@@ -1597,7 +1597,7 @@
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
                </db:member>
@@ -1616,7 +1616,7 @@
          <db:para>Unlike the <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code> function, the alpha-channel specified by the given <db:code><db:link xlink:href="qcolor.html#QRgb-typedef">QRgb</db:link></db:code> value is included.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
                </db:member>
@@ -1632,7 +1632,7 @@
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#cyan">cyan</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#magenta">magenta</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#yellow">yellow</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#black">black</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setCmyk">setCmyk</db:link>()</db:code>
                </db:member>
@@ -1648,7 +1648,7 @@
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#cyanF">cyanF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blackF">blackF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setCmykF">setCmykF</db:link>()</db:code>
                </db:member>
@@ -1665,7 +1665,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>
                </db:member>
@@ -1679,7 +1679,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setHsl">setHsl</db:link>()</db:code>
                </db:member>
@@ -1692,7 +1692,7 @@
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code>
                </db:member>
@@ -1708,7 +1708,7 @@
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#valueF">valueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setHsv">setHsv</db:link>()</db:code>
                </db:member>
@@ -1724,7 +1724,7 @@
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
                </db:member>
@@ -1740,7 +1740,7 @@
          <db:para>These components can be retrieved individually using the <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>, <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code> and <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
                </db:member>
@@ -1755,7 +1755,7 @@
          <db:para>Returns the green color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setGreen">setGreen</db:link>()</db:code>
                </db:member>
@@ -1773,7 +1773,7 @@
          <db:para>Returns the green color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setGreenF">setGreenF</db:link>()</db:code>
                </db:member>
@@ -1792,7 +1792,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
                </db:member>
@@ -1808,7 +1808,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>
                </db:member>
@@ -1824,7 +1824,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
                </db:member>
@@ -1843,7 +1843,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
                </db:member>
@@ -1858,7 +1858,7 @@
          <db:para>Returns the hue color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hueF">hueF</db:link>()</db:code>
                </db:member>
@@ -1876,7 +1876,7 @@
          <db:para>Returns the hue color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hue">hue</db:link>()</db:code>
                </db:member>
@@ -1894,7 +1894,7 @@
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#saturationF">saturationF</db:link>()</db:code>
                </db:member>
@@ -1912,7 +1912,7 @@
          <db:para>Returns the saturation color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#saturation">saturation</db:link>()</db:code>
                </db:member>
@@ -1931,7 +1931,7 @@
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hsvHue">hsvHue</db:link>()</db:code>
                </db:member>
@@ -1953,7 +1953,7 @@
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hsvHueF">hsvHueF</db:link>()</db:code>
                </db:member>
@@ -1980,7 +1980,7 @@
          <db:para>This function was introduced in Qt 4.7.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
                </db:member>
@@ -1995,7 +1995,7 @@
          <db:para>This function was introduced in Qt 4.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#darker">darker</db:link>()</db:code>
                </db:member>
@@ -2011,7 +2011,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#lightnessF">lightnessF</db:link>()</db:code>
                </db:member>
@@ -2027,7 +2027,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code>
                </db:member>
@@ -2042,7 +2042,7 @@
          <db:para>Returns the magenta color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#magentaF">magentaF</db:link>()</db:code>
                </db:member>
@@ -2060,7 +2060,7 @@
          <db:para>Returns the magenta color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#magenta">magenta</db:link>()</db:code>
                </db:member>
@@ -2078,7 +2078,7 @@
          <db:para>Returns the name of the color in the format "#RRGGBB"; i.e. a "#" character followed by three two-digit hexadecimal numbers.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
                </db:member>
@@ -2091,7 +2091,7 @@
          <db:para>This function was introduced in Qt 5.2.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setNamedColor">setNamedColor</db:link>()</db:code>
                </db:member>
@@ -2106,7 +2106,7 @@
          <db:para>Returns the red color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setRed">setRed</db:link>()</db:code>
                </db:member>
@@ -2124,7 +2124,7 @@
          <db:para>Returns the red color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setRedF">setRedF</db:link>()</db:code>
                </db:member>
@@ -2142,7 +2142,7 @@
          <db:para>Returns the RGB value of the color. The alpha value is opaque.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setRgb">setRgb</db:link>()</db:code>
                </db:member>
@@ -2161,7 +2161,7 @@
          <db:para>For an invalid color, the alpha value of the returned color is unspecified.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#setRgba">setRgba</db:link>()</db:code>
                </db:member>
@@ -2177,7 +2177,7 @@
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hsvSaturation">hsvSaturation</db:link>()</db:code>
                </db:member>
@@ -2199,7 +2199,7 @@
          <db:para>The color is implicitly converted to HSV.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#hsvSaturationF">hsvSaturationF</db:link>()</db:code>
                </db:member>
@@ -2220,7 +2220,7 @@
          <db:para>Sets the alpha of this color to <db:emphasis>alpha</db:emphasis>. Integer alpha is specified in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#alpha">alpha</db:link>()</db:code>
                </db:member>
@@ -2238,7 +2238,7 @@
          <db:para>Sets the alpha of this color to <db:emphasis>alpha</db:emphasis>. qreal alpha is specified in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#alphaF">alphaF</db:link>()</db:code>
                </db:member>
@@ -2256,7 +2256,7 @@
          <db:para>Sets the blue color component of this color to <db:emphasis>blue</db:emphasis>. Integer components are specified in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#blue">blue</db:link>()</db:code>
                </db:member>
@@ -2274,7 +2274,7 @@
          <db:para>Sets the blue color component of this color to <db:emphasis>blue</db:emphasis>. Float components are specified in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#blueF">blueF</db:link>()</db:code>
                </db:member>
@@ -2293,7 +2293,7 @@
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getCmyk">getCmyk</db:link>()</db:code>
                </db:member>
@@ -2313,7 +2313,7 @@
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getCmykF">getCmykF</db:link>()</db:code>
                </db:member>
@@ -2331,7 +2331,7 @@
          <db:para>Sets the green color component of this color to <db:emphasis>green</db:emphasis>. Integer components are specified in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#green">green</db:link>()</db:code>
                </db:member>
@@ -2349,7 +2349,7 @@
          <db:para>Sets the green color component of this color to <db:emphasis>green</db:emphasis>. Float components are specified in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#greenF">greenF</db:link>()</db:code>
                </db:member>
@@ -2369,7 +2369,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getHsl">getHsl</db:link>()</db:code>
                </db:member>
@@ -2386,7 +2386,7 @@
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getHslF">getHslF</db:link>()</db:code>
                </db:member>
@@ -2402,7 +2402,7 @@
          <db:para>The saturation, value and alpha-channel values must be in the range 0-255, and the hue value must be greater than -1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getHsv">getHsv</db:link>()</db:code>
                </db:member>
@@ -2421,7 +2421,7 @@
          <db:para>All the values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#getHsvF">getHsvF</db:link>()</db:code>
                </db:member>
@@ -2464,7 +2464,7 @@
          <db:para>The color is invalid if <db:emphasis>name</db:emphasis> cannot be parsed.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#QColor">QColor</db:link>()</db:code>
                </db:member>
@@ -2482,7 +2482,7 @@
          <db:para>Sets the red color component of this color to <db:emphasis>red</db:emphasis>. Integer components are specified in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#red">red</db:link>()</db:code>
                </db:member>
@@ -2500,7 +2500,7 @@
          <db:para>Sets the red color component of this color to <db:emphasis>red</db:emphasis>. Float components are specified in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#redF">redF</db:link>()</db:code>
                </db:member>
@@ -2519,7 +2519,7 @@
          <db:para>All the values must be in the range 0-255.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
                </db:member>
@@ -2543,7 +2543,7 @@
          <db:para>All values must be in the range 0.0-1.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#rgb">rgb</db:link>()</db:code>
                </db:member>
@@ -2561,7 +2561,7 @@
          <db:para>Sets the RGB value to <db:emphasis>rgba</db:emphasis>, including its alpha.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#rgba">rgba</db:link>()</db:code>
                </db:member>
@@ -2576,7 +2576,7 @@
          <db:para>Returns how the color was specified.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qcolor.html#Spec-enum">Spec</db:link>
                </db:member>
@@ -2591,7 +2591,7 @@
          <db:para>Creates and returns a CMYK <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromCmyk">fromCmyk</db:link>()</db:code>
                </db:member>
@@ -2612,7 +2612,7 @@
          <db:para>Creates and returns an HSL <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromHsl">fromHsl</db:link>()</db:code>
                </db:member>
@@ -2630,7 +2630,7 @@
          <db:para>Creates and returns an HSV <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromHsv">fromHsv</db:link>()</db:code>
                </db:member>
@@ -2651,7 +2651,7 @@
          <db:para>Create and returns an RGB <db:code><db:link xlink:href="qcolor.html">QColor</db:link></db:code> based on this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#fromRgb">fromRgb</db:link>()</db:code>
                </db:member>
@@ -2669,7 +2669,7 @@
          <db:para>Returns the value color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#valueF">valueF</db:link>()</db:code>
                </db:member>
@@ -2687,7 +2687,7 @@
          <db:para>Returns the value color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#value">value</db:link>()</db:code>
                </db:member>
@@ -2705,7 +2705,7 @@
          <db:para>Returns the yellow color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#yellowF">yellowF</db:link>()</db:code>
                </db:member>
@@ -2723,7 +2723,7 @@
          <db:para>Returns the yellow color component of this color.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#yellow">yellow</db:link>()</db:code>
                </db:member>
@@ -2767,7 +2767,7 @@
          <db:para>The type also holds a value for the alpha-channel. The default alpha channel is <db:code>ff</db:code>, i.e opaque. For more information, see the <db:link xlink:href="qcolor.html#alpha-blended-drawing">Alpha-Blended Drawing</db:link> section.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#rgb">QColor::rgb</db:link>()</db:code>
                </db:member>
@@ -2782,7 +2782,7 @@
          <db:para>Returns the alpha component of the ARGB quadruplet <db:emphasis>rgba</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
                </db:member>
@@ -2797,7 +2797,7 @@
          <db:para>Returns the blue component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
                </db:member>
@@ -2823,7 +2823,7 @@
          <db:para>Returns the green component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
                </db:member>
@@ -2839,7 +2839,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qUnpremultiply">qUnpremultiply</db:link>()</db:code>
                </db:member>
@@ -2851,7 +2851,7 @@
          <db:para>Returns the red component of the ARGB quadruplet <db:emphasis>rgb</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
                </db:member>
@@ -2866,7 +2866,7 @@
          <db:para>Returns the ARGB quadruplet (255, <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qRgba">qRgba</db:link>()</db:code>
                </db:member>
@@ -2887,7 +2887,7 @@
          <db:para>Returns the ARGB quadruplet (<db:emphasis>a</db:emphasis>, <db:emphasis>r</db:emphasis>, <db:emphasis>g</db:emphasis>, <db:emphasis>b</db:emphasis>).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qRgb">qRgb</db:link>()</db:code>
                </db:member>
@@ -2909,7 +2909,7 @@
          <db:para>This function was introduced in Qt 5.3.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:code><db:link xlink:href="qcolor.html#qPremultiply">qPremultiply</db:link>()</db:code>
                </db:member>
@@ -2921,7 +2921,7 @@
          <db:para>Writes the <db:emphasis>color</db:emphasis> to the <db:emphasis>stream</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtcore/datastreamformat.html">Serializing Qt Data Types</db:link>
                </db:member>
@@ -2933,7 +2933,7 @@
          <db:para>Reads the <db:emphasis>color</db:emphasis> from the <db:emphasis>stream</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtcore/datastreamformat.html">Serializing Qt Data Types</db:link>
                </db:member>

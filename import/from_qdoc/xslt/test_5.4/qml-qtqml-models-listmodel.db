@@ -20,7 +20,7 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>append</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>jsobject</db:type>
             <db:parameter>dict</db:parameter>
          </db:methodparam>
@@ -33,11 +33,11 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>get</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>object</db:type>
             <db:parameter>get</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
@@ -45,11 +45,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>insert</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>jsobject</db:type>
             <db:parameter>dict</db:parameter>
          </db:methodparam>
@@ -57,15 +57,15 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>move</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>from</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>to</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>n</db:parameter>
          </db:methodparam>
@@ -73,11 +73,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>remove</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>count</db:parameter>
          </db:methodparam>
@@ -85,11 +85,11 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>set</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>jsobject</db:type>
             <db:parameter>dict</db:parameter>
          </db:methodparam>
@@ -97,15 +97,15 @@
       <db:methodsynopsis>
          <db:void/>
          <db:methodname>setProperty</db:methodname>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type>string</db:type>
             <db:parameter>property</db:parameter>
          </db:methodparam>
-         <db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-variant.html">variant</db:type>
             <db:parameter>value</db:parameter>
          </db:methodparam>
@@ -214,7 +214,7 @@
                                 thread.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qtquick/qtquick-modelviewsdata-modelview.html#qml-data-models">Data Models</db:link>
                </db:member>
@@ -268,7 +268,7 @@
          <db:programlisting>fruitModel.append({"cost": 5.95,"name":"Pizza"})</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>
                </db:member>
@@ -283,7 +283,7 @@
          <db:para>Deletes all content from the model.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -316,7 +316,7 @@
          </db:warning>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -338,7 +338,7 @@
                                         append).</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>
                </db:member>
@@ -362,7 +362,7 @@
                                             -3,3)</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -377,7 +377,7 @@
                                         the model.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#clear-method">clear()</db:link>
                </db:member>
@@ -401,7 +401,7 @@
                                         list.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
@@ -421,7 +421,7 @@
                                         list.</db:para>
          <db:section>
             <db:title>See Also</db:title>
-            <db:simplelist>
+            <db:simplelist type="vert">
                <db:member>
                   <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
                </db:member>
