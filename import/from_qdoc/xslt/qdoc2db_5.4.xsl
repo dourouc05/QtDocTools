@@ -41,6 +41,10 @@
   <!-- Main function. Output document class. -->
   <xsl:template match="html:html">
     <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
+    
+    <xsl:if test="not($content)">
+      <xsl:message terminate="yes">ERROR: This page has no content!</xsl:message>
+    </xsl:if>
 
     <!-- Extract the metadata. -->
     <xsl:variable name="title" select="$content/html:h1[@class = 'title']/text()" as="xs:string"/>
