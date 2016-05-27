@@ -177,6 +177,24 @@
                                     keyState ,  qint64 
                                 uniqueID )</db:exceptionname>
       </db:constructorsynopsis>
+      <db:constructorsynopsis xlink:href="#QTabletEvent-2">
+         <db:modifier>(compat)</db:modifier>
+         <db:methodname>QTabletEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( Type  type , const
+                                     QPointF  &amp;  pos ,
+                                const  QPointF  &amp; 
+                                    globalPos ,  int  device ,  int  pointerType ,
+                                     qreal  pressure ,
+                                     int  xTilt ,
+                                     int  yTilt ,
+                                     qreal  tangentialPressure ,
+                                     qreal  rotation ,
+                                     int  z ,
+                                     Qt::KeyboardModifiers 
+                                    keyState ,  qint64 
+                                uniqueID )</db:exceptionname>
+      </db:constructorsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
@@ -921,6 +939,32 @@
                   </db:member>
                   <db:member>
                      <db:code><db:link xlink:href="qtabletevent.html#z">z</db:link>()</db:code>
+                  </db:member>
+               </db:simplelist>
+            </db:section>
+         </db:section>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Compatibility Members</db:title>
+      <db:section xml:id="compat_memfunc">
+         <db:title>Member Function Documentation</db:title>
+         <db:section xml:id="hiResGlobalPos">
+            <db:title>const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+            <db:para>The high precision coordinates delivered from the tablet
+                                expressed. Sub pixeling information is in the fractional part of the
+                                    <db:code><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:code>.</db:para>
+            <db:section>
+               <db:title>See Also</db:title>
+               <db:simplelist type="vert">
+                  <db:member>
+                     <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                  </db:member>
+                  <db:member>
+                     <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalX">hiResGlobalX</db:link>()</db:code>
+                  </db:member>
+                  <db:member>
+                     <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalY">hiResGlobalY</db:link>()</db:code>
                   </db:member>
                </db:simplelist>
             </db:section>

@@ -448,7 +448,7 @@
         /html:div[@class = 'content']
         /html:div[@class = 'line']
         /html:div[@class = 'content mainContent']"/>
-    <xsl:variable name="compatibility"
+    <xsl:variable name="compat"
       select="
       $linkedDocuments/entry[@type = 'compat']
       /html:html
@@ -458,7 +458,7 @@
       /html:div[@class = 'content']
       /html:div[@class = 'line']
       /html:div[@class = 'content mainContent']"/>
-
+    
     <xsl:variable name="obsolete_types" as="element(html:div)?">
       <xsl:call-template name="lookupSection_ltd">
         <xsl:with-param name="root" select="$obsolete"/>
@@ -466,7 +466,7 @@
         <xsl:with-param name="title" select="'Member Type Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
-
+    
     <xsl:variable name="obsolete_properties" as="element(html:div)?">
       <xsl:call-template name="lookupSection_ltd">
         <xsl:with-param name="root" select="$obsolete"/>
@@ -474,7 +474,7 @@
         <xsl:with-param name="title" select="'Property Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
-
+    
     <xsl:variable name="obsolete_memfuncs" as="element(html:div)?">
       <xsl:call-template name="lookupSection_ltd">
         <xsl:with-param name="root" select="$obsolete"/>
@@ -482,7 +482,7 @@
         <xsl:with-param name="title" select="'Member Function Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
-
+    
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
       <xsl:call-template name="lookupSection_ltd">
         <xsl:with-param name="root" select="$obsolete"/>
@@ -490,10 +490,50 @@
         <xsl:with-param name="title" select="'Function Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
-
+    
     <xsl:variable name="obsolete_nonmems" as="element(html:div)?">
       <xsl:call-template name="lookupSection_ltd">
         <xsl:with-param name="root" select="$obsolete"/>
+        <xsl:with-param name="anchor" select="'nonmems'"/>
+        <xsl:with-param name="title" select="'Related Non-Members'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:variable name="compat_types" as="element(html:div)?">
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$compat"/>
+        <xsl:with-param name="anchor" select="'types'"/>
+        <xsl:with-param name="title" select="'Member Type Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:variable name="compat_properties" as="element(html:div)?">
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$compat"/>
+        <xsl:with-param name="anchor" select="'prop'"/>
+        <xsl:with-param name="title" select="'Property Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:variable name="compat_memfuncs" as="element(html:div)?">
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$compat"/>
+        <xsl:with-param name="anchor" select="'memfunc'"/>
+        <xsl:with-param name="title" select="'Member Function Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:variable name="compat_funcs" as="element(html:div)?">
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$compat"/>
+        <xsl:with-param name="anchor" select="'func'"/>
+        <xsl:with-param name="title" select="'Function Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <xsl:variable name="compat_nonmems" as="element(html:div)?">
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$compat"/>
         <xsl:with-param name="anchor" select="'nonmems'"/>
         <xsl:with-param name="title" select="'Related Non-Members'"/>
       </xsl:call-template>
@@ -510,9 +550,6 @@
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
       <xsl:if test="$types and $warnVocabularyUnsupportedFeatures">
         <xsl:message>WARNING: No summary output for types.</xsl:message>
-      </xsl:if>
-      <xsl:if test="$obsolete_types and $warnVocabularyUnsupportedFeatures">
-        <xsl:message>WARNING: No summary output for types, even if obsolete.</xsl:message>
       </xsl:if>
 
       <xsl:if test="$isClass">
@@ -531,6 +568,9 @@
   
           <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
+          
+          <xsl:with-param name="compatMemberFunctions" select="$compat_memfuncs"/>
+          <xsl:with-param name="compatProperties" select="$compat_properties"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -590,6 +630,9 @@
 
           <xsl:with-param name="obsoleteMemberFunctions" select="$obsolete_memfuncs"/>
           <xsl:with-param name="obsoleteProperties" select="$obsolete_properties"/>
+          
+          <xsl:with-param name="compatMemberFunctions" select="$compat_memfuncs"/>
+          <xsl:with-param name="compatProperties" select="$compat_properties"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -729,8 +772,8 @@
         </xsl:call-template>
       </xsl:if>
       
-      <!-- There may be obsolete things for C++ classes. -->
-      <!-- Prefix anchors with obsolete_. -->
+      <!-- There may be obsolete or compatibility things for C++ classes. -->
+      <!-- Prefix anchors with obsolete_ or compat_. -->
       <xsl:if test="$obsolete">
         <db:section>
           <db:title>
@@ -766,6 +809,45 @@
               <xsl:with-param name="data" select="$obsolete_nonmems"/>
               <xsl:with-param name="title" select="'Related Non-Members'"/>
               <xsl:with-param name="anchor" select="'obsolete_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
+            </xsl:call-template>
+          </xsl:if>
+        </db:section>
+      </xsl:if>
+      <xsl:if test="$compat">
+        <db:section>
+          <db:title>
+            <xsl:text>Compatibility Members</xsl:text>
+          </db:title>
+          
+          <xsl:if test="$compat_types"><!-- No example found in test suite. -->
+            <xsl:call-template name="content_types">
+              <xsl:with-param name="data" select="$compat_types"/>
+              <xsl:with-param name="title" select="'Type Documentation'"/>
+              <xsl:with-param name="anchor" select="'compat_types'"/>
+            </xsl:call-template>
+          </xsl:if>
+          
+          <xsl:if test="$compat_memfuncs">
+            <xsl:call-template name="content_class">
+              <xsl:with-param name="data" select="$compat_memfuncs"/>
+              <xsl:with-param name="title" select="'Member Function Documentation'"/>
+              <xsl:with-param name="anchor" select="'compat_memfunc'"/><!-- Actually, func, but avoid mismatch with non-member functions. -->
+            </xsl:call-template>
+          </xsl:if>
+          
+          <xsl:if test="$compat_funcs">
+            <xsl:call-template name="content_class">
+              <xsl:with-param name="data" select="$compat_funcs"/>
+              <xsl:with-param name="title" select="'Function Documentation'"/>
+              <xsl:with-param name="anchor" select="'compat_func'"/>
+            </xsl:call-template>
+          </xsl:if>
+          
+          <xsl:if test="$compat_nonmems">
+            <xsl:call-template name="content_nonmems">
+              <xsl:with-param name="data" select="$compat_nonmems"/>
+              <xsl:with-param name="title" select="'Related Non-Members'"/>
+              <xsl:with-param name="anchor" select="'compat_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
             </xsl:call-template>
           </xsl:if>
         </db:section>
@@ -984,6 +1066,9 @@
     
     <xsl:param name="obsoleteMemberFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
+    
+    <xsl:param name="compatMemberFunctions" as="element(html:div)?"/>
+    <xsl:param name="compatProperties" as="element(html:div)?"/>
 
     <xsl:param name="header" as="element()?"/>
     <xsl:param name="qmake" as="element()?"/>
@@ -1045,7 +1130,13 @@
       </xsl:apply-templates>
       <xsl:if test="boolean($obsoleteProperties)">
         <xsl:apply-templates mode="propertiesListing" select="$obsoleteProperties/html:h3">
-          <xsl:with-param name="obsolete" select="true()"/>
+          <xsl:with-param name="type" select="'obsolete'"/>
+          <xsl:with-param name="kind" select="'Qt property'"/>
+        </xsl:apply-templates>
+      </xsl:if>
+      <xsl:if test="boolean($compatProperties)">
+        <xsl:apply-templates mode="propertiesListing" select="$compatProperties/html:h3">
+          <xsl:with-param name="type" select="'compat'"/>
           <xsl:with-param name="kind" select="'Qt property'"/>
         </xsl:apply-templates>
       </xsl:if>
@@ -1060,7 +1151,13 @@
       <xsl:if test="boolean($obsoleteMemberFunctions)">
         <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
           <xsl:with-param name="className" select="$className"/>
-          <xsl:with-param name="obsolete" select="true()"/>
+          <xsl:with-param name="type" select="'obsolete'"/>
+        </xsl:apply-templates>
+      </xsl:if>
+      <xsl:if test="boolean($compatMemberFunctions)">
+        <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+          <xsl:with-param name="className" select="$className"/>
+          <xsl:with-param name="type" select="'compat'"/>
         </xsl:apply-templates>
       </xsl:if>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
@@ -1071,7 +1168,7 @@
   
   <xsl:template mode="propertiesListing" match="text()"/>
   <xsl:template mode="propertiesListing" match="html:h3[@class = 'fn']">
-    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+    <xsl:param name="type" as="xs:string" select="''"/>
     <xsl:param name="kind" as="xs:string"/>
     <xsl:variable name="anchor" select="./@id"/>
     
@@ -1080,8 +1177,12 @@
         <db:modifier>(<xsl:value-of select="$kind"/>)</db:modifier>
       </xsl:if>
       
-      <xsl:if test="$obsolete">
-        <db:modifier><xsl:text>(obsolete)</xsl:text></db:modifier>
+      <xsl:if test="string-length($type) &gt; 0">
+        <db:modifier>
+          <xsl:text>(</xsl:text>
+          <xsl:value-of select="$type"/>
+          <xsl:text>)</xsl:text>
+        </db:modifier>
       </xsl:if>
       
       <xsl:call-template name="classListing_methodBody_analyseType">
@@ -1096,7 +1197,7 @@
   <xsl:template mode="classListing" match="text()"/>
   <xsl:template mode="classListing" match="html:h3">
     <xsl:param name="className" as="xs:string"/>
-    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+    <xsl:param name="type" as="xs:string" select="''"/>
 
     <!-- Possible anchors: for constructors, Class, Class-2; for destructors, dtor.Class -->
     <xsl:variable name="functionAnchor" select="./@id"/>
@@ -1109,7 +1210,7 @@
         <db:constructorsynopsis>
           <xsl:attribute name="xlink:href" select="concat('#', $functionAnchor)"/>
           <xsl:call-template name="classListing_methodBody">
-            <xsl:with-param name="obsolete" select="$obsolete"/>
+            <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
         </db:constructorsynopsis>
       </xsl:when>
@@ -1117,7 +1218,7 @@
         <db:destructorsynopsis>
           <xsl:attribute name="xlink:href" select="$functionAnchor"/>
           <xsl:call-template name="classListing_methodBody">
-            <xsl:with-param name="obsolete" select="$obsolete"/>
+            <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
         </db:destructorsynopsis>
       </xsl:when>
@@ -1125,14 +1226,14 @@
         <db:methodsynopsis>
           <xsl:attribute name="xlink:href" select="$functionAnchor"/>
           <xsl:call-template name="classListing_methodBody">
-            <xsl:with-param name="obsolete" select="$obsolete"/>
+            <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
         </db:methodsynopsis>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
   <xsl:template name="classListing_methodBody">
-    <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+    <xsl:param name="type" as="xs:string" select="''"/>
 
     <xsl:variable name="titleNode" select="."/>
     <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
@@ -1141,8 +1242,12 @@
     <xsl:variable name="isStatic" as="xs:boolean"
       select="boolean($returnTypes/preceding-sibling::html:code[normalize-space(text()) = '[static]'])"/>
 
-    <xsl:if test="$obsolete">
-      <db:modifier>(obsolete)</db:modifier>
+    <xsl:if test="string-length($type) &gt; 0">
+      <db:modifier>
+        <xsl:text>(</xsl:text>
+        <xsl:value-of select="$type"/>
+        <xsl:text>)</xsl:text>
+      </db:modifier>
     </xsl:if>
 
     <xsl:if test="$isStatic">
