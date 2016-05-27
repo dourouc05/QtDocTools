@@ -418,30 +418,26 @@
       <xsl:variable name="linkedDocumentsList"
         select="$content/html:ul[preceding::html:div[@class = 'table']][1]" as="element()?"/>
       <xsl:variable name="linkedDocumentsFileNames" as="xs:string*">
-        <xsl:value-of
-          select="replace($linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]/@href, '.html', '.xml')"
-        />
-      </xsl:variable>
-      <xsl:if test="$linkedDocumentsFileNames">
-        <xsl:for-each select="$linkedDocumentsFileNames">
-          <entry>
-            <xsl:attribute name="file-name">
-              <xsl:value-of select="."/>
-            </xsl:attribute>
-            <xsl:attribute name="type">
-              <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
-            </xsl:attribute>
-            <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
-          </entry>
+        <xsl:for-each select="$linkedDocumentsList/html:li/html:a[not(ends-with(@href, '-members.html'))]">
+          <xsl:value-of select="replace(@href, '.html', '.xml')"/>
         </xsl:for-each>
-      </xsl:if>
+      </xsl:variable>
+      <xsl:message><xsl:value-of select="$linkedDocumentsFileNames"/></xsl:message>
+      <xsl:for-each select="$linkedDocumentsFileNames">
+        <entry>
+          <xsl:attribute name="file-name">
+            <xsl:value-of select="."/>
+          </xsl:attribute>
+          <xsl:attribute name="type">
+            <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
+          </xsl:attribute>
+          <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
+        </entry>
+      </xsl:for-each>
     </xsl:variable>
-    <xsl:if test="count($linkedDocuments) > 1">
-      <xsl:message>WARNING: More than one linked document. Unsupported.</xsl:message>
-    </xsl:if>
     <xsl:variable name="obsolete"
       select="
-        $linkedDocuments[1]
+        $linkedDocuments/entry[@type = 'obsolete']
         /html:html
         /html:body
         /html:div[@class = 'header']
@@ -449,7 +445,6 @@
         /html:div[@class = 'content']
         /html:div[@class = 'line']
         /html:div[@class = 'content mainContent']"/>
-    <xsl:variable name="hasObsolete" select="boolean($obsolete)" as="xs:boolean"/>
 
     <xsl:variable name="obsolete_types" as="element(html:div)?">
       <xsl:variable name="title" as="element(html:h2)?"
@@ -743,7 +738,7 @@
       
       <!-- There may be obsolete things for C++ classes. -->
       <!-- Prefix anchors with obsolete_. -->
-      <xsl:if test="$hasObsolete">
+      <xsl:if test="$obsolete">
         <db:section>
           <db:title>
             <xsl:text>Obsolete Members</xsl:text>

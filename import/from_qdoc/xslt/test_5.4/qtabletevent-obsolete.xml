@@ -1,0 +1,142 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qevent.cpp -->
+        <html:title>Obsolete Members for QTabletEvent | Qt GUI 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtgui-index.html">Qt GUI</html:a></html:li>
+                            <html:li><html:a href="qtgui-module.html">C++ Classes</html:a></html:li>
+                            <html:li>QTabletEvent</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar"><html:div class="sidebar-content"
+                                    id="sidebar-content"></html:div></html:div>
+                            <html:h1 class="title">Obsolete Members for QTabletEvent</html:h1>
+                            <html:p><html:b>The following members of class <html:a
+                                        href="qtabletevent.html">QTabletEvent</html:a> are
+                                    obsolete.</html:b> They are provided to keep old source code
+                                working. We strongly advise against using them in new code.</html:p>
+                            <html:h2>Public Functions</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft topAlign rightAlign">
+                                                <html:code>(obsolete) </html:code></html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent-obsolete.html#QTabletEvent-2"
+                                                  >QTabletEvent</html:a></html:b>(Type<html:i>
+                                                  type</html:i>, const QPointF &amp;<html:i>
+                                                  pos</html:i>, const QPointF &amp;<html:i>
+                                                  globalPos</html:i>, int<html:i> device</html:i>,
+                                                  int<html:i> pointerType</html:i>, qreal<html:i>
+                                                  pressure</html:i>, int<html:i> xTilt</html:i>,
+                                                  int<html:i> yTilt</html:i>, qreal<html:i>
+                                                  tangentialPressure</html:i>, qreal<html:i>
+                                                  rotation</html:i>, int<html:i> z</html:i>,
+                                                  Qt::KeyboardModifiers<html:i> keyState</html:i>,
+                                                  qint64<html:i> uniqueID</html:i>)</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:h2>Member Function Documentation</html:h2>
+                            <!-- $$$QTabletEvent$$$QTabletEventTypeconstQPointF&constQPointF&intintqrealintintqrealqrealintQt::KeyboardModifiersqint64 -->
+                            <html:h3 class="fn" id="QTabletEvent-2"><html:a name="QTabletEvent-2"
+                                    ></html:a>QTabletEvent::<html:span class="name"
+                                    >QTabletEvent</html:span>(<html:span class="type"><html:a
+                                        href="qtcore/qevent.html#Type-enum"
+                                    >Type</html:a></html:span><html:i> type</html:i>, const
+                                    <html:span class="type"><html:a href="qtcore/qpointf.html"
+                                        >QPointF</html:a></html:span> &amp;<html:i> pos</html:i>,
+                                const <html:span class="type"><html:a href="qtcore/qpointf.html"
+                                        >QPointF</html:a></html:span> &amp;<html:i>
+                                    globalPos</html:i>, <html:span class="type"
+                                    >int</html:span><html:i> device</html:i>, <html:span
+                                    class="type">int</html:span><html:i> pointerType</html:i>,
+                                    <html:span class="type"><html:a
+                                        href="qtcore/qtglobal.html#qreal-typedef"
+                                    >qreal</html:a></html:span><html:i> pressure</html:i>,
+                                    <html:span class="type">int</html:span><html:i> xTilt</html:i>,
+                                    <html:span class="type">int</html:span><html:i> yTilt</html:i>,
+                                    <html:span class="type"><html:a
+                                        href="qtcore/qtglobal.html#qreal-typedef"
+                                    >qreal</html:a></html:span><html:i> tangentialPressure</html:i>,
+                                    <html:span class="type"><html:a
+                                        href="qtcore/qtglobal.html#qreal-typedef"
+                                    >qreal</html:a></html:span><html:i> rotation</html:i>,
+                                    <html:span class="type">int</html:span><html:i> z</html:i>,
+                                    <html:span class="type"><html:a
+                                        href="qtcore/qt.html#KeyboardModifier-enum"
+                                        >Qt::KeyboardModifiers</html:a></html:span><html:i>
+                                    keyState</html:i>, <html:span class="type"><html:a
+                                        href="qtcore/qtglobal.html#qint64-typedef"
+                                    >qint64</html:a></html:span><html:i>
+                                uniqueID</html:i>)</html:h3>
+                            <html:p>Construct a tablet event of the given
+                                <html:i>type</html:i>.</html:p>
+                            <html:p>The <html:i>pos</html:i> parameter indicates where the event
+                                occurred in the widget; <html:i>globalPos</html:i> is the
+                                corresponding position in absolute coordinates.</html:p>
+                            <html:p><html:i>pressure</html:i> contains the pressure exerted on the
+                                    <html:i>device</html:i>.</html:p>
+                            <html:p><html:i>pointerType</html:i> describes the type of pen that is
+                                being used.</html:p>
+                            <html:p><html:i>xTilt</html:i> and <html:i>yTilt</html:i> contain the
+                                device's degree of tilt from the x and y axes respectively.</html:p>
+                            <html:p><html:i>keyState</html:i> specifies which keyboard modifiers are
+                                pressed (e.g., <html:b>Ctrl</html:b>).</html:p>
+                            <html:p>The <html:i>uniqueID</html:i> parameter contains the unique ID
+                                for the current device.</html:p>
+                            <html:p>The <html:i>z</html:i> parameter contains the coordinate of the
+                                device on the tablet, this is usually given by a wheel on 4D mouse.
+                                If the device does not support a Z-axis, pass zero here.</html:p>
+                            <html:p>The <html:i>tangentialPressure</html:i> parameter contins the
+                                tangential pressure of an air brush. If the device does not support
+                                tangential pressure, pass 0 here.</html:p>
+                            <html:p><html:i>rotation</html:i> contains the device's rotation in
+                                degrees. 4D mice support rotation. If the device does not support
+                                rotation, pass 0 here.</html:p>
+                            <html:p><html:b>See also </html:b><html:a href="qtabletevent.html#pos"
+                                    >pos</html:a>(), <html:a href="qtabletevent.html#globalPos"
+                                    >globalPos</html:a>(), <html:a href="qtabletevent.html#device"
+                                    >device</html:a>(), <html:a href="qtabletevent.html#pressure"
+                                    >pressure</html:a>(), <html:a href="qtabletevent.html#xTilt"
+                                    >xTilt</html:a>(), <html:a href="qtabletevent.html#yTilt"
+                                    >yTilt</html:a>(), <html:a href="qtabletevent.html#uniqueId"
+                                    >uniqueId</html:a>(), <html:a href="qtabletevent.html#rotation"
+                                    >rotation</html:a>(), <html:a
+                                    href="qtabletevent.html#tangentialPressure"
+                                    >tangentialPressure</html:a>(), and <html:a
+                                    href="qtabletevent.html#z">z</html:a>().</html:p>
+                            <!-- @@@QTabletEvent -->
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

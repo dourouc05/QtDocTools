@@ -1,0 +1,908 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qevent.cpp -->
+        <html:title>QTabletEvent Class | Qt GUI 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtgui-index.html">Qt GUI</html:a></html:li>
+                            <html:li><html:a href="qtgui-module.html">C++ Classes</html:a></html:li>
+                            <html:li>QTabletEvent</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#public-types">Public
+                                                Types</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#public-functions"
+                                                >Public Functions</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#details">Detailed
+                                                Description</html:a></html:li>
+                                        <html:li class="level2"><html:a href="#notes-for-x11-users"
+                                                >Notes for X11 Users</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">QTabletEvent Class</html:h1>
+                            <!-- $$$QTabletEvent-brief -->
+                            <html:p>The <html:a href="qtabletevent.html">QTabletEvent</html:a> class
+                                contains parameters that describe a Tablet event. <html:a
+                                    href="#details">More...</html:a></html:p>
+                            <!-- @@@QTabletEvent -->
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Header:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:span class="preprocessor">#include
+                                                  &lt;QTabletEvent&gt;</html:span>
+                                            </html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                qmake:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> QT +=
+                                                gui</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Inherits:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:a href="qinputevent.html"
+                                                >QInputEvent</html:a></html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div><html:ul>
+                                <html:li><html:a href="qtabletevent-members.html">List of all
+                                        members, including inherited members</html:a></html:li>
+                                <html:li><html:a href="qtabletevent-obsolete.html">Obsolete
+                                        members</html:a></html:li>
+                                <html:li><html:a href="qtabletevent-compat.html">Compatibility
+                                        members</html:a></html:li>
+                            </html:ul>
+                            <html:a name="public-types"></html:a>
+                            <html:h2 id="public-types">Public Types</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> enum </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#PointerType-enum"
+                                                  >PointerType</html:a></html:b> { UnknownPointer,
+                                                Pen, Cursor, Eraser }</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> enum </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#TabletDevice-enum"
+                                                  >TabletDevice</html:a></html:b> { NoDevice, Puck,
+                                                Stylus, Airbrush, FourDMouse, RotationStylus
+                                                }</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:a name="public-functions"></html:a>
+                            <html:h2 id="public-functions">Public Functions</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#QTabletEvent"
+                                                  >QTabletEvent</html:a></html:b>(Type<html:i>
+                                                  type</html:i>, const QPointF &amp;<html:i>
+                                                  pos</html:i>, const QPointF &amp;<html:i>
+                                                  globalPos</html:i>, int<html:i> device</html:i>,
+                                                  int<html:i> pointerType</html:i>, qreal<html:i>
+                                                  pressure</html:i>, int<html:i> xTilt</html:i>,
+                                                  int<html:i> yTilt</html:i>, qreal<html:i>
+                                                  tangentialPressure</html:i>, qreal<html:i>
+                                                  rotation</html:i>, int<html:i> z</html:i>,
+                                                  Qt::KeyboardModifiers<html:i> keyState</html:i>,
+                                                  qint64<html:i> uniqueID</html:i>,
+                                                  Qt::MouseButton<html:i> button</html:i>,
+                                                  Qt::MouseButtons<html:i>
+                                                buttons</html:i>)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Qt::MouseButton </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#button"
+                                                  >button</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Qt::MouseButtons </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#buttons"
+                                                  >buttons</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                TabletDevice </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#device"
+                                                  >device</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> QPoint </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#globalPos"
+                                                  >globalPos</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> const
+                                                QPointF &amp; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#globalPosF"
+                                                  >globalPosF</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#globalX"
+                                                  >globalX</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#globalY"
+                                                  >globalY</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qreal </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#hiResGlobalX"
+                                                  >hiResGlobalX</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qreal </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#hiResGlobalY"
+                                                  >hiResGlobalY</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                PointerType </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#pointerType"
+                                                  >pointerType</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> QPoint </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#pos"
+                                                  >pos</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> const
+                                                QPointF &amp; </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#posF"
+                                                  >posF</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qreal </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#pressure"
+                                                  >pressure</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qreal </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#rotation"
+                                                  >rotation</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qreal </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qtabletevent.html#tangentialPressure"
+                                                  >tangentialPressure</html:a></html:b>()
+                                                const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> qint64 </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#uniqueId"
+                                                  >uniqueId</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#x"
+                                                  >x</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#xTilt"
+                                                  >xTilt</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#y"
+                                                  >y</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#yTilt"
+                                                  >yTilt</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> int </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a href="qtabletevent.html#z"
+                                                  >z</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:ul>
+                                <html:li class="fn">2 public functions inherited from <html:a
+                                        href="qinputevent.html#public-functions"
+                                        >QInputEvent</html:a></html:li>
+                                <html:li class="fn">6 public functions inherited from <html:a
+                                        href="qtcore/qevent.html#public-functions"
+                                    >QEvent</html:a></html:li>
+                            </html:ul>
+                            <html:h3>Additional Inherited Members</html:h3>
+                            <html:ul>
+                                <html:li class="fn">1 property inherited from <html:a
+                                        href="qtcore/qevent.html#properties"
+                                    >QEvent</html:a></html:li>
+                                <html:li class="fn">1 static public member inherited from <html:a
+                                        href="qtcore/qevent.html#static-public-members"
+                                        >QEvent</html:a></html:li>
+                                <html:li class="fn">2 protected variables inherited from <html:a
+                                        href="qtcore/qevent.html#protected-variables"
+                                        >QEvent</html:a></html:li>
+                            </html:ul>
+                            <html:a name="details"></html:a>
+                            <!-- $$$QTabletEvent-description -->
+                            <html:div class="descr">
+                                <html:h2 id="details">Detailed Description</html:h2>
+                                <html:p>The <html:a href="qtabletevent.html">QTabletEvent</html:a>
+                                    class contains parameters that describe a Tablet event.</html:p>
+                                <html:p><html:i>Tablet events</html:i> are generated from tablet
+                                    peripherals such as Wacom tablets and various other brands, and
+                                    electromagnetic stylus devices included with some types of
+                                    tablet computers. (It is not the same as <html:a
+                                        href="qtouchevent.html">QTouchEvent</html:a> which a
+                                    touchscreen generates, even when a passive stylus is used on a
+                                    touchscreen.)</html:p>
+                                <html:p>Tablet events are similar to mouse events; for example, the
+                                        <html:a href="qtabletevent.html#x">x</html:a>(), <html:a
+                                        href="qtabletevent.html#y">y</html:a>(), <html:a
+                                        href="qtabletevent.html#pos">pos</html:a>(), <html:a
+                                        href="qtabletevent.html#globalX">globalX</html:a>(), <html:a
+                                        href="qtabletevent.html#globalY">globalY</html:a>(), and
+                                        <html:a href="qtabletevent.html#globalPos"
+                                        >globalPos</html:a>() accessors provide the cursor position,
+                                    and you can see which <html:a href="qtabletevent.html#buttons"
+                                        >buttons</html:a>() are pressed (pressing the stylus tip
+                                    against the tablet surface is equivalent to a left mouse
+                                    button). But tablet events also pass through some extra
+                                    information that the tablet device driver provides; for example,
+                                    you might want to do subpixel rendering with higher resolution
+                                    coordinates (<html:a href="qtabletevent.html#hiResGlobalX"
+                                        >hiResGlobalX</html:a>() and <html:a
+                                        href="qtabletevent.html#hiResGlobalY"
+                                    >hiResGlobalY</html:a>()), adjust color brightness based on the
+                                        <html:a href="qtabletevent.html#pressure"
+                                    >pressure</html:a>() of the tool against the tablet surface, use
+                                    different brushes depending on the type of tool in use (<html:a
+                                        href="qtabletevent.html#device">device</html:a>()), modulate
+                                    the brush shape in some way according to the X-axis and Y-axis
+                                    tilt of the tool with respect to the tablet surface (<html:a
+                                        href="qtabletevent.html#xTilt">xTilt</html:a>() and <html:a
+                                        href="qtabletevent.html#yTilt">yTilt</html:a>()), and use a
+                                    virtual eraser instead of a brush if the user switches to the
+                                    other end of a double-ended stylus (<html:a
+                                        href="qtabletevent.html#pointerType"
+                                    >pointerType</html:a>()).</html:p>
+                                <html:p>Every event contains an accept flag that indicates whether
+                                    the receiver wants the event. You should call <html:a
+                                        href="qtcore/qevent.html#accept"
+                                        >QTabletEvent::accept</html:a>() if you handle the tablet
+                                    event; otherwise it will be sent to the parent widget. The
+                                    exception are <html:a href="qtcore/qevent.html#Type-enum"
+                                        >TabletEnterProximity</html:a> and <html:a
+                                        href="qtcore/qevent.html#Type-enum"
+                                        >TabletLeaveProximity</html:a> events: these are only sent
+                                    to <html:a href="qtwidgets/qapplication.html"
+                                        >QApplication</html:a> and do not check whether or not they
+                                    are accepted.</html:p>
+                                <html:p>The <html:a href="qtwidgets/qwidget.html#enabled-prop"
+                                        >QWidget::setEnabled</html:a>() function can be used to
+                                    enable or disable mouse, tablet and keyboard events for a
+                                    widget.</html:p>
+                                <html:p>The event handler <html:a
+                                        href="qtwidgets/qwidget.html#tabletEvent"
+                                        >QWidget::tabletEvent</html:a>() receives <html:a
+                                        href="qtcore/qevent.html#Type-enum">TabletPress</html:a>,
+                                        <html:a href="qtcore/qevent.html#Type-enum"
+                                        >TabletRelease</html:a> and <html:a
+                                        href="qtcore/qevent.html#Type-enum">TabletMove</html:a>
+                                    events. Qt will first send a tablet event, then if it is not
+                                    accepted by any widget, it will send a mouse event. This allows
+                                    users of applications that are not designed for tablets to use a
+                                    tablet like a mouse. However high-resolution drawing
+                                    applications should handle the tablet events, because they can
+                                    occur at a higher frequency, which is a benefit for smooth and
+                                    accurate drawing. If the tablet events are rejected, the
+                                    synthetic mouse events may be compressed for
+                                    efficiency.</html:p>
+                                <html:p>New in Qt 5.4: <html:a href="qtabletevent.html"
+                                        >QTabletEvent</html:a> includes all information available
+                                    from the device, including <html:a
+                                        href="qtabletevent.html#buttons"
+                                        >QTabletEvent::buttons</html:a>(). Previously it was not
+                                    possible to accept all tablet events and also know which stylus
+                                    buttons were pressed.</html:p>
+                                <html:p>Note that pressing the stylus button while the stylus hovers
+                                    over the tablet will generate a button press on some types of
+                                    tablets, while on other types it will be necessary to press the
+                                    stylus against the tablet surface in order to register the
+                                    simultaneous stylus button press.</html:p>
+                                <html:a name="notes-for-x11-users"></html:a>
+                                <html:h3>Notes for X11 Users</html:h3>
+                                <html:p>If the tablet is configured in xorg.conf to use the Wacom
+                                    driver, there will be separate XInput "devices" for the stylus,
+                                    eraser, and (optionally) cursor and touchpad. Qt recognizes
+                                    these by their names. Otherwise, if the tablet is configured to
+                                    use the evdev driver, there will be only one device and
+                                    applications may not be able to distinguish the stylus from the
+                                    eraser.</html:p>
+                            </html:div>
+                            <!-- @@@QTabletEvent -->
+                            <html:div class="types">
+                                <html:h2>Member Type Documentation</html:h2>
+                                <!-- $$$PointerType$$$UnknownPointer$$$Pen$$$Cursor$$$Eraser -->
+                                <html:h3 class="fn" id="PointerType-enum"><html:a
+                                        name="PointerType-enum"></html:a>enum
+                                        QTabletEvent::<html:span class="name"
+                                        >PointerType</html:span></html:h3>
+                                <html:p>This enum defines what type of point is generating the
+                                    event.</html:p>
+                                <html:div class="table"><html:table class="valuelist">
+                                        <html:tbody>
+                                            <html:tr class="odd" valign="top">
+                                                <html:th class="tblConst">Constant</html:th>
+                                                <html:th class="tblval">Value</html:th>
+                                                <html:th class="tbldscr">Description</html:th>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::UnknownPointer</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>0</html:code></html:td>
+                                                <html:td class="topAlign">An unknown
+                                                  device.</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::Pen</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>1</html:code></html:td>
+                                                <html:td class="topAlign">Tip end of a stylus-like
+                                                  device (the narrow end of the pen).</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::Cursor</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>2</html:code></html:td>
+                                                <html:td class="topAlign">Any puck-like
+                                                  device.</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::Eraser</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>3</html:code></html:td>
+                                                <html:td class="topAlign">Eraser end of a
+                                                  stylus-like device (the broad end of the
+                                                  pen).</html:td>
+                                            </html:tr>
+                                        </html:tbody>
+                                    </html:table></html:div>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#pointerType"
+                                    >pointerType</html:a>().</html:p>
+                                <!-- @@@PointerType -->
+                                <!-- $$$TabletDevice$$$NoDevice$$$Puck$$$Stylus$$$Airbrush$$$FourDMouse$$$XFreeEraser$$$RotationStylus -->
+                                <html:h3 class="fn" id="TabletDevice-enum"><html:a
+                                        name="TabletDevice-enum"></html:a>enum
+                                        QTabletEvent::<html:span class="name"
+                                        >TabletDevice</html:span></html:h3>
+                                <html:p>This enum defines what type of device is generating the
+                                    event.</html:p>
+                                <html:div class="table"><html:table class="valuelist">
+                                        <html:tbody>
+                                            <html:tr class="odd" valign="top">
+                                                <html:th class="tblConst">Constant</html:th>
+                                                <html:th class="tblval">Value</html:th>
+                                                <html:th class="tbldscr">Description</html:th>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::NoDevice</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>0</html:code></html:td>
+                                                <html:td class="topAlign">No device, or an unknown
+                                                  device.</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::Puck</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>1</html:code></html:td>
+                                                <html:td class="topAlign">A Puck (a device that is
+                                                  similar to a flat mouse with a transparent circle
+                                                  with cross-hairs).</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::Stylus</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>2</html:code></html:td>
+                                                <html:td class="topAlign">A Stylus.</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::Airbrush</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>3</html:code></html:td>
+                                                <html:td class="topAlign">An airbrush</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::FourDMouse</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>4</html:code></html:td>
+                                                <html:td class="topAlign">A 4D Mouse.</html:td>
+                                            </html:tr>
+                                            <html:tr>
+                                                <html:td class="topAlign"
+                                                  ><html:code>QTabletEvent::RotationStylus</html:code></html:td>
+                                                <html:td class="topAlign"
+                                                  ><html:code>6</html:code></html:td>
+                                                <html:td class="topAlign">A special stylus that also
+                                                  knows about rotation (a 6D stylus).</html:td>
+                                            </html:tr>
+                                        </html:tbody>
+                                    </html:table></html:div>
+                                <html:p>This enum was introduced or modified in Qt 4.1.</html:p>
+                                <!-- @@@TabletDevice -->
+                            </html:div>
+                            <html:div class="func">
+                                <html:h2>Member Function Documentation</html:h2>
+                                <!-- $$$QTabletEvent[overload1]$$$QTabletEventTypeconstQPointF&constQPointF&intintqrealintintqrealqrealintQt::KeyboardModifiersqint64Qt::MouseButtonQt::MouseButtons -->
+                                <html:h3 class="fn" id="QTabletEvent"><html:a name="QTabletEvent"
+                                        ></html:a>QTabletEvent::<html:span class="name"
+                                        >QTabletEvent</html:span>(<html:span class="type"><html:a
+                                            href="qtcore/qevent.html#Type-enum"
+                                        >Type</html:a></html:span><html:i> type</html:i>, const
+                                        <html:span class="type"><html:a href="qtcore/qpointf.html"
+                                            >QPointF</html:a></html:span> &amp;<html:i>
+                                    pos</html:i>, const <html:span class="type"><html:a
+                                            href="qtcore/qpointf.html">QPointF</html:a></html:span>
+                                        &amp;<html:i> globalPos</html:i>, <html:span class="type"
+                                        >int</html:span><html:i> device</html:i>, <html:span
+                                        class="type">int</html:span><html:i> pointerType</html:i>,
+                                        <html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span><html:i> pressure</html:i>,
+                                        <html:span class="type">int</html:span><html:i>
+                                        xTilt</html:i>, <html:span class="type"
+                                        >int</html:span><html:i> yTilt</html:i>, <html:span
+                                        class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span><html:i>
+                                        tangentialPressure</html:i>, <html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span><html:i> rotation</html:i>,
+                                        <html:span class="type">int</html:span><html:i> z</html:i>,
+                                        <html:span class="type"><html:a
+                                            href="qtcore/qt.html#KeyboardModifier-enum"
+                                            >Qt::KeyboardModifiers</html:a></html:span><html:i>
+                                        keyState</html:i>, <html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qint64-typedef"
+                                            >qint64</html:a></html:span><html:i> uniqueID</html:i>,
+                                        <html:span class="type"><html:a
+                                            href="qtcore/qt.html#MouseButton-enum"
+                                            >Qt::MouseButton</html:a></html:span><html:i>
+                                        button</html:i>, <html:span class="type"><html:a
+                                            href="qtcore/qt.html#MouseButton-enum"
+                                            >Qt::MouseButtons</html:a></html:span><html:i>
+                                        buttons</html:i>)</html:h3>
+                                <html:p>Construct a tablet event of the given
+                                    <html:i>type</html:i>.</html:p>
+                                <html:p>The <html:i>pos</html:i> parameter indicates where the event
+                                    occurred in the widget; <html:i>globalPos</html:i> is the
+                                    corresponding position in absolute coordinates.</html:p>
+                                <html:p><html:i>pressure</html:i> contains the pressure exerted on
+                                    the <html:i>device</html:i>.</html:p>
+                                <html:p><html:i>pointerType</html:i> describes the type of pen that
+                                    is being used.</html:p>
+                                <html:p><html:i>xTilt</html:i> and <html:i>yTilt</html:i> contain
+                                    the device's degree of tilt from the x and y axes
+                                    respectively.</html:p>
+                                <html:p><html:i>keyState</html:i> specifies which keyboard modifiers
+                                    are pressed (e.g., <html:b>Ctrl</html:b>).</html:p>
+                                <html:p>The <html:i>uniqueID</html:i> parameter contains the unique
+                                    ID for the current device.</html:p>
+                                <html:p>The <html:i>z</html:i> parameter contains the coordinate of
+                                    the device on the tablet, this is usually given by a wheel on 4D
+                                    mouse. If the device does not support a Z-axis, pass zero
+                                    here.</html:p>
+                                <html:p>The <html:i>tangentialPressure</html:i> parameter contins
+                                    the tangential pressure of an air brush. If the device does not
+                                    support tangential pressure, pass 0 here.</html:p>
+                                <html:p><html:i>rotation</html:i> contains the device's rotation in
+                                    degrees. 4D mice and the Wacom Art Pen support rotation. If the
+                                    device does not support rotation, pass 0 here.</html:p>
+                                <html:p>The <html:i>button</html:i> that caused the event is given
+                                    as a value from the <html:a
+                                        href="qtcore/qt.html#MouseButton-enum"
+                                        >Qt::MouseButton</html:a> enum. If the event
+                                        <html:i>type</html:i> is not <html:a
+                                        href="qtcore/qevent.html#Type-enum">TabletPress</html:a> or
+                                        <html:a href="qtcore/qevent.html#Type-enum"
+                                        >TabletRelease</html:a>, the appropriate button for this
+                                    event is <html:a href="qtcore/qt.html#MouseButton-enum"
+                                        >Qt::NoButton</html:a>.</html:p>
+                                <html:p><html:i>buttons</html:i> is the state of all buttons at the
+                                    time of the event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#pos">pos</html:a>(), <html:a
+                                        href="qtabletevent.html#globalPos">globalPos</html:a>(),
+                                        <html:a href="qtabletevent.html#device">device</html:a>(),
+                                        <html:a href="qtabletevent.html#pressure"
+                                    >pressure</html:a>(), <html:a href="qtabletevent.html#xTilt"
+                                        >xTilt</html:a>(), <html:a href="qtabletevent.html#yTilt"
+                                        >yTilt</html:a>(), <html:a href="qtabletevent.html#uniqueId"
+                                        >uniqueId</html:a>(), <html:a
+                                        href="qtabletevent.html#rotation">rotation</html:a>(),
+                                        <html:a href="qtabletevent.html#tangentialPressure"
+                                        >tangentialPressure</html:a>(), and <html:a
+                                        href="qtabletevent.html#z">z</html:a>().</html:p>
+                                <!-- @@@QTabletEvent -->
+                                <!-- $$$button[overload1]$$$button -->
+                                <html:h3 class="fn" id="button"><html:a name="button"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qt.html#MouseButton-enum"
+                                            >Qt::MouseButton</html:a></html:span>
+                                        QTabletEvent::<html:span class="name">button</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the button that caused the event.</html:p>
+                                <html:p>Note that the returned value is always <html:a
+                                        href="qtcore/qt.html#MouseButton-enum">Qt::NoButton</html:a>
+                                    for <html:a href="qtcore/qevent.html#Type-enum"
+                                        >TabletMove</html:a>, <html:a
+                                        href="qtcore/qevent.html#Type-enum"
+                                        >TabletEnterProximity</html:a> and <html:a
+                                        href="qtcore/qevent.html#Type-enum"
+                                        >TabletLeaveProximity</html:a> events.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#buttons">buttons</html:a>() and
+                                        <html:a href="qtcore/qt.html#MouseButton-enum"
+                                        >Qt::MouseButton</html:a>.</html:p>
+                                <!-- @@@button -->
+                                <!-- $$$buttons[overload1]$$$buttons -->
+                                <html:h3 class="fn" id="buttons"><html:a name="buttons"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qt.html#MouseButton-enum"
+                                            >Qt::MouseButtons</html:a></html:span>
+                                        QTabletEvent::<html:span class="name">buttons</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the button state when the event was generated. The
+                                    button state is a combination of buttons from the <html:a
+                                        href="qtcore/qt.html#MouseButton-enum"
+                                        >Qt::MouseButton</html:a> enum using the OR operator. For
+                                        <html:a href="qtcore/qevent.html#Type-enum"
+                                        >TabletMove</html:a> events, this is all buttons that are
+                                    pressed down. For <html:a href="qtcore/qevent.html#Type-enum"
+                                        >TabletPress</html:a> events this includes the button that
+                                    caused the event. For <html:a
+                                        href="qtcore/qevent.html#Type-enum">TabletRelease</html:a>
+                                    events this excludes the button that caused the event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#button">button</html:a>() and
+                                        <html:a href="qtcore/qt.html#MouseButton-enum"
+                                        >Qt::MouseButton</html:a>.</html:p>
+                                <!-- @@@buttons -->
+                                <!-- $$$device[overload1]$$$device -->
+                                <html:h3 class="fn" id="device"><html:a name="device"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtabletevent.html#TabletDevice-enum"
+                                            >TabletDevice</html:a></html:span>
+                                        QTabletEvent::<html:span class="name">device</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the type of device that generated the
+                                    event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#TabletDevice-enum"
+                                        >TabletDevice</html:a>.</html:p>
+                                <!-- @@@device -->
+                                <!-- $$$globalPos[overload1]$$$globalPos -->
+                                <html:h3 class="fn" id="globalPos"><html:a name="globalPos"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qpoint.html">QPoint</html:a></html:span>
+                                        QTabletEvent::<html:span class="name"
+                                    >globalPos</html:span>() const</html:h3>
+                                <html:p>Returns the global position of the device <html:i>at the
+                                        time of the event</html:i>. This is important on
+                                    asynchronous windows systems like X11; whenever you move your
+                                    widgets around in response to mouse events, globalPos() can
+                                    differ significantly from the current position <html:a
+                                        href="qcursor.html#pos">QCursor::pos</html:a>().</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#globalX">globalX</html:a>(), <html:a
+                                        href="qtabletevent.html#globalY">globalY</html:a>(), and
+                                        <html:a href="qtabletevent-compat.html#hiResGlobalPos"
+                                        >hiResGlobalPos</html:a>().</html:p>
+                                <!-- @@@globalPos -->
+                                <!-- $$$globalPosF[overload1]$$$globalPosF -->
+                                <html:h3 class="fn" id="globalPosF"><html:a name="globalPosF"
+                                    ></html:a>const <html:span class="type"><html:a
+                                            href="qtcore/qpointf.html">QPointF</html:a></html:span>
+                                    &amp; QTabletEvent::<html:span class="name"
+                                        >globalPosF</html:span>() const</html:h3>
+                                <html:p>Returns the global position of the device <html:i>at the
+                                        time of the event</html:i>. This is important on
+                                    asynchronous windows systems like X11; whenever you move your
+                                    widgets around in response to mouse events, globalPosF() can
+                                    differ significantly from the current position <html:a
+                                        href="qcursor.html#pos">QCursor::pos</html:a>().</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#posF">posF</html:a>().</html:p>
+                                <!-- @@@globalPosF -->
+                                <!-- $$$globalX[overload1]$$$globalX -->
+                                <html:h3 class="fn" id="globalX"><html:a name="globalX"
+                                        ></html:a><html:span class="type">int</html:span>
+                                        QTabletEvent::<html:span class="name">globalX</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the global x position of the mouse pointer at the
+                                    time of the event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#globalY">globalY</html:a>(), <html:a
+                                        href="qtabletevent.html#globalPos">globalPos</html:a>(), and
+                                        <html:a href="qtabletevent.html#hiResGlobalX"
+                                        >hiResGlobalX</html:a>().</html:p>
+                                <!-- @@@globalX -->
+                                <!-- $$$globalY[overload1]$$$globalY -->
+                                <html:h3 class="fn" id="globalY"><html:a name="globalY"
+                                        ></html:a><html:span class="type">int</html:span>
+                                        QTabletEvent::<html:span class="name">globalY</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the global y position of the tablet device at the
+                                    time of the event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#globalX">globalX</html:a>(), <html:a
+                                        href="qtabletevent.html#globalPos">globalPos</html:a>(), and
+                                        <html:a href="qtabletevent.html#hiResGlobalY"
+                                        >hiResGlobalY</html:a>().</html:p>
+                                <!-- @@@globalY -->
+                                <!-- $$$hiResGlobalX[overload1]$$$hiResGlobalX -->
+                                <html:h3 class="fn" id="hiResGlobalX"><html:a name="hiResGlobalX"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">hiResGlobalX</html:span>() const</html:h3>
+                                <html:p>The high precision x position of the tablet device.</html:p>
+                                <!-- @@@hiResGlobalX -->
+                                <!-- $$$hiResGlobalY[overload1]$$$hiResGlobalY -->
+                                <html:h3 class="fn" id="hiResGlobalY"><html:a name="hiResGlobalY"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">hiResGlobalY</html:span>() const</html:h3>
+                                <html:p>The high precision y position of the tablet device.</html:p>
+                                <!-- @@@hiResGlobalY -->
+                                <!-- $$$pointerType[overload1]$$$pointerType -->
+                                <html:h3 class="fn" id="pointerType"><html:a name="pointerType"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtabletevent.html#PointerType-enum"
+                                            >PointerType</html:a></html:span>
+                                        QTabletEvent::<html:span class="name"
+                                        >pointerType</html:span>() const</html:h3>
+                                <html:p>Returns the type of point that generated the event.</html:p>
+                                <!-- @@@pointerType -->
+                                <!-- $$$pos[overload1]$$$pos -->
+                                <html:h3 class="fn" id="pos"><html:a name="pos"></html:a><html:span
+                                        class="type"><html:a href="qtcore/qpoint.html"
+                                            >QPoint</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">pos</html:span>() const</html:h3>
+                                <html:p>Returns the position of the device, relative to the widget
+                                    that received the event.</html:p>
+                                <html:p>If you move widgets around in response to mouse events, use
+                                        <html:a href="qtabletevent.html#globalPos"
+                                        >globalPos</html:a>() instead of this function.</html:p>
+                                <html:p><html:b>See also </html:b><html:a href="qtabletevent.html#x"
+                                        >x</html:a>(), <html:a href="qtabletevent.html#y"
+                                    >y</html:a>(), and <html:a href="qtabletevent.html#globalPos"
+                                        >globalPos</html:a>().</html:p>
+                                <!-- @@@pos -->
+                                <!-- $$$posF[overload1]$$$posF -->
+                                <html:h3 class="fn" id="posF"><html:a name="posF"></html:a>const
+                                        <html:span class="type"><html:a href="qtcore/qpointf.html"
+                                            >QPointF</html:a></html:span> &amp;
+                                        QTabletEvent::<html:span class="name">posF</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the position of the device, relative to the widget
+                                    that received the event.</html:p>
+                                <html:p>If you move widgets around in response to mouse events, use
+                                        <html:a href="qtabletevent.html#globalPosF"
+                                        >globalPosF</html:a>() instead of this function.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#globalPosF"
+                                    >globalPosF</html:a>().</html:p>
+                                <!-- @@@posF -->
+                                <!-- $$$pressure[overload1]$$$pressure -->
+                                <html:h3 class="fn" id="pressure"><html:a name="pressure"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">pressure</html:span>() const</html:h3>
+                                <html:p>Returns the pressure for the device. 0.0 indicates that the
+                                    stylus is not on the tablet, 1.0 indicates the maximum amount of
+                                    pressure for the stylus.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#tangentialPressure"
+                                        >tangentialPressure</html:a>().</html:p>
+                                <!-- @@@pressure -->
+                                <!-- $$$rotation[overload1]$$$rotation -->
+                                <html:h3 class="fn" id="rotation"><html:a name="rotation"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qreal-typedef"
+                                        >qreal</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">rotation</html:span>() const</html:h3>
+                                <html:p>Returns the rotation of the current device in degress. This
+                                    is usually given by a 4D Mouse. If the device does not support
+                                    rotation this value is always 0.0.</html:p>
+                                <!-- @@@rotation -->
+                                <!-- $$$tangentialPressure[overload1]$$$tangentialPressure -->
+                                <html:h3 class="fn" id="tangentialPressure"><html:a
+                                        name="tangentialPressure"></html:a><html:span class="type"
+                                            ><html:a href="qtcore/qtglobal.html#qreal-typedef"
+                                            >qreal</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">tangentialPressure</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the tangential pressure for the device. This is
+                                    typically given by a finger wheel on an airbrush tool. The range
+                                    is from -1.0 to 1.0. 0.0 indicates a neutral position. Current
+                                    airbrushes can only move in the positive direction from the
+                                    neutrual position. If the device does not support tangential
+                                    pressure, this value is always 0.0.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#pressure"
+                                    >pressure</html:a>().</html:p>
+                                <!-- @@@tangentialPressure -->
+                                <!-- $$$uniqueId[overload1]$$$uniqueId -->
+                                <html:h3 class="fn" id="uniqueId"><html:a name="uniqueId"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qtglobal.html#qint64-typedef"
+                                            >qint64</html:a></html:span> QTabletEvent::<html:span
+                                        class="name">uniqueId</html:span>() const</html:h3>
+                                <html:p>Returns a unique ID for the current device, making it
+                                    possible to differentiate between multiple devices being used at
+                                    the same time on the tablet.</html:p>
+                                <html:p>Support of this feature is dependent on the tablet.</html:p>
+                                <html:p>Values for the same device may vary from OS to OS.</html:p>
+                                <html:p>Later versions of the Wacom driver for Linux will now report
+                                    the ID information. If you have a tablet that supports unique ID
+                                    and are not getting the information on Linux, consider upgrading
+                                    your driver.</html:p>
+                                <html:p>As of Qt 4.2, the unique ID is the same regardless of the
+                                    orientation of the pen. Earlier versions would report a
+                                    different value when using the eraser-end versus the pen-end of
+                                    the stylus on some OS's.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#pointerType"
+                                    >pointerType</html:a>().</html:p>
+                                <!-- @@@uniqueId -->
+                                <!-- $$$x[overload1]$$$x -->
+                                <html:h3 class="fn" id="x"><html:a name="x"></html:a><html:span
+                                        class="type">int</html:span> QTabletEvent::<html:span
+                                        class="name">x</html:span>() const</html:h3>
+                                <html:p>Returns the x position of the device, relative to the widget
+                                    that received the event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a href="qtabletevent.html#y"
+                                        >y</html:a>() and <html:a href="qtabletevent.html#pos"
+                                        >pos</html:a>().</html:p>
+                                <!-- @@@x -->
+                                <!-- $$$xTilt[overload1]$$$xTilt -->
+                                <html:h3 class="fn" id="xTilt"><html:a name="xTilt"
+                                        ></html:a><html:span class="type">int</html:span>
+                                        QTabletEvent::<html:span class="name">xTilt</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the angle between the device (a pen, for example)
+                                    and the perpendicular in the direction of the x axis. Positive
+                                    values are towards the tablet's physical right. The angle is in
+                                    the range -60 to +60 degrees.</html:p>
+                                <html:p class="centerAlign"><html:img alt=""
+                                        src="images/qtabletevent-tilt.png"
+                                         /></html:p><html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#yTilt">yTilt</html:a>().</html:p>
+                                <!-- @@@xTilt -->
+                                <!-- $$$y[overload1]$$$y -->
+                                <html:h3 class="fn" id="y"><html:a name="y"></html:a><html:span
+                                        class="type">int</html:span> QTabletEvent::<html:span
+                                        class="name">y</html:span>() const</html:h3>
+                                <html:p>Returns the y position of the device, relative to the widget
+                                    that received the event.</html:p>
+                                <html:p><html:b>See also </html:b><html:a href="qtabletevent.html#x"
+                                        >x</html:a>() and <html:a href="qtabletevent.html#pos"
+                                        >pos</html:a>().</html:p>
+                                <!-- @@@y -->
+                                <!-- $$$yTilt[overload1]$$$yTilt -->
+                                <html:h3 class="fn" id="yTilt"><html:a name="yTilt"
+                                        ></html:a><html:span class="type">int</html:span>
+                                        QTabletEvent::<html:span class="name">yTilt</html:span>()
+                                    const</html:h3>
+                                <html:p>Returns the angle between the device (a pen, for example)
+                                    and the perpendicular in the direction of the y axis. Positive
+                                    values are towards the bottom of the tablet. The angle is within
+                                    the range -60 to +60 degrees.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#xTilt">xTilt</html:a>().</html:p>
+                                <!-- @@@yTilt -->
+                                <!-- $$$z[overload1]$$$z -->
+                                <html:h3 class="fn" id="z"><html:a name="z"></html:a><html:span
+                                        class="type">int</html:span> QTabletEvent::<html:span
+                                        class="name">z</html:span>() const</html:h3>
+                                <html:p>Returns the z position of the device. Typically this is
+                                    represented by a wheel on a 4D Mouse. If the device does not
+                                    support a Z-axis, this value is always zero. This is
+                                        <html:b>not</html:b> the same as pressure.</html:p>
+                                <html:p><html:b>See also </html:b><html:a
+                                        href="qtabletevent.html#pressure"
+                                    >pressure</html:a>().</html:p>
+                                <!-- @@@z -->
+                            </html:div>
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>
