@@ -114,6 +114,7 @@ void test() {
 		"	*  oldState)", "QSGSimpleMaterialShader::updateState: line feeds");
 	total++; count += test_match("(const  cpnst_iterator  &  other )", "QWebElementCollection::const_iterator::operator<, modified: type has an underscore");
 	total++; count += test_match("(const  const_iterator  &  other )", "QWebElementCollection::const_iterator::operator<: type starts with const");
+	total++; count += test_match("( QRgb  initial  = 0xffffffff,  bool  *  ok  = 0,  QWidget  *  parent  = 0)", "QWebElementCollection::const_iterator::operator<: type starts with const");
 
 	std::cerr << std::endl << std::endl << "Total: " << count << " passed out of " << total << "." << std::endl;
 	if (count < total) std::cerr << "More work is needed for " << (total - count) << " item" << ((total - count) > 1 ? "s" : "") << ". " << std::endl;

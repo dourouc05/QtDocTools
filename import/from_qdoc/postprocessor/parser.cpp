@@ -250,10 +250,11 @@ AST* cpp_prototype(const char * begin, char const * end) {
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
 	auto value_number = axe::r_double() >> valueAllocator >> valueDouble;
+	auto value_hexa = (axe::r_lit("0x") & axe::r_hexstr()) >> valueAllocator >> valueDouble;
 	auto value_string_double_quote = (quote & *((escape & quote) | (axe::r_any() - quote)) & quote);
 	auto value_string_simple_quote = (simple_quote & *((escape & simple_quote) | (axe::r_any() - simple_quote)) & simple_quote);
 	auto value_string = (value_string_double_quote | value_string_simple_quote) >> valueAllocator >> valueString;
-	auto value_litteral = value_string | value_number | value_boolean;
+	auto value_litteral = value_string | value_hexa | value_number | value_boolean;
 	auto value_constant_nowrite = identifier & *space & *type_namespace;
 	auto value_constant = value_constant_nowrite >> valueAllocator >> valueConstant;
 	auto value_expression = (
