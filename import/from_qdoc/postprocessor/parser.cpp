@@ -201,9 +201,9 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	/// Grammar rules. 
 	// Recursive rules don't work due to missing syntax sugar. Order: build simple values (litterals), grow them into
 	// objects whose constructor only needs bare litterals, then once more to nest objects into objects. 
-	auto raw_identifier = ((alpha & *alphanum)) >> valueIdentifier;
+	auto raw_identifier = (((alpha | underscore) & *(alphanum | underscore))) >> valueIdentifier;
 	auto type_namespace = (kw_namespace >> valueIdentifierAddCharacters) & raw_identifier >> valueIdentifierAddCharacters;
-	auto identifier = (!kw_const & raw_identifier) & *type_namespace;
+	auto identifier = raw_identifier & *type_namespace;
 	auto identifier_nowrite = (alpha & *alphanum) % kw_namespace;
 	auto type_template = (tpl_open >> valueIdentifierAddCharacters)
 		& *space
@@ -280,7 +280,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	// then backtrack if it is a dead end. In this case, it will have allocated objects, which will then be lost. 
 	// As a consequence, this would be a waste of both time and memory. 
 
-	auto parameter =  // const  char  * const  xpm
+	auto parameter = // E.g.: const char * const xpm
 		~(kw_volatile >> parameterAllocator >> parameterVolatile) // volatile
 		& *space
 		& ~(kw_const >> parameterAllocator >> parameterConstFront) // const
@@ -293,7 +293,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 		& *space
 		& ~(kw_const >> parameterAllocator >> parameterConstRear) // const
 		& *space
-		& ~((*(*space & (kw_pointer | kw_reference)) & *(*space & kw_array_begin & *space & ~axe::r_decimal() & *space & kw_array_end)) >> parameterPointersReferencesAfterRear) // Pointers and references in type.
+		& ~((*(*space & (kw_pointer | kw_reference)) & *(*space & kw_array_begin & *space & ~axe::r_decimal() & *space & kw_array_end)) >> parameterPointersReferencesAfterRear) // Array markers.
 		& *space
 		& ~(identifier >> parameterIdentifier) // Identifier (sometimes omitted). 
 		& *space
