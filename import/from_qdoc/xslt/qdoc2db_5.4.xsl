@@ -423,17 +423,20 @@
         </xsl:for-each>
       </xsl:variable>
       <xsl:message><xsl:value-of select="$linkedDocumentsFileNames"/></xsl:message>
-      <xsl:for-each select="$linkedDocumentsFileNames">
-        <entry>
-          <xsl:attribute name="file-name">
-            <xsl:value-of select="."/>
-          </xsl:attribute>
-          <xsl:attribute name="type">
-            <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
-          </xsl:attribute>
-          <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
-        </entry>
-      </xsl:for-each>
+      
+      <list>
+       <xsl:for-each select="$linkedDocumentsFileNames">
+         <entry>
+           <xsl:attribute name="file-name">
+             <xsl:value-of select="."/>
+           </xsl:attribute>
+           <xsl:attribute name="type">
+             <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
+           </xsl:attribute>
+           <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
+         </entry>
+       </xsl:for-each>
+      </list>
     </xsl:variable>
     <xsl:variable name="obsolete"
       select="
@@ -445,65 +448,55 @@
         /html:div[@class = 'content']
         /html:div[@class = 'line']
         /html:div[@class = 'content mainContent']"/>
+    <xsl:variable name="compatibility"
+      select="
+      $linkedDocuments/entry[@type = 'compat']
+      /html:html
+      /html:body
+      /html:div[@class = 'header']
+      /html:div[@class = 'main']
+      /html:div[@class = 'content']
+      /html:div[@class = 'line']
+      /html:div[@class = 'content mainContent']"/>
 
     <xsl:variable name="obsolete_types" as="element(html:div)?">
-      <xsl:variable name="title" as="element(html:h2)?"
-        select="$obsolete/html:h2[text() = 'Member Type Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
-      <xsl:if test="$title">
-        <html:div class="types">
-          <xsl:copy-of select="$title"/>
-          <xsl:copy-of
-            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$obsolete"/>
+        <xsl:with-param name="anchor" select="'types'"/>
+        <xsl:with-param name="title" select="'Member Type Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="obsolete_properties" as="element(html:div)?">
-      <xsl:variable name="title" as="element(html:h2)?"
-        select="$obsolete/html:h2[text() = 'Property Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
-      <xsl:if test="$title">
-        <html:div class="prop">
-          <xsl:copy-of select="$title"/>
-          <xsl:copy-of
-            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$obsolete"/>
+        <xsl:with-param name="anchor" select="'prop'"/>
+        <xsl:with-param name="title" select="'Property Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="obsolete_memfuncs" as="element(html:div)?">
-      <xsl:variable name="title" as="element(html:h2)?"
-        select="$obsolete/html:h2[text() = 'Member Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
-      <xsl:if test="$title">
-        <html:div class="func">
-          <xsl:copy-of select="$title"/>
-          <xsl:copy-of
-            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$obsolete"/>
+        <xsl:with-param name="anchor" select="'memfunc'"/>
+        <xsl:with-param name="title" select="'Member Function Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="obsolete_funcs" as="element(html:div)?">
-      <xsl:variable name="title" as="element(html:h2)?"
-        select="$obsolete/html:h2[text() = 'Function Documentation'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
-      <xsl:if test="$title">
-        <html:div class="func">
-          <xsl:copy-of select="$title"/>
-          <xsl:copy-of
-            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$obsolete"/>
+        <xsl:with-param name="anchor" select="'func'"/>
+        <xsl:with-param name="title" select="'Function Documentation'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <xsl:variable name="obsolete_nonmems" as="element(html:div)?">
-      <xsl:variable name="title" as="element(html:h2)?"
-        select="$obsolete/html:h2[text() = 'Related Non-Members'][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
-      <xsl:if test="$title">
-        <html:div class="types">
-          <xsl:copy-of select="$title"/>
-          <xsl:copy-of
-            select="$title/following-sibling::node()[preceding-sibling::html:h2 = $title]"/>
-        </html:div>
-      </xsl:if>
+      <xsl:call-template name="lookupSection_ltd">
+        <xsl:with-param name="root" select="$obsolete"/>
+        <xsl:with-param name="anchor" select="'nonmems'"/>
+        <xsl:with-param name="title" select="'Related Non-Members'"/>
+      </xsl:call-template>
     </xsl:variable>
 
     <!-- Actually output something. -->
@@ -802,6 +795,22 @@
         </html:div>
       </xsl:when>
     </xsl:choose>
+  </xsl:template>
+  <xsl:template name="lookupSection_ltd">
+    <xsl:param name="root" as="element(html:div)*"/>
+    <xsl:param name="anchor" as="xs:string"/>
+    <xsl:param name="title" as="xs:string"/>
+    
+    <xsl:variable name="titleTag" as="element(html:h2)?"
+      select="$root/html:h2[text() = $title][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
+    <xsl:if test="$titleTag">
+      <html:div>
+        <xsl:attribute name="class" select="$anchor"/>
+        <xsl:copy-of select="$titleTag"/>
+        <xsl:copy-of
+          select="$titleTag/following-sibling::node()[preceding-sibling::html:h2 = $titleTag]"/>
+      </html:div>
+    </xsl:if>
   </xsl:template>
   
   <xsl:function name="tc:rewrite-xml-id" as="xs:string">
