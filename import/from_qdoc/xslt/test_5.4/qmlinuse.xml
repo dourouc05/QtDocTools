@@ -1,0 +1,595 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+  <html:head>
+    <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <!-- qmlinuse.qdoc -->
+    <html:title>Using QML elements | Qt 5.4 </html:title>
+    <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+  </html:head>
+  <html:body>
+    <html:div class="header" id="qtdocheader">
+      <html:div class="main">
+        <html:div class="main-rounded">
+          <html:div class="navigationbar">
+            <html:ul>
+              <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+              <html:li>Using QML elements</html:li>
+              <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+            </html:ul>
+          </html:div>
+        </html:div>
+        <html:div class="content">
+          <html:div class="line">
+            <html:div class="content mainContent">
+              <html:div class="sidebar"><html:div class="sidebar-content" id="sidebar-content"
+                ></html:div></html:div>
+              <html:h1 class="title">Using QML elements</html:h1>
+              <html:span class="subtitle"></html:span>
+              <!-- $$$qmlinuse.html-description -->
+              <html:div class="descr">
+                <html:a name="details"></html:a>
+                <html:div class="item group">
+                  <html:div class="secondaryx">
+                    <html:div class="toc">
+                      <html:h3>
+                        <html:a name="toc">QML Elements</html:a></html:h3>
+                      <html:ul>
+                        <html:li class="level1"><html:a href="#basicElements">Basic QML
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#visualElements">QML Visual
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#AnimAndTrans">QML Animation and
+                            Transition Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#interactElement">Basic QML
+                            Interaction Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#eventElements">QML Event
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#Position">QML Positioning
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#stateElement">QML State
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#transformElement">QML Transform
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#utilityElement">QML Utility
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#modelView">Models and View
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#paths">Paths</html:a></html:li>
+                        <html:li class="level1"><html:a href="#ParticleElement">Particle
+                            Elements</html:a></html:li>
+                        <html:li class="level1"><html:a href="#bridge">Bridge
+                          Elements</html:a></html:li>
+                      </html:ul>
+                    </html:div>
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h1> Groups Of Related QML Elements</html:h1>
+                    <html:p> QML Elements are grouped by their respective functionalities. Certain
+                      elements are suited for building complex components while other elements
+                      strictly dictate appearances and color.</html:p>
+                    <html:div class="cols two group unclear">
+                      <html:div class="col first">
+                        <html:p>
+                          <html:i>add something about elements in use in general</html:i></html:p>
+                      </html:div>
+                      <html:div class="col">
+                        <html:img src="images/quick_screens.png" />
+                      </html:div>
+                    </html:div>
+                  </html:div>
+                </html:div>
+                <!-- tech domains start -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="basicElements"> Basic QML Elements</html:a></html:h2>
+                    <html:p> Basic elements can be extended to form more complex elements.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-item.html">Item Element</html:a> - The Item is the
+                        most basic of all visual items in QML. Many visual elements inherit
+                        properties from the Item element.</html:li>
+                      <html:li><html:a href="qml-component.html">Component Element</html:a> - The
+                        Component element encapsulates a QML component definition.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="visualElements">QML Visual Elements</html:a></html:h2>
+                    <html:p> Visual elements offer various interactive and graphical
+                      functionalities. Visual elements can directly set properties that dictate
+                      appearances.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-borderimage.html">BorderImage Element</html:a> -
+                        The BorderImage element provides an image that can be used as a
+                        border.</html:li>
+                      <html:li><html:a href="qml-gradient.html">Gradient Element</html:a> - The
+                        Gradient item defines a gradient fill.</html:li>
+                      <html:li><html:a href="qml-gradientstop.html">GradientStop Element</html:a> -
+                        The GradientStop item defines the color at a position in a
+                        Gradient.</html:li>
+                      <html:li><html:a href="qml-image.html">Image Element</html:a> - The Image
+                        element displays an image from a source.</html:li>
+                      <html:li><html:a href="qml-rectangle.html">Rectangle Element</html:a> - The
+                        Rectangle item provides a filled rectangle.</html:li>
+                      <html:li><html:a href="qml-text.html">Text Element</html:a> - The Text item
+                        allows the addition of formatted text to a scene.</html:li>
+                      <html:li><html:a href="qml-textedit.html">TextEdit Element</html:a> - The
+                        TextEdit item displays multiple lines of editable formatted text.</html:li>
+                      <html:li><html:a href="qml-textinput.html">TextInput Element</html:a> - The
+                        TextInput item displays an editable line of text.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="AnimAndTrans">QML Animation and Transition
+                        Elements</html:a></html:h2>
+                    <html:p> Animation and transition elements control animation behaviors.
+                      Animations can run in parallel or in series for different value types. </html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-anchoranimation.html">AnchorAnimation
+                          Element</html:a> - The AnchorAnimation element animates changes in anchor
+                        values.</html:li>
+                      <html:li><html:a href="qml-animation.html">Animation Element</html:a> - The
+                        Animation element is the base of all QML animations.</html:li>
+                      <html:li><html:a href="qml-behavior.html">Behavior Element</html:a> - The
+                        Behavior element allows you to specify a default animation for a property
+                        change.</html:li>
+                      <html:li><html:a href="qml-coloranimation.html">ColorAnimation
+                          Element</html:a> - The ColorAnimation element animates changes in color
+                        values.</html:li>
+                      <html:li><html:a href="qml-numberanimation.html">NumberAnimation
+                          Element</html:a> - The NumberAnimation element animates changes in
+                        qreal-type values.</html:li>
+                      <html:li><html:a href="qml-parallelanimation.html">ParallelAnimation
+                          Element</html:a> - The ParallelAnimation element allows animations to be
+                        run in parallel.</html:li>
+                      <html:li><html:a href="qml-parentanimation.html">ParentAnimation
+                          Element</html:a> - The ParentAnimation element animates changes in parent
+                        values.</html:li>
+                      <html:li><html:a href="qml-pauseanimation.html">PauseAnimation
+                          Element</html:a> - The PauseAnimation element provides a pause during an
+                        animation.</html:li>
+                      <html:li><html:a href="qml-propertyaction.html">PropertyAction
+                          Element</html:a> - The PropertyAction element allows immediate property
+                        changes during animation.</html:li>
+                      <html:li><html:a href="qml-propertyanimation.html">PropertyAnimation
+                          Element</html:a> - The PropertyAnimation element animates changes in
+                        property values.</html:li>
+                      <html:li><html:a href="qml-rotationanimation.html">RotationAnimation
+                          Element</html:a> - The RotationAnimation element animates changes in
+                        rotational values.</html:li>
+                      <html:li><html:a href="qml-scriptaction.html">ScriptAction Element</html:a> -
+                        The ScriptAction element allows scripts to be run during an
+                        animation.</html:li>
+                      <html:li><html:a href="qml-sequentialanimation.html">SequentialAnimation
+                          Element</html:a> - The SequentialAnimation element allows animations to be
+                        run sequentially.</html:li>
+                      <html:li><html:a href="qml-smoothedanimation.html">SmoothedAnimation
+                          Element</html:a> - The SmoothedAnimation element allows a property to
+                        smoothly track a value.</html:li>
+                      <html:li><html:a href="qml-springanimation.html">SpringAnimation
+                          Element</html:a> - The SpringAnimation element allows a property to track
+                        a value in a spring-like motion.</html:li>
+                      <html:li><html:a href="qml-transition.html">Transition Element</html:a> - The
+                        Transition element defines animated transitions that occur on state
+                        changes.</html:li>
+                      <html:li><html:a href="qml-vector3danimation.html">Vector3dAnimation
+                          Element</html:a> - The Vector3dAnimation element animates changes in
+                        QVector3d values.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="interactElement">QML Interaction
+                      Elements</html:a></html:h2>
+                    <html:p> These elements define basic interactions such as touch movements and
+                      focus management.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-flickable.html">Flickable Element</html:a> - The
+                        Flickable item provides a surface that can be "flicked".</html:li>
+                      <html:li><html:a href="qml-flipable.html">Flipable Element</html:a> - The
+                        Flipable item provides a surface that can be flipped or reflected.</html:li>
+                      <html:li><html:a href="qml-focuspanel.html">FocusPanel Element</html:a> - The
+                        FocusPanel item explicitly creates a focus panel.</html:li>
+                      <html:li><html:a href="qml-focusscope.html">FocusScope Element</html:a> - The
+                        FocusScope object explicitly creates a focus scope for focus
+                        management.</html:li>
+                      <html:li><html:a href="qml-pincharea.html">PinchArea Element</html:a> - The
+                        PinchArea item enables simple pinch gesture handling.</html:li>
+                      <html:li><html:a href="qml-keynavigation.html">KeyNavigation Element</html:a>
+                        - The KeyNavigation attached property supports key navigation by arrow
+                        keys.</html:li>
+                      <html:li><html:a href="qml-keys.html">Keys Element</html:a> - The Keys
+                        attached property provides key handling to Items.</html:li>
+                      <html:li><html:a href="qml-mousearea.html">MouseArea Element</html:a> - The
+                        MouseArea item enables simple mouse handling.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="eventElements">QML Event Elements</html:a></html:h2>
+                    <html:p> Key and mouse events information are provided in these event
+                      elements.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-keyevent.html">KeyEvent Element</html:a> - The
+                        KeyEvent object provides information about a key event.</html:li>
+                      <html:li><html:a href="qml-mouseevent.html">MouseEvent Element</html:a> - The
+                        MouseEvent object provides information about a mouse event.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="Position">QML Positioning Elements</html:a></html:h2>
+                    <html:p> Using positioning elements, layouts can be defined and their children
+                      accessed through an index.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-column.html">Column Element</html:a> - The Column
+                        item arranges its children vertically.</html:li>
+                      <html:li><html:a href="qml-flow.html">Flow Element</html:a> - The Flow item
+                        arranges its children side by side, wrapping as necessary.</html:li>
+                      <html:li><html:a href="qml-grid.html">Grid Element</html:a> - The Grid item
+                        positions its children in a grid.</html:li>
+                      <html:li><html:a href="qml-row.html">Row Element</html:a> - The Row item
+                        arranges its children horizontally.</html:li>
+                      <html:li><html:a href="qml-repeater.html">Repeater Element</html:a> - The
+                        Repeater element allows you to repeat an Item-based component using a
+                        model.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="stateElement">QML State Elements</html:a></html:h2>
+                    <html:p> States and groups of states are formed using state elements.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-anchorchanges.html">AnchorChanges Element</html:a>
+                        - The AnchorChanges element allows you to change the anchors of an item in a
+                        state.</html:li>
+                      <html:li><html:a href="qml-parentchange.html">ParentChange Element</html:a> -
+                        The ParentChange element allows you to reparent an Item in a state
+                        change.</html:li>
+                      <html:li><html:a href="qml-propertychanges.html">PropertyChanges
+                          Element</html:a> - The PropertyChanges element describes new property
+                        bindings or values for a state.</html:li>
+                      <html:li><html:a href="qml-state.html">State Element</html:a> - The State
+                        element defines configurations of objects and properties.</html:li>
+                      <html:li><html:a href="qml-statechangescript.html">StateChangeScript
+                          Element</html:a> - The StateChangeScript element allows you to run a
+                        script in a state.</html:li>
+                      <html:li><html:a href="qml-stategroup.html">StateGroup Element</html:a> - The
+                        StateGroup element provides state support for non-Item elements.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="transformElement">QML Transform
+                      Elements</html:a></html:h2>
+                    <html:p> Advanced handling of transformations is controlled in transform
+                      elements.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-rotation.html">Rotation Element</html:a> - The
+                        Rotation object provides a way to rotate an Item.</html:li>
+                      <html:li><html:a href="qml-scale.html">Scale Element</html:a> - The Scale
+                        element provides a way to scale an Item.</html:li>
+                      <html:li><html:a href="qml-transform.html">Transform Element</html:a> - The
+                        Transform element provide a way of building advanced transformations on
+                        Items.</html:li>
+                      <html:li><html:a href="qml-translate.html">Translate Element</html:a> - The
+                        Translate object provides a way to move an Item without changing its x or y
+                        properties.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="utilityElement">QML Utility Elements</html:a></html:h2>
+                    <html:p> These elements handle assorted operations such as event timing, Qt
+                      enumerations, and font loading.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-binding.html">Binding Element</html:a> - The
+                        Binding element allows arbitrary property bindings to be created.</html:li>
+                      <html:li><html:a href="qml-connections.html">Connections Element</html:a> - A
+                        Connections element describes generalized connections to signals.</html:li>
+                      <html:li><html:a href="qml-doublevalidator.html">DoubleValidator
+                          Element</html:a> - Provides a validator for non-integer numbers.</html:li>
+                      <html:li><html:a href="qml-fontloader.html">FontLoader Element</html:a> - The
+                        FontLoader element allows fonts to be loaded by name or URL.</html:li>
+                      <html:li><html:a href="qml-intvalidator.html">IntValidator Element</html:a> -
+                        This element provides a validator for integer values.</html:li>
+                      <html:li><html:a href="qml-layoutitem.html">LayoutItem Element</html:a> - The
+                        LayoutItem element allows declarative UI elements to be placed inside Qt's
+                        Graphics View layouts.</html:li>
+                      <html:li><html:a href="qml-loader.html">Loader Element</html:a> - The Loader
+                        item allows dynamically loading an Item-based subtree from a URL or
+                        Component.</html:li>
+                      <html:li><html:a href="qml-package.html">Package Element</html:a> - Package
+                        provides a bundle for shared contexts in multiple views.</html:li>
+                      <html:li><html:a href="qml-qt.html">Qt Element</html:a> - The QML global Qt
+                        object provides useful enums and functions from Qt.</html:li>
+                      <html:li><html:a href="qml-qtobject.html">QtObject Element</html:a> - The
+                        QtObject element is the most basic element in QML.</html:li>
+                      <html:li><html:a href="qml-regexpvalidator.html">RegExpValidator
+                          Element</html:a> - This element provides a validator for regular
+                        expressions.</html:li>
+                      <html:li><html:a href="qml-systempalette.html">SystemPalette Element</html:a>
+                        - The SystemPalette element provides access to the Qt palettes.</html:li>
+                      <html:li><html:a href="qml-timer.html">Timer Element</html:a> - The Timer item
+                        triggers a handler at a specified interval.</html:li>
+                      <html:li><html:a href="qml-workerscript.html">WorkerScript Element</html:a> -
+                        The WorkerScript element enables the use of threads in QML.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="modelView">Models and View Elements</html:a></html:h2>
+                    <html:p> Models and views are used to organize data and control their layouts
+                      using delegates. Models dictate the data formation and views control the
+                      layouts of data in the model.</html:p>
+                    <html:b>View Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-gridview.html">GridView Element</html:a> - The
+                        GridView item provides a grid view of items provided by a model.</html:li>
+                      <html:li><html:a href="qml-listview.html">ListView Element</html:a> - The
+                        ListView item provides a list view of items provided by a model.</html:li>
+                      <html:li><html:a href="qml-pathview.html">PathView Element</html:a> - The
+                        PathView element lays out model-provided items on a path.</html:li>
+                      <html:li><html:a href="qml-webview.html">WebView Element</html:a> - The
+                        WebView item allows you to add Web content to a canvas.</html:li>
+                    </html:ul>
+                    <html:b>Model Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-folderlistmodel.html">FolderListModel
+                          Element</html:a> - The FolderListModel provides a model of the contents of
+                        a file system folder.</html:li>
+                      <html:li><html:a href="qml-listelement.html">ListElement Element</html:a> - A
+                        ListElement defines a data item in a ListModel.</html:li>
+                      <html:li><html:a href="qml-listmodel.html">ListModel Element</html:a> - The
+                        ListModel element defines a free-form list data source.</html:li>
+                      <html:li><html:a href="qml-visualdatamodel.html">VisualDataModel
+                          Element</html:a> - The VisualDataModel encapsulates a model and
+                        delegate.</html:li>
+                      <html:li><html:a href="qml-visualitemmodel.html">VisualItemModel
+                          Element</html:a> - The VisualItemModel allows items to be provided to a
+                        view.</html:li>
+                      <html:li><html:a href="qml-xmllistmodel.html">XmlListModel Element</html:a> -
+                        The XmlListModel element is used to specify a model using XPath
+                        expressions.</html:li>
+                      <html:li><html:a href="qml-xmlrole.html">XmlRole Element</html:a> - The
+                        XmlRole element allows you to specify a role for an XmlListModel.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="paths">Paths</html:a></html:h2>
+                    <html:p> QML components can be arranged along paths. Path elements allow control
+                      over different path types.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-path.html">Path Element</html:a> - A Path object
+                        defines a path for use by PathView.</html:li>
+                      <html:li><html:a href="qml-pathattribute.html">PathAttribute Element</html:a>
+                        - The PathAttribute allows setting an attribute at a given position in a
+                        Path.</html:li>
+                      <html:li><html:a href="qml-pathcubic.html">PathCubic Element</html:a> - The
+                        PathCubic defines a cubic Bezier curve with two control points.</html:li>
+                      <html:li><html:a href="qml-pathelement.html">PathElement Element</html:a> -
+                        PathElement is the base path type.</html:li>
+                      <html:li><html:a href="qml-pathline.html">PathLine Element</html:a> - The
+                        PathLine defines a straight line.</html:li>
+                      <html:li><html:a href="qml-pathpercent.html">PathPercent Element</html:a> -
+                        The PathPercent manipulates the way a path is interpreted.</html:li>
+                      <html:li><html:a href="qml-pathquad.html">PathQuad Element</html:a> - The
+                        PathQuad defines a quadratic Bezier curve with a control point.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="ParticleElement">Particle Elements</html:a></html:h2>
+                    <html:p> Particle effects are declared and controlled using particle
+                      elements.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-particlemotiongravity.html">ParticleMotionGravity
+                          Element</html:a> - The ParticleMotionGravity object moves particles
+                        towards a point.</html:li>
+                      <html:li><html:a href="qml-particlemotionlinear.html">ParticleMotionLinear
+                          Element</html:a> - The ParticleMotionLinear object moves particles
+                        linearly.</html:li>
+                      <html:li><html:a href="qml-particlemotionwander.html">ParticleMotionWander
+                          Element</html:a> - The ParticleMotionWander object moves particles in a
+                        somewhat random fashion.</html:li>
+                      <html:li><html:a href="qml-particles.html">Particles Element</html:a> - The
+                        Particles object generates and moves particles.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+                <!-- next -->
+                <html:div class="item group">
+                  <html:hr />
+                  <html:div class="secondary">
+                    <html:div class="box">
+                      <!-- video box -->
+                      <html:h3> image heading</html:h3>
+                      <html:img src="" />
+                      <html:p> img descr.</html:p>
+                    </html:div>
+                    <!-- video box end -->
+                  </html:div>
+                  <html:div class="primary">
+                    <html:h2><html:a name="bridge">Bridge Elements</html:a></html:h2>
+                    <html:p> Bridge elements allow direct communication between C++ and QML
+                      entities.</html:p>
+                    <html:b>Elements:</html:b>
+                    <html:ul>
+                      <html:li><html:a href="qml-layoutitem.html">LayoutItem Element</html:a> - The
+                        LayoutItem element allows declarative UI elements to be placed inside Qt's
+                        Graphics View layouts.</html:li>
+                    </html:ul>
+                  </html:div>
+                </html:div>
+              </html:div>
+              <!-- @@@qmlinuse.html -->
+            </html:div>
+          </html:div>
+        </html:div>
+      </html:div>
+    </html:div>
+    <html:div class="footer">
+      <html:p>
+        <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd. Documentation
+        contributions included herein are the copyrights of their respective owners.<html:br /> The
+        documentation provided herein is licensed under the terms of the <html:a
+          href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License version
+          1.3</html:a> as published by the Free Software Foundation.<html:br /> Qt and respective
+        logos are trademarks of The Qt Company Ltd. in Finland and/or other countries worldwide. All
+        other trademarks are property of their respective owners. </html:p>
+    </html:div>
+  </html:body>
+</html:html>

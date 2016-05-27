@@ -826,6 +826,24 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+  
+  <!-- Utility templates, to output DocBook tags. -->
+  <xsl:template name="db_imageobject">
+    <xsl:param name="tag" as="element(html:img)"/>
+    
+    <xsl:if test="$tag/@alt and not($tag/@alt = '')">
+      <db:alt>
+        <xsl:value-of select="$tag/@alt"/>
+      </db:alt>
+    </xsl:if>
+    <db:imageobject>
+      <db:imagedata>
+        <xsl:attribute name="fileref">
+          <xsl:copy-of select="$tag/@src"/>
+        </xsl:attribute>
+      </db:imagedata>
+    </db:imageobject>
+  </xsl:template>
 
   <!-- Utility templates, to be used everywhere. -->
   <xsl:template name="content_title">
@@ -1968,6 +1986,17 @@
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
   </xsl:template>
+  <xsl:template mode="content" match="html:img">
+    <xsl:if test="@src != ''">
+      <db:informalfigure>
+        <db:mediaobject>
+          <xsl:call-template name="db_imageobject">
+            <xsl:with-param name="tag" select="."/>
+          </xsl:call-template>
+        </db:mediaobject>
+      </db:informalfigure>
+    </xsl:if>
+  </xsl:template>
   <xsl:template mode="content" match="html:a[@name]">
     <!-- Normally, these should already be in xml:id. -->
   </xsl:template>
@@ -1981,19 +2010,9 @@
         <!-- If title: <figure>. Otherwise: <informalfigure>. -->
         <db:informalfigure>
           <db:mediaobject>
-            <xsl:if test="not(normalize-space(./html:img/@alt) = '')">
-              <db:alt>
-                <xsl:value-of select="./html:img/@alt"/>
-              </db:alt>
-            </xsl:if>
-            
-            <db:imageobject>
-              <db:imagedata>
-                <xsl:attribute name="fileref">
-                  <xsl:copy-of select="./html:img/@src"/>
-                </xsl:attribute>
-              </db:imagedata>
-            </db:imageobject>
+            <xsl:call-template name="db_imageobject">
+              <xsl:with-param name="tag" select="html:img"/>
+            </xsl:call-template>
           </db:mediaobject>
         </db:informalfigure>
       </xsl:when>
@@ -2066,7 +2085,14 @@
   </xsl:template>
   <!-- Titles are handled in template content_withTitles_before. -->
   <xsl:template mode="content" match="html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
+  <!-- Exceptionnally, allow html:h1 for qmlinuse. -->
+  <xsl:template mode="content" match="html:h1[..[self::html:div and @class = 'primary']/..[self::html:div and @class = 'item group']]"/>
   <xsl:template mode="content" match="html:br"/>
+  <xsl:template mode="content" match="html:b">
+    <db:para>
+      <xsl:apply-templates mode="content_paragraph"/>
+    </db:para>
+  </xsl:template>
   <xsl:template mode="content" match="html:pre">
     <db:programlisting>
       <!-- 
@@ -2529,18 +2555,9 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:img">
     <db:inlinemediaobject>
-      <xsl:if test=".[@alt] and not(./@alt = '')">
-        <db:alt>
-          <xsl:value-of select="./@alt"/>
-        </db:alt>
-      </xsl:if>
-      <db:imageobject>
-        <db:imagedata>
-          <xsl:attribute name="fileref">
-            <xsl:value-of select="./@src"/>
-          </xsl:attribute>
-        </db:imagedata>
-      </db:imageobject>
+      <xsl:call-template name="db_imageobject">
+        <xsl:with-param name="tag" select="."/>
+      </xsl:call-template>
     </db:inlinemediaobject>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:p">

@@ -45,9 +45,9 @@ keep_xhtml = True  # TODO!
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
 # Off-line configuration, should be altered only infrequently.
-# Modules to ignore (outside Qt Base). They have no documentation for them.
-ignored = ["qttranslations", "qtwayland"]
-# Folders to ignore inside Qt Base sources (/Qt/5.3/Src/qtbase/src). This is mostly to avoid spending time on them.
+# Modules to ignore (outside Qt Base). They have no documentation for them, as of Qt 5.4.
+ignored = ["qttranslations", "qtwayland", "qtlalr"]
+# Folders to ignore inside Qt Base sources (/Qt/5.4/Src/qtbase/src). This is mostly to avoid spending time on them.
 qt_base_ignore = ["3rdparty", "android", "angle", "winmain", "openglextensions", "platformsupport", "plugins"]
 
 # Make the environment variables needed by QDoc.
