@@ -422,7 +422,6 @@
           <xsl:value-of select="replace(@href, '.html', '.xml')"/>
         </xsl:for-each>
       </xsl:variable>
-      <xsl:message><xsl:value-of select="$linkedDocumentsFileNames"/></xsl:message>
       
       <list>
        <xsl:for-each select="$linkedDocumentsFileNames">
@@ -914,18 +913,16 @@
   </xsl:function>
   
   <!-- Utility templates, to output DocBook tags. -->
-  <xsl:template name="db_imageobject">
-    <xsl:param name="tag" as="element(html:img)"/>
-    
-    <xsl:if test="$tag/@alt and not($tag/@alt = '')">
+  <xsl:template mode="db_imageobject" match="html:img">
+    <xsl:if test="@alt and not(@alt = '')">
       <db:alt>
-        <xsl:value-of select="$tag/@alt"/>
+        <xsl:value-of select="@alt"/>
       </db:alt>
     </xsl:if>
     <db:imageobject>
       <db:imagedata>
         <xsl:attribute name="fileref">
-          <xsl:copy-of select="$tag/@src"/>
+          <xsl:copy-of select="@src"/>
         </xsl:attribute>
       </db:imagedata>
     </db:imageobject>
@@ -2099,9 +2096,7 @@
     <xsl:if test="@src != ''">
       <db:informalfigure>
         <db:mediaobject>
-          <xsl:call-template name="db_imageobject">
-            <xsl:with-param name="tag" select="."/>
-          </xsl:call-template>
+          <xsl:apply-templates mode="db_imageobject" select="."/>
         </db:mediaobject>
       </db:informalfigure>
     </xsl:if>
@@ -2119,9 +2114,7 @@
         <!-- If title: <figure>. Otherwise: <informalfigure>. -->
         <db:informalfigure>
           <db:mediaobject>
-            <xsl:call-template name="db_imageobject">
-              <xsl:with-param name="tag" select="html:img"/>
-            </xsl:call-template>
+            <xsl:apply-templates mode="db_imageobject" select="html:img"/>
           </db:mediaobject>
         </db:informalfigure>
       </xsl:when>
@@ -2664,9 +2657,7 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:img">
     <db:inlinemediaobject>
-      <xsl:call-template name="db_imageobject">
-        <xsl:with-param name="tag" select="."/>
-      </xsl:call-template>
+      <xsl:apply-templates mode="db_imageobject" select="."/>
     </db:inlinemediaobject>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:p">
