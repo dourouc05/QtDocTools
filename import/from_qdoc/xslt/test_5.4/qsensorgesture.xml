@@ -1,0 +1,332 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qsensorgesture.cpp -->
+        <html:title>QSensorGesture Class | Qt Sensors 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtsensors-index.html">Qt
+                                Sensors</html:a></html:li>
+                            <html:li><html:a href="qtsensors-module.html">C++
+                                Classes</html:a></html:li>
+                            <html:li>QSensorGesture</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#public-functions"
+                                                >Public Functions</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#signals"
+                                                >Signals</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#details">Detailed
+                                                Description</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">QSensorGesture Class</html:h1>
+                            <!-- $$$QSensorGesture-brief -->
+                            <html:p>The <html:a href="qsensorgesture.html">QSensorGesture</html:a>
+                                class represents one or more sensor gesture recognizers. <html:a
+                                    href="#details">More...</html:a></html:p>
+                            <!-- @@@QSensorGesture -->
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Header:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:span class="preprocessor">#include
+                                                  &lt;QSensorGesture&gt;</html:span>
+                                            </html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                qmake:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> QT +=
+                                                sensors</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Since:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> Qt
+                                                5.1</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Inherits:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:a href="qtcore/qobject.html"
+                                                >QObject</html:a></html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div><html:ul>
+                                <html:li><html:a href="qsensorgesture-members.html">List of all
+                                        members, including inherited members</html:a></html:li>
+                            </html:ul>
+                            <html:a name="public-functions"></html:a>
+                            <html:h2 id="public-functions">Public Functions</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#QSensorGesture"
+                                                  >QSensorGesture</html:a></html:b>(const
+                                                QStringList &amp;<html:i> ids</html:i>, QObject
+                                                  *<html:i> parent</html:i> = 0)</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#dtor.QSensorGesture"
+                                                  >~QSensorGesture</html:a></html:b>()</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QStringList </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#gestureSignals"
+                                                  >gestureSignals</html:a></html:b>()
+                                                const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QStringList </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#invalidIds"
+                                                  >invalidIds</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> bool </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#isActive"
+                                                  >isActive</html:a></html:b>()</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> void </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#startDetection"
+                                                  >startDetection</html:a></html:b>()</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> void </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#stopDetection"
+                                                  >stopDetection</html:a></html:b>()</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                QStringList </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#validIds"
+                                                  >validIds</html:a></html:b>() const</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:ul>
+                                <html:li class="fn">31 public functions inherited from <html:a
+                                        href="qtcore/qobject.html#public-functions"
+                                    >QObject</html:a></html:li>
+                            </html:ul>
+                            <html:a name="signals"></html:a>
+                            <html:h2 id="signals">Signals</html:h2>
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> void </html:td>
+                                            <html:td class="memItemRight bottomAlign"
+                                                  ><html:b><html:a
+                                                  href="qsensorgesture.html#detected"
+                                                  >detected</html:a></html:b>(QString<html:i>
+                                                  gestureId</html:i>)</html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div>
+                            <html:ul>
+                                <html:li class="fn">2 signals inherited from <html:a
+                                        href="qtcore/qobject.html#signals"
+                                    >QObject</html:a></html:li>
+                            </html:ul>
+                            <html:h3>Additional Inherited Members</html:h3>
+                            <html:ul>
+                                <html:li class="fn">1 property inherited from <html:a
+                                        href="qtcore/qobject.html#properties"
+                                    >QObject</html:a></html:li>
+                                <html:li class="fn">1 public slot inherited from <html:a
+                                        href="qtcore/qobject.html#public-slots"
+                                    >QObject</html:a></html:li>
+                                <html:li class="fn">1 public variable inherited from <html:a
+                                        href="qtcore/qobject.html#public-variables"
+                                    >QObject</html:a></html:li>
+                                <html:li class="fn">10 static public members inherited from <html:a
+                                        href="qtcore/qobject.html#static-public-members"
+                                        >QObject</html:a></html:li>
+                                <html:li class="fn">9 protected functions inherited from <html:a
+                                        href="qtcore/qobject.html#protected-functions"
+                                        >QObject</html:a></html:li>
+                                <html:li class="fn">2 protected variables inherited from <html:a
+                                        href="qtcore/qobject.html#protected-variables"
+                                        >QObject</html:a></html:li>
+                            </html:ul>
+                            <html:a name="details"></html:a>
+                            <!-- $$$QSensorGesture-description -->
+                            <html:div class="descr">
+                                <html:h2 id="details">Detailed Description</html:h2>
+                                <html:p>The <html:a href="qsensorgesture.html"
+                                        >QSensorGesture</html:a> class represents one or more sensor
+                                    gesture recognizers.</html:p>
+                                <html:p>In addition to the <html:a
+                                        href="qsensorgesture.html#detected"
+                                        >QSensorGesture::detected</html:a>() signal, Sensor Gesture
+                                    Recognizers can have their own specific signals, and may be
+                                    discovered through <html:a
+                                        href="qsensorgesture.html#gestureSignals"
+                                        >QSensorGesture::gestureSignals</html:a>().</html:p>
+                                <html:p><html:b>Note that <html:a href="qsensorgesture.html"
+                                            >QSensorGesture</html:a> uses a custom meta-object in
+                                        order to provide recognizer-specific signals. This means it
+                                        is not possible to sub-class <html:a
+                                            href="qsensorgesture.html">QSensorGesture</html:a> and
+                                        use <html:a href="qtcore/qobject.html#Q_OBJECT"
+                                            >Q_OBJECT</html:a>. Also <html:a
+                                            href="qtcore/qobject.html#qobject_cast"
+                                            >qobject_cast</html:a>&lt;<html:a
+                                            href="qsensorgesture.html"
+                                        >QSensorGesture</html:a>*&gt;(ptr) will not
+                                    work.</html:b></html:p>
+                                <html:p>You may use <html:a href="qsensorgesturemanager.html"
+                                        >QSensorGestureManager</html:a> to obtain the systems known
+                                    sensor gesture ids.</html:p>
+                            </html:div>
+                            <html:p><html:b>See also </html:b><html:a
+                                    href="qsensorgesturerecognizer.html"
+                                    >QSensorGestureRecognizer</html:a> and <html:a
+                                    href="qsensorgesturemanager.html"
+                                >QSensorGestureManager</html:a>.</html:p>
+                            <!-- @@@QSensorGesture -->
+                            <html:div class="func">
+                                <html:h2>Member Function Documentation</html:h2>
+                                <!-- $$$QSensorGesture[overload1]$$$QSensorGestureconstQStringList&QObject* -->
+                                <html:h3 class="fn" id="QSensorGesture"><html:a
+                                        name="QSensorGesture"></html:a>QSensorGesture::<html:span
+                                        class="name">QSensorGesture</html:span>(const <html:span
+                                        class="type"><html:a href="qtcore/qstringlist.html"
+                                            >QStringList</html:a></html:span> &amp;<html:i>
+                                        ids</html:i>, <html:span class="type"><html:a
+                                            href="qtcore/qobject.html#QObject"
+                                        >QObject</html:a></html:span> *<html:i> parent</html:i> =
+                                    0)</html:h3>
+                                <html:p>Constructs the sensor gesture, and initializes the
+                                        <html:i>ids</html:i> list of recognizers, with parent
+                                        <html:i>parent</html:i></html:p>
+                                <!-- @@@QSensorGesture -->
+                                <!-- $$$~QSensorGesture[overload1]$$$~QSensorGesture -->
+                                <html:h3 class="fn" id="dtor.QSensorGesture"><html:a
+                                        name="dtor.QSensorGesture"
+                                        ></html:a>QSensorGesture::<html:span class="name"
+                                        >~QSensorGesture</html:span>()</html:h3>
+                                <html:p>Destroy the <html:a href="qsensorgesture.html"
+                                        >QSensorGesture</html:a></html:p>
+                                <!-- @@@~QSensorGesture -->
+                                <!-- $$$detected[overload1]$$$detectedQString -->
+                                <html:h3 class="fn" id="detected"><html:a name="detected"
+                                        ></html:a><html:code>[signal] </html:code><html:span
+                                        class="type">void</html:span> QSensorGesture::<html:span
+                                        class="name">detected</html:span>(<html:span class="type"
+                                            ><html:a href="qtcore/qstring.html"
+                                        >QString</html:a></html:span><html:i>
+                                    gestureId</html:i>)</html:h3>
+                                <html:p>Signals when the <html:i>gestureId</html:i> gesture has been
+                                    recognized.</html:p>
+                                <!-- @@@detected -->
+                                <!-- $$$gestureSignals[overload1]$$$gestureSignals -->
+                                <html:h3 class="fn" id="gestureSignals"><html:a
+                                        name="gestureSignals"></html:a><html:span class="type"
+                                            ><html:a href="qtcore/qstringlist.html"
+                                            >QStringList</html:a></html:span>
+                                        QSensorGesture::<html:span class="name"
+                                        >gestureSignals</html:span>() const</html:h3>
+                                <html:p>Returns all the possible gestures signals that may be
+                                    emitted.</html:p>
+                                <!-- @@@gestureSignals -->
+                                <!-- $$$invalidIds[overload1]$$$invalidIds -->
+                                <html:h3 class="fn" id="invalidIds"><html:a name="invalidIds"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qstringlist.html"
+                                        >QStringList</html:a></html:span> QSensorGesture::<html:span
+                                        class="name">invalidIds</html:span>() const</html:h3>
+                                <html:p>Returns the gesture recognizer ids that were not
+                                    found.</html:p>
+                                <!-- @@@invalidIds -->
+                                <!-- $$$isActive[overload1]$$$isActive -->
+                                <html:h3 class="fn" id="isActive"><html:a name="isActive"
+                                        ></html:a><html:span class="type">bool</html:span>
+                                        QSensorGesture::<html:span class="name"
+                                    >isActive</html:span>()</html:h3>
+                                <html:p>Returns whether this gesture is active or not.</html:p>
+                                <!-- @@@isActive -->
+                                <!-- $$$startDetection[overload1]$$$startDetection -->
+                                <html:h3 class="fn" id="startDetection"><html:a
+                                        name="startDetection"></html:a><html:span class="type"
+                                        >void</html:span> QSensorGesture::<html:span class="name"
+                                        >startDetection</html:span>()</html:h3>
+                                <html:p>Starts the gesture detection routines in the
+                                    recognizer.</html:p>
+                                <!-- @@@startDetection -->
+                                <!-- $$$stopDetection[overload1]$$$stopDetection -->
+                                <html:h3 class="fn" id="stopDetection"><html:a name="stopDetection"
+                                        ></html:a><html:span class="type">void</html:span>
+                                        QSensorGesture::<html:span class="name"
+                                        >stopDetection</html:span>()</html:h3>
+                                <html:p>Stops the gesture detection routines.</html:p>
+                                <!-- @@@stopDetection -->
+                                <!-- $$$validIds[overload1]$$$validIds -->
+                                <html:h3 class="fn" id="validIds"><html:a name="validIds"
+                                        ></html:a><html:span class="type"><html:a
+                                            href="qtcore/qstringlist.html"
+                                        >QStringList</html:a></html:span> QSensorGesture::<html:span
+                                        class="name">validIds</html:span>() const</html:h3>
+                                <html:p>Returns the gesture recognizer ids that were found.</html:p>
+                                <!-- @@@validIds -->
+                            </html:div>
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

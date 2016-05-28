@@ -2140,13 +2140,13 @@
       </xsl:when>
       <xsl:when test="
         ./child::node()[1][self::html:b] and (
-          starts-with(./html:b[1]/text()[1], 'Note') 
-          or starts-with(./html:b[1]/text()[1], 'Warning') 
-          or starts-with(./html:b[1]/text()[1], 'See also')
+          starts-with(html:b[1]/text()[1], 'Note') 
+          or starts-with(html:b[1]/text()[1], 'Warning') 
+          or starts-with(html:b[1]/text()[1], 'See also')
         )">
         <!-- Sometimes, some "titles" are in bold, but do not correspond to these special texts! They should flow normally, unmatched here. -->
         <xsl:choose>
-          <xsl:when test="starts-with(./html:b[1]/text(), 'Note')">
+          <xsl:when test="starts-with(html:b[1]/text()[1], 'Note:')">
             <db:note>
               <db:para>
                 <xsl:apply-templates mode="content_paragraph">
@@ -2155,7 +2155,7 @@
               </db:para>
             </db:note>
           </xsl:when>
-          <xsl:when test="starts-with(./html:b[1]/text(), 'Warning')">
+          <xsl:when test="starts-with(html:b[1]/text()[1], 'Warning:')">
             <db:warning>
               <db:para>
                 <xsl:apply-templates mode="content_paragraph">
@@ -2164,7 +2164,7 @@
               </db:para>
             </db:warning>
           </xsl:when>
-          <xsl:when test="starts-with(./html:b[1]/text(), 'See also') and count(./html:a) &gt;= 1">
+          <xsl:when test="starts-with(html:b[1]/text()[1], 'See also:') and count(html:a) &gt;= 1">
             <xsl:call-template name="content_seealso">
               <xsl:with-param name="seeAlso" select="."/>
             </xsl:call-template>
