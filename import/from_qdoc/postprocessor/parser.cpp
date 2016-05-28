@@ -249,7 +249,7 @@ AST* cpp_prototype(const char * begin, char const * end) {
 	auto type = type_complex & ~((*space & kw_namespace & *space & identifier_nowrite) >> valueIdentifierAddCharacters);
 
 	auto value_boolean = (kw_true >> valueAllocator >> valueTrue) | (kw_false >> valueAllocator >> valueFalse);
-	auto value_number = axe::r_double() >> valueAllocator >> valueDouble;
+	auto value_number = (axe::r_double() & ~axe::r_lit('f')) >> valueAllocator >> valueDouble;
 	auto value_hexa = (axe::r_lit("0x") & axe::r_hexstr()) >> valueAllocator >> valueDouble;
 	auto value_string_double_quote = (quote & *((escape & quote) | (axe::r_any() - quote)) & quote);
 	auto value_string_simple_quote = (simple_quote & *((escape & simple_quote) | (axe::r_any() - simple_quote)) & simple_quote);
