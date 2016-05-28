@@ -87,6 +87,9 @@
     <xsl:variable name="isConcept"
       select="not($isClass) and not($isNamespace) and not($isFunctions) and not($isQmlType) and not($isGlobal)"
       as="xs:boolean"/>
+    
+    <!-- QDoc's manual contains samples of pretty much everything that can happen in the documentation, so must treat it differently… -->
+    <xsl:variable name="isQdocDocumentation" select="$isConcept and contains(/html:html/html:head/html:title/text(), 'QDoc Manual')"/>
 
     <!-- Extract the various parts of the prologue. -->
     <xsl:variable name="prologueTable"
@@ -117,7 +120,7 @@
     <xsl:variable name="prologueCount" as="xs:integer"
       select="
         count((boolean($prologueHeader), boolean($prologueQmake), boolean($prologueInstantiates), boolean($prologueInstantiatedBy), boolean($prologueInherits), boolean($prologueInheritedBy), boolean($prologueImport), boolean($prologueSince))[. = true()])"/>
-    <xsl:if test="count($prologueTable) != $prologueCount">
+    <xsl:if test="not($isQdocDocumentation) and count($prologueTable) != $prologueCount">
       <xsl:message>WARNING: One or more rows of prologue table not recognised.</xsl:message>
     </xsl:if>
 
@@ -388,17 +391,16 @@
     <xsl:if test="$isClass and boolean($qmlMeths)">
       <xsl:message terminate="no">WARNING: A C++ class has QML methods.</xsl:message>
     </xsl:if>
-    <xsl:if test="$isConcept and boolean($types)">
-      <xsl:message terminate="no">WARNING: A concept has C++ types.</xsl:message>
-    </xsl:if>
-    <xsl:if test="$isConcept and boolean($funcs)">
-      <xsl:message terminate="no">WARNING: A concept has C++ functions.</xsl:message>
-    </xsl:if>
-    <xsl:if test="$isConcept and boolean($properties)">
-      <xsl:message terminate="no">WARNING: A concept has C++ properties.</xsl:message>
-    </xsl:if>
-    <xsl:if test="$isConcept and boolean($funcs)">
-      <xsl:message terminate="no">WARNING: A concept has C++ functions.</xsl:message>
+    <xsl:if test="not($isQdocDocumentation)">
+      <xsl:if test="$isConcept and boolean($types)">
+        <xsl:message terminate="no">WARNING: A concept has C++ types.</xsl:message>
+      </xsl:if>
+      <xsl:if test="$isConcept and boolean($funcs)">
+        <xsl:message terminate="no">WARNING: A concept has C++ functions.</xsl:message>
+      </xsl:if>
+      <xsl:if test="$isConcept and boolean($properties)">
+        <xsl:message terminate="no">WARNING: A concept has C++ properties.</xsl:message>
+      </xsl:if>
     </xsl:if>
     <xsl:if test="$isQmlType and boolean($funcs)">
       <xsl:message terminate="no">WARNING: A QML type has C++ functions.</xsl:message>
@@ -573,30 +575,32 @@
         </xsl:call-template>
       </xsl:if>
 
-      <xsl:if test="$macros">
-        <xsl:call-template name="macroListing">
-          <xsl:with-param name="data" select="$macros"/>
-          <xsl:with-param name="className" select="$className"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$nonmems">
-        <xsl:call-template name="functionListing">
-          <xsl:with-param name="data" select="$nonmems"/>
-          <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
-        </xsl:call-template>
-      </xsl:if>
-      
-      <xsl:if test="not($isNamespace) and $nonmemtypes">
-        <xsl:call-template name="functionListing">
-          <xsl:with-param name="data" select="$nonmemtypes"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="not($isNamespace) and $nonmemfuncs">
-        <xsl:call-template name="functionListing">
-          <xsl:with-param name="data" select="$nonmemfuncs"/>
-        </xsl:call-template>
+      <xsl:if test="not($isQdocDocumentation)">
+       <xsl:if test="$macros">
+         <xsl:call-template name="macroListing">
+           <xsl:with-param name="data" select="$macros"/>
+           <xsl:with-param name="className" select="$className"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$nonmems">
+         <xsl:call-template name="functionListing">
+           <xsl:with-param name="data" select="$nonmems"/>
+           <xsl:with-param name="obsoleteData" select="$obsolete_nonmems"/>
+         </xsl:call-template>
+       </xsl:if>
+       
+       <xsl:if test="not($isNamespace) and $nonmemtypes">
+         <xsl:call-template name="functionListing">
+           <xsl:with-param name="data" select="$nonmemtypes"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="not($isNamespace) and $nonmemfuncs">
+         <xsl:call-template name="functionListing">
+           <xsl:with-param name="data" select="$nonmemfuncs"/>
+         </xsl:call-template>
+       </xsl:if>
       </xsl:if>
 
       <xsl:if test="$isNamespace or $isGlobal">
@@ -665,192 +669,194 @@
       </xsl:if>
 
       <!-- There may be types, properties, functions, and macros for C++ classes and namespaces. -->
-      <xsl:if test="$classes">
-        <xsl:call-template name="content_types">
-          <xsl:with-param name="data" select="$classes"/>
-          <xsl:with-param name="title" select="'Classes'"/>
-          <xsl:with-param name="anchor" select="'classes'"/>
-        </xsl:call-template>
-      </xsl:if>
-      
-      <xsl:if test="$types">
-        <xsl:call-template name="content_types">
-          <xsl:with-param name="data" select="$types"/>
-          <xsl:with-param name="title" select="'Member Type Documentation'"/>
-          <xsl:with-param name="anchor" select="'types'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$properties and not($isQmlType)">
-        <xsl:call-template name="content_props">
-          <xsl:with-param name="data" select="$properties"/>
-          <xsl:with-param name="title" select="'Property Documentation'"/>
-          <xsl:with-param name="anchor" select="'prop'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$funcs">
-        <xsl:call-template name="content_class">
-          <xsl:with-param name="data" select="$funcs"/>
-          <xsl:with-param name="title" select="'Member Function Documentation'"/>
-          <xsl:with-param name="anchor" select="'func'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$nonmems">
-        <xsl:call-template name="content_nonmems">
-          <xsl:with-param name="data" select="$nonmems"/>
-          <xsl:with-param name="title" select="'Related Non-Members'"/>
-          <xsl:with-param name="anchor" select="'relnonmem'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$vars">
-        <xsl:call-template name="content_vars">
-          <xsl:with-param name="data" select="$vars"/>
-          <xsl:with-param name="title" select="'Member Variable Documentation'"/>
-          <xsl:with-param name="anchor" select="'vars'"/>
-        </xsl:call-template>
-      </xsl:if>
-        
-      <xsl:if test="$nonmemtypes">
-        <xsl:call-template name="content_types">
-          <xsl:with-param name="data" select="$nonmemtypes"/>
-          <xsl:with-param name="title" select="'Type Documentation'"/>
-          <xsl:with-param name="anchor" select="'nonmemtypes'"/><!-- Normally, 'types', but avoid clash. -->
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$nonmemfuncs">
-        <xsl:call-template name="content_class">
-          <xsl:with-param name="data" select="$nonmemfuncs"/>
-          <xsl:with-param name="title" select="'Function Documentation'"/>
-          <xsl:with-param name="anchor" select="'nonmemfunc'"/><!-- Normally, 'func', but avoid clash. -->
-        </xsl:call-template>
-      </xsl:if>
-      
-      <xsl:if test="$macros"> <!--  and not($isNamespace): but macros cannot be put inside NSs currently! -->
-        <xsl:call-template name="content_macros">
-          <xsl:with-param name="data" select="$macros"/>
-          <xsl:with-param name="title" select="'Macro Documentation'"/>
-          <xsl:with-param name="anchor" select="'macros'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <!-- There may be properties and methods for QML types. -->
-      <xsl:if test="$properties and $isQmlType">
-        <xsl:call-template name="content_qmlProps">
-          <xsl:with-param name="data" select="$properties"/>
-          <xsl:with-param name="title" select="'Properties Documentation'"/>
-          <xsl:with-param name="anchor" select="'prop'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$qmlAttachedProps">
-        <xsl:call-template name="content_qmlProps">
-          <xsl:with-param name="data" select="$qmlAttachedProps"/>
-          <xsl:with-param name="title" select="'Attached Properties Documentation'"/>
-          <xsl:with-param name="anchor" select="'qml-attached-props'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$qmlMeths">
-        <xsl:call-template name="content_qmlMeths">
-          <xsl:with-param name="data" select="$qmlMeths"/>
-          <xsl:with-param name="title" select="'Methods Documentation'"/>
-          <xsl:with-param name="anchor" select="'qml-meths'"/>
-        </xsl:call-template>
-      </xsl:if>
-
-      <xsl:if test="$qmlSignals">
-        <xsl:call-template name="content_qmlMeths">
-          <xsl:with-param name="data" select="$qmlSignals"/>
-          <xsl:with-param name="title" select="'Signals Documentation'"/>
-          <xsl:with-param name="anchor" select="'qml-signals'"/>
-          <xsl:with-param name="type" select="'signal'"/>
-        </xsl:call-template>
-      </xsl:if>
-      
-      <!-- There may be obsolete or compatibility things for C++ classes. -->
-      <!-- Prefix anchors with obsolete_ or compat_. -->
-      <xsl:if test="$obsolete">
-        <db:section>
-          <db:title>
-            <xsl:text>Obsolete Members</xsl:text>
-          </db:title>
-
-          <xsl:if test="$obsolete_types"><!-- No example found in test suite. -->
-            <xsl:call-template name="content_types">
-              <xsl:with-param name="data" select="$obsolete_types"/>
-              <xsl:with-param name="title" select="'Type Documentation'"/>
-              <xsl:with-param name="anchor" select="'obsolete_types'"/>
-            </xsl:call-template>
-          </xsl:if>
-
-          <xsl:if test="$obsolete_memfuncs">
-            <xsl:call-template name="content_class">
-              <xsl:with-param name="data" select="$obsolete_memfuncs"/>
-              <xsl:with-param name="title" select="'Member Function Documentation'"/>
-              <xsl:with-param name="anchor" select="'obsolete_memfunc'"/><!-- Actually, func, but avoid mismatch with non-member functions. -->
-            </xsl:call-template>
-          </xsl:if>
-
-          <xsl:if test="$obsolete_funcs">
-            <xsl:call-template name="content_class">
-              <xsl:with-param name="data" select="$obsolete_funcs"/>
-              <xsl:with-param name="title" select="'Function Documentation'"/>
-              <xsl:with-param name="anchor" select="'obsolete_func'"/>
-            </xsl:call-template>
-          </xsl:if>
-
-          <xsl:if test="$obsolete_nonmems">
-            <xsl:call-template name="content_nonmems">
-              <xsl:with-param name="data" select="$obsolete_nonmems"/>
-              <xsl:with-param name="title" select="'Related Non-Members'"/>
-              <xsl:with-param name="anchor" select="'obsolete_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
-            </xsl:call-template>
-          </xsl:if>
+      <xsl:if test="not($isQdocDocumentation)">
+       <xsl:if test="$classes">
+         <xsl:call-template name="content_types">
+           <xsl:with-param name="data" select="$classes"/>
+           <xsl:with-param name="title" select="'Classes'"/>
+           <xsl:with-param name="anchor" select="'classes'"/>
+         </xsl:call-template>
+       </xsl:if>
+       
+       <xsl:if test="$types">
+         <xsl:call-template name="content_types">
+           <xsl:with-param name="data" select="$types"/>
+           <xsl:with-param name="title" select="'Member Type Documentation'"/>
+           <xsl:with-param name="anchor" select="'types'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$properties and not($isQmlType)">
+         <xsl:call-template name="content_props">
+           <xsl:with-param name="data" select="$properties"/>
+           <xsl:with-param name="title" select="'Property Documentation'"/>
+           <xsl:with-param name="anchor" select="'prop'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$funcs">
+         <xsl:call-template name="content_class">
+           <xsl:with-param name="data" select="$funcs"/>
+           <xsl:with-param name="title" select="'Member Function Documentation'"/>
+           <xsl:with-param name="anchor" select="'func'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$nonmems">
+         <xsl:call-template name="content_nonmems">
+           <xsl:with-param name="data" select="$nonmems"/>
+           <xsl:with-param name="title" select="'Related Non-Members'"/>
+           <xsl:with-param name="anchor" select="'relnonmem'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$vars">
+         <xsl:call-template name="content_vars">
+           <xsl:with-param name="data" select="$vars"/>
+           <xsl:with-param name="title" select="'Member Variable Documentation'"/>
+           <xsl:with-param name="anchor" select="'vars'"/>
+         </xsl:call-template>
+       </xsl:if>
+         
+       <xsl:if test="$nonmemtypes">
+         <xsl:call-template name="content_types">
+           <xsl:with-param name="data" select="$nonmemtypes"/>
+           <xsl:with-param name="title" select="'Type Documentation'"/>
+           <xsl:with-param name="anchor" select="'nonmemtypes'"/><!-- Normally, 'types', but avoid clash. -->
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$nonmemfuncs">
+         <xsl:call-template name="content_class">
+           <xsl:with-param name="data" select="$nonmemfuncs"/>
+           <xsl:with-param name="title" select="'Function Documentation'"/>
+           <xsl:with-param name="anchor" select="'nonmemfunc'"/><!-- Normally, 'func', but avoid clash. -->
+         </xsl:call-template>
+       </xsl:if>
+       
+       <xsl:if test="$macros"> <!--  and not($isNamespace): but macros cannot be put inside NSs currently! -->
+         <xsl:call-template name="content_macros">
+           <xsl:with-param name="data" select="$macros"/>
+           <xsl:with-param name="title" select="'Macro Documentation'"/>
+           <xsl:with-param name="anchor" select="'macros'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <!-- There may be properties and methods for QML types. -->
+       <xsl:if test="$properties and $isQmlType">
+         <xsl:call-template name="content_qmlProps">
+           <xsl:with-param name="data" select="$properties"/>
+           <xsl:with-param name="title" select="'Properties Documentation'"/>
+           <xsl:with-param name="anchor" select="'prop'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$qmlAttachedProps">
+         <xsl:call-template name="content_qmlProps">
+           <xsl:with-param name="data" select="$qmlAttachedProps"/>
+           <xsl:with-param name="title" select="'Attached Properties Documentation'"/>
+           <xsl:with-param name="anchor" select="'qml-attached-props'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$qmlMeths">
+         <xsl:call-template name="content_qmlMeths">
+           <xsl:with-param name="data" select="$qmlMeths"/>
+           <xsl:with-param name="title" select="'Methods Documentation'"/>
+           <xsl:with-param name="anchor" select="'qml-meths'"/>
+         </xsl:call-template>
+       </xsl:if>
+ 
+       <xsl:if test="$qmlSignals">
+         <xsl:call-template name="content_qmlMeths">
+           <xsl:with-param name="data" select="$qmlSignals"/>
+           <xsl:with-param name="title" select="'Signals Documentation'"/>
+           <xsl:with-param name="anchor" select="'qml-signals'"/>
+           <xsl:with-param name="type" select="'signal'"/>
+         </xsl:call-template>
+       </xsl:if>
+       
+       <!-- There may be obsolete or compatibility things for C++ classes. -->
+       <!-- Prefix anchors with obsolete_ or compat_. -->
+       <xsl:if test="$obsolete">
+         <db:section>
+           <db:title>
+             <xsl:text>Obsolete Members</xsl:text>
+           </db:title>
+ 
+           <xsl:if test="$obsolete_types"><!-- No example found in test suite. -->
+             <xsl:call-template name="content_types">
+               <xsl:with-param name="data" select="$obsolete_types"/>
+               <xsl:with-param name="title" select="'Type Documentation'"/>
+               <xsl:with-param name="anchor" select="'obsolete_types'"/>
+             </xsl:call-template>
+           </xsl:if>
+ 
+           <xsl:if test="$obsolete_memfuncs">
+             <xsl:call-template name="content_class">
+               <xsl:with-param name="data" select="$obsolete_memfuncs"/>
+               <xsl:with-param name="title" select="'Member Function Documentation'"/>
+               <xsl:with-param name="anchor" select="'obsolete_memfunc'"/><!-- Actually, func, but avoid mismatch with non-member functions. -->
+             </xsl:call-template>
+           </xsl:if>
+ 
+           <xsl:if test="$obsolete_funcs">
+             <xsl:call-template name="content_class">
+               <xsl:with-param name="data" select="$obsolete_funcs"/>
+               <xsl:with-param name="title" select="'Function Documentation'"/>
+               <xsl:with-param name="anchor" select="'obsolete_func'"/>
+             </xsl:call-template>
+           </xsl:if>
+ 
+           <xsl:if test="$obsolete_nonmems">
+             <xsl:call-template name="content_nonmems">
+               <xsl:with-param name="data" select="$obsolete_nonmems"/>
+               <xsl:with-param name="title" select="'Related Non-Members'"/>
+               <xsl:with-param name="anchor" select="'obsolete_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
+             </xsl:call-template>
+           </xsl:if>
+         </db:section>
+       </xsl:if>
+       <xsl:if test="$compat">
+         <db:section>
+           <db:title>
+             <xsl:text>Compatibility Members</xsl:text>
+           </db:title>
+           
+           <xsl:if test="$compat_types"><!-- No example found in test suite. -->
+             <xsl:call-template name="content_types">
+               <xsl:with-param name="data" select="$compat_types"/>
+               <xsl:with-param name="title" select="'Type Documentation'"/>
+               <xsl:with-param name="anchor" select="'compat_types'"/>
+             </xsl:call-template>
+           </xsl:if>
+           
+           <xsl:if test="$compat_memfuncs">
+             <xsl:call-template name="content_class">
+               <xsl:with-param name="data" select="$compat_memfuncs"/>
+               <xsl:with-param name="title" select="'Member Function Documentation'"/>
+               <xsl:with-param name="anchor" select="'compat_memfunc'"/><!-- Actually, func, but avoid mismatch with non-member functions. -->
+             </xsl:call-template>
+           </xsl:if>
+           
+           <xsl:if test="$compat_funcs">
+             <xsl:call-template name="content_class">
+               <xsl:with-param name="data" select="$compat_funcs"/>
+               <xsl:with-param name="title" select="'Function Documentation'"/>
+               <xsl:with-param name="anchor" select="'compat_func'"/>
+             </xsl:call-template>
+           </xsl:if>
+           
+           <xsl:if test="$compat_nonmems">
+             <xsl:call-template name="content_nonmems">
+               <xsl:with-param name="data" select="$compat_nonmems"/>
+               <xsl:with-param name="title" select="'Related Non-Members'"/>
+               <xsl:with-param name="anchor" select="'compat_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
+             </xsl:call-template>
+           </xsl:if>
         </db:section>
       </xsl:if>
-      <xsl:if test="$compat">
-        <db:section>
-          <db:title>
-            <xsl:text>Compatibility Members</xsl:text>
-          </db:title>
-          
-          <xsl:if test="$compat_types"><!-- No example found in test suite. -->
-            <xsl:call-template name="content_types">
-              <xsl:with-param name="data" select="$compat_types"/>
-              <xsl:with-param name="title" select="'Type Documentation'"/>
-              <xsl:with-param name="anchor" select="'compat_types'"/>
-            </xsl:call-template>
-          </xsl:if>
-          
-          <xsl:if test="$compat_memfuncs">
-            <xsl:call-template name="content_class">
-              <xsl:with-param name="data" select="$compat_memfuncs"/>
-              <xsl:with-param name="title" select="'Member Function Documentation'"/>
-              <xsl:with-param name="anchor" select="'compat_memfunc'"/><!-- Actually, func, but avoid mismatch with non-member functions. -->
-            </xsl:call-template>
-          </xsl:if>
-          
-          <xsl:if test="$compat_funcs">
-            <xsl:call-template name="content_class">
-              <xsl:with-param name="data" select="$compat_funcs"/>
-              <xsl:with-param name="title" select="'Function Documentation'"/>
-              <xsl:with-param name="anchor" select="'compat_func'"/>
-            </xsl:call-template>
-          </xsl:if>
-          
-          <xsl:if test="$compat_nonmems">
-            <xsl:call-template name="content_nonmems">
-              <xsl:with-param name="data" select="$compat_nonmems"/>
-              <xsl:with-param name="title" select="'Related Non-Members'"/>
-              <xsl:with-param name="anchor" select="'compat_nonmems'"/><!-- Actually, types, but avoid mismatch with types. -->
-            </xsl:call-template>
-          </xsl:if>
-        </db:section>
-      </xsl:if>
+     </xsl:if>
     </db:article>
   </xsl:template>
   
