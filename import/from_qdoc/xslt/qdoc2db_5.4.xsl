@@ -1031,12 +1031,12 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:choose>
-          <xsl:when test="$tag[self::html:b]">
+          <xsl:when test="$in[self::html:b]">
             <!-- Less robust test: no access to sibling nodes of $in, as copies happened before. -->
             <xsl:variable name="nodeAfterMarker" select="$tag/following-sibling::node()[1]"/>
             <xsl:value-of select="starts-with($tag/text()[1], $marker)"/>
           </xsl:when>
-          <xsl:when test="$tag[self::html:p]">
+          <xsl:when test="$in[self::html:p]">
             <xsl:variable name="markerColon" select="concat($marker, ':')"/>
             <xsl:variable name="nodeAfterMarker" select="$in/html:b[1]/following-sibling::node()[1]"/>
             <xsl:value-of

@@ -5392,7 +5392,8 @@
             <db:para>Only visible widgets can grab mouse input. If <db:code><db:link xlink:href="qwidget.html#visible-prop">isVisible</db:link>()</db:code> returns <db:code>false</db:code> for a widget, that widget cannot call grabMouse().</db:para>
          </db:note>
          <db:note>
-            <db:para> For <db:emphasis>Cocoa</db:emphasis>, calling grabMouse() on a widget only works when the mouse is inside the frame of that widget. For <db:emphasis>Carbon</db:emphasis>, it works outside the widget's frame as well, like for Windows and X11.</db:para>
+            <db:para>
+               <db:emphasis role="bold">(Mac OS X developers)</db:emphasis> For <db:emphasis>Cocoa</db:emphasis>, calling grabMouse() on a widget only works when the mouse is inside the frame of that widget. For <db:emphasis>Carbon</db:emphasis>, it works outside the widget's frame as well, like for Windows and X11.</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
@@ -5418,7 +5419,8 @@
             <db:para> Grabbing the mouse might lock the terminal.</db:para>
          </db:warning>
          <db:note>
-            <db:para> See the note in <db:code><db:link xlink:href="qwidget.html#grabMouse">QWidget::grabMouse</db:link>()</db:code>.</db:para>
+            <db:para>
+               <db:emphasis role="bold">(Mac OS X developers)</db:emphasis> See the note in <db:code><db:link xlink:href="qwidget.html#grabMouse">QWidget::grabMouse</db:link>()</db:code>.</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
@@ -6302,11 +6304,12 @@
          <db:para>The background can be set using <db:code><db:link xlink:href="qwidget.html#setBackgroundRole">setBackgroundRole</db:link>()</db:code> and <db:code><db:link xlink:href="qwidget.html#palette-prop">setPalette</db:link>()</db:code>.</db:para>
          <db:para>Since Qt 4.0, <db:code><db:link xlink:href="qwidget.html">QWidget</db:link></db:code> automatically double-buffers its painting, so there is no need to write double-buffering code in paintEvent() to avoid flicker.</db:para>
          <db:note>
-            <db:para>: It is possible to toggle global double buffering by calling <db:code>qt_x11_set_global_double_buffer()</db:code>. For example,</db:para>
+            <db:para>It is possible to toggle global double buffering by calling<db:code>qt_x11_set_global_double_buffer()</db:code>. For example,</db:para>
          </db:note>
          <db:programlisting>...externvoid qt_x11_set_global_double_buffer(bool); qt_x11_set_global_double_buffer(false); ...</db:programlisting>
          <db:note>
-            <db:para>Generally, you should refrain from calling <db:code><db:link xlink:href="qwidget.html#update">update</db:link>()</db:code> or <db:code><db:link xlink:href="qwidget.html#repaint">repaint</db:link>()</db:code>  a paintEvent(). For example, calling <db:code><db:link xlink:href="qwidget.html#update">update</db:link>()</db:code> or <db:code><db:link xlink:href="qwidget.html#repaint">repaint</db:link>()</db:code> on children inside a paintevent() results in undefined behavior; the child may or may not get a paint event.</db:para>
+            <db:para>Generally, you should refrain from calling <db:code><db:link xlink:href="qwidget.html#update">update</db:link>()</db:code> or <db:code><db:link xlink:href="qwidget.html#repaint">repaint</db:link>()</db:code> 
+               <db:emphasis role="bold">inside</db:emphasis> a paintEvent(). For example, calling <db:code><db:link xlink:href="qwidget.html#update">update</db:link>()</db:code> or <db:code><db:link xlink:href="qwidget.html#repaint">repaint</db:link>()</db:code> on children inside a paintevent() results in undefined behavior; the child may or may not get a paint event.</db:para>
          </db:note>
          <db:warning>
             <db:para> If you are using a custom paint engine without Qt's backingstore, <db:code><db:link xlink:href="qtcore/qt.html#WidgetAttribute-enum">Qt::WA_PaintOnScreen</db:link></db:code> must be set. Otherwise, <db:code><db:link xlink:href="qwidget.html#paintEngine">QWidget::paintEngine</db:link>()</db:code> will never be called; the backingstore will be used instead.</db:para>

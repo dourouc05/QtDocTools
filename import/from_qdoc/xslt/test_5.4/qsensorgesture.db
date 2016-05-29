@@ -1,140 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    version="5.0"
-    xml:lang="en">
-    <db:title>QSensorGesture Class</db:title>
-    <db:classsynopsis>
-        <db:ooclass>
-            <db:classname>QSensorGesture</db:classname>
-        </db:ooclass>
-        <db:classsynopsisinfo role="header">#include
-            &lt;QSensorGesture&gt;</db:classsynopsisinfo>
-        <db:classsynopsisinfo role="qmake"> QT +=
-            sensors</db:classsynopsisinfo>
-        <db:classsynopsisinfo role="inherits">
-            <db:link xlink:href="qtcore/qobject.html">QObject</db:link>
-        </db:classsynopsisinfo>
-        <db:classsynopsisinfo role="since"> Qt
-            5.1</db:classsynopsisinfo>
-        <db:constructorsynopsis xlink:href="#QSensorGesture">
-            <db:methodname>QSensorGesture</db:methodname>
-            <db:void role="parameters"/>
-            <db:exceptionname role="parameters">(const  QStringList  &amp; 
-                ids ,  QObject  *  parent  =
-                0)</db:exceptionname>
-        </db:constructorsynopsis>
-        <db:destructorsynopsis xlink:href="dtor.QSensorGesture">
-            <db:methodname>~QSensorGesture</db:methodname>
-            <db:void/>
-        </db:destructorsynopsis>
-        <db:methodsynopsis xlink:href="detected">
-            <db:void/>
-            <db:methodname>detected</db:methodname>
-            <db:void role="parameters"/>
-            <db:exceptionname role="parameters">( QString 
-                gestureId )</db:exceptionname>
-        </db:methodsynopsis>
-        <db:methodsynopsis xlink:href="gestureSignals">
-            <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
-            <db:methodname>gestureSignals</db:methodname>
-            <db:void/>
-            <db:modifier>const</db:modifier>
-        </db:methodsynopsis>
-        <db:methodsynopsis xlink:href="invalidIds">
-            <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
-            <db:methodname>invalidIds</db:methodname>
-            <db:void/>
-            <db:modifier>const</db:modifier>
-        </db:methodsynopsis>
-        <db:methodsynopsis xlink:href="isActive">
-            <db:type>bool</db:type>
-            <db:methodname>isActive</db:methodname>
-            <db:void/>
-        </db:methodsynopsis>
-        <db:methodsynopsis xlink:href="startDetection">
-            <db:void/>
-            <db:methodname>startDetection</db:methodname>
-            <db:void/>
-        </db:methodsynopsis>
-        <db:methodsynopsis xlink:href="stopDetection">
-            <db:void/>
-            <db:methodname>stopDetection</db:methodname>
-            <db:void/>
-        </db:methodsynopsis>
-        <db:methodsynopsis xlink:href="validIds">
-            <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
-            <db:methodname>validIds</db:methodname>
-            <db:void/>
-            <db:modifier>const</db:modifier>
-        </db:methodsynopsis>
-    </db:classsynopsis>
-    <db:section xml:id="details">
-        <db:title>Detailed Description</db:title>
-        <db:para>The <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code> class represents one or more sensor
-            gesture recognizers.</db:para>
-        <db:para>In addition to the <db:code><db:link xlink:href="qsensorgesture.html#detected">QSensorGesture::detected</db:link>()</db:code> signal, Sensor Gesture
-            Recognizers can have their own specific signals, and may be
-            discovered through <db:code><db:link xlink:href="qsensorgesture.html#gestureSignals">QSensorGesture::gestureSignals</db:link>()</db:code>.</db:para>
-        <db:para>You may use <db:code><db:link xlink:href="qsensorgesturemanager.html">QSensorGestureManager</db:link></db:code> to obtain the systems known
-            sensor gesture ids.</db:para>
-        <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-                <db:member>
-                    <db:code><db:link xlink:href="qsensorgesturerecognizer.html">QSensorGestureRecognizer</db:link></db:code>
-                </db:member>
-                <db:member>
-                    <db:code><db:link xlink:href="qsensorgesturemanager.html">QSensorGestureManager</db:link></db:code>
-                </db:member>
-            </db:simplelist>
-        </db:section>
-    </db:section>
-    <db:section xml:id="func">
-        <db:title>Member Function Documentation</db:title>
-        <db:section xml:id="QSensorGesture">
-            <db:title>QSensorGesture::QSensorGesture(const <db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
-            <db:para>Constructs the sensor gesture, and initializes the
-                <db:emphasis>ids</db:emphasis> list of recognizers, with parent
-                <db:emphasis>parent</db:emphasis>
-            </db:para>
-        </db:section>
-        <db:section xml:id="dtor.QSensorGesture">
-            <db:title>QSensorGesture::~QSensorGesture()</db:title>
-            <db:para>Destroy the <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code>
-            </db:para>
-        </db:section>
-        <db:section xml:id="detected">
-            <db:title>[signal] void QSensorGesture::detected(<db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
-            <db:para>Signals when the <db:emphasis>gestureId</db:emphasis> gesture has been
-                recognized.</db:para>
-        </db:section>
-        <db:section xml:id="gestureSignals">
-            <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
-            <db:para>Returns all the possible gestures signals that may be
-                emitted.</db:para>
-        </db:section>
-        <db:section xml:id="invalidIds">
-            <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
-            <db:para>Returns the gesture recognizer ids that were not
-                found.</db:para>
-        </db:section>
-        <db:section xml:id="isActive">
-            <db:title>bool QSensorGesture::isActive()</db:title>
-            <db:para>Returns whether this gesture is active or not.</db:para>
-        </db:section>
-        <db:section xml:id="startDetection">
-            <db:title>void QSensorGesture::startDetection()</db:title>
-            <db:para>Starts the gesture detection routines in the
-                recognizer.</db:para>
-        </db:section>
-        <db:section xml:id="stopDetection">
-            <db:title>void QSensorGesture::stopDetection()</db:title>
-            <db:para>Stops the gesture detection routines.</db:para>
-        </db:section>
-        <db:section xml:id="validIds">
-            <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
-            <db:para>Returns the gesture recognizer ids that were found.</db:para>
-        </db:section>
-    </db:section>
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.0"
+            xml:lang="en">
+   <db:title>QSensorGesture Class</db:title>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QSensorGesture</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="header">#include
+                                                  &lt;QSensorGesture&gt;</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="qmake"> QT +=
+                                                sensors</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="inherits">
+         <db:link xlink:href="qtcore/qobject.html">QObject</db:link>
+      </db:classsynopsisinfo>
+      <db:classsynopsisinfo role="since"> Qt
+                                                5.1</db:classsynopsisinfo>
+      <db:constructorsynopsis xlink:href="#QSensorGesture">
+         <db:methodname>QSensorGesture</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const  QStringList  &amp; 
+                                        ids ,  QObject  *  parent  =
+                                    0)</db:exceptionname>
+      </db:constructorsynopsis>
+      <db:destructorsynopsis xlink:href="dtor.QSensorGesture">
+         <db:methodname>~QSensorGesture</db:methodname>
+         <db:void/>
+      </db:destructorsynopsis>
+      <db:methodsynopsis xlink:href="detected">
+         <db:void/>
+         <db:methodname>detected</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QString 
+                                    gestureId )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="gestureSignals">
+         <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
+         <db:methodname>gestureSignals</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="invalidIds">
+         <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
+         <db:methodname>invalidIds</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="isActive">
+         <db:type>bool</db:type>
+         <db:methodname>isActive</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="startDetection">
+         <db:void/>
+         <db:methodname>startDetection</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="stopDetection">
+         <db:void/>
+         <db:methodname>stopDetection</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="validIds">
+         <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
+         <db:methodname>validIds</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code> class represents one or more sensor
+                                    gesture recognizers.</db:para>
+      <db:para>In addition to the <db:code><db:link xlink:href="qsensorgesture.html#detected">QSensorGesture::detected</db:link>()</db:code> signal, Sensor Gesture
+                                    Recognizers can have their own specific signals, and may be
+                                    discovered through <db:code><db:link xlink:href="qsensorgesture.html#gestureSignals">QSensorGesture::gestureSignals</db:link>()</db:code>.</db:para>
+      <db:para>
+         <db:emphasis role="bold">Note that <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code> uses a custom meta-object in
+                                        order to provide recognizer-specific signals. This means it
+                                        is not possible to sub-class <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code> and
+                                        use <db:code><db:link xlink:href="qtcore/qobject.html#Q_OBJECT">Q_OBJECT</db:link></db:code>. Also <db:link xlink:href="qtcore/qobject.html#qobject_cast">qobject_cast</db:link><db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code>*&gt;(ptr) will not
+                                    work.</db:emphasis>
+      </db:para>
+      <db:para>You may use <db:code><db:link xlink:href="qsensorgesturemanager.html">QSensorGestureManager</db:link></db:code> to obtain the systems known
+                                    sensor gesture ids.</db:para>
+      <db:section>
+         <db:title>See Also</db:title>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:code><db:link xlink:href="qsensorgesturerecognizer.html">QSensorGestureRecognizer</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qsensorgesturemanager.html">QSensorGestureManager</db:link></db:code>
+            </db:member>
+         </db:simplelist>
+      </db:section>
+   </db:section>
+   <db:section xml:id="func">
+      <db:title>Member Function Documentation</db:title>
+      <db:section xml:id="QSensorGesture">
+         <db:title>QSensorGesture::QSensorGesture(const <db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link><db:link xlink:href="qtcore/qobject.html#QObject">QObject</db:link></db:title>
+         <db:para>Constructs the sensor gesture, and initializes the
+                                        <db:emphasis>ids</db:emphasis> list of recognizers, with parent
+                                        <db:emphasis>parent</db:emphasis>
+         </db:para>
+      </db:section>
+      <db:section xml:id="dtor.QSensorGesture">
+         <db:title>QSensorGesture::~QSensorGesture()</db:title>
+         <db:para>Destroy the <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code>
+         </db:para>
+      </db:section>
+      <db:section xml:id="detected">
+         <db:title>[signal] void QSensorGesture::detected(<db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
+         <db:para>Signals when the <db:emphasis>gestureId</db:emphasis> gesture has been
+                                    recognized.</db:para>
+      </db:section>
+      <db:section xml:id="gestureSignals">
+         <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
+         <db:para>Returns all the possible gestures signals that may be
+                                    emitted.</db:para>
+      </db:section>
+      <db:section xml:id="invalidIds">
+         <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
+         <db:para>Returns the gesture recognizer ids that were not
+                                    found.</db:para>
+      </db:section>
+      <db:section xml:id="isActive">
+         <db:title>bool QSensorGesture::isActive()</db:title>
+         <db:para>Returns whether this gesture is active or not.</db:para>
+      </db:section>
+      <db:section xml:id="startDetection">
+         <db:title>void QSensorGesture::startDetection()</db:title>
+         <db:para>Starts the gesture detection routines in the
+                                    recognizer.</db:para>
+      </db:section>
+      <db:section xml:id="stopDetection">
+         <db:title>void QSensorGesture::stopDetection()</db:title>
+         <db:para>Stops the gesture detection routines.</db:para>
+      </db:section>
+      <db:section xml:id="validIds">
+         <db:title><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
+         <db:para>Returns the gesture recognizer ids that were found.</db:para>
+      </db:section>
+   </db:section>
 </db:article>
