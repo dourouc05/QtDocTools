@@ -1,0 +1,499 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en"><html:head>
+  <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- qdoc-manual-markupcmds.qdoc -->
+  <html:title>Miscellaneous | QDoc Manual 5.4</html:title>
+  <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+</html:head>
+<html:body>
+<html:div class="header" id="qtdocheader">
+    <html:div class="main">
+    <html:div class="main-rounded">
+        <html:div class="navigationbar">
+        <html:ul>
+<html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+<html:li><html:a href="qdoc-index.html">QDoc Manual</html:a></html:li>
+<html:li>Miscellaneous</html:li>
+<html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+    </html:ul>
+    </html:div>
+</html:div>
+<html:div class="content">
+<html:div class="line">
+<html:div class="content mainContent">
+  <html:link href="11-qdoc-commands-specialcontent.html" rel="prev" />
+  <html:link href="21-0-qdoc-creating-dita-maps.html" rel="next" />
+<html:p class="naviNextPrevious headerNavi">
+<html:a class="prevPage" href="11-qdoc-commands-specialcontent.html">Special Content</html:a>
+<html:a class="nextPage" href="21-0-qdoc-creating-dita-maps.html">Creating DITA Maps</html:a>
+</html:p><html:p>
+</html:p><html:div class="sidebar">
+<html:div class="toc">
+<html:h3><html:a name="toc">Contents</html:a></html:h3>
+<html:ul>
+<html:li class="level1"><html:a href="#annotatedlist">\annotatedlist</html:a></html:li>
+<html:li class="level1"><html:a href="#generatelist">\generatelist</html:a></html:li>
+<html:li class="level2"><html:a href="#annotatedclasses"><html:code>annotatedclasses</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#classes-op-lt-op-prefix-op-gt-op"><html:code>classes &lt;prefix&gt;</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#classesbymodule"><html:code>classesbymodule</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#compatclasses"><html:code>compatclasses</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#functionindex"><html:code>functionindex</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#legalese"><html:code>legalese</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#mainclasses"><html:code>mainclasses</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#overviews"><html:code>overviews</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#related"><html:code>related</html:code></html:a></html:li>
+<html:li class="level2"><html:a href="#service"><html:code>service</html:code></html:a></html:li>
+<html:li class="level1"><html:a href="#if">\if</html:a></html:li>
+<html:li class="level1"><html:a href="#endif">\endif</html:a></html:li>
+<html:li class="level1"><html:a href="#else">\else</html:a></html:li>
+<html:li class="level1"><html:a href="#include">\include</html:a></html:li>
+<html:li class="level2"><html:a href="#include-filename-snippet-identifier">\include filename snippet-identifier</html:a></html:li>
+<html:li class="level1"><html:a href="#meta">\meta</html:a></html:li>
+<html:li class="level1"><html:a href="#omit">\omit</html:a></html:li>
+<html:li class="level1"><html:a href="#raw-avoid">\raw <html:span class="newStuff">(avoid)</html:span></html:a></html:li>
+<html:li class="level1"><html:a href="#unicode">\unicode</html:a></html:li>
+</html:ul>
+</html:div>
+<html:div class="sidebar-content" id="sidebar-content" /></html:div>
+<html:h1 class="title">Miscellaneous</html:h1>
+<html:span class="subtitle" />
+<!-- $$$12-0-qdoc-commands-miscellaneous.html-description -->
+<html:div class="descr"> <html:a name="details" />
+<html:p>These commands provide miscellaneous functions connected to the visual appearance of the documentation, and to the process of generating the documentation.</html:p>
+<html:a name="annotatedlist-command" /><html:a name="annotatedlist" />
+<html:h2 id="annotatedlist">\annotatedlist</html:h2>
+<html:p>The \annotatedlist command expands to a list of the members of a group, each member listed with its <html:i>brief</html:i> text. Below is an example from the Qt Reference Documentation:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    <html:span class="operator">.</html:span><html:span class="operator">.</html:span><html:span class="operator">.</html:span>
+    \section1 Drag and Drop Classes
+
+    These classes deal with drag and drop and the necessary mime type
+    encoding and decoding<html:span class="operator">.</html:span>
+
+    \annotatedlist draganddrop
+
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>This generates a list of all the C++ classes and/or QML types in the <html:i>draganddrop</html:i> group. A C++ class or QML type in the <html:i>draganddrop</html:i> group will have <html:i>\ingroup draganddrop</html:i> in its <html:i>\class</html:i> or <html:i>\qmltype</html:i> comment.</html:p>
+<html:a name="generatelist-command" /><html:a name="generatelist" />
+<html:h2 id="generatelist">\generatelist</html:h2>
+<html:p>The \generatelist command expands to a list of links to the documentation entities in a group. Below is an example from the Qt Reference Documentation:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \page classes<html:span class="operator">.</html:span>html
+    \title All Classes
+
+    For a shorter list that only includes the most
+    frequently used classes<html:span class="operator">,</html:span> see \l{<html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span><html:span class="char">'s Main Classes}.
+
+    \generatelist classes Q
+* /
+</html:span></html:pre>
+<html:p>This generates the <html:i>All Classes</html:i> page. The command accepts the following arguments:</html:p>
+<html:a name="table-example" /><html:a name="annotatedclasses" />
+<html:h3><html:code>annotatedclasses</html:code></html:h3>
+<html:p>The <html:code>annotatedclasses</html:code> argument provides a table containing the names of all the classes, and a description of each class. Each class name is a link to the class's reference documentation. For example:</html:p>
+<html:div class="table"><html:table class="generic">
+ <html:tbody><html:tr class="odd" valign="top"><html:td><html:a href="qtwidgets/qdial.html">QDial</html:a></html:td><html:td>Rounded range control (like a speedometer or potentiometer)</html:td></html:tr>
+<html:tr class="even" valign="top"><html:td><html:a href="qtwidgets/qdialog.html">QDialog</html:a></html:td><html:td>The base class of dialog windows</html:td></html:tr>
+<html:tr class="odd" valign="top"><html:td><html:a href="qtcore/qdir.html">QDir</html:a></html:td><html:td>Access to directory structures and their contents</html:td></html:tr>
+</html:tbody></html:table></html:div>
+<html:p>A C++ class is documented with the <html:a href="13-qdoc-commands-topics.html#class-command">\class</html:a> command. The annotation for the class is taken from the argument of the class comment's <html:a href="11-qdoc-commands-specialcontent.html#brief-command">\brief</html:a> command.</html:p>
+<html:a name="list-example" /><html:a name="classes-op-lt-op-prefix-op-gt-op" />
+<html:h3><html:code>classes &lt;prefix&gt;</html:code></html:h3>
+<html:p>The <html:code>classes</html:code> argument provides a complete alphabetical list of the classes. The second argument, <html:code>&lt;prefix&gt;</html:code>, is the common prefix for the class names. The class names will be sorted on the character that follows the common prefix. e.g. The common prefix for the Qt classes is <html:code>Q</html:code>. The common prefix argument is optional. If no common prefix is provided, the class names will be sorted on their first character.</html:p>
+<html:p>Each class name becomes a link to the class's reference documentation. This command is used to generate the <html:i>All Classes</html:i> page this way:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \page classes<html:span class="operator">.</html:span>html
+    \title All Classes
+    \ingroup classlists
+
+    \brief Alphabetical list of classes<html:span class="operator">.</html:span>
+
+    This is a list of all <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> classes<html:span class="operator">.</html:span> For a list of the classes
+    provided <html:span class="keyword">for</html:span> compatibility with Qt3<html:span class="operator">,</html:span> see \l{Qt3 Support
+    Classes}<html:span class="operator">.</html:span> For classes that have been deprecated<html:span class="operator">,</html:span> see the
+    \l{Obsolete Classes} list<html:span class="operator">.</html:span>
+
+    \generatelist classes Q
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>A C++ class is documented with the <html:a href="13-qdoc-commands-topics.html#class-command">\class</html:a> command.</html:p>
+<html:a name="classesbymodule" />
+<html:h3><html:code>classesbymodule</html:code></html:h3>
+<html:p>When this argument is used, a second argument is required, which specifies the module whose classes are to be listed. QDoc generates a table containing those classes. Each class is listed with the text of its <html:a href="11-qdoc-commands-specialcontent.html#brief-command">\brief</html:a> command.</html:p>
+<html:p>For example, this command can be used on a module page as follows:</html:p>
+<html:pre class="cpp">  <html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+      \page phonon<html:span class="operator">-</html:span>module<html:span class="operator">.</html:span>html
+      \module Phonon
+      \title Phonon Module
+      \ingroup modules
+
+      \brief Contains namespaces and classes <html:span class="keyword">for</html:span> multimedia functionality<html:span class="operator">.</html:span>
+
+      \generatelist{classesbymodule Phonon}
+
+  <html:span class="operator">.</html:span><html:span class="operator">.</html:span><html:span class="operator">.</html:span>
+
+  <html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>Each class that is a member of the specified module must be marked with the <html:a href="19-qdoc-commands-grouping.html#inmodule-command">\inmodule</html:a> command in its \class comment.</html:p>
+<html:a name="compatclasses" />
+<html:h3><html:code>compatclasses</html:code></html:h3>
+<html:p>The <html:code>compatclasses</html:code> argument generates a list in alphabetical order of the support classes. It is normally used only to generate the Qt3 Support Classes page this way:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \page compatclasses<html:span class="operator">.</html:span>html
+    \title Qt3 Support Classes
+    \ingroup classlists
+
+    \brief Enable porting of code from <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> <html:span class="number">3</html:span> to <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> <html:span class="number">4.</html:span>
+
+    These are the classes that <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> provides <html:span class="keyword">for</html:span> compatibility with <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span>
+    <html:span class="number">3.</html:span> Most of these are provided by the <html:span class="type">Qt3Support</html:span> module<html:span class="operator">.</html:span>
+
+    \generatelist compatclasses
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>A support class is identified in the \class comment with the <html:a href="16-qdoc-commands-status.html#compat-command">\compat</html:a> command.</html:p>
+<html:a name="functionindex" />
+<html:h3><html:code>functionindex</html:code></html:h3>
+<html:p>The <html:code>functionindex</html:code> argument provides a complete alphabetical list of all the documented member functions. It is normally used only to generate the <html:i>Qt function index</html:i> page this way:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \page functions<html:span class="operator">.</html:span>html
+    \title All Functions
+    \ingroup funclists
+
+    \brief All documented <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> functions listed alphabetically with a
+    link to where each one is declared<html:span class="operator">.</html:span>
+
+    This is the list of all documented member functions and global
+    functions in the <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> API<html:span class="operator">.</html:span> Each function has a link to the
+    <html:span class="keyword">class</html:span> <html:span class="keyword">or</html:span> header file where it is declared and documented<html:span class="operator">.</html:span>
+
+    \generatelist functionindex
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:a name="legalese" />
+<html:h3><html:code>legalese</html:code></html:h3>
+<html:p>The <html:code>legalese</html:code> argument tells QDoc to generate a complete list of licenses in the documentation. Each license is identified using the <html:a href="11-qdoc-commands-specialcontent.html#legalese-command">\legalese</html:a> command. This command is used to generate the <html:i>Qt license information</html:i> page this way:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \page licenses<html:span class="operator">.</html:span>html
+    \title Other Licenses Used in <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span>
+    \ingroup licensing
+    \brief Information about other licenses used <html:span class="keyword">for</html:span> <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> components and third<html:span class="operator">-</html:span>party code<html:span class="operator">.</html:span>
+
+    <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> contains some code that is <html:span class="keyword">not</html:span> provided under the
+    \l{GNU General Public License (GPL)}<html:span class="operator">,</html:span>
+    \l{GNU Lesser General Public License (LGPL)} <html:span class="keyword">or</html:span> the
+    \l{<html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Commercial Edition}{<html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Commercial License Agreement}<html:span class="operator">,</html:span> but rather under
+    specific licenses from the original authors<html:span class="operator">.</html:span> Some pieces of code were developed
+    by Digia and others originated from third parties<html:span class="operator">.</html:span>
+    This page lists the licenses used<html:span class="operator">,</html:span> names the authors<html:span class="operator">,</html:span> and links
+    to the places where it is used<html:span class="operator">.</html:span>
+
+    Digia gratefully acknowledges these and other contributions
+    to <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span><html:span class="operator">.</html:span> We recommend that programs that use <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> also acknowledge
+    these contributions<html:span class="operator">,</html:span> and quote these license statements in an
+    appendix to the documentation<html:span class="operator">.</html:span>
+
+    See also: \l{Licenses <html:span class="keyword">for</html:span> Fonts Used in <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> <html:span class="keyword">for</html:span> Embedded Linux}
+
+    \generatelist legalese
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:a name="mainclasses" />
+<html:h3><html:code>mainclasses</html:code></html:h3>
+<html:p>The <html:code>mainclasses</html:code> argument tells QDoc to generate an alphabetical list of the main classes. A class is marked as a main class by including a <html:a href="19-qdoc-commands-grouping.html#mainclass-command">\mainclass</html:a> command in the \class comment.</html:p>
+<html:p><html:b>Note: </html:b>The Qt documentation no longer includes a main classes page, but you can generate one for your main classes if you want it.</html:p><html:a name="overviews" />
+<html:h3><html:code>overviews</html:code></html:h3>
+<html:p>The <html:code>overviews</html:code> argument is used to tell QDoc to generate a list by concatenating the contents of all the <html:a href="13-qdoc-commands-topics.html#group-command">\group</html:a> pages. Qt uses it to generate the <html:i>overviews</html:i> page this way:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \page overviews<html:span class="operator">.</html:span>html
+
+    \title All Overviews and HOWTOs
+
+    \generatelist overviews
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:a name="related" />
+<html:h3><html:code>related</html:code></html:h3>
+<html:p>The <html:code>related</html:code> argument is used in combination with the <html:a href="13-qdoc-commands-topics.html#group-command">\group</html:a> and <html:a href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</html:a> commands to list all the overviews related to a specified group. For example, the page for the <html:i>Programming with Qt</html:i> page is generated this way:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \group qt<html:span class="operator">-</html:span>basic<html:span class="operator">-</html:span>concepts
+    \title Programming with <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span>
+
+    \brief The basic architecture of the <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> cross<html:span class="operator">-</html:span>platform application and UI framework<html:span class="operator">.</html:span>
+
+    <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> is a cross<html:span class="operator">-</html:span>platform application and UI framework <html:span class="keyword">for</html:span>
+    writing web<html:span class="operator">-</html:span>enabled applications <html:span class="keyword">for</html:span> desktop<html:span class="operator">,</html:span> mobile<html:span class="operator">,</html:span> and
+    embedded operating systems<html:span class="operator">.</html:span> This page contains links to
+    articles and overviews explaining key components and
+    techniuqes used in <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> development<html:span class="operator">.</html:span>
+
+    \generatelist {related}
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>Each page listed on this group page contains the command:</html:p>
+<html:pre class="cpp">    \ingroup qt<html:span class="operator">-</html:span>basic<html:span class="operator">-</html:span>concepts</html:pre>
+<html:a name="service" />
+<html:h3><html:code>service</html:code></html:h3>
+<html:p>The <html:code>service</html:code> argument tells QDoc to generate an alphabetical list of the services. Each service name is a link to the service's reference documentation.</html:p>
+<html:p>A service is identified with the <html:a href="13-qdoc-commands-topics.html#service-command">\service</html:a> command.</html:p>
+<html:p><html:b>Note: </html:b>This command and the <html:a href="13-qdoc-commands-topics.html#service-command">\service</html:a> command are not used in the Qt documentation.</html:p><html:a name="if-command" /><html:a name="if" />
+<html:h2 id="if">\if</html:h2>
+<html:p>The \if command and the corresponding \endif command enclose parts of a QDoc comment that only will be included if the condition specified by the command's argument is true.</html:p>
+<html:p>The command reads the rest of the line and parses it as an C++ #if statement.</html:p>
+<html:pre class="cpp">       <html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+           \<html:span class="keyword">if</html:span> defined(opensourceedition)
+
+           \b{Note:} This edition is <html:span class="keyword">for</html:span> the development of
+           \l{<html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Open Source Edition} {Free and Open Source}
+           software only; see \l{<html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Commercial Editions}<html:span class="operator">.</html:span>
+
+           \endif
+       <html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>This QDoc comment will only be rendered if the <html:code>opensourceedition</html:code> preprocessor symbol is defined, and specified in the <html:a href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</html:a> variable in the configuration file to make QDoc process the code within #ifdef and #endif:</html:p>
+<html:pre class="cpp">           defines <html:span class="operator">=</html:span> opensourceedition</html:pre>
+<html:p>You can also define the preprocessor symbol manually on the command line. For more information see the documentation of the <html:a href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</html:a> variable.</html:p>
+<html:p>See also <html:a href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</html:a>, <html:a href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</html:a>, <html:a href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</html:a> and <html:a href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</html:a>.</html:p>
+<html:a name="endif-command" /><html:a name="endif" />
+<html:h2 id="endif">\endif</html:h2>
+<html:p>The \endif command and the corresponding \if command enclose parts of a QDoc comment that will be included if the condition specified by the <html:a href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</html:a> command's argument is true.</html:p>
+<html:p>For more information, see the documentation of the <html:a href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</html:a> command.</html:p>
+<html:p>See also <html:a href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</html:a>, <html:a href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</html:a>, <html:a href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</html:a> and <html:a href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</html:a>.</html:p>
+<html:a name="else-command" /><html:a name="else" />
+<html:h2 id="else">\else</html:h2>
+<html:p>The \else command specifies an alternative if the condition in the <html:a href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</html:a> command is false.</html:p>
+<html:p>The \else command can only be used within <html:a href="12-0-qdoc-commands-miscellaneous.html#if-command">\if...\endif</html:a> commands, but is useful when there is only two alternatives.</html:p>
+<html:pre class="cpp">       <html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+           The <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> <html:span class="number">3</html:span> support library is provided to keep old
+           source code working<html:span class="operator">.</html:span>
+
+           In addition to the \c <html:span class="type">Qt3Support</html:span> classes<html:span class="operator">,</html:span> <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> <html:span class="number">4</html:span> provides
+           compatibility functions when it<html:span class="char">'s possible for an old
+           API to cohabit with the new one.
+
+           \if !defined(QT3_SUPPORT)
+               \if defined(QT3_SUPPORTWARNINGS)
+                   The compiler emits a warning when a
+                   compatibility function is called. (This works
+                   only with GCC 3.2+ and MSVC 7.)
+               \else
+                   To use the Qt 3 support library, you need to
+                   have the line QT += qt3support in your .pro
+                   file (qmake automatically define the
+                   QT3_SUPPORT symbol, turning on compatibility
+                   function support).
+
+                   You can also define the symbol manually (for example,
+                   if you don'</html:span>t want to link against the \c
+                   <html:span class="type">Qt3Support</html:span> library)<html:span class="operator">,</html:span> <html:span class="keyword">or</html:span> you can define \c
+                   QT3_SUPPORT_WARNINGS instead<html:span class="operator">,</html:span> telling the
+                   compiler to <html:span class="keyword">emit</html:span> a warning when a compatibility
+                   function is called<html:span class="operator">.</html:span> (This works only with GCC
+                   <html:span class="number">3.2</html:span><html:span class="operator">+</html:span> and MSVC <html:span class="number">7.</html:span>)
+               \endif
+           \endif
+       <html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>If the <html:code>QT3_SUPPORT</html:code> is defined, the comment will be rendered like this:</html:p>
+<html:blockquote><html:p>The Qt 3 support library is provided to keep old source code working.</html:p>
+<html:p>In addition to the Qt3Support classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</html:p>
+</html:blockquote>
+<html:p>If <html:code>QT3_SUPPORT</html:code> is not defined but <html:code>QT3_SUPPORT_WARNINGS</html:code> is defined, the comment will be rendered like this:</html:p>
+<html:blockquote><html:p>The Qt 3 support library is provided to keep old source code working.</html:p>
+<html:p>In addition to the Qt3Support classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</html:p>
+<html:p>The compiler emits a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</html:p>
+</html:blockquote>
+<html:p>If none of the symbols are defined, the comment will be rendered as</html:p>
+<html:blockquote><html:p>The Qt 3 support library is provided to keep old source code working.</html:p>
+<html:p>In addition to the <html:code>Qt3Support</html:code> classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</html:p>
+<html:p>To use the Qt 3 support library, you need to have the line QT += qt3support in your .pro file (qmake automatically define the QT3_SUPPORT symbol, turning on compatibility function support).</html:p>
+<html:p>You can also define the symbol manually (e.g., if you don't want to link against the <html:code>Qt3Support</html:code> library), or you can define <html:code>QT3_SUPPORT_WARNINGS</html:code> instead, telling the compiler to emit a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</html:p>
+</html:blockquote>
+<html:p>See also <html:a href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</html:a>, <html:a href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</html:a>, <html:a href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</html:a> and <html:a href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</html:a>.</html:p>
+<html:a name="include-command" /><html:a name="include" />
+<html:h2 id="include">\include</html:h2>
+<html:p>The \include command sends all or part of the file specified by its first argument to the QDoc input stream to be processed as a QDoc comment snippet. This command is often assigned the alias, <html:i>input</html:i>, in the QDoc configuration file, for example <html:i>alias.include = input</html:i>.</html:p>
+<html:p>The command is useful when some snippet of commands and text is to be used in multiple places in the documentation. In that case, move the snippet into a separate file and use the \include command wherever you want to insert the snippet into the documentation. To prevent QDoc from reading the file as a stand-alone page of documentation, we recommend that you use the <html:code>.qdocinc</html:code> extension for these <html:i>include</html:i> files.</html:p>
+<html:p>The command can have either one or two arguments. The first argument is always a file name. The contents of the file must be QDoc input, in other words, a sequence of QDoc commands and text, but without the enclosing QDoc comment <html:code>/</html:code><html:code>*!</html:code> ... <html:code>*</html:code><html:code>/</html:code> delimiters. If you want to include the entire named file, don't use the second argument. If you want to include only part of the file, see the <html:a href="12-0-qdoc-commands-miscellaneous.html#2-argument-form">two argument form</html:a> below. Here is an example of the one argument form:</html:p>
+<html:pre class="cpp">        <html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+            \page corefeatures<html:span class="operator">.</html:span>html
+            \title Core Features
+
+            \<html:span class="keyword">include</html:span> examples<html:span class="operator">/</html:span>signalandslots<html:span class="operator">.</html:span>qdocinc
+            \<html:span class="keyword">include</html:span> examples<html:span class="operator">/</html:span>objectmodel<html:span class="operator">.</html:span>qdocinc
+            \<html:span class="keyword">include</html:span> examples<html:span class="operator">/</html:span>layoutmanagement<html:span class="operator">.</html:span>qdocinc
+        <html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>QDoc renders this page <html:a href="corefeatures.html">as shown here</html:a>.</html:p>
+<html:a name="2-argument-form" /><html:a name="include-filename-snippet-identifier" />
+<html:h3>\include filename snippet-identifier</html:h3>
+<html:p>It is a waste of time to make a separate <html:code>.qdocinc</html:code> file for every QDoc include snippet you want to use in multiple places in the documentation, especially given that you probably have to put the copyright/license notice in every one of these files. So if you have a large number of snippets to be included, you can put them all in a single file if you want, and surround each one with:</html:p>
+<html:pre class="cpp">    <html:span class="comment">//! [snippet-id1]</html:span>
+
+       <html:span class="type">QDoc</html:span> commands and text<html:span class="operator">.</html:span><html:span class="operator">.</html:span><html:span class="operator">.</html:span>
+
+<html:span class="comment">//! [snippet-id1]</html:span>
+
+    <html:span class="comment">//! [snippet-id2]</html:span>
+
+       More <html:span class="type">QDoc</html:span> commands and text<html:span class="operator">.</html:span><html:span class="operator">.</html:span><html:span class="operator">.</html:span>
+
+<html:span class="comment">//! [snippet-id2]</html:span></html:pre>
+<html:p>Then you can use the two-argument form of the command:</html:p>
+<html:pre class="cpp">    \input examples<html:span class="operator">/</html:span>signalandslots<html:span class="operator">.</html:span>qdocinc snippet<html:span class="operator">-</html:span>id2
+    \input examples<html:span class="operator">/</html:span>objectmodel<html:span class="operator">.</html:span>qdocinc another<html:span class="operator">-</html:span>snippet<html:span class="operator">-</html:span>id</html:pre>
+<html:p>It works as expected. The sequence of QDoc commands and text found between the two tags with the same name as the second argument is sent to the QDoc input stream. You can even nest these snippets, although it's not clear why you would want to do that.</html:p>
+<html:a name="meta-command" /><html:a name="meta" />
+<html:h2 id="meta">\meta</html:h2>
+<html:p>The \meta command is mainly used for including metadata in DITA XML files. It is also used when generating HTML output for specifying the <html:i>maintainer(s)</html:i> of a C++ class.</html:p>
+<html:p>The command has two arguments: the first argument is the name of the metadata attribute, and the second argument is the value for the attribute. Each argument should be enclosed in curly brackets, as shown in this example:</html:p>
+<html:pre class="cpp"><html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+    \<html:span class="keyword">class</html:span> <html:span class="type"><html:a href="qtwidgets/qwidget.html">QWidget</html:a></html:span>
+    \brief The <html:span class="type"><html:a href="qtwidgets/qwidget.html">QWidget</html:a></html:span> <html:span class="keyword">class</html:span> is the base <html:span class="keyword">class</html:span> of all user interface objects<html:span class="operator">.</html:span>
+
+    \ingroup basicwidgets
+
+    \meta {technology} {User Interface}
+    \meta {platform} {OS X <html:span class="number">10.6</html:span>}
+    \meta {platform} {Symbian}
+    \meta {platform} {MeeGo}
+    \meta {audience} {user}
+    \meta {audience} {programmer}
+    \meta {audience} {designer}
+<html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>When running QDoc to generate HTML, the example above will have no effect on the generated output, but if you run QDoc to generate DITA XML, the example will generate the following:</html:p>
+<html:pre class="cpp"><html:span class="operator">&lt;</html:span><html:span class="operator">?</html:span>xml version<html:span class="operator">=</html:span><html:span class="string">"1.0"</html:span> encoding<html:span class="operator">=</html:span><html:span class="string">"UTF-8"</html:span><html:span class="operator">?</html:span><html:span class="operator">&gt;</html:span>
+<html:span class="operator">&lt;</html:span><html:span class="operator">!</html:span>DOCTYPE cxxClass PUBLIC <html:span class="string">"-//NOKIA//DTD DITA C++ API Class Reference Type v0.6.0//EN"</html:span> <html:span class="string">"dtd/cxxClass.dtd"</html:span><html:span class="operator">&gt;</html:span>
+<html:span class="operator">&lt;</html:span><html:span class="operator">!</html:span><html:span class="operator">-</html:span><html:span class="operator">-</html:span>qwidget<html:span class="operator">.</html:span>cpp<html:span class="operator">-</html:span><html:span class="operator">-</html:span><html:span class="operator">&gt;</html:span>
+<html:span class="operator">&lt;</html:span>cxxClass id<html:span class="operator">=</html:span><html:span class="string">"id-9a14268e-6b09-4eee-b940-21a00a0961df"</html:span><html:span class="operator">&gt;</html:span>
+   <html:span class="operator">&lt;</html:span>apiName<html:span class="operator">&gt;</html:span><html:span class="type"><html:a href="qtwidgets/qwidget.html">QWidget</html:a></html:span><html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>apiName<html:span class="operator">&gt;</html:span>
+   <html:span class="operator">&lt;</html:span>shortdesc<html:span class="operator">&gt;</html:span>the <html:span class="type"><html:a href="qtwidgets/qwidget.html">QWidget</html:a></html:span> <html:span class="keyword">class</html:span> is the base <html:span class="keyword">class</html:span> of all user interface objects<html:span class="operator">.</html:span><html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>shortdesc<html:span class="operator">&gt;</html:span>
+   <html:span class="operator">&lt;</html:span>prolog<html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span>author<html:span class="operator">&gt;</html:span><html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Development Frameworks<html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>author<html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span>publisher<html:span class="operator">&gt;</html:span><html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Project<html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>publisher<html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span>copyright<html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>copyryear year<html:span class="operator">=</html:span><html:span class="string">"2015"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>copyrholder<html:span class="operator">&gt;</html:span><html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Project<html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>copyrholder<html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>copyright<html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span>permissions view<html:span class="operator">=</html:span><html:span class="string">"all"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span>metadata<html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>audience type<html:span class="operator">=</html:span><html:span class="string">"designer"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>audience type<html:span class="operator">=</html:span><html:span class="string">"programmer"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>audience type<html:span class="operator">=</html:span><html:span class="string">"user"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>category<html:span class="operator">&gt;</html:span>Class reference<html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>category<html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>prodinfo<html:span class="operator">&gt;</html:span>
+               <html:span class="operator">&lt;</html:span>prodname<html:span class="operator">&gt;</html:span><html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> Reference Documentation<html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>prodname<html:span class="operator">&gt;</html:span>
+               <html:span class="operator">&lt;</html:span>vrmlist<html:span class="operator">&gt;</html:span>
+                   <html:span class="operator">&lt;</html:span>vrm version<html:span class="operator">=</html:span><html:span class="string">"4"</html:span> release<html:span class="operator">=</html:span><html:span class="string">"7"</html:span> modification<html:span class="operator">=</html:span><html:span class="string">"3"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+               <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>vrmlist<html:span class="operator">&gt;</html:span>
+               <html:span class="operator">&lt;</html:span>component<html:span class="operator">&gt;</html:span><html:span class="type"><html:a href="qtgui/qtgui-module.html">QtGui</html:a></html:span><html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>component<html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>prodinfo<html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>othermeta name<html:span class="operator">=</html:span><html:span class="string">"platform"</html:span> content<html:span class="operator">=</html:span><html:span class="string">"MeeGo"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>othermeta name<html:span class="operator">=</html:span><html:span class="string">"platform"</html:span> content<html:span class="operator">=</html:span><html:span class="string">"Symbian"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>othermeta name<html:span class="operator">=</html:span><html:span class="string">"platform"</html:span> content<html:span class="operator">=</html:span><html:span class="string">"OS X 10.6"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>othermeta name<html:span class="operator">=</html:span><html:span class="string">"technology"</html:span> content<html:span class="operator">=</html:span><html:span class="string">"User Interface"</html:span><html:span class="operator">/</html:span><html:span class="operator">&gt;</html:span>
+       <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>metadata<html:span class="operator">&gt;</html:span>
+   <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>prolog<html:span class="operator">&gt;</html:span></html:pre>
+<html:p>In the example output, several values have been set using default values obtained from the QDoc configuration file. See <html:a href="21-3-qt-dita-xml-output.html">Generating DITA XML Output</html:a> for details.</html:p>
+<html:a name="omit-command" /><html:a name="omit" />
+<html:h2 id="omit">\omit</html:h2>
+<html:p>The \omit command and the corresponding \endomit command delimit parts of the documentation that you want QDoc to skip. For example:</html:p>
+<html:pre class="cpp">        <html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+            \table
+            \row
+                \li Basic Widgets
+                \li Basic GUI widgets such as buttons<html:span class="operator">,</html:span> comboboxes
+                   and scrollbars<html:span class="operator">.</html:span>
+
+            \omit
+            \row
+                \li Component Model
+                \li Interfaces and helper classes <html:span class="keyword">for</html:span> the <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span>
+                   Component Model<html:span class="operator">.</html:span>
+            \endomit
+
+            \row
+                \li Database Classes
+                \li Database related classes<html:span class="operator">,</html:span> e<html:span class="operator">.</html:span>g<html:span class="operator">.</html:span> <html:span class="keyword">for</html:span> SQL databases<html:span class="operator">.</html:span>
+            \endtable
+        <html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>QDoc renders this as:</html:p>
+                <html:table align="center" border="0" cellpadding="2" cellspacing="1">
+
+                <html:tbody><html:tr bgcolor="#d0d0d0" valign="top">
+                    <html:td>Basic Widgets</html:td>
+                    <html:td>Basic GUI widgets such as buttons, comboboxes
+                       and scrollbars.</html:td>
+                </html:tr>
+
+                <html:tr bgcolor="#c0c0c0" valign="top">
+                    <html:td>Database Classes</html:td>
+                    <html:td>Database related classes, e.g. for SQL databases.</html:td>
+                </html:tr>
+                </html:tbody></html:table>
+            <html:a name="raw-command" /><html:a name="raw-avoid" />
+<html:h2 id="raw-avoid">\raw <html:span class="newStuff">(avoid)</html:span></html:h2>
+<html:p>The \raw command and the corresponding \endraw command delimit a block of raw mark-up language code.</html:p>
+<html:p><html:b>Note: </html:b>Avoid using this command if possible, because it generates DITA XML code that causes problems. If you are trying to generate special table or list behavior, try to get the behavior you want using the <html:a href="04-qdoc-commands-textmarkup.html#span-command">\span</html:a> and <html:a href="04-qdoc-commands-textmarkup.html#div-command">\div</html:a> commands in your <html:a href="10-qdoc-commands-tablesandlists.html#table-command">\table</html:a> or <html:a href="10-qdoc-commands-tablesandlists.html#list-command">\list</html:a>.</html:p><html:p>The command takes an argument specifying the code's format. Currently, the only supported format is HTML.</html:p>
+<html:p>The \raw command is useful if you want some special HTML effects in your documentation.</html:p>
+<html:pre class="cpp">       <html:span class="operator">/</html:span> <html:span class="operator">*</html:span><html:span class="operator">!</html:span>
+           <html:span class="type"><html:a href="qtcore/qt.html">Qt</html:a></html:span> has some predefined <html:span class="type"><html:a href="qtgui/qcolor.html">QColor</html:a></html:span> objects<html:span class="operator">.</html:span>
+
+           \raw HTML
+           <html:span class="operator">&lt;</html:span>style type<html:span class="operator">=</html:span><html:span class="string">"text/css"</html:span> id<html:span class="operator">=</html:span><html:span class="string">"colorstyles"</html:span><html:span class="operator">&gt;</html:span>
+           <html:span class="preprocessor">#color-blue { background-color: #0000ff; color: #ffffff }</html:span>
+           <html:span class="preprocessor">#color-darkBlue { background-color: #000080; color: #ffffff }</html:span>
+           <html:span class="preprocessor">#color-cyan { background-color: #00ffff; color: #000000 }</html:span>
+           <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>style<html:span class="operator">&gt;</html:span>
+
+           <html:span class="operator">&lt;</html:span>p<html:span class="operator">&gt;</html:span>
+           <html:span class="operator">&lt;</html:span>tt id<html:span class="operator">=</html:span><html:span class="string">"color-blue"</html:span><html:span class="operator">&gt;</html:span>Blue(<html:span class="preprocessor">#0000ff)&lt;/tt&gt;,</html:span>
+           <html:span class="operator">&lt;</html:span>tt id<html:span class="operator">=</html:span><html:span class="string">"color-darkBlue"</html:span><html:span class="operator">&gt;</html:span>dark blue(<html:span class="preprocessor">#000080)&lt;/tt&gt; and</html:span>
+           <html:span class="operator">&lt;</html:span>tt id<html:span class="operator">=</html:span><html:span class="string">"color-cyan"</html:span><html:span class="operator">&gt;</html:span>cyan(<html:span class="preprocessor">#00ffff)&lt;/tt&gt;.</html:span>
+       <html:span class="operator">&lt;</html:span><html:span class="operator">/</html:span>p<html:span class="operator">&gt;</html:span>
+           \endraw
+       <html:span class="operator">*</html:span> <html:span class="operator">/</html:span></html:pre>
+<html:p>QDoc renders this as:</html:p>
+<html:blockquote><html:p>Qt has some predefined <html:a href="qtgui/qcolor.html">QColor</html:a> objects.</html:p>
+               <html:style id="colorstyles" type="text/css">
+               #color-blue { background-color: #0000ff; color: #ffffff }
+               #color-darkBlue { background-color: #000080; color: #ffffff }
+               #color-cyan { background-color: #00ffff; color: #000000 }
+               </html:style>
+
+               <html:p>
+               <html:tt id="color-blue">Blue(#0000ff)</html:tt>,
+               <html:tt id="color-darkBlue">dark blue(#000080)</html:tt> and
+               <html:tt id="color-cyan">cyan(#00ffff)</html:tt>.
+           </html:p>
+               </html:blockquote>
+<html:p><html:b>Note: </html:b>But you can achieve the exact same thing using qdoc commands. In this case, all you have to do is include the color styles in your style.css file. Then you can write:</html:p><html:pre class="cpp">       \tt {\span {id<html:span class="operator">=</html:span><html:span class="string">"color-blue"</html:span>} {Blue(<html:span class="preprocessor">#0000ff)}},</html:span>
+       \tt {\span {id<html:span class="operator">=</html:span><html:span class="string">"color-darkBlue"</html:span>} {dark blue(<html:span class="preprocessor">#000080)}} and</html:span>
+       \tt {\span {id<html:span class="operator">=</html:span><html:span class="string">"color-cyan"</html:span>} {cyan(<html:span class="preprocessor">#00ffff)}}.</html:span></html:pre>
+<html:p>...which is rendered as:</html:p>
+<html:p><html:code><html:span id="color-blue">Blue(#0000ff)</html:span></html:code>, <html:code><html:span id="color-darkBlue">dark blue(#000080)</html:span></html:code> and <html:code><html:span id="color-cyan">cyan(#00ffff)</html:span></html:code>.</html:p>
+<html:a name="unicode-command" /><html:a name="unicode" />
+<html:h2 id="unicode">\unicode</html:h2>
+<html:p>The \unicode command allows you to insert an arbitrary Unicode character in the document.</html:p>
+<html:p>The command takes an argument specifying the character as an integer. By default, base 10 is assumed, unless a '0x' or '0' prefix is specified (for base 16 and 8, respectively). For example:</html:p>
+<html:pre class="cpp">            O G\unicode{<html:span class="number">0xEA</html:span>}nio e as Rosas
+
+            \unicode <html:span class="number">0xC0</html:span> table en famille avec <html:span class="number">15</html:span> \unicode <html:span class="number">0x20AC</html:span> par jour
+
+            \unicode <html:span class="number">0x3A3</html:span> \e{a}\sub{\e{i}}</html:pre>
+<html:p>QDoc renders this as:</html:p>
+<html:blockquote><html:p>O G&#234;nio e as Rosas</html:p>
+<html:p>&#192; table en famille avec 15 &#8364; par jour</html:p>
+<html:p>&#931; <html:i>a</html:i><html:sub><html:i>i</html:i></html:sub></html:p>
+</html:blockquote>
+</html:div>
+<!-- @@@12-0-qdoc-commands-miscellaneous.html -->
+<html:p class="naviNextPrevious footerNavi">
+<html:a class="prevPage" href="11-qdoc-commands-specialcontent.html">Special Content</html:a>
+<html:a class="nextPage" href="21-0-qdoc-creating-dita-maps.html">Creating DITA Maps</html:a>
+</html:p>
+        </html:div>
+       </html:div>
+   </html:div>
+   </html:div>
+</html:div>
+<html:div class="footer">
+   <html:p>
+   <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<html:br />    The documentation provided herein is licensed under the terms of the    <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</html:a> as published by the Free Software Foundation.<html:br />    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </html:p>
+</html:div>
+
+
+</html:body></html:html>

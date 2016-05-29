@@ -565,7 +565,7 @@
     </xsl:variable>
 
     <!-- Actually output something. -->
-    <db:article version="5.0">
+    <db:article version="5.1">
       <xsl:attribute name="xml:lang">
         <xsl:value-of select="@lang"/>
       </xsl:attribute>
@@ -2871,12 +2871,12 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:sub">
     <db:subscript>
-      <xsl:apply-templates mode="content_list"/>
+      <xsl:apply-templates mode="content_paragraph"/>
     </db:subscript>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:sup">
     <db:superscript>
-      <xsl:apply-templates mode="content_list"/>
+      <xsl:apply-templates mode="content_paragraph"/>
     </db:superscript>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:ul">
@@ -2889,7 +2889,7 @@
       <xsl:apply-templates mode="content_list"/>
     </db:orderedlist>
   </xsl:template>
-  <xsl:template mode="content_paragraph" match="html:code">
+  <xsl:template mode="content_paragraph" match="html:code | html:tt">
     <db:code>
       <xsl:apply-templates mode="content_paragraph"/>
     </db:code>
@@ -2920,6 +2920,7 @@
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
   </xsl:template>
+  <xsl:template mode="content_bq" match="html:style"/><!-- Sorry, there's just nothing DocBook can help with. -->
   <xsl:template mode="content_bq" match="html:a">
     <xsl:choose>
       <xsl:when test="./html:h1">
