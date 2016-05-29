@@ -990,17 +990,19 @@
   <xsl:function name="tc:paragraph-should-rewrite-seealso" as="xs:boolean">
     <!--When a paragraph should be rewritten as a See also section. -->
     <xsl:param name="in" as="element()"/>
-    <xsl:variable name="tag" as="element(html:b)?" select="tc:paragraph-should-rewrite-sub__toElt($in)"/>
+    <xsl:variable name="tag" as="element(html:b)?"
+      select="tc:paragraph-should-rewrite-sub__toElt($in)"/>
     <xsl:choose>
       <xsl:when test="$tag">
-        <xsl:value-of select="starts-with($tag/text()[1], 'See also') and count($in/html:a) &gt;= 1"/>
+        <xsl:value-of select="starts-with($tag/text()[1], 'See also') and count($in/html:a) &gt;= 1"
+        />
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="false()"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
   <xsl:function name="tc:paragraph-should-rewrite-sub__toElt" as="element()?">
     <xsl:param name="in" as="element()"/>
     <xsl:choose>
@@ -1024,7 +1026,8 @@
     <xsl:param name="in" as="element()"/>
     <xsl:param name="marker" as="xs:string"/>
 
-    <xsl:variable name="tag" as="element(html:b)?" select="tc:paragraph-should-rewrite-sub__toElt($in)"/>
+    <xsl:variable name="tag" as="element(html:b)?"
+      select="tc:paragraph-should-rewrite-sub__toElt($in)"/>
     <xsl:choose>
       <xsl:when test="not($tag)">
         <xsl:value-of select="false()"/>
@@ -1041,8 +1044,8 @@
             <xsl:variable name="nodeAfterMarker" select="$in/html:b[1]/following-sibling::node()[1]"/>
             <xsl:value-of
               select="
-              starts-with($tag/text()[1], $markerColon)
-              or (starts-with($tag/text()[1], $marker) and starts-with(normalize-space($nodeAfterMarker), ':'))"
+                starts-with($tag/text()[1], $markerColon)
+                or (starts-with($tag/text()[1], $marker) and starts-with(normalize-space($nodeAfterMarker), ':'))"
             />
           </xsl:when>
         </xsl:choose>
@@ -2704,7 +2707,8 @@
         <xsl:value-of select="substring-after(., '>')"/>
       </xsl:when>
       <!-- When rewriting as notes or something else, in nonstandard cases, some dangling colon might appear. -->
-      <xsl:when test="parent::html:p and tc:paragraph-should-rewrite(parent::html:p) and starts-with(normalize-space(.), ':')">
+      <xsl:when
+        test="parent::html:p and tc:paragraph-should-rewrite(parent::html:p) and starts-with(normalize-space(.), ':')">
         <xsl:variable name="real" select="normalize-space(substring-after(., ':'))"/>
         <xsl:value-of select="concat(upper-case(substring($real, 1, 1)), substring($real, 2))"/>
       </xsl:when>
@@ -2713,7 +2717,10 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template mode="content_paragraph" match="html:br"/>
+  <xsl:template mode="content_paragraph" match="html:qtalgorithms">
+    <!-- OK, they made pure bullshit. This ought to be real text! -->
+    <xsl:text>&lt;qtalgorithms&gt;</xsl:text>
+  </xsl:template>
   <xsl:template mode="content_paragraph" match="html:hr">
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
@@ -2827,8 +2834,7 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:b | html:strong">
     <xsl:param name="forgetNotes" select="false()"/>
-    <xsl:if
-      test="not($forgetNotes) or ($forgetNotes and not(tc:paragraph-should-rewrite(.)))">
+    <xsl:if test="not($forgetNotes) or ($forgetNotes and not(tc:paragraph-should-rewrite(.)))">
       <xsl:choose>
         <xsl:when test="not(html:u)">
           <db:emphasis role="bold">
@@ -2910,50 +2916,47 @@
     </xsl:if>
   </xsl:template>
 
-  <!-- 
-    Finally, take back those elements and handle block quotes.
-    Something similar is required to handle correctly text(). 
-  -->
-  <xsl:template mode="content_bq" match="html:h1 | html:h2 | html:h3 | html:h4 | html:h5 | html:h6"/>
+  <!-- Finally, take back those elements and handle block quotes. -->
   <xsl:template mode="content_bq" match="text()"/>
   <xsl:template mode="content_bq" match="html:hr">
     <!-- Due to lack of proper separator in DocBook… -->
     <db:bridgehead renderas="sect1">&#0151;</db:bridgehead>
   </xsl:template>
-  <xsl:template mode="content_bq" match="html:style"/><!-- Sorry, there's just nothing DocBook can help with. -->
-  <xsl:template mode="content_bq" match="html:a">
-    <xsl:choose>
-      <xsl:when test="./html:h1">
-        <db:bridgehead renderas="sect1">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h2">
-        <db:bridgehead renderas="sect2">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h3">
-        <db:bridgehead renderas="sect3">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h4">
-        <db:bridgehead renderas="sect4">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h5">
-        <db:bridgehead renderas="sect5">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-      <xsl:when test="./html:h6">
-        <db:bridgehead renderas="sect6">
-          <xsl:value-of select="."/>
-        </db:bridgehead>
-      </xsl:when>
-    </xsl:choose>
+  <xsl:template mode="content_bq" match="html:center | html:a">
+    <xsl:apply-templates mode="content_bq"/>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:style">
+    <!-- Sorry, there's just nothing DocBook can help with. -->
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h1">
+    <db:bridgehead renderas="sect1">
+      <xsl:value-of select="."/>
+    </db:bridgehead>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h2">
+    <db:bridgehead renderas="sect2">
+      <xsl:value-of select="."/>
+    </db:bridgehead>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h3">
+    <db:bridgehead renderas="sect3">
+      <xsl:value-of select="."/>
+    </db:bridgehead>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h4">
+    <db:bridgehead renderas="sect4">
+      <xsl:value-of select="."/>
+    </db:bridgehead>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h5">
+    <db:bridgehead renderas="sect5">
+      <xsl:value-of select="."/>
+    </db:bridgehead>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:h6">
+    <db:bridgehead renderas="sect6">
+      <xsl:value-of select="."/>
+    </db:bridgehead>
   </xsl:template>
   <xsl:template mode="content_bq" match="html:p">
     <xsl:if test="not(. = '')">
@@ -2970,7 +2973,7 @@
   <xsl:template mode="content_bq" match="html:ol">
     <db:orderedlist>
       <xsl:choose>
-        <xsl:when test=".[@class = '1']">
+        <xsl:when test="@class = '1'">
           <xsl:attribute name="numeration">
             <xsl:text>arabic</xsl:text>
           </xsl:attribute>
@@ -2992,5 +2995,13 @@
       </xsl:if>
       <xsl:value-of select="."/>
     </db:programlisting>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:table">
+    <db:informaltable>
+      <xsl:apply-templates select="*" mode="content_table"/>
+    </db:informaltable>
+  </xsl:template>
+  <xsl:template mode="content_bq" match="html:tt[html:pre]">
+    <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
 </xsl:stylesheet>
