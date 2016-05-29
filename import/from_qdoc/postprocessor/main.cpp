@@ -8,7 +8,7 @@
 #include "parser.hpp"
 #include "pugixml\src\pugixml.hpp"
 
-#define RUN_TEST_SUITE 1 // 0 to disable the test suite, other values to enable it. 
+#define RUN_TEST_SUITE 0 // 0 to disable the test suite, other values to enable it. 
 
 std::string sanitise_spaces(const std::string str_) {
 	std::string str = str_;

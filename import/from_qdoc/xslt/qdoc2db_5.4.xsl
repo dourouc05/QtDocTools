@@ -2206,9 +2206,9 @@
     <xsl:apply-templates select="*" mode="content"/>
   </xsl:template>
   <xsl:template mode="content" match="html:table">
-    <db:informaltable>
-      <xsl:apply-templates select="*" mode="content_table"/>
-    </db:informaltable>
+    <xsl:call-template name="content_table">
+      <xsl:with-param name="tag" select="."/>
+    </xsl:call-template>
   </xsl:template>
   <xsl:template mode="content" match="html:div">
     <xsl:choose>
@@ -2579,6 +2579,15 @@
   </xsl:template>
 
   <!-- Handle tables. -->
+  <xsl:template name="content_table">
+    <xsl:param name="tag" as="element(html:table)"/>
+    
+    <xsl:if test="$tag/html:tbody/html:tr[1]/html:td[1] or $tag/html:tbody/html:tr[1]/html:th[1]">
+      <db:informaltable>
+        <xsl:apply-templates select="$tag/*" mode="content_table"/>
+      </db:informaltable>
+    </xsl:if>
+  </xsl:template>
   <xsl:template mode="content_table" match="html:thead">
     <db:thead>
       <xsl:apply-templates select="*" mode="content_table"/>
@@ -2998,9 +3007,9 @@
     </db:programlisting>
   </xsl:template>
   <xsl:template mode="content_bq" match="html:table">
-    <db:informaltable>
-      <xsl:apply-templates select="*" mode="content_table"/>
-    </db:informaltable>
+    <xsl:call-template name="content_table">
+      <xsl:with-param name="tag" select="."/>
+    </xsl:call-template>
   </xsl:template>
   <xsl:template mode="content_bq" match="html:tt[html:pre]">
     <xsl:apply-templates select="*" mode="content"/>
