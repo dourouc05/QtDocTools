@@ -14,8 +14,8 @@
       <db:para>The abstract section is rendered as an indented italicized
                                     paragraph.</db:para>
       <db:warning>
-         <db:para> The  and
-                                         commands have not been
+         <db:para> The <db:emphasis role="bold">\abstract</db:emphasis> and
+                                        <db:emphasis role="bold">\endabstract</db:emphasis> commands have not been
                                     implemented. The abstract section is rendered as a regular HTML
                                     paragraph.</db:para>
       </db:warning>
@@ -67,8 +67,8 @@
                                     footnote.</db:para>
       <db:para>The footnote is rendered at the bottom of the page.</db:para>
       <db:warning>
-         <db:para> The  and
-                                         commands have not been
+         <db:para> The <db:emphasis role="bold">\footnote</db:emphasis> and
+                                        <db:emphasis role="bold">\endfootnote</db:emphasis> commands have not been
                                     implemented. The footnote is rendered as a regular HTML
                                     paragraph.</db:para>
       </db:warning>
