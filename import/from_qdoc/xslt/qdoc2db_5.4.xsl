@@ -2729,6 +2729,7 @@
     <xsl:message>WARNING: Error at QDoc step. Given message: <xsl:value-of select="."
       /></xsl:message>
   </xsl:template>
+  <xsl:template mode="content_paragraph" match="html:br"/>
   <xsl:template mode="content_paragraph" match="html:a">
     <!-- 
       Output a link, maybe enclosing its content with <db:code> when it's a method (followed by parentheses) or a class. 

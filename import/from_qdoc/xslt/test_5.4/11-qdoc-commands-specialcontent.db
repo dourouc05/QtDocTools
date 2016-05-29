@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.0"
+            version="5.1"
             xml:lang="en">
    <db:title>Special Content</db:title>
    <db:para>The document contents commands identify parts of the
@@ -116,6 +116,7 @@
                                     resize event (resizeEvent()) immediately.... \sa frameGeometry(), rect(),...*/</db:programlisting>
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
+         <db:bridgehead renderas="sect3">geometry : QRect</db:bridgehead>
          <db:para>This property holds the geometry of the widget relative
                                         to its parent and excluding the window frame.</db:para>
          <db:para>...</db:para>
@@ -164,10 +165,12 @@
                                         window.... \sa QWidget*/</db:programlisting>
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
+         <db:bridgehead renderas="sect1">PreviewWindow Class Reference</db:bridgehead>
          <db:para>The PreviewWindow class is a custom widget displaying
                                         the names of its currently set window flags in a read-only
                                         text editor. <db:link xlink:href="13-qdoc-commands-topics.html#preview-window">More...</db:link>
          </db:para>
+         <db:bridgehead renderas="sect3">Properties</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
                <db:para>52 properties inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
@@ -178,6 +181,7 @@
                </db:para>
             </db:listitem>
          </db:itemizedlist>
+         <db:bridgehead renderas="sect3">Public Functions</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
                <db:para>
@@ -200,6 +204,7 @@
                </db:para>
             </db:listitem>
          </db:itemizedlist>
+         <db:bridgehead renderas="sect3">Public Slots</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
                <db:para>17 public slots inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
@@ -210,6 +215,7 @@
                </db:para>
             </db:listitem>
          </db:itemizedlist>
+         <db:bridgehead renderas="sect3">Additional Inherited Members</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
                <db:para>1 signal inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
@@ -237,6 +243,7 @@
             </db:listitem>
          </db:itemizedlist>
          <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+         <db:bridgehead renderas="sect2">Detailed Description</db:bridgehead>
          <db:para>The PreviewWindow class is a custom widget displaying
                                         the names of its currently set window flags in a read-only
                                         text editor.</db:para>
@@ -247,8 +254,11 @@
          <db:para>...</db:para>
          <db:para>See also <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>.</db:para>
          <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+         <db:bridgehead renderas="sect2">Member Function Documentation</db:bridgehead>
+         <db:bridgehead renderas="sect3">PreviewWindow(QWidget *parent = 0)</db:bridgehead>
          <db:para>Constructs a preview window widget with
                                             <db:emphasis>parent</db:emphasis>.</db:para>
+         <db:bridgehead renderas="sect3">setWindowFlags(Qt::WindowFlags flags)</db:bridgehead>
          <db:para>Sets the widgets flags using the <db:code><db:link xlink:href="qtwidgets/qwidget.html#windowFlags-prop">QWidget::setWindowFlags</db:link>()</db:code> function.</db:para>
          <db:para>Then runs through the available window flags, creating a
                                         text that contains the names of the flags that matches the
