@@ -969,6 +969,87 @@
     </xsl:choose>
   </xsl:function>
 
+  <xsl:function name="tc:paragraph-should-rewrite" as="xs:boolean">
+    <!-- When a paragraph should be rewritten, as See also, Note, or Warning. -->
+    <xsl:param name="p" as="element()"/>
+    <xsl:value-of
+      select="tc:paragraph-should-rewrite-note($p) or tc:paragraph-should-rewrite-warning($p) or tc:paragraph-should-rewrite-seealso($p)"
+    />
+  </xsl:function>
+
+  <xsl:function name="tc:paragraph-should-rewrite-note" as="xs:boolean">
+    <!--When a paragraph should be rewritten as a note. -->
+    <xsl:param name="in" as="element()"/>
+    <xsl:value-of select="tc:paragraph-should-rewrite-sub__($in, 'Note')"/>
+  </xsl:function>
+  <xsl:function name="tc:paragraph-should-rewrite-warning" as="xs:boolean">
+    <!--When a paragraph should be rewritten as a warning. -->
+    <xsl:param name="in" as="element()"/>
+    <xsl:value-of select="tc:paragraph-should-rewrite-sub__($in, 'Warning')"/>
+  </xsl:function>
+  <xsl:function name="tc:paragraph-should-rewrite-seealso" as="xs:boolean">
+    <!--When a paragraph should be rewritten as a See also section. -->
+    <xsl:param name="in" as="element()"/>
+    <xsl:variable name="tag" as="element(html:b)?" select="tc:paragraph-should-rewrite-sub__toElt($in)"/>
+    <xsl:choose>
+      <xsl:when test="$tag">
+        <xsl:value-of select="starts-with($tag/text()[1], 'See also') and count($in/html:a) &gt;= 1"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="false()"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="tc:paragraph-should-rewrite-sub__toElt" as="element()?">
+    <xsl:param name="in" as="element()"/>
+    <xsl:choose>
+      <xsl:when test="$in[self::html:b]">
+        <xsl:copy-of select="$in"/>
+      </xsl:when>
+      <xsl:when test="$in[self::html:p]">
+        <xsl:copy-of select="$in/html:b[1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>ERROR: Unrecognised value! </xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  <xsl:function name="tc:paragraph-should-rewrite-sub__" as="xs:boolean">
+    <!-- 
+      Two kinds of markers: either "<b>Note:</b>" or "<b>Note</b>:". 
+      However, "<b>Note</b>" is NOT sufficient, as it might mark a regular paragraph. 
+      The same holds for warnings. 
+    -->
+    <xsl:param name="in" as="element()"/>
+    <xsl:param name="marker" as="xs:string"/>
+
+    <xsl:variable name="tag" as="element(html:b)?" select="tc:paragraph-should-rewrite-sub__toElt($in)"/>
+    <xsl:choose>
+      <xsl:when test="not($tag)">
+        <xsl:value-of select="false()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:choose>
+          <xsl:when test="$tag[self::html:b]">
+            <!-- Less robust test: no access to sibling nodes of $in, as copies happened before. -->
+            <xsl:variable name="nodeAfterMarker" select="$tag/following-sibling::node()[1]"/>
+            <xsl:value-of select="starts-with($tag/text()[1], $marker)"/>
+          </xsl:when>
+          <xsl:when test="$tag[self::html:p]">
+            <xsl:variable name="markerColon" select="concat($marker, ':')"/>
+            <xsl:variable name="nodeAfterMarker" select="$in/html:b[1]/following-sibling::node()[1]"/>
+            <xsl:value-of
+              select="
+              starts-with($tag/text()[1], $markerColon)
+              or (starts-with($tag/text()[1], $marker) and starts-with(normalize-space($nodeAfterMarker), ':'))"
+            />
+          </xsl:when>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
   <!-- Utility templates, to output DocBook tags. -->
   <xsl:template mode="db_imageobject" match="html:img">
     <xsl:if test="@alt and not(@alt = '')">
@@ -1140,7 +1221,7 @@
 
       <xsl:if test="$isNamespace">
         <db:classsynopsisinfo role="isNamespace">
-          <xs:text>yes</xs:text>
+          <xsl:text>yes</xsl:text>
         </db:classsynopsisinfo>
       </xsl:if>
       <xsl:if test="$header">
@@ -2235,16 +2316,10 @@
           </db:tbody>
         </db:informaltable>
       </xsl:when>
-      <xsl:when
-        test="
-          ./child::node()[1][self::html:b] and (
-          starts-with(html:b[1]/text()[1], 'Note')
-          or starts-with(html:b[1]/text()[1], 'Warning')
-          or starts-with(html:b[1]/text()[1], 'See also')
-          )">
+      <xsl:when test="tc:paragraph-should-rewrite(.)">
         <!-- Sometimes, some "titles" are in bold, but do not correspond to these special texts! They should flow normally, unmatched here. -->
         <xsl:choose>
-          <xsl:when test="starts-with(html:b[1]/text()[1], 'Note:')">
+          <xsl:when test="tc:paragraph-should-rewrite-note(.)">
             <db:note>
               <db:para>
                 <xsl:apply-templates mode="content_paragraph">
@@ -2253,7 +2328,7 @@
               </db:para>
             </db:note>
           </xsl:when>
-          <xsl:when test="starts-with(html:b[1]/text()[1], 'Warning:')">
+          <xsl:when test="tc:paragraph-should-rewrite-warning(.)">
             <db:warning>
               <db:para>
                 <xsl:apply-templates mode="content_paragraph">
@@ -2262,7 +2337,7 @@
               </db:para>
             </db:warning>
           </xsl:when>
-          <xsl:when test="starts-with(html:b[1]/text()[1], 'See also') and count(html:a) &gt;= 1">
+          <xsl:when test="tc:paragraph-should-rewrite-seealso(.)">
             <xsl:call-template name="content_seealso">
               <xsl:with-param name="seeAlso" select="."/>
             </xsl:call-template>
@@ -2621,12 +2696,17 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="text()">
     <xsl:choose>
-      <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '(')">
+      <!-- When converting a link to <db:code>, it consumes a bit more text than that of the link. This works both for parentheses and templates.-->
+      <xsl:when test="preceding-sibling::*[1][self::html:a] and starts-with(., '(')">
         <xsl:value-of select="substring-after(., ')')"/>
       </xsl:when>
-      <xsl:when test="./preceding-sibling::*[1][self::html:a] and starts-with(., '&lt;')">
-        <!-- Templated type: starts with &lt;, ends with &gt;. -->
+      <xsl:when test="preceding-sibling::*[1][self::html:a] and starts-with(., '&lt;')">
         <xsl:value-of select="substring-after(., '>')"/>
+      </xsl:when>
+      <!-- When rewriting as notes or something else, in nonstandard cases, some dangling colon might appear. -->
+      <xsl:when test="parent::html:p and tc:paragraph-should-rewrite(parent::html:p) and starts-with(normalize-space(.), ':')">
+        <xsl:variable name="real" select="normalize-space(substring-after(., ':'))"/>
+        <xsl:value-of select="concat(upper-case(substring($real, 1, 1)), substring($real, 2))"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="."/>
@@ -2747,7 +2827,8 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:b | html:strong">
     <xsl:param name="forgetNotes" select="false()"/>
-    <xsl:if test="not($forgetNotes) or ($forgetNotes and not(contains(text(), 'Note:')) and not(contains(text(), 'Warning:')))">
+    <xsl:if
+      test="not($forgetNotes) or ($forgetNotes and not(tc:paragraph-should-rewrite(.)))">
       <xsl:choose>
         <xsl:when test="not(html:u)">
           <db:emphasis role="bold">

@@ -1254,6 +1254,10 @@
                                         Qt::ConnectionType type)</db:code> but it uses <db:code><db:link xlink:href="qmetamethod.html">QMetaMethod</db:link></db:code> to specify
                                     signal and method.</db:para>
          <db:para>This function was introduced in Qt 4.8.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis>connect(const QObject *sender,
+                                    const char *signal, const QObject *receiver, const char *method,
+                                    Qt::ConnectionType type).</db:para>
       </db:section>
       <db:section xml:id="connect-3">
          <db:title><db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qt.html#ConnectionType-enum">Qt::ConnectionType</db:link></db:title>
@@ -1634,6 +1638,10 @@
                                     QMetaMethod(). <db:emphasis>sender</db:emphasis> parameter should be never
                                     0.</db:para>
          <db:para>This function was introduced in Qt 4.8.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See also </db:emphasis>disconnect(const QObject *sender,
+                                    const char *signal, const QObject *receiver, const char
+                                    *method).</db:para>
       </db:section>
       <db:section xml:id="disconnect-3">
          <db:title>[static] bool QObject::disconnect(const <db:link xlink:href="qmetaobject-connection.html">QMetaObject::Connection</db:link></db:title>

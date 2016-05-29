@@ -876,7 +876,7 @@
                                             Math.max(text.implicitHeight, image.implicitHeight) Image { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
                                             parent.verticalCenter } }</db:programlisting>
          <db:note>
-            <db:para>: using <db:link xlink:href="qml-qtquick-item.html#implicitWidth-prop">implicitWidth</db:link> of Text or <db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and
+            <db:para>Using<db:link xlink:href="qml-qtquick-item.html#implicitWidth-prop">implicitWidth</db:link> of Text or <db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and
                                         setting the width explicitly incurs a performance penalty as
                                         the text must be laid out twice.</db:para>
          </db:note>
@@ -899,8 +899,7 @@
                                             Math.max(text.implicitHeight, image.implicitHeight) Image { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
                                             parent.verticalCenter } }</db:programlisting>
          <db:note>
-            <db:para>: using implicitWidth of Text or
-                                            <db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and setting the width explicitly
+            <db:para>Using implicitWidth of Text or<db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and setting the width explicitly
                                         incurs a performance penalty as the text must be laid out
                                         twice.</db:para>
          </db:note>
