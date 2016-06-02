@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0"  ns="http://docbook.org/ns/docbook">
   <!-- ========== Import DocBook DTD ========== -->
-  <include href="http://docbook.org/xml/5.1/rng/docbook.rng"/>
+  <!-- <include href="http://docbook.org/xml/5.1/rng/docbook.rng"/> -->
+  <include href="docbookxi.rng"/>
   <start combine="choice">
     <choice>
       <ref name="header"/>
@@ -257,7 +258,7 @@
   <define name="library-reference">
     <element name="library-reference">
       <ref name="library-reference.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="library-reference.attlist" combine="interleave">
@@ -296,7 +297,7 @@
   <define name="header">
     <element name="header">
       <ref name="header.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="header.attlist" combine="interleave">
@@ -459,7 +460,7 @@
   <define name="template-arg">
     <element name="template-arg">
       <ref name="template-arg.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="template-arg.attlist" combine="interleave">
@@ -471,7 +472,7 @@
   <define name="default">
     <element name="default">
       <ref name="default.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="default.attlist" combine="interleave">
@@ -498,7 +499,7 @@
   <define name="purpose">
     <element name="purpose">
       <ref name="purpose.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="purpose.attlist" combine="interleave">
@@ -507,7 +508,7 @@
   <define name="description">
     <element name="description">
       <ref name="description.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="description.attlist" combine="interleave">
@@ -516,7 +517,7 @@
   <define name="type">
     <element name="type">
       <ref name="type.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="type.attlist" combine="interleave">
@@ -613,7 +614,7 @@
   <define name="paramtype">
     <element name="paramtype">
       <ref name="paramtype.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="paramtype.attlist" combine="interleave">
@@ -622,7 +623,7 @@
   <define name="effects">
     <element name="effects">
       <ref name="effects.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="effects.attlist" combine="interleave">
@@ -631,7 +632,7 @@
   <define name="postconditions">
     <element name="postconditions">
       <ref name="postconditions.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="postconditions.attlist" combine="interleave">
@@ -775,7 +776,7 @@
   <define name="requires">
     <element name="requires">
       <ref name="requires.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="requires.attlist" combine="interleave">
@@ -784,7 +785,7 @@
   <define name="returns">
     <element name="returns">
       <ref name="returns.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="returns.attlist" combine="interleave">
@@ -793,7 +794,7 @@
   <define name="throws">
     <element name="throws">
       <ref name="throws.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="throws.attlist" combine="interleave">
@@ -802,7 +803,7 @@
   <define name="complexity">
     <element name="complexity">
       <ref name="complexity.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="complexity.attlist" combine="interleave">
@@ -811,7 +812,7 @@
   <define name="notes">
     <element name="notes">
       <ref name="notes.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="notes.attlist" combine="interleave">
@@ -820,7 +821,7 @@
   <define name="rationale">
     <element name="rationale">
       <ref name="rationale.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="rationale.attlist" combine="interleave">
@@ -928,7 +929,7 @@
   <define name="precondition">
     <element name="precondition">
       <ref name="precondition.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="precondition.attlist" combine="interleave">
@@ -937,7 +938,7 @@
   <define name="code" combine="choice">
     <element name="code">
       <ref name="code.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="code.attlist" combine="interleave">
@@ -1116,7 +1117,7 @@
   <define name="if-fails">
     <element name="if-fails">
       <ref name="if-fails.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="if-fails.attlist" combine="interleave">
@@ -1145,7 +1146,7 @@
   <define name="programlisting" combine="interleave">
     <element name="programlisting">
       <ref name="db.programlisting.attlist"/>
-      <ref name="any"/>
+      
     </element>
   </define>
   <define name="db.programlisting.attlist" combine="choice">
@@ -1193,21 +1194,5 @@
   </define>
   <define name="local.title.char.mix">
     <notAllowed/>
-  </define>
-  <define name="any">
-    <zeroOrMore>
-      <choice>
-        <element>
-          <anyName/>
-          <zeroOrMore>
-            <attribute>
-              <anyName/>
-            </attribute>
-          </zeroOrMore>
-          <ref name="any"/>
-        </element>
-        <text/>
-      </choice>
-    </zeroOrMore>
   </define>
 </grammar>

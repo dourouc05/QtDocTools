@@ -1,6 +1,7 @@
 default namespace = "http://docbook.org/ns/docbook"
 # ========== Import DocBook Grammar ==========
-include "http://docbook.org/xml/5.1/rng/docbook.rnc"
+# include "http://docbook.org/xml/5.1/rng/docbook.rnc"
+include "docbookxi.rnc"
 start |= header | library | api | precondition
 local.common.attrib = attribute last-revision { text }?
 # ========== Define the API extensions ==========
@@ -113,7 +114,7 @@ librarycategory.attlist &=
 libraryname = element libraryname { libraryname.attlist, text }
 libraryname.attlist &= api.common.attrib
 library-reference =
-  element library-reference { library-reference.attlist, any }
+  element library-reference { library-reference.attlist }
 library-reference.attlist &= api.common.attrib
 librarylist = element librarylist { librarylist.attlist, empty }
 librarylist.attlist &= api.common.attrib
@@ -127,7 +128,7 @@ librarycategorydef =
 librarycategorydef.attlist &=
   attribute name { text },
   api.common.attrib
-header = element header { header.attlist, any }
+header = element header { header.attlist }
 header.attlist &=
   attribute name { text },
   api.common.attrib
@@ -197,22 +198,22 @@ template-varargs.attlist &= api.common.attrib
 specialization =
   element specialization { specialization.attlist, template-arg* }
 specialization.attlist &= api.common.attrib
-template-arg = element template-arg { template-arg.attlist, any }
+template-arg = element template-arg { template-arg.attlist }
 template-arg.attlist &=
   attribute pack { text }?,
   api.common.attrib
-\default = element default { default.attlist, any }
+\default = element default { default.attlist }
 default.attlist &= api.common.attrib
 \inherit = element inherit { inherit.attlist, type, purpose? }
 inherit.attlist &=
   attribute access { text }?,
   attribute pack { text }?,
   api.common.attrib
-purpose = element purpose { purpose.attlist, any }
+purpose = element purpose { purpose.attlist }
 purpose.attlist &= api.common.attrib
-description = element description { description.attlist, any }
+description = element description { description.attlist }
 description.attlist &= api.common.attrib
-type = element type { type.attlist, any }
+type = element type { type.attlist }
 type.attlist &= api.common.attrib
 typedef =
   element typedef { typedef.attlist, type, purpose?, description? }
@@ -245,11 +246,11 @@ data-member.attlist &=
   attribute name { text },
   attribute specifiers { text }?,
   api.common.attrib
-paramtype = element paramtype { paramtype.attlist, any }
+paramtype = element paramtype { paramtype.attlist }
 paramtype.attlist &= api.common.attrib
-effects = element effects { effects.attlist, any }
+effects = element effects { effects.attlist }
 effects.attlist &= api.common.attrib
-postconditions = element postconditions { postconditions.attlist, any }
+postconditions = element postconditions { postconditions.attlist }
 postconditions.attlist &= api.common.attrib
 method-group =
   element method-group {
@@ -311,17 +312,17 @@ signature.attlist &=
   attribute cv { text }?,
   attribute specifiers { text }?,
   api.common.attrib
-requires = element requires { requires.attlist, any }
+requires = element requires { requires.attlist }
 requires.attlist &= api.common.attrib
-returns = element returns { returns.attlist, any }
+returns = element returns { returns.attlist }
 returns.attlist &= api.common.attrib
-throws = element throws { throws.attlist, any }
+throws = element throws { throws.attlist }
 throws.attlist &= api.common.attrib
-complexity = element complexity { complexity.attlist, any }
+complexity = element complexity { complexity.attlist }
 complexity.attlist &= api.common.attrib
-notes = element notes { notes.attlist, any }
+notes = element notes { notes.attlist }
 notes.attlist &= api.common.attrib
-rationale = element rationale { rationale.attlist, any }
+rationale = element rationale { rationale.attlist }
 rationale.attlist &= api.common.attrib
 functionname = element functionname { functionname.attlist, text }
 functionname.attlist &=
@@ -362,9 +363,9 @@ free-function-group =
 free-function-group.attlist &=
   attribute name { text },
   api.common.attrib
-precondition = element precondition { precondition.attlist, any }
+precondition = element precondition { precondition.attlist }
 precondition.attlist &= api.common.attrib
-code |= element code { code.attlist, any }
+code |= element code { code.attlist }
 code.attlist &= api.common.attrib
 using-namespace =
   element using-namespace { using-namespace.attlist, empty }
@@ -434,7 +435,7 @@ lib = element lib { lib.attlist, text }
 lib.attlist &= empty
 requirement = element requirement { requirement.attlist, text }
 requirement.attlist &= attribute name { text }
-if-fails = element if-fails { if-fails.attlist, any }
+if-fails = element if-fails { if-fails.attlist }
 if-fails.attlist &= empty
 parameter =
   element parameter {
@@ -444,7 +445,7 @@ parameter.attlist &=
   attribute name { text }?,
   attribute pack { text }?
 programlisting &=
-  element programlisting { db.programlisting.attlist, any }
+  element programlisting { db.programlisting.attlist }
 db.programlisting.attlist |= attribute name { text }?
 # ========== Customize the DocBook Grammar ==========
 db.programming.inlines |=
@@ -456,9 +457,3 @@ db.classname.attlist |= attribute alt { text }?
 db.methodname.attlist |= attribute alt { text }?
 db.refentry |= library-reference | testsuite
 local.title.char.mix = notAllowed
-any =
-  (element * {
-     attribute * { text }*,
-     any
-   }
-   | text)*
