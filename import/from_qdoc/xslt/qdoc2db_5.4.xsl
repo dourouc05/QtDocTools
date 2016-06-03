@@ -23,7 +23,7 @@
   <xsl:param name="warnMissingDocumentation" select="false()"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
-  <xsl:import-schema schema-location="../schemas/docbook.xsd"
+  <xsl:import-schema schema-location="../schemas/docbook50/docbook.xsd"
     use-when="system-property('xsl:is-schema-aware')='yes'"/>
 
   <!-- Trick to keep the same stylesheet schema-aware and non-schema-aware. -->
@@ -962,6 +962,9 @@
       <xsl:when
         test="$in = ('types', 'classes', 'prop', 'func', 'relnonmem', 'funcnonmem', 'typenonmem', 'macros', 'vars', 'qml-attached-props', 'qml-meths', 'qml-signals')">
         <xsl:value-of select="concat($in, '-sect')"/>
+      </xsl:when>
+      <xsl:when test="matches($in, '^\d')">
+        <xsl:value-of select="concat('sect-', $in)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$in"/>
