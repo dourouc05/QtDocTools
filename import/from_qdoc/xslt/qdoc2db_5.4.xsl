@@ -945,7 +945,7 @@
         <xsl:attribute name="class" select="$anchor"/>
         <xsl:copy-of select="$titleTag"/>
         <xsl:copy-of
-          select="$titleTag/following-sibling::node()[preceding-sibling::html:h2 = $titleTag]"/>
+          select="$titleTag/following-sibling::node()[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleTag]"/>
       </html:div>
     </xsl:if>
   </xsl:template>

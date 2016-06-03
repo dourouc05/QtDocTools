@@ -23,7 +23,10 @@ for %%f in (*.xml) do (
             IF /I "!ISOBSOLETE!" EQU "1" (
                 echo -- !FILENAME!
                 java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLT% -o:!FILENAME!.db
-                java -jar %JING% -c %RNG% !FILENAME!.db
+                rem Either Saxon successes and outputs the .db file, or it does not and shows a lengthy error. No need to duplicate an error for something that does not exist. 
+                if exist !FILENAME!.db (
+                    java -jar %JING% -c %RNG% !FILENAME!.db
+                )
             )
         )
     )

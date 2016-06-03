@@ -507,20 +507,6 @@
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  sourceText , const  char  *  disambiguation  = 0,  int  n  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qFindChild-2">
-         <db:modifier>(obsolete)</db:modifier>
-         <db:type>T</db:type>
-         <db:methodname>qFindChild</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const  QObject  *  obj , const  QString  &amp;  name  = QString())</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qFindChildren-3">
-         <db:modifier>(obsolete)</db:modifier>
-         <db:type>QList&lt;T&gt;</db:type>
-         <db:methodname>qFindChildren</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const  QObject  *  obj , const  QString  &amp;  name  = QString())</db:exceptionname>
-      </db:methodsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#Q_CLASSINFO">
       <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
@@ -3087,38 +3073,6 @@
                   </db:member>
                   <db:member>
                      <db:link xlink:href="qtdoc/internationalization.html">Internationalization with Qt</db:link>
-                  </db:member>
-               </db:simplelist>
-            </db:section>
-         </db:section>
-         <db:section xml:id="qFindChild-2">
-            <db:title>T qFindChild(const <db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
-            <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
-            <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChild">findChild</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
-            <db:note>
-               <db:para>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</db:para>
-            </db:note>
-            <db:section>
-               <db:title>See Also</db:title>
-               <db:simplelist type="vert">
-                  <db:member>
-                     <db:code><db:link xlink:href="qobject.html#findChild">QObject::findChild</db:link>()</db:code>
-                  </db:member>
-               </db:simplelist>
-            </db:section>
-         </db:section>
-         <db:section xml:id="qFindChildren-3">
-            <db:title><db:link xlink:href="qlist.html">QList</db:link><db:link xlink:href="qobject.html#QObject">QObject</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
-            <db:para>This function overloads <db:code><db:link xlink:href="qobject.html#qFindChildren">qFindChildren</db:link>()</db:code>.</db:para>
-            <db:para>This function is equivalent to <db:emphasis>obj</db:emphasis>-&gt;<db:link xlink:href="qobject.html#findChildren">findChildren</db:link>(<db:emphasis>name</db:emphasis>).</db:para>
-            <db:note>
-               <db:para>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</db:para>
-            </db:note>
-            <db:section>
-               <db:title>See Also</db:title>
-               <db:simplelist type="vert">
-                  <db:member>
-                     <db:code><db:link xlink:href="qobject.html#findChildren">QObject::findChildren</db:link>()</db:code>
                   </db:member>
                </db:simplelist>
             </db:section>
