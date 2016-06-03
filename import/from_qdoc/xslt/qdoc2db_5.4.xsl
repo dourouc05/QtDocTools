@@ -195,18 +195,9 @@
           </xsl:when>
           <xsl:otherwise>
             <!-- Deal with QML descriptions. -->
-            <xsl:variable name="propText" select="'Property Documentation'" as="xs:string"/>
-            <xsl:variable name="attachedPropText" select="'Attached Property Documentation'"
-              as="xs:string"/>
-            <xsl:variable name="methText" select="'Method Documentation'" as="xs:string"/>
-
             <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
-            <xsl:variable name="propTitle" select="$content/html:h2[text() = $propText]"
-              as="element()?"/>
-            <xsl:variable name="attachedPropTitle"
-              select="$content/html:h2[text() = $attachedPropText]" as="element()?"/>
-            <xsl:variable name="methTitle" select="$content/html:h2[text() = $methText]"
-              as="element()?"/>
+            <xsl:variable name="forbiddenTitles"
+              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Signal Documentation')]"            />
 
             <html:div class="descr">
               <html:h2 id="details">Detailed Description</html:h2>
@@ -219,23 +210,21 @@
               <xsl:for-each
                 select="
                   $descTitle
-                  /following-sibling::html:*[
-                  (not(self::html:p) or (text() != '' or child::html:*))
-                  and (not(self::html:h2) or not(text() = ($propText, $attachedPropText, $methText)))
-                  and not(preceding-sibling::html:h2[1] = ($propTitle, $attachedPropTitle, $methTitle))
-                  ]">
+                  /following-sibling::html:*[(not(self::html:p) or (text() != '' or child::html:*))]">
                 <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
                 <xsl:choose>
                   <xsl:when test="current()[self::html:h2]">
-                    <html:h3>
-                      <xsl:attribute name="id"
-                        select="
-                          if (@id) then
-                            @id
-                          else
-                            ./preceding-sibling::node()[1]/@name"/>
-                      <xsl:value-of select="current()"/>
-                    </html:h3>
+                    <xsl:if test="not(. = $forbiddenTitles)">
+                      <html:h3>
+                        <xsl:attribute name="id"
+                          select="
+                            if (@id) then
+                              @id
+                            else
+                              ./preceding-sibling::node()[1]/@name"/>
+                        <xsl:value-of select="current()"/>
+                      </html:h3>
+                    </xsl:if>
                   </xsl:when>
                   <xsl:when
                     test="current()[self::html:h3][preceding-sibling::html:h2[1] != $descTitle]">
@@ -250,7 +239,9 @@
                     </html:h4>
                   </xsl:when>
                   <xsl:otherwise>
-                    <xsl:copy-of select="current()"/>
+                    <xsl:if test="not(preceding-sibling::html:h2[1] = $forbiddenTitles)">
+                      <xsl:copy-of select="current()"/>
+                    </xsl:if>
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
