@@ -2,7 +2,10 @@
 setlocal enabledelayedexpansion
 
 SET SAXON=F:/QtDoc/QtDoc/SaxonHE9-7-0-3J/saxon9he.jar
-SET XSLTF=F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl
+SET JING=F:/QtDoc/QtDoc/jing-20140903-saxon95.jar
+
+SET XSLT=F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl
+SET RNG=F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/schemas/docbook51/api.rnc
 
 echo Starting
 for %%f in (*.xml) do (
@@ -19,7 +22,8 @@ for %%f in (*.xml) do (
         IF /I "!ISMEMBER!" EQU "1" (
             IF /I "!ISOBSOLETE!" EQU "1" (
                 echo -- !FILENAME!
-                java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLTF% -o:!FILENAME!.db
+                java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLT% -o:!FILENAME!.db
+                java -jar %JING% -c %RNG% !FILENAME!.db
             )
         )
     )
