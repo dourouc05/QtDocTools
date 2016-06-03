@@ -278,20 +278,6 @@
          <db:exceptionname role="parameters">( QBenchmarkMetric 
                                         metric )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="benchmarkMetricName">
-         <db:type>char</db:type>
-         <db:methodname>benchmarkMetricName</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QBenchmarkMetric 
-                                        metric )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="benchmarkMetricUnit">
-         <db:type>char</db:type>
-         <db:methodname>benchmarkMetricUnit</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QBenchmarkMetric 
-                                        metric )</db:exceptionname>
-      </db:methodsynopsis>
       <db:methodsynopsis xlink:href="benchmarkMetricUnit">
          <db:type>char</db:type>
          <db:methodname>benchmarkMetricUnit</db:methodname>
@@ -1993,18 +1979,6 @@
          <db:title>const char * QTest::benchmarkMetricName(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
          <db:para>Returns the enum value <db:emphasis>metric</db:emphasis> as a
                                     character string.</db:para>
-         <db:para>This function was introduced in Qt 4.7.</db:para>
-      </db:section>
-      <db:section xml:id="benchmarkMetricName">
-         <db:title>const char * QTest::benchmarkMetricName(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
-         <db:para>Returns the enum value <db:emphasis>metric</db:emphasis> as a
-                                    character string.</db:para>
-         <db:para>This function was introduced in Qt 4.7.</db:para>
-      </db:section>
-      <db:section xml:id="benchmarkMetricUnit">
-         <db:title>const char * QTest::benchmarkMetricUnit(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
-         <db:para>Retuns the units of measure for the specified
-                                        <db:emphasis>metric</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 4.7.</db:para>
       </db:section>
       <db:section xml:id="benchmarkMetricUnit">

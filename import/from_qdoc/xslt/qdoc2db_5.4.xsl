@@ -927,7 +927,18 @@
 
           <xsl:for-each
             select="$titleNode/following-sibling::html:*[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleNode]">
-            <xsl:copy-of select="."/>
+            <xsl:choose>
+              <xsl:when test="self::html:h3">
+                <xsl:if test="not(@id = preceding-sibling::html:h3[1]/@id)">
+                  <xsl:copy-of select="."/>
+                </xsl:if>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:if test="not(preceding-sibling::html:h3[1]/@id = preceding-sibling::html:h3[2]/@id)">
+                  <xsl:copy-of select="."/>
+                </xsl:if>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:for-each>
         </html:div>
       </xsl:when>
