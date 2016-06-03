@@ -21,8 +21,8 @@
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:param name="vocabulary" select="'docbook'"/>
-  <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for extended Boost's variant (TODO). -->
+  <xsl:param name="vocabulary" select="'boostbook'"/>
+  <!-- 'docbook' for raw DocBook 5.1; 'boostbook' for extended Boost's variant. -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
   <xsl:param name="warnMissingDocumentation" select="false()"/>
@@ -551,7 +551,21 @@
     </xsl:variable>
 
     <!-- Actually output something. -->
-    <db:article version="5.1">
+    <db:article>
+      <xsl:attribute name="version">
+        <xsl:choose>
+          <xsl:when test="$vocabulary = 'docbook'">
+            <xsl:value-of select="'5.1'"/>
+          </xsl:when>
+          <xsl:when test="$vocabulary = 'boostbook'">
+            <xsl:value-of select="'5.1-extension boostbook-2.0 qtdoctools-1.0'"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>WARNING: Unrecognised vocabulary!</xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:attribute>
+      
       <xsl:attribute name="xml:lang">
         <xsl:value-of select="@lang"/>
       </xsl:attribute>
@@ -561,16 +575,13 @@
       </db:title>
 
       <!-- Output the list of methods of the class if any, then its related non-member functions. -->
-      <xsl:if test="$types and $warnVocabularyUnsupportedFeatures">
-        <xsl:message>WARNING: No summary output for types.</xsl:message>
-      </xsl:if>
-
       <xsl:if test="$isClass">
         <xsl:call-template name="classListing">
           <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="functions" select="$funcs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
+          <xsl:with-param name="types" select="$types"/>
           <!-- <xsl:with-param name="publicFuncs" select="$publicFuncs"/> -->
 
           <xsl:with-param name="header" select="$prologueHeader"/>
@@ -1202,6 +1213,7 @@
     <xsl:param name="properties" as="element(html:div)?"/>
     <xsl:param name="vars" as="element(html:div)?"/>
     <xsl:param name="macros" as="element(html:div)?"/>
+    <xsl:param name="types" as="element(html:div)?"/>
 
     <xsl:param name="obsoleteMemberFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
@@ -1283,7 +1295,7 @@
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
 
-      <!-- Deal with functions, then macros. -->
+      <!-- Deal with functions, then types and macros. -->
       <xsl:apply-templates mode="classListing" select="$functions/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
@@ -1298,6 +1310,18 @@
           <xsl:with-param name="className" select="$className"/>
           <xsl:with-param name="type" select="'compat'"/>
         </xsl:apply-templates>
+      </xsl:if>
+      <xsl:if test="$types">
+        <xsl:choose>
+          <xsl:when test="$vocabulary != 'boostbook' and $warnMissingDocumentation">
+            <xsl:message>WARNING: No summary output for types.</xsl:message>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates mode="typeListing" select="$types/html:h3">
+              <xsl:with-param name="className" select="$className"/>
+            </xsl:apply-templates>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:if>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
         <xsl:with-param name="className" select="$className"/>
@@ -1496,6 +1520,42 @@
         </db:type>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="typeListing">
+    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="className" as="xs:string"/>
+    
+    <xsl:apply-templates mode="typeListing" select="$data/html:h3">
+      <xsl:with-param name="className" select="$className"/>
+    </xsl:apply-templates>
+  </xsl:template>
+  <xsl:template mode="typeListing" match="text()"/>
+  <xsl:template mode="typeListing" match="html:h3">
+    <db:enumsynopsis>
+      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
+        
+      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
+      <db:enumname>
+        <xsl:value-of select="$enumName"/>
+      </db:enumname>
+      
+      <xsl:variable name="values" select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
+      <xsl:if test="$values">
+        <xsl:for-each select="$values/html:tr">
+          <xsl:if test="count(html:td) &gt;= 2">
+            <db:enumitem>
+              <db:enumidentifier>
+                <xsl:value-of select="html:td[1]"/>
+              </db:enumidentifier>
+              <db:enumvalue>
+                <xsl:value-of select="html:td[2]"/>
+              </db:enumvalue>
+            </db:enumitem>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:if>
+    </db:enumsynopsis>
   </xsl:template>
 
   <xsl:template name="macroListing">
@@ -1918,7 +1978,7 @@
       <xsl:call-template name="content_title"/>
 
       <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+        <xsl:with-param name="node" select="following-sibling::*[1]"/>
       </xsl:call-template>
     </db:section>
   </xsl:template>

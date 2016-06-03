@@ -1,0 +1,67 @@
+default namespace = "http://docbook.org/ns/docbook"
+include "api.rnc"
+
+# Deal with namespaces. 
+db.synopsis.blocks |= qdt.namespacesynopsis
+qdt.namespacesynopsis = element namespacesynopsis { text } #TODO!
+
+# Deal with structures. 
+db.classsynopsis.class.enumeration |= "structure"
+
+# Deal with macros. 
+qdt.macrosynopsis = 
+    element macrosynopsis {
+      db.funcsynopsis.attlist,
+      db.funcsynopsis.info,
+      (db.funcsynopsisinfo | db.funcprototype)+
+    }
+    
+# Deal with enums. 
+db.programming.inlines |= qdt.enumname
+div {
+    qdt.enumname.role.attribute = attribute role { text }
+    qdt.enumname.attlist =
+       qdt.enumname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumname = element enumname { qdt.enumname.attlist, db._text }
+}
+
+db.programming.inlines |= qdt.enumvalue
+div {
+    qdt.enumvalue.role.attribute = attribute role { text }
+    qdt.enumvalue.attlist =
+       qdt.enumvalue.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumvalue = element enumvalue { qdt.enumvalue.attlist, db._text }
+    
+    qdt.enumidentifier.role.attribute = attribute role { text }
+    qdt.enumidentifier.attlist =
+       qdt.enumidentifier.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumidentifier = element enumidentifier { qdt.enumidentifier.attlist, db._text }
+
+    qdt.enumitem.role.attribute = attribute role { text }
+    qdt.enumitem.attlist =
+       qdt.enumitem.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumitem = element enumitem { qdt.enumvalue.attlist, qdt.enumidentifier, qdt.enumvalue? }
+}
+
+div {
+     qdt.enumsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+     qdt.enumsynopsis.info = db._info.title.forbidden
+     qdt.enumsynopsis = 
+       element enumsynopsis {
+         qdt.enumsynopsis.attlist, 
+         db.programming.inlines+, 
+         qdt.enumvalue*
+       }
+}
+  
