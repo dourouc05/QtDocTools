@@ -6,6 +6,11 @@
   
   
   How to retrieve base class?
+  
+  
+  
+  Suboptimal things: 
+    - how are QML group property handled? Currently: marked with <db:modifier>(group)</db:modified
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
@@ -17,7 +22,7 @@
   <xsl:strip-space elements="*"/>
 
   <xsl:param name="vocabulary" select="'docbook'"/>
-  <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for Boost's variant (TODO). -->
+  <!-- 'docbook' for raw DocBook 5.1; 'quickbook' for extended Boost's variant (TODO). -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
   <xsl:param name="warnMissingDocumentation" select="false()"/>
@@ -383,18 +388,8 @@
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
       select="$hasSubtitle and ends-with($title, 'Example File')"/>
-    <xsl:variable name="isBareExamplePage" as="xs:boolean"
-      select="
-        $isExamplePage
-        and count($description/child::*) = 2
-        and $description/child::*[1][self::html:a][@name = 'details']
-        and $description/child::*[2][self::html:pre]"/>
-    <!-- 
-      TODO: is the distinction with $isExamplePage required? It seems only pages with source code 
-      (and not the "main" page for each example) have a nonempty subtitle and require this. 
-    -->
 
-    <xsl:if test="$hasSubtitle and not($isBareExamplePage)">
+    <xsl:if test="$hasSubtitle and not($isExamplePage)">
       <!-- Ignore the subtitles for example pages, with only source code (it is redundant with the title). -->
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
@@ -1774,17 +1769,21 @@
       <xsl:variable name="anchor" select="$row/@id"/>
 
       <xsl:if test="$title/html:span[@class = 'name']">
-        <!-- TODO: how to handle property groups? -->
         <db:fieldsynopsis>
           <xsl:if test="$attached">
             <db:modifier>attached</db:modifier>
           </xsl:if>
 
+          <xsl:variable name="name" select="$title/html:span[@class = 'name']/text()"/>
+          <xsl:if test="contains($name, '.')">
+            <db:modifier>(group)</db:modifier>
+          </xsl:if>
+          
           <xsl:call-template name="classListing_methodBody_analyseType">
             <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"/>
           </xsl:call-template>
           <db:varname>
-            <xsl:value-of select="$title/html:span[@class = 'name']/text()"/>
+            <xsl:value-of select="$name"/>
           </db:varname>
         </db:fieldsynopsis>
       </xsl:if>
@@ -2150,7 +2149,7 @@
         <xsl:otherwise>
           <!-- Property group. Group title on the first row; actual properties on subsequent rows. -->
           <db:title>
-            <xsl:value-of select="$row/html:b"/>
+            <xsl:value-of select="$row//html:b"/>
           </db:title>
 
           <xsl:for-each select="$table/html:tr">
@@ -2926,6 +2925,7 @@
     </db:inlinemediaobject>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:p">
+    <!-- Paragraph in paragraph: quite rare, only to make an image. -->
     <xsl:if test="./child::*[self::html:img]">
       <xsl:apply-templates mode="content_paragraph"/>
     </xsl:if>

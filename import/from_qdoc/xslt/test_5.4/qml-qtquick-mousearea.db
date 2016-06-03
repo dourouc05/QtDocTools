@@ -27,38 +27,47 @@
          <db:varname>cursorShape</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
          <db:varname>drag.target</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>drag.active</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>enumeration</db:type>
          <db:varname>drag.axis</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.minimumX</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.maximumX</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.minimumY</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.maximumY</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>drag.filterChildren</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.threshold</db:varname>
       </db:fieldsynopsis>
@@ -392,7 +401,8 @@
          </db:section>
       </db:section>
       <db:section xml:id="drag-prop">
-         <db:title/>
+         <db:title>drag
+                                                  group</db:title>
          <db:bridgehead renderas="sect3">drag.target : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
          </db:bridgehead>
          <db:bridgehead renderas="sect3">drag.active : bool</db:bridgehead>

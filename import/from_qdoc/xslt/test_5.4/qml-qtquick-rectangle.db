@@ -15,10 +15,12 @@
          <db:varname>antialiasing</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>int</db:type>
          <db:varname>border.width</db:varname>
       </db:fieldsynopsis>
       <db:fieldsynopsis>
+         <db:modifier>(group)</db:modifier>
          <db:type>color</db:type>
          <db:varname>border.color</db:varname>
       </db:fieldsynopsis>
@@ -95,7 +97,8 @@
                                         false otherwise.</db:para>
       </db:section>
       <db:section xml:id="border-prop">
-         <db:title/>
+         <db:title>border
+                                                  group</db:title>
          <db:bridgehead renderas="sect3">border.width : int</db:bridgehead>
          <db:bridgehead renderas="sect3">border.color : color</db:bridgehead>
          <db:para>The width and color used to draw the border of the
