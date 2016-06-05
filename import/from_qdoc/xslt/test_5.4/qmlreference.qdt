@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>The QML Reference</db:title>
+   <db:para>QML is a multi-paradigm language for creating highly dynamic applications. With QML, application building blocks such as UI components are <db:emphasis>declared</db:emphasis> and various properties set to define the application behavior. Application behavior can be further scripted through JavaScript, which is a subset of the language. In addition, QML heavily uses Qt, which allows types and other Qt features to be accessible directly from QML applications.</db:para>
+   <db:para>This reference guide describes the features of the QML language. Many of the QML types in the guide originate from the <db:link xlink:href="qtqml-index.html">Qt QML</db:link> or <db:link xlink:href="qtquick/qtquick-index.html">Qt Quick</db:link> modules.</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-syntax-basics.html">QML Syntax Basics</db:link>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-imports.html">Import Statements</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-basics.html#object-declarations">Object Declarations</db:link>
+                     <db:itemizedlist>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-syntax-basics.html#child-objects">Child Objects</db:link>
+                           </db:para>
+                        </db:listitem>
+                     </db:itemizedlist>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-basics.html#comments">Comments</db:link>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-syntax-objectattributes.html">QML Object Attributes</db:link>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-objectattributes.html#the-id-attribute">The <db:emphasis>id</db:emphasis> Attribute</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-objectattributes.html#property-attributes">Property Attributes</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-objectattributes.html#signal-attributes">Signal Attributes</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-objectattributes.html#method-attributes">Method Attributes</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-syntax-objectattributes.html#attached-properties-and-attached-signal-handlers">Attached Properties and Attached Signal Handlers</db:link>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-syntax-propertybinding.html">Property Binding</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-syntax-signals.html">Signal and Handler Event System</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-javascript-topic.html">Integrating QML and JavaScript</db:link>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-javascript-expressions.html">Using JavaScript Expressions with QML</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-javascript-dynamicobjectcreation.html">Dynamic QML Object Creation from JavaScript</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-javascript-resources.html">Defining JavaScript Resources In QML</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-javascript-imports.html">Importing JavaScript Resources In QML</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-javascript-hostenvironment.html">JavaScript Host Environment</db:link>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-typesystem-topic.html">The QML Type System</db:link>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-typesystem-basictypes.html">Basic Types</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-typesystem-topic.html#javascript-types">JavaScript Types</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-typesystem-objecttypes.html">QML Object Types</db:link>
+                     <db:itemizedlist>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-documents-definetypes.html">Defining Object Types from QML</db:link>
+                           </db:para>
+                        </db:listitem>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-cppintegration-definetypes.html">Defining Object Types from C++</db:link>
+                           </db:para>
+                        </db:listitem>
+                     </db:itemizedlist>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-modules-topic.html">QML Modules</db:link>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-modules-qmldir.html">Specifying A QML Module</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-modules-topic.html#supported-qml-module-types">Supported QML Module Types</db:link>
+                     <db:itemizedlist>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-modules-identifiedmodules.html">Identified Modules</db:link>
+                           </db:para>
+                        </db:listitem>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-modules-legacymodules.html">Legacy Modules</db:link>
+                           </db:para>
+                        </db:listitem>
+                     </db:itemizedlist>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-modules-cppplugins.html">Providing Types and Functionality in a C++ Plugin</db:link>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qtqml-documents-topic.html">QML Documents</db:link>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-documents-structure.html">Structure of a QML Document</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-documents-topic.html#syntax-of-the-qml-language">Syntax of the QML Language</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-documents-definetypes.html">Defining Object Types through QML Documents</db:link>
+                     <db:itemizedlist>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-documents-definetypes.html#defining-an-object-type-with-a-qml-file">Defining an Object Type with a QML File</db:link>
+                           </db:para>
+                        </db:listitem>
+                        <db:listitem>
+                           <db:para>
+                              <db:link xlink:href="qtqml-documents-definetypes.html#accessible-attributes-of-custom-types">Accessible Attributes of Custom Types</db:link>
+                           </db:para>
+                        </db:listitem>
+                     </db:itemizedlist>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-documents-networktransparency.html">Resource Loading and Network Transparency</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="qtqml-documents-scope.html">Scope and Naming Resolution</db:link>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:para>
+      </db:listitem>
+   </db:itemizedlist>
+</db:article>

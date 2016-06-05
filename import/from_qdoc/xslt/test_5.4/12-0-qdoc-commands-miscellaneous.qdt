@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>Miscellaneous</db:title>
+   <db:para>These commands provide miscellaneous functions connected to the visual appearance of the documentation, and to the process of generating the documentation.</db:para>
+   <db:section xml:id="annotatedlist">
+      <db:title>\annotatedlist</db:title>
+      <db:para>The \annotatedlist command expands to a list of the members of a group, each member listed with its <db:emphasis>brief</db:emphasis> text. Below is an example from the Qt Reference Documentation:</db:para>
+      <db:programlisting>/*!...
+    \section1 Drag and Drop Classes
+
+    These classes deal with drag and drop and the necessary mime type
+    encoding and decoding.
+
+    \annotatedlist draganddrop
+
+*/</db:programlisting>
+      <db:para>This generates a list of all the C++ classes and/or QML types in the <db:emphasis>draganddrop</db:emphasis> group. A C++ class or QML type in the <db:emphasis>draganddrop</db:emphasis> group will have <db:emphasis>\ingroup draganddrop</db:emphasis> in its <db:emphasis>\class</db:emphasis> or <db:emphasis>\qmltype</db:emphasis> comment.</db:para>
+   </db:section>
+   <db:section xml:id="generatelist">
+      <db:title>\generatelist</db:title>
+      <db:para>The \generatelist command expands to a list of links to the documentation entities in a group. Below is an example from the Qt Reference Documentation:</db:para>
+      <db:programlisting>/*!
+    \page classes.html
+    \title All Classes
+
+    For a shorter list that only includes the most
+    frequently used classes, see \l{Qt's Main Classes}.
+
+    \generatelist classes Q
+* /
+</db:programlisting>
+      <db:para>This generates the <db:emphasis>All Classes</db:emphasis> page. The command accepts the following arguments:</db:para>
+      <db:section xml:id="annotatedclasses">
+         <db:title/>
+         <db:para>The <db:code>annotatedclasses</db:code> argument provides a table containing the names of all the classes, and a description of each class. Each class name is a link to the class's reference documentation. For example:</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qtwidgets/qdial.html">QDial</db:link></db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Rounded range control (like a speedometer or potentiometer)</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qtwidgets/qdialog.html">QDialog</db:link></db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>The base class of dialog windows</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qtcore/qdir.html">QDir</db:link></db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Access to directory structures and their contents</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>A C++ class is documented with the <db:link xlink:href="13-qdoc-commands-topics.html#class-command">\class</db:link> command. The annotation for the class is taken from the argument of the class comment's <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command.</db:para>
+      </db:section>
+      <db:section xml:id="classes-op-lt-op-prefix-op-gt-op">
+         <db:title/>
+         <db:para>The <db:code>classes</db:code> argument provides a complete alphabetical list of the classes. The second argument, <db:code>&lt;prefix&gt;</db:code>, is the common prefix for the class names. The class names will be sorted on the character that follows the common prefix. e.g. The common prefix for the Qt classes is <db:code>Q</db:code>. The common prefix argument is optional. If no common prefix is provided, the class names will be sorted on their first character.</db:para>
+         <db:para>Each class name becomes a link to the class's reference documentation. This command is used to generate the <db:emphasis>All Classes</db:emphasis> page this way:</db:para>
+         <db:programlisting>/*!
+    \page classes.html
+    \title All Classes
+    \ingroup classlists
+
+    \brief Alphabetical list of classes.
+
+    This is a list of all Qt classes. For a list of the classes
+    provided for compatibility with Qt3, see \l{Qt3 Support
+    Classes}. For classes that have been deprecated, see the
+    \l{Obsolete Classes} list.
+
+    \generatelist classes Q
+*/</db:programlisting>
+         <db:para>A C++ class is documented with the <db:link xlink:href="13-qdoc-commands-topics.html#class-command">\class</db:link> command.</db:para>
+      </db:section>
+      <db:section xml:id="classesbymodule">
+         <db:title/>
+         <db:para>When this argument is used, a second argument is required, which specifies the module whose classes are to be listed. QDoc generates a table containing those classes. Each class is listed with the text of its <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command.</db:para>
+         <db:para>For example, this command can be used on a module page as follows:</db:para>
+         <db:programlisting>/*!
+      \page phonon-module.html
+      \module Phonon
+      \title Phonon Module
+      \ingroup modules
+
+      \brief Contains namespaces and classes for multimedia functionality.
+
+      \generatelist{classesbymodule Phonon}
+
+  ...*/</db:programlisting>
+         <db:para>Each class that is a member of the specified module must be marked with the <db:link xlink:href="19-qdoc-commands-grouping.html#inmodule-command">\inmodule</db:link> command in its \class comment.</db:para>
+      </db:section>
+      <db:section xml:id="compatclasses">
+         <db:title/>
+         <db:para>The <db:code>compatclasses</db:code> argument generates a list in alphabetical order of the support classes. It is normally used only to generate the Qt3 Support Classes page this way:</db:para>
+         <db:programlisting>/*!
+    \page compatclasses.html
+    \title Qt3 Support Classes
+    \ingroup classlists
+
+    \brief Enable porting of code from Qt3 to Qt4.
+
+    These are the classes that Qt provides for compatibility with Qt3. Most of these are provided by the Qt3Support module.
+
+    \generatelist compatclasses
+*/</db:programlisting>
+         <db:para>A support class is identified in the \class comment with the <db:link xlink:href="16-qdoc-commands-status.html#compat-command">\compat</db:link> command.</db:para>
+      </db:section>
+      <db:section xml:id="functionindex">
+         <db:title/>
+         <db:para>The <db:code>functionindex</db:code> argument provides a complete alphabetical list of all the documented member functions. It is normally used only to generate the <db:emphasis>Qt function index</db:emphasis> page this way:</db:para>
+         <db:programlisting>/*!
+    \page functions.html
+    \title All Functions
+    \ingroup funclists
+
+    \brief All documented Qt functions listed alphabetically with a
+    link to where each one is declared.
+
+    This is the list of all documented member functions and global
+    functions in the Qt API. Each function has a link to the
+    classor header file where it is declared and documented.
+
+    \generatelist functionindex
+*/</db:programlisting>
+      </db:section>
+      <db:section xml:id="legalese">
+         <db:title/>
+         <db:para>The <db:code>legalese</db:code> argument tells QDoc to generate a complete list of licenses in the documentation. Each license is identified using the <db:link xlink:href="11-qdoc-commands-specialcontent.html#legalese-command">\legalese</db:link> command. This command is used to generate the <db:emphasis>Qt license information</db:emphasis> page this way:</db:para>
+         <db:programlisting>/*!
+    \page licenses.html
+    \title Other Licenses Used in Qt
+    \ingroup licensing
+    \brief Information about other licenses used forQt components and third-party code.Qt contains some code that is not provided under the
+    \l{GNU General Public License (GPL)},
+    \l{GNU Lesser General Public License (LGPL)} or the
+    \l{Qt Commercial Edition}{Qt Commercial License Agreement}, but rather under
+    specific licenses from the original authors. Some pieces of code were developed
+    by Digia and others originated from third parties.
+    This page lists the licenses used, names the authors, and links
+    to the places where it is used.
+
+    Digia gratefully acknowledges these and other contributions
+    to Qt. We recommend that programs that use Qt also acknowledge
+    these contributions, and quote these license statements in an
+    appendix to the documentation.
+
+    See also: \l{Licenses for Fonts Used in Qtfor Embedded Linux}
+
+    \generatelist legalese
+*/</db:programlisting>
+      </db:section>
+      <db:section xml:id="mainclasses">
+         <db:title/>
+         <db:para>The <db:code>mainclasses</db:code> argument tells QDoc to generate an alphabetical list of the main classes. A class is marked as a main class by including a <db:link xlink:href="19-qdoc-commands-grouping.html#mainclass-command">\mainclass</db:link> command in the \class comment.</db:para>
+         <db:note>
+            <db:para>The Qt documentation no longer includes a main classes page, but you can generate one for your main classes if you want it.</db:para>
+         </db:note>
+      </db:section>
+      <db:section xml:id="overviews">
+         <db:title/>
+         <db:para>The <db:code>overviews</db:code> argument is used to tell QDoc to generate a list by concatenating the contents of all the <db:link xlink:href="13-qdoc-commands-topics.html#group-command">\group</db:link> pages. Qt uses it to generate the <db:emphasis>overviews</db:emphasis> page this way:</db:para>
+         <db:programlisting>/*!
+    \page overviews.html
+
+    \title All Overviews and HOWTOs
+
+    \generatelist overviews
+*/</db:programlisting>
+      </db:section>
+      <db:section xml:id="related">
+         <db:title/>
+         <db:para>The <db:code>related</db:code> argument is used in combination with the <db:link xlink:href="13-qdoc-commands-topics.html#group-command">\group</db:link> and <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> commands to list all the overviews related to a specified group. For example, the page for the <db:emphasis>Programming with Qt</db:emphasis> page is generated this way:</db:para>
+         <db:programlisting>/*!
+    \group qt-basic-concepts
+    \title Programming with Qt
+
+    \brief The basic architecture of the Qt cross-platform application and UI framework.Qt is a cross-platform application and UI framework for
+    writing web-enabled applications for desktop, mobile, and
+    embedded operating systems. This page contains links to
+    articles and overviews explaining key components and
+    techniuqes used in Qt development.
+
+    \generatelist {related}
+*/</db:programlisting>
+         <db:para>Each page listed on this group page contains the command:</db:para>
+         <db:programlisting>    \ingroup qt-basic-concepts</db:programlisting>
+      </db:section>
+      <db:section xml:id="service">
+         <db:title/>
+         <db:para>The <db:code>service</db:code> argument tells QDoc to generate an alphabetical list of the services. Each service name is a link to the service's reference documentation.</db:para>
+         <db:para>A service is identified with the <db:link xlink:href="13-qdoc-commands-topics.html#service-command">\service</db:link> command.</db:para>
+         <db:note>
+            <db:para>This command and the <db:link xlink:href="13-qdoc-commands-topics.html#service-command">\service</db:link> command are not used in the Qt documentation.</db:para>
+         </db:note>
+      </db:section>
+   </db:section>
+   <db:section xml:id="if">
+      <db:title>\if</db:title>
+      <db:para>The \if command and the corresponding \endif command enclose parts of a QDoc comment that only will be included if the condition specified by the command's argument is true.</db:para>
+      <db:para>The command reads the rest of the line and parses it as an C++ #if statement.</db:para>
+      <db:programlisting>/*!
+           \if defined(opensourceedition)
+
+           \b{Note:} This edition is for the development of
+           \l{Qt Open Source Edition} {Free and Open Source}
+           software only; see \l{Qt Commercial Editions}.
+
+           \endif
+       */</db:programlisting>
+      <db:para>This QDoc comment will only be rendered if the <db:code>opensourceedition</db:code> preprocessor symbol is defined, and specified in the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> variable in the configuration file to make QDoc process the code within #ifdef and #endif:</db:para>
+      <db:programlisting>           defines = opensourceedition</db:programlisting>
+      <db:para>You can also define the preprocessor symbol manually on the command line. For more information see the documentation of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> variable.</db:para>
+      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="endif">
+      <db:title>\endif</db:title>
+      <db:para>The \endif command and the corresponding \if command enclose parts of a QDoc comment that will be included if the condition specified by the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link> command's argument is true.</db:para>
+      <db:para>For more information, see the documentation of the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link> command.</db:para>
+      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="else">
+      <db:title>\else</db:title>
+      <db:para>The \else command specifies an alternative if the condition in the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link> command is false.</db:para>
+      <db:para>The \else command can only be used within <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if...\endif</db:link> commands, but is useful when there is only two alternatives.</db:para>
+      <db:programlisting>/*!
+           The Qt3 support library is provided to keep old
+           source code working.
+
+           In addition to the \c Qt3Support classes,Qt4 provides
+           compatibility functions when it's possible for an old
+           API to cohabit with the new one.
+
+           \if !defined(QT3_SUPPORT)
+               \if defined(QT3_SUPPORTWARNINGS)
+                   The compiler emits a warning when a
+                   compatibility function is called. (This works
+                   only with GCC 3.2+ and MSVC 7.)
+               \else
+                   To use the Qt 3 support library, you need to
+                   have the line QT += qt3support in your .pro
+                   file (qmake automatically define the
+                   QT3_SUPPORT symbol, turning on compatibility
+                   function support).
+
+                   You can also define the symbol manually (for example,
+                   if you don't want to link against the \c
+                   Qt3Support library),or you can define \c
+                   QT3_SUPPORT_WARNINGS instead, telling the
+                   compiler to emit a warning when a compatibility
+                   function is called. (This works only with GCC
+                   3.2+ and MSVC 7.)
+               \endif
+           \endif
+       */</db:programlisting>
+      <db:para>If the <db:code>QT3_SUPPORT</db:code> is defined, the comment will be rendered like this:</db:para>
+      <db:blockquote>
+         <db:para>The Qt 3 support library is provided to keep old source code working.</db:para>
+         <db:para>In addition to the Qt3Support classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</db:para>
+      </db:blockquote>
+      <db:para>If <db:code>QT3_SUPPORT</db:code> is not defined but <db:code>QT3_SUPPORT_WARNINGS</db:code> is defined, the comment will be rendered like this:</db:para>
+      <db:blockquote>
+         <db:para>The Qt 3 support library is provided to keep old source code working.</db:para>
+         <db:para>In addition to the Qt3Support classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</db:para>
+         <db:para>The compiler emits a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</db:para>
+      </db:blockquote>
+      <db:para>If none of the symbols are defined, the comment will be rendered as</db:para>
+      <db:blockquote>
+         <db:para>The Qt 3 support library is provided to keep old source code working.</db:para>
+         <db:para>In addition to the <db:code>Qt3Support</db:code> classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</db:para>
+         <db:para>To use the Qt 3 support library, you need to have the line QT += qt3support in your .pro file (qmake automatically define the QT3_SUPPORT symbol, turning on compatibility function support).</db:para>
+         <db:para>You can also define the symbol manually (e.g., if you don't want to link against the <db:code>Qt3Support</db:code> library), or you can define <db:code>QT3_SUPPORT_WARNINGS</db:code> instead, telling the compiler to emit a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</db:para>
+      </db:blockquote>
+      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="include">
+      <db:title>\include</db:title>
+      <db:para>The \include command sends all or part of the file specified by its first argument to the QDoc input stream to be processed as a QDoc comment snippet. This command is often assigned the alias, <db:emphasis>input</db:emphasis>, in the QDoc configuration file, for example <db:emphasis>alias.include = input</db:emphasis>.</db:para>
+      <db:para>The command is useful when some snippet of commands and text is to be used in multiple places in the documentation. In that case, move the snippet into a separate file and use the \include command wherever you want to insert the snippet into the documentation. To prevent QDoc from reading the file as a stand-alone page of documentation, we recommend that you use the <db:code>.qdocinc</db:code> extension for these <db:emphasis>include</db:emphasis> files.</db:para>
+      <db:para>The command can have either one or two arguments. The first argument is always a file name. The contents of the file must be QDoc input, in other words, a sequence of QDoc commands and text, but without the enclosing QDoc comment <db:code>/</db:code>
+         <db:code>*!</db:code> ... <db:code>*</db:code>
+         <db:code>/</db:code> delimiters. If you want to include the entire named file, don't use the second argument. If you want to include only part of the file, see the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#2-argument-form">two argument form</db:link> below. Here is an example of the one argument form:</db:para>
+      <db:programlisting>/*!
+            \page corefeatures.html
+            \title Core Features
+
+            \include examples/signalandslots.qdocinc
+            \include examples/objectmodel.qdocinc
+            \include examples/layoutmanagement.qdocinc
+        */</db:programlisting>
+      <db:para>QDoc renders this page <db:link xlink:href="corefeatures.html">as shown here</db:link>.</db:para>
+      <db:section xml:id="include-filename-snippet-identifier">
+         <db:title>\include filename snippet-identifier</db:title>
+         <db:para>It is a waste of time to make a separate <db:code>.qdocinc</db:code> file for every QDoc include snippet you want to use in multiple places in the documentation, especially given that you probably have to put the copyright/license notice in every one of these files. So if you have a large number of snippets to be included, you can put them all in a single file if you want, and surround each one with:</db:para>
+         <db:programlisting>//! [snippet-id1]QDoc commands and text...//! [snippet-id1]//! [snippet-id2]
+
+       More QDoc commands and text...//! [snippet-id2]</db:programlisting>
+         <db:para>Then you can use the two-argument form of the command:</db:para>
+         <db:programlisting>    \input examples/signalandslots.qdocinc snippet-id2
+    \input examples/objectmodel.qdocinc another-snippet-id</db:programlisting>
+         <db:para>It works as expected. The sequence of QDoc commands and text found between the two tags with the same name as the second argument is sent to the QDoc input stream. You can even nest these snippets, although it's not clear why you would want to do that.</db:para>
+      </db:section>
+   </db:section>
+   <db:section xml:id="meta">
+      <db:title>\meta</db:title>
+      <db:para>The \meta command is mainly used for including metadata in DITA XML files. It is also used when generating HTML output for specifying the <db:emphasis>maintainer(s)</db:emphasis> of a C++ class.</db:para>
+      <db:para>The command has two arguments: the first argument is the name of the metadata attribute, and the second argument is the value for the attribute. Each argument should be enclosed in curly brackets, as shown in this example:</db:para>
+      <db:programlisting>/*!
+    \classQWidget
+    \brief The QWidgetclass is the base class of all user interface objects.
+
+    \ingroup basicwidgets
+
+    \meta {technology} {User Interface}
+    \meta {platform} {OS X 10.6}
+    \meta {platform} {Symbian}
+    \meta {platform} {MeeGo}
+    \meta {audience} {user}
+    \meta {audience} {programmer}
+    \meta {audience} {designer}
+*/</db:programlisting>
+      <db:para>When running QDoc to generate HTML, the example above will have no effect on the generated output, but if you run QDoc to generate DITA XML, the example will generate the following:</db:para>
+      <db:programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE cxxClass PUBLIC "-//NOKIA//DTD DITA C++ API Class Reference Type v0.6.0//EN""dtd/cxxClass.dtd"&gt;&lt;!--qwidget.cpp--&gt;&lt;cxxClass id="id-9a14268e-6b09-4eee-b940-21a00a0961df"&gt;&lt;apiName&gt;QWidget&lt;/apiName&gt;&lt;shortdesc&gt;the QWidgetclass is the base class of all user interface objects.&lt;/shortdesc&gt;&lt;prolog&gt;&lt;author&gt;Qt Development Frameworks&lt;/author&gt;&lt;publisher&gt;Qt Project&lt;/publisher&gt;&lt;copyright&gt;&lt;copyryear year="2015"/&gt;&lt;copyrholder&gt;Qt Project&lt;/copyrholder&gt;&lt;/copyright&gt;&lt;permissions view="all"/&gt;&lt;metadata&gt;&lt;audience type="designer"/&gt;&lt;audience type="programmer"/&gt;&lt;audience type="user"/&gt;&lt;category&gt;Class reference&lt;/category&gt;&lt;prodinfo&gt;&lt;prodname&gt;Qt Reference Documentation&lt;/prodname&gt;&lt;vrmlist&gt;&lt;vrm version="4" release="7" modification="3"/&gt;&lt;/vrmlist&gt;&lt;component&gt;QtGui&lt;/component&gt;&lt;/prodinfo&gt;&lt;othermeta name="platform" content="MeeGo"/&gt;&lt;othermeta name="platform" content="Symbian"/&gt;&lt;othermeta name="platform" content="OS X 10.6"/&gt;&lt;othermeta name="technology" content="User Interface"/&gt;&lt;/metadata&gt;&lt;/prolog&gt;</db:programlisting>
+      <db:para>In the example output, several values have been set using default values obtained from the QDoc configuration file. See <db:link xlink:href="21-3-qt-dita-xml-output.html">Generating DITA XML Output</db:link> for details.</db:para>
+   </db:section>
+   <db:section xml:id="omit">
+      <db:title>\omit</db:title>
+      <db:para>The \omit command and the corresponding \endomit command delimit parts of the documentation that you want QDoc to skip. For example:</db:para>
+      <db:programlisting>/*!
+            \table
+            \row
+                \li Basic Widgets
+                \li Basic GUI widgets such as buttons, comboboxes
+                   and scrollbars.
+
+            \omit
+            \row
+                \li Component Model
+                \li Interfaces and helper classes for the Qt
+                   Component Model.
+            \endomit
+
+            \row
+                \li Database Classes
+                \li Database related classes, e.g.for SQL databases.
+            \endtable
+        */</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>Basic Widgets</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Basic GUI widgets such as buttons, comboboxes
+                       and scrollbars.</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>Database Classes</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Database related classes, e.g. for SQL databases.</db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="raw-avoid">
+      <db:title>\raw </db:title>
+      <db:para>The \raw command and the corresponding \endraw command delimit a block of raw mark-up language code.</db:para>
+      <db:note>
+         <db:para>Avoid using this command if possible, because it generates DITA XML code that causes problems. If you are trying to generate special table or list behavior, try to get the behavior you want using the <db:link xlink:href="04-qdoc-commands-textmarkup.html#span-command">\span</db:link> and <db:link xlink:href="04-qdoc-commands-textmarkup.html#div-command">\div</db:link> commands in your <db:link xlink:href="10-qdoc-commands-tablesandlists.html#table-command">\table</db:link> or <db:link xlink:href="10-qdoc-commands-tablesandlists.html#list-command">\list</db:link>.</db:para>
+      </db:note>
+      <db:para>The command takes an argument specifying the code's format. Currently, the only supported format is HTML.</db:para>
+      <db:para>The \raw command is useful if you want some special HTML effects in your documentation.</db:para>
+      <db:programlisting>/*!Qt has some predefined QColor objects.
+
+           \raw HTML
+           &lt;style type="text/css" id="colorstyles"&gt;#color-blue { background-color: #0000ff; color: #ffffff }#color-darkBlue { background-color: #000080; color: #ffffff }#color-cyan { background-color: #00ffff; color: #000000 }&lt;/style&gt;&lt;p&gt;&lt;tt id="color-blue"&gt;Blue(#0000ff)&lt;/tt&gt;,&lt;tt id="color-darkBlue"&gt;dark blue(#000080)&lt;/tt&gt; and&lt;tt id="color-cyan"&gt;cyan(#00ffff)&lt;/tt&gt;.&lt;/p&gt;
+           \endraw
+       */</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>Qt has some predefined <db:code><db:link xlink:href="qtgui/qcolor.html">QColor</db:link></db:code> objects.</db:para>
+         <db:para>
+            <db:code>Blue(#0000ff)</db:code>,
+               <db:code>dark blue(#000080)</db:code> and
+               <db:code>cyan(#00ffff)</db:code>.
+           </db:para>
+      </db:blockquote>
+      <db:note>
+         <db:para>But you can achieve the exact same thing using qdoc commands. In this case, all you have to do is include the color styles in your style.css file. Then you can write:</db:para>
+      </db:note>
+      <db:programlisting>       \tt {\span {id="color-blue"} {Blue(#0000ff)}},
+       \tt {\span {id="color-darkBlue"} {dark blue(#000080)}} and
+       \tt {\span {id="color-cyan"} {cyan(#00ffff)}}.</db:programlisting>
+      <db:para>...which is rendered as:</db:para>
+      <db:para>
+         <db:code>Blue(#0000ff)</db:code>, <db:code>dark blue(#000080)</db:code> and <db:code>cyan(#00ffff)</db:code>.</db:para>
+   </db:section>
+   <db:section xml:id="unicode">
+      <db:title>\unicode</db:title>
+      <db:para>The \unicode command allows you to insert an arbitrary Unicode character in the document.</db:para>
+      <db:para>The command takes an argument specifying the character as an integer. By default, base 10 is assumed, unless a '0x' or '0' prefix is specified (for base 16 and 8, respectively). For example:</db:para>
+      <db:programlisting>            O G\unicode{0xEA}nio e as Rosas
+
+            \unicode 0xC0 table en famille avec 15 \unicode 0x20AC par jour
+
+            \unicode 0x3A3 \e{a}\sub{\e{i}}</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>O Gênio e as Rosas</db:para>
+         <db:para>À table en famille avec 15 € par jour</db:para>
+         <db:para>Σ <db:emphasis>a</db:emphasis>
+            <db:subscript>
+               <db:emphasis>i</db:emphasis>
+            </db:subscript>
+         </db:para>
+      </db:blockquote>
+   </db:section>
+</db:article>

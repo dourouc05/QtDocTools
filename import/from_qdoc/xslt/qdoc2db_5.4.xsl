@@ -10,7 +10,7 @@
   
   
   Suboptimal things: 
-    - how are QML group property handled? Currently: marked with <db:modifier>(group)</db:modified
+    - how are QML group property handled? Currently: marked with <db:modifier>(group)</db:modifier>
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
@@ -21,8 +21,8 @@
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:param name="vocabulary" select="'boostbook'"/>
-  <!-- 'docbook' for raw DocBook 5.1; 'boostbook' for extended Boost's variant. -->
+  <xsl:param name="vocabulary" select="'qtdoctools'"/>
+  <!-- 'docbook' for raw DocBook 5.1; 'qtdoctools' for the custom QtDocTools extension. -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
   <xsl:param name="warnMissingDocumentation" select="false()"/>
@@ -552,23 +552,8 @@
 
     <!-- Actually output something. -->
     <db:article>
-      <xsl:attribute name="version">
-        <xsl:choose>
-          <xsl:when test="$vocabulary = 'docbook'">
-            <xsl:value-of select="'5.1'"/>
-          </xsl:when>
-          <xsl:when test="$vocabulary = 'boostbook'">
-            <xsl:value-of select="'5.1-extension boostbook-2.0 qtdoctools-1.0'"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message>WARNING: Unrecognised vocabulary!</xsl:message>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      
-      <xsl:attribute name="xml:lang">
-        <xsl:value-of select="@lang"/>
-      </xsl:attribute>
+      <xsl:attribute name="version" select="tc:version()"/>
+      <xsl:attribute name="xml:lang" select="@lang"/>
 
       <db:title>
         <xsl:value-of select="$title"/>
@@ -582,7 +567,6 @@
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
           <xsl:with-param name="types" select="$types"/>
-          <!-- <xsl:with-param name="publicFuncs" select="$publicFuncs"/> -->
 
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
@@ -904,6 +888,20 @@
   </xsl:template>
 
   <!-- Utility templates, useable only in the main template. -->
+  <xsl:function name="tc:version" as="xs:string">
+    <xsl:choose>
+      <xsl:when test="$vocabulary = 'docbook'">
+        <xsl:value-of select="'5.1'"/>
+      </xsl:when>
+      <xsl:when test="$vocabulary = 'qtdoctools'">
+        <xsl:value-of select="'5.1-extension qtdoctools-1.0'"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Unrecognised vocabulary!</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
   <xsl:template name="lookupSection">
     <xsl:param name="globalList" as="element(html:div)*"/>
     <xsl:param name="anchor" as="xs:string"/>

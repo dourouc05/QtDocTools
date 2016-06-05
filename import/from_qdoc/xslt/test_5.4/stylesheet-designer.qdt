@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>Qt Designer Integration</db:title>
+   <db:para>Qt Designer{Qt Designer} is an excellent tool to preview
+                                    style sheets. You can right-click on any widget in Designer and
+                                    select <db:emphasis role="bold">Change <db:link xlink:href="stylesheet.html#stylesheet">styleSheet</db:link>...</db:emphasis> to set the style
+                                    sheet.</db:para>
+   <db:informalfigure>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/designer-stylesheet-options.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+   </db:informalfigure>
+   <db:para>In Qt 4.2 and later, Qt Designer also
+                                    includes a style sheet syntax highlighter and validator. The
+                                    validator indicates if the syntax is valid or invalid, at the
+                                    bottom left of the <db:emphasis role="bold">Edit Style Sheet</db:emphasis>
+                                    dialog.</db:para>
+   <db:informalfigure>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/designer-validator-highlighter.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+   </db:informalfigure>
+   <db:para>When you click <db:emphasis role="bold">OK</db:emphasis> or
+                                        <db:emphasis role="bold">Apply</db:emphasis>, Qt Designer will automatically
+                                    display the widget with its new stylesheet.</db:para>
+   <db:informalfigure>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/designer-stylesheet-usage.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+   </db:informalfigure>
+</db:article>

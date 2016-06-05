@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>Standard Accelerator Keys</db:title>
+   <db:para>Applications invariably need to define accelerator keys for
+                                    actions. Qt fully supports accelerators, for example with
+                                        <db:code><db:link xlink:href="qtwidgets/qshortcut.html">QShortcut</db:link></db:code>.
+                                    Platform defaults for key bindings can also be assigned using
+                                        <db:code><db:link xlink:href="qtgui/qkeysequence.html#StandardKey-enum">QKeySequence::StandardKey</db:link></db:code>.</db:para>
+   <db:para>Here are Microsoft's recommendations for accelerator keys,
+                                    with comments about the Open Group's recommendations where they
+                                    exist and differ. For most commands, the Open Group either has
+                                    no advice or agrees with Microsoft.</db:para>
+   <db:para>The emboldened letter plus Alt is Microsoft's recommended
+                                    choice, and we recommend supporting it. For an Apply button, for
+                                    example, we recommend <db:code><db:link xlink:href="qtwidgets/qabstractbutton.html#text-prop">QAbstractButton::setText</db:link></db:code>);</db:para>
+   <db:para>If you have conflicting commands (e.g. About and Apply
+                                    buttons in the same dialog), you must decide for
+                                    yourself.</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:accel>A</db:accel>bout</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Always on
+                                        <db:accel>T</db:accel>op</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>A</db:accel>pply</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>B</db:accel>ack</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>B</db:accel>rowse</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>C</db:accel>lose (CDE: Alt+F4;
+                                        Alt+F4 is "close window" in Windows)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>C</db:accel>opy (CDE: Ctrl+C,
+                                        Ctrl+Insert)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>C</db:accel>opy Here</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Create
+                                        <db:accel>S</db:accel>hortcut</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Create <db:accel>S</db:accel>hortcut
+                                        Here</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Cu<db:accel>t</db:accel>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>D</db:accel>elete</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>E</db:accel>dit</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>E</db:accel>xit (CDE:
+                                                E<db:accel>x</db:accel>it)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>E</db:accel>xplore</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>F</db:accel>ile</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>F</db:accel>ind</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>H</db:accel>elp</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Help <db:accel>T</db:accel>opics</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>H</db:accel>ide</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>I</db:accel>nsert</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Insert
+                                        <db:accel>O</db:accel>bject</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>L</db:accel>ink Here</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Ma<db:accel>x</db:accel>imize</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Mi<db:accel>n</db:accel>imize</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>M</db:accel>ove</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>M</db:accel>ove Here</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>N</db:accel>ew</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>N</db:accel>ext</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>N</db:accel>o</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>O</db:accel>pen</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Open <db:accel>W</db:accel>ith</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Page Set<db:accel>u</db:accel>p</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>P</db:accel>aste</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Paste <db:accel>L</db:accel>ink</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Paste
+                                        <db:accel>S</db:accel>hortcut</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Paste
+                                        <db:accel>S</db:accel>pecial</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>P</db:accel>ause</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>P</db:accel>lay</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>P</db:accel>rint</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>P</db:accel>rint Here</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>P<db:accel>r</db:accel>operties</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>Q</db:accel>uick View</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>R</db:accel>edo (CDE: Ctrl+Y,
+                                        Shift+Alt+Backspace)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>R</db:accel>epeat</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>R</db:accel>estore</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>R</db:accel>esume</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>R</db:accel>etry</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>R</db:accel>un</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>S</db:accel>ave</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Save <db:accel>A</db:accel>s</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Select <db:accel>A</db:accel>ll</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>Se<db:accel>n</db:accel>d To</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>S</db:accel>how</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>S</db:accel>ize</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>S<db:accel>p</db:accel>lit</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>S</db:accel>top</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>U</db:accel>ndo (CDE: Ctrl+Z or
+                                        Alt+Backspace)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>V</db:accel>iew</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>W</db:accel>hat's
+                                        This?</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>W</db:accel>indow</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:accel>Y</db:accel>es</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:para>There are also a lot of other keys and actions (that use
+                                    other modifier keys than Alt). See the Microsoft and The Open
+                                    Group documentation for details.</db:para>
+   <db:para>The <db:link xlink:href="http://www.amazon.com/exec/obidos/ASIN/0735605661/trolltech/t">Microsoft book</db:link> has ISBN 0735605661. The
+                                    corresponding Open Group book is very hard to find, rather
+                                    expensive and we cannot recommend it. However, if you really
+                                    want it, ogpubs@opengroup.org might be able to help. Ask them
+                                    for ISBN 1859121047.</db:para>
+</db:article>

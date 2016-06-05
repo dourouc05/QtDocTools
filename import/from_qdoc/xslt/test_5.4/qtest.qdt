@@ -1,0 +1,3629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>QTest Namespace</db:title>
+   <db:funcsynopsis xlink:href="#QBENCHMARK">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QBENCHMARK</db:function>
+         </db:funcdef>
+         <db:void/>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QBENCHMARK_ONCE">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QBENCHMARK_ONCE</db:function>
+         </db:funcdef>
+         <db:void/>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QCOMPARE">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QCOMPARE</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>expected</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QEXPECT_FAIL">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QEXPECT_FAIL</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>dataIndex</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>comment</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>mode</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QFAIL">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QFAIL</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>message</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QFETCH">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QFETCH</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>type</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>name</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QFINDTESTDATA">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QFINDTESTDATA</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>filename</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QSKIP">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QSKIP</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>description</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTEST">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTEST</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>testElement</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTEST_APPLESS_MAIN">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTEST_APPLESS_MAIN</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>TestClass</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTEST_GUILESS_MAIN">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTEST_GUILESS_MAIN</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>TestClass</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTEST_MAIN">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTEST_MAIN</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>TestClass</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTRY_COMPARE">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTRY_COMPARE</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>expected</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTRY_COMPARE_WITH_TIMEOUT">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTRY_COMPARE_WITH_TIMEOUT</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>expected</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>timeout</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTRY_VERIFY">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTRY_VERIFY</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QTRY_VERIFY_WITH_TIMEOUT">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QTRY_VERIFY_WITH_TIMEOUT</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>timeout</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QVERIFY2">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QVERIFY2</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>message</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QVERIFY">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QVERIFY</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QVERIFY_EXCEPTION_THROWN">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QVERIFY_EXCEPTION_THROWN</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>expression</db:parameter>
+         </db:paramdef>
+         <db:paramdef choice="req">
+            <db:parameter>exceptiontype</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:funcsynopsis xlink:href="#QWARN">
+      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      <db:funcprototype>
+         <db:funcdef>
+            <db:function>QWARN</db:function>
+         </db:funcdef>
+         <db:paramdef choice="req">
+            <db:parameter>message</db:parameter>
+         </db:paramdef>
+      </db:funcprototype>
+   </db:funcsynopsis>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QTest</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="isNamespace">yes</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="header">#include
+                                                  &lt;QTest&gt;</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="qmake"> QT +=
+                                                testlib</db:classsynopsisinfo>
+      <db:methodsynopsis xlink:href="addColumn">
+         <db:void/>
+         <db:methodname>addColumn</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         char  * 
+                                        name ,  T 
+                                        *  dummy  = 0)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="benchmarkMetricName">
+         <db:type>char</db:type>
+         <db:methodname>benchmarkMetricName</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QBenchmarkMetric 
+                                        metric )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="benchmarkMetricUnit">
+         <db:type>char</db:type>
+         <db:methodname>benchmarkMetricUnit</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QBenchmarkMetric 
+                                        metric )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="currentAppName">
+         <db:type>char</db:type>
+         <db:methodname>currentAppName</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="currentDataTag">
+         <db:type>char</db:type>
+         <db:methodname>currentDataTag</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="currentTestFailed">
+         <db:type>bool</db:type>
+         <db:methodname>currentTestFailed</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="currentTestFunction">
+         <db:type>char</db:type>
+         <db:methodname>currentTestFunction</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="ignoreMessage">
+         <db:void/>
+         <db:methodname>ignoreMessage</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QtMsgType  type ,
+                                    const  char  * 
+                                        message )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="ignoreMessage-2">
+         <db:void/>
+         <db:methodname>ignoreMessage</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QtMsgType  type ,
+                                    const  QRegularExpression  &amp; 
+                                        messagePattern )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyClick">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyClick-2">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         char 
+                                        key ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyClick-3">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyClick-4">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  char  key ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyClicks">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyClicks</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                    const  QString  &amp; 
+                                        sequence ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyEvent">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( KeyAction  action ,
+                                         QWidget  *  widget ,
+                                         Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyEvent-2">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( KeyAction  action ,
+                                         QWidget  *  widget ,
+                                         char 
+                                        ascii ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyEvent-3">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( KeyAction  action ,
+                                         QWindow  *  window ,
+                                         Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyEvent-4">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( KeyAction  action ,
+                                         QWindow  *  window ,
+                                         char 
+                                        ascii ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyPress">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyPress</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyPress-2">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyPress</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         char 
+                                        key ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyPress-3">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyPress</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyPress-4">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyPress</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  char  key ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyRelease">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyRelease</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyRelease-2">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyRelease</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         char 
+                                        key ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyRelease-3">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyRelease</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::Key  key ,
+                                         Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="keyRelease-4">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>keyRelease</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  char  key ,  Qt::KeyboardModifiers 
+                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseClick">
+         <db:void/>
+         <db:methodname>mouseClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        modifier  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseClick-2">
+         <db:void/>
+         <db:methodname>mouseClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        stateKey  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseDClick">
+         <db:void/>
+         <db:methodname>mouseDClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        modifier  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseDClick-2">
+         <db:void/>
+         <db:methodname>mouseDClick</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        stateKey  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseMove">
+         <db:void/>
+         <db:methodname>mouseMove</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseMove-2">
+         <db:void/>
+         <db:methodname>mouseMove</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mousePress">
+         <db:void/>
+         <db:methodname>mousePress</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        modifier  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mousePress-2">
+         <db:void/>
+         <db:methodname>mousePress</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        stateKey  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseRelease">
+         <db:void/>
+         <db:methodname>mouseRelease</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        modifier  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="mouseRelease-2">
+         <db:void/>
+         <db:methodname>mouseRelease</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  Qt::MouseButton 
+                                        button ,  Qt::KeyboardModifiers 
+                                        stateKey  = 0,  QPoint  pos  =
+                                    QPoint(),  int 
+                                        delay  = -1)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="newRow">
+         <db:type>QTestData</db:type>
+         <db:methodname>newRow</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         char  * 
+                                        dataTag )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qExec">
+         <db:type>int</db:type>
+         <db:methodname>qExec</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QObject  * 
+                                        testObject ,  int  argc  = 0,  char  **  argv  =
+                                    0)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qExec-2">
+         <db:type>int</db:type>
+         <db:methodname>qExec</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QObject  * 
+                                        testObject , const  QStringList  &amp; 
+                                        arguments )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qSleep">
+         <db:void/>
+         <db:methodname>qSleep</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( int  ms )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qWait">
+         <db:modifier>static</db:modifier>
+         <db:void/>
+         <db:methodname>qWait</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( int  ms )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qWaitForWindowActive">
+         <db:modifier>static</db:modifier>
+         <db:type>bool</db:type>
+         <db:methodname>qWaitForWindowActive</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow  *  window ,
+                                         int 
+                                        timeout  = 5000)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qWaitForWindowActive-2">
+         <db:modifier>static</db:modifier>
+         <db:type>bool</db:type>
+         <db:methodname>qWaitForWindowActive</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         int 
+                                        timeout  = 1000)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qWaitForWindowExposed">
+         <db:modifier>static</db:modifier>
+         <db:type>bool</db:type>
+         <db:methodname>qWaitForWindowExposed</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow  *  window ,
+                                         int 
+                                        timeout  = 5000)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="qWaitForWindowExposed-2">
+         <db:modifier>static</db:modifier>
+         <db:type>bool</db:type>
+         <db:methodname>qWaitForWindowExposed</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         int 
+                                        timeout  = 1000)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="setBenchmarkResult">
+         <db:void/>
+         <db:methodname>setBenchmarkResult</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( qreal  result ,
+                                         QBenchmarkMetric 
+                                        metric )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toHexRepresentation">
+         <db:type>char</db:type>
+         <db:methodname>toHexRepresentation</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const  char  *  ba ,
+                                         int 
+                                        length )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         T  &amp; 
+                                        value )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-4">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QLatin1String  &amp; 
+                                        string )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-5">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QString  &amp; 
+                                        string )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-6">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QByteArray  &amp; 
+                                    ba )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-7">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QTime  &amp; 
+                                    time )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-8">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QDate  &amp; 
+                                    date )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-9">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QDateTime  &amp; 
+                                        dateTime )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-10">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QChar  &amp; 
+                                        character )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-11">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QPoint  &amp; 
+                                        point )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-12">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QSize  &amp; 
+                                    size )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-13">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QRect  &amp; 
+                                        rectangle )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-14">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QUrl  &amp; 
+                                    url )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-15">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QPointF  &amp; 
+                                        point )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-16">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QSizeF  &amp; 
+                                    size )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-17">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QRectF  &amp; 
+                                        rectangle )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="toString-18">
+         <db:type>char</db:type>
+         <db:methodname>toString</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const
+                                         QVariant  &amp; 
+                                        variant )</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="touchEvent">
+         <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
+         <db:methodname>touchEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWidget  *  widget ,
+                                         QTouchDevice  * 
+                                    device ,  bool  autoCommit  =
+                                    true)</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="touchEvent-2">
+         <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
+         <db:methodname>touchEvent</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( QWindow 
+                                        *  window ,  QTouchDevice  * 
+                                    device ,  bool  autoCommit  =
+                                    true)</db:exceptionname>
+      </db:methodsynopsis>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qtest.html">QTest</db:link></db:code> namespace
+                                    contains all the functions and declarations that are related to
+                                    Qt Test.</db:para>
+      <db:para>See the <db:link xlink:href="qtest-overview.html">Qt Test
+                                        Overview</db:link> for information about how to write unit
+                                    tests.</db:para>
+   </db:section>
+   <db:section xml:id="classes">
+      <db:title>Classes</db:title>
+      <db:section>
+         <db:title>class <db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:title>
+         <db:para>The <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> class is used to simulate a
+                                    sequence of touch events. <db:link xlink:href="qtest-qtoucheventsequence.html#details">More...</db:link>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section xml:id="nonmemtypes">
+      <db:title>Type Documentation</db:title>
+      <db:section xml:id="AttributeIndex-enum">
+         <db:title>enum QTest::AttributeIndex</db:title>
+         <db:para>This enum numbers the different tests.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Undefined</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>-1</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Name</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Result</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Tests</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>2</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Failures</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>3</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Errors</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>4</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Type</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>5</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Description</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>6</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_PropertyValue</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>7</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_QTestVersion</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>8</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_QtVersion</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>9</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_File</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>10</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Line</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>11</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Metric</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>12</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Tag</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>13</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Value</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>14</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AI_Iterations</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>15</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="KeyAction-enum">
+         <db:title>enum QTest::KeyAction</db:title>
+         <db:para>This enum describes possible actions for key
+                                    handling.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Press</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>The key is
+                                                  pressed.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Release</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>The key is
+                                                  released.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Click</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>2</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>The key is clicked
+                                                  (pressed and released).</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="LogElementType-enum">
+         <db:title>enum QTest::LogElementType</db:title>
+         <db:para>The enum specifies the kinds of test log messages.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_Undefined</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>-1</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_Property</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_Properties</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_Failure</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>2</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_Error</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>3</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_TestCase</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>4</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_TestSuite</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>5</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_Benchmark</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>6</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::LET_SystemError</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>7</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="MouseAction-enum">
+         <db:title>enum QTest::MouseAction</db:title>
+         <db:para>This enum describes possible actions for mouse
+                                    handling.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MousePress</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>A mouse button is
+                                                  pressed.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MouseRelease</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>A mouse button is
+                                                  released.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MouseClick</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>2</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>A mouse button is clicked
+                                                  (pressed and released).</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MouseDClick</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>3</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>A mouse button is double
+                                                  clicked (pressed and released twice).</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MouseMove</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>4</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>The mouse pointer has
+                                                  moved.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section xml:id="QBenchmarkMetric-enum">
+         <db:title>enum QTest::QBenchmarkMetric</db:title>
+         <db:para>This enum lists all the things that can be
+                                    benchmarked.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::FramesPerSecond</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Frames per
+                                                  second</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::BitsPerSecond</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Bits per second</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::BytesPerSecond</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>2</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Bytes per second</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::WalltimeMilliseconds</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>3</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Clock time in
+                                                  milliseconds</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::WalltimeNanoseconds</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>7</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Clock time in
+                                                  nanoseconds</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::BytesAllocated</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>8</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Memory usage in
+                                                  bytes</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Events</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>6</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Event count</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CPUTicks</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>4</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>CPU time</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CPUMigrations</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>9</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Process migrations between
+                                                  CPUs</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CPUCycles</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>10</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>CPU cycles</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::BusCycles</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>11</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Bus cycles</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::StalledCycles</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>12</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cycles stalled</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::InstructionReads</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>5</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Instruction
+                                                  reads</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Instructions</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>13</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Instructions
+                                                  executed</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::BranchInstructions</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>14</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Branch-type
+                                                  instructions</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::BranchMisses</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>15</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Branch instructions that
+                                                  were mispredicted</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CacheReferences</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>16</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache accesses of any
+                                                  type</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CacheMisses</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>20</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache misses of any
+                                                  type</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CacheReads</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>17</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache reads /
+                                                  loads</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CacheReadMisses</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>21</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache read / load
+                                                  misses</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CacheWrites</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>18</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache writes /
+                                                  stores</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CacheWriteMisses</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>22</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache write / store
+                                                  misses</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CachePrefetches</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>19</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache prefetches</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::CachePrefetchMisses</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>23</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Cache prefetch
+                                                  misses</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::ContextSwitches</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>24</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Context switches</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::PageFaults</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>25</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Page faults of any
+                                                  type</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MinorPageFaults</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>26</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Minor page
+                                                  faults</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::MajorPageFaults</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>27</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Major page
+                                                  faults</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::AlignmentFaults</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>28</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Faults caused due to
+                                                  misalignment</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::EmulationFaults</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>29</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Faults that needed
+                                                  software emulation</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>Note that <db:code>WalltimeNanoseconds</db:code> and
+                                        <db:code>BytesAllocated</db:code> are only provided for
+                                    use via <db:code><db:link xlink:href="qtest.html#setBenchmarkResult">setBenchmarkResult</db:link>()</db:code>, and results in those metrics
+                                    are not able to be provided automatically by the <db:code><db:link xlink:href="qtest.html">QTest</db:link></db:code> framework.</db:para>
+         <db:para>This enum was introduced or modified in Qt 4.7.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#benchmarkMetricName">QTest::benchmarkMetricName</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#benchmarkMetricUnit">QTest::benchmarkMetricUnit</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="TestFailMode-enum">
+         <db:title>enum QTest::TestFailMode</db:title>
+         <db:para>This enum describes the modes for handling an expected
+                                    failure of the <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> or <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> macros.</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Abort</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Aborts the execution of
+                                                  the test. Use this mode when it doesn't make sense
+                                                  to execute the test any further after the expected
+                                                  failure.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QTest::Continue</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>2</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Continues execution of the
+                                                  test after the expected failure.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QEXPECT_FAIL">QEXPECT_FAIL</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+   </db:section>
+   <db:section xml:id="nonmemfunc">
+      <db:title>Function Documentation</db:title>
+      <db:section xml:id="addColumn">
+         <db:title>void QTest::addColumn(const char * name, T * dummy = 0)</db:title>
+         <db:para>Adds a column with type <db:code>T</db:code> to the
+                                    current test data. <db:emphasis>name</db:emphasis> is the name of the
+                                    column. <db:emphasis>dummy</db:emphasis> is a workaround for buggy
+                                    compilers and can be ignored.</db:para>
+         <db:para>To populate the column with values, <db:code><db:link xlink:href="qtest.html#newRow">newRow</db:link>()</db:code> can be used. Use
+                                        <db:code><db:link xlink:href="qtest.html#QFETCH">QFETCH</db:link>()</db:code> to fetch
+                                    the data in the actual test.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>void
+                                    myTestFunction_data() { QTest::addColumn&lt;int&gt;("intval"); QTest::addColumn&lt;QString&gt;("str"); QTest::addColumn&lt;double&gt;("dbl"); QTest::newRow("row1") &lt;&lt;1&lt;&lt;"hello"&lt;&lt;1.5; }</db:programlisting>
+         <db:para>To add custom types to the testdata, the type must be
+                                    registered with <db:code><db:link xlink:href="qtcore/qmetatype.html">QMetaType</db:link></db:code> via <db:code><db:link xlink:href="qtcore/qmetatype.html#Q_DECLARE_METATYPE">Q_DECLARE_METATYPE</db:link>()</db:code>.</db:para>
+         <db:note>
+            <db:para> This macro can only be used in a
+                                    test's data function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>See <db:link xlink:href="qttestlib-tutorial2-example.html">Data
+                                        Driven Testing</db:link> for a more extensive
+                                    example.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#newRow">QTest::newRow</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QFETCH">QFETCH</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtcore/qmetatype.html">QMetaType</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="benchmarkMetricName">
+         <db:title>const char * QTest::benchmarkMetricName(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
+         <db:para>Returns the enum value <db:emphasis>metric</db:emphasis> as a
+                                    character string.</db:para>
+         <db:para>This function was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section xml:id="benchmarkMetricUnit">
+         <db:title>const char * QTest::benchmarkMetricUnit(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
+         <db:para>Retuns the units of measure for the specified
+                                        <db:emphasis>metric</db:emphasis>.</db:para>
+         <db:para>This function was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section xml:id="currentAppName">
+         <db:title>const char * QTest::currentAppName()</db:title>
+         <db:para>Returns the name of the binary that is currently
+                                    executed.</db:para>
+      </db:section>
+      <db:section xml:id="currentDataTag">
+         <db:title>const char * QTest::currentDataTag()</db:title>
+         <db:para>Returns the name of the current test data. If the test
+                                    doesn't have any assigned testdata, the function returns
+                                    0.</db:para>
+      </db:section>
+      <db:section xml:id="currentTestFailed">
+         <db:title>bool QTest::currentTestFailed()</db:title>
+         <db:para>Returns <db:code>true</db:code> if the current test
+                                    function failed, otherwise false.</db:para>
+      </db:section>
+      <db:section xml:id="currentTestFunction">
+         <db:title>const char * QTest::currentTestFunction()</db:title>
+         <db:para>Returns the name of the test function that is currently
+                                    executed.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>void
+                                        MyTestClass::cleanup() { if (qstrcmp(currentTestFunction(),"myDatabaseTest")
+                                        ==0) { // clean up all database
+                                        connections closeAllDatabases(); } }</db:programlisting>
+      </db:section>
+      <db:section xml:id="ignoreMessage">
+         <db:title>void QTest::ignoreMessage(<db:link xlink:href="qtcore/qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:title>
+         <db:para>Ignores messages created by <db:code><db:link xlink:href="qtcore/qtglobal.html#qDebug">qDebug</db:link>()</db:code> or
+                                        <db:code><db:link xlink:href="qtcore/qtglobal.html#qWarning">qWarning</db:link>()</db:code>. If the <db:emphasis>message</db:emphasis> with
+                                    the corresponding <db:emphasis>type</db:emphasis> is outputted, it will be
+                                    removed from the test log. If the test finished and the
+                                        <db:emphasis>message</db:emphasis> was not outputted, a test failure
+                                    is appended to the test log.</db:para>
+         <db:note>
+            <db:para> Invoking this function will only
+                                    ignore one message. If the message you want to ignore is
+                                    outputted twice, you have to call ignoreMessage() twice,
+                                    too.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>QDir dir;
+                                        QTest::ignoreMessage(QtWarningMsg,"QDir::mkdir: Empty or null file
+                                        name(s)"); dir.mkdir("");</db:programlisting>
+         <db:para>The example above tests that <db:code><db:link xlink:href="qtcore/qdir.html#mkdir">QDir::mkdir</db:link>()</db:code> outputs
+                                    the right warning when invoked with an invalid file
+                                    name.</db:para>
+      </db:section>
+      <db:section xml:id="ignoreMessage-2">
+         <db:title>void QTest::ignoreMessage(<db:link xlink:href="qtcore/qtglobal.html#QtMsgType-enum">QtMsgType</db:link><db:link xlink:href="qtcore/qregularexpression.html">QRegularExpression</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Ignores messages created by <db:code><db:link xlink:href="qtcore/qtglobal.html#qDebug">qDebug</db:link>()</db:code> or
+                                        <db:code><db:link xlink:href="qtcore/qtglobal.html#qWarning">qWarning</db:link>()</db:code>. If the message matching
+                                        <db:emphasis>messagePattern</db:emphasis> with the corresponding
+                                        <db:emphasis>type</db:emphasis> is outputted, it will be removed from
+                                    the test log. If the test finished and the message was not
+                                    outputted, a test failure is appended to the test log.</db:para>
+         <db:note>
+            <db:para> Invoking this function will only
+                                    ignore one message. If the message you want to ignore is
+                                    outputted twice, you have to call <db:code><db:link xlink:href="qtest.html#ignoreMessage">ignoreMessage</db:link>()</db:code>
+                                    twice, too.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt 5.3.</db:para>
+      </db:section>
+      <db:section xml:id="keyClick">
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before clicking the
+                                    key.</db:para>
+         <db:para>Examples:</db:para>
+         <db:programlisting>QTest::keyClick(myWidget,Qt::Key_Escape); QTest::keyClick(myWidget,Qt::Key_Escape,Qt::ShiftModifier,200);</db:programlisting>
+         <db:para>The first example above simulates clicking the
+                                        <db:code>escape</db:code> key on
+                                        <db:code>myWidget</db:code> without any keyboard
+                                    modifiers and without delay. The second example simulates
+                                    clicking <db:code>shift-escape</db:code> on
+                                        <db:code>myWidget</db:code> following a 200 ms delay of
+                                    the test.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyClick-2">
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before clicking the
+                                    key.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>QTest::keyClick(myWidget,'a');</db:programlisting>
+         <db:para>The example above simulates clicking
+                                        <db:code>a</db:code> on <db:code>myWidget</db:code>
+                                    without any keyboard modifiers and without delay of the
+                                    test.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyClick-3">
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before clicking the
+                                    key.</db:para>
+         <db:para>Examples:</db:para>
+         <db:programlisting>QTest::keyClick(myWindow,Qt::Key_Escape); QTest::keyClick(myWindow,Qt::Key_Escape,Qt::ShiftModifier,200);</db:programlisting>
+         <db:para>The first example above simulates clicking the
+                                        <db:code>escape</db:code> key on
+                                        <db:code>myWindow</db:code> without any keyboard
+                                    modifiers and without delay. The second example simulates
+                                    clicking <db:code>shift-escape</db:code> on
+                                        <db:code>myWindow</db:code> following a 200 ms delay of
+                                    the test.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyClick-4">
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before clicking the
+                                    key.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>QTest::keyClick(myWindow,'a');</db:programlisting>
+         <db:para>The example above simulates clicking
+                                        <db:code>a</db:code> on <db:code>myWindow</db:code>
+                                    without any keyboard modifiers and without delay of the
+                                    test.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyClicks">
+         <db:title>[static] void QTest::keyClicks(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>Simulates clicking a <db:emphasis>sequence</db:emphasis> of keys on a
+                                        <db:emphasis>widget</db:emphasis>. Optionally, a keyboard
+                                        <db:emphasis>modifier</db:emphasis> can be specified as well as a
+                                        <db:emphasis>delay</db:emphasis> (in milliseconds) of the test before
+                                    each key click.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>QTest::keyClicks(myWidget,"hello world");</db:programlisting>
+         <db:para>The example above simulates clicking the sequence of keys
+                                    representing "hello world" on <db:code>myWidget</db:code>
+                                    without any keyboard modifiers and without delay of the
+                                    test.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyEvent">
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>Sends a Qt key event to <db:emphasis>widget</db:emphasis> with the
+                                    given <db:emphasis>key</db:emphasis> and an associated
+                                        <db:emphasis>action</db:emphasis>. Optionally, a keyboard
+                                        <db:emphasis>modifier</db:emphasis> can be specified, as well as a
+                                        <db:emphasis>delay</db:emphasis> (in milliseconds) of the test before
+                                    sending the event.</db:para>
+      </db:section>
+      <db:section xml:id="keyEvent-2">
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Sends a Qt key event to <db:emphasis>widget</db:emphasis> with the
+                                    given key <db:emphasis>ascii</db:emphasis> and an associated
+                                        <db:emphasis>action</db:emphasis>. Optionally, a keyboard
+                                        <db:emphasis>modifier</db:emphasis> can be specified, as well as a
+                                        <db:emphasis>delay</db:emphasis> (in milliseconds) of the test before
+                                    sending the event.</db:para>
+      </db:section>
+      <db:section xml:id="keyEvent-3">
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Sends a Qt key event to <db:emphasis>window</db:emphasis> with the
+                                    given <db:emphasis>key</db:emphasis> and an associated
+                                        <db:emphasis>action</db:emphasis>. Optionally, a keyboard
+                                        <db:emphasis>modifier</db:emphasis> can be specified, as well as a
+                                        <db:emphasis>delay</db:emphasis> (in milliseconds) of the test before
+                                    sending the event.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+      </db:section>
+      <db:section xml:id="keyEvent-4">
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Sends a Qt key event to <db:emphasis>window</db:emphasis> with the
+                                    given key <db:emphasis>ascii</db:emphasis> and an associated
+                                        <db:emphasis>action</db:emphasis>. Optionally, a keyboard
+                                        <db:emphasis>modifier</db:emphasis> can be specified, as well as a
+                                        <db:emphasis>delay</db:emphasis> (in milliseconds) of the test before
+                                    sending the event.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+      </db:section>
+      <db:section xml:id="keyPress">
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before pressing the
+                                    key.</db:para>
+         <db:note>
+            <db:para> At some point you should release the
+                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+         </db:note>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyPress-2">
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before pressing the
+                                    key.</db:para>
+         <db:note>
+            <db:para> At some point you should release the
+                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+         </db:note>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyPress-3">
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before pressing the
+                                    key.</db:para>
+         <db:note>
+            <db:para> At some point you should release the
+                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyPress-4">
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before pressing the
+                                    key.</db:para>
+         <db:note>
+            <db:para> At some point you should release the
+                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyRelease">
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before releasing the
+                                    key.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyPress">QTest::keyPress</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyRelease-2">
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before releasing the
+                                    key.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyRelease-3">
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before releasing the
+                                    key.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyPress">QTest::keyPress</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="keyRelease-4">
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
+                                        <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
+                                    for <db:emphasis>delay</db:emphasis> milliseconds before releasing the
+                                    key.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseClick">
+         <db:title>void QTest::mouseClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>Simulates clicking a mouse <db:emphasis>button</db:emphasis> with an
+                                    optional <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>.
+                                    The position of the click is defined by <db:emphasis>pos</db:emphasis>;
+                                    the default position is the center of the widget. If
+                                        <db:emphasis>delay</db:emphasis> is specified, the test will wait for
+                                    the specified amount of milliseconds before pressing and before
+                                    releasing the button.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseClick-2">
+         <db:title>void QTest::mouseClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates clicking a mouse <db:emphasis>button</db:emphasis> with an
+                                    optional <db:emphasis>stateKey</db:emphasis> modifier on a
+                                        <db:emphasis>window</db:emphasis>. The position of the click is
+                                    defined by <db:emphasis>pos</db:emphasis>; the default position is the
+                                    center of the window. If <db:emphasis>delay</db:emphasis> is specified,
+                                    the test will wait for the specified amount of milliseconds
+                                    before pressing and before releasing the button.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseDClick">
+         <db:title>void QTest::mouseDClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>Simulates double clicking a mouse <db:emphasis>button</db:emphasis>
+                                    with an optional <db:emphasis>modifier</db:emphasis> on a
+                                        <db:emphasis>widget</db:emphasis>. The position of the click is
+                                    defined by <db:emphasis>pos</db:emphasis>; the default position is the
+                                    center of the widget. If <db:emphasis>delay</db:emphasis> is specified,
+                                    the test will wait for the specified amount of milliseconds
+                                    before each press and release.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseDClick-2">
+         <db:title>void QTest::mouseDClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates double clicking a mouse <db:emphasis>button</db:emphasis>
+                                    with an optional <db:emphasis>stateKey</db:emphasis> modifier on a
+                                        <db:emphasis>window</db:emphasis>. The position of the click is
+                                    defined by <db:emphasis>pos</db:emphasis>; the default position is the
+                                    center of the window. If <db:emphasis>delay</db:emphasis> is specified,
+                                    the test will wait for the specified amount of milliseconds
+                                    before each press and release.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseMove">
+         <db:title>void QTest::mouseMove(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>Moves the mouse pointer to a <db:emphasis>widget</db:emphasis>. If
+                                        <db:emphasis>pos</db:emphasis> is not specified, the mouse pointer
+                                    moves to the center of the widget. If a <db:emphasis>delay</db:emphasis>
+                                    (in milliseconds) is given, the test will wait before moving the
+                                    mouse pointer.</db:para>
+      </db:section>
+      <db:section xml:id="mouseMove-2">
+         <db:title>void QTest::mouseMove(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Moves the mouse pointer to a <db:emphasis>window</db:emphasis>. If
+                                        <db:emphasis>pos</db:emphasis> is not specified, the mouse pointer
+                                    moves to the center of the window. If a <db:emphasis>delay</db:emphasis>
+                                    (in milliseconds) is given, the test will wait before moving the
+                                    mouse pointer.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+      </db:section>
+      <db:section xml:id="mousePress">
+         <db:title>void QTest::mousePress(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>Simulates pressing a mouse <db:emphasis>button</db:emphasis> with an
+                                    optional <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>.
+                                    The position is defined by <db:emphasis>pos</db:emphasis>; the default
+                                    position is the center of the widget. If <db:emphasis>delay</db:emphasis>
+                                    is specified, the test will wait for the specified amount of
+                                    milliseconds before the press.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mousePress-2">
+         <db:title>void QTest::mousePress(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates pressing a mouse <db:emphasis>button</db:emphasis> with an
+                                    optional <db:emphasis>stateKey</db:emphasis> modifier on a
+                                        <db:emphasis>window</db:emphasis>. The position is defined by
+                                        <db:emphasis>pos</db:emphasis>; the default position is the center of
+                                    the window. If <db:emphasis>delay</db:emphasis> is specified, the test
+                                    will wait for the specified amount of milliseconds before the
+                                    press.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseRelease">
+         <db:title>void QTest::mouseRelease(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>Simulates releasing a mouse <db:emphasis>button</db:emphasis> with an
+                                    optional <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>.
+                                    The position of the release is defined by <db:emphasis>pos</db:emphasis>;
+                                    the default position is the center of the widget. If
+                                        <db:emphasis>delay</db:emphasis> is specified, the test will wait for
+                                    the specified amount of milliseconds before releasing the
+                                    button.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="mouseRelease-2">
+         <db:title>void QTest::mouseRelease(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Simulates releasing a mouse <db:emphasis>button</db:emphasis> with an
+                                    optional <db:emphasis>stateKey</db:emphasis> modifier on a
+                                        <db:emphasis>window</db:emphasis>. The position of the release is
+                                    defined by <db:emphasis>pos</db:emphasis>; the default position is the
+                                    center of the window. If <db:emphasis>delay</db:emphasis> is specified,
+                                    the test will wait for the specified amount of milliseconds
+                                    before releasing the button.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="newRow">
+         <db:title>QTestData &amp; QTest::newRow(const char * dataTag)</db:title>
+         <db:para>Appends a new row to the current test data.
+                                        <db:emphasis>dataTag</db:emphasis> is the name of the testdata that
+                                    will appear in the test output. Returns a QTestData reference
+                                    that can be used to stream in data.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>void
+                                    myTestFunction_data() { QTest::addColumn&lt;QString&gt;("aString"); QTest::newRow("just hello") &lt;&lt;QString("hello"); QTest::newRow("a null string") &lt;&lt;QString(); }</db:programlisting>
+         <db:note>
+            <db:para> This macro can only be used in a
+                                    test's data function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>See <db:link xlink:href="qttestlib-tutorial2-example.html">Data
+                                        Driven Testing</db:link> for a more extensive
+                                    example.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#addColumn">addColumn</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QFETCH">QFETCH</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qExec">
+         <db:title>int QTest::qExec(<db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:title>
+         <db:para>Executes tests declared in <db:emphasis>testObject</db:emphasis>. In
+                                    addition, the private slots
+                                        <db:code>initTestCase()</db:code>,
+                                        <db:code>cleanupTestCase()</db:code>,
+                                        <db:code>init()</db:code> and
+                                        <db:code>cleanup()</db:code> are executed if they exist.
+                                    See <db:link xlink:href="qtest-overview.html#creating-a-test">Creating
+                                        a Test</db:link> for more details.</db:para>
+         <db:para>Optionally, the command line arguments <db:emphasis>argc</db:emphasis>
+                                    and <db:emphasis>argv</db:emphasis> can be provided. For a list of
+                                    recognized arguments, read <db:link xlink:href="qtest-overview.html#qt-test-command-line-arguments">Qt
+                                        Test Command Line Arguments</db:link>.</db:para>
+         <db:para>The following example will run all tests in
+                                        <db:code>MyTestObject</db:code>:</db:para>
+         <db:programlisting>MyTestObject test1; QTest::qExec(&amp;test1);</db:programlisting>
+         <db:para>This function returns 0 if no tests failed, or a value other
+                                    than 0 if one or more tests failed or in case of unhandled
+                                    exceptions. (Skipped tests do not influence the return
+                                    value.)</db:para>
+         <db:para>For stand-alone test applications, the convenience macro
+                                        <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
+                                    can be used to declare a main() function that parses the command
+                                    line arguments and executes the tests, avoiding the need to call
+                                    this function explicitly.</db:para>
+         <db:para>The return value from this function is also the exit code of
+                                    the test application when the <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code> macro is
+                                    used.</db:para>
+         <db:para>For stand-alone test applications, this function should not
+                                    be called more than once, as command-line options for logging
+                                    test output to files and executing individual test functions
+                                    will not behave correctly.</db:para>
+         <db:para>Note: This function is not reentrant, only one test can run
+                                    at a time. A test that was executed with qExec() can't run
+                                    another test via qExec() and threads are not allowed to call
+                                    qExec() simultaneously.</db:para>
+         <db:para>If you have programatically created the arguments, as
+                                    opposed to getting them from the arguments in
+                                        <db:code>main()</db:code>, it is likely of interest to
+                                    use QTest::qExec(<db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code> *, const <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> &amp;)
+                                    since it is Unicode safe.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qExec-2">
+         <db:title>int QTest::qExec(<db:link xlink:href="qtcore/qobject.html">QObject</db:link><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Behaves identically to <db:link xlink:href="qtest.html#qExec">qExec</db:link>
+            <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code> *, int, char**) but takes a <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> of
+                                        <db:emphasis>arguments</db:emphasis> instead of a
+                                        <db:code>char**</db:code> list.</db:para>
+         <db:para>This function was introduced in Qt 4.4.</db:para>
+      </db:section>
+      <db:section xml:id="qSleep">
+         <db:title>void QTest::qSleep(int ms)</db:title>
+         <db:para>Sleeps for <db:emphasis>ms</db:emphasis> milliseconds, blocking
+                                    execution of the test. qSleep() will not do any event processing
+                                    and leave your test unresponsive. Network communication might
+                                    time out while sleeping. Use <db:code><db:link xlink:href="qtest.html#qWait">qWait</db:link>()</db:code> to do non-blocking sleeping.</db:para>
+         <db:para>
+            <db:emphasis>ms</db:emphasis> must be greater than 0.</db:para>
+         <db:note>
+            <db:para> The qSleep() function calls either
+                                        <db:code>nanosleep()</db:code> on unix or
+                                        <db:code>Sleep()</db:code> on windows, so the accuracy
+                                    of time spent in qSleep() depends on the operating
+                                    system.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>QTest::qSleep(250);</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qWait">qWait</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qWait">
+         <db:title>[static] void QTest::qWait(int ms)</db:title>
+         <db:para>Waits for <db:emphasis>ms</db:emphasis> milliseconds. While waiting,
+                                    events will be processed and your test will stay responsive to
+                                    user interface events or network communication.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>int i
+                                        =0; while
+                                    (myNetworkServerNotResponding() &amp;&amp; i++&lt;50) QTest::qWait(250);</db:programlisting>
+         <db:para>The code above will wait until the network server is
+                                    responding for a maximum of about 12.5 seconds.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qSleep">QTest::qSleep</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qsignalspy.html#wait">QSignalSpy::wait</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qWaitForWindowActive">
+         <db:title>[static] bool QTest::qWaitForWindowActive(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:title>
+         <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
+                                        <db:emphasis>window</db:emphasis> is active.</db:para>
+         <db:para>Returns <db:code>true</db:code> if
+                                        <db:code>window</db:code> is active within
+                                        <db:emphasis>timeout</db:emphasis> milliseconds, otherwise returns
+                                        <db:code>false</db:code>.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtgui/qwindow.html#active-prop">QWindow::isActive</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qWaitForWindowActive-2">
+         <db:title>[static] bool QTest::qWaitForWindowActive(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
+         <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
+                                        <db:emphasis>widget</db:emphasis>'s window is active.</db:para>
+         <db:para>Returns <db:code>true</db:code> if
+                                        <db:code>widget</db:code>'s window is active within
+                                        <db:emphasis>timeout</db:emphasis> milliseconds, otherwise returns
+                                        <db:code>false</db:code>.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtwidgets/qwidget.html#isActiveWindow-prop">QWidget::isActiveWindow</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qWaitForWindowExposed">
+         <db:title>[static] bool QTest::qWaitForWindowExposed(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:title>
+         <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
+                                        <db:emphasis>window</db:emphasis> is exposed. Returns
+                                        <db:code>true</db:code> if <db:code>window</db:code>
+                                    is exposed within <db:emphasis>timeout</db:emphasis> milliseconds,
+                                    otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>This is mainly useful for asynchronous systems like X11,
+                                    where a window will be mapped to screen some time after being
+                                    asked to show itself on the screen.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtgui/qwindow.html#isExposed">QWindow::isExposed</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="qWaitForWindowExposed-2">
+         <db:title>[static] bool QTest::qWaitForWindowExposed(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
+         <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
+                                        <db:emphasis>widget</db:emphasis>'s window is exposed. Returns
+                                        <db:code>true</db:code> if
+                                    <db:code>widget</db:code>'s window is exposed within
+                                        <db:emphasis>timeout</db:emphasis> milliseconds, otherwise returns
+                                        <db:code>false</db:code>.</db:para>
+         <db:para>This is mainly useful for asynchronous systems like X11,
+                                    where a window will be mapped to screen some time after being
+                                    asked to show itself on the screen.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="setBenchmarkResult">
+         <db:title>void QTest::setBenchmarkResult(<db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
+         <db:para>Sets the benchmark result for this test function to
+                                        <db:emphasis>result</db:emphasis>.</db:para>
+         <db:para>Use this function if you want to report benchmark results
+                                    without using the QBENCHMARK macro. Use <db:emphasis>metric</db:emphasis>
+                                    to specify how Qt Test should interpret the results.</db:para>
+         <db:para>The context for the result will be the test function name
+                                    and any data tag from the _data function. This function can only
+                                    be called once in each test function, subsequent calls will
+                                    replace the earlier reported results.</db:para>
+         <db:para>Note that the -iterations command line argument has no
+                                    effect on test functions without the QBENCHMARK macro.</db:para>
+         <db:para>This function was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section xml:id="toHexRepresentation">
+         <db:title>char * QTest::toHexRepresentation(const char * ba, int length)</db:title>
+         <db:para>Returns a pointer to a string that is the string
+                                        <db:emphasis>ba</db:emphasis> represented as a space-separated
+                                    sequence of hex characters. If the input is considered too long,
+                                    it is truncated. A trucation is indicated in the returned string
+                                    as an ellipsis at the end.</db:para>
+         <db:para>
+            <db:emphasis>length</db:emphasis> is the length of the string
+                                        <db:emphasis>ba</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString">
+         <db:title>char * QTest::toString(const T &amp; value)</db:title>
+         <db:para>Returns a textual representation of <db:emphasis>value</db:emphasis>.
+                                    This function is used by <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> to output verbose information in case
+                                    of a test failure.</db:para>
+         <db:para>You can add specializations of this function to your test to
+                                    enable verbose output.</db:para>
+         <db:note>
+            <db:para> The caller of toString() must delete
+                                    the returned data using <db:code>delete[]</db:code>. Your
+                                    implementation should return a string created with
+                                        <db:code>new[]</db:code> or <db:code><db:link xlink:href="qtcore/qbytearray.html#qstrdup">qstrdup</db:link>()</db:code>.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>namespaceQTest { template&lt;&gt;char*toString(const MyPoint &amp;point) { QByteArray ba ="MyPoint("; ba +=QByteArray::number(point.x()) +", "+QByteArray::number(point.y()); ba +=")"; return qstrdup(ba.data()); } }</db:programlisting>
+         <db:para>The example above defines a toString() specialization for a
+                                    class called <db:code>MyPoint</db:code>. Whenever a
+                                    comparison of two instances of <db:code>MyPoint</db:code>
+                                    fails, <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+                                    will call this function to output the contents of
+                                        <db:code>MyPoint</db:code> to the test log.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="toString-4">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qlatin1string.html">QLatin1String</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>string</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-5">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>string</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-6">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the byte array
+                                        <db:emphasis>ba</db:emphasis>.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#toHexRepresentation">QTest::toHexRepresentation</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="toString-7">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qtime.html">QTime</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>time</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-8">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qdate.html">QDate</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>date</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-9">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qdatetime.html">QDateTime</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the date and time
+                                    specified by <db:emphasis>dateTime</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-10">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qchar.html">QChar</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>character</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-11">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>point</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-12">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>size</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-13">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>rectangle</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-14">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>url</db:emphasis>.</db:para>
+         <db:para>This function was introduced in Qt 4.4.</db:para>
+      </db:section>
+      <db:section xml:id="toString-15">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>point</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-16">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qsizef.html">QSizeF</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>size</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-17">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>rectangle</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="toString-18">
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qvariant.html">QVariant</db:link></db:title>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns a textual representation of the given
+                                        <db:emphasis>variant</db:emphasis>.</db:para>
+      </db:section>
+      <db:section xml:id="touchEvent">
+         <db:title><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtgui/qtouchdevice.html">QTouchDevice</db:link></db:title>
+         <db:para>Creates and returns a <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> for the
+                                        <db:emphasis>device</db:emphasis> to simulate events for
+                                        <db:emphasis>widget</db:emphasis>.</db:para>
+         <db:para>When adding touch events to the sequence,
+                                        <db:emphasis>widget</db:emphasis> will also be used to translate the
+                                    position provided to screen coordinates, unless another widget
+                                    is provided in the respective calls to press(), move()
+                                    etc.</db:para>
+         <db:para>The touch events are committed to the event system when the
+                                    destructor of the <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> is called (ie when the object
+                                    returned runs out of scope), unless <db:emphasis>autoCommit</db:emphasis>
+                                    is set to false. When <db:emphasis>autoCommit</db:emphasis> is false,
+                                    commit() has to be called manually.</db:para>
+      </db:section>
+      <db:section xml:id="touchEvent-2">
+         <db:title><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtgui/qtouchdevice.html">QTouchDevice</db:link></db:title>
+         <db:para>Creates and returns a <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> for the
+                                        <db:emphasis>device</db:emphasis> to simulate events for
+                                        <db:emphasis>window</db:emphasis>.</db:para>
+         <db:para>When adding touch events to the sequence,
+                                        <db:emphasis>window</db:emphasis> will also be used to translate the
+                                    position provided to screen coordinates, unless another window
+                                    is provided in the respective calls to press(), move()
+                                    etc.</db:para>
+         <db:para>The touch events are committed to the event system when the
+                                    destructor of the <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> is called (ie when the object
+                                    returned runs out of scope), unless <db:emphasis>autoCommit</db:emphasis>
+                                    is set to false. When <db:emphasis>autoCommit</db:emphasis> is false,
+                                    commit() has to be called manually.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+      </db:section>
+   </db:section>
+   <db:section xml:id="macros">
+      <db:title>Macro Documentation</db:title>
+      <db:section xml:id="QBENCHMARK">
+         <db:title>QBENCHMARK</db:title>
+         <db:para>This macro is used to measure the performance of code within
+                                    a test. The code to be benchmarked is contained within a code
+                                    block following this macro.</db:para>
+         <db:para>For example:</db:para>
+         <db:programlisting>void
+                                        TestBenchmark::simple() { QString
+                                    str1 =
+                                        QLatin1String("This is a test
+                                        string"); QString
+                                    str2 =
+                                        QLatin1String("This is a test
+                                        string"); QCOMPARE(str1.localeAwareCompare(str2),0); QBENCHMARK {
+                                        str1.localeAwareCompare(str2); } }</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="qtest-overview.html#creating-a-benchmark">Creating a
+                                        Benchmark</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qttestlib-tutorial5-example.html">Writing a
+                                        Benchmark</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QBENCHMARK_ONCE">
+         <db:title>QBENCHMARK_ONCE</db:title>
+         <db:para>The QBENCHMARK_ONCE macro is for measuring performance of a
+                                    code block by running it once.</db:para>
+         <db:para>This macro is used to measure the performance of code within
+                                    a test. The code to be benchmarked is contained within a code
+                                    block following this macro.</db:para>
+         <db:para>Unlike QBENCHMARK, the contents of the contained code block
+                                    is only run once. The elapsed time will be reported as "0" if
+                                    it's to short to be measured by the selected backend.
+                                    (Use)</db:para>
+         <db:para>This function was introduced in Qt 4.6.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="qtest-overview.html#creating-a-benchmark">Creating a
+                                        Benchmark</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qttestlib-tutorial5-example.html">Writing a
+                                        Benchmark</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QCOMPARE">
+         <db:title>QCOMPARE( actual, expected)</db:title>
+         <db:para>The QCOMPARE macro compares an <db:emphasis>actual</db:emphasis> value
+                                    to an <db:emphasis>expected</db:emphasis> value using the equals operator.
+                                    If <db:emphasis>actual</db:emphasis> and <db:emphasis>expected</db:emphasis> are
+                                    identical, execution continues. If not, a failure is recorded in
+                                    the test log and the test won't be executed further.</db:para>
+         <db:para>In the case of comparing floats and doubles, <db:code><db:link xlink:href="qtcore/qtglobal.html#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code> is used for comparing. This means
+                                    that comparing to 0 will likely fail. One solution to this is to
+                                    compare to 1, and add 1 to the produced output.</db:para>
+         <db:para>QCOMPARE tries to output the contents of the values if the
+                                    comparison fails, so it is visible from the test log why the
+                                    comparison failed.</db:para>
+         <db:para>QCOMPARE is very strict on the data types. Both
+                                        <db:emphasis>actual</db:emphasis> and <db:emphasis>expected</db:emphasis> have
+                                    to be of the same type, otherwise the test won't compile. This
+                                    prohibits unspecified behavior from being introduced; that is
+                                    behavior that usually occurs when the compiler implicitly casts
+                                    the argument.</db:para>
+         <db:para>For your own classes, you can use <db:code><db:link xlink:href="qtest.html#toString">QTest::toString</db:link>()</db:code> to
+                                    format values for outputting into the test log.</db:para>
+         <db:note>
+            <db:para>This macro can only be used in a test
+                                    function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>QCOMPARE(QString("hello").toUpper(),QString("HELLO"));</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#toString">QTest::toString</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QEXPECT_FAIL">
+         <db:title>QEXPECT_FAIL( dataIndex, comment, mode)</db:title>
+         <db:para>The QEXPECT_FAIL() macro marks the next <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> or <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> as an expected
+                                    failure. Instead of adding a failure to the test log, an
+                                    expected failure will be reported.</db:para>
+         <db:para>If a <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> or
+                                        <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> is
+                                    marked as an expected failure, but passes instead, an unexpected
+                                    pass (XPASS) is written to the test log.</db:para>
+         <db:para>The parameter <db:emphasis>dataIndex</db:emphasis> describes for which
+                                    entry in the test data the failure is expected. Pass an empty
+                                    string (<db:code>""</db:code>) if the failure is expected
+                                    for all entries or if no test data exists.</db:para>
+         <db:para>
+            <db:emphasis>comment</db:emphasis> will be appended to the test log
+                                    for the expected failure.</db:para>
+         <db:para>
+            <db:emphasis>mode</db:emphasis> is a <db:code><db:link xlink:href="qtest.html#TestFailMode-enum">QTest::TestFailMode</db:link></db:code> and sets whether the test
+                                    should continue to execute or not.</db:para>
+         <db:note>
+            <db:para> This macro can only be used in a test
+                                    function that is invoked by the test framework.</db:para>
+         </db:note>
+         <db:para>Example 1:</db:para>
+         <db:programlisting>QEXPECT_FAIL("","Will fix in the next
+                                        release", Continue); QCOMPARE(i,42); QCOMPARE(j,43);</db:programlisting>
+         <db:para>In the example above, an expected fail will be written into
+                                    the test output if the variable <db:code>i</db:code> is not
+                                    42. If the variable <db:code>i</db:code> is 42, an
+                                    unexpected pass is written instead. The QEXPECT_FAIL() has no
+                                    influence on the second <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> statement in the example.</db:para>
+         <db:para>Example 2:</db:para>
+         <db:programlisting>QEXPECT_FAIL("data27","Oh my, this is soooo
+                                        broken",
+                                    Abort); QCOMPARE(i,42);</db:programlisting>
+         <db:para>The above testfunction will not continue executing for the
+                                    test data entry <db:code>data27</db:code>.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#TestFailMode-enum">QTest::TestFailMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QFAIL">
+         <db:title>QFAIL( message)</db:title>
+         <db:para>This macro can be used to force a test failure. The test
+                                    stops executing and the failure <db:emphasis>message</db:emphasis> is
+                                    appended to the test log.</db:para>
+         <db:note>
+            <db:para> This macro can only be used in a test
+                                    function that is invoked by the test framework.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>if
+                                        (sizeof(int) !=4) QFAIL("This test has not been ported to this
+                                        platform yet.");</db:programlisting>
+      </db:section>
+      <db:section xml:id="QFETCH">
+         <db:title>QFETCH( type, name)</db:title>
+         <db:para>The fetch macro creates a local variable named
+                                        <db:emphasis>name</db:emphasis> with the type <db:emphasis>type</db:emphasis> on
+                                    the stack. <db:emphasis>name</db:emphasis> has to match the element name
+                                    from the test's data. If no such element exists, the test will
+                                    assert.</db:para>
+         <db:para>Assuming a test has the following data:</db:para>
+         <db:programlisting>void
+                                        TestQString::toInt_data() { QTest::addColumn&lt;QString&gt;("aString"); QTest::addColumn&lt;int&gt;("expected"); QTest::newRow("positive value") &lt;&lt;"42"&lt;&lt;42; QTest::newRow("negative
+                                        value") &lt;&lt;"-42"&lt;&lt;-42; QTest::newRow("zero") &lt;&lt;"0"&lt;&lt;0; }</db:programlisting>
+         <db:para>The test data has two elements, a <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> called
+                                        <db:code>aString</db:code> and an integer called
+                                        <db:code>expected</db:code>. To fetch these values in
+                                    the actual test:</db:para>
+         <db:programlisting>void
+                                        TestQString::toInt()
+                                    { QFETCH(QString, aString); QFETCH(int,
+                                    expected); QCOMPARE(aString.toInt(), expected); }</db:programlisting>
+         <db:para>
+            <db:code>aString</db:code> and
+                                        <db:code>expected</db:code> are variables on the stack
+                                    that are initialized with the current test data.</db:para>
+         <db:note>
+            <db:para> This macro can only be used in a test
+                                    function that is invoked by the test framework. The test
+                                    function must have a _data function.</db:para>
+         </db:note>
+      </db:section>
+      <db:section xml:id="QFINDTESTDATA">
+         <db:title>QFINDTESTDATA( filename)</db:title>
+         <db:para>Returns a <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> for the testdata file referred to by
+                                        <db:emphasis>filename</db:emphasis>, or an empty <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> if the testdata
+                                    file could not be found.</db:para>
+         <db:para>This macro allows the test to load data from an external
+                                    file without hardcoding an absolute filename into the test, or
+                                    using relative paths which may be error prone.</db:para>
+         <db:para>The returned path will be the first path from the following
+                                    list which resolves to an existing file or directory:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>
+                  <db:emphasis>filename</db:emphasis> relative to <db:code><db:link xlink:href="qtcore/qcoreapplication.html#applicationDirPath">QCoreApplication::applicationDirPath</db:link>()</db:code> (only
+                                        if a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> or <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>
+                                        object has been created).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:emphasis>filename</db:emphasis> relative to the test's
+                                        standard install directory (<db:code><db:link xlink:href="qtcore/qlibraryinfo.html#LibraryLocation-enum">QLibraryInfo::TestsPath</db:link></db:code> with the lowercased
+                                        testcase name appended).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:emphasis>filename</db:emphasis> relative to the directory
+                                        containing the source file from which QFINDTESTDATA is
+                                        invoked.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>If the named file/directory does not exist at any of these
+                                    locations, a warning is printed to the test log.</db:para>
+         <db:para>For example, in this code:</db:para>
+         <db:programlisting>// Source:
+                                        /home/user/sources/myxmlparser/tests/tst_myxmlparser/tst_myxmlparser.cpp// Build:
+                                        /home/user/build/myxmlparser/tests/tst_myxmlparser// Qt:
+                                        /usr/local/Qt-5.0.0void
+                                        tst_MyXmlParser::parse() { MyXmlParser parser; QString input = QFINDTESTDATA("testxml/simple1.xml");
+                                        QVERIFY(parser.parse(input)); }</db:programlisting>
+         <db:para>The testdata file will be resolved as the first existing
+                                    file from:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>
+                  <db:code>/home/user/build/myxmlparser/tests/tst_myxmlparser/testxml/simple1.xml</db:code>
+               </db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:code>/usr/local/Qt-5.0.0/tests/tst_myxmlparser/testxml/simple1.xml</db:code>
+               </db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>
+                  <db:code>/home/user/sources/myxmlparser/tests/tst_myxmlparser/testxml/simple1.xml</db:code>
+               </db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>This allows the test to find its testdata regardless of
+                                    whether the test has been installed, and regardless of whether
+                                    the test's build tree is equal to the test's source
+                                    tree.</db:para>
+         <db:note>
+            <db:para> reliable detection of testdata from
+                                    the source directory requires either that qmake is used, or the
+                                        <db:code>QT_TESTCASE_BUILDDIR</db:code> macro is defined
+                                    to point to the working directory from which the compiler is
+                                    invoked, or only absolute paths to the source files are passed
+                                    to the compiler. Otherwise, the absolute path of the source
+                                    directory cannot be determined.</db:para>
+         </db:note>
+         <db:note>
+            <db:para> For tests that use the <db:code><db:link xlink:href="qtest.html#QTEST_APPLESS_MAIN">QTEST_APPLESS_MAIN</db:link>()</db:code> macro to generate a
+                                        <db:code>main()</db:code> function,
+                                        <db:code>QFINDTESTDATA</db:code> will not attempt to
+                                    find test data relative to <db:code><db:link xlink:href="qtcore/qcoreapplication.html#applicationDirPath">QCoreApplication::applicationDirPath</db:link>()</db:code>. In
+                                    practice, this means that tests using
+                                        <db:code>QTEST_APPLESS_MAIN()</db:code> will fail to
+                                    find their test data if run from a shadow build tree.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+      </db:section>
+      <db:section xml:id="QSKIP">
+         <db:title>QSKIP( description)</db:title>
+         <db:para>If called from a test function, the QSKIP() macro stops
+                                    execution of the test without adding a failure to the test log.
+                                    You can use it to skip tests that wouldn't make sense in the
+                                    current configuration. The text <db:emphasis>description</db:emphasis> is
+                                    appended to the test log and should contain an explanation of
+                                    why the test couldn't be executed.</db:para>
+         <db:para>If the test is data-driven, each call to QSKIP() will skip
+                                    only the current row of test data, so an unconditional call to
+                                    QSKIP will produce one skip message in the test log for each row
+                                    of test data.</db:para>
+         <db:para>If called from an _data function, the QSKIP() macro will
+                                    stop execution of the _data function and will prevent execution
+                                    of the associated test function.</db:para>
+         <db:para>If called from initTestCase() or initTestCase_data(), the
+                                    QSKIP() macro will skip all test and _data functions.</db:para>
+         <db:note>
+            <db:para> This macro can only be used in a test
+                                    function or _data function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>if
+                                        (!QSqlDatabase::drivers().contains("SQLITE")) QSKIP("This test requires the SQLITE database
+                                        driver");</db:programlisting>
+      </db:section>
+      <db:section xml:id="QTEST">
+         <db:title>QTEST( actual, testElement)</db:title>
+         <db:para>QTEST() is a convenience macro for <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> that compares
+                                    the value <db:emphasis>actual</db:emphasis> with the element
+                                        <db:emphasis>testElement</db:emphasis> from the test's data. If there
+                                    is no such element, the test asserts.</db:para>
+         <db:para>Apart from that, QTEST() behaves exactly as <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>.</db:para>
+         <db:para>Instead of writing:</db:para>
+         <db:programlisting>QFETCH(QString, myString); QCOMPARE(QString("hello").toUpper(), myString);</db:programlisting>
+         <db:para>you can write:</db:para>
+         <db:programlisting>QTEST(QString("hello").toUpper(),"myString");</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTEST_APPLESS_MAIN">
+         <db:title>QTEST_APPLESS_MAIN( TestClass)</db:title>
+         <db:para>Implements a main() function that executes all tests in
+                                        <db:emphasis>TestClass</db:emphasis>.</db:para>
+         <db:para>Behaves like <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>, but doesn't instantiate a <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>
+                                    object. Use this macro for really simple stand-alone non-GUI
+                                    tests.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTEST_GUILESS_MAIN">
+         <db:title>QTEST_GUILESS_MAIN( TestClass)</db:title>
+         <db:para>Implements a main() function that instantiates a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> object and the
+                                        <db:emphasis>TestClass</db:emphasis>, and executes all tests in the
+                                    order they were defined. Use this macro to build stand-alone
+                                    executables.</db:para>
+         <db:para>Behaves like <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>, but instantiates a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> instead of the <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>
+                                    object. Use this macro if your test case doesn't need
+                                    functionality offered by <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>,
+                                    but the event loop is still necessary.</db:para>
+         <db:para>This function was introduced in Qt 5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTEST_MAIN">
+         <db:title>QTEST_MAIN( TestClass)</db:title>
+         <db:para>Implements a main() function that instantiates an
+                                    application object and the <db:emphasis>TestClass</db:emphasis>, and
+                                    executes all tests in the order they were defined. Use this
+                                    macro to build stand-alone executables.</db:para>
+         <db:para>If <db:code>QT_WIDGETS_LIB</db:code> is defined, the
+                                    application object will be a <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>, if
+                                        <db:code>QT_GUI_LIB</db:code> is defined, the
+                                    application object will be a <db:code><db:link xlink:href="qtgui/qguiapplication.html">QGuiApplication</db:link></db:code>,
+                                    otherwise it will be a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code>. If qmake is used and the
+                                    configuration includes <db:code>QT += widgets</db:code>,
+                                    then <db:code>QT_WIDGETS_LIB</db:code> will be defined
+                                    automatically. Similarly, if qmake is used and the configuration
+                                    includes <db:code>QT += gui</db:code>, then
+                                        <db:code>QT_GUI_LIB</db:code> will be defined
+                                    automatically.</db:para>
+         <db:note>
+            <db:para> On platforms that have keypad
+                                    navigation enabled by default, this macro will forcefully
+                                    disable it if <db:code>QT_WIDGETS_LIB</db:code> is defined.
+                                    This is done to simplify the usage of key events when writing
+                                    autotests. If you wish to write a test case that uses keypad
+                                    navigation, you should enable it either in the
+                                        <db:code>initTestCase()</db:code> or
+                                        <db:code>init()</db:code> functions of your test case by
+                                    calling <db:code><db:link xlink:href="qtwidgets/qapplication.html#setNavigationMode">QApplication::setNavigationMode</db:link>()</db:code>.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>class
+                                    TestQString: publicQObject { ... };
+                                    QTEST_MAIN(TestQString)</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTEST_APPLESS_MAIN">QTEST_APPLESS_MAIN</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTEST_GUILESS_MAIN">QTEST_GUILESS_MAIN</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#qExec">QTest::qExec</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtwidgets/qapplication.html#setNavigationMode">QApplication::setNavigationMode</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTRY_COMPARE">
+         <db:title>QTRY_COMPARE( actual, expected)</db:title>
+         <db:para>Performs a comparison of the <db:emphasis>actual</db:emphasis> and
+                                        <db:emphasis>expected</db:emphasis> values by invoking <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE_WITH_TIMEOUT">QTRY_COMPARE_WITH_TIMEOUT</db:link>()</db:code> with a timeout of five
+                                    seconds.</db:para>
+         <db:note>
+            <db:para>This macro can only be used in a test
+                                    function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt
+                                    5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE_WITH_TIMEOUT">QTRY_COMPARE_WITH_TIMEOUT</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTRY_COMPARE_WITH_TIMEOUT">
+         <db:title>QTRY_COMPARE_WITH_TIMEOUT( actual, expected, timeout)</db:title>
+         <db:para>The QTRY_COMPARE_WITH_TIMEOUT() macro is similar to <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>, but performs
+                                    the comparison of the <db:emphasis>actual</db:emphasis> and
+                                        <db:emphasis>expected</db:emphasis> values repeatedly, until either
+                                    the two values are equal or the <db:emphasis>timeout</db:emphasis> is
+                                    reached. Between each comparison, events will be processed. If
+                                    the timeout is reached, a failure is recorded in the test log
+                                    and the test won't be executed further.</db:para>
+         <db:note>
+            <db:para>This macro can only be used in a test
+                                    function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt
+                                    5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTRY_VERIFY">
+         <db:title>QTRY_VERIFY( condition)</db:title>
+         <db:para>Checks the <db:emphasis>condition</db:emphasis> by invoking <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY_WITH_TIMEOUT">QTRY_VERIFY_WITH_TIMEOUT</db:link>()</db:code> with a timeout of five
+                                    seconds.</db:para>
+         <db:note>
+            <db:para>This macro can only be used in a test
+                                    function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt
+                                    5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY_WITH_TIMEOUT">QTRY_VERIFY_WITH_TIMEOUT</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QTRY_VERIFY_WITH_TIMEOUT">
+         <db:title>QTRY_VERIFY_WITH_TIMEOUT( condition, timeout)</db:title>
+         <db:para>The QTRY_VERIFY_WITH_TIMEOUT() macro is similar to <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>, but checks the
+                                        <db:emphasis>condition</db:emphasis> repeatedly, until either the
+                                    condition becomes true or the <db:emphasis>timeout</db:emphasis> is
+                                    reached. Between each evaluation, events will be processed. If
+                                    the timeout is reached, a failure is recorded in the test log
+                                    and the test won't be executed further.</db:para>
+         <db:note>
+            <db:para>This macro can only be used in a test
+                                    function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt
+                                    5.0.</db:para>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QVERIFY2">
+         <db:title>QVERIFY2( condition, message)</db:title>
+         <db:para>The QVERIFY2() macro behaves exactly like <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>, except that it
+                                    outputs a verbose <db:emphasis>message</db:emphasis> when
+                                        <db:emphasis>condition</db:emphasis> is false. The
+                                        <db:emphasis>message</db:emphasis> is a plain C string.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>QVERIFY2(1+1==2,"A breach in basic arithmetic
+                                        occurred.");</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QVERIFY">
+         <db:title>QVERIFY( condition)</db:title>
+         <db:para>The QVERIFY() macro checks whether the
+                                        <db:emphasis>condition</db:emphasis> is true or not. If it is true,
+                                    execution continues. If not, a failure is recorded in the test
+                                    log and the test won't be executed further.</db:para>
+         <db:note>
+            <db:para> This macro can only be used in a test
+                                    function that is invoked by the test framework.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>QVERIFY(1+1==2);</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="QVERIFY_EXCEPTION_THROWN">
+         <db:title>QVERIFY_EXCEPTION_THROWN( expression, exceptiontype)</db:title>
+         <db:para>The QVERIFY_EXCEPTION_THROWN macro executes an
+                                        <db:emphasis>expression</db:emphasis> and tries to catch an exception
+                                    thrown from the <db:emphasis>expression</db:emphasis>. If the
+                                        <db:emphasis>expression</db:emphasis> throws an exception and its type
+                                    is the same as <db:emphasis>exceptiontype</db:emphasis> or
+                                        <db:emphasis>exceptiontype</db:emphasis> is substitutable with the
+                                    type of thrown exception (i.e. usually the type of thrown
+                                    exception is publically derived from
+                                        <db:emphasis>exceptiontype</db:emphasis>) then execution will be
+                                    continued. If not-substitutable type of exception is thrown or
+                                    the <db:emphasis>expression</db:emphasis> doesn't throw an exception at
+                                    all, then a failure will be recorded in the test log and the
+                                    test won't be executed further.</db:para>
+         <db:note>
+            <db:para>This macro can only be used in a test
+                                    function that is invoked by the test
+                                    framework.</db:para>
+         </db:note>
+         <db:para>This function was introduced in Qt
+                                    5.3.</db:para>
+      </db:section>
+      <db:section xml:id="QWARN">
+         <db:title>QWARN( message)</db:title>
+         <db:para>Appends <db:emphasis>message</db:emphasis> as a warning to the test
+                                    log. This macro can be used anywhere in your tests.</db:para>
+         <db:note>
+            <db:para> This function is <db:link xlink:href="qtdoc/threads-reentrancy.html#thread-safe">thread-safe</db:link>.</db:para>
+         </db:note>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Obsolete Members</db:title>
+      <db:section xml:id="obsolete_func">
+         <db:title>Function Documentation</db:title>
+         <db:section xml:id="qWaitForWindowShown">
+            <db:title>[static] bool QTest::qWaitForWindowShown(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
+            <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the <db:emphasis>widget</db:emphasis>'s window is exposed. Returns <db:code>true</db:code> if <db:code>widget</db:code>'s window is exposed within <db:emphasis>timeout</db:emphasis> milliseconds, otherwise returns <db:code>false</db:code>.</db:para>
+            <db:para>This function does the same as <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">qWaitForWindowExposed</db:link>()</db:code>.</db:para>
+            <db:para>Example:</db:para>
+            <db:programlisting>QWidget widget;
+widget.show();
+QTest::qWaitForWindowShown(&amp;widget);</db:programlisting>
+            <db:para>This function was introduced in  Qt 5.0.</db:para>
+            <db:section>
+               <db:title>See Also</db:title>
+               <db:simplelist type="vert">
+                  <db:member>
+                     <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
+                  </db:member>
+                  <db:member>
+                     <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
+                  </db:member>
+               </db:simplelist>
+            </db:section>
+         </db:section>
+      </db:section>
+   </db:section>
+</db:article>

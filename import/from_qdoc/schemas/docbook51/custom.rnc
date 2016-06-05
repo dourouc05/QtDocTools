@@ -1,12 +1,12 @@
 default namespace = "http://docbook.org/ns/docbook"
-include "api.rnc"
+include "docbookxi.rnc"
 
 # Deal with namespaces. 
-db.synopsis.blocks |= qdt.namespacesynopsis
-qdt.namespacesynopsis = element namespacesynopsis { text } #TODO!
+# db.synopsis.blocks |= qdt.namespacesynopsis
+# qdt.namespacesynopsis = element namespacesynopsis { text } #TODO!
 
 # Deal with structures. 
-db.classsynopsis.class.enumeration |= "structure"
+# db.classsynopsis.class.enumeration |= "structure"
 
 # Deal with macros. 
 qdt.macrosynopsis = 

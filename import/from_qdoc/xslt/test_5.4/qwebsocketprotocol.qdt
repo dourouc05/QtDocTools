@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>QWebSocketProtocol Namespace</db:title>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QWebSocketProtocol</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="isNamespace">yes</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="header">#include
+                                                  &lt;QWebSocketProtocol&gt;</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="qmake"> QT +=
+                                                websockets</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="since"> Qt
+                                                5.3</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>Contains constants related to the <db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>
+                                    standard.</db:para>
+   </db:section>
+   <db:section xml:id="nonmemtypes">
+      <db:title>Type Documentation</db:title>
+      <db:section xml:id="CloseCode-enum">
+         <db:title>enum QWebSocketProtocol::CloseCode</db:title>
+         <db:para>The close codes supported by <db:link xlink:href="qtdoc/topics-network-connectivity.html#websockets">WebSockets</db:link> V13</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeNormal</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1000</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Normal closure</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeGoingAway</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1001</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Going away</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeProtocolError</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1002</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Protocol error</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeDatatypeNotSupported</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1003</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Unsupported data</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeReserved1004</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1004</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Reserved</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeMissingStatusCode</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1005</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>No status
+                                                  received</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeAbnormalDisconnection</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1006</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Abnormal closure</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeWrongDatatype</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1007</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Invalid frame payload
+                                                  data</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodePolicyViolated</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1008</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Policy violation</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeTooMuchData</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1009</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Message too big</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeMissingExtension</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1010</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Mandatory extension
+                                                  missing</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeBadOperation</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1011</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Internal server
+                                                  error</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::CloseCodeTlsHandshakeFailed</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>1015</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>TLS handshake
+                                                  failed</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwebsocket.html#close">QWebSocket::close</db:link>()</db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+      <db:section xml:id="Version-enum">
+         <db:title>enum QWebSocketProtocol::Version</db:title>
+         <db:para>The different defined versions of the <db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>
+                                    protocol.</db:para>
+         <db:para>For an overview of the differences between the different
+                                    protocols, see
+                                    &lt;http://code.google.com/p/pywebsocket/wiki/WebSocketProtocolSpec&gt;</db:para>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::VersionUnknown</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>-1</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Unknown or unspecified
+                                                  version.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version0</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>0</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>hixie76:
+                                                  http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol-76
+                                                  &amp; hybi-00:
+                                                  http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-00.
+                                                  Works with key1, key2 and a key in the payload.
+                                                  Attribute: Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Draft value 0. Not supported
+                                                  by <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version4</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>4</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>hybi-04:
+                                                  http://tools.ietf.org/id/draft-ietf-hybi-thewebsocketprotocol-04.txt.
+                                                  Changed handshake: key1, key2, key3 ==&gt;
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Key, Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Nonce, Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Accept Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Draft renamed to Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 4. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version5</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>5</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>hybi-05:
+                                                  http://tools.ietf.org/id/draft-ietf-hybi-thewebsocketprotocol-05.txt.
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 5 Removed
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Nonce Added Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Accept. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version6</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>6</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 6. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version7</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>7</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>hybi-07:
+                                                  http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-07.
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 7. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version8</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>8</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>hybi-8, hybi-9, hybi-10,
+                                                  hybi-11 and hybi-12. Status codes 1005 and 1006
+                                                  are added and all codes are now unsigned Internal
+                                                  error results in 1006. Not supported by <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::Version13</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>13</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>hybi-13, hybi14, hybi-15,
+                                                  hybi-16, hybi-17 and RFC 6455. Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 13 Status code 1004
+                                                  is now reserved Added 1008, 1009 and 1010 Must
+                                                  support TLS Clarify multiple version support.
+                                                  Supported by <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code>QWebSocketProtocol::VersionLatest</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code>Version13</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>Refers to the latest known
+                                                  version to <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+   </db:section>
+</db:article>

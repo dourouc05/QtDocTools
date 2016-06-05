@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>Using QML elements</db:title>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#basicElements">Basic QML
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#visualElements">QML Visual
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#AnimAndTrans">QML Animation and
+                            Transition Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#interactElement">Basic QML
+                            Interaction Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#eventElements">QML Event
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#Position">QML Positioning
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#stateElement">QML State
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#transformElement">QML Transform
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#utilityElement">QML Utility
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#modelView">Models and View
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#paths">Paths</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#ParticleElement">Particle
+                            Elements</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="#bridge">Bridge
+                          Elements</db:link>
+         </db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:para> QML Elements are grouped by their respective functionalities. Certain
+                      elements are suited for building complex components while other elements
+                      strictly dictate appearances and color.</db:para>
+   <db:para>
+      <db:emphasis>add something about elements in use in general</db:emphasis>
+   </db:para>
+   <db:informalfigure>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/quick_screens.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+   </db:informalfigure>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Basic elements can be extended to form more complex elements.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-item.html">Item Element</db:link> - The Item is the
+                        most basic of all visual items in QML. Many visual elements inherit
+                        properties from the Item element.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-component.html">Component Element</db:link> - The
+                        Component element encapsulates a QML component definition.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Visual elements offer various interactive and graphical
+                      functionalities. Visual elements can directly set properties that dictate
+                      appearances.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-borderimage.html">BorderImage Element</db:link> -
+                        The BorderImage element provides an image that can be used as a
+                        border.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-gradient.html">Gradient Element</db:link> - The
+                        Gradient item defines a gradient fill.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-gradientstop.html">GradientStop Element</db:link> -
+                        The GradientStop item defines the color at a position in a
+                        Gradient.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-image.html">Image Element</db:link> - The Image
+                        element displays an image from a source.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-rectangle.html">Rectangle Element</db:link> - The
+                        Rectangle item provides a filled rectangle.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-text.html">Text Element</db:link> - The Text item
+                        allows the addition of formatted text to a scene.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-textedit.html">TextEdit Element</db:link> - The
+                        TextEdit item displays multiple lines of editable formatted text.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-textinput.html">TextInput Element</db:link> - The
+                        TextInput item displays an editable line of text.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Animation and transition elements control animation behaviors.
+                      Animations can run in parallel or in series for different value types. </db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-anchoranimation.html">AnchorAnimation
+                          Element</db:link> - The AnchorAnimation element animates changes in anchor
+                        values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-animation.html">Animation Element</db:link> - The
+                        Animation element is the base of all QML animations.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-behavior.html">Behavior Element</db:link> - The
+                        Behavior element allows you to specify a default animation for a property
+                        change.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-coloranimation.html">ColorAnimation
+                          Element</db:link> - The ColorAnimation element animates changes in color
+                        values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-numberanimation.html">NumberAnimation
+                          Element</db:link> - The NumberAnimation element animates changes in
+                        qreal-type values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-parallelanimation.html">ParallelAnimation
+                          Element</db:link> - The ParallelAnimation element allows animations to be
+                        run in parallel.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-parentanimation.html">ParentAnimation
+                          Element</db:link> - The ParentAnimation element animates changes in parent
+                        values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pauseanimation.html">PauseAnimation
+                          Element</db:link> - The PauseAnimation element provides a pause during an
+                        animation.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-propertyaction.html">PropertyAction
+                          Element</db:link> - The PropertyAction element allows immediate property
+                        changes during animation.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-propertyanimation.html">PropertyAnimation
+                          Element</db:link> - The PropertyAnimation element animates changes in
+                        property values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-rotationanimation.html">RotationAnimation
+                          Element</db:link> - The RotationAnimation element animates changes in
+                        rotational values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-scriptaction.html">ScriptAction Element</db:link> -
+                        The ScriptAction element allows scripts to be run during an
+                        animation.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-sequentialanimation.html">SequentialAnimation
+                          Element</db:link> - The SequentialAnimation element allows animations to be
+                        run sequentially.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-smoothedanimation.html">SmoothedAnimation
+                          Element</db:link> - The SmoothedAnimation element allows a property to
+                        smoothly track a value.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-springanimation.html">SpringAnimation
+                          Element</db:link> - The SpringAnimation element allows a property to track
+                        a value in a spring-like motion.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-transition.html">Transition Element</db:link> - The
+                        Transition element defines animated transitions that occur on state
+                        changes.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-vector3danimation.html">Vector3dAnimation
+                          Element</db:link> - The Vector3dAnimation element animates changes in
+                        QVector3d values.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> These elements define basic interactions such as touch movements and
+                      focus management.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-flickable.html">Flickable Element</db:link> - The
+                        Flickable item provides a surface that can be "flicked".</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-flipable.html">Flipable Element</db:link> - The
+                        Flipable item provides a surface that can be flipped or reflected.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-focuspanel.html">FocusPanel Element</db:link> - The
+                        FocusPanel item explicitly creates a focus panel.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-focusscope.html">FocusScope Element</db:link> - The
+                        FocusScope object explicitly creates a focus scope for focus
+                        management.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pincharea.html">PinchArea Element</db:link> - The
+                        PinchArea item enables simple pinch gesture handling.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-keynavigation.html">KeyNavigation Element</db:link>
+                        - The KeyNavigation attached property supports key navigation by arrow
+                        keys.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-keys.html">Keys Element</db:link> - The Keys
+                        attached property provides key handling to Items.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-mousearea.html">MouseArea Element</db:link> - The
+                        MouseArea item enables simple mouse handling.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Key and mouse events information are provided in these event
+                      elements.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-keyevent.html">KeyEvent Element</db:link> - The
+                        KeyEvent object provides information about a key event.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-mouseevent.html">MouseEvent Element</db:link> - The
+                        MouseEvent object provides information about a mouse event.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Using positioning elements, layouts can be defined and their children
+                      accessed through an index.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-column.html">Column Element</db:link> - The Column
+                        item arranges its children vertically.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-flow.html">Flow Element</db:link> - The Flow item
+                        arranges its children side by side, wrapping as necessary.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-grid.html">Grid Element</db:link> - The Grid item
+                        positions its children in a grid.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-row.html">Row Element</db:link> - The Row item
+                        arranges its children horizontally.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-repeater.html">Repeater Element</db:link> - The
+                        Repeater element allows you to repeat an Item-based component using a
+                        model.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> States and groups of states are formed using state elements.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-anchorchanges.html">AnchorChanges Element</db:link>
+                        - The AnchorChanges element allows you to change the anchors of an item in a
+                        state.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-parentchange.html">ParentChange Element</db:link> -
+                        The ParentChange element allows you to reparent an Item in a state
+                        change.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-propertychanges.html">PropertyChanges
+                          Element</db:link> - The PropertyChanges element describes new property
+                        bindings or values for a state.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-state.html">State Element</db:link> - The State
+                        element defines configurations of objects and properties.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-statechangescript.html">StateChangeScript
+                          Element</db:link> - The StateChangeScript element allows you to run a
+                        script in a state.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-stategroup.html">StateGroup Element</db:link> - The
+                        StateGroup element provides state support for non-Item elements.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Advanced handling of transformations is controlled in transform
+                      elements.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-rotation.html">Rotation Element</db:link> - The
+                        Rotation object provides a way to rotate an Item.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-scale.html">Scale Element</db:link> - The Scale
+                        element provides a way to scale an Item.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-transform.html">Transform Element</db:link> - The
+                        Transform element provide a way of building advanced transformations on
+                        Items.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-translate.html">Translate Element</db:link> - The
+                        Translate object provides a way to move an Item without changing its x or y
+                        properties.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> These elements handle assorted operations such as event timing, Qt
+                      enumerations, and font loading.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-binding.html">Binding Element</db:link> - The
+                        Binding element allows arbitrary property bindings to be created.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-connections.html">Connections Element</db:link> - A
+                        Connections element describes generalized connections to signals.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-doublevalidator.html">DoubleValidator
+                          Element</db:link> - Provides a validator for non-integer numbers.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-fontloader.html">FontLoader Element</db:link> - The
+                        FontLoader element allows fonts to be loaded by name or URL.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-intvalidator.html">IntValidator Element</db:link> -
+                        This element provides a validator for integer values.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-layoutitem.html">LayoutItem Element</db:link> - The
+                        LayoutItem element allows declarative UI elements to be placed inside Qt's
+                        Graphics View layouts.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-loader.html">Loader Element</db:link> - The Loader
+                        item allows dynamically loading an Item-based subtree from a URL or
+                        Component.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-package.html">Package Element</db:link> - Package
+                        provides a bundle for shared contexts in multiple views.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-qt.html">Qt Element</db:link> - The QML global Qt
+                        object provides useful enums and functions from Qt.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-qtobject.html">QtObject Element</db:link> - The
+                        QtObject element is the most basic element in QML.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-regexpvalidator.html">RegExpValidator
+                          Element</db:link> - This element provides a validator for regular
+                        expressions.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-systempalette.html">SystemPalette Element</db:link>
+                        - The SystemPalette element provides access to the Qt palettes.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-timer.html">Timer Element</db:link> - The Timer item
+                        triggers a handler at a specified interval.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-workerscript.html">WorkerScript Element</db:link> -
+                        The WorkerScript element enables the use of threads in QML.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Models and views are used to organize data and control their layouts
+                      using delegates. Models dictate the data formation and views control the
+                      layouts of data in the model.</db:para>
+   <db:para>View Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-gridview.html">GridView Element</db:link> - The
+                        GridView item provides a grid view of items provided by a model.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-listview.html">ListView Element</db:link> - The
+                        ListView item provides a list view of items provided by a model.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathview.html">PathView Element</db:link> - The
+                        PathView element lays out model-provided items on a path.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-webview.html">WebView Element</db:link> - The
+                        WebView item allows you to add Web content to a canvas.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:para>Model Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-folderlistmodel.html">FolderListModel
+                          Element</db:link> - The FolderListModel provides a model of the contents of
+                        a file system folder.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-listelement.html">ListElement Element</db:link> - A
+                        ListElement defines a data item in a ListModel.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-listmodel.html">ListModel Element</db:link> - The
+                        ListModel element defines a free-form list data source.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-visualdatamodel.html">VisualDataModel
+                          Element</db:link> - The VisualDataModel encapsulates a model and
+                        delegate.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-visualitemmodel.html">VisualItemModel
+                          Element</db:link> - The VisualItemModel allows items to be provided to a
+                        view.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-xmllistmodel.html">XmlListModel Element</db:link> -
+                        The XmlListModel element is used to specify a model using XPath
+                        expressions.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-xmlrole.html">XmlRole Element</db:link> - The
+                        XmlRole element allows you to specify a role for an XmlListModel.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> QML components can be arranged along paths. Path elements allow control
+                      over different path types.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-path.html">Path Element</db:link> - A Path object
+                        defines a path for use by PathView.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathattribute.html">PathAttribute Element</db:link>
+                        - The PathAttribute allows setting an attribute at a given position in a
+                        Path.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathcubic.html">PathCubic Element</db:link> - The
+                        PathCubic defines a cubic Bezier curve with two control points.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathelement.html">PathElement Element</db:link> -
+                        PathElement is the base path type.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathline.html">PathLine Element</db:link> - The
+                        PathLine defines a straight line.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathpercent.html">PathPercent Element</db:link> -
+                        The PathPercent manipulates the way a path is interpreted.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-pathquad.html">PathQuad Element</db:link> - The
+                        PathQuad defines a quadratic Bezier curve with a control point.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Particle effects are declared and controlled using particle
+                      elements.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-particlemotiongravity.html">ParticleMotionGravity
+                          Element</db:link> - The ParticleMotionGravity object moves particles
+                        towards a point.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-particlemotionlinear.html">ParticleMotionLinear
+                          Element</db:link> - The ParticleMotionLinear object moves particles
+                        linearly.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-particlemotionwander.html">ParticleMotionWander
+                          Element</db:link> - The ParticleMotionWander object moves particles in a
+                        somewhat random fashion.</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-particles.html">Particles Element</db:link> - The
+                        Particles object generates and moves particles.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+   <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
+   <db:para> img descr.</db:para>
+   <db:para> Bridge elements allow direct communication between C++ and QML
+                      entities.</db:para>
+   <db:para>Elements:</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="qml-layoutitem.html">LayoutItem Element</db:link> - The
+                        LayoutItem element allows declarative UI elements to be placed inside Qt's
+                        Graphics View layouts.</db:para>
+      </db:listitem>
+   </db:itemizedlist>
+</db:article>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>Bearer Management</db:title>
+   <db:para>Bearer Management controls the connectivity state of the
+                                    system so that the user can start or stop interfaces or roam
+                                    transparently between access points.</db:para>
+   <db:section xml:id="overview">
+      <db:title>Overview</db:title>
+      <db:para>The Bearer Management API controls the system's connectivity
+                                    state. This incorporates simple information such as whether the
+                                    device is online and how many interfaces there are as well as
+                                    enables the application developer to start, stop network
+                                    interfaces and influences other connection specific details.
+                                    Depending on the platform's capabilities it may even provide
+                                    session management so that a network interface remains up for as
+                                    long as clients have a registered interest in them while at the
+                                    same time optimizes the interface's uptime.</db:para>
+      <db:para>This API does not provide support for management of network
+                                    configurations themselves. It is up to the platform to provide
+                                    infrastructure which enables to user to create, edit or delete
+                                    network configurations.</db:para>
+      <db:section xml:id="the-api-in-detail">
+         <db:title>The API in Detail</db:title>
+         <db:para>Computer systems manage their network interfaces via a set
+                                    of configurations. Each configuration describes a set of
+                                    parameters which instruct the system how a particular network
+                                    interface is started. One of the most simplistic examples might
+                                    be an Ethernet configuration that links a network card to a DHCP
+                                    server. A more complex example might be a Wireless LAN
+                                    configuration which may comprise of hardware details such as the
+                                    WLAN card address, WLAN access point details (e.g ESSID,
+                                    encryption details) and user specific information (for example
+                                    username and password). Once the network interface was
+                                    configured and started according to the configuration blue
+                                    print, multiple applications are free to use this link layer
+                                    connection/session for their own socket operations. Note that
+                                    the <db:code><db:link xlink:href="qnetworkconfiguration.html">QNetworkConfiguration</db:link></db:code> object only provides limited
+                                    information about the configuration details themselves. It's
+                                    main purpose is to act as a configuration identifier through
+                                    which link layer connections can be created, destroyed and
+                                    monitored.</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
+                                    provides two types of use cases. It enables the monitoring of
+                                    physical network interfaces and management of network sessions.
+                                    Network sessions are a common feature on mobile devices where
+                                    multiple applications can request network sessions as they see
+                                    fit. The system consolidates and tracks active network sessions
+                                    for the same network interface by maintaining the link layer
+                                    connections until the last session has been closed. The
+                                    subsequent table lists the major <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
+                                    functions and how they fit into the session and hardware
+                                    management categories:</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Interface management</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Session management</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#stop">QNetworkSession::stop</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#open">QNetworkSession::open</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#interface">QNetworkSession::interface</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#close">QNetworkSession::close</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#state">QNetworkSession::state</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#isOpen">QNetworkSession::isOpen</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#bytesWritten">QNetworkSession::bytesWritten</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#migrate">QNetworkSession::migrate</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#bytesReceived">QNetworkSession::bytesReceived</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#ignore">QNetworkSession::ignore</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#activeTime">QNetworkSession::activeTime</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#accept">QNetworkSession::accept</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#stateChanged">QNetworkSession::stateChanged</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#reject">QNetworkSession::reject</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para/>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#opened">QNetworkSession::opened</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:para/>
+                  </db:td>
+                  <db:td>
+                     <db:para>
+                        <db:code><db:link xlink:href="qnetworksession.html#closed">QNetworkSession::closed</db:link>()</db:code>
+                     </db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The state of the session represents the state of the
+                                    underlying access point whereas the session's openness implies
+                                    the networking/connectivity state available to the current
+                                    process.</db:para>
+         <db:para>Possible use cases for interface management are network
+                                    management related applications which intend to monitor the
+                                    connectivity state but do not engage in network communication
+                                    themselves. Any application wanting to open a socket to a remote
+                                    address will typically use session management related
+                                    functionality.</db:para>
+         <db:section xml:id="service-networks">
+            <db:title>Service networks</db:title>
+            <db:para>Some mobile platforms use the concept of grouped access
+                                    points (also called SNAP or Service Network Access Point). In
+                                    principle multiple configurations are grouped together and
+                                    possibly even prioritized when compared to each other. This is
+                                    useful for use cases where all configurations serve a similar
+                                    purpose or context. A common context could be that they provide
+                                    access to the public Internet or possibly only to the office
+                                    Intranet. By providing a pool of configurations the system can
+                                    make a decision based on given priorities which usually map to
+                                    factors such as speed, availability and cost. Furthermore the
+                                    system can automatically roam from one access point to the next
+                                    one while ensuring minimal impact on the user
+                                    experience.</db:para>
+            <db:para>The <db:code><db:link xlink:href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::Type</db:link></db:code> flag specifies to what
+                                    category a configuration belongs. The <db:code><db:link xlink:href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::InternetAccessPoint</db:link></db:code> type is
+                                    the most common example. It represents a configuration that can
+                                    be used to create a session. The above mentioned grouping
+                                    behavior is provided by <db:code><db:link xlink:href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::ServiceNetwork</db:link></db:code>
+                                    configurations. Service networks are place holders until such
+                                    time when the user attempts to <db:link xlink:href="qnetworksession.html#open">open()</db:link> a new
+                                    session. At that point in time the system determines which of
+                                    the configurations <db:code><db:link xlink:href="qnetworkconfiguration.html#children">QNetworkConfiguration::children</db:link>()</db:code> is best to use.
+                                    The selection algorithm is provided by the platform and is
+                                    usually managed by network settings applications. A service
+                                    network can only have one level of indirection which implies
+                                    children can only be of type <db:code><db:link xlink:href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::InternetAccessPoint</db:link></db:code>.</db:para>
+            <db:para>Most systems allow the user to define the systems default
+                                    configuration. Usually the default behavior is either a service
+                                    network, a particular Internet access point or the user
+                                    instructs the platform to ask the user once an application
+                                    requests the network. User interaction is generally implemented
+                                    by some sort of system dialog which shows up at the appropriate
+                                    point in time. The application does not have to handle the user
+                                    input. This API provides the <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#defaultConfiguration">QNetworkConfigurationManager::defaultConfiguration</db:link>()</db:code>
+                                    call which serves a similar purpose. The subsequent code snippet
+                                    provides a quick way how an application can quickly create a new
+                                    network session without (or only minimal) user
+                                    interaction:</db:para>
+            <db:programlisting>// Set Internet
+                                        Access PointQNetworkConfigurationManager
+                                    manager; const bool
+                                    canStartIAP =
+                                        (manager.capabilities() &amp;QNetworkConfigurationManager::CanStartAndStopInterfaces);
+                                        // Is there default access point,
+                                        use itQNetworkConfiguration cfg
+                                        = manager.defaultConfiguration();
+                                        if (!cfg.isValid() ||
+                                        (!canStartIAP
+                                        &amp;&amp; cfg.state() !=QNetworkConfiguration::Active)) { QMessageBox::information(this, tr("Network"), tr( "No Access
+                                        Point found.")); return; } session =newQNetworkSession(cfg,this); session-&gt;open(); session-&gt;waitForOpened(-1);</db:programlisting>
+            <db:para>To accommodate the "Ask user" use case the default
+                                    configuration can be of type <db:code><db:link xlink:href="qnetworkconfiguration.html#Type-enum">QNetworkConfiguration::UserChoice</db:link></db:code>. A user choice
+                                    configuration is resolved as part of the <db:code><db:link xlink:href="qnetworksession.html#open">QNetworkSession::open</db:link>()</db:code> call. Note that a <db:link xlink:href="qnetworkconfiguration.html#Type-enum">UserChoice</db:link> configuration is only ever returned via
+                                        <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#defaultConfiguration">QNetworkConfigurationManager::defaultConfiguration</db:link>()</db:code>
+                                    and not <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#allConfigurations">QNetworkConfigurationManager::allConfigurations</db:link>()</db:code>.</db:para>
+            <db:para>On systems which do not maintain a list of <db:link xlink:href="qnetworkconfigurationmanager.html#defaultConfiguration">defaultConfiguration()</db:link> an invalid configuration is
+                                    returned. A possible workaround could be to implement a custom
+                                    dialog which is populated based on what <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#allConfigurations">QNetworkConfigurationManager::allConfigurations</db:link>()</db:code>
+                                    returns.</db:para>
+         </db:section>
+         <db:section xml:id="managing-network-sessions">
+            <db:title>Managing network sessions</db:title>
+            <db:para>A <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code> object separates a <db:link xlink:href="qnetworksession.html#state">state()</db:link> and an
+                                        <db:link xlink:href="qnetworksession.html#isOpen">isOpen()</db:link>
+                                    condition.</db:para>
+            <db:para>The state() attribute enables developers to detect whether
+                                    the system currently maintains a global network session for the
+                                    given <db:code><db:link xlink:href="qnetworkconfiguration.html">QNetworkConfiguration</db:link></db:code>. If <db:link xlink:href="qnetworksession.html#isOpen">isOpen()</db:link> returns
+                                        <db:code>true</db:code> the <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
+                                    instance at hand was at least one of the entities requesting the
+                                    global network session. This distinction is required to support
+                                    the notion of session registrations. For as long as there are
+                                    one or more open <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code> instances the underlying network
+                                    interface is not shut down. Therefore the session <db:link xlink:href="qnetworksession.html#state">state()</db:link> can be
+                                    used to monitor the state of network interfaces.</db:para>
+            <db:para>An open session is created by calling <db:code><db:link xlink:href="qnetworksession.html#open">QNetworkSession::open</db:link>()</db:code> and closed via <db:code><db:link xlink:href="qnetworksession.html#close">QNetworkSession::close</db:link>()</db:code>, respectively. If the
+                                    session is <db:link xlink:href="qnetworksession.html#State-enum">disconnected</db:link> at the time of the <db:link xlink:href="qnetworksession.html#open">open()</db:link> call the
+                                    underlying interface is started; otherwise only the reference
+                                    counter against the global session is incremented. The opposite
+                                    behavior can be observed when using <db:link xlink:href="qnetworksession.html#close">close()</db:link>.</db:para>
+            <db:para>In some use cases it may be necessary to turn the interface
+                                    off despite of open sessions. This can be achieved by calling
+                                        <db:link xlink:href="qnetworksession.html#stop">stop()</db:link>. An
+                                    example use case could be a network manager type of application
+                                    allowing the user to control the overall state of the devices
+                                    connectivity.</db:para>
+            <db:para>Global (inter-process) session support is platform dependent
+                                    and can be detected via <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::SystemSessionSupport</db:link></db:code>.
+                                    If the system does not support global session calling <db:link xlink:href="qnetworksession.html#close">close()</db:link> never
+                                    stops the interface.</db:para>
+         </db:section>
+         <db:section xml:id="roaming">
+            <db:title>Roaming</db:title>
+            <db:para>Roaming is the process of reconnecting a device from one
+                                    network to another while minimizing the impact on the
+                                    application. The system notifies the application about link
+                                    layer changes so that the required preparation can be taken. The
+                                    most common reaction would be to reinitialize sockets and to
+                                    renegotiate stateful connections with other parties. In the most
+                                    extreme cases applications may even prevent the roaming
+                                    altogether.</db:para>
+            <db:para>Roaming is initiated when the system determines that a more
+                                    appropriate access point becomes available to the user. In
+                                    general such a decision is based on cost, network speed or
+                                    network type (access to certain private networks may only be
+                                    provided via certain access points). Almost all devices
+                                    providing roaming support have some form of global configuration
+                                    application enabling the user to define such groups of access
+                                    points (service networks) and priorities.</db:para>
+            <db:para>This API supports two types of roaming. Application level
+                                    roaming (ALR) provides the most control over the process.
+                                    Applications will be notified about upcoming link layer changes
+                                    and get the opportunity to test the new access point. Eventually
+                                    they can reject or accept the link layer change. The second form
+                                    of roaming is referred to as Forced Roaming. The system simply
+                                    changes the link layer without consulting the application. It is
+                                    up to the application to detect that some of its internal socket
+                                    may have become invalid. As a consequence it has to reinitialize
+                                    those sockets and reestablish the previous user session without
+                                    any interruption. Forced roaming has the advantage that
+                                    applications don't have to manage the entire roaming process by
+                                    themselves.</db:para>
+            <db:para>
+               <db:code><db:link xlink:href="qnetworksession.html">QNetworkSession</db:link></db:code>
+                                    is the central class for managing roaming related
+                                    issues.</db:para>
+         </db:section>
+         <db:section xml:id="platform-capabilities">
+            <db:title>Platform capabilities</db:title>
+            <db:para>Some API features are not available on all platforms. The
+                                        <db:code><db:link xlink:href="qnetworkconfigurationmanager.html#Capability-enum">QNetworkConfigurationManager::Capability</db:link></db:code> should be
+                                    used to detect platform features at runtime. The following table
+                                    lists the various platform APIs being used by this API. This may
+                                    assist in the process of determining the feature
+                                    support:</db:para>
+            <db:informaltable>
+               <db:thead>
+                  <db:tr>
+                     <db:th>
+                        <db:para>Platform</db:para>
+                     </db:th>
+                     <db:th>
+                        <db:para>Backend capabilities</db:para>
+                     </db:th>
+                  </db:tr>
+               </db:thead>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>
+                        <db:para>Linux®</db:para>
+                     </db:td>
+                     <db:td>
+                        <db:para>Linux uses the <db:link xlink:href="http://projects.gnome.org/NetworkManager">NetworkManager</db:link> and <db:link xlink:href="http://connman.net/">ConnMan</db:link> /
+                                                  <db:link xlink:href="http://ofono.org/">oFono</db:link>
+                                                  APIs which support interface notifications and
+                                                  starting and stopping of network interfaces.
+                                                  Network Manager version 0.9 and above is
+                                                  supported.</db:para>
+                     </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                        <db:para>Windows® XP</db:para>
+                     </db:td>
+                     <db:td>
+                        <db:para>This platform supports interface
+                                                  notifications without active polling.</db:para>
+                     </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                        <db:para>Windows XP SP2+Hotfixes, Windows XP SP3,
+                                                  Windows Vista, Windows 7</db:para>
+                     </db:td>
+                     <db:td>
+                        <db:para>In addition to standard Windows XP wifi
+                                                  access point monitoring has been improved which
+                                                  includes the ability to start and stop wifi
+                                                  interfaces. This requires Windows to manage the
+                                                  wifi interfaces.</db:para>
+                     </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                        <db:para>Mac OS®</db:para>
+                     </db:td>
+                     <db:td>
+                        <db:para>This platform has full support by way of
+                                                  CoreWLAN offered in Mac OS 10.6. Previous versions
+                                                  of Mac OS - 10.5 and 10.4 have limited
+                                                  support.</db:para>
+                     </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                        <db:para>All other platforms (*nix, Windows
+                                                  Mobile)</db:para>
+                     </db:td>
+                     <db:td>
+                        <db:para>This backend is the fallback for all
+                                                  platforms supports network interface notifications
+                                                  via active polling only.</db:para>
+                     </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:section>
+      </db:section>
+   </db:section>
+</db:article>
