@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QWidget Class</db:title>
    <db:classsynopsis>
@@ -1427,6 +1427,21 @@
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
+      <db:enumsynopsis xlink:href="#RenderFlag-enum">
+         <db:enumname>RenderFlag</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QWidget::DrawWindowBackground</db:enumidentifier>
+            <db:enumvalue>0x1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QWidget::DrawChildren</db:enumidentifier>
+            <db:enumvalue>0x2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QWidget::IgnoreMask</db:enumidentifier>
+            <db:enumvalue>0x4</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#QWIDGETSIZE_MAX">
       <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>

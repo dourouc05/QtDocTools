@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QQuickItem Class</db:title>
    <db:classsynopsis>
@@ -664,6 +664,103 @@
          <db:exceptionname role="parameters">( QQuickWindow  * 
                                         window )</db:exceptionname>
       </db:methodsynopsis>
+      <db:enumsynopsis xlink:href="#Flag-enum">
+         <db:enumname>Flag</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemClipsChildrenToShape</db:enumidentifier>
+            <db:enumvalue>0x01</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemAcceptsInputMethod</db:enumidentifier>
+            <db:enumvalue>0x02</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemIsFocusScope</db:enumidentifier>
+            <db:enumvalue>0x04</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemHasContents</db:enumidentifier>
+            <db:enumvalue>0x08</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemAcceptsDrops</db:enumidentifier>
+            <db:enumvalue>0x10</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#ItemChange-enum">
+         <db:enumname>ItemChange</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemChildAddedChange</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemChildRemovedChange</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemSceneChange</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemVisibleHasChanged</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemParentHasChanged</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemOpacityHasChanged</db:enumidentifier>
+            <db:enumvalue>5</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemActiveFocusHasChanged</db:enumidentifier>
+            <db:enumvalue>6</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::ItemRotationHasChanged</db:enumidentifier>
+            <db:enumvalue>7</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#TransformOrigin-enum">
+         <db:enumname>TransformOrigin</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::TopLeft</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::Top</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::TopRight</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::Left</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::Center</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::Right</db:enumidentifier>
+            <db:enumvalue>5</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::BottomLeft</db:enumidentifier>
+            <db:enumvalue>6</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::Bottom</db:enumidentifier>
+            <db:enumvalue>7</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQuickItem::BottomRight</db:enumidentifier>
+            <db:enumvalue>8</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>

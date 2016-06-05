@@ -30,12 +30,12 @@ for %%f in (*.xml) do (
                 rem Process for each output: first generate the resulting XML. Then, either Saxon successes and outputs the requested XML file, 
                 rem or it does not and shows a lengthy error. No need to duplicate an error for something that does not exist, hence the check. 
                 
-                java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLT% -o:!FILENAME!.%EXT_DB% -vocabulary=docbook
+                java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLT% -o:!FILENAME!.%EXT_DB% vocabulary=docbook
                 if exist !FILENAME!.%EXT_DB% (
                     java -jar %JING% -c %RNG_DB% !FILENAME!.%EXT_DB%
                 )
                 
-                java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLT% -o:!FILENAME!.%EXT_QDT% -vocabulary=qtdoctools
+                java -jar %SAXON% -s:!FILENAME!.xml -xsl:%XSLT% -o:!FILENAME!.%EXT_QDT% vocabulary=qtdoctools
                 if exist !FILENAME!.%EXT_QDT% (
                     java -jar %JING% -c %RNG_QDT% !FILENAME!.%EXT_QDT%
                 )

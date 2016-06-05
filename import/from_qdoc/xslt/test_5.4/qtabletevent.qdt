@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QTabletEvent Class</db:title>
    <db:classsynopsis>
@@ -195,6 +195,52 @@
                                     keyState ,  qint64 
                                 uniqueID )</db:exceptionname>
       </db:constructorsynopsis>
+      <db:enumsynopsis xlink:href="#PointerType-enum">
+         <db:enumname>PointerType</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::UnknownPointer</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::Pen</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::Cursor</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::Eraser</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#TabletDevice-enum">
+         <db:enumname>TabletDevice</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::NoDevice</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::Puck</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::Stylus</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::Airbrush</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::FourDMouse</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTabletEvent::RotationStylus</db:enumidentifier>
+            <db:enumvalue>6</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>

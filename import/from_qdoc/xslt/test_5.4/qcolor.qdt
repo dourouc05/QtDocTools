@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QColor Class</db:title>
    <db:classsynopsis>
@@ -602,6 +602,40 @@
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  factor  = 150) const</db:exceptionname>
       </db:methodsynopsis>
+      <db:enumsynopsis xlink:href="#NameFormat-enum">
+         <db:enumname>NameFormat</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QColor::HexRgb</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QColor::HexArgb</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#Spec-enum">
+         <db:enumname>Spec</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QColor::Rgb</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QColor::Hsv</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QColor::Cmyk</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QColor::Hsl</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QColor::Invalid</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#qAlpha">
       <db:funcprototype>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QQmlComponent Class</db:title>
    <db:classsynopsis>
@@ -164,6 +164,36 @@
                                         data , const  QUrl 
                                         &amp;  url )</db:exceptionname>
       </db:methodsynopsis>
+      <db:enumsynopsis xlink:href="#CompilationMode-enum">
+         <db:enumname>CompilationMode</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QQmlComponent::PreferSynchronous</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQmlComponent::Asynchronous</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#Status-enum">
+         <db:enumname>Status</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QQmlComponent::Null</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQmlComponent::Ready</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQmlComponent::Loading</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQmlComponent::Error</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>

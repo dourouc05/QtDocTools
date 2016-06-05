@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QLowEnergyCharacteristic Class</db:title>
    <db:classsynopsis>
@@ -90,6 +90,45 @@
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QLowEnergyCharacteristic  &amp;  other ) const</db:exceptionname>
       </db:methodsynopsis>
+      <db:enumsynopsis xlink:href="#PropertyType-enum">
+         <db:enumname>PropertyType</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::Unknown</db:enumidentifier>
+            <db:enumvalue>0x00</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::Broadcasting</db:enumidentifier>
+            <db:enumvalue>0x01</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::Read</db:enumidentifier>
+            <db:enumvalue>0x02</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::WriteNoResponse</db:enumidentifier>
+            <db:enumvalue>0x04</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::Write</db:enumidentifier>
+            <db:enumvalue>0x08</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::Notify</db:enumidentifier>
+            <db:enumvalue>0x10</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::Indicate</db:enumidentifier>
+            <db:enumvalue>0x20</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::WriteSigned</db:enumidentifier>
+            <db:enumvalue>0x40</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QLowEnergyCharacteristic::ExtendedProperty</db:enumidentifier>
+            <db:enumvalue>0x80</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>

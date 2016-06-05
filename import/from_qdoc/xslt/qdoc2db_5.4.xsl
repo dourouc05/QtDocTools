@@ -21,11 +21,11 @@
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:param name="vocabulary" select="'qtdoctools'"/>
+  <xsl:param name="vocabulary" select="'docbook'" as="xs:string"/>
   <!-- 'docbook' for raw DocBook 5.1; 'qtdoctools' for the custom QtDocTools extension. -->
-  <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()"/>
+  <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()" as="xs:boolean"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
-  <xsl:param name="warnMissingDocumentation" select="false()"/>
+  <xsl:param name="warnMissingDocumentation" select="false()" as="xs:boolean"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
   <xsl:import-schema schema-location="../schemas/docbook50/docbook.xsd"
@@ -1311,8 +1311,10 @@
       </xsl:if>
       <xsl:if test="$types">
         <xsl:choose>
-          <xsl:when test="$vocabulary != 'boostbook' and $warnMissingDocumentation">
-            <xsl:message>WARNING: No summary output for types.</xsl:message>
+          <xsl:when test="$vocabulary != 'qtdoctools'">
+            <xsl:if test="$warnMissingDocumentation">
+              <xsl:message>WARNING: No summary output for types.</xsl:message>
+            </xsl:if>
           </xsl:when>
           <xsl:otherwise>
             <xsl:apply-templates mode="typeListing" select="$types/html:h3">
@@ -1524,12 +1526,12 @@
     <xsl:param name="data" as="element(html:div)"/>
     <xsl:param name="className" as="xs:string"/>
     
-    <xsl:apply-templates mode="typeListing" select="$data/html:h3">
+    <xsl:apply-templates mode="typeListing" select="$data/html:h3[$vocabulary = 'qtdoctools']">
       <xsl:with-param name="className" select="$className"/>
     </xsl:apply-templates>
   </xsl:template>
-  <xsl:template mode="typeListing" match="text()"/>
-  <xsl:template mode="typeListing" match="html:h3">
+  <xsl:template mode="typeListing" match="text()[$vocabulary = 'qtdoctools']"/>
+  <xsl:template mode="typeListing" match="html:h3[$vocabulary = 'qtdoctools']">
     <db:enumsynopsis>
       <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
         

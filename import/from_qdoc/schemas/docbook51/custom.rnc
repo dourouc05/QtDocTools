@@ -1,5 +1,17 @@
 default namespace = "http://docbook.org/ns/docbook"
-include "docbookxi.rnc"
+include "docbookxi.rnc" {
+  db.classsynopsis =
+    element classsynopsis {
+      db.classsynopsis.attlist,
+      db.oo.inlines+,
+      (db.classsynopsisinfo
+       | db.methodsynopsis
+       | db.constructorsynopsis
+       | db.destructorsynopsis
+       | db.fieldsynopsis
+       | qdt.enumsynopsis)*
+    }
+}
 
 # Deal with namespaces. 
 # db.synopsis.blocks |= qdt.namespacesynopsis
@@ -61,7 +73,7 @@ div {
        element enumsynopsis {
          qdt.enumsynopsis.attlist, 
          db.programming.inlines+, 
-         qdt.enumvalue*
+         qdt.enumitem*
        }
 }
   

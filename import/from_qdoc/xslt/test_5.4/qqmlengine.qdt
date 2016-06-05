@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QQmlEngine Class</db:title>
    <db:classsynopsis>
@@ -241,6 +241,17 @@
          <db:exceptionname role="parameters">(const  QList &lt; QQmlError &gt; &amp; 
                                         warnings )</db:exceptionname>
       </db:methodsynopsis>
+      <db:enumsynopsis xlink:href="#ObjectOwnership-enum">
+         <db:enumname>ObjectOwnership</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QQmlEngine::CppOwnership</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QQmlEngine::JavaScriptOwnership</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#QML_DECLARE_TYPE">
       <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
