@@ -44,3 +44,5 @@ for %%f in (*.xml) do (
     )
 )
 echo Done
+
+pause

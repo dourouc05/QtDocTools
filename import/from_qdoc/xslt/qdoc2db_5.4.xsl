@@ -1312,8 +1312,8 @@
       <xsl:if test="$types">
         <xsl:choose>
           <xsl:when test="$vocabulary != 'qtdoctools'">
-            <xsl:if test="$warnMissingDocumentation">
-              <xsl:message>WARNING: No summary output for types.</xsl:message>
+            <xsl:if test="$warnVocabularyUnsupportedFeatures">
+              <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
             </xsl:if>
           </xsl:when>
           <xsl:otherwise>
@@ -1633,15 +1633,19 @@
     </xsl:if>
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
-  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
-    <xsl:if test="$warnVocabularyUnsupportedFeatures">
-      <xsl:message terminate="no">WARNING: No summary output for typedefs. </xsl:message>
-    </xsl:if>
-  </xsl:template>
-  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-enum')]">
-    <xsl:if test="$warnVocabularyUnsupportedFeatures">
-      <xsl:message terminate="no">WARNING: No summary output for enums. </xsl:message>
-    </xsl:if>
+  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef') or ends-with(@id, '-enums')]">
+    <xsl:choose>
+      <xsl:when test="$vocabulary != 'qtdoctools'">
+        <xsl:if test="$warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
+        </xsl:if>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="typeListing" select=".">
+          <xsl:with-param name="className" select="''"/>
+        </xsl:apply-templates>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="functionListing"
     match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef')) and not(ends-with(@id, '-enum'))]">
