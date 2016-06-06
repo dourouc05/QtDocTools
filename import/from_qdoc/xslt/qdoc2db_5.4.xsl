@@ -1310,18 +1310,9 @@
         </xsl:apply-templates>
       </xsl:if>
       <xsl:if test="$types">
-        <xsl:choose>
-          <xsl:when test="$vocabulary != 'qtdoctools'">
-            <xsl:if test="$warnVocabularyUnsupportedFeatures">
-              <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
-            </xsl:if>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates mode="typeListing" select="$types/html:h3">
-              <xsl:with-param name="className" select="$className"/>
-            </xsl:apply-templates>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:apply-templates mode="functionListing" select="$types/html:h3">
+          <xsl:with-param name="className" select="$className"/>
+        </xsl:apply-templates>
       </xsl:if>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
         <xsl:with-param name="className" select="$className"/>
@@ -1521,52 +1512,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
-  <xsl:template name="typeListing">
-    <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="className" as="xs:string"/>
-    
-    <xsl:apply-templates mode="typeListing" select="$data/html:h3[$vocabulary = 'qtdoctools']">
-      <xsl:with-param name="className" select="$className"/>
-    </xsl:apply-templates>
-  </xsl:template>
-  <xsl:template mode="typeListing" match="text()[$vocabulary = 'qtdoctools']"/>
-  <xsl:template mode="typeListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'enum')]">
-    <db:enumsynopsis>
-      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
-        
-      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
-      <db:enumname>
-        <xsl:value-of select="$enumName"/>
-      </db:enumname>
-      
-      <xsl:variable name="values" select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
-      <xsl:if test="$values">
-        <xsl:for-each select="$values/html:tr">
-          <xsl:if test="count(html:td) &gt;= 2">
-            <db:enumitem>
-              <db:enumidentifier>
-                <xsl:value-of select="html:td[1]"/>
-              </db:enumidentifier>
-              <db:enumvalue>
-                <xsl:value-of select="html:td[2]"/>
-              </db:enumvalue>
-            </db:enumitem>
-          </xsl:if>
-        </xsl:for-each>
-      </xsl:if>
-    </db:enumsynopsis>
-  </xsl:template>
-  <xsl:template mode="typeListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'typedef')]">
-    <db:typedefsynopsis>
-      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
-      
-      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
-      <db:typedefname>
-        <xsl:value-of select="$enumName"/>
-      </db:typedefname>
-    </db:typedefsynopsis>
-  </xsl:template>
 
   <xsl:template name="macroListing">
     <xsl:param name="data" as="element(html:div)"/>
@@ -1633,22 +1578,50 @@
     </xsl:if>
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
-  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef') or ends-with(@id, '-enum')]">
-    <xsl:choose>
-      <xsl:when test="$vocabulary != 'qtdoctools'">
-        <xsl:if test="$warnVocabularyUnsupportedFeatures">
-          <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
-        </xsl:if>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:apply-templates mode="typeListing" select=".">
-          <xsl:with-param name="className" select="''"/>
-        </xsl:apply-templates>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:template mode="functionListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'enum')]">
+    <db:enumsynopsis>
+      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
+      
+      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
+      <db:enumname>
+        <xsl:value-of select="$enumName"/>
+      </db:enumname>
+      
+      <xsl:variable name="values" select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
+      <xsl:if test="$values">
+        <xsl:for-each select="$values/html:tr">
+          <xsl:if test="count(html:td) &gt;= 2">
+            <db:enumitem>
+              <db:enumidentifier>
+                <xsl:value-of select="html:td[1]"/>
+              </db:enumidentifier>
+              <db:enumvalue>
+                <xsl:value-of select="html:td[2]"/>
+              </db:enumvalue>
+            </db:enumitem>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:if>
+    </db:enumsynopsis>
+  </xsl:template>
+  <xsl:template mode="functionListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'typedef')]">
+    <db:typedefsynopsis>
+      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
+      
+      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
+      <db:typedefname>
+        <xsl:value-of select="$enumName"/>
+      </db:typedefname>
+    </db:typedefsynopsis>
   </xsl:template>
   <xsl:template mode="functionListing"
-    match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef')) and not(ends-with(@id, '-enum'))]">
+    match="html:h3[not($vocabulary = 'qtdoctools')][starts-with(text()[1], 'typedef') or starts-with(text()[1], 'enum')]">
+    <xsl:if test="$warnVocabularyUnsupportedFeatures">
+      <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
+    </xsl:if>
+  </xsl:template>
+  <xsl:template mode="functionListing"
+    match="html:h3[@class = 'fn'][not(starts-with(text()[1], 'typedef')) and not(starts-with(text()[1], 'enum'))]">
     <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
     <db:funcsynopsis>
       <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
