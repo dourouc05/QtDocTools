@@ -56,6 +56,8 @@ div {
     qdt.enumidentifier = element enumidentifier { qdt.enumidentifier.attlist, db._text }
 
     ## Then the synopsis.
+    db.synopsis.blocks |= qdt.enumsynopsis
+    
     qdt.enumitem.role.attribute = attribute role { text }
     qdt.enumitem.attlist =
        qdt.enumitem.role.attribute?
@@ -88,6 +90,8 @@ div {
     qdt.typedefname = element typedefname { qdt.typedefname.attlist, db._text }
     
     ## Then the synopsis.
+    db.synopsis.blocks |= qdt.typedefsynopsis
+    
     qdt.typedefsynopsis.attlist = 
        db.common.attributes
        & db.common.linking.attributes

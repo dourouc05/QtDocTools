@@ -1633,7 +1633,7 @@
     </xsl:if>
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
-  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef') or ends-with(@id, '-enums')]">
+  <xsl:template mode="functionListing" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef') or ends-with(@id, '-enum')]">
     <xsl:choose>
       <xsl:when test="$vocabulary != 'qtdoctools'">
         <xsl:if test="$warnVocabularyUnsupportedFeatures">
