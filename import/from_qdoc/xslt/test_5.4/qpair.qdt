@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.1"
+            version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QPair Class</db:title>
    <db:classsynopsis>
@@ -55,6 +55,12 @@
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QPair &lt; TT1 ,  TT2 &gt; &amp;&amp;  p )</db:exceptionname>
       </db:methodsynopsis>
+      <db:typedefsynopsis xlink:href="#first_type-typedef">
+         <db:typedefname>first_type</db:typedefname>
+      </db:typedefsynopsis>
+      <db:typedefsynopsis xlink:href="#second_type-typedef">
+         <db:typedefname>second_type</db:typedefname>
+      </db:typedefsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#qMakePair">
       <db:funcprototype>

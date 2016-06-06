@@ -9,9 +9,10 @@ include "docbookxi.rnc" {
        | db.constructorsynopsis
        | db.destructorsynopsis
        | db.fieldsynopsis
-       | qdt.enumsynopsis)*
+       | qdt.synopsis)*
     }
 }
+qdt.synopsis = qdt.enumsynopsis | qdt.typedefsynopsis
 
 # Deal with namespaces. 
 # db.synopsis.blocks |= qdt.namespacesynopsis
@@ -29,18 +30,17 @@ qdt.macrosynopsis =
     }
     
 # Deal with enums. 
-db.programming.inlines |= qdt.enumname
 div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.enumname | qdt.enumvalue | qdt.enumidentifier
+
     qdt.enumname.role.attribute = attribute role { text }
     qdt.enumname.attlist =
        qdt.enumname.role.attribute?
        & db.common.attributes
        & db.common.linking.attributes
     qdt.enumname = element enumname { qdt.enumname.attlist, db._text }
-}
-
-db.programming.inlines |= qdt.enumvalue
-div {
+    
     qdt.enumvalue.role.attribute = attribute role { text }
     qdt.enumvalue.attlist =
        qdt.enumvalue.role.attribute?
@@ -55,25 +55,48 @@ div {
        & db.common.linking.attributes
     qdt.enumidentifier = element enumidentifier { qdt.enumidentifier.attlist, db._text }
 
+    ## Then the synopsis.
     qdt.enumitem.role.attribute = attribute role { text }
     qdt.enumitem.attlist =
        qdt.enumitem.role.attribute?
        & db.common.attributes
        & db.common.linking.attributes
     qdt.enumitem = element enumitem { qdt.enumvalue.attlist, qdt.enumidentifier, qdt.enumvalue? }
-}
-
-div {
-     qdt.enumsynopsis.attlist = 
+    
+    qdt.enumsynopsis.attlist = 
        db.common.attributes
        & db.common.linking.attributes
        & db.language.attribute?
-     qdt.enumsynopsis.info = db._info.title.forbidden
-     qdt.enumsynopsis = 
-       element enumsynopsis {
-         qdt.enumsynopsis.attlist, 
-         db.programming.inlines+, 
-         qdt.enumitem*
-       }
+    qdt.enumsynopsis = 
+      element enumsynopsis {
+        qdt.enumsynopsis.attlist, 
+        db.programming.inlines+, 
+        qdt.enumitem*
+      }
+}
+  
+# Deal with typedefs.
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.typedefname
+    
+    qdt.typedefname.role.attribute = attribute role { text }
+    qdt.typedefname.attlist =
+       qdt.typedefname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.typedefname = element typedefname { qdt.typedefname.attlist, db._text }
+    
+    ## Then the synopsis.
+    qdt.typedefsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+    qdt.typedefsynopsis = 
+      element typedefsynopsis {
+        qdt.typedefsynopsis.attlist, 
+        qdt.typedefname, 
+        db.programming.inlines*
+      }
 }
   

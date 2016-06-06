@@ -21,7 +21,7 @@
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:param name="vocabulary" select="'docbook'" as="xs:string"/>
+  <xsl:param name="vocabulary" select="'qtdoctools'" as="xs:string"/>
   <!-- 'docbook' for raw DocBook 5.1; 'qtdoctools' for the custom QtDocTools extension. -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()" as="xs:boolean"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
@@ -1531,7 +1531,7 @@
     </xsl:apply-templates>
   </xsl:template>
   <xsl:template mode="typeListing" match="text()[$vocabulary = 'qtdoctools']"/>
-  <xsl:template mode="typeListing" match="html:h3[$vocabulary = 'qtdoctools']">
+  <xsl:template mode="typeListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'enum')]">
     <db:enumsynopsis>
       <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
         
@@ -1556,6 +1556,16 @@
         </xsl:for-each>
       </xsl:if>
     </db:enumsynopsis>
+  </xsl:template>
+  <xsl:template mode="typeListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'typedef')]">
+    <db:typedefsynopsis>
+      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
+      
+      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
+      <db:typedefname>
+        <xsl:value-of select="$enumName"/>
+      </db:typedefname>
+    </db:typedefsynopsis>
   </xsl:template>
 
   <xsl:template name="macroListing">
