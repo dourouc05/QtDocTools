@@ -602,6 +602,20 @@
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  factor  = 150) const</db:exceptionname>
       </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#dark">
+         <db:modifier>(compat)</db:modifier>
+         <db:type xlink:href="qcolor.html#QColor">QColor</db:type>
+         <db:methodname>dark</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( int  factor  = 200) const</db:exceptionname>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#light">
+         <db:modifier>(compat)</db:modifier>
+         <db:type xlink:href="qcolor.html#QColor">QColor</db:type>
+         <db:methodname>light</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">( int  factor  = 150) const</db:exceptionname>
+      </db:methodsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#qAlpha">
       <db:funcprototype>

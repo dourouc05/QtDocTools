@@ -507,6 +507,14 @@
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  sourceText , const  char  *  disambiguation  = 0,  int  n  = -1)</db:exceptionname>
       </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#trUtf8">
+         <db:modifier>(compat)</db:modifier>
+         <db:modifier>static</db:modifier>
+         <db:type xlink:href="qstring.html">QString</db:type>
+         <db:methodname>trUtf8</db:methodname>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters">(const  char  *  sourceText , const  char  *  disambiguation  = 0,  int  n  = -1)</db:exceptionname>
+      </db:methodsynopsis>
    </db:classsynopsis>
    <db:funcsynopsis xlink:href="#Q_CLASSINFO">
       <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>

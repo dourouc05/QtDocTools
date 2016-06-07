@@ -1427,6 +1427,27 @@
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#isEnabledToTLW">
+         <db:modifier>(compat)</db:modifier>
+         <db:type>bool</db:type>
+         <db:methodname>isEnabledToTLW</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#isTopLevel">
+         <db:modifier>(compat)</db:modifier>
+         <db:type>bool</db:type>
+         <db:methodname>isTopLevel</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#topLevelWidget">
+         <db:modifier>(compat)</db:modifier>
+         <db:type xlink:href="qwidget.html#QWidget">QWidget</db:type>
+         <db:methodname>topLevelWidget</db:methodname>
+         <db:void/>
+         <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
       <db:enumsynopsis xlink:href="#RenderFlag-enum">
          <db:enumname>RenderFlag</db:enumname>
          <db:enumitem>

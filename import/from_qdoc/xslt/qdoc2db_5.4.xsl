@@ -599,14 +599,13 @@
         <xsl:if test="$classes and $warnVocabularyUnsupportedFeatures">
           <xsl:message>WARNING: No precise output for namespace classes.</xsl:message>
         </xsl:if>
-        <xsl:call-template name="classListing">
+        <xsl:call-template name="nsListing">
           <xsl:with-param name="className"
             select="
               if ($isGlobal) then
                 'QtGlobal'
               else
                 $namespaceName"/>
-          <xsl:with-param name="isNamespace" select="true()"/>
 
           <xsl:with-param name="functions"
             select="
@@ -616,7 +615,7 @@
                 /.."/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
-          <!-- <xsl:with-param name="macros" select="$macros"/> -->
+          <!-- TODO: <xsl:with-param name="macros" select="$macros"/> -->
 
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
@@ -1078,9 +1077,8 @@
   </xsl:template>
 
   <!-- Handle classes: class structure. -->
-  <xsl:template name="classListing">
+  <xsl:template name="nsListing">
     <xsl:param name="className" as="xs:string"/>
-    <xsl:param name="isNamespace" as="xs:boolean" select="false()"/>
 
     <xsl:param name="functions" as="element(html:div)?"/>
     <xsl:param name="properties" as="element(html:div)?"/>
@@ -1107,11 +1105,10 @@
         </db:classname>
       </db:ooclass>
 
-      <xsl:if test="$isNamespace">
-        <db:classsynopsisinfo role="isNamespace">
-          <xsl:text>yes</xsl:text>
-        </db:classsynopsisinfo>
-      </xsl:if>
+      <db:classsynopsisinfo role="isNamespace">
+        <xsl:text>yes</xsl:text>
+      </db:classsynopsisinfo>
+      
       <xsl:if test="$header">
         <db:classsynopsisinfo role="header">
           <xsl:value-of select="$header"/>
@@ -1150,18 +1147,14 @@
       <xsl:apply-templates mode="propertiesListing" select="$properties/html:h3">
         <xsl:with-param name="kind" select="'Qt property'"/>
       </xsl:apply-templates>
-      <xsl:if test="boolean($obsoleteProperties)">
-        <xsl:apply-templates mode="propertiesListing" select="$obsoleteProperties/html:h3">
-          <xsl:with-param name="type" select="'obsolete'"/>
-          <xsl:with-param name="kind" select="'Qt property'"/>
-        </xsl:apply-templates>
-      </xsl:if>
-      <xsl:if test="boolean($compatProperties)">
-        <xsl:apply-templates mode="propertiesListing" select="$compatProperties/html:h3">
-          <xsl:with-param name="type" select="'compat'"/>
-          <xsl:with-param name="kind" select="'Qt property'"/>
-        </xsl:apply-templates>
-      </xsl:if>
+      <xsl:apply-templates mode="propertiesListing" select="$obsoleteProperties/html:h3">
+        <xsl:with-param name="type" select="'obsolete'"/>
+        <xsl:with-param name="kind" select="'Qt property'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="propertiesListing" select="$compatProperties/html:h3">
+        <xsl:with-param name="type" select="'compat'"/>
+        <xsl:with-param name="kind" select="'Qt property'"/>
+      </xsl:apply-templates>
       <xsl:apply-templates mode="propertiesListing" select="$vars/html:h3">
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
@@ -1170,23 +1163,121 @@
       <xsl:apply-templates mode="classListing" select="$functions/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
-      <xsl:if test="boolean($obsoleteMemberFunctions)">
-        <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
-          <xsl:with-param name="className" select="$className"/>
-          <xsl:with-param name="type" select="'obsolete'"/>
-        </xsl:apply-templates>
+      <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="type" select="'obsolete'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="type" select="'compat'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="functionListing" select="$types/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
+    </db:classsynopsis>
+  </xsl:template>
+  <xsl:template name="classListing">
+    <xsl:param name="className" as="xs:string"/>
+    <xsl:param name="isNamespace" as="xs:boolean" select="false()"/>
+    
+    <xsl:param name="functions" as="element(html:div)?"/>
+    <xsl:param name="properties" as="element(html:div)?"/>
+    <xsl:param name="vars" as="element(html:div)?"/>
+    <xsl:param name="macros" as="element(html:div)?"/>
+    <xsl:param name="types" as="element(html:div)?"/>
+    
+    <xsl:param name="obsoleteMemberFunctions" as="element(html:div)?"/>
+    <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
+    
+    <xsl:param name="compatMemberFunctions" as="element(html:div)?"/>
+    <xsl:param name="compatProperties" as="element(html:div)?"/>
+    
+    <xsl:param name="header" as="element()?"/>
+    <xsl:param name="qmake" as="element()?"/>
+    <xsl:param name="inherits" as="element()?"/>
+    <xsl:param name="inheritedBy" as="element()?"/>
+    <xsl:param name="since" as="element()?"/>
+    
+    <db:classsynopsis>
+      <db:ooclass>
+        <db:classname>
+          <xsl:value-of select="$className"/>
+        </db:classname>
+      </db:ooclass>
+      
+      <xsl:if test="$isNamespace">
+        <db:classsynopsisinfo role="isNamespace">
+          <xsl:text>yes</xsl:text>
+        </db:classsynopsisinfo>
       </xsl:if>
-      <xsl:if test="boolean($compatMemberFunctions)">
-        <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
-          <xsl:with-param name="className" select="$className"/>
-          <xsl:with-param name="type" select="'compat'"/>
-        </xsl:apply-templates>
+      <xsl:if test="$header">
+        <db:classsynopsisinfo role="header">
+          <xsl:value-of select="$header"/>
+        </db:classsynopsisinfo>
       </xsl:if>
-      <xsl:if test="$types">
-        <xsl:apply-templates mode="functionListing" select="$types/html:h3">
-          <xsl:with-param name="className" select="$className"/>
-        </xsl:apply-templates>
+      <xsl:if test="$qmake">
+        <db:classsynopsisinfo role="qmake">
+          <xsl:value-of select="$qmake"/>
+        </db:classsynopsisinfo>
       </xsl:if>
+      <xsl:if test="$inherits">
+        <xsl:for-each select="$inherits/html:a">
+          <db:classsynopsisinfo role="inherits">
+            <db:link xlink:href="{@href}">
+              <xsl:value-of select="text()"/>
+            </db:link>
+          </db:classsynopsisinfo>
+        </xsl:for-each>
+      </xsl:if>
+      <xsl:if test="$inheritedBy">
+        <xsl:for-each select="$inheritedBy/html:p/html:a">
+          <db:classsynopsisinfo role="inheritedBy">
+            <db:link xlink:href="{@href}">
+              <xsl:value-of select="text()"/>
+            </db:link>
+          </db:classsynopsisinfo>
+        </xsl:for-each>
+      </xsl:if>
+      <xsl:if test="$since">
+        <db:classsynopsisinfo role="since">
+          <xsl:value-of select="$since"/>
+        </db:classsynopsisinfo>
+      </xsl:if>
+      
+      <!-- Deal with properties and variables as fields. -->
+      <xsl:apply-templates mode="propertiesListing" select="$properties/html:h3">
+        <xsl:with-param name="kind" select="'Qt property'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="propertiesListing" select="$obsoleteProperties/html:h3">
+        <xsl:with-param name="type" select="'obsolete'"/>
+        <xsl:with-param name="kind" select="'Qt property'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="propertiesListing" select="$compatProperties/html:h3">
+        <xsl:with-param name="type" select="'compat'"/>
+        <xsl:with-param name="kind" select="'Qt property'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="propertiesListing" select="$vars/html:h3">
+        <xsl:with-param name="kind" select="'public variable'"/>
+      </xsl:apply-templates>
+      
+      <!-- Deal with functions, then types and macros. -->
+      <xsl:apply-templates mode="classListing" select="$functions/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="type" select="'obsolete'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="type" select="'compat'"/>
+      </xsl:apply-templates>
+      <xsl:apply-templates mode="functionListing" select="$types/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
