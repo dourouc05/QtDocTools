@@ -48,7 +48,7 @@
 
   <!-- Main function. Output document class. -->
   <xsl:template match="html:html">
-    <xsl:variable name="content" select=".//html:div[@class = 'content mainContent']"/>
+    <xsl:variable name="content" select="//html:div[@class = 'content mainContent']"/>
 
     <xsl:if test="not($content)">
       <xsl:message terminate="yes">ERROR: This page has no content!</xsl:message>
@@ -58,7 +58,6 @@
     <xsl:variable name="title" select="$content/html:h1[@class = 'title']/text()" as="xs:string"/>
     <xsl:variable name="subtitle" as="xs:string"
       select="string($content/html:span[@class = 'subtitle']/text())"/>
-    <xsl:variable name="hasSubtitle" as="xs:boolean" select="not($subtitle = '')"/>
 
     <xsl:variable name="isClass" as="xs:boolean"
       select="ends-with($title, ' Class') and count(contains($title, ' ')) = 1"/>
@@ -171,14 +170,12 @@
                     <xsl:choose>
                       <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
                       <xsl:when test="current()[self::html:h2]">
-                        <html:h3>
-                          <xsl:attribute name="id" select="current()/@id"/>
+                        <html:h3 xml:id="{current()/@id}">
                           <xsl:value-of select="current()"/>
                         </html:h3>
                       </xsl:when>
                       <xsl:when test="current()[self::html:h3]">
-                        <html:h4>
-                          <xsl:attribute name="id" select="current()/@id"/>
+                        <html:h4 xml:id="{current()/@id}">
                           <xsl:value-of select="current()"/>
                         </html:h4>
                       </xsl:when>
@@ -195,14 +192,14 @@
             <!-- If there is no actual detailed description, take what is available in the header part. -->
             <html:div class="descr">
               <html:h2 id="details">Detailed Description</html:h2>
-              <xsl:copy-of select="$content/html:p[./html:a[@href = '#details']]"/>
+              <xsl:copy-of select="$content/html:p[html:a[@href = '#details']]"/>
             </html:div>
           </xsl:when>
           <xsl:otherwise>
             <!-- Deal with QML descriptions. -->
             <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
             <xsl:variable name="forbiddenTitles"
-              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Signal Documentation')]"            />
+              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Signal Documentation')]"/>
 
             <html:div class="descr">
               <html:h2 id="details">Detailed Description</html:h2>
@@ -220,26 +217,14 @@
                 <xsl:choose>
                   <xsl:when test="current()[self::html:h2]">
                     <xsl:if test="not(. = $forbiddenTitles)">
-                      <html:h3>
-                        <xsl:attribute name="id"
-                          select="
-                            if (@id) then
-                              @id
-                            else
-                              ./preceding-sibling::node()[1]/@name"/>
+                      <html:h3 xml:id="{if (@id) then @id else preceding-sibling::node()[1]/@name}">
                         <xsl:value-of select="current()"/>
                       </html:h3>
                     </xsl:if>
                   </xsl:when>
                   <xsl:when
                     test="current()[self::html:h3][preceding-sibling::html:h2[1] != $descTitle]">
-                    <html:h4>
-                      <xsl:attribute name="id"
-                        select="
-                          if (@id) then
-                            @id
-                          else
-                            ./preceding-sibling::node()[1]/@name"/>
+                    <html:h4 xml:id="{if (@id) then @id else preceding-sibling::node()[1]/@name}">
                       <xsl:value-of select="current()"/>
                     </html:h4>
                   </xsl:when>
@@ -284,7 +269,6 @@
     <xsl:variable name="index" as="element()?"
       select="$siblingAfterSeeAlso[self::html:div][@class = 'table'][html:table[@class = 'annotated']]"/>
     <!-- For pages that contain only an index, like accessibility -->
-    <xsl:variable name="hasIndex" select="boolean($index)" as="xs:boolean"/>
     <xsl:if
       test="$isQmlType and //html:*[self::html:div][@class = 'table'][html:table[@class = 'annotated']]">
       <xsl:message>WARNING: QML type seems to have an index page; not implemented. </xsl:message>
@@ -387,9 +371,9 @@
 
     <!-- Error checks. -->
     <xsl:variable name="isExamplePage" as="xs:boolean"
-      select="$hasSubtitle and ends-with($title, 'Example File')"/>
+      select="$subtitle and ends-with($title, 'Example File')"/>
 
-    <xsl:if test="$hasSubtitle and not($isExamplePage)">
+    <xsl:if test="$subtitle and not($isExamplePage)">
       <!-- Ignore the subtitles for example pages, with only source code (it is redundant with the title). -->
       <xsl:message terminate="no">WARNING: Found a subtitle; not implemented</xsl:message>
     </xsl:if>
@@ -437,13 +421,7 @@
 
       <list>
         <xsl:for-each select="$linkedDocumentsFileNames">
-          <entry>
-            <xsl:attribute name="file-name">
-              <xsl:value-of select="."/>
-            </xsl:attribute>
-            <xsl:attribute name="type">
-              <xsl:value-of select="substring-after(replace(., '.xml', ''), '-')"/>
-            </xsl:attribute>
+          <entry file-name="{.}" type="{substring-after(replace(., '.xml', ''), '-')}">
             <xsl:copy-of select="document(resolve-uri(., base-uri($content)))"/>
           </entry>
         </xsl:for-each>
@@ -551,10 +529,7 @@
     </xsl:variable>
 
     <!-- Actually output something. -->
-    <db:article>
-      <xsl:attribute name="version" select="tc:version()"/>
-      <xsl:attribute name="xml:lang" select="@lang"/>
-
+    <db:article version="{tc:version()}" xml:lang="{@lang}">
       <db:title>
         <xsl:value-of select="$title"/>
       </db:title>
@@ -682,207 +657,111 @@
       </xsl:call-template>
 
       <!-- There may be a table for generated index pages. -->
-      <xsl:if test="$hasIndex">
+      <xsl:if test="$index">
         <xsl:apply-templates mode="indexTable" select="$index"/>
       </xsl:if>
 
       <!-- There may be types, properties, functions, and macros for C++ classes and namespaces. -->
       <xsl:if test="not($isQdocDocumentation)">
-        <xsl:if test="$classes">
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$classes"/>
+          <xsl:with-param name="title" select="'Classes'"/>
+          <xsl:with-param name="anchor" select="'classes'"/>
+        </xsl:call-template>
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$types"/>
+          <xsl:with-param name="title" select="'Member Type Documentation'"/>
+          <xsl:with-param name="anchor" select="'types'"/>
+        </xsl:call-template>
+        <xsl:if test="not($isQmlType)">
           <xsl:call-template name="content_types">
-            <xsl:with-param name="data" select="$classes"/>
-            <xsl:with-param name="title" select="'Classes'"/>
-            <xsl:with-param name="anchor" select="'classes'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$types">
-          <xsl:call-template name="content_types">
-            <xsl:with-param name="data" select="$types"/>
-            <xsl:with-param name="title" select="'Member Type Documentation'"/>
-            <xsl:with-param name="anchor" select="'types'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$properties and not($isQmlType)">
-          <xsl:call-template name="content_props">
             <xsl:with-param name="data" select="$properties"/>
             <xsl:with-param name="title" select="'Property Documentation'"/>
             <xsl:with-param name="anchor" select="'prop'"/>
           </xsl:call-template>
         </xsl:if>
+        <xsl:call-template name="content_class">
+          <xsl:with-param name="data" select="$funcs"/>
+          <xsl:with-param name="title" select="'Member Function Documentation'"/>
+          <xsl:with-param name="anchor" select="'func'"/>
+        </xsl:call-template>
+        <xsl:call-template name="content_nonmems">
+          <xsl:with-param name="data" select="$nonmems"/>
+          <xsl:with-param name="title" select="'Related Non-Members'"/>
+          <xsl:with-param name="anchor" select="'relnonmem'"/>
+        </xsl:call-template>
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$vars"/>
+          <xsl:with-param name="title" select="'Member Variable Documentation'"/>
+          <xsl:with-param name="anchor" select="'vars'"/>
+        </xsl:call-template>
+        <xsl:call-template name="content_types">
+          <xsl:with-param name="data" select="$nonmemtypes"/>
+          <xsl:with-param name="title" select="'Type Documentation'"/>
+          <xsl:with-param name="anchor" select="'nonmemtypes'"/>
+          <!-- Normally, 'types', but avoid clash. -->
+        </xsl:call-template>
+      </xsl:if>
 
-        <xsl:if test="$funcs">
-          <xsl:call-template name="content_class">
-            <xsl:with-param name="data" select="$funcs"/>
-            <xsl:with-param name="title" select="'Member Function Documentation'"/>
-            <xsl:with-param name="anchor" select="'func'"/>
-          </xsl:call-template>
-        </xsl:if>
+      <xsl:call-template name="content_class">
+        <xsl:with-param name="data" select="$nonmemfuncs"/>
+        <xsl:with-param name="title" select="'Function Documentation'"/>
+        <xsl:with-param name="anchor" select="'nonmemfunc'"/>
+        <!-- Normally, 'func', but avoid clash. -->
+      </xsl:call-template>
 
-        <xsl:if test="$nonmems">
-          <xsl:call-template name="content_nonmems">
-            <xsl:with-param name="data" select="$nonmems"/>
-            <xsl:with-param name="title" select="'Related Non-Members'"/>
-            <xsl:with-param name="anchor" select="'relnonmem'"/>
-          </xsl:call-template>
-        </xsl:if>
+      <xsl:if test="$macros">
+        <!-- TODO: and not($isNamespace): but macros cannot be put inside NSs currently! -->
+        <xsl:call-template name="content_macros">
+          <xsl:with-param name="data" select="$macros"/>
+          <xsl:with-param name="title" select="'Macro Documentation'"/>
+          <xsl:with-param name="anchor" select="'macros'"/>
+        </xsl:call-template>
+      </xsl:if>
 
-        <xsl:if test="$vars">
-          <xsl:call-template name="content_vars">
-            <xsl:with-param name="data" select="$vars"/>
-            <xsl:with-param name="title" select="'Member Variable Documentation'"/>
-            <xsl:with-param name="anchor" select="'vars'"/>
-          </xsl:call-template>
-        </xsl:if>
+      <!-- There may be properties and methods for QML types. -->
+      <xsl:if test="$isQmlType">
+        <xsl:call-template name="content_qmlProps">
+          <xsl:with-param name="data" select="$properties"/>
+          <xsl:with-param name="title" select="'Properties Documentation'"/>
+          <xsl:with-param name="anchor" select="'prop'"/>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:call-template name="content_qmlProps">
+        <xsl:with-param name="data" select="$qmlAttachedProps"/>
+        <xsl:with-param name="title" select="'Attached Properties Documentation'"/>
+        <xsl:with-param name="anchor" select="'qml-attached-props'"/>
+      </xsl:call-template>
+      <xsl:call-template name="content_qmlMeths">
+        <xsl:with-param name="data" select="$qmlMeths"/>
+        <xsl:with-param name="title" select="'Methods Documentation'"/>
+        <xsl:with-param name="anchor" select="'qml-meths'"/>
+      </xsl:call-template>
+      <xsl:call-template name="content_qmlMeths">
+        <xsl:with-param name="data" select="$qmlSignals"/>
+        <xsl:with-param name="title" select="'Signals Documentation'"/>
+        <xsl:with-param name="anchor" select="'qml-signals'"/>
+        <xsl:with-param name="type" select="'signal'"/>
+      </xsl:call-template>
 
-        <xsl:if test="$nonmemtypes">
-          <xsl:call-template name="content_types">
-            <xsl:with-param name="data" select="$nonmemtypes"/>
-            <xsl:with-param name="title" select="'Type Documentation'"/>
-            <xsl:with-param name="anchor" select="'nonmemtypes'"/>
-            <!-- Normally, 'types', but avoid clash. -->
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$nonmemfuncs">
-          <xsl:call-template name="content_class">
-            <xsl:with-param name="data" select="$nonmemfuncs"/>
-            <xsl:with-param name="title" select="'Function Documentation'"/>
-            <xsl:with-param name="anchor" select="'nonmemfunc'"/>
-            <!-- Normally, 'func', but avoid clash. -->
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$macros">
-          <!--  and not($isNamespace): but macros cannot be put inside NSs currently! -->
-          <xsl:call-template name="content_macros">
-            <xsl:with-param name="data" select="$macros"/>
-            <xsl:with-param name="title" select="'Macro Documentation'"/>
-            <xsl:with-param name="anchor" select="'macros'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <!-- There may be properties and methods for QML types. -->
-        <xsl:if test="$properties and $isQmlType">
-          <xsl:call-template name="content_qmlProps">
-            <xsl:with-param name="data" select="$properties"/>
-            <xsl:with-param name="title" select="'Properties Documentation'"/>
-            <xsl:with-param name="anchor" select="'prop'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$qmlAttachedProps">
-          <xsl:call-template name="content_qmlProps">
-            <xsl:with-param name="data" select="$qmlAttachedProps"/>
-            <xsl:with-param name="title" select="'Attached Properties Documentation'"/>
-            <xsl:with-param name="anchor" select="'qml-attached-props'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$qmlMeths">
-          <xsl:call-template name="content_qmlMeths">
-            <xsl:with-param name="data" select="$qmlMeths"/>
-            <xsl:with-param name="title" select="'Methods Documentation'"/>
-            <xsl:with-param name="anchor" select="'qml-meths'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <xsl:if test="$qmlSignals">
-          <xsl:call-template name="content_qmlMeths">
-            <xsl:with-param name="data" select="$qmlSignals"/>
-            <xsl:with-param name="title" select="'Signals Documentation'"/>
-            <xsl:with-param name="anchor" select="'qml-signals'"/>
-            <xsl:with-param name="type" select="'signal'"/>
-          </xsl:call-template>
-        </xsl:if>
-
-        <!-- There may be obsolete or compatibility things for C++ classes. -->
-        <!-- Prefix anchors with obsolete_ or compat_. -->
-        <xsl:if test="$obsolete">
-          <db:section>
-            <db:title>
-              <xsl:text>Obsolete Members</xsl:text>
-            </db:title>
-
-            <xsl:if test="$obsolete_types">
-              <!-- No example found in test suite. -->
-              <xsl:call-template name="content_types">
-                <xsl:with-param name="data" select="$obsolete_types"/>
-                <xsl:with-param name="title" select="'Type Documentation'"/>
-                <xsl:with-param name="anchor" select="'obsolete_types'"/>
-              </xsl:call-template>
-            </xsl:if>
-
-            <xsl:if test="$obsolete_memfuncs">
-              <xsl:call-template name="content_class">
-                <xsl:with-param name="data" select="$obsolete_memfuncs"/>
-                <xsl:with-param name="title" select="'Member Function Documentation'"/>
-                <xsl:with-param name="anchor" select="'obsolete_memfunc'"/>
-                <!-- Actually, func, but avoid mismatch with non-member functions. -->
-              </xsl:call-template>
-            </xsl:if>
-
-            <xsl:if test="$obsolete_funcs">
-              <xsl:call-template name="content_class">
-                <xsl:with-param name="data" select="$obsolete_funcs"/>
-                <xsl:with-param name="title" select="'Function Documentation'"/>
-                <xsl:with-param name="anchor" select="'obsolete_func'"/>
-              </xsl:call-template>
-            </xsl:if>
-
-            <xsl:if test="$obsolete_nonmems">
-              <xsl:call-template name="content_nonmems">
-                <xsl:with-param name="data" select="$obsolete_nonmems"/>
-                <xsl:with-param name="title" select="'Related Non-Members'"/>
-                <xsl:with-param name="anchor" select="'obsolete_nonmems'"/>
-                <!-- Actually, types, but avoid mismatch with types. -->
-              </xsl:call-template>
-            </xsl:if>
-          </db:section>
-        </xsl:if>
-        <xsl:if test="$compat">
-          <db:section>
-            <db:title>
-              <xsl:text>Compatibility Members</xsl:text>
-            </db:title>
-
-            <xsl:if test="$compat_types">
-              <!-- No example found in test suite. -->
-              <xsl:call-template name="content_types">
-                <xsl:with-param name="data" select="$compat_types"/>
-                <xsl:with-param name="title" select="'Type Documentation'"/>
-                <xsl:with-param name="anchor" select="'compat_types'"/>
-              </xsl:call-template>
-            </xsl:if>
-
-            <xsl:if test="$compat_memfuncs">
-              <xsl:call-template name="content_class">
-                <xsl:with-param name="data" select="$compat_memfuncs"/>
-                <xsl:with-param name="title" select="'Member Function Documentation'"/>
-                <xsl:with-param name="anchor" select="'compat_memfunc'"/>
-                <!-- Actually, func, but avoid mismatch with non-member functions. -->
-              </xsl:call-template>
-            </xsl:if>
-
-            <xsl:if test="$compat_funcs">
-              <xsl:call-template name="content_class">
-                <xsl:with-param name="data" select="$compat_funcs"/>
-                <xsl:with-param name="title" select="'Function Documentation'"/>
-                <xsl:with-param name="anchor" select="'compat_func'"/>
-              </xsl:call-template>
-            </xsl:if>
-
-            <xsl:if test="$compat_nonmems">
-              <xsl:call-template name="content_nonmems">
-                <xsl:with-param name="data" select="$compat_nonmems"/>
-                <xsl:with-param name="title" select="'Related Non-Members'"/>
-                <xsl:with-param name="anchor" select="'compat_nonmems'"/>
-                <!-- Actually, types, but avoid mismatch with types. -->
-              </xsl:call-template>
-            </xsl:if>
-          </db:section>
-        </xsl:if>
+      <!-- There may be obsolete or compatibility things for C++ classes. -->
+      <xsl:if test="$obsolete">
+        <xsl:call-template name="content_obs_compat">
+          <xsl:with-param name="isObsolete" select="true()"/>
+          <xsl:with-param name="types" select="$obsolete_types"/>
+          <xsl:with-param name="memfuncs" select="$obsolete_memfuncs"/>
+          <xsl:with-param name="funcs" select="$obsolete_funcs"/>
+          <xsl:with-param name="nonmems" select="$obsolete_nonmems"/>
+        </xsl:call-template>
+      </xsl:if>
+      <xsl:if test="$compat">
+        <xsl:call-template name="content_obs_compat">
+          <xsl:with-param name="isObsolete" select="false()"/>
+          <xsl:with-param name="types" select="$compat_types"/>
+          <xsl:with-param name="memfuncs" select="$compat_memfuncs"/>
+          <xsl:with-param name="funcs" select="$compat_funcs"/>
+          <xsl:with-param name="nonmems" select="$compat_nonmems"/>
+        </xsl:call-template>
       </xsl:if>
     </db:article>
   </xsl:template>
@@ -901,7 +780,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
   <xsl:template name="lookupSection">
     <xsl:param name="globalList" as="element(html:div)*"/>
     <xsl:param name="anchor" as="xs:string"/>
@@ -914,8 +793,7 @@
       </xsl:when>
       <xsl:when test="//html:h2[text() = $title]">
         <xsl:variable name="titleNode" select="//html:h2[text() = $title]"/>
-        <html:div>
-          <xsl:attribute name="class" select="$anchor"/>
+        <html:div class="{$anchor}">
           <html:h2>
             <xsl:value-of select="$title"/>
           </html:h2>
@@ -929,7 +807,8 @@
                 </xsl:if>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:if test="not(preceding-sibling::html:h3[1]/@id = preceding-sibling::html:h3[2]/@id)">
+                <xsl:if
+                  test="not(preceding-sibling::html:h3[1]/@id = preceding-sibling::html:h3[2]/@id)">
                   <xsl:copy-of select="."/>
                 </xsl:if>
               </xsl:otherwise>
@@ -947,11 +826,11 @@
     <xsl:variable name="titleTag" as="element(html:h2)?"
       select="$root/html:h2[text() = $title][not(following-sibling::html:*[1][self::html:div[@class = 'table']])]"/>
     <xsl:if test="$titleTag">
-      <html:div>
-        <xsl:attribute name="class" select="$anchor"/>
+      <html:div class="{$anchor}">
         <xsl:copy-of select="$titleTag"/>
         <xsl:copy-of
-          select="$titleTag/following-sibling::node()[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleTag]"/>
+          select="$titleTag/following-sibling::node()[not(self::html:h2)][preceding-sibling::html:h2[1] = $titleTag]"
+        />
       </html:div>
     </xsl:if>
   </xsl:template>
@@ -1064,17 +943,14 @@
 
   <!-- Utility templates, to output DocBook tags. -->
   <xsl:template mode="db_imageobject" match="html:img">
+    <!-- Used within <db:mediaobject> and <db:inlinemediaobject>. -->
     <xsl:if test="@alt and not(@alt = '')">
       <db:alt>
         <xsl:value-of select="@alt"/>
       </db:alt>
     </xsl:if>
     <db:imageobject>
-      <db:imagedata>
-        <xsl:attribute name="fileref">
-          <xsl:copy-of select="@src"/>
-        </xsl:attribute>
-      </db:imagedata>
+      <db:imagedata fileref="{@src}"/>
     </db:imageobject>
   </xsl:template>
 
@@ -1125,8 +1001,7 @@
           <xsl:variable name="part2" select="tokenize($part1[2], '\|\|\|\|\]')"/>
           <xsl:variable name="text" select="$part2[1]"/>
 
-          <db:link>
-            <xsl:attribute name="xlink:href" select="$url"/>
+          <db:link xlink:href="{$url}">
             <xsl:value-of select="$text"/>
           </db:link>
         </xsl:otherwise>
@@ -1189,14 +1064,14 @@
   </xsl:template>
   <xsl:template match="html:table" mode="indexTable">
     <xsl:choose>
-      <xsl:when test="./@class = 'annotated'">
+      <xsl:when test="@class = 'annotated'">
         <!-- Like index pages. -->
         <xsl:apply-templates select="." mode="content"/>
       </xsl:when>
-      <xsl:when test="./@class = 'alignedsummary'"/>
+      <xsl:when test="@class = 'alignedsummary'"/>
       <!-- Like class pages: just redundant. -->
       <xsl:otherwise>
-        <xsl:message terminate="no">WARNING: Unknown table: <xsl:value-of select="./@class"
+        <xsl:message terminate="no">WARNING: Unknown table: <xsl:value-of select="@class"
           /></xsl:message>
       </xsl:otherwise>
     </xsl:choose>
@@ -1250,8 +1125,7 @@
       <xsl:if test="$inherits">
         <xsl:for-each select="$inherits/html:a">
           <db:classsynopsisinfo role="inherits">
-            <db:link>
-              <xsl:attribute name="xlink:href" select="@href"/>
+            <db:link xlink:href="{@href}">
               <xsl:value-of select="text()"/>
             </db:link>
           </db:classsynopsisinfo>
@@ -1260,8 +1134,7 @@
       <xsl:if test="$inheritedBy">
         <xsl:for-each select="$inheritedBy/html:p/html:a">
           <db:classsynopsisinfo role="inheritedBy">
-            <db:link>
-              <xsl:attribute name="xlink:href" select="@href"/>
+            <db:link xlink:href="{@href}">
               <xsl:value-of select="text()"/>
             </db:link>
           </db:classsynopsisinfo>
@@ -1324,7 +1197,7 @@
   <xsl:template mode="propertiesListing" match="html:h3[@class = 'fn']">
     <xsl:param name="type" as="xs:string" select="''"/>
     <xsl:param name="kind" as="xs:string"/>
-    <xsl:variable name="anchor" select="./@id"/>
+    <xsl:variable name="anchor" select="@id"/>
 
     <db:fieldsynopsis>
       <xsl:if test="$kind">
@@ -1340,10 +1213,10 @@
       </xsl:if>
 
       <xsl:call-template name="classListing_methodBody_analyseType">
-        <xsl:with-param name="typeNodes" select="./html:span[@class = 'type']"/>
+        <xsl:with-param name="typeNodes" select="html:span[@class = 'type']"/>
       </xsl:call-template>
       <db:varname>
-        <xsl:value-of select="./html:span[@class = 'name']/text()"/>
+        <xsl:value-of select="html:span[@class = 'name']/text()"/>
       </db:varname>
     </db:fieldsynopsis>
   </xsl:template>
@@ -1354,31 +1227,28 @@
     <xsl:param name="type" as="xs:string" select="''"/>
 
     <!-- Possible anchors: for constructors, Class, Class-2; for destructors, dtor.Class -->
-    <xsl:variable name="functionAnchor" select="./@id"/>
+    <xsl:variable name="functionAnchor" select="@id"/>
     <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/>
     <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/>
     <xsl:variable name="isFct" select="not($isCtor or $isDtor)"/>
 
     <xsl:choose>
       <xsl:when test="$isCtor">
-        <db:constructorsynopsis>
-          <xsl:attribute name="xlink:href" select="concat('#', $functionAnchor)"/>
+        <db:constructorsynopsis xlink:href="#{$functionAnchor}">
           <xsl:call-template name="classListing_methodBody">
             <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
         </db:constructorsynopsis>
       </xsl:when>
       <xsl:when test="$isDtor">
-        <db:destructorsynopsis>
-          <xsl:attribute name="xlink:href" select="$functionAnchor"/>
+        <db:destructorsynopsis xlink:href="#{$functionAnchor}">
           <xsl:call-template name="classListing_methodBody">
             <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
         </db:destructorsynopsis>
       </xsl:when>
       <xsl:when test="$isFct">
-        <db:methodsynopsis>
-          <xsl:attribute name="xlink:href" select="$functionAnchor"/>
+        <db:methodsynopsis xlink:href="#{$functionAnchor}">
           <xsl:call-template name="classListing_methodBody">
             <xsl:with-param name="type" select="$type"/>
           </xsl:call-template>
@@ -1390,7 +1260,7 @@
     <xsl:param name="type" as="xs:string" select="''"/>
 
     <xsl:variable name="titleNode" select="."/>
-    <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
+    <xsl:variable name="functionName" select="html:span[@class = 'name']"/>
     <xsl:variable name="returnTypes"
       select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
     <xsl:variable name="isStatic" as="xs:boolean"
@@ -1465,11 +1335,7 @@
         <xsl:variable name="node" select="$typeNodes[1]"/>
         <xsl:choose>
           <xsl:when test="$node/html:a">
-            <db:type>
-              <xsl:attribute name="xlink:href">
-                <xsl:value-of select="$node/html:a/@href"/>
-              </xsl:attribute>
-
+            <db:type xlink:href="{$node/html:a/@href}">
               <xsl:value-of select="$node/html:a/text()"/>
             </db:type>
           </xsl:when>
@@ -1523,13 +1389,11 @@
   </xsl:template>
   <xsl:template mode="macroListing" match="text()"/>
   <xsl:template mode="macroListing" match="html:h3[@class = 'fn']">
-    <db:funcsynopsis>
-      <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
-
+    <db:funcsynopsis xlink:href="#{@id}">
       <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
       <db:funcprototype>
         <xsl:variable name="titleNode" select="."/>
-        <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
+        <xsl:variable name="functionName" select="html:span[@class = 'name']"/>
 
         <db:funcdef>
           <db:function>
@@ -1546,8 +1410,8 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:choose>
-              <xsl:when test="count(./html:i) &gt;= 1">
-                <xsl:for-each select="./html:i">
+              <xsl:when test="count(html:i) &gt;= 1">
+                <xsl:for-each select="html:i">
                   <db:paramdef choice="req">
                     <!-- A macro only has a name. -->
                     <db:parameter>
@@ -1578,16 +1442,16 @@
     </xsl:if>
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
-  <xsl:template mode="functionListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'enum')]">
-    <db:enumsynopsis>
-      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
-      
+  <xsl:template mode="functionListing"
+    match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'enum')]">
+    <db:enumsynopsis xlink:href="#{@id}">
       <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
       <db:enumname>
         <xsl:value-of select="$enumName"/>
       </db:enumname>
-      
-      <xsl:variable name="values" select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
+
+      <xsl:variable name="values"
+        select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
       <xsl:if test="$values">
         <xsl:for-each select="$values/html:tr">
           <xsl:if test="count(html:td) &gt;= 2">
@@ -1604,10 +1468,9 @@
       </xsl:if>
     </db:enumsynopsis>
   </xsl:template>
-  <xsl:template mode="functionListing" match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'typedef')]">
-    <db:typedefsynopsis>
-      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
-      
+  <xsl:template mode="functionListing"
+    match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'typedef')]">
+    <db:typedefsynopsis xlink:href="#{@id}">
       <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
       <db:typedefname>
         <xsl:value-of select="$enumName"/>
@@ -1623,12 +1486,10 @@
   <xsl:template mode="functionListing"
     match="html:h3[@class = 'fn'][not(starts-with(text()[1], 'typedef')) and not(starts-with(text()[1], 'enum'))]">
     <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
-    <db:funcsynopsis>
-      <xsl:attribute name="xlink:href" select="concat('#', ./@id)"/>
-
+    <db:funcsynopsis xlink:href="#{@id}">
       <db:funcprototype>
         <xsl:variable name="titleNode" select="."/>
-        <xsl:variable name="functionName" select="./html:span[@class = 'name']"/>
+        <xsl:variable name="functionName" select="html:span[@class = 'name']"/>
         <xsl:variable name="returnTypes"
           select="$functionName/preceding-sibling::html:span[@class = 'type']"/>
         <xsl:variable name="isStatic" as="xs:boolean"
@@ -1662,7 +1523,7 @@
             <db:void/>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:variable name="nArguments" select="count(./text()[contains(., ',')]) + 1"/>
+            <xsl:variable name="nArguments" select="count(text()[contains(., ',')]) + 1"/>
 
             <xsl:for-each select="1 to $nArguments">
               <xsl:variable name="index" select="." as="xs:integer"/>
@@ -1719,9 +1580,8 @@
     match="html:h3[not(@class = 'fn')][starts-with(normalize-space(.), 'class')]">
     <db:classsynopsis>
       <db:ooclass>
-        <db:classname>
-          <xsl:attribute name="xlink:href" select="./html:a/@href"/>
-          <xsl:value-of select="./html:a"/>
+        <db:classname xlink:href="{html:a/@href}">
+          <xsl:value-of select="html:a"/>
         </db:classname>
       </db:ooclass>
     </db:classsynopsis>
@@ -1825,7 +1685,7 @@
           <xsl:if test="contains($name, '.')">
             <db:modifier>(group)</db:modifier>
           </xsl:if>
-          
+
           <xsl:call-template name="classListing_methodBody_analyseType">
             <xsl:with-param name="typeNodes" select="$title/html:span[@class = 'type']"/>
           </xsl:call-template>
@@ -1932,24 +1792,25 @@
 
   <!-- Handle C++ types: detailed description. -->
   <xsl:template name="content_types">
-    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="data" as="element(html:div)?"/>
     <xsl:param name="title" as="xs:string"/>
     <xsl:param name="anchor" as="xs:string"/>
 
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+    <xsl:if test="$data and count($data/html:h3) &gt;= 1">
+      <db:section xml:id="{$anchor}">
+        <db:title>
+          <xsl:value-of select="$title"/>
+        </db:title>
 
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
-      </xsl:variable>
-      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
-    </db:section>
+        <xsl:variable name="elts_translated">
+          <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
+        </xsl:variable>
+        <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+          <xsl:message>WARNING: Missed at least one element!</xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="$elts_translated"/>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   <!-- 
     Three types of types: either class="fn", just an enum; or class="flags"; or no class, probably a C++ class. 
@@ -1970,59 +1831,37 @@
     </db:section>
   </xsl:template>
 
-  <!-- Handle C++ properties: detailed description. -->
-  <xsl:template name="content_props">
-    <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="title" as="xs:string"/>
-    <xsl:param name="anchor" as="xs:string"/>
-
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
-
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
-      </xsl:variable>
-      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
-    </db:section>
-  </xsl:template>
-
   <!-- Handle C++ classes: detailed description. -->
   <xsl:template name="content_class">
-    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="data" as="element(html:div)?"/>
     <xsl:param name="title" as="xs:string"/>
     <xsl:param name="anchor" as="xs:string"/>
 
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+    <xsl:if test="$data and count($data/html:h3) &gt;= 1">
+      <db:section xml:id="{$anchor}">
+        <db:title>
+          <xsl:value-of select="$title"/>
+        </db:title>
 
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
-      </xsl:variable>
-      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
-    </db:section>
+        <xsl:variable name="elts_translated">
+          <xsl:apply-templates mode="content_class" select="$data/html:h3"/>
+        </xsl:variable>
+        <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+          <xsl:message>WARNING: Missed at least one element!</xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="$elts_translated"/>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="content_class" match="html:h3[@class = 'fn']">
-    <xsl:variable name="functionAnchor" select="./@id"/>
-    <db:section>
-      <xsl:attribute name="xml:id" select="$functionAnchor"/>
+    <xsl:variable name="functionAnchor" select="@id"/>
+    <db:section xml:id="{$functionAnchor}">
       <xsl:call-template name="content_title"/>
 
       <xsl:choose>
-        <xsl:when test="./following-sibling::*[1][not(self::html:h3)]">
+        <xsl:when test="following-sibling::*[1][not(self::html:h3)]">
           <xsl:call-template name="content_class_content">
-            <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+            <xsl:with-param name="node" select="following-sibling::*[1]"/>
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -2053,8 +1892,7 @@
     <xsl:param name="title" as="xs:string"/>
     <xsl:param name="anchor" as="xs:string"/>
 
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
+    <db:section xml:id="{$anchor}">
       <db:title>
         <xsl:value-of select="$title"/>
       </db:title>
@@ -2071,111 +1909,86 @@
 
   <!-- Handle C++ classes: non-member related functions, typedefs, classes. -->
   <xsl:template name="content_nonmems">
-    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="data" as="element(html:div)?"/>
     <xsl:param name="title" as="xs:string"/>
     <xsl:param name="anchor" as="xs:string"/>
 
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+    <xsl:if test="$data and count($data/html:h3) &gt;= 1">
+      <db:section xml:id="{$anchor}">
+        <db:title>
+          <xsl:value-of select="$title"/>
+        </db:title>
 
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
-      </xsl:variable>
-      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
-    </db:section>
+        <xsl:variable name="elts_translated">
+          <xsl:apply-templates mode="content_nonmems" select="$data/html:h3"/>
+        </xsl:variable>
+        <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
+          <xsl:message>WARNING: Missed at least one element!</xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="$elts_translated"/>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="content_nonmems" match="html:h3[not(@class)]">
     <!-- Classes (they have no anchor!) -->
-    <xsl:variable name="functionAnchor" select="./@id"/>
+    <xsl:variable name="functionAnchor" select="@id"/>
     <db:section>
       <xsl:call-template name="content_title"/>
 
       <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+        <xsl:with-param name="node" select="following-sibling::*[1]"/>
       </xsl:call-template>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_nonmems" match="html:h3[@class = 'fn'][ends-with(@id, '-typedef')]">
     <!-- Classes -->
-    <db:section>
-      <xsl:attribute name="xml:id" select="tc:rewrite-xml-id(@id)"/>
+    <db:section xml:id="{tc:rewrite-xml-id(@id)}">
       <xsl:call-template name="content_title"/>
-
       <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+        <xsl:with-param name="node" select="following-sibling::*[1]"/>
       </xsl:call-template>
     </db:section>
   </xsl:template>
   <xsl:template mode="content_nonmems"
     match="html:h3[@class = 'fn'][not(ends-with(@id, '-typedef'))]">
-    <db:section>
-      <xsl:attribute name="xml:id" select="tc:rewrite-xml-id(@id)"/>
+    <db:section xml:id="{tc:rewrite-xml-id(@id)}">
       <xsl:call-template name="content_title"/>
       <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./following-sibling::*[1]"/>
+        <xsl:with-param name="node" select="following-sibling::*[1]"/>
       </xsl:call-template>
-    </db:section>
-  </xsl:template>
-
-  <!-- Handle C++ classes: member variables. -->
-  <xsl:template name="content_vars">
-    <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="title" as="xs:string"/>
-    <xsl:param name="anchor" as="xs:string"/>
-
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
-
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_types" select="$data/html:h3"/>
-      </xsl:variable>
-      <xsl:if test="not(count($elts_translated/db:section) = count($data/html:h3))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
     </db:section>
   </xsl:template>
 
   <!-- Handle QML properties. -->
   <xsl:template name="content_qmlProps">
-    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="data" as="element(html:div)?"/>
     <xsl:param name="title" as="xs:string"/>
     <xsl:param name="anchor" as="xs:string"/>
 
-    <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
-      <db:title>
-        <xsl:value-of select="$title"/>
-      </db:title>
+    <xsl:if test="$data">
+      <db:section xml:id="{$anchor}">
+        <db:title>
+          <xsl:value-of select="$title"/>
+        </db:title>
 
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
-      </xsl:variable>
-      <xsl:if
-        test="not(count($elts_translated/db:section) = count($data/html:div[@class = 'qmlitem']))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
-    </db:section>
+        <xsl:variable name="elts_translated">
+          <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+        </xsl:variable>
+        <xsl:if
+          test="not(count($elts_translated/db:section) = count($data/html:div[@class = 'qmlitem']))">
+          <xsl:message>WARNING: Missed at least one element!</xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="$elts_translated"/>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="content_qmlProps" match="html:div[@class = 'qmlitem']">
     <xsl:variable name="table"
-      select="./html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody"
+      select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody"
       as="element(html:tbody)"/>
     <xsl:variable name="row" select="$table/html:tr[1]" as="element(html:tr)"/>
 
-    <db:section>
-      <xsl:attribute name="xml:id" select="tc:rewrite-xml-id($row/@id)"/>
-
+    <db:section xml:id="{tc:rewrite-xml-id($row/@id)}">
       <!-- 
         Output the title. Either only one (single property) or a sequence of titles (property group).
         Not reusing that of C++, as it does not handle links (need to renormalise a lot strings in C++, 
@@ -2202,10 +2015,10 @@
           <xsl:for-each select="$table/html:tr">
             <xsl:if test="not(.//html:b)">
               <db:bridgehead renderas="sect3">
-                <xsl:value-of select="./html:td/html:p/html:span[@class = 'name']"/>
+                <xsl:value-of select="html:td/html:p/html:span[@class = 'name']"/>
                 <xsl:text> : </xsl:text>
                 <xsl:apply-templates mode="content_paragraph"
-                  select="./html:td/html:p/html:span[@class = 'type']"/>
+                  select="html:td/html:p/html:span[@class = 'type']"/>
               </db:bridgehead>
             </xsl:if>
           </xsl:for-each>
@@ -2214,32 +2027,87 @@
 
       <!-- Deal with the content. -->
       <xsl:call-template name="content_class_content">
-        <xsl:with-param name="node" select="./html:div[@class = 'qmldoc']/child::html:*[1]"/>
+        <xsl:with-param name="node" select="html:div[@class = 'qmldoc']/child::html:*[1]"/>
       </xsl:call-template>
     </db:section>
   </xsl:template>
 
   <!-- Handle QML methods. -->
   <xsl:template name="content_qmlMeths">
-    <xsl:param name="data" as="element(html:div)"/>
+    <xsl:param name="data" as="element(html:div)?"/>
     <xsl:param name="title" as="xs:string"/>
     <xsl:param name="anchor" as="xs:string"/>
     <xsl:param name="type" as="xs:string" select="''"/>
 
+    <xsl:if test="$data">
+      <db:section xml:id="{$anchor}">
+        <db:title>
+          <xsl:value-of select="$title"/>
+        </db:title>
+
+        <xsl:variable name="elts_translated">
+          <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
+        </xsl:variable>
+        <xsl:if
+          test="not(count($elts_translated/db:section) = count($data/html:div[@class = 'qmlitem']))">
+          <xsl:message>WARNING: Missed at least one element!</xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="$elts_translated"/>
+      </db:section>
+    </xsl:if>
+  </xsl:template>
+
+  <!-- Handle the obsolete and compatibility sections. -->
+  <xsl:template name="content_obs_compat">
+    <xsl:param name="isObsolete" as="xs:boolean"/>
+    <xsl:param name="types" as="element(html:div)?"/>
+    <xsl:param name="memfuncs" as="element(html:div)?"/>
+    <xsl:param name="funcs" as="element(html:div)?"/>
+    <xsl:param name="nonmems" as="element(html:div)?"/>
+
+    <xsl:variable name="isCompatibility" as="xs:boolean" select="not($isObsolete)"/>
+    <xsl:variable name="prefix" as="xs:string"
+      select="
+        if ($isCompatibility) then
+          'compat_'
+        else
+          'obsolete_'"/>
+    <!-- Prefix anchors with obsolete_ or compat_ to avoid clashes (not stored on the same page for Qt). -->
+
     <db:section>
-      <xsl:attribute name="xml:id" select="$anchor"/>
       <db:title>
-        <xsl:value-of select="$title"/>
+        <xsl:choose>
+          <xsl:when test="$isObsolete">
+            <xsl:text>Obsolete Members</xsl:text>
+          </xsl:when>
+          <xsl:when test="$isCompatibility">
+            <xsl:text>Compatibility Members</xsl:text>
+          </xsl:when>
+        </xsl:choose>
       </db:title>
 
-      <xsl:variable name="elts_translated">
-        <xsl:apply-templates mode="content_qmlProps" select="$data/html:div[@class = 'qmlitem']"/>
-      </xsl:variable>
-      <xsl:if
-        test="not(count($elts_translated/db:section) = count($data/html:div[@class = 'qmlitem']))">
-        <xsl:message>WARNING: Missed at least one element!</xsl:message>
-      </xsl:if>
-      <xsl:copy-of select="$elts_translated"/>
+      <xsl:call-template name="content_types">
+        <xsl:with-param name="data" select="$types"/>
+        <xsl:with-param name="title" select="'Type Documentation'"/>
+        <xsl:with-param name="anchor" select="concat($prefix, 'types')"/>
+      </xsl:call-template>
+      <xsl:call-template name="content_class">
+        <xsl:with-param name="data" select="$memfuncs"/>
+        <xsl:with-param name="title" select="'Member Function Documentation'"/>
+        <xsl:with-param name="anchor" select="concat($prefix, 'memfunc')"/>
+        <!-- Actually, func, but avoid mismatch with non-member functions. -->
+      </xsl:call-template>
+      <xsl:call-template name="content_class">
+        <xsl:with-param name="data" select="$funcs"/>
+        <xsl:with-param name="title" select="'Function Documentation'"/>
+        <xsl:with-param name="anchor" select="concat($prefix, 'func')"/>
+      </xsl:call-template>
+      <xsl:call-template name="content_nonmems">
+        <xsl:with-param name="data" select="$nonmems"/>
+        <xsl:with-param name="title" select="'Related Non-Members'"/>
+        <xsl:with-param name="anchor" select="concat($prefix, 'nonmems')"/>
+        <!-- Actually, types, but avoid mismatch with types. -->
+      </xsl:call-template>
     </db:section>
   </xsl:template>
 
@@ -2267,7 +2135,7 @@
         <db:informaltable>
           <db:tbody>
             <db:tr>
-              <xsl:for-each select="./html:div[@class = 'doc-column']">
+              <xsl:for-each select="html:div[@class = 'doc-column']">
                 <db:td>
                   <xsl:apply-templates select="*" mode="content"/>
                 </db:td>
@@ -2443,14 +2311,9 @@
   </xsl:template>
   <xsl:template mode="content" match="html:ol">
     <db:orderedlist>
-      <xsl:choose>
-        <xsl:when test=".[@class = '1']">
-          <xsl:attribute name="numeration">
-            <xsl:text>arabic</xsl:text>
-          </xsl:attribute>
-        </xsl:when>
-      </xsl:choose>
-
+      <xsl:if test="@class = '1'">
+        <xsl:attribute name="numeration" select="'arabic'"/>
+      </xsl:if>
       <xsl:apply-templates mode="content_list"/>
     </db:orderedlist>
   </xsl:template>
@@ -2462,11 +2325,11 @@
       <xsl:choose>
         <xsl:when
           test="
-            not(.[self::html:h2] or ./preceding-sibling::html:h2
-            or .[self::html:h3] or ./preceding-sibling::html:h3
-            or .[self::html:h4] or ./preceding-sibling::html:h4
-            or .[self::html:h5] or ./preceding-sibling::html:h5
-            or .[self::html:h6] or ./preceding-sibling::html:h6)">
+            not(self::html:h2 or preceding-sibling::html:h2
+            or self::html:h3 or preceding-sibling::html:h3
+            or self::html:h4 or preceding-sibling::html:h4
+            or self::html:h5 or preceding-sibling::html:h5
+            or self::html:h6 or preceding-sibling::html:h6)">
           <xsl:apply-templates mode="content" select="."/>
         </xsl:when>
       </xsl:choose>
@@ -2484,86 +2347,52 @@
       select="($firstTitle, $firstTitle/following-sibling::*)"/>
 
     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
-      <db:section>
-        <!-- Handle anchors. -->
-        <xsl:attribute name="xml:id">
-          <xsl:value-of
-            select="
-              tc:rewrite-xml-id(if (@id) then
-                @id
-              else
-                ./preceding-sibling::node()[1]/@name)"
-          />
-        </xsl:attribute>
-
+      <db:section
+        xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
         <!-- Handle title then subsections. In rare occasions, some sections are empty, and are directly followed by another title. -->
         <db:title>
-          <xsl:copy-of select="./text()"/>
+          <xsl:copy-of select="text()"/>
         </db:title>
         <xsl:if
-          test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h2 or self::html:h3])">
+          test="following-sibling::html:*[1][self::html:a] and (following-sibling::html:*[2][self::html:h2 or self::html:h3])">
           <db:para/>
         </xsl:if>
         <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
-              <db:section>
-                <xsl:attribute name="xml:id">
-                  <xsl:value-of
-                    select="
-                      tc:rewrite-xml-id(if (@id) then
-                        @id
-                      else
-                        ./preceding-sibling::node()[1]/@name)"
-                  />
-                </xsl:attribute>
+              <db:section
+                xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
                 <db:title>
-                  <xsl:copy-of select="./text()"/>
+                  <xsl:copy-of select="text()"/>
                 </db:title>
                 <xsl:if
-                  test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h3 or self::html:h4])">
+                  test="following-sibling::html:*[1][self::html:a] and (following-sibling::html:*[2][self::html:h3 or self::html:h4])">
                   <db:para/>
                 </xsl:if>
 
                 <xsl:for-each-group select="current-group()" group-starting-with="html:h4">
                   <xsl:choose>
                     <xsl:when test="current-group()[self::html:h4]">
-                      <db:section>
-                        <xsl:attribute name="xml:id">
-                          <xsl:value-of
-                            select="
-                              tc:rewrite-xml-id(if (@id) then
-                                @id
-                              else
-                                ./preceding-sibling::node()[1]/@name)"
-                          />
-                        </xsl:attribute>
+                      <db:section
+                        xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
                         <db:title>
-                          <xsl:copy-of select="./text()"/>
+                          <xsl:copy-of select="text()"/>
                         </db:title>
                         <xsl:if
-                          test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h4 or self::html:h5])">
+                          test="following-sibling::html:*[1][self::html:a] and (following-sibling::html:*[2][self::html:h4 or self::html:h5])">
                           <db:para/>
                         </xsl:if>
 
                         <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
                           <xsl:choose>
                             <xsl:when test="current-group()[self::html:h5]">
-                              <db:section>
-                                <xsl:attribute name="xml:id">
-                                  <xsl:value-of
-                                    select="
-                                      tc:rewrite-xml-id(if (@id) then
-                                        @id
-                                      else
-                                        ./preceding-sibling::node()[1]/@name)"
-                                  />
-                                </xsl:attribute>
+                              <db:section
+                                xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
                                 <db:title>
-                                  <xsl:copy-of select="./text()"/>
+                                  <xsl:copy-of select="text()"/>
                                 </db:title>
                                 <xsl:if
-                                  test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h5 or self::html:h6])">
+                                  test="following-sibling::html:*[1][self::html:a] and (following-sibling::html:*[2][self::html:h5 or self::html:h6])">
                                   <db:para/>
                                 </xsl:if>
 
@@ -2571,21 +2400,13 @@
                                   group-starting-with="html:h6">
                                   <xsl:choose>
                                     <xsl:when test="current-group()[self::html:h6]">
-                                      <db:section>
-                                        <xsl:attribute name="xml:id">
-                                          <xsl:value-of
-                                            select="
-                                              tc:rewrite-xml-id(if (@id) then
-                                                @id
-                                              else
-                                                ./preceding-sibling::node()[1]/@name)"
-                                          />
-                                        </xsl:attribute>
+                                      <db:section
+                                        xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
                                         <db:title>
-                                          <xsl:copy-of select="./text()"/>
+                                          <xsl:copy-of select="text()"/>
                                         </db:title>
                                         <xsl:if
-                                          test="./following-sibling::html:*[1][self::html:a] and (./following-sibling::html:*[2][self::html:h6])">
+                                          test="following-sibling::html:*[1][self::html:a] and (following-sibling::html:*[2][self::html:h6])">
                                           <db:para/>
                                         </xsl:if>
 
@@ -2632,7 +2453,7 @@
   <!-- Handle tables. -->
   <xsl:template name="content_table">
     <xsl:param name="tag" as="element(html:table)"/>
-    
+
     <xsl:if test="$tag/html:tbody/html:tr[1]/html:td[1] or $tag/html:tbody/html:tr[1]/html:th[1]">
       <db:informaltable>
         <xsl:apply-templates select="$tag/*" mode="content_table"/>
@@ -2657,7 +2478,7 @@
   <xsl:template mode="content_table" match="html:th">
     <db:th>
       <xsl:choose>
-        <xsl:when test="./child::html:p">
+        <xsl:when test="child::html:p">
           <xsl:apply-templates select="*" mode="content"/>
         </xsl:when>
         <xsl:otherwise>
@@ -2670,10 +2491,8 @@
   </xsl:template>
   <xsl:template mode="content_table" match="html:td">
     <db:td>
-      <xsl:if test=".[@rowspan]">
-        <xsl:attribute name="rowspan">
-          <xsl:value-of select="./@rowspan"/>
-        </xsl:attribute>
+      <xsl:if test="@rowspan">
+        <xsl:attribute name="rowspan" select="@rowspan"/>
       </xsl:if>
 
       <!-- 
@@ -2692,14 +2511,14 @@
       -->
       <xsl:choose>
         <xsl:when
-          test="./child::node()[1][self::html:p] | ./child::node()[1][self::html:pre] | ./child::node()[1][self::html:ul] | ./child::node()[1][self::html:ol]">
+          test="child::node()[1][self::html:p] | child::node()[1][self::html:pre] | child::node()[1][self::html:ul] | child::node()[1][self::html:ol]">
           <xsl:apply-templates select="*" mode="content"/>
         </xsl:when>
-        <xsl:when test="./child::html:p">
+        <xsl:when test="child::html:p">
           <!-- There is some text to wrap, then already wrapped text. -->
           <xsl:variable name="startText" as="element(html:p)">
             <html:p>
-              <xsl:for-each select="./child::node()">
+              <xsl:for-each select="child::node()">
                 <xsl:if test="not(self::html:p)">
                   <xsl:copy-of select="."/>
                 </xsl:if>
@@ -2707,7 +2526,7 @@
             </html:p>
           </xsl:variable>
           <xsl:variable name="endText" as="element(html:p)+">
-            <xsl:for-each select="./child::node()">
+            <xsl:for-each select="child::node()">
               <xsl:if test="self::html:p">
                 <xsl:copy-of select="."/>
               </xsl:if>
@@ -2734,15 +2553,15 @@
           Has it a paragraph child? DocBook needs one! QDoc peculiarity: may very well have text, then
           a paragraph tag! 
         -->
-        <xsl:when test="./child::node()[1][self::html:p]">
+        <xsl:when test="child::node()[1][self::html:p]">
           <xsl:apply-templates mode="content"/>
         </xsl:when>
-        <xsl:when test="./html:p">
+        <xsl:when test="html:p">
           <!-- It has a paragraph, but it's not the first element. Treat the beginning as if there were no paragraph near, then do the paragraph separately. -->
           <db:para>
             <xsl:apply-templates mode="content_paragraph"/>
           </db:para>
-          <xsl:apply-templates mode="content" select="./html:p"/>
+          <xsl:apply-templates mode="content" select="html:p"/>
         </xsl:when>
         <xsl:otherwise>
           <db:para>
@@ -2800,15 +2619,14 @@
     -->
     <xsl:choose>
       <!-- First case: followed by parentheses. -->
-      <xsl:when test="starts-with(./following-sibling::text()[1], '()')">
+      <xsl:when test="starts-with(following-sibling::text()[1], '()')">
         <!-- Prepare to conditionnally output a <db:code> tag around the link (only if not yet done). -->
         <xsl:variable name="link">
-          <db:link>
-            <xsl:attribute name="xlink:href" select="@href"/>
+          <db:link xlink:href="{@href}">
             <xsl:apply-templates mode="content_paragraph"/>
           </db:link>
           <xsl:variable name="toEndList" as="xs:string"
-            select="substring-before(./following-sibling::text()[1], ')')[1]"/>
+            select="substring-before(following-sibling::text()[1], ')')[1]"/>
           <xsl:value-of select="concat('(', substring-after($toEndList, '('), ')')"/>
         </xsl:variable>
 
@@ -2824,17 +2642,15 @@
         </xsl:choose>
       </xsl:when>
       <!-- Second case: only text, starts with a Q (hence a Qt C++ class). -->
-      <xsl:when
-        test="count(./text()) = 1 and starts-with(./text(), 'Q') and not(contains(./text(), ' '))">
+      <xsl:when test="count(text()) = 1 and starts-with(text(), 'Q') and not(contains(text(), ' '))">
         <xsl:variable name="link">
-          <db:link>
-            <xsl:attribute name="xlink:href" select="@href"/>
+          <db:link xlink:href="{@href}">
             <xsl:apply-templates mode="content_paragraph"/>
           </db:link>
           <!-- Maybe it's templated. -->
-          <xsl:if test="starts-with(./following-sibling::text()[1], '&lt;')">
+          <xsl:if test="starts-with(following-sibling::text()[1], '&lt;')">
             <xsl:variable name="toEndTemplate"
-              select="substring-before(./following-sibling::text()[1], '>')[1]"/>
+              select="substring-before(following-sibling::text()[1], '>')[1]"/>
 
             <xsl:text>&lt;</xsl:text>
             <xsl:value-of select="substring-after($toEndTemplate, '&lt;')"/>
@@ -2854,10 +2670,9 @@
         </xsl:choose>
       </xsl:when>
       <xsl:when
-        test="count(./text()) = 1 and starts-with(./text(), '&lt;') and ends-with(./text(), '&gt;')">
+        test="count(text()) = 1 and starts-with(text(), '&lt;') and ends-with(text(), '&gt;')">
         <xsl:variable name="link">
-          <db:link>
-            <xsl:attribute name="xlink:href" select="@href"/>
+          <db:link xlink:href="{@href}">
             <xsl:apply-templates mode="content_paragraph"/>
           </db:link>
         </xsl:variable>
@@ -2875,8 +2690,7 @@
       </xsl:when>
       <!-- No <db:code> should be inferred here. -->
       <xsl:otherwise>
-        <db:link>
-          <xsl:attribute name="xlink:href" select="@href"/>
+        <db:link xlink:href="{@href}">
           <xsl:apply-templates mode="content_paragraph"/>
         </db:link>
       </xsl:otherwise>
@@ -2911,13 +2725,13 @@
   <xsl:template mode="content_paragraph" match="html:acronym | html:abbr">
     <db:acronym>
       <db:alt>
-        <xsl:value-of select="./@title"/>
+        <xsl:value-of select="@title"/>
       </db:alt>
       <xsl:apply-templates mode="content_paragraph"/>
     </db:acronym>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:i | html:em">
-    <!-- Need to distinguish them? -->
+    <!-- When in some code, this is a placeholder. Otherwise, standard emphasis. s-->
     <xsl:choose>
       <xsl:when test="..[self::html:code]">
         <db:replaceable>
@@ -2946,15 +2760,8 @@
       <xsl:apply-templates mode="content_paragraph"/>
     </db:superscript>
   </xsl:template>
-  <xsl:template mode="content_paragraph" match="html:ul">
-    <db:itemizedlist>
-      <xsl:apply-templates mode="content_list"/>
-    </db:itemizedlist>
-  </xsl:template>
-  <xsl:template mode="content_paragraph" match="html:ol">
-    <db:orderedlist>
-      <xsl:apply-templates mode="content_list"/>
-    </db:orderedlist>
+  <xsl:template mode="content_paragraph" match="html:ul | html:ol">
+    <xsl:apply-templates mode="content" select="."/>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:code | html:tt">
     <db:code>
@@ -2973,7 +2780,7 @@
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:p">
     <!-- Paragraph in paragraph: quite rare, only to make an image. -->
-    <xsl:if test="./child::*[self::html:img]">
+    <xsl:if test="child::*[self::html:img]">
       <xsl:apply-templates mode="content_paragraph"/>
     </xsl:if>
   </xsl:template>
@@ -3027,41 +2834,8 @@
       </db:para>
     </xsl:if>
   </xsl:template>
-  <xsl:template mode="content_bq" match="html:ul">
-    <db:itemizedlist>
-      <xsl:apply-templates mode="content_list"/>
-    </db:itemizedlist>
-  </xsl:template>
-  <xsl:template mode="content_bq" match="html:ol">
-    <db:orderedlist>
-      <xsl:choose>
-        <xsl:when test="@class = '1'">
-          <xsl:attribute name="numeration">
-            <xsl:text>arabic</xsl:text>
-          </xsl:attribute>
-        </xsl:when>
-      </xsl:choose>
-
-      <xsl:apply-templates mode="content_list"/>
-    </db:orderedlist>
-  </xsl:template>
-  <xsl:template mode="content_bq" match="html:pre">
-    <db:programlisting>
-      <!-- 
-        All codes may have class="cpp", even JavaScript (qtqml-javascript-imports.xml), 
-        even though it's sometimes correct: qtbluetooth-index.xml, qml-color.xml. 
-        In other words: when it's not C++, it's reliable. 
-      -->
-      <xsl:if test="@class and not(@class = 'cpp')">
-        <xsl:attribute name="language" select="@class"/>
-      </xsl:if>
-      <xsl:value-of select="."/>
-    </db:programlisting>
-  </xsl:template>
-  <xsl:template mode="content_bq" match="html:table">
-    <xsl:call-template name="content_table">
-      <xsl:with-param name="tag" select="."/>
-    </xsl:call-template>
+  <xsl:template mode="content_bq" match="html:pre | html:ol | html:ul | html:table">
+    <xsl:apply-templates mode="content" select="."/>
   </xsl:template>
   <xsl:template mode="content_bq" match="html:tt[html:pre]">
     <xsl:apply-templates select="*" mode="content"/>

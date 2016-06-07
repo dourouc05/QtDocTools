@@ -262,7 +262,7 @@
                                                   &lt;QTest&gt;</db:classsynopsisinfo>
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 testlib</db:classsynopsisinfo>
-      <db:methodsynopsis xlink:href="addColumn">
+      <db:methodsynopsis xlink:href="#addColumn">
          <db:void/>
          <db:methodname>addColumn</db:methodname>
          <db:void role="parameters"/>
@@ -271,41 +271,41 @@
                                         name ,  T 
                                         *  dummy  = 0)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="benchmarkMetricName">
+      <db:methodsynopsis xlink:href="#benchmarkMetricName">
          <db:type>char</db:type>
          <db:methodname>benchmarkMetricName</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QBenchmarkMetric 
                                         metric )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="benchmarkMetricUnit">
+      <db:methodsynopsis xlink:href="#benchmarkMetricUnit">
          <db:type>char</db:type>
          <db:methodname>benchmarkMetricUnit</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QBenchmarkMetric 
                                         metric )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="currentAppName">
+      <db:methodsynopsis xlink:href="#currentAppName">
          <db:type>char</db:type>
          <db:methodname>currentAppName</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="currentDataTag">
+      <db:methodsynopsis xlink:href="#currentDataTag">
          <db:type>char</db:type>
          <db:methodname>currentDataTag</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="currentTestFailed">
+      <db:methodsynopsis xlink:href="#currentTestFailed">
          <db:type>bool</db:type>
          <db:methodname>currentTestFailed</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="currentTestFunction">
+      <db:methodsynopsis xlink:href="#currentTestFunction">
          <db:type>char</db:type>
          <db:methodname>currentTestFunction</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="ignoreMessage">
+      <db:methodsynopsis xlink:href="#ignoreMessage">
          <db:void/>
          <db:methodname>ignoreMessage</db:methodname>
          <db:void role="parameters"/>
@@ -313,7 +313,7 @@
                                     const  char  * 
                                         message )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="ignoreMessage-2">
+      <db:methodsynopsis xlink:href="#ignoreMessage-2">
          <db:void/>
          <db:methodname>ignoreMessage</db:methodname>
          <db:void role="parameters"/>
@@ -321,7 +321,7 @@
                                     const  QRegularExpression  &amp; 
                                         messagePattern )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyClick">
+      <db:methodsynopsis xlink:href="#keyClick">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyClick</db:methodname>
@@ -331,7 +331,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyClick-2">
+      <db:methodsynopsis xlink:href="#keyClick-2">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyClick</db:methodname>
@@ -341,7 +341,7 @@
                                         key ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyClick-3">
+      <db:methodsynopsis xlink:href="#keyClick-3">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyClick</db:methodname>
@@ -351,7 +351,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyClick-4">
+      <db:methodsynopsis xlink:href="#keyClick-4">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyClick</db:methodname>
@@ -360,7 +360,7 @@
                                         *  window ,  char  key ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyClicks">
+      <db:methodsynopsis xlink:href="#keyClicks">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyClicks</db:methodname>
@@ -370,7 +370,7 @@
                                         sequence ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyEvent">
+      <db:methodsynopsis xlink:href="#keyEvent">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyEvent</db:methodname>
@@ -381,7 +381,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyEvent-2">
+      <db:methodsynopsis xlink:href="#keyEvent-2">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyEvent</db:methodname>
@@ -392,7 +392,7 @@
                                         ascii ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyEvent-3">
+      <db:methodsynopsis xlink:href="#keyEvent-3">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyEvent</db:methodname>
@@ -403,7 +403,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyEvent-4">
+      <db:methodsynopsis xlink:href="#keyEvent-4">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyEvent</db:methodname>
@@ -414,7 +414,7 @@
                                         ascii ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyPress">
+      <db:methodsynopsis xlink:href="#keyPress">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyPress</db:methodname>
@@ -424,7 +424,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyPress-2">
+      <db:methodsynopsis xlink:href="#keyPress-2">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyPress</db:methodname>
@@ -434,7 +434,7 @@
                                         key ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyPress-3">
+      <db:methodsynopsis xlink:href="#keyPress-3">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyPress</db:methodname>
@@ -444,7 +444,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyPress-4">
+      <db:methodsynopsis xlink:href="#keyPress-4">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyPress</db:methodname>
@@ -453,7 +453,7 @@
                                         *  window ,  char  key ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyRelease">
+      <db:methodsynopsis xlink:href="#keyRelease">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyRelease</db:methodname>
@@ -463,7 +463,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyRelease-2">
+      <db:methodsynopsis xlink:href="#keyRelease-2">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyRelease</db:methodname>
@@ -473,7 +473,7 @@
                                         key ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyRelease-3">
+      <db:methodsynopsis xlink:href="#keyRelease-3">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyRelease</db:methodname>
@@ -483,7 +483,7 @@
                                          Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="keyRelease-4">
+      <db:methodsynopsis xlink:href="#keyRelease-4">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>keyRelease</db:methodname>
@@ -492,7 +492,7 @@
                                         *  window ,  char  key ,  Qt::KeyboardModifiers 
                                         modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseClick">
+      <db:methodsynopsis xlink:href="#mouseClick">
          <db:void/>
          <db:methodname>mouseClick</db:methodname>
          <db:void role="parameters"/>
@@ -503,7 +503,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseClick-2">
+      <db:methodsynopsis xlink:href="#mouseClick-2">
          <db:void/>
          <db:methodname>mouseClick</db:methodname>
          <db:void role="parameters"/>
@@ -514,7 +514,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseDClick">
+      <db:methodsynopsis xlink:href="#mouseDClick">
          <db:void/>
          <db:methodname>mouseDClick</db:methodname>
          <db:void role="parameters"/>
@@ -525,7 +525,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseDClick-2">
+      <db:methodsynopsis xlink:href="#mouseDClick-2">
          <db:void/>
          <db:methodname>mouseDClick</db:methodname>
          <db:void role="parameters"/>
@@ -536,7 +536,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseMove">
+      <db:methodsynopsis xlink:href="#mouseMove">
          <db:void/>
          <db:methodname>mouseMove</db:methodname>
          <db:void role="parameters"/>
@@ -545,7 +545,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseMove-2">
+      <db:methodsynopsis xlink:href="#mouseMove-2">
          <db:void/>
          <db:methodname>mouseMove</db:methodname>
          <db:void role="parameters"/>
@@ -554,7 +554,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mousePress">
+      <db:methodsynopsis xlink:href="#mousePress">
          <db:void/>
          <db:methodname>mousePress</db:methodname>
          <db:void role="parameters"/>
@@ -565,7 +565,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mousePress-2">
+      <db:methodsynopsis xlink:href="#mousePress-2">
          <db:void/>
          <db:methodname>mousePress</db:methodname>
          <db:void role="parameters"/>
@@ -576,7 +576,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseRelease">
+      <db:methodsynopsis xlink:href="#mouseRelease">
          <db:void/>
          <db:methodname>mouseRelease</db:methodname>
          <db:void role="parameters"/>
@@ -587,7 +587,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mouseRelease-2">
+      <db:methodsynopsis xlink:href="#mouseRelease-2">
          <db:void/>
          <db:methodname>mouseRelease</db:methodname>
          <db:void role="parameters"/>
@@ -598,7 +598,7 @@
                                     QPoint(),  int 
                                         delay  = -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="newRow">
+      <db:methodsynopsis xlink:href="#newRow">
          <db:type>QTestData</db:type>
          <db:methodname>newRow</db:methodname>
          <db:void role="parameters"/>
@@ -606,7 +606,7 @@
                                          char  * 
                                         dataTag )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qExec">
+      <db:methodsynopsis xlink:href="#qExec">
          <db:type>int</db:type>
          <db:methodname>qExec</db:methodname>
          <db:void role="parameters"/>
@@ -614,7 +614,7 @@
                                         testObject ,  int  argc  = 0,  char  **  argv  =
                                     0)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qExec-2">
+      <db:methodsynopsis xlink:href="#qExec-2">
          <db:type>int</db:type>
          <db:methodname>qExec</db:methodname>
          <db:void role="parameters"/>
@@ -622,20 +622,20 @@
                                         testObject , const  QStringList  &amp; 
                                         arguments )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qSleep">
+      <db:methodsynopsis xlink:href="#qSleep">
          <db:void/>
          <db:methodname>qSleep</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  ms )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qWait">
+      <db:methodsynopsis xlink:href="#qWait">
          <db:modifier>static</db:modifier>
          <db:void/>
          <db:methodname>qWait</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  ms )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qWaitForWindowActive">
+      <db:methodsynopsis xlink:href="#qWaitForWindowActive">
          <db:modifier>static</db:modifier>
          <db:type>bool</db:type>
          <db:methodname>qWaitForWindowActive</db:methodname>
@@ -644,7 +644,7 @@
                                          int 
                                         timeout  = 5000)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qWaitForWindowActive-2">
+      <db:methodsynopsis xlink:href="#qWaitForWindowActive-2">
          <db:modifier>static</db:modifier>
          <db:type>bool</db:type>
          <db:methodname>qWaitForWindowActive</db:methodname>
@@ -653,7 +653,7 @@
                                          int 
                                         timeout  = 1000)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qWaitForWindowExposed">
+      <db:methodsynopsis xlink:href="#qWaitForWindowExposed">
          <db:modifier>static</db:modifier>
          <db:type>bool</db:type>
          <db:methodname>qWaitForWindowExposed</db:methodname>
@@ -662,7 +662,7 @@
                                          int 
                                         timeout  = 5000)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="qWaitForWindowExposed-2">
+      <db:methodsynopsis xlink:href="#qWaitForWindowExposed-2">
          <db:modifier>static</db:modifier>
          <db:type>bool</db:type>
          <db:methodname>qWaitForWindowExposed</db:methodname>
@@ -671,7 +671,7 @@
                                          int 
                                         timeout  = 1000)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setBenchmarkResult">
+      <db:methodsynopsis xlink:href="#setBenchmarkResult">
          <db:void/>
          <db:methodname>setBenchmarkResult</db:methodname>
          <db:void role="parameters"/>
@@ -679,7 +679,7 @@
                                          QBenchmarkMetric 
                                         metric )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toHexRepresentation">
+      <db:methodsynopsis xlink:href="#toHexRepresentation">
          <db:type>char</db:type>
          <db:methodname>toHexRepresentation</db:methodname>
          <db:void role="parameters"/>
@@ -687,7 +687,7 @@
                                          int 
                                         length )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString">
+      <db:methodsynopsis xlink:href="#toString">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -695,7 +695,7 @@
                                          T  &amp; 
                                         value )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-4">
+      <db:methodsynopsis xlink:href="#toString-4">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -703,7 +703,7 @@
                                          QLatin1String  &amp; 
                                         string )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-5">
+      <db:methodsynopsis xlink:href="#toString-5">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -711,7 +711,7 @@
                                          QString  &amp; 
                                         string )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-6">
+      <db:methodsynopsis xlink:href="#toString-6">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -719,7 +719,7 @@
                                          QByteArray  &amp; 
                                     ba )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-7">
+      <db:methodsynopsis xlink:href="#toString-7">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -727,7 +727,7 @@
                                          QTime  &amp; 
                                     time )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-8">
+      <db:methodsynopsis xlink:href="#toString-8">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -735,7 +735,7 @@
                                          QDate  &amp; 
                                     date )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-9">
+      <db:methodsynopsis xlink:href="#toString-9">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -743,7 +743,7 @@
                                          QDateTime  &amp; 
                                         dateTime )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-10">
+      <db:methodsynopsis xlink:href="#toString-10">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -751,7 +751,7 @@
                                          QChar  &amp; 
                                         character )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-11">
+      <db:methodsynopsis xlink:href="#toString-11">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -759,7 +759,7 @@
                                          QPoint  &amp; 
                                         point )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-12">
+      <db:methodsynopsis xlink:href="#toString-12">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -767,7 +767,7 @@
                                          QSize  &amp; 
                                     size )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-13">
+      <db:methodsynopsis xlink:href="#toString-13">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -775,7 +775,7 @@
                                          QRect  &amp; 
                                         rectangle )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-14">
+      <db:methodsynopsis xlink:href="#toString-14">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -783,7 +783,7 @@
                                          QUrl  &amp; 
                                     url )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-15">
+      <db:methodsynopsis xlink:href="#toString-15">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -791,7 +791,7 @@
                                          QPointF  &amp; 
                                         point )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-16">
+      <db:methodsynopsis xlink:href="#toString-16">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -799,7 +799,7 @@
                                          QSizeF  &amp; 
                                     size )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-17">
+      <db:methodsynopsis xlink:href="#toString-17">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -807,7 +807,7 @@
                                          QRectF  &amp; 
                                         rectangle )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toString-18">
+      <db:methodsynopsis xlink:href="#toString-18">
          <db:type>char</db:type>
          <db:methodname>toString</db:methodname>
          <db:void role="parameters"/>
@@ -815,7 +815,7 @@
                                          QVariant  &amp; 
                                         variant )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="touchEvent">
+      <db:methodsynopsis xlink:href="#touchEvent">
          <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
          <db:methodname>touchEvent</db:methodname>
          <db:void role="parameters"/>
@@ -824,7 +824,7 @@
                                     device ,  bool  autoCommit  =
                                     true)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="touchEvent-2">
+      <db:methodsynopsis xlink:href="#touchEvent-2">
          <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
          <db:methodname>touchEvent</db:methodname>
          <db:void role="parameters"/>

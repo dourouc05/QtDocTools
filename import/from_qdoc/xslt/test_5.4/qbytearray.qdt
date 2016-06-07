@@ -39,11 +39,11 @@
          <db:exceptionname role="parameters">( QByteArray  &amp;&amp; 
                                         other )</db:exceptionname>
       </db:constructorsynopsis>
-      <db:destructorsynopsis xlink:href="dtor.QByteArray">
+      <db:destructorsynopsis xlink:href="#dtor.QByteArray">
          <db:methodname>~QByteArray</db:methodname>
          <db:void/>
       </db:destructorsynopsis>
-      <db:methodsynopsis xlink:href="append">
+      <db:methodsynopsis xlink:href="#append">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>append</db:methodname>
          <db:void role="parameters"/>
@@ -51,7 +51,7 @@
                                          QByteArray  &amp; 
                                     ba )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="append-2">
+      <db:methodsynopsis xlink:href="#append-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>append</db:methodname>
          <db:void role="parameters"/>
@@ -59,7 +59,7 @@
                                          QString  &amp; 
                                     str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="append-3">
+      <db:methodsynopsis xlink:href="#append-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>append</db:methodname>
          <db:void role="parameters"/>
@@ -67,7 +67,7 @@
                                          char  * 
                                         str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="append-4">
+      <db:methodsynopsis xlink:href="#append-4">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>append</db:methodname>
          <db:void role="parameters"/>
@@ -75,61 +75,61 @@
                                          char  * 
                                         str ,  int  len )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="append-5">
+      <db:methodsynopsis xlink:href="#append-5">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>append</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="at">
+      <db:methodsynopsis xlink:href="#at">
          <db:type>char</db:type>
          <db:methodname>at</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="capacity">
+      <db:methodsynopsis xlink:href="#capacity">
          <db:type>int</db:type>
          <db:methodname>capacity</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="chop">
+      <db:methodsynopsis xlink:href="#chop">
          <db:void/>
          <db:methodname>chop</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  n )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="clear">
+      <db:methodsynopsis xlink:href="#clear">
          <db:void/>
          <db:methodname>clear</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="constData">
+      <db:methodsynopsis xlink:href="#constData">
          <db:type>char</db:type>
          <db:methodname>constData</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="contains">
+      <db:methodsynopsis xlink:href="#contains">
          <db:type>bool</db:type>
          <db:methodname>contains</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp;  ba )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="contains-2">
+      <db:methodsynopsis xlink:href="#contains-2">
          <db:type>bool</db:type>
          <db:methodname>contains</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="contains-3">
+      <db:methodsynopsis xlink:href="#contains-3">
          <db:type>bool</db:type>
          <db:methodname>contains</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="count">
+      <db:methodsynopsis xlink:href="#count">
          <db:type>int</db:type>
          <db:methodname>count</db:methodname>
          <db:void role="parameters"/>
@@ -137,7 +137,7 @@
                                          QByteArray  &amp;  ba )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="count-2">
+      <db:methodsynopsis xlink:href="#count-2">
          <db:type>int</db:type>
          <db:methodname>count</db:methodname>
          <db:void role="parameters"/>
@@ -145,56 +145,56 @@
                                          char  * 
                                         str ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="count-3">
+      <db:methodsynopsis xlink:href="#count-3">
          <db:type>int</db:type>
          <db:methodname>count</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="count-4">
+      <db:methodsynopsis xlink:href="#count-4">
          <db:type>int</db:type>
          <db:methodname>count</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="data">
+      <db:methodsynopsis xlink:href="#data">
          <db:type>char</db:type>
          <db:methodname>data</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="data-2">
+      <db:methodsynopsis xlink:href="#data-2">
          <db:type>char</db:type>
          <db:methodname>data</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="endsWith">
+      <db:methodsynopsis xlink:href="#endsWith">
          <db:type>bool</db:type>
          <db:methodname>endsWith</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp;  ba )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="endsWith-2">
+      <db:methodsynopsis xlink:href="#endsWith-2">
          <db:type>bool</db:type>
          <db:methodname>endsWith</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="endsWith-3">
+      <db:methodsynopsis xlink:href="#endsWith-3">
          <db:type>bool</db:type>
          <db:methodname>endsWith</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fill">
+      <db:methodsynopsis xlink:href="#fill">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fill</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ,  int  size  =
                                     -1)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromBase64">
+      <db:methodsynopsis xlink:href="#fromBase64">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromBase64</db:methodname>
@@ -202,7 +202,7 @@
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         base64 )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromBase64-2">
+      <db:methodsynopsis xlink:href="#fromBase64-2">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromBase64</db:methodname>
@@ -211,14 +211,14 @@
                                         base64 ,  Base64Options 
                                         options )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromCFData">
+      <db:methodsynopsis xlink:href="#fromCFData">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromCFData</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( CFDataRef  data )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromHex">
+      <db:methodsynopsis xlink:href="#fromHex">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromHex</db:methodname>
@@ -226,7 +226,7 @@
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         hexEncoded )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromNSData">
+      <db:methodsynopsis xlink:href="#fromNSData">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromNSData</db:methodname>
@@ -234,7 +234,7 @@
          <db:exceptionname role="parameters">(const  NSData  * 
                                     data )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromPercentEncoding">
+      <db:methodsynopsis xlink:href="#fromPercentEncoding">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromPercentEncoding</db:methodname>
@@ -243,7 +243,7 @@
                                          QByteArray  &amp; 
                                         input ,  char  percent  = '%')</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromRawCFData">
+      <db:methodsynopsis xlink:href="#fromRawCFData">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromRawCFData</db:methodname>
@@ -251,7 +251,7 @@
          <db:exceptionname role="parameters">( CFDataRef 
                                     data )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromRawData">
+      <db:methodsynopsis xlink:href="#fromRawData">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromRawData</db:methodname>
@@ -260,7 +260,7 @@
                                          int 
                                         size )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromRawNSData">
+      <db:methodsynopsis xlink:href="#fromRawNSData">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromRawNSData</db:methodname>
@@ -268,7 +268,7 @@
          <db:exceptionname role="parameters">(const  NSData  * 
                                     data )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="fromStdString">
+      <db:methodsynopsis xlink:href="#fromStdString">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>fromStdString</db:methodname>
@@ -276,7 +276,7 @@
          <db:exceptionname role="parameters">(const  std::string  &amp; 
                                         str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="indexOf">
+      <db:methodsynopsis xlink:href="#indexOf">
          <db:type>int</db:type>
          <db:methodname>indexOf</db:methodname>
          <db:void role="parameters"/>
@@ -284,49 +284,49 @@
                                          int 
                                         from  = 0) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="indexOf-2">
+      <db:methodsynopsis xlink:href="#indexOf-2">
          <db:type>int</db:type>
          <db:methodname>indexOf</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString 
                                         &amp;  str ,  int  from  = 0) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="indexOf-3">
+      <db:methodsynopsis xlink:href="#indexOf-3">
          <db:type>int</db:type>
          <db:methodname>indexOf</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str ,  int  from  = 0)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="indexOf-4">
+      <db:methodsynopsis xlink:href="#indexOf-4">
          <db:type>int</db:type>
          <db:methodname>indexOf</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ,  int  from  = 0)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="insert">
+      <db:methodsynopsis xlink:href="#insert">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>insert</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i , const  QByteArray  &amp; 
                                         ba )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="insert-2">
+      <db:methodsynopsis xlink:href="#insert-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>insert</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i , const  QString  &amp; 
                                     str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="insert-3">
+      <db:methodsynopsis xlink:href="#insert-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>insert</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i , const  char  * 
                                     str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="insert-4">
+      <db:methodsynopsis xlink:href="#insert-4">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>insert</db:methodname>
          <db:void role="parameters"/>
@@ -334,25 +334,25 @@
                                          int 
                                     len )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="insert-5">
+      <db:methodsynopsis xlink:href="#insert-5">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>insert</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i ,  char  ch )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="isEmpty">
+      <db:methodsynopsis xlink:href="#isEmpty">
          <db:type>bool</db:type>
          <db:methodname>isEmpty</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="isNull">
+      <db:methodsynopsis xlink:href="#isNull">
          <db:type>bool</db:type>
          <db:methodname>isNull</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="lastIndexOf">
+      <db:methodsynopsis xlink:href="#lastIndexOf">
          <db:type>int</db:type>
          <db:methodname>lastIndexOf</db:methodname>
          <db:void role="parameters"/>
@@ -360,34 +360,34 @@
                                          int 
                                         from  = -1) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="lastIndexOf-2">
+      <db:methodsynopsis xlink:href="#lastIndexOf-2">
          <db:type>int</db:type>
          <db:methodname>lastIndexOf</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString 
                                         &amp;  str ,  int  from  = -1) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="lastIndexOf-3">
+      <db:methodsynopsis xlink:href="#lastIndexOf-3">
          <db:type>int</db:type>
          <db:methodname>lastIndexOf</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str ,  int  from  = -1)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="lastIndexOf-4">
+      <db:methodsynopsis xlink:href="#lastIndexOf-4">
          <db:type>int</db:type>
          <db:methodname>lastIndexOf</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ,  int  from  = -1)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="left">
+      <db:methodsynopsis xlink:href="#left">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>left</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  len ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="leftJustified">
+      <db:methodsynopsis xlink:href="#leftJustified">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>leftJustified</db:methodname>
          <db:void role="parameters"/>
@@ -396,27 +396,27 @@
                                         fill  = ' ',  bool  truncate  = false)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="length">
+      <db:methodsynopsis xlink:href="#length">
          <db:type>int</db:type>
          <db:methodname>length</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="mid">
+      <db:methodsynopsis xlink:href="#mid">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>mid</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  pos ,  int  len  = -1)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="number">
+      <db:methodsynopsis xlink:href="#number">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>number</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  n ,  int  base  = 10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="number-2">
+      <db:methodsynopsis xlink:href="#number-2">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>number</db:methodname>
@@ -424,7 +424,7 @@
          <db:exceptionname role="parameters">( uint  n ,  int  base  =
                                     10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="number-3">
+      <db:methodsynopsis xlink:href="#number-3">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>number</db:methodname>
@@ -433,7 +433,7 @@
                                          int 
                                         base  = 10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="number-4">
+      <db:methodsynopsis xlink:href="#number-4">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>number</db:methodname>
@@ -442,7 +442,7 @@
                                          int 
                                         base  = 10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="number-5">
+      <db:methodsynopsis xlink:href="#number-5">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>number</db:methodname>
@@ -451,82 +451,82 @@
                                          int 
                                         prec  = 6)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="prepend">
+      <db:methodsynopsis xlink:href="#prepend">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>prepend</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                     ba )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="prepend-2">
+      <db:methodsynopsis xlink:href="#prepend-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>prepend</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="prepend-3">
+      <db:methodsynopsis xlink:href="#prepend-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>prepend</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str ,  int  len )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="prepend-4">
+      <db:methodsynopsis xlink:href="#prepend-4">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>prepend</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="push_back">
+      <db:methodsynopsis xlink:href="#push_back">
          <db:void/>
          <db:methodname>push_back</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         other )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="push_back-2">
+      <db:methodsynopsis xlink:href="#push_back-2">
          <db:void/>
          <db:methodname>push_back</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="push_back-3">
+      <db:methodsynopsis xlink:href="#push_back-3">
          <db:void/>
          <db:methodname>push_back</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="push_front">
+      <db:methodsynopsis xlink:href="#push_front">
          <db:void/>
          <db:methodname>push_front</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         other )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="push_front-2">
+      <db:methodsynopsis xlink:href="#push_front-2">
          <db:void/>
          <db:methodname>push_front</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="push_front-3">
+      <db:methodsynopsis xlink:href="#push_front-3">
          <db:void/>
          <db:methodname>push_front</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="remove">
+      <db:methodsynopsis xlink:href="#remove">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>remove</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  pos ,  int  len )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="repeated">
+      <db:methodsynopsis xlink:href="#repeated">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>repeated</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  times ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace">
+      <db:methodsynopsis xlink:href="#replace">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -534,7 +534,7 @@
                                          QByteArray  &amp; 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-2">
+      <db:methodsynopsis xlink:href="#replace-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -542,7 +542,7 @@
                                          char  * 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-3">
+      <db:methodsynopsis xlink:href="#replace-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -550,7 +550,7 @@
                                          char  * 
                                         after ,  int  alen )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-4">
+      <db:methodsynopsis xlink:href="#replace-4">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -558,7 +558,7 @@
                                         before , const  QByteArray  &amp; 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-5">
+      <db:methodsynopsis xlink:href="#replace-5">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -566,7 +566,7 @@
                                          QByteArray  &amp; 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-6">
+      <db:methodsynopsis xlink:href="#replace-6">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -574,14 +574,14 @@
                                          char  * 
                                         after ,  int  asize )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-7">
+      <db:methodsynopsis xlink:href="#replace-7">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         before , const  char  *  after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-8">
+      <db:methodsynopsis xlink:href="#replace-8">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -589,14 +589,14 @@
                                         &amp;  before , const  QByteArray  &amp; 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-9">
+      <db:methodsynopsis xlink:href="#replace-9">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString 
                                         &amp;  before , const  char  *  after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-10">
+      <db:methodsynopsis xlink:href="#replace-10">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
@@ -604,53 +604,53 @@
                                          char  * 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-11">
+      <db:methodsynopsis xlink:href="#replace-11">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  before , const  QByteArray  &amp; 
                                         after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-12">
+      <db:methodsynopsis xlink:href="#replace-12">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  before , const  QString  &amp; 
                                     after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-13">
+      <db:methodsynopsis xlink:href="#replace-13">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  before , const  char  * 
                                     after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="replace-14">
+      <db:methodsynopsis xlink:href="#replace-14">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>replace</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  before ,  char 
                                     after )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="reserve">
+      <db:methodsynopsis xlink:href="#reserve">
          <db:void/>
          <db:methodname>reserve</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  size )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="resize">
+      <db:methodsynopsis xlink:href="#resize">
          <db:void/>
          <db:methodname>resize</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  size )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="right">
+      <db:methodsynopsis xlink:href="#right">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>right</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  len ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="rightJustified">
+      <db:methodsynopsis xlink:href="#rightJustified">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>rightJustified</db:methodname>
          <db:void role="parameters"/>
@@ -659,34 +659,34 @@
                                         fill  = ' ',  bool  truncate  = false)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum">
+      <db:methodsynopsis xlink:href="#setNum">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  n ,  int  base  = 10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-2">
+      <db:methodsynopsis xlink:href="#setNum-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( uint  n ,  int  base  =
                                     10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-3">
+      <db:methodsynopsis xlink:href="#setNum-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( short  n ,  int  base  =
                                     10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-4">
+      <db:methodsynopsis xlink:href="#setNum-4">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( ushort  n ,  int  base  =
                                     10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-5">
+      <db:methodsynopsis xlink:href="#setNum-5">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
@@ -694,7 +694,7 @@
                                          int 
                                         base  = 10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-6">
+      <db:methodsynopsis xlink:href="#setNum-6">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
@@ -702,7 +702,7 @@
                                          int 
                                         base  = 10)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-7">
+      <db:methodsynopsis xlink:href="#setNum-7">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
@@ -710,7 +710,7 @@
                                          int 
                                         prec  = 6)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setNum-8">
+      <db:methodsynopsis xlink:href="#setNum-8">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setNum</db:methodname>
          <db:void role="parameters"/>
@@ -718,133 +718,133 @@
                                          int 
                                         prec  = 6)</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setRawData">
+      <db:methodsynopsis xlink:href="#setRawData">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>setRawData</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  data ,  uint 
                                     size )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="simplified">
+      <db:methodsynopsis xlink:href="#simplified">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>simplified</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="size">
+      <db:methodsynopsis xlink:href="#size">
          <db:type>int</db:type>
          <db:methodname>size</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="split">
+      <db:methodsynopsis xlink:href="#split">
          <db:type>QList&lt;QByteArray&gt;</db:type>
          <db:methodname>split</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  sep ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="squeeze">
+      <db:methodsynopsis xlink:href="#squeeze">
          <db:void/>
          <db:methodname>squeeze</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="startsWith">
+      <db:methodsynopsis xlink:href="#startsWith">
          <db:type>bool</db:type>
          <db:methodname>startsWith</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp;  ba )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="startsWith-2">
+      <db:methodsynopsis xlink:href="#startsWith-2">
          <db:type>bool</db:type>
          <db:methodname>startsWith</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="startsWith-3">
+      <db:methodsynopsis xlink:href="#startsWith-3">
          <db:type>bool</db:type>
          <db:methodname>startsWith</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="swap">
+      <db:methodsynopsis xlink:href="#swap">
          <db:void/>
          <db:methodname>swap</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QByteArray  &amp; 
                                         other )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toBase64">
+      <db:methodsynopsis xlink:href="#toBase64">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>toBase64</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toBase64-2">
+      <db:methodsynopsis xlink:href="#toBase64-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>toBase64</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( Base64Options 
                                         options ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toCFData">
+      <db:methodsynopsis xlink:href="#toCFData">
          <db:type>CFDataRef</db:type>
          <db:methodname>toCFData</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toDouble">
+      <db:methodsynopsis xlink:href="#toDouble">
          <db:type>double</db:type>
          <db:methodname>toDouble</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toFloat">
+      <db:methodsynopsis xlink:href="#toFloat">
          <db:type>float</db:type>
          <db:methodname>toFloat</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toHex">
+      <db:methodsynopsis xlink:href="#toHex">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>toHex</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toInt">
+      <db:methodsynopsis xlink:href="#toInt">
          <db:type>int</db:type>
          <db:methodname>toInt</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool 
                                         *  ok  = 0,  int  base  = 10) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toLong">
+      <db:methodsynopsis xlink:href="#toLong">
          <db:type>long</db:type>
          <db:methodname>toLong</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool 
                                         *  ok  = 0,  int  base  = 10) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toLongLong">
+      <db:methodsynopsis xlink:href="#toLongLong">
          <db:type xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:type>
          <db:methodname>toLongLong</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0,  int  base  = 10)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toLower">
+      <db:methodsynopsis xlink:href="#toLower">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>toLower</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toNSData">
+      <db:methodsynopsis xlink:href="#toNSData">
          <db:type>NSData</db:type>
          <db:methodname>toNSData</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toPercentEncoding">
+      <db:methodsynopsis xlink:href="#toPercentEncoding">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>toPercentEncoding</db:methodname>
          <db:void role="parameters"/>
@@ -853,197 +853,197 @@
                                         include  = QByteArray(),  char  percent  = '%')
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toRawCFData">
+      <db:methodsynopsis xlink:href="#toRawCFData">
          <db:type>CFDataRef</db:type>
          <db:methodname>toRawCFData</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toRawNSData">
+      <db:methodsynopsis xlink:href="#toRawNSData">
          <db:type>NSData</db:type>
          <db:methodname>toRawNSData</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toShort">
+      <db:methodsynopsis xlink:href="#toShort">
          <db:type>short</db:type>
          <db:methodname>toShort</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0,  int  base  = 10)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toStdString">
+      <db:methodsynopsis xlink:href="#toStdString">
          <db:type>std::string</db:type>
          <db:methodname>toStdString</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toUInt">
+      <db:methodsynopsis xlink:href="#toUInt">
          <db:type xlink:href="qtglobal.html#uint-typedef">uint</db:type>
          <db:methodname>toUInt</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0,  int  base  = 10)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toULong">
+      <db:methodsynopsis xlink:href="#toULong">
          <db:type xlink:href="qtglobal.html#ulong-typedef">ulong</db:type>
          <db:methodname>toULong</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0,  int  base  = 10)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toULongLong">
+      <db:methodsynopsis xlink:href="#toULongLong">
          <db:type xlink:href="qtglobal.html#qulonglong-typedef">qulonglong</db:type>
          <db:methodname>toULongLong</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0,  int  base  = 10)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toUShort">
+      <db:methodsynopsis xlink:href="#toUShort">
          <db:type xlink:href="qtglobal.html#ushort-typedef">ushort</db:type>
          <db:methodname>toUShort</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( bool  *  ok  = 0,  int  base  = 10)
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="toUpper">
+      <db:methodsynopsis xlink:href="#toUpper">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>toUpper</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="trimmed">
+      <db:methodsynopsis xlink:href="#trimmed">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>trimmed</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="truncate">
+      <db:methodsynopsis xlink:href="#truncate">
          <db:void/>
          <db:methodname>truncate</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  pos )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-not-eq">
+      <db:methodsynopsis xlink:href="#operator-not-eq">
          <db:type>bool</db:type>
          <db:methodname>operator!=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString  &amp;  str )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-2b-eq">
+      <db:methodsynopsis xlink:href="#operator-2b-eq">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator+=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                     ba )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-2b-eq-2">
+      <db:methodsynopsis xlink:href="#operator-2b-eq-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator+=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString 
                                         &amp;  str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-2b-eq-3">
+      <db:methodsynopsis xlink:href="#operator-2b-eq-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator+=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-2b-eq-4">
+      <db:methodsynopsis xlink:href="#operator-2b-eq-4">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator+=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( char  ch )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-lt">
+      <db:methodsynopsis xlink:href="#operator-lt">
          <db:type>bool</db:type>
          <db:methodname>operator&lt;</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString 
                                         &amp;  str ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-lt-eq">
+      <db:methodsynopsis xlink:href="#operator-lt-eq">
          <db:type>bool</db:type>
          <db:methodname>operator&lt;=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString  &amp;  str )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-eq">
+      <db:methodsynopsis xlink:href="#operator-eq">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         other )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-eq-2">
+      <db:methodsynopsis xlink:href="#operator-eq-2">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QByteArray  &amp;&amp; 
                                         other )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-eq-3">
+      <db:methodsynopsis xlink:href="#operator-eq-3">
          <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
          <db:methodname>operator=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  char  *  str )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-eq-eq">
+      <db:methodsynopsis xlink:href="#operator-eq-eq">
          <db:type>bool</db:type>
          <db:methodname>operator==</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString  &amp;  str )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-gt">
+      <db:methodsynopsis xlink:href="#operator-gt">
          <db:type>bool</db:type>
          <db:methodname>operator&gt;</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString 
                                         &amp;  str ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-gt-eq">
+      <db:methodsynopsis xlink:href="#operator-gt-eq">
          <db:type>bool</db:type>
          <db:methodname>operator&gt;=</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">(const  QString  &amp;  str )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-5b-5d">
+      <db:methodsynopsis xlink:href="#operator-5b-5d">
          <db:type>QByteRef</db:type>
          <db:methodname>operator[]</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-5b-5d-2">
+      <db:methodsynopsis xlink:href="#operator-5b-5d-2">
          <db:type>char</db:type>
          <db:methodname>operator[]</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  i ) const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-5b-5d-3">
+      <db:methodsynopsis xlink:href="#operator-5b-5d-3">
          <db:type>QByteRef</db:type>
          <db:methodname>operator[]</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( uint  i )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-5b-5d-4">
+      <db:methodsynopsis xlink:href="#operator-5b-5d-4">
          <db:type>char</db:type>
          <db:methodname>operator[]</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( uint  i )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-const-char--2a">
+      <db:methodsynopsis xlink:href="#operator-const-char--2a">
          <db:modifier>(obsolete)</db:modifier>
          <db:methodname>operator const char *</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="operator-const-void--2a">
+      <db:methodsynopsis xlink:href="#operator-const-void--2a">
          <db:modifier>(obsolete)</db:modifier>
          <db:methodname>operator const void *</db:methodname>
          <db:void/>

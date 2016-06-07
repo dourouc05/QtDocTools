@@ -175,33 +175,33 @@
                                     type ,  QObject  *  parent  =
                                     0)</db:exceptionname>
       </db:constructorsynopsis>
-      <db:destructorsynopsis xlink:href="dtor.QSensor">
+      <db:destructorsynopsis xlink:href="#dtor.QSensor">
          <db:methodname>~QSensor</db:methodname>
          <db:void/>
       </db:destructorsynopsis>
-      <db:methodsynopsis xlink:href="addFilter">
+      <db:methodsynopsis xlink:href="#addFilter">
          <db:void/>
          <db:methodname>addFilter</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QSensorFilter  * 
                                         filter )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="availableSensorsChanged">
+      <db:methodsynopsis xlink:href="#availableSensorsChanged">
          <db:void/>
          <db:methodname>availableSensorsChanged</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="busyChanged">
+      <db:methodsynopsis xlink:href="#busyChanged">
          <db:void/>
          <db:methodname>busyChanged</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="connectToBackend">
+      <db:methodsynopsis xlink:href="#connectToBackend">
          <db:type>bool</db:type>
          <db:methodname>connectToBackend</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="defaultSensorForType">
+      <db:methodsynopsis xlink:href="#defaultSensorForType">
          <db:modifier>static</db:modifier>
          <db:type xlink:href="qtcore/qbytearray.html">QByteArray</db:type>
          <db:methodname>defaultSensorForType</db:methodname>
@@ -210,33 +210,33 @@
                                          QByteArray  &amp; 
                                     type )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="filters">
+      <db:methodsynopsis xlink:href="#filters">
          <db:type>QList&lt;QSensorFilter&gt;</db:type>
          <db:methodname>filters</db:methodname>
          <db:void/>
          <db:modifier>const</db:modifier>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="isFeatureSupported">
+      <db:methodsynopsis xlink:href="#isFeatureSupported">
          <db:type>bool</db:type>
          <db:methodname>isFeatureSupported</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( Feature  feature )
                                     const</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="removeFilter">
+      <db:methodsynopsis xlink:href="#removeFilter">
          <db:void/>
          <db:methodname>removeFilter</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( QSensorFilter  * 
                                         filter )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="sensorTypes">
+      <db:methodsynopsis xlink:href="#sensorTypes">
          <db:modifier>static</db:modifier>
          <db:type>QList&lt;QByteArray&gt;</db:type>
          <db:methodname>sensorTypes</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="sensorsForType">
+      <db:methodsynopsis xlink:href="#sensorsForType">
          <db:modifier>static</db:modifier>
          <db:type>QList&lt;QByteArray&gt;</db:type>
          <db:methodname>sensorsForType</db:methodname>
@@ -244,32 +244,32 @@
          <db:exceptionname role="parameters">(const  QByteArray  &amp; 
                                         type )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setCurrentOrientation">
+      <db:methodsynopsis xlink:href="#setCurrentOrientation">
          <db:void/>
          <db:methodname>setCurrentOrientation</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int 
                                         currentOrientation )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setEfficientBufferSize">
+      <db:methodsynopsis xlink:href="#setEfficientBufferSize">
          <db:void/>
          <db:methodname>setEfficientBufferSize</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int 
                                         efficientBufferSize )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="setMaxBufferSize">
+      <db:methodsynopsis xlink:href="#setMaxBufferSize">
          <db:void/>
          <db:methodname>setMaxBufferSize</db:methodname>
          <db:void role="parameters"/>
          <db:exceptionname role="parameters">( int  maxBufferSize )</db:exceptionname>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="start">
+      <db:methodsynopsis xlink:href="#start">
          <db:type>bool</db:type>
          <db:methodname>start</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="stop">
+      <db:methodsynopsis xlink:href="#stop">
          <db:void/>
          <db:methodname>stop</db:methodname>
          <db:void/>
