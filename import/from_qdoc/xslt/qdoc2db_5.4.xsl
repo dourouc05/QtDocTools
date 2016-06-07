@@ -1318,34 +1318,30 @@
     <xsl:param name="type" as="xs:string" select="''"/>
 
     <!-- Possible anchors: for constructors, Class, Class-2; for destructors, dtor.Class -->
-    <xsl:variable name="functionAnchor" select="@id"/>
+    <xsl:variable name="functionAnchor" as="xs:string" select="@id"/>
     <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/>
     <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/>
     <xsl:variable name="isFct" select="not($isCtor or $isDtor)"/>
+    
+    <xsl:variable name="tag" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$isCtor">
+          <xsl:text>db:constructorsynopsis</xsl:text>
+        </xsl:when>
+        <xsl:when test="$isDtor">
+          <xsl:text>db:destructorsynopsis</xsl:text>
+        </xsl:when>
+        <xsl:when test="$isFct">
+          <xsl:text>db:methodsynopsis</xsl:text>
+        </xsl:when>
+      </xsl:choose></xsl:variable>
 
-    <xsl:choose>
-      <xsl:when test="$isCtor">
-        <db:constructorsynopsis xlink:href="#{$functionAnchor}">
-          <xsl:call-template name="classListing_methodBody">
-            <xsl:with-param name="type" select="$type"/>
-          </xsl:call-template>
-        </db:constructorsynopsis>
-      </xsl:when>
-      <xsl:when test="$isDtor">
-        <db:destructorsynopsis xlink:href="#{$functionAnchor}">
-          <xsl:call-template name="classListing_methodBody">
-            <xsl:with-param name="type" select="$type"/>
-          </xsl:call-template>
-        </db:destructorsynopsis>
-      </xsl:when>
-      <xsl:when test="$isFct">
-        <db:methodsynopsis xlink:href="#{$functionAnchor}">
-          <xsl:call-template name="classListing_methodBody">
-            <xsl:with-param name="type" select="$type"/>
-          </xsl:call-template>
-        </db:methodsynopsis>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:element name="{$tag}">
+      <xsl:attribute name="xlink:href" select="concat('#', $functionAnchor)"/>
+      <xsl:call-template name="classListing_methodBody">
+        <xsl:with-param name="type" select="$type"/>
+      </xsl:call-template>
+    </xsl:element>
   </xsl:template>
   <xsl:template name="classListing_methodBody">
     <xsl:param name="type" as="xs:string" select="''"/>
