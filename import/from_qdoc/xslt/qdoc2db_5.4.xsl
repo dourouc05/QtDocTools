@@ -1097,50 +1097,63 @@
     <xsl:param name="inherits" as="element()?"/>
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
+    
+    <xsl:variable name="nsSynopsisTag" as="xs:string" select="if ($vocabulary = 'qtdoctools') then 'db:namespacesynopsis' else 'db:classsynopsis'"/>
+    <xsl:variable name="nsTag" as="xs:string" select="if ($vocabulary = 'qtdoctools') then 'db:namespace' else 'db:ooclass'"/>
+    <xsl:variable name="nsNameTag" as="xs:string" select="if ($vocabulary = 'qtdoctools') then 'db:namespacename' else 'db:classname'"/>
+    <xsl:variable name="nsInfoTag" as="xs:string" select="if ($vocabulary = 'qtdoctools') then 'db:namespacesynopsisinfo' else 'db:classsynopsisinfo'"/>
 
-    <db:classsynopsis>
-      <db:ooclass>
-        <db:classname>
+    <xsl:element name="{$nsSynopsisTag}">
+      <xsl:element name="{$nsTag}">
+        <xsl:element name="{$nsNameTag}">
           <xsl:value-of select="$className"/>
-        </db:classname>
-      </db:ooclass>
+        </xsl:element>
+      </xsl:element>
 
-      <db:classsynopsisinfo role="isNamespace">
-        <xsl:text>yes</xsl:text>
-      </db:classsynopsisinfo>
+      <xsl:if test="not($vocabulary = 'qtdoctools')">
+        <xsl:element name="{$nsInfoTag}">
+          <xsl:attribute name="role" select="'isNamespace'"/>
+          <xsl:text>yes</xsl:text>
+        </xsl:element>
+      </xsl:if>
       
       <xsl:if test="$header">
-        <db:classsynopsisinfo role="header">
+        <xsl:element name="{$nsInfoTag}">
+          <xsl:attribute name="role" select="'header'"/>
           <xsl:value-of select="$header"/>
-        </db:classsynopsisinfo>
+        </xsl:element>
       </xsl:if>
       <xsl:if test="$qmake">
-        <db:classsynopsisinfo role="qmake">
+        <xsl:element name="{$nsInfoTag}">
+          <xsl:attribute name="role" select="'qmake'"/>
           <xsl:value-of select="$qmake"/>
-        </db:classsynopsisinfo>
+        </xsl:element>
       </xsl:if>
       <xsl:if test="$inherits">
         <xsl:for-each select="$inherits/html:a">
-          <db:classsynopsisinfo role="inherits">
+          <xsl:element name="{$nsInfoTag}">
+            <xsl:attribute name="role" select="'inherits'"/>
             <db:link xlink:href="{@href}">
               <xsl:value-of select="text()"/>
             </db:link>
-          </db:classsynopsisinfo>
+          </xsl:element>
         </xsl:for-each>
       </xsl:if>
       <xsl:if test="$inheritedBy">
         <xsl:for-each select="$inheritedBy/html:p/html:a">
-          <db:classsynopsisinfo role="inheritedBy">
+          <xsl:element name="{$nsInfoTag}">
+            <xsl:attribute name="role" select="'inheritedBy'"/>
             <db:link xlink:href="{@href}">
               <xsl:value-of select="text()"/>
             </db:link>
-          </db:classsynopsisinfo>
+          </xsl:element>
         </xsl:for-each>
       </xsl:if>
       <xsl:if test="$since">
-        <db:classsynopsisinfo role="since">
+        <xsl:element name="{$nsInfoTag}">
+          <xsl:attribute name="role" select="'since'"/>
           <xsl:value-of select="$since"/>
-        </db:classsynopsisinfo>
+        </xsl:element>
       </xsl:if>
 
       <!-- Deal with properties and variables as fields. -->
@@ -1159,25 +1172,45 @@
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
 
-      <!-- Deal with functions, then types and macros. -->
-      <xsl:apply-templates mode="classListing" select="$functions/html:h3">
-        <xsl:with-param name="className" select="$className"/>
-      </xsl:apply-templates>
-      <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
-        <xsl:with-param name="className" select="$className"/>
-        <xsl:with-param name="type" select="'obsolete'"/>
-      </xsl:apply-templates>
-      <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
-        <xsl:with-param name="className" select="$className"/>
-        <xsl:with-param name="type" select="'compat'"/>
-      </xsl:apply-templates>
-      <xsl:apply-templates mode="functionListing" select="$types/html:h3">
-        <xsl:with-param name="className" select="$className"/>
-      </xsl:apply-templates>
+      <!-- Deal with functions, then types and macros. For raw DocBook, cannot use functions, but rather methods, due to the encoding of namespaces. -->
+      <xsl:choose>
+        <xsl:when test="$vocabulary = 'qtdoctools'">
+          <xsl:apply-templates mode="functionListing" select="$functions/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates mode="functionListing" select="$obsoleteMemberFunctions/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+            <xsl:with-param name="type" select="'obsolete'"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates mode="functionListing" select="$obsoleteMemberFunctions/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+            <xsl:with-param name="type" select="'compat'"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates mode="functionListing" select="$types/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:apply-templates>
+        </xsl:when>
+        <xsl:when test="$vocabulary = 'docbook'">
+          <xsl:apply-templates mode="classListing" select="$functions/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+            <xsl:with-param name="type" select="'obsolete'"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates mode="classListing" select="$obsoleteMemberFunctions/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+            <xsl:with-param name="type" select="'compat'"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates mode="classListing" select="$types/html:h3">
+            <xsl:with-param name="className" select="$className"/>
+          </xsl:apply-templates>
+        </xsl:when>
+      </xsl:choose>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
-    </db:classsynopsis>
+    </xsl:element>
   </xsl:template>
   <xsl:template name="classListing">
     <xsl:param name="className" as="xs:string"/>
@@ -1500,7 +1533,7 @@
               <xsl:when test="count(html:i) &gt;= 1">
                 <xsl:for-each select="html:i">
                   <db:paramdef choice="req">
-                    <!-- A macro only has a name. -->
+                    <!-- A macro only has a name for each parameter. -->
                     <db:parameter>
                       <xsl:value-of select="normalize-space(.)"/>
                     </db:parameter>
@@ -1573,6 +1606,7 @@
   <xsl:template mode="functionListing"
     match="html:h3[@class = 'fn'][not(starts-with(text()[1], 'typedef')) and not(starts-with(text()[1], 'enum'))]">
     <xsl:param name="obsolete" as="xs:boolean" select="false()"/>
+    
     <db:funcsynopsis xlink:href="#{@id}">
       <db:funcprototype>
         <xsl:variable name="titleNode" select="."/>
@@ -1637,7 +1671,7 @@
                   <db:paramdef choice="req">
                     <!-- Maybe this parameter is const. -->
                     <xsl:if test="normalize-space($textAfterName) = '(const'">
-                      <!-- DocBook does not allow <db:modifier>!? -->
+                      <!-- TODO: DocBook does not allow <db:modifier>!? -->
                       <db:type>const</db:type>
                     </xsl:if>
 

@@ -253,587 +253,1221 @@
          </db:paramdef>
       </db:funcprototype>
    </db:funcsynopsis>
-   <db:classsynopsis>
-      <db:ooclass>
-         <db:classname>QTest</db:classname>
-      </db:ooclass>
-      <db:classsynopsisinfo role="isNamespace">yes</db:classsynopsisinfo>
-      <db:classsynopsisinfo role="header">#include
-                                                  &lt;QTest&gt;</db:classsynopsisinfo>
-      <db:classsynopsisinfo role="qmake"> QT +=
-                                                testlib</db:classsynopsisinfo>
-      <db:methodsynopsis xlink:href="#addColumn">
-         <db:void/>
-         <db:methodname>addColumn</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         char  * 
-                                        name ,  T 
-                                        *  dummy  = 0)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#benchmarkMetricName">
-         <db:type>char</db:type>
-         <db:methodname>benchmarkMetricName</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QBenchmarkMetric 
-                                        metric )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#benchmarkMetricUnit">
-         <db:type>char</db:type>
-         <db:methodname>benchmarkMetricUnit</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QBenchmarkMetric 
-                                        metric )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#currentAppName">
-         <db:type>char</db:type>
-         <db:methodname>currentAppName</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#currentDataTag">
-         <db:type>char</db:type>
-         <db:methodname>currentDataTag</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#currentTestFailed">
-         <db:type>bool</db:type>
-         <db:methodname>currentTestFailed</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#currentTestFunction">
-         <db:type>char</db:type>
-         <db:methodname>currentTestFunction</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#ignoreMessage">
-         <db:void/>
-         <db:methodname>ignoreMessage</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QtMsgType  type ,
-                                    const  char  * 
-                                        message )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#ignoreMessage-2">
-         <db:void/>
-         <db:methodname>ignoreMessage</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QtMsgType  type ,
-                                    const  QRegularExpression  &amp; 
-                                        messagePattern )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyClick">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyClick-2">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         char 
-                                        key ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyClick-3">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyClick-4">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  char  key ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyClicks">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyClicks</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                    const  QString  &amp; 
-                                        sequence ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyEvent">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyEvent</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( KeyAction  action ,
-                                         QWidget  *  widget ,
-                                         Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyEvent-2">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyEvent</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( KeyAction  action ,
-                                         QWidget  *  widget ,
-                                         char 
-                                        ascii ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyEvent-3">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyEvent</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( KeyAction  action ,
-                                         QWindow  *  window ,
-                                         Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyEvent-4">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyEvent</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( KeyAction  action ,
-                                         QWindow  *  window ,
-                                         char 
-                                        ascii ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyPress">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyPress</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyPress-2">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyPress</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         char 
-                                        key ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyPress-3">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyPress</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyPress-4">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyPress</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  char  key ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyRelease">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyRelease</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyRelease-2">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyRelease</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         char 
-                                        key ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyRelease-3">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyRelease</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::Key  key ,
-                                         Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#keyRelease-4">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>keyRelease</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  char  key ,  Qt::KeyboardModifiers 
-                                        modifier  = Qt::NoModifier,  int  delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseClick">
-         <db:void/>
-         <db:methodname>mouseClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        modifier  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseClick-2">
-         <db:void/>
-         <db:methodname>mouseClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        stateKey  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseDClick">
-         <db:void/>
-         <db:methodname>mouseDClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        modifier  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseDClick-2">
-         <db:void/>
-         <db:methodname>mouseDClick</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        stateKey  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseMove">
-         <db:void/>
-         <db:methodname>mouseMove</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseMove-2">
-         <db:void/>
-         <db:methodname>mouseMove</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mousePress">
-         <db:void/>
-         <db:methodname>mousePress</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        modifier  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mousePress-2">
-         <db:void/>
-         <db:methodname>mousePress</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        stateKey  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseRelease">
-         <db:void/>
-         <db:methodname>mouseRelease</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        modifier  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#mouseRelease-2">
-         <db:void/>
-         <db:methodname>mouseRelease</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  Qt::MouseButton 
-                                        button ,  Qt::KeyboardModifiers 
-                                        stateKey  = 0,  QPoint  pos  =
-                                    QPoint(),  int 
-                                        delay  = -1)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#newRow">
-         <db:type>QTestData</db:type>
-         <db:methodname>newRow</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         char  * 
-                                        dataTag )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qExec">
-         <db:type>int</db:type>
-         <db:methodname>qExec</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QObject  * 
-                                        testObject ,  int  argc  = 0,  char  **  argv  =
-                                    0)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qExec-2">
-         <db:type>int</db:type>
-         <db:methodname>qExec</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QObject  * 
-                                        testObject , const  QStringList  &amp; 
-                                        arguments )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qSleep">
-         <db:void/>
-         <db:methodname>qSleep</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( int  ms )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qWait">
-         <db:modifier>static</db:modifier>
-         <db:void/>
-         <db:methodname>qWait</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( int  ms )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qWaitForWindowActive">
-         <db:modifier>static</db:modifier>
-         <db:type>bool</db:type>
-         <db:methodname>qWaitForWindowActive</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow  *  window ,
-                                         int 
-                                        timeout  = 5000)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qWaitForWindowActive-2">
-         <db:modifier>static</db:modifier>
-         <db:type>bool</db:type>
-         <db:methodname>qWaitForWindowActive</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         int 
-                                        timeout  = 1000)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qWaitForWindowExposed">
-         <db:modifier>static</db:modifier>
-         <db:type>bool</db:type>
-         <db:methodname>qWaitForWindowExposed</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow  *  window ,
-                                         int 
-                                        timeout  = 5000)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#qWaitForWindowExposed-2">
-         <db:modifier>static</db:modifier>
-         <db:type>bool</db:type>
-         <db:methodname>qWaitForWindowExposed</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         int 
-                                        timeout  = 1000)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#setBenchmarkResult">
-         <db:void/>
-         <db:methodname>setBenchmarkResult</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( qreal  result ,
-                                         QBenchmarkMetric 
-                                        metric )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toHexRepresentation">
-         <db:type>char</db:type>
-         <db:methodname>toHexRepresentation</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const  char  *  ba ,
-                                         int 
-                                        length )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         T  &amp; 
-                                        value )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-4">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QLatin1String  &amp; 
-                                        string )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-5">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QString  &amp; 
-                                        string )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-6">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QByteArray  &amp; 
-                                    ba )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-7">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QTime  &amp; 
-                                    time )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-8">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QDate  &amp; 
-                                    date )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-9">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QDateTime  &amp; 
-                                        dateTime )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-10">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QChar  &amp; 
-                                        character )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-11">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QPoint  &amp; 
-                                        point )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-12">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QSize  &amp; 
-                                    size )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-13">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QRect  &amp; 
-                                        rectangle )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-14">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QUrl  &amp; 
-                                    url )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-15">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QPointF  &amp; 
-                                        point )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-16">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QSizeF  &amp; 
-                                    size )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-17">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QRectF  &amp; 
-                                        rectangle )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toString-18">
-         <db:type>char</db:type>
-         <db:methodname>toString</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QVariant  &amp; 
-                                        variant )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#touchEvent">
-         <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
-         <db:methodname>touchEvent</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWidget  *  widget ,
-                                         QTouchDevice  * 
-                                    device ,  bool  autoCommit  =
-                                    true)</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#touchEvent-2">
-         <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
-         <db:methodname>touchEvent</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window ,  QTouchDevice  * 
-                                    device ,  bool  autoCommit  =
-                                    true)</db:exceptionname>
-      </db:methodsynopsis>
-   </db:classsynopsis>
+   <db:namespacesynopsis>
+      <db:namespace>
+         <db:namespacename>QTest</db:namespacename>
+      </db:namespace>
+      <db:namespacesynopsisinfo role="header">#include
+                                                  &lt;QTest&gt;</db:namespacesynopsisinfo>
+      <db:namespacesynopsisinfo role="qmake"> QT +=
+                                                testlib</db:namespacesynopsisinfo>
+      <db:funcsynopsis xlink:href="#addColumn">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>addColumn</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type>char&lt;T&gt;</db:type>
+               <db:parameter>name</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type>T</db:type>
+               <db:parameter>dummy</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#benchmarkMetricName">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>benchmarkMetricName</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:type>
+               <db:parameter>metric</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#benchmarkMetricUnit">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>benchmarkMetricUnit</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:type>
+               <db:parameter>metric</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#currentAppName">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>currentAppName</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#currentDataTag">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>currentDataTag</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#currentTestFailed">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>bool</db:type>
+               <db:function>currentTestFailed</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#currentTestFunction">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>currentTestFunction</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#ignoreMessage">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>ignoreMessage</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QtMsgType&lt;char&gt;</db:type>
+               <db:parameter>type</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char</db:type>
+               <db:parameter>message</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#ignoreMessage-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>ignoreMessage</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QtMsgType&lt;QRegularExpression&gt;</db:type>
+               <db:parameter>type</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type xlink:href="qtcore/qregularexpression.html">QRegularExpression</db:type>
+               <db:parameter>messagePattern</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyClick">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyClick-2">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyClick-3">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyClick-4">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyClicks">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyClicks</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;QString&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QString&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>sequence</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyEvent">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyEvent</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>KeyAction&lt;QWidget&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>action</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyEvent-2">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyEvent</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>KeyAction&lt;QWidget&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>action</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>ascii</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyEvent-3">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyEvent</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>KeyAction&lt;QWindow&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>action</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyEvent-4">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyEvent</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>KeyAction&lt;QWindow&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>action</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>ascii</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyPress">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyPress</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyPress-2">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyPress</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyPress-3">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyPress</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyPress-4">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyPress</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyRelease">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyRelease</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyRelease-2">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyRelease</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyRelease-3">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyRelease</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::Key&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#keyRelease-4">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>keyRelease</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char&lt;Qt::KeyboardModifiers&lt;int&gt;&gt;</db:type>
+               <db:parameter>key</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;int&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseClick">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseClick-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>stateKey</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseDClick">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseDClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseDClick-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseDClick</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>stateKey</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseMove">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseMove</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseMove-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseMove</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mousePress">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mousePress</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mousePress-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mousePress</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>stateKey</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseRelease">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseRelease</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>modifier</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#mouseRelease-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>mouseRelease</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::MouseButton&lt;Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;&gt;</db:type>
+               <db:parameter>button</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>Qt::KeyboardModifiers&lt;QPoint&lt;int&gt;&gt;</db:type>
+               <db:parameter>stateKey</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QPoint&lt;int&gt;</db:type>
+               <db:parameter>pos</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>delay</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#newRow">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>QTestData</db:type>
+               <db:function>newRow</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type>char</db:type>
+               <db:parameter>dataTag</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qExec">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>int</db:type>
+               <db:function>qExec</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QObject&lt;int&lt;char&gt;&gt;</db:type>
+               <db:parameter>testObject</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int&lt;char&gt;</db:type>
+               <db:parameter>argc</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>char</db:type>
+               <db:parameter>argv</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qExec-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>int</db:type>
+               <db:function>qExec</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QObject&lt;QStringList&gt;</db:type>
+               <db:parameter>testObject</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type xlink:href="qtcore/qstringlist.html">QStringList</db:type>
+               <db:parameter>arguments</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qSleep">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>qSleep</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>ms</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qWait">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:function>qWait</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>ms</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qWaitForWindowActive">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:type>bool</db:type>
+               <db:function>qWaitForWindowActive</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;int&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qWaitForWindowActive-2">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:type>bool</db:type>
+               <db:function>qWaitForWindowActive</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;int&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qWaitForWindowExposed">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:type>bool</db:type>
+               <db:function>qWaitForWindowExposed</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;int&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#qWaitForWindowExposed-2">
+         <db:funcprototype>
+            <db:modifier>static</db:modifier>
+            <db:funcdef>
+               <db:type>bool</db:type>
+               <db:function>qWaitForWindowExposed</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;int&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#setBenchmarkResult">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>setBenchmarkResult</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>qreal&lt;QBenchmarkMetric&gt;</db:type>
+               <db:parameter>result</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:type>
+               <db:parameter>metric</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toHexRepresentation">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toHexRepresentation</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type>char&lt;int&gt;</db:type>
+               <db:parameter>ba</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type>int</db:type>
+               <db:parameter>length</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type>T</db:type>
+               <db:parameter>value</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-4">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qlatin1string.html">QLatin1String</db:type>
+               <db:parameter>string</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-5">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qstring.html">QString</db:type>
+               <db:parameter>string</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-6">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qbytearray.html">QByteArray</db:type>
+               <db:parameter>ba</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-7">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qtime.html">QTime</db:type>
+               <db:parameter>time</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-8">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qdate.html">QDate</db:type>
+               <db:parameter>date</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-9">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qdatetime.html">QDateTime</db:type>
+               <db:parameter>dateTime</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-10">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qchar.html">QChar</db:type>
+               <db:parameter>character</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-11">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qpoint.html">QPoint</db:type>
+               <db:parameter>point</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-12">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qsize.html">QSize</db:type>
+               <db:parameter>size</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-13">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qrect.html">QRect</db:type>
+               <db:parameter>rectangle</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-14">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qurl.html">QUrl</db:type>
+               <db:parameter>url</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-15">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qpointf.html">QPointF</db:type>
+               <db:parameter>point</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-16">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qsizef.html">QSizeF</db:type>
+               <db:parameter>size</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-17">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qrectf.html">QRectF</db:type>
+               <db:parameter>rectangle</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toString-18">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>char</db:type>
+               <db:function>toString</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qvariant.html">QVariant</db:type>
+               <db:parameter>variant</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#touchEvent">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
+               <db:function>touchEvent</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWidget&lt;QTouchDevice&lt;bool&gt;&gt;</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QTouchDevice&lt;bool&gt;</db:type>
+               <db:parameter>device</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>bool</db:type>
+               <db:parameter>autoCommit</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#touchEvent-2">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:type>
+               <db:function>touchEvent</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>QWindow&lt;QTouchDevice&lt;bool&gt;&gt;</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>QTouchDevice&lt;bool&gt;</db:type>
+               <db:parameter>device</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:type>bool</db:type>
+               <db:parameter>autoCommit</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+   </db:namespacesynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>The <db:code><db:link xlink:href="qtest.html">QTest</db:link></db:code> namespace

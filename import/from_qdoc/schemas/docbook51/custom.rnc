@@ -15,8 +15,56 @@ include "docbookxi.rnc" {
 qdt.synopsis = qdt.enumsynopsis | qdt.typedefsynopsis
 
 # Deal with namespaces. 
-# db.synopsis.blocks |= qdt.namespacesynopsis
-# qdt.namespacesynopsis = element namespacesynopsis { text } #TODO!
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.namespace | qdt.namespacename
+
+    qdt.namespace.role.attribute = attribute role { text }
+    qdt.namespace.attlist =
+       qdt.namespace.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.namespace = element namespace { qdt.namespace.attlist, qdt.namespacename }
+
+    qdt.namespacename.role.attribute = attribute role { text }
+    qdt.namespacename.attlist =
+       qdt.namespacename.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.namespacename = element namespacename { qdt.namespacename.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= qdt.namespacesynopsis
+    
+    qdt.namespacesynopsisinfo.role.attribute = attribute role { text }
+    qdt.namespacesynopsisinfo.attlist =
+      qdt.namespacesynopsisinfo.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.verbatim.attributes
+    qdt.namespacesynopsisinfo =
+      element namespacesynopsisinfo {
+        qdt.namespacesynopsisinfo.attlist, db.verbatim.contentmodel
+      }
+    
+    qdt.namespacesynopsis.role.attribute = attribute role { text }
+    qdt.namespacesynopsis.attlist =
+      qdt.namespacesynopsis.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.language.attribute?
+    qdt.namespacesynopsis = 
+      element namespacesynopsis { 
+        qdt.namespacesynopsis.attlist,
+        db.programming.inlines+,
+        (qdt.namespacesynopsisinfo
+        | db.classsynopsis
+        | db.funcsynopsis
+        | db.fieldsynopsis
+        | qdt.typedefsynopsis
+        | qdt.macrosynopsis)*
+      }
+}
 
 # Deal with structures. 
 # db.classsynopsis.class.enumeration |= "structure"

@@ -4,75 +4,117 @@
             version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QtMac Namespace</db:title>
-   <db:classsynopsis>
-      <db:ooclass>
-         <db:classname>QtMac</db:classname>
-      </db:ooclass>
-      <db:classsynopsisinfo role="isNamespace">yes</db:classsynopsisinfo>
-      <db:classsynopsisinfo role="header">#include
-                                                  &lt;QtMac&gt;</db:classsynopsisinfo>
-      <db:classsynopsisinfo role="qmake"> QT +=
-                                                macextras</db:classsynopsisinfo>
-      <db:classsynopsisinfo role="since"> Qt
-                                                5.2</db:classsynopsisinfo>
-      <db:methodsynopsis xlink:href="#applicationIconBadgeNumber">
-         <db:type>int</db:type>
-         <db:methodname>applicationIconBadgeNumber</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#badgeLabelText">
-         <db:type xlink:href="qtcore/qstring.html">QString</db:type>
-         <db:methodname>badgeLabelText</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#currentCGContext">
-         <db:type>CGContextRef</db:type>
-         <db:methodname>currentCGContext</db:methodname>
-         <db:void/>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#fromCGImageRef">
-         <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
-         <db:methodname>fromCGImageRef</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( CGImageRef  image )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#isMainWindow">
-         <db:type>bool</db:type>
-         <db:methodname>isMainWindow</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( QWindow 
-                                        *  window )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#setApplicationIconBadgeNumber">
-         <db:void/>
-         <db:methodname>setApplicationIconBadgeNumber</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">( int 
-                                    number )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#setBadgeLabelText">
-         <db:void/>
-         <db:methodname>setBadgeLabelText</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const  QString  &amp; 
-                                    text )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toCGImageRef">
-         <db:type>CGImageRef</db:type>
-         <db:methodname>toCGImageRef</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const  QPixmap 
-                                        &amp;  pixmap )</db:exceptionname>
-      </db:methodsynopsis>
-      <db:methodsynopsis xlink:href="#toNSImage">
-         <db:type>NSImage</db:type>
-         <db:methodname>toNSImage</db:methodname>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters">(const
-                                         QPixmap  &amp; 
-                                        pixmap )</db:exceptionname>
-      </db:methodsynopsis>
-   </db:classsynopsis>
+   <db:namespacesynopsis>
+      <db:namespace>
+         <db:namespacename>QtMac</db:namespacename>
+      </db:namespace>
+      <db:namespacesynopsisinfo role="header">#include
+                                                  &lt;QtMac&gt;</db:namespacesynopsisinfo>
+      <db:namespacesynopsisinfo role="qmake"> QT +=
+                                                macextras</db:namespacesynopsisinfo>
+      <db:namespacesynopsisinfo role="since"> Qt
+                                                5.2</db:namespacesynopsisinfo>
+      <db:funcsynopsis xlink:href="#applicationIconBadgeNumber">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>int</db:type>
+               <db:function>applicationIconBadgeNumber</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#badgeLabelText">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type xlink:href="qtcore/qstring.html">QString</db:type>
+               <db:function>badgeLabelText</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#currentCGContext">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>CGContextRef</db:type>
+               <db:function>currentCGContext</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#fromCGImageRef">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
+               <db:function>fromCGImageRef</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>CGImageRef</db:type>
+               <db:parameter>image</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#isMainWindow">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>bool</db:type>
+               <db:function>isMainWindow</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type xlink:href="qtgui/qwindow.html">QWindow</db:type>
+               <db:parameter>window</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#setApplicationIconBadgeNumber">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>setApplicationIconBadgeNumber</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>int</db:type>
+               <db:parameter>number</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#setBadgeLabelText">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>setBadgeLabelText</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtcore/qstring.html">QString</db:type>
+               <db:parameter>text</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toCGImageRef">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>CGImageRef</db:type>
+               <db:function>toCGImageRef</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
+               <db:parameter>pixmap</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#toNSImage">
+         <db:funcprototype>
+            <db:funcdef>
+               <db:type>NSImage</db:type>
+               <db:function>toNSImage</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:type>const</db:type>
+               <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
+               <db:parameter>pixmap</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+   </db:namespacesynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>The <db:code><db:link xlink:href="qtmac.html">QtMac</db:link></db:code> namespace
