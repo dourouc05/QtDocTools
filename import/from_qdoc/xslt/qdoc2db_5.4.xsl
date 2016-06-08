@@ -585,37 +585,16 @@
         </xsl:if>
       </xsl:if>
 
-      <xsl:if test="$isNamespace or $isGlobal">
-        <xsl:if test="$warnVocabularyUnsupportedFeatures">
-          <xsl:message>WARNING: No precise output for namespaces.</xsl:message>
-        </xsl:if>
-        <xsl:if test="$nonmemfuncs and $warnVocabularyUnsupportedFeatures">
-          <xsl:message>WARNING: No precise output for namespace functions.</xsl:message>
-        </xsl:if>
-        <xsl:if test="$macros and $warnVocabularyUnsupportedFeatures">
-          <xsl:message>WARNING: No precise output for namespace macros (fpr now, outside the
-            namespace).</xsl:message>
-        </xsl:if>
-        <xsl:if test="$classes and $warnVocabularyUnsupportedFeatures">
-          <xsl:message>WARNING: No precise output for namespace classes.</xsl:message>
-        </xsl:if>
+      <xsl:if test="$isNamespace">
         <xsl:call-template name="nsListing">
-          <xsl:with-param name="className"
-            select="
-              if ($isGlobal) then
-                'QtGlobal'
-              else
-                $namespaceName"/>
+          <xsl:with-param name="className" select="$namespaceName"/>
 
-          <xsl:with-param name="functions"
-            select="
-              if (not($isGlobal)) then
-                $nonmemfuncs
-              else
-                /.."/>
+          <xsl:with-param name="functions" select="$nonmemfuncs"/>
           <xsl:with-param name="properties" select="$properties"/>
           <xsl:with-param name="vars" select="$vars"/>
-          <!-- TODO: <xsl:with-param name="macros" select="$macros"/> -->
+          <xsl:with-param name="macros" select="$macros"/>
+          <xsl:with-param name="types" select="$nonmemtypes"/>
+          <xsl:with-param name="classes" select="$classes"/>
 
           <xsl:with-param name="header" select="$prologueHeader"/>
           <xsl:with-param name="qmake" select="$prologueQmake"/>
@@ -1085,6 +1064,7 @@
     <xsl:param name="vars" as="element(html:div)?"/>
     <xsl:param name="macros" as="element(html:div)?"/>
     <xsl:param name="types" as="element(html:div)?"/>
+    <xsl:param name="classes" as="element(html:div)?"/>
 
     <xsl:param name="obsoleteMemberFunctions" as="element(html:div)?"/>
     <xsl:param name="obsoleteProperties" as="element(html:div)?"/>
@@ -1097,6 +1077,25 @@
     <xsl:param name="inherits" as="element()?"/>
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
+    
+    <xsl:if test="$vocabulary = 'docbook'">
+      <xsl:if test="$warnVocabularyUnsupportedFeatures">
+        <xsl:message>WARNING: No precise output for namespaces.</xsl:message>
+      </xsl:if>
+      <xsl:if test="$functions and $warnVocabularyUnsupportedFeatures">
+        <xsl:message>WARNING: No precise output for namespace functions.</xsl:message>
+      </xsl:if>
+      <xsl:if test="$macros and $warnVocabularyUnsupportedFeatures">
+        <xsl:message>WARNING: No precise output for namespace macros (outside the
+          namespace).</xsl:message>
+      </xsl:if>
+      <xsl:if test="$types and $warnVocabularyUnsupportedFeatures">
+        <xsl:message>WARNING: No precise output for namespace types.</xsl:message>
+      </xsl:if>
+      <xsl:if test="$classes and $warnVocabularyUnsupportedFeatures">
+        <xsl:message>WARNING: No precise output for namespace classes.</xsl:message>
+      </xsl:if>
+    </xsl:if>
     
     <xsl:variable name="nsSynopsisTag" as="xs:string" select="if ($vocabulary = 'qtdoctools') then 'db:namespacesynopsis' else 'db:classsynopsis'"/>
     <xsl:variable name="nsTag" as="xs:string" select="if ($vocabulary = 'qtdoctools') then 'db:namespace' else 'db:ooclass'"/>
@@ -1325,7 +1324,10 @@
 
     <db:fieldsynopsis>
       <xsl:if test="$kind">
-        <db:modifier>(<xsl:value-of select="$kind"/>)</db:modifier>
+        <db:modifier>
+          <xsl:text>(</xsl:text>
+          <xsl:value-of select="$kind"/>
+          <xsl:text>)</xsl:text></db:modifier>
       </xsl:if>
 
       <xsl:if test="string-length($type) &gt; 0">
@@ -1426,10 +1428,10 @@
 
     <!-- Handle function const. -->
     <xsl:variable name="textAfterArguments"
-      select="normalize-space(substring-after($textAfterName, ')'))"/>
+      select="replace(normalize-space(substring-after($textAfterName, ')')), ' \)', '')"/>
     <xsl:if test="string-length($textAfterArguments) > 0">
       <db:modifier>
-        <xsl:value-of select="replace($textAfterArguments, ' \)', '')"/>
+        <xsl:value-of select="$textAfterArguments"/>
       </db:modifier>
     </xsl:if>
   </xsl:template>
@@ -1671,7 +1673,7 @@
                   <db:paramdef choice="req">
                     <!-- Maybe this parameter is const. -->
                     <xsl:if test="normalize-space($textAfterName) = '(const'">
-                      <!-- TODO: DocBook does not allow <db:modifier>!? -->
+                      <!-- TODO: DocBook does not allow <db:modifier>!? ISSUE: https://github.com/docbook/docbook/issues/59 -->
                       <db:type>const</db:type>
                     </xsl:if>
 
@@ -1826,7 +1828,7 @@
     <xsl:variable name="anchor" select="$row/@id"/>
 
     <db:methodsynopsis>
-      <xsl:if test="string-length($type)">
+      <xsl:if test="string-length($type) &gt;= 1">
         <db:modifier>
           <xsl:value-of select="$type"/>
         </db:modifier>
