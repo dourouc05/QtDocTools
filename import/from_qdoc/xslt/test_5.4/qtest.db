@@ -4,255 +4,6 @@
             version="5.1"
             xml:lang="en">
    <db:title>QTest Namespace</db:title>
-   <db:funcsynopsis xlink:href="#QBENCHMARK">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QBENCHMARK</db:function>
-         </db:funcdef>
-         <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QBENCHMARK_ONCE">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QBENCHMARK_ONCE</db:function>
-         </db:funcdef>
-         <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QCOMPARE">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QCOMPARE</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>actual</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>expected</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QEXPECT_FAIL">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QEXPECT_FAIL</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>dataIndex</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>comment</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>mode</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QFAIL">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QFAIL</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>message</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QFETCH">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QFETCH</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>type</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>name</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QFINDTESTDATA">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QFINDTESTDATA</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>filename</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QSKIP">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QSKIP</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>description</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTEST">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTEST</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>actual</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>testElement</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTEST_APPLESS_MAIN">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTEST_APPLESS_MAIN</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>TestClass</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTEST_GUILESS_MAIN">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTEST_GUILESS_MAIN</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>TestClass</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTEST_MAIN">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTEST_MAIN</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>TestClass</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTRY_COMPARE">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTRY_COMPARE</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>actual</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>expected</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTRY_COMPARE_WITH_TIMEOUT">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTRY_COMPARE_WITH_TIMEOUT</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>actual</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>expected</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>timeout</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTRY_VERIFY">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTRY_VERIFY</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>condition</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QTRY_VERIFY_WITH_TIMEOUT">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QTRY_VERIFY_WITH_TIMEOUT</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>condition</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>timeout</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QVERIFY2">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QVERIFY2</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>condition</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>message</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QVERIFY">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QVERIFY</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>condition</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QVERIFY_EXCEPTION_THROWN">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QVERIFY_EXCEPTION_THROWN</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>expression</db:parameter>
-         </db:paramdef>
-         <db:paramdef choice="req">
-            <db:parameter>exceptiontype</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QWARN">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QWARN</db:function>
-         </db:funcdef>
-         <db:paramdef choice="req">
-            <db:parameter>message</db:parameter>
-         </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
    <db:classsynopsis>
       <db:ooclass>
          <db:classname>QTest</db:classname>
@@ -838,255 +589,175 @@
                                     device ,  bool  autoCommit  =
                                     true)</db:exceptionname>
       </db:methodsynopsis>
-      <db:funcsynopsis xlink:href="#QBENCHMARK">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QBENCHMARK</db:function>
-            </db:funcdef>
-            <db:void/>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QBENCHMARK_ONCE">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QBENCHMARK_ONCE</db:function>
-            </db:funcdef>
-            <db:void/>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QCOMPARE">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QCOMPARE</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>actual</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>expected</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QEXPECT_FAIL">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QEXPECT_FAIL</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>dataIndex</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>comment</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>mode</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QFAIL">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QFAIL</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>message</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QFETCH">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QFETCH</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>type</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>name</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QFINDTESTDATA">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QFINDTESTDATA</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>filename</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QSKIP">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QSKIP</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>description</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTEST">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTEST</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>actual</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>testElement</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTEST_APPLESS_MAIN">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTEST_APPLESS_MAIN</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>TestClass</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTEST_GUILESS_MAIN">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTEST_GUILESS_MAIN</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>TestClass</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTEST_MAIN">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTEST_MAIN</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>TestClass</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTRY_COMPARE">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTRY_COMPARE</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>actual</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>expected</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTRY_COMPARE_WITH_TIMEOUT">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTRY_COMPARE_WITH_TIMEOUT</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>actual</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>expected</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>timeout</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTRY_VERIFY">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTRY_VERIFY</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>condition</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QTRY_VERIFY_WITH_TIMEOUT">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QTRY_VERIFY_WITH_TIMEOUT</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>condition</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>timeout</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QVERIFY2">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QVERIFY2</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>condition</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>message</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QVERIFY">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QVERIFY</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>condition</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QVERIFY_EXCEPTION_THROWN">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QVERIFY_EXCEPTION_THROWN</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>expression</db:parameter>
-            </db:paramdef>
-            <db:paramdef choice="req">
-               <db:parameter>exceptiontype</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
-      <db:funcsynopsis xlink:href="#QWARN">
-         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-         <db:funcprototype>
-            <db:funcdef>
-               <db:function>QWARN</db:function>
-            </db:funcdef>
-            <db:paramdef choice="req">
-               <db:parameter>message</db:parameter>
-            </db:paramdef>
-         </db:funcprototype>
-      </db:funcsynopsis>
+      <db:methodsynopsis xlink:href="#QBENCHMARK">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QBENCHMARK</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QBENCHMARK_ONCE">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QBENCHMARK_ONCE</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QCOMPARE">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QCOMPARE</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>expected</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QEXPECT_FAIL">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QEXPECT_FAIL</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>dataIndex</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>comment</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>mode</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QFAIL">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QFAIL</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>message</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QFETCH">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QFETCH</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>type</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>name</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QFINDTESTDATA">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QFINDTESTDATA</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>filename</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QSKIP">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QSKIP</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>description</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTEST">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTEST</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>testElement</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTEST_APPLESS_MAIN">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTEST_APPLESS_MAIN</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>TestClass</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTEST_GUILESS_MAIN">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTEST_GUILESS_MAIN</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>TestClass</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTEST_MAIN">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTEST_MAIN</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>TestClass</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTRY_COMPARE">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTRY_COMPARE</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>expected</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTRY_COMPARE_WITH_TIMEOUT">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTRY_COMPARE_WITH_TIMEOUT</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>actual</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>expected</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>timeout</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTRY_VERIFY">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTRY_VERIFY</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QTRY_VERIFY_WITH_TIMEOUT">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QTRY_VERIFY_WITH_TIMEOUT</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>timeout</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QVERIFY2">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QVERIFY2</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>message</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QVERIFY">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QVERIFY</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>condition</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QVERIFY_EXCEPTION_THROWN">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QVERIFY_EXCEPTION_THROWN</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>expression</db:parameter>
+         </db:methodparam>
+         <db:methodparam choice="req">
+            <db:parameter>exceptiontype</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#QWARN">
+         <db:modifier>macro</db:modifier>
+         <db:methodname>QWARN</db:methodname>
+         <db:methodparam choice="req">
+            <db:parameter>message</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
@@ -3238,619 +2909,6 @@
                                     is set to false. When <db:emphasis>autoCommit</db:emphasis> is false,
                                     commit() has to be called manually.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
-      </db:section>
-   </db:section>
-   <db:section xml:id="macros">
-      <db:title>Macro Documentation</db:title>
-      <db:section xml:id="QBENCHMARK">
-         <db:title>QBENCHMARK</db:title>
-         <db:para>This macro is used to measure the performance of code within
-                                    a test. The code to be benchmarked is contained within a code
-                                    block following this macro.</db:para>
-         <db:para>For example:</db:para>
-         <db:programlisting>void
-                                        TestBenchmark::simple() { QString
-                                    str1 =
-                                        QLatin1String("This is a test
-                                        string"); QString
-                                    str2 =
-                                        QLatin1String("This is a test
-                                        string"); QCOMPARE(str1.localeAwareCompare(str2),0); QBENCHMARK {
-                                        str1.localeAwareCompare(str2); } }</db:programlisting>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:link xlink:href="qtest-overview.html#creating-a-benchmark">Creating a
-                                        Benchmark</db:link>
-               </db:member>
-               <db:member>
-                  <db:link xlink:href="qttestlib-tutorial5-example.html">Writing a
-                                        Benchmark</db:link>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QBENCHMARK_ONCE">
-         <db:title>QBENCHMARK_ONCE</db:title>
-         <db:para>The QBENCHMARK_ONCE macro is for measuring performance of a
-                                    code block by running it once.</db:para>
-         <db:para>This macro is used to measure the performance of code within
-                                    a test. The code to be benchmarked is contained within a code
-                                    block following this macro.</db:para>
-         <db:para>Unlike QBENCHMARK, the contents of the contained code block
-                                    is only run once. The elapsed time will be reported as "0" if
-                                    it's to short to be measured by the selected backend.
-                                    (Use)</db:para>
-         <db:para>This function was introduced in Qt 4.6.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:link xlink:href="qtest-overview.html#creating-a-benchmark">Creating a
-                                        Benchmark</db:link>
-               </db:member>
-               <db:member>
-                  <db:link xlink:href="qttestlib-tutorial5-example.html">Writing a
-                                        Benchmark</db:link>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QCOMPARE">
-         <db:title>QCOMPARE( actual, expected)</db:title>
-         <db:para>The QCOMPARE macro compares an <db:emphasis>actual</db:emphasis> value
-                                    to an <db:emphasis>expected</db:emphasis> value using the equals operator.
-                                    If <db:emphasis>actual</db:emphasis> and <db:emphasis>expected</db:emphasis> are
-                                    identical, execution continues. If not, a failure is recorded in
-                                    the test log and the test won't be executed further.</db:para>
-         <db:para>In the case of comparing floats and doubles, <db:code><db:link xlink:href="qtcore/qtglobal.html#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code> is used for comparing. This means
-                                    that comparing to 0 will likely fail. One solution to this is to
-                                    compare to 1, and add 1 to the produced output.</db:para>
-         <db:para>QCOMPARE tries to output the contents of the values if the
-                                    comparison fails, so it is visible from the test log why the
-                                    comparison failed.</db:para>
-         <db:para>QCOMPARE is very strict on the data types. Both
-                                        <db:emphasis>actual</db:emphasis> and <db:emphasis>expected</db:emphasis> have
-                                    to be of the same type, otherwise the test won't compile. This
-                                    prohibits unspecified behavior from being introduced; that is
-                                    behavior that usually occurs when the compiler implicitly casts
-                                    the argument.</db:para>
-         <db:para>For your own classes, you can use <db:code><db:link xlink:href="qtest.html#toString">QTest::toString</db:link>()</db:code> to
-                                    format values for outputting into the test log.</db:para>
-         <db:note>
-            <db:para>This macro can only be used in a test
-                                    function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>Example:</db:para>
-         <db:programlisting>QCOMPARE(QString("hello").toUpper(),QString("HELLO"));</db:programlisting>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#toString">QTest::toString</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QEXPECT_FAIL">
-         <db:title>QEXPECT_FAIL( dataIndex, comment, mode)</db:title>
-         <db:para>The QEXPECT_FAIL() macro marks the next <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> or <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> as an expected
-                                    failure. Instead of adding a failure to the test log, an
-                                    expected failure will be reported.</db:para>
-         <db:para>If a <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> or
-                                        <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> is
-                                    marked as an expected failure, but passes instead, an unexpected
-                                    pass (XPASS) is written to the test log.</db:para>
-         <db:para>The parameter <db:emphasis>dataIndex</db:emphasis> describes for which
-                                    entry in the test data the failure is expected. Pass an empty
-                                    string (<db:code>""</db:code>) if the failure is expected
-                                    for all entries or if no test data exists.</db:para>
-         <db:para>
-            <db:emphasis>comment</db:emphasis> will be appended to the test log
-                                    for the expected failure.</db:para>
-         <db:para>
-            <db:emphasis>mode</db:emphasis> is a <db:code><db:link xlink:href="qtest.html#TestFailMode-enum">QTest::TestFailMode</db:link></db:code> and sets whether the test
-                                    should continue to execute or not.</db:para>
-         <db:note>
-            <db:para> This macro can only be used in a test
-                                    function that is invoked by the test framework.</db:para>
-         </db:note>
-         <db:para>Example 1:</db:para>
-         <db:programlisting>QEXPECT_FAIL("","Will fix in the next
-                                        release", Continue); QCOMPARE(i,42); QCOMPARE(j,43);</db:programlisting>
-         <db:para>In the example above, an expected fail will be written into
-                                    the test output if the variable <db:code>i</db:code> is not
-                                    42. If the variable <db:code>i</db:code> is 42, an
-                                    unexpected pass is written instead. The QEXPECT_FAIL() has no
-                                    influence on the second <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> statement in the example.</db:para>
-         <db:para>Example 2:</db:para>
-         <db:programlisting>QEXPECT_FAIL("data27","Oh my, this is soooo
-                                        broken",
-                                    Abort); QCOMPARE(i,42);</db:programlisting>
-         <db:para>The above testfunction will not continue executing for the
-                                    test data entry <db:code>data27</db:code>.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#TestFailMode-enum">QTest::TestFailMode</db:link></db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QFAIL">
-         <db:title>QFAIL( message)</db:title>
-         <db:para>This macro can be used to force a test failure. The test
-                                    stops executing and the failure <db:emphasis>message</db:emphasis> is
-                                    appended to the test log.</db:para>
-         <db:note>
-            <db:para> This macro can only be used in a test
-                                    function that is invoked by the test framework.</db:para>
-         </db:note>
-         <db:para>Example:</db:para>
-         <db:programlisting>if
-                                        (sizeof(int) !=4) QFAIL("This test has not been ported to this
-                                        platform yet.");</db:programlisting>
-      </db:section>
-      <db:section xml:id="QFETCH">
-         <db:title>QFETCH( type, name)</db:title>
-         <db:para>The fetch macro creates a local variable named
-                                        <db:emphasis>name</db:emphasis> with the type <db:emphasis>type</db:emphasis> on
-                                    the stack. <db:emphasis>name</db:emphasis> has to match the element name
-                                    from the test's data. If no such element exists, the test will
-                                    assert.</db:para>
-         <db:para>Assuming a test has the following data:</db:para>
-         <db:programlisting>void
-                                        TestQString::toInt_data() { QTest::addColumn&lt;QString&gt;("aString"); QTest::addColumn&lt;int&gt;("expected"); QTest::newRow("positive value") &lt;&lt;"42"&lt;&lt;42; QTest::newRow("negative
-                                        value") &lt;&lt;"-42"&lt;&lt;-42; QTest::newRow("zero") &lt;&lt;"0"&lt;&lt;0; }</db:programlisting>
-         <db:para>The test data has two elements, a <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> called
-                                        <db:code>aString</db:code> and an integer called
-                                        <db:code>expected</db:code>. To fetch these values in
-                                    the actual test:</db:para>
-         <db:programlisting>void
-                                        TestQString::toInt()
-                                    { QFETCH(QString, aString); QFETCH(int,
-                                    expected); QCOMPARE(aString.toInt(), expected); }</db:programlisting>
-         <db:para>
-            <db:code>aString</db:code> and
-                                        <db:code>expected</db:code> are variables on the stack
-                                    that are initialized with the current test data.</db:para>
-         <db:note>
-            <db:para> This macro can only be used in a test
-                                    function that is invoked by the test framework. The test
-                                    function must have a _data function.</db:para>
-         </db:note>
-      </db:section>
-      <db:section xml:id="QFINDTESTDATA">
-         <db:title>QFINDTESTDATA( filename)</db:title>
-         <db:para>Returns a <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> for the testdata file referred to by
-                                        <db:emphasis>filename</db:emphasis>, or an empty <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code> if the testdata
-                                    file could not be found.</db:para>
-         <db:para>This macro allows the test to load data from an external
-                                    file without hardcoding an absolute filename into the test, or
-                                    using relative paths which may be error prone.</db:para>
-         <db:para>The returned path will be the first path from the following
-                                    list which resolves to an existing file or directory:</db:para>
-         <db:itemizedlist>
-            <db:listitem>
-               <db:para>
-                  <db:emphasis>filename</db:emphasis> relative to <db:code><db:link xlink:href="qtcore/qcoreapplication.html#applicationDirPath">QCoreApplication::applicationDirPath</db:link>()</db:code> (only
-                                        if a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> or <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>
-                                        object has been created).</db:para>
-            </db:listitem>
-            <db:listitem>
-               <db:para>
-                  <db:emphasis>filename</db:emphasis> relative to the test's
-                                        standard install directory (<db:code><db:link xlink:href="qtcore/qlibraryinfo.html#LibraryLocation-enum">QLibraryInfo::TestsPath</db:link></db:code> with the lowercased
-                                        testcase name appended).</db:para>
-            </db:listitem>
-            <db:listitem>
-               <db:para>
-                  <db:emphasis>filename</db:emphasis> relative to the directory
-                                        containing the source file from which QFINDTESTDATA is
-                                        invoked.</db:para>
-            </db:listitem>
-         </db:itemizedlist>
-         <db:para>If the named file/directory does not exist at any of these
-                                    locations, a warning is printed to the test log.</db:para>
-         <db:para>For example, in this code:</db:para>
-         <db:programlisting>// Source:
-                                        /home/user/sources/myxmlparser/tests/tst_myxmlparser/tst_myxmlparser.cpp// Build:
-                                        /home/user/build/myxmlparser/tests/tst_myxmlparser// Qt:
-                                        /usr/local/Qt-5.0.0void
-                                        tst_MyXmlParser::parse() { MyXmlParser parser; QString input = QFINDTESTDATA("testxml/simple1.xml");
-                                        QVERIFY(parser.parse(input)); }</db:programlisting>
-         <db:para>The testdata file will be resolved as the first existing
-                                    file from:</db:para>
-         <db:itemizedlist>
-            <db:listitem>
-               <db:para>
-                  <db:code>/home/user/build/myxmlparser/tests/tst_myxmlparser/testxml/simple1.xml</db:code>
-               </db:para>
-            </db:listitem>
-            <db:listitem>
-               <db:para>
-                  <db:code>/usr/local/Qt-5.0.0/tests/tst_myxmlparser/testxml/simple1.xml</db:code>
-               </db:para>
-            </db:listitem>
-            <db:listitem>
-               <db:para>
-                  <db:code>/home/user/sources/myxmlparser/tests/tst_myxmlparser/testxml/simple1.xml</db:code>
-               </db:para>
-            </db:listitem>
-         </db:itemizedlist>
-         <db:para>This allows the test to find its testdata regardless of
-                                    whether the test has been installed, and regardless of whether
-                                    the test's build tree is equal to the test's source
-                                    tree.</db:para>
-         <db:note>
-            <db:para> reliable detection of testdata from
-                                    the source directory requires either that qmake is used, or the
-                                        <db:code>QT_TESTCASE_BUILDDIR</db:code> macro is defined
-                                    to point to the working directory from which the compiler is
-                                    invoked, or only absolute paths to the source files are passed
-                                    to the compiler. Otherwise, the absolute path of the source
-                                    directory cannot be determined.</db:para>
-         </db:note>
-         <db:note>
-            <db:para> For tests that use the <db:code><db:link xlink:href="qtest.html#QTEST_APPLESS_MAIN">QTEST_APPLESS_MAIN</db:link>()</db:code> macro to generate a
-                                        <db:code>main()</db:code> function,
-                                        <db:code>QFINDTESTDATA</db:code> will not attempt to
-                                    find test data relative to <db:code><db:link xlink:href="qtcore/qcoreapplication.html#applicationDirPath">QCoreApplication::applicationDirPath</db:link>()</db:code>. In
-                                    practice, this means that tests using
-                                        <db:code>QTEST_APPLESS_MAIN()</db:code> will fail to
-                                    find their test data if run from a shadow build tree.</db:para>
-         </db:note>
-         <db:para>This function was introduced in Qt 5.0.</db:para>
-      </db:section>
-      <db:section xml:id="QSKIP">
-         <db:title>QSKIP( description)</db:title>
-         <db:para>If called from a test function, the QSKIP() macro stops
-                                    execution of the test without adding a failure to the test log.
-                                    You can use it to skip tests that wouldn't make sense in the
-                                    current configuration. The text <db:emphasis>description</db:emphasis> is
-                                    appended to the test log and should contain an explanation of
-                                    why the test couldn't be executed.</db:para>
-         <db:para>If the test is data-driven, each call to QSKIP() will skip
-                                    only the current row of test data, so an unconditional call to
-                                    QSKIP will produce one skip message in the test log for each row
-                                    of test data.</db:para>
-         <db:para>If called from an _data function, the QSKIP() macro will
-                                    stop execution of the _data function and will prevent execution
-                                    of the associated test function.</db:para>
-         <db:para>If called from initTestCase() or initTestCase_data(), the
-                                    QSKIP() macro will skip all test and _data functions.</db:para>
-         <db:note>
-            <db:para> This macro can only be used in a test
-                                    function or _data function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>Example:</db:para>
-         <db:programlisting>if
-                                        (!QSqlDatabase::drivers().contains("SQLITE")) QSKIP("This test requires the SQLITE database
-                                        driver");</db:programlisting>
-      </db:section>
-      <db:section xml:id="QTEST">
-         <db:title>QTEST( actual, testElement)</db:title>
-         <db:para>QTEST() is a convenience macro for <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> that compares
-                                    the value <db:emphasis>actual</db:emphasis> with the element
-                                        <db:emphasis>testElement</db:emphasis> from the test's data. If there
-                                    is no such element, the test asserts.</db:para>
-         <db:para>Apart from that, QTEST() behaves exactly as <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>.</db:para>
-         <db:para>Instead of writing:</db:para>
-         <db:programlisting>QFETCH(QString, myString); QCOMPARE(QString("hello").toUpper(), myString);</db:programlisting>
-         <db:para>you can write:</db:para>
-         <db:programlisting>QTEST(QString("hello").toUpper(),"myString");</db:programlisting>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTEST_APPLESS_MAIN">
-         <db:title>QTEST_APPLESS_MAIN( TestClass)</db:title>
-         <db:para>Implements a main() function that executes all tests in
-                                        <db:emphasis>TestClass</db:emphasis>.</db:para>
-         <db:para>Behaves like <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>, but doesn't instantiate a <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>
-                                    object. Use this macro for really simple stand-alone non-GUI
-                                    tests.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTEST_GUILESS_MAIN">
-         <db:title>QTEST_GUILESS_MAIN( TestClass)</db:title>
-         <db:para>Implements a main() function that instantiates a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> object and the
-                                        <db:emphasis>TestClass</db:emphasis>, and executes all tests in the
-                                    order they were defined. Use this macro to build stand-alone
-                                    executables.</db:para>
-         <db:para>Behaves like <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>, but instantiates a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code> instead of the <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>
-                                    object. Use this macro if your test case doesn't need
-                                    functionality offered by <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>,
-                                    but the event loop is still necessary.</db:para>
-         <db:para>This function was introduced in Qt 5.0.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTEST_MAIN">
-         <db:title>QTEST_MAIN( TestClass)</db:title>
-         <db:para>Implements a main() function that instantiates an
-                                    application object and the <db:emphasis>TestClass</db:emphasis>, and
-                                    executes all tests in the order they were defined. Use this
-                                    macro to build stand-alone executables.</db:para>
-         <db:para>If <db:code>QT_WIDGETS_LIB</db:code> is defined, the
-                                    application object will be a <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code>, if
-                                        <db:code>QT_GUI_LIB</db:code> is defined, the
-                                    application object will be a <db:code><db:link xlink:href="qtgui/qguiapplication.html">QGuiApplication</db:link></db:code>,
-                                    otherwise it will be a <db:code><db:link xlink:href="qtcore/qcoreapplication.html">QCoreApplication</db:link></db:code>. If qmake is used and the
-                                    configuration includes <db:code>QT += widgets</db:code>,
-                                    then <db:code>QT_WIDGETS_LIB</db:code> will be defined
-                                    automatically. Similarly, if qmake is used and the configuration
-                                    includes <db:code>QT += gui</db:code>, then
-                                        <db:code>QT_GUI_LIB</db:code> will be defined
-                                    automatically.</db:para>
-         <db:note>
-            <db:para> On platforms that have keypad
-                                    navigation enabled by default, this macro will forcefully
-                                    disable it if <db:code>QT_WIDGETS_LIB</db:code> is defined.
-                                    This is done to simplify the usage of key events when writing
-                                    autotests. If you wish to write a test case that uses keypad
-                                    navigation, you should enable it either in the
-                                        <db:code>initTestCase()</db:code> or
-                                        <db:code>init()</db:code> functions of your test case by
-                                    calling <db:code><db:link xlink:href="qtwidgets/qapplication.html#setNavigationMode">QApplication::setNavigationMode</db:link>()</db:code>.</db:para>
-         </db:note>
-         <db:para>Example:</db:para>
-         <db:programlisting>class
-                                    TestQString: publicQObject { ... };
-                                    QTEST_MAIN(TestQString)</db:programlisting>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTEST_APPLESS_MAIN">QTEST_APPLESS_MAIN</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTEST_GUILESS_MAIN">QTEST_GUILESS_MAIN</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qExec">QTest::qExec</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtwidgets/qapplication.html#setNavigationMode">QApplication::setNavigationMode</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTRY_COMPARE">
-         <db:title>QTRY_COMPARE( actual, expected)</db:title>
-         <db:para>Performs a comparison of the <db:emphasis>actual</db:emphasis> and
-                                        <db:emphasis>expected</db:emphasis> values by invoking <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE_WITH_TIMEOUT">QTRY_COMPARE_WITH_TIMEOUT</db:link>()</db:code> with a timeout of five
-                                    seconds.</db:para>
-         <db:note>
-            <db:para>This macro can only be used in a test
-                                    function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>This function was introduced in Qt
-                                    5.0.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE_WITH_TIMEOUT">QTRY_COMPARE_WITH_TIMEOUT</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTRY_COMPARE_WITH_TIMEOUT">
-         <db:title>QTRY_COMPARE_WITH_TIMEOUT( actual, expected, timeout)</db:title>
-         <db:para>The QTRY_COMPARE_WITH_TIMEOUT() macro is similar to <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>, but performs
-                                    the comparison of the <db:emphasis>actual</db:emphasis> and
-                                        <db:emphasis>expected</db:emphasis> values repeatedly, until either
-                                    the two values are equal or the <db:emphasis>timeout</db:emphasis> is
-                                    reached. Between each comparison, events will be processed. If
-                                    the timeout is reached, a failure is recorded in the test log
-                                    and the test won't be executed further.</db:para>
-         <db:note>
-            <db:para>This macro can only be used in a test
-                                    function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>This function was introduced in Qt
-                                    5.0.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTRY_VERIFY">
-         <db:title>QTRY_VERIFY( condition)</db:title>
-         <db:para>Checks the <db:emphasis>condition</db:emphasis> by invoking <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY_WITH_TIMEOUT">QTRY_VERIFY_WITH_TIMEOUT</db:link>()</db:code> with a timeout of five
-                                    seconds.</db:para>
-         <db:note>
-            <db:para>This macro can only be used in a test
-                                    function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>This function was introduced in Qt
-                                    5.0.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY_WITH_TIMEOUT">QTRY_VERIFY_WITH_TIMEOUT</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QTRY_VERIFY_WITH_TIMEOUT">
-         <db:title>QTRY_VERIFY_WITH_TIMEOUT( condition, timeout)</db:title>
-         <db:para>The QTRY_VERIFY_WITH_TIMEOUT() macro is similar to <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>, but checks the
-                                        <db:emphasis>condition</db:emphasis> repeatedly, until either the
-                                    condition becomes true or the <db:emphasis>timeout</db:emphasis> is
-                                    reached. Between each evaluation, events will be processed. If
-                                    the timeout is reached, a failure is recorded in the test log
-                                    and the test won't be executed further.</db:para>
-         <db:note>
-            <db:para>This macro can only be used in a test
-                                    function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>This function was introduced in Qt
-                                    5.0.</db:para>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_COMPARE">QTRY_COMPARE</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QVERIFY2">
-         <db:title>QVERIFY2( condition, message)</db:title>
-         <db:para>The QVERIFY2() macro behaves exactly like <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>, except that it
-                                    outputs a verbose <db:emphasis>message</db:emphasis> when
-                                        <db:emphasis>condition</db:emphasis> is false. The
-                                        <db:emphasis>message</db:emphasis> is a plain C string.</db:para>
-         <db:para>Example:</db:para>
-         <db:programlisting>QVERIFY2(1+1==2,"A breach in basic arithmetic
-                                        occurred.");</db:programlisting>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QVERIFY">
-         <db:title>QVERIFY( condition)</db:title>
-         <db:para>The QVERIFY() macro checks whether the
-                                        <db:emphasis>condition</db:emphasis> is true or not. If it is true,
-                                    execution continues. If not, a failure is recorded in the test
-                                    log and the test won't be executed further.</db:para>
-         <db:note>
-            <db:para> This macro can only be used in a test
-                                    function that is invoked by the test framework.</db:para>
-         </db:note>
-         <db:para>Example:</db:para>
-         <db:programlisting>QVERIFY(1+1==2);</db:programlisting>
-         <db:section>
-            <db:title>See Also</db:title>
-            <db:simplelist type="vert">
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
-               </db:member>
-               <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTRY_VERIFY">QTRY_VERIFY</db:link>()</db:code>
-               </db:member>
-            </db:simplelist>
-         </db:section>
-      </db:section>
-      <db:section xml:id="QVERIFY_EXCEPTION_THROWN">
-         <db:title>QVERIFY_EXCEPTION_THROWN( expression, exceptiontype)</db:title>
-         <db:para>The QVERIFY_EXCEPTION_THROWN macro executes an
-                                        <db:emphasis>expression</db:emphasis> and tries to catch an exception
-                                    thrown from the <db:emphasis>expression</db:emphasis>. If the
-                                        <db:emphasis>expression</db:emphasis> throws an exception and its type
-                                    is the same as <db:emphasis>exceptiontype</db:emphasis> or
-                                        <db:emphasis>exceptiontype</db:emphasis> is substitutable with the
-                                    type of thrown exception (i.e. usually the type of thrown
-                                    exception is publically derived from
-                                        <db:emphasis>exceptiontype</db:emphasis>) then execution will be
-                                    continued. If not-substitutable type of exception is thrown or
-                                    the <db:emphasis>expression</db:emphasis> doesn't throw an exception at
-                                    all, then a failure will be recorded in the test log and the
-                                    test won't be executed further.</db:para>
-         <db:note>
-            <db:para>This macro can only be used in a test
-                                    function that is invoked by the test
-                                    framework.</db:para>
-         </db:note>
-         <db:para>This function was introduced in Qt
-                                    5.3.</db:para>
-      </db:section>
-      <db:section xml:id="QWARN">
-         <db:title>QWARN( message)</db:title>
-         <db:para>Appends <db:emphasis>message</db:emphasis> as a warning to the test
-                                    log. This macro can be used anywhere in your tests.</db:para>
-         <db:note>
-            <db:para> This function is <db:link xlink:href="qtdoc/threads-reentrancy.html#thread-safe">thread-safe</db:link>.</db:para>
-         </db:note>
       </db:section>
    </db:section>
    <db:section>

@@ -253,29 +253,27 @@
          </db:enumitem>
       </db:enumsynopsis>
    </db:classsynopsis>
-   <db:funcsynopsis xlink:href="#QML_DECLARE_TYPE">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QML_DECLARE_TYPE</db:function>
-         </db:funcdef>
+   <db:macrosynopsis xlink:href="#QML_DECLARE_TYPE">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>QML_DECLARE_TYPE</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QML_DECLARE_TYPEINFO">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QML_DECLARE_TYPEINFO</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#QML_DECLARE_TYPEINFO">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>QML_DECLARE_TYPEINFO</db:macro>
+         </db:macrodef>
          <db:paramdef choice="req">
             <db:parameter>Type</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
             <db:parameter>Flags</db:parameter>
          </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
+      </db:macroprototype>
+   </db:macrosynopsis>
    <db:funcsynopsis xlink:href="#qmlAttachedPropertiesObject">
       <db:funcprototype>
          <db:funcdef>

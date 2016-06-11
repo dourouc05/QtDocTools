@@ -67,16 +67,73 @@ div {
       }
 }
 
-# Deal with structures. 
-# db.classsynopsis.class.enumeration |= "structure"
-
-# Deal with macros. 
-qdt.macrosynopsis = 
-    element macrosynopsis {
-      db.funcsynopsis.attlist,
-      db.funcsynopsis.info,
-      (db.funcsynopsisinfo | db.funcprototype)+
-    }
+# Deal with macros. Adapted from db.funcsynopsis.
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.macro
+        
+    qdt.macro.role.attribute = attribute role { text }
+    qdt.macro.attlist =
+      qdt.macro.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+    qdt.macro =
+      element macro { db.function.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= qdt.macrosynopsis
+    
+    qdt.macrosynopsis.role.attribute = attribute role { text }
+    qdt.macrosynopsis.attlist =
+      qdt.macrosynopsis.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.language.attribute?
+    qdt.macrosynopsis.info = db._info.title.forbidden
+    qdt.macrosynopsis =
+      element macrosynopsis {
+        qdt.macrosynopsis.attlist,
+        qdt.macrosynopsis.info,
+        (qdt.macrosynopsisinfo | qdt.macroprototype)+
+      }
+    
+   qdt.macrosynopsisinfo.role.attribute = attribute role { text }
+   qdt.macrosynopsisinfo.attlist =
+     qdt.macrosynopsisinfo.role.attribute?
+     & db.common.attributes
+     & db.common.linking.attributes
+     & db.verbatim.attributes
+   qdt.macrosynopsisinfo =
+     element macrosynopsisinfo {
+       qdt.macrosynopsisinfo.attlist, db.verbatim.contentmodel
+     }
+     
+    qdt.macroprototype.role.attribute = attribute role { text }
+    qdt.macroprototype.attlist =
+      qdt.macroprototype.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+    qdt.macroprototype =
+      element macroprototype {
+        qdt.macroprototype.attlist,
+        db.modifier*,
+        qdt.macrodef,
+        (db.void
+         | db.varargs
+         | ((db.paramdef | db.group.paramdef)+, db.varargs?)),
+        db.modifier*
+      }
+      
+      qdt.macrodef.role.attribute = attribute role { text }
+      qdt.macrodef.attlist =
+        qdt.macrodef.role.attribute?
+        & db.common.attributes
+        & db.common.linking.attributes
+      qdt.macrodef =
+        element macrodef {
+          qdt.macrodef.attlist, (db._text | db.type | qdt.macro)*
+        }
+}
     
 # Deal with enums. 
 div {

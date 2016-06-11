@@ -21,7 +21,7 @@
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:param name="vocabulary" select="'docbook'" as="xs:string"/>
+  <xsl:param name="vocabulary" select="'qtdoctools'" as="xs:string"/>
   <!-- 'docbook' for raw DocBook 5.1; 'qtdoctools' for the custom QtDocTools extension. -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()" as="xs:boolean"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
@@ -558,11 +558,8 @@
       </xsl:if>
 
       <xsl:if test="not($isQdocDocumentation)">
-        <xsl:if test="$macros">
-          <xsl:call-template name="macroListing">
-            <xsl:with-param name="data" select="$macros"/>
-            <xsl:with-param name="className" select="$className"/>
-          </xsl:call-template>
+        <xsl:if test="$macros and not($isNamespace)">
+          <xsl:apply-templates mode="macroListing" select="$macros/html:h3"/>
         </xsl:if>
 
         <xsl:if test="$nonmems">
@@ -688,8 +685,7 @@
         <!-- Normally, 'func', but avoid clash. -->
       </xsl:call-template>
 
-      <xsl:if test="$macros">
-        <!-- TODO: and not($isNamespace): but macros cannot be put inside NSs currently! -->
+      <xsl:if test="$macros and not($isNamespace)">
         <xsl:call-template name="content_macros">
           <xsl:with-param name="data" select="$macros"/>
           <xsl:with-param name="title" select="'Macro Documentation'"/>
@@ -1175,6 +1171,9 @@
       <xsl:apply-templates mode="propertiesListing" select="$vars/html:h3">
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
+      <xsl:if test="$classes">
+        <xsl:message terminate="yes">TODO</xsl:message>
+      </xsl:if>
       <xsl:apply-templates mode="classListing" select="$classes/html:h3">
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
@@ -1216,7 +1215,7 @@
         </xsl:when>
       </xsl:choose>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
-        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="forceMethod" select="true()"/>
       </xsl:apply-templates>
     </xsl:element>
   </xsl:template>
@@ -1320,7 +1319,7 @@
         <xsl:with-param name="className" select="$className"/>
       </xsl:apply-templates>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
-        <xsl:with-param name="className" select="$className"/>
+        <xsl:with-param name="forceMethod" select="true()"/>
       </xsl:apply-templates>
     </db:classsynopsis>
   </xsl:template>
@@ -1378,7 +1377,8 @@
         <xsl:when test="$isFct">
           <xsl:text>db:methodsynopsis</xsl:text>
         </xsl:when>
-      </xsl:choose></xsl:variable>
+      </xsl:choose>
+    </xsl:variable>
 
     <xsl:element name="{$tag}">
       <xsl:attribute name="xlink:href" select="concat('#', $functionAnchor)"/>
@@ -1510,28 +1510,77 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template name="macroListing">
-    <xsl:param name="data" as="element(html:div)"/>
-    <xsl:param name="className" as="xs:string"/>
-
-    <xsl:apply-templates mode="macroListing" select="$data/html:h3">
-      <xsl:with-param name="className" select="$className"/>
-    </xsl:apply-templates>
-  </xsl:template>
   <xsl:template mode="macroListing" match="text()"/>
   <xsl:template mode="macroListing" match="html:h3[@class = 'fn']">
-    <db:funcsynopsis xlink:href="#{@id}">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-        <xsl:variable name="titleNode" select="."/>
-        <xsl:variable name="functionName" select="html:span[@class = 'name']"/>
-
-        <db:funcdef>
-          <db:function>
-            <xsl:value-of select="$functionName"/>
-          </db:function>
-        </db:funcdef>
-
+    <xsl:param name="forceMethod" select="false()" as="xs:boolean"/>
+    <xsl:variable name="functionName" select="html:span[@class = 'name']"/>
+    
+    <xsl:variable name="index" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$vocabulary = 'qtdoctools'">
+          <xsl:value-of select="'qdt'"/>
+        </xsl:when>
+        <xsl:when test="$forceMethod">
+          <xsl:value-of select="'method'"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="'function'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="tags">
+      <tag name="synopsis">
+        <value case="qdt">db:macrosynopsis</value>
+        <value case="method">db:methodsynopsis</value>
+        <value case="function">db:funcsynopsis</value>
+      </tag>
+      <tag name="macroprototype">
+        <value case="qdt">db:macroprototype</value>
+        <value case="function">db:funcprototype</value>
+      </tag>
+      <tag name="macrodef">
+        <value case="qdt">db:macrodef</value>
+        <value case="function">db:funcdef</value>
+      </tag>
+      <tag name="macro">
+        <value case="qdt">db:macro</value>
+        <value case="function">db:function</value>
+      </tag>
+      <tag name="paramdef">
+        <value case="qdt">db:paramdef</value>
+        <value case="method">db:methodparam</value>
+        <value case="function">db:paramdef</value>
+      </tag>
+    </xsl:variable>
+    
+    <xsl:element name="{$tags/tag[@name = 'synopsis']/value[@case = $index]}">
+      <xsl:attribute name="xlink:href" select="concat('#', @id)"/>
+      
+      <!-- Indicate this element is a macro if need be. -->
+      <xsl:if test="not($vocabulary = 'qtdoctools') and not($forceMethod)">
+        <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+      </xsl:if>
+      <xsl:if test="not($vocabulary = 'qtdoctools') and $forceMethod">
+        <db:modifier>macro</db:modifier>
+      </xsl:if>
+      
+      <xsl:variable name="content">
+        <!-- Macro name. -->
+        <xsl:choose>
+          <xsl:when test="$index = 'method'">
+            <db:methodname>
+              <xsl:value-of select="$functionName"/>
+            </db:methodname>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:element name="{$tags/tag[@name = 'macrodef']/value[@case = $index]}">
+              <xsl:element name="{$tags/tag[@name = 'macro']/value[@case = $index]}">
+                <xsl:value-of select="$functionName"/>
+              </xsl:element>
+            </xsl:element>
+          </xsl:otherwise>
+        </xsl:choose>
+        
         <!-- Handle parameters list. -->
         <xsl:variable name="textAfterName"
           select="normalize-space($functionName/following-sibling::text()[1])"/>
@@ -1543,22 +1592,44 @@
             <xsl:choose>
               <xsl:when test="count(html:i) &gt;= 1">
                 <xsl:for-each select="html:i">
-                  <db:paramdef choice="req">
+                  <xsl:element name="{$tags/tag[@name = 'paramdef']/value[@case = $index]}">
+                    <xsl:attribute name="choice" select="'req'"></xsl:attribute>
                     <!-- A macro only has a name for each parameter. -->
                     <db:parameter>
                       <xsl:value-of select="normalize-space(.)"/>
                     </db:parameter>
-                  </db:paramdef>
+                  </xsl:element>
                 </xsl:for-each>
               </xsl:when>
               <xsl:otherwise>
-                <db:varargs/>
+                <xsl:choose>
+                  <xsl:when test="$index = 'method'">
+                    <!-- No varargs allowed here, but other ways to encode it for actual methods (modifier after type and name): not a DocBook deficiency. Hence this. -->
+                    <db:parameter>
+                      <xsl:text>...</xsl:text>
+                    </db:parameter>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <db:varargs/>
+                  </xsl:otherwise>
+                </xsl:choose>
               </xsl:otherwise>
             </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
-      </db:funcprototype>
-    </db:funcsynopsis>
+      </xsl:variable>
+      
+      <xsl:choose>
+        <xsl:when test="$index = 'method'">
+          <xsl:copy-of select="$content"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:element name="{$tags/tag[@name = 'macroprototype']/value[@case = $index]}">
+            <xsl:copy-of select="$content"/>
+          </xsl:element>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template name="functionListing">

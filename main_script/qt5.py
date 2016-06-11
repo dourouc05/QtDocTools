@@ -266,7 +266,7 @@ def call_xslt(file_in, file_out, stylesheet):
             with open(file_in, 'w') as file:
                 file.write("\n".join(lines))
 
-            # Restart the SXLT engine.
+            # Restart the SXLT engine, see if changed anything in the process.
             result = subprocess.run(command_line, stderr=subprocess.PIPE)
             if len(result.stderr) == 0:
                 return

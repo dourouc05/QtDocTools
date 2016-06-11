@@ -516,150 +516,135 @@
          <db:exceptionname role="parameters">(const  char  *  sourceText , const  char  *  disambiguation  = 0,  int  n  = -1)</db:exceptionname>
       </db:methodsynopsis>
    </db:classsynopsis>
-   <db:funcsynopsis xlink:href="#Q_CLASSINFO">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_CLASSINFO</db:function>
-         </db:funcdef>
+   <db:macrosynopsis xlink:href="#Q_CLASSINFO">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_CLASSINFO</db:macro>
+         </db:macrodef>
          <db:paramdef choice="req">
             <db:parameter>Name</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
             <db:parameter>Value</db:parameter>
          </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_DISABLE_COPY">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_DISABLE_COPY</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_DISABLE_COPY">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_DISABLE_COPY</db:macro>
+         </db:macrodef>
          <db:paramdef choice="req">
             <db:parameter>Class</db:parameter>
          </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_EMIT">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_EMIT</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_EMIT">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_EMIT</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_ENUMS">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_ENUMS</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_ENUMS">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_ENUMS</db:macro>
+         </db:macrodef>
          <db:varargs/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_FLAGS">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_FLAGS</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_FLAGS">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_FLAGS</db:macro>
+         </db:macrodef>
          <db:varargs/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_INTERFACES">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_INTERFACES</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_INTERFACES">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_INTERFACES</db:macro>
+         </db:macrodef>
          <db:varargs/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_INVOKABLE">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_INVOKABLE</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_INVOKABLE">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_INVOKABLE</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_OBJECT">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_OBJECT</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_OBJECT">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_OBJECT</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_PROPERTY">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_PROPERTY</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_PROPERTY">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_PROPERTY</db:macro>
+         </db:macrodef>
          <db:varargs/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_REVISION">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_REVISION</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_REVISION">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_REVISION</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_SET_OBJECT_NAME">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_SET_OBJECT_NAME</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_SET_OBJECT_NAME">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_SET_OBJECT_NAME</db:macro>
+         </db:macrodef>
          <db:paramdef choice="req">
             <db:parameter>Object</db:parameter>
          </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_SIGNAL">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_SIGNAL</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_SIGNAL">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_SIGNAL</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_SIGNALS">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_SIGNALS</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_SIGNALS">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_SIGNALS</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_SLOT">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_SLOT</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_SLOT">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_SLOT</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#Q_SLOTS">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>Q_SLOTS</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#Q_SLOTS">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>Q_SLOTS</db:macro>
+         </db:macrodef>
          <db:void/>
-      </db:funcprototype>
-   </db:funcsynopsis>
+      </db:macroprototype>
+   </db:macrosynopsis>
    <db:typedefsynopsis xlink:href="#QObjectList-typedef">
       <db:typedefname>QObjectList</db:typedefname>
    </db:typedefsynopsis>

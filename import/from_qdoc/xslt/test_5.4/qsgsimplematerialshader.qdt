@@ -43,34 +43,32 @@
          <db:exceptionname role="parameters">(const  State  *  newState , const  State  *  oldState )</db:exceptionname>
       </db:methodsynopsis>
    </db:classsynopsis>
-   <db:funcsynopsis xlink:href="#QSG_DECLARE_SIMPLE_COMPARABLE_SHADER">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QSG_DECLARE_SIMPLE_COMPARABLE_SHADER</db:function>
-         </db:funcdef>
+   <db:macrosynopsis xlink:href="#QSG_DECLARE_SIMPLE_COMPARABLE_SHADER">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>QSG_DECLARE_SIMPLE_COMPARABLE_SHADER</db:macro>
+         </db:macrodef>
          <db:paramdef choice="req">
             <db:parameter>Shader</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
             <db:parameter>State</db:parameter>
          </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
-   <db:funcsynopsis xlink:href="#QSG_DECLARE_SIMPLE_SHADER">
-      <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
-      <db:funcprototype>
-         <db:funcdef>
-            <db:function>QSG_DECLARE_SIMPLE_SHADER</db:function>
-         </db:funcdef>
+      </db:macroprototype>
+   </db:macrosynopsis>
+   <db:macrosynopsis xlink:href="#QSG_DECLARE_SIMPLE_SHADER">
+      <db:macroprototype>
+         <db:macrodef>
+            <db:macro>QSG_DECLARE_SIMPLE_SHADER</db:macro>
+         </db:macrodef>
          <db:paramdef choice="req">
             <db:parameter>Shader</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
             <db:parameter>State</db:parameter>
          </db:paramdef>
-      </db:funcprototype>
-   </db:funcsynopsis>
+      </db:macroprototype>
+   </db:macrosynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
       <db:para>The <db:code><db:link xlink:href="qsgsimplematerialshader.html">QSGSimpleMaterialShader</db:link></db:code> class provides a convenient way of building custom materials for the scene graph.</db:para>
