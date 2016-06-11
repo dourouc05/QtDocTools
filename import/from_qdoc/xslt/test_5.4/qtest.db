@@ -262,6 +262,11 @@
                                                   &lt;QTest&gt;</db:classsynopsisinfo>
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 testlib</db:classsynopsisinfo>
+      <db:methodsynopsis xlink:href="#">
+         <db:methodname/>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters"/>
+      </db:methodsynopsis>
       <db:methodsynopsis xlink:href="#addColumn">
          <db:void/>
          <db:methodname>addColumn</db:methodname>
@@ -833,6 +838,255 @@
                                     device ,  bool  autoCommit  =
                                     true)</db:exceptionname>
       </db:methodsynopsis>
+      <db:funcsynopsis xlink:href="#QBENCHMARK">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QBENCHMARK</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QBENCHMARK_ONCE">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QBENCHMARK_ONCE</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QCOMPARE">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QCOMPARE</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>expected</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QEXPECT_FAIL">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QEXPECT_FAIL</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>dataIndex</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>comment</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>mode</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QFAIL">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QFAIL</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>message</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QFETCH">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QFETCH</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>type</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>name</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QFINDTESTDATA">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QFINDTESTDATA</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>filename</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QSKIP">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QSKIP</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>description</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>testElement</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST_APPLESS_MAIN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST_APPLESS_MAIN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>TestClass</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST_GUILESS_MAIN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST_GUILESS_MAIN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>TestClass</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST_MAIN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST_MAIN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>TestClass</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_COMPARE">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_COMPARE</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>expected</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_COMPARE_WITH_TIMEOUT">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_COMPARE_WITH_TIMEOUT</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>expected</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_VERIFY">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_VERIFY</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_VERIFY_WITH_TIMEOUT">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_VERIFY_WITH_TIMEOUT</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QVERIFY2">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QVERIFY2</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>message</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QVERIFY">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QVERIFY</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QVERIFY_EXCEPTION_THROWN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QVERIFY_EXCEPTION_THROWN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>expression</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>exceptiontype</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QWARN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QWARN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>message</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>

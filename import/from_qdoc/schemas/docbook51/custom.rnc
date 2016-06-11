@@ -62,7 +62,8 @@ div {
         | db.funcsynopsis
         | db.fieldsynopsis
         | qdt.typedefsynopsis
-        | qdt.macrosynopsis)*
+        | qdt.macrosynopsis
+        | qdt.enumsynopsis)*
       }
 }
 

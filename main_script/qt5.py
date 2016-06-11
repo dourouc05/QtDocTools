@@ -39,6 +39,8 @@ generate_html = False  # If prepare is not True when generate is, need an indexF
 generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
 
+db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
+
 keep_html = False  # TODO!
 keep_xhtml = True  # TODO!
 
@@ -243,13 +245,15 @@ def generate_module_xml(module_name):
 # <!-- -- -->), then deal with it.
 # Here, specific to one XSLT2 engine: Saxon 9. Displays errors to the user.
 def call_xslt(file_in, file_out, stylesheet):
-    command_line = ['java', '-jar', saxon9, '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out]
+    command_line = ['java', '-jar', saxon9,
+                    '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out,
+                    'vocabulary=%s' % db_vocabulary]
 
     result = subprocess.run(command_line, stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
         error_msg = result.stderr.decode('utf-8')
         if "SXXP0003: Error reported by XML parser: The string \"--\" is not permitted within comments." in error_msg:
-            # Try to rewrite the comments before retrying.
+            # Try to rewrite the comments before retrying (caused by one-line comments about operator--).
             def remove_comments(line):
                 l = line.strip()
                 if l.startswith("<!--") and l.endswith("-->"):

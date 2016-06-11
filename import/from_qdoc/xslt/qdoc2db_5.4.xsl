@@ -21,7 +21,7 @@
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
 
-  <xsl:param name="vocabulary" select="'qtdoctools'" as="xs:string"/>
+  <xsl:param name="vocabulary" select="'docbook'" as="xs:string"/>
   <!-- 'docbook' for raw DocBook 5.1; 'qtdoctools' for the custom QtDocTools extension. -->
   <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()" as="xs:boolean"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
@@ -217,14 +217,14 @@
                 <xsl:choose>
                   <xsl:when test="current()[self::html:h2]">
                     <xsl:if test="not(. = $forbiddenTitles)">
-                      <html:h3 xml:id="{if (@id) then @id else preceding-sibling::node()[1]/@name}">
+                      <html:h3 xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
                         <xsl:value-of select="current()"/>
                       </html:h3>
                     </xsl:if>
                   </xsl:when>
                   <xsl:when
                     test="current()[self::html:h3][preceding-sibling::html:h2[1] != $descTitle]">
-                    <html:h4 xml:id="{if (@id) then @id else preceding-sibling::node()[1]/@name}">
+                    <html:h4 xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
                       <xsl:value-of select="current()"/>
                     </html:h4>
                   </xsl:when>
@@ -758,6 +758,11 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+  
+  <xsl:function name="tc:find-id">
+    <xsl:param name="elt" as="element()"></xsl:param>
+    <xsl:value-of select="if ($elt/@id) then $elt/@id else $elt/preceding-sibling::node()[1]/@name"/>
+  </xsl:function>
 
   <xsl:template name="lookupSection">
     <xsl:param name="globalList" as="element(html:div)*"/>
@@ -1170,6 +1175,10 @@
       <xsl:apply-templates mode="propertiesListing" select="$vars/html:h3">
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
+      <xsl:apply-templates mode="classListing" select="$classes/html:h3">
+        <xsl:with-param name="className" select="$className"/>
+      </xsl:apply-templates>
+      
 
       <!-- Deal with functions, then types and macros. For raw DocBook, cannot use functions, but rather methods, due to the encoding of namespaces. -->
       <xsl:choose>
@@ -1201,7 +1210,7 @@
             <xsl:with-param name="className" select="$className"/>
             <xsl:with-param name="type" select="'compat'"/>
           </xsl:apply-templates>
-          <xsl:apply-templates mode="classListing" select="$types/html:h3">
+          <xsl:apply-templates mode="functionListing" select="$types/html:h3">
             <xsl:with-param name="className" select="$className"/>
           </xsl:apply-templates>
         </xsl:when>
@@ -1353,7 +1362,7 @@
     <xsl:param name="type" as="xs:string" select="''"/>
 
     <!-- Possible anchors: for constructors, Class, Class-2; for destructors, dtor.Class -->
-    <xsl:variable name="functionAnchor" as="xs:string" select="@id"/>
+    <xsl:variable name="functionAnchor" as="xs:string" select="tc:find-id(.)"/>
     <xsl:variable name="isCtor" select="starts-with($functionAnchor, $className)"/>
     <xsl:variable name="isDtor" select="starts-with($functionAnchor, 'dtor.')"/>
     <xsl:variable name="isFct" select="not($isCtor or $isDtor)"/>
@@ -1565,45 +1574,57 @@
   </xsl:template>
   <xsl:template mode="functionListing" match="text()"/>
   <xsl:template mode="functionListing"
-    match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'enum')]">
-    <db:enumsynopsis xlink:href="#{@id}">
-      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
-      <db:enumname>
-        <xsl:value-of select="$enumName"/>
-      </db:enumname>
-
-      <xsl:variable name="values"
-        select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
-      <xsl:if test="$values">
-        <xsl:for-each select="$values/html:tr">
-          <xsl:if test="count(html:td) &gt;= 2">
-            <db:enumitem>
-              <db:enumidentifier>
-                <xsl:value-of select="html:td[1]"/>
-              </db:enumidentifier>
-              <db:enumvalue>
-                <xsl:value-of select="html:td[2]"/>
-              </db:enumvalue>
-            </db:enumitem>
+    match="html:h3[starts-with(text()[1], 'enum')]">
+    <xsl:choose>
+      <xsl:when test="$vocabulary = 'qtdoctools'">
+        <db:enumsynopsis xlink:href="#{@id}">
+          <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
+          <db:enumname>
+            <xsl:value-of select="$enumName"/>
+          </db:enumname>
+          
+          <xsl:variable name="values"
+            select="following-sibling::html:div[1][@class = 'table']/html:table[@class = 'valuelist']/html:tbody"/>
+          <xsl:if test="$values">
+            <xsl:for-each select="$values/html:tr">
+              <xsl:if test="count(html:td) &gt;= 2">
+                <db:enumitem>
+                  <db:enumidentifier>
+                    <xsl:value-of select="html:td[1]"/>
+                  </db:enumidentifier>
+                  <db:enumvalue>
+                    <xsl:value-of select="html:td[2]"/>
+                  </db:enumvalue>
+                </db:enumitem>
+              </xsl:if>
+            </xsl:for-each>
           </xsl:if>
-        </xsl:for-each>
-      </xsl:if>
-    </db:enumsynopsis>
+        </db:enumsynopsis>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="$warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="functionListing"
-    match="html:h3[$vocabulary = 'qtdoctools'][starts-with(text()[1], 'typedef')]">
-    <db:typedefsynopsis xlink:href="#{@id}">
-      <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
-      <db:typedefname>
-        <xsl:value-of select="$enumName"/>
-      </db:typedefname>
-    </db:typedefsynopsis>
-  </xsl:template>
-  <xsl:template mode="functionListing"
-    match="html:h3[not($vocabulary = 'qtdoctools')][starts-with(text()[1], 'typedef') or starts-with(text()[1], 'enum')]">
-    <xsl:if test="$warnVocabularyUnsupportedFeatures">
-      <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
-    </xsl:if>
+    match="html:h3[starts-with(text()[1], 'typedef')]">
+    <xsl:choose>
+      <xsl:when test="$vocabulary = 'qtdoctools'">
+        <db:typedefsynopsis xlink:href="#{@id}">
+          <xsl:variable name="enumName" select="html:span[@class = 'name'][1]" as="element(html:span)"/>
+          <db:typedefname>
+            <xsl:value-of select="$enumName"/>
+          </db:typedefname>
+        </db:typedefsynopsis>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:if test="$warnVocabularyUnsupportedFeatures">
+          <xsl:message>WARNING: No summary output for types (enums and typedefs).</xsl:message>
+        </xsl:if>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="functionListing"
     match="html:h3[@class = 'fn'][not(starts-with(text()[1], 'typedef')) and not(starts-with(text()[1], 'enum'))]">
@@ -2471,7 +2492,7 @@
 
     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
       <db:section
-        xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
+        xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
         <!-- Handle title then subsections. In rare occasions, some sections are empty, and are directly followed by another title. -->
         <db:title>
           <xsl:copy-of select="text()"/>
@@ -2484,7 +2505,7 @@
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
               <db:section
-                xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
+                xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
                 <db:title>
                   <xsl:copy-of select="text()"/>
                 </db:title>
@@ -2497,7 +2518,7 @@
                   <xsl:choose>
                     <xsl:when test="current-group()[self::html:h4]">
                       <db:section
-                        xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
+                        xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
                         <db:title>
                           <xsl:copy-of select="text()"/>
                         </db:title>
@@ -2510,7 +2531,7 @@
                           <xsl:choose>
                             <xsl:when test="current-group()[self::html:h5]">
                               <db:section
-                                xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
+                                xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
                                 <db:title>
                                   <xsl:copy-of select="text()"/>
                                 </db:title>
@@ -2524,7 +2545,7 @@
                                   <xsl:choose>
                                     <xsl:when test="current-group()[self::html:h6]">
                                       <db:section
-                                        xml:id="{tc:rewrite-xml-id(if (@id) then @id else preceding-sibling::node()[1]/@name)}">
+                                        xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
                                         <db:title>
                                           <xsl:copy-of select="text()"/>
                                         </db:title>

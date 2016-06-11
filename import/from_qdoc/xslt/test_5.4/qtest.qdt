@@ -261,6 +261,11 @@
                                                   &lt;QTest&gt;</db:namespacesynopsisinfo>
       <db:namespacesynopsisinfo role="qmake"> QT +=
                                                 testlib</db:namespacesynopsisinfo>
+      <db:methodsynopsis xlink:href="#">
+         <db:methodname/>
+         <db:void role="parameters"/>
+         <db:exceptionname role="parameters"/>
+      </db:methodsynopsis>
       <db:funcsynopsis xlink:href="#addColumn">
          <db:funcprototype>
             <db:funcdef>
@@ -1464,6 +1469,537 @@
             <db:paramdef choice="req">
                <db:type>bool</db:type>
                <db:parameter>autoCommit</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:enumsynopsis xlink:href="#AttributeIndex-enum">
+         <db:enumname>AttributeIndex</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Undefined</db:enumidentifier>
+            <db:enumvalue>-1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Name</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Result</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Tests</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Failures</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Errors</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Type</db:enumidentifier>
+            <db:enumvalue>5</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Description</db:enumidentifier>
+            <db:enumvalue>6</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_PropertyValue</db:enumidentifier>
+            <db:enumvalue>7</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_QTestVersion</db:enumidentifier>
+            <db:enumvalue>8</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_QtVersion</db:enumidentifier>
+            <db:enumvalue>9</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_File</db:enumidentifier>
+            <db:enumvalue>10</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Line</db:enumidentifier>
+            <db:enumvalue>11</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Metric</db:enumidentifier>
+            <db:enumvalue>12</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Tag</db:enumidentifier>
+            <db:enumvalue>13</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Value</db:enumidentifier>
+            <db:enumvalue>14</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AI_Iterations</db:enumidentifier>
+            <db:enumvalue>15</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#KeyAction-enum">
+         <db:enumname>KeyAction</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Press</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Release</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Click</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#LogElementType-enum">
+         <db:enumname>LogElementType</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_Undefined</db:enumidentifier>
+            <db:enumvalue>-1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_Property</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_Properties</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_Failure</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_Error</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_TestCase</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_TestSuite</db:enumidentifier>
+            <db:enumvalue>5</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_Benchmark</db:enumidentifier>
+            <db:enumvalue>6</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::LET_SystemError</db:enumidentifier>
+            <db:enumvalue>7</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#MouseAction-enum">
+         <db:enumname>MouseAction</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MousePress</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MouseRelease</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MouseClick</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MouseDClick</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MouseMove</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#QBenchmarkMetric-enum">
+         <db:enumname>QBenchmarkMetric</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTest::FramesPerSecond</db:enumidentifier>
+            <db:enumvalue>0</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::BitsPerSecond</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::BytesPerSecond</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::WalltimeMilliseconds</db:enumidentifier>
+            <db:enumvalue>3</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::WalltimeNanoseconds</db:enumidentifier>
+            <db:enumvalue>7</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::BytesAllocated</db:enumidentifier>
+            <db:enumvalue>8</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Events</db:enumidentifier>
+            <db:enumvalue>6</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CPUTicks</db:enumidentifier>
+            <db:enumvalue>4</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CPUMigrations</db:enumidentifier>
+            <db:enumvalue>9</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CPUCycles</db:enumidentifier>
+            <db:enumvalue>10</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::BusCycles</db:enumidentifier>
+            <db:enumvalue>11</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::StalledCycles</db:enumidentifier>
+            <db:enumvalue>12</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::InstructionReads</db:enumidentifier>
+            <db:enumvalue>5</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Instructions</db:enumidentifier>
+            <db:enumvalue>13</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::BranchInstructions</db:enumidentifier>
+            <db:enumvalue>14</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::BranchMisses</db:enumidentifier>
+            <db:enumvalue>15</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CacheReferences</db:enumidentifier>
+            <db:enumvalue>16</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CacheMisses</db:enumidentifier>
+            <db:enumvalue>20</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CacheReads</db:enumidentifier>
+            <db:enumvalue>17</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CacheReadMisses</db:enumidentifier>
+            <db:enumvalue>21</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CacheWrites</db:enumidentifier>
+            <db:enumvalue>18</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CacheWriteMisses</db:enumidentifier>
+            <db:enumvalue>22</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CachePrefetches</db:enumidentifier>
+            <db:enumvalue>19</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::CachePrefetchMisses</db:enumidentifier>
+            <db:enumvalue>23</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::ContextSwitches</db:enumidentifier>
+            <db:enumvalue>24</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::PageFaults</db:enumidentifier>
+            <db:enumvalue>25</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MinorPageFaults</db:enumidentifier>
+            <db:enumvalue>26</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::MajorPageFaults</db:enumidentifier>
+            <db:enumvalue>27</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::AlignmentFaults</db:enumidentifier>
+            <db:enumvalue>28</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::EmulationFaults</db:enumidentifier>
+            <db:enumvalue>29</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:enumsynopsis xlink:href="#TestFailMode-enum">
+         <db:enumname>TestFailMode</db:enumname>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Abort</db:enumidentifier>
+            <db:enumvalue>1</db:enumvalue>
+         </db:enumitem>
+         <db:enumitem>
+            <db:enumidentifier>QTest::Continue</db:enumidentifier>
+            <db:enumvalue>2</db:enumvalue>
+         </db:enumitem>
+      </db:enumsynopsis>
+      <db:funcsynopsis xlink:href="#QBENCHMARK">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QBENCHMARK</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QBENCHMARK_ONCE">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QBENCHMARK_ONCE</db:function>
+            </db:funcdef>
+            <db:void/>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QCOMPARE">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QCOMPARE</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>expected</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QEXPECT_FAIL">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QEXPECT_FAIL</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>dataIndex</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>comment</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>mode</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QFAIL">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QFAIL</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>message</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QFETCH">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QFETCH</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>type</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>name</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QFINDTESTDATA">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QFINDTESTDATA</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>filename</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QSKIP">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QSKIP</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>description</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>testElement</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST_APPLESS_MAIN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST_APPLESS_MAIN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>TestClass</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST_GUILESS_MAIN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST_GUILESS_MAIN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>TestClass</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTEST_MAIN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTEST_MAIN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>TestClass</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_COMPARE">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_COMPARE</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>expected</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_COMPARE_WITH_TIMEOUT">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_COMPARE_WITH_TIMEOUT</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>actual</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>expected</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_VERIFY">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_VERIFY</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QTRY_VERIFY_WITH_TIMEOUT">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QTRY_VERIFY_WITH_TIMEOUT</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>timeout</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QVERIFY2">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QVERIFY2</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>message</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QVERIFY">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QVERIFY</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>condition</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QVERIFY_EXCEPTION_THROWN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QVERIFY_EXCEPTION_THROWN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>expression</db:parameter>
+            </db:paramdef>
+            <db:paramdef choice="req">
+               <db:parameter>exceptiontype</db:parameter>
+            </db:paramdef>
+         </db:funcprototype>
+      </db:funcsynopsis>
+      <db:funcsynopsis xlink:href="#QWARN">
+         <db:funcsynopsisinfo>macro</db:funcsynopsisinfo>
+         <db:funcprototype>
+            <db:funcdef>
+               <db:function>QWARN</db:function>
+            </db:funcdef>
+            <db:paramdef choice="req">
+               <db:parameter>message</db:parameter>
             </db:paramdef>
          </db:funcprototype>
       </db:funcsynopsis>
