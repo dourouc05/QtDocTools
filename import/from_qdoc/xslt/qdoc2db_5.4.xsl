@@ -1176,20 +1176,14 @@
       <!-- Deal with functions, then types and macros. For raw DocBook, cannot use functions, but rather methods, due to the encoding of namespaces. -->
       <xsl:choose>
         <xsl:when test="$vocabulary = 'qtdoctools'">
-          <xsl:apply-templates mode="functionListing" select="$functions/html:h3">
-            <xsl:with-param name="name" select="$name"/>
-          </xsl:apply-templates>
+          <xsl:apply-templates mode="functionListing" select="$functions/html:h3"/>
           <xsl:apply-templates mode="functionListing" select="$obsoleteMemberFunctions/html:h3">
-            <xsl:with-param name="name" select="$name"/>
             <xsl:with-param name="type" select="'obsolete'"/>
           </xsl:apply-templates>
           <xsl:apply-templates mode="functionListing" select="$obsoleteMemberFunctions/html:h3">
-            <xsl:with-param name="name" select="$name"/>
             <xsl:with-param name="type" select="'compat'"/>
           </xsl:apply-templates>
-          <xsl:apply-templates mode="functionListing" select="$types/html:h3">
-            <xsl:with-param name="name" select="$name"/>
-          </xsl:apply-templates>
+          <xsl:apply-templates mode="functionListing" select="$types/html:h3"/>
         </xsl:when>
         <xsl:when test="$vocabulary = 'docbook'">
           <xsl:apply-templates mode="classListing" select="$functions/html:h3">
@@ -1203,9 +1197,7 @@
             <xsl:with-param name="name" select="$name"/>
             <xsl:with-param name="type" select="'compat'"/>
           </xsl:apply-templates>
-          <xsl:apply-templates mode="functionListing" select="$types/html:h3">
-            <xsl:with-param name="name" select="$name"/>
-          </xsl:apply-templates>
+          <xsl:apply-templates mode="functionListing" select="$types/html:h3"/>
         </xsl:when>
       </xsl:choose>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
@@ -1321,9 +1313,7 @@
         <xsl:with-param name="name" select="$name"/>
         <xsl:with-param name="type" select="'compat'"/>
       </xsl:apply-templates>
-      <xsl:apply-templates mode="functionListing" select="$types/html:h3">
-        <xsl:with-param name="name" select="$name"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates mode="functionListing" select="$types/html:h3"/>
       <xsl:apply-templates mode="macroListing" select="$macros/html:h3">
         <xsl:with-param name="forceMethod" select="true()"/>
       </xsl:apply-templates>
