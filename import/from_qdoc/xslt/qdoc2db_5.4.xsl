@@ -1171,12 +1171,7 @@
       <xsl:apply-templates mode="propertiesListing" select="$vars/html:h3">
         <xsl:with-param name="kind" select="'public variable'"/>
       </xsl:apply-templates>
-      <xsl:if test="$classes">
-        <xsl:message terminate="yes">TODO</xsl:message>
-      </xsl:if>
-      <xsl:apply-templates mode="classListing" select="$classes/html:h3">
-        <xsl:with-param name="name" select="$name"/>
-      </xsl:apply-templates>
+      <xsl:apply-templates mode="nsClassListing" select="$classes/html:h3"/>
 
       <!-- Deal with functions, then types and macros. For raw DocBook, cannot use functions, but rather methods, due to the encoding of namespaces. -->
       <xsl:choose>
@@ -1217,6 +1212,18 @@
         <xsl:with-param name="forceMethod" select="true()"/>
       </xsl:apply-templates>
     </xsl:element>
+  </xsl:template>
+  <xsl:template mode="nsClassListing" match="html:h3">
+    <!-- No inner classes with DocBook. -->
+    <xsl:if test="$vocabulary != 'docbook'">
+      <db:classsynopsis xlink:href="{html:a/@href}">
+        <db:ooclass>
+          <db:classname>
+            <xsl:value-of select="html:a/text()"/>
+          </db:classname>
+        </db:ooclass>
+      </db:classsynopsis>
+    </xsl:if>
   </xsl:template>
   <xsl:template name="classListing">
     <xsl:param name="name" as="xs:string"/>

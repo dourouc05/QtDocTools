@@ -12,23 +12,24 @@
                                                   &lt;QTest&gt;</db:namespacesynopsisinfo>
       <db:namespacesynopsisinfo role="qmake"> QT +=
                                                 testlib</db:namespacesynopsisinfo>
-      <db:methodsynopsis xlink:href="#">
-         <db:methodname/>
-         <db:void role="parameters"/>
-         <db:exceptionname role="parameters"/>
-      </db:methodsynopsis>
+      <db:classsynopsis xlink:href="qtest-qtoucheventsequence.html">
+         <db:ooclass>
+            <db:classname>QTouchEventSequence</db:classname>
+         </db:ooclass>
+      </db:classsynopsis>
       <db:funcsynopsis xlink:href="#addColumn">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>addColumn</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type>char&lt;T&gt;</db:type>
                <db:parameter>name</db:parameter>
             </db:paramdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type>T</db:type>
                <db:parameter>dummy</db:parameter>
             </db:paramdef>
@@ -97,6 +98,7 @@
       <db:funcsynopsis xlink:href="#ignoreMessage">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>ignoreMessage</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -112,6 +114,7 @@
       <db:funcsynopsis xlink:href="#ignoreMessage-2">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>ignoreMessage</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -128,6 +131,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -152,6 +156,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -176,6 +181,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -200,6 +206,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -224,6 +231,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyClicks</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -248,6 +256,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyEvent</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -276,6 +285,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyEvent</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -304,6 +314,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyEvent</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -332,6 +343,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyEvent</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -360,6 +372,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyPress</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -384,6 +397,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyPress</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -408,6 +422,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyPress</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -432,6 +447,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyPress</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -456,6 +472,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyRelease</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -480,6 +497,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyRelease</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -504,6 +522,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyRelease</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -528,6 +547,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>keyRelease</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -551,6 +571,7 @@
       <db:funcsynopsis xlink:href="#mouseClick">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -578,6 +599,7 @@
       <db:funcsynopsis xlink:href="#mouseClick-2">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -605,6 +627,7 @@
       <db:funcsynopsis xlink:href="#mouseDClick">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseDClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -632,6 +655,7 @@
       <db:funcsynopsis xlink:href="#mouseDClick-2">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseDClick</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -659,6 +683,7 @@
       <db:funcsynopsis xlink:href="#mouseMove">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseMove</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -678,6 +703,7 @@
       <db:funcsynopsis xlink:href="#mouseMove-2">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseMove</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -697,6 +723,7 @@
       <db:funcsynopsis xlink:href="#mousePress">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mousePress</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -724,6 +751,7 @@
       <db:funcsynopsis xlink:href="#mousePress-2">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mousePress</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -751,6 +779,7 @@
       <db:funcsynopsis xlink:href="#mouseRelease">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseRelease</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -778,6 +807,7 @@
       <db:funcsynopsis xlink:href="#mouseRelease-2">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>mouseRelease</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -809,7 +839,7 @@
                <db:function>newRow</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type>char</db:type>
                <db:parameter>dataTag</db:parameter>
             </db:paramdef>
@@ -854,6 +884,7 @@
       <db:funcsynopsis xlink:href="#qSleep">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>qSleep</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -866,6 +897,7 @@
          <db:funcprototype>
             <db:modifier>static</db:modifier>
             <db:funcdef>
+               <db:void/>
                <db:function>qWait</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -945,6 +977,7 @@
       <db:funcsynopsis xlink:href="#setBenchmarkResult">
          <db:funcprototype>
             <db:funcdef>
+               <db:void/>
                <db:function>setBenchmarkResult</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -964,12 +997,12 @@
                <db:function>toHexRepresentation</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type>char&lt;int&gt;</db:type>
                <db:parameter>ba</db:parameter>
             </db:paramdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type>int</db:type>
                <db:parameter>length</db:parameter>
             </db:paramdef>
@@ -982,7 +1015,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type>T</db:type>
                <db:parameter>value</db:parameter>
             </db:paramdef>
@@ -995,7 +1028,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qlatin1string.html">QLatin1String</db:type>
                <db:parameter>string</db:parameter>
             </db:paramdef>
@@ -1008,7 +1041,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qstring.html">QString</db:type>
                <db:parameter>string</db:parameter>
             </db:paramdef>
@@ -1021,7 +1054,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qbytearray.html">QByteArray</db:type>
                <db:parameter>ba</db:parameter>
             </db:paramdef>
@@ -1034,7 +1067,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qtime.html">QTime</db:type>
                <db:parameter>time</db:parameter>
             </db:paramdef>
@@ -1047,7 +1080,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qdate.html">QDate</db:type>
                <db:parameter>date</db:parameter>
             </db:paramdef>
@@ -1060,7 +1093,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qdatetime.html">QDateTime</db:type>
                <db:parameter>dateTime</db:parameter>
             </db:paramdef>
@@ -1073,7 +1106,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qchar.html">QChar</db:type>
                <db:parameter>character</db:parameter>
             </db:paramdef>
@@ -1086,7 +1119,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qpoint.html">QPoint</db:type>
                <db:parameter>point</db:parameter>
             </db:paramdef>
@@ -1099,7 +1132,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qsize.html">QSize</db:type>
                <db:parameter>size</db:parameter>
             </db:paramdef>
@@ -1112,7 +1145,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qrect.html">QRect</db:type>
                <db:parameter>rectangle</db:parameter>
             </db:paramdef>
@@ -1125,7 +1158,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qurl.html">QUrl</db:type>
                <db:parameter>url</db:parameter>
             </db:paramdef>
@@ -1138,7 +1171,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qpointf.html">QPointF</db:type>
                <db:parameter>point</db:parameter>
             </db:paramdef>
@@ -1151,7 +1184,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qsizef.html">QSizeF</db:type>
                <db:parameter>size</db:parameter>
             </db:paramdef>
@@ -1164,7 +1197,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qrectf.html">QRectF</db:type>
                <db:parameter>rectangle</db:parameter>
             </db:paramdef>
@@ -1177,7 +1210,7 @@
                <db:function>toString</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qvariant.html">QVariant</db:type>
                <db:parameter>variant</db:parameter>
             </db:paramdef>

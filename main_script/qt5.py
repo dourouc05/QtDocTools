@@ -252,12 +252,12 @@ def call_xslt(file_in, file_out, stylesheet):
     result = subprocess.run(command_line, stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
         error_msg = result.stderr.decode('utf-8')
-        if "SXXP0003: Error reported by XML parser: The string \"--\" is not permitted within comments." in error_msg:
+        if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
             # Try to rewrite the comments before retrying (caused by one-line comments about operator--).
             def remove_comments(line):
                 l = line.strip()
-                if l.startswith("<!--") and l.endswith("-->"):
-                    return ""
+                if l.startswith('<!--') and l.endswith('-->'):
+                    return ''
                 return line
 
             with open(file_in, 'r') as file:
