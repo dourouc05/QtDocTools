@@ -68,7 +68,7 @@
       <db:funcsynopsis xlink:href="#setApplicationIconBadgeNumber">
          <db:funcprototype>
             <db:funcdef>
-               <db:type>void</db:type>
+               <db:void/>
                <db:function>setApplicationIconBadgeNumber</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
@@ -80,11 +80,11 @@
       <db:funcsynopsis xlink:href="#setBadgeLabelText">
          <db:funcprototype>
             <db:funcdef>
-               <db:type>void</db:type>
+               <db:void/>
                <db:function>setBadgeLabelText</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtcore/qstring.html">QString</db:type>
                <db:parameter>text</db:parameter>
             </db:paramdef>
@@ -97,7 +97,7 @@
                <db:function>toCGImageRef</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
                <db:parameter>pixmap</db:parameter>
             </db:paramdef>
@@ -110,7 +110,7 @@
                <db:function>toNSImage</db:function>
             </db:funcdef>
             <db:paramdef choice="req">
-               <db:type>const</db:type>
+               <db:modifier>const</db:modifier>
                <db:type xlink:href="qtgui/qpixmap.html">QPixmap</db:type>
                <db:parameter>pixmap</db:parameter>
             </db:paramdef>

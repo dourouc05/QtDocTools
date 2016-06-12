@@ -281,12 +281,12 @@
             <db:function>qmlAttachedPropertiesObject</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QObject&lt;bool&gt;</db:type>
             <db:parameter>attachee</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>bool</db:type>
             <db:parameter>create</db:parameter>
          </db:paramdef>
@@ -295,7 +295,7 @@
    <db:funcsynopsis xlink:href="#qmlClearTypeRegistrations">
       <db:funcprototype>
          <db:funcdef>
-            <db:type>void</db:type>
+            <db:void/>
             <db:function>qmlClearTypeRegistrations</db:function>
          </db:funcdef>
          <db:void/>
@@ -308,7 +308,7 @@
             <db:function>qmlContext</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtcore/qobject.html#QObject">QObject</db:type>
             <db:parameter>object</db:parameter>
          </db:paramdef>
@@ -321,7 +321,7 @@
             <db:function>qmlEngine</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtcore/qobject.html#QObject">QObject</db:type>
             <db:parameter>object</db:parameter>
          </db:paramdef>
@@ -334,12 +334,12 @@
             <db:function>qmlProtectModule</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int</db:type>
             <db:parameter>majVersion</db:parameter>
          </db:paramdef>
@@ -352,22 +352,22 @@
             <db:function>qmlRegisterExtendedType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
@@ -380,27 +380,27 @@
             <db:function>qmlRegisterExtendedUncreatableType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&lt;QString&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&lt;QString&gt;&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&lt;QString&gt;&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QString&gt;</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtcore/qstring.html">QString</db:type>
             <db:parameter>reason</db:parameter>
          </db:paramdef>
@@ -413,7 +413,7 @@
             <db:function>qmlRegisterInterface</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>typeName</db:parameter>
          </db:paramdef>
@@ -426,17 +426,17 @@
             <db:function>qmlRegisterRevision</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
@@ -449,32 +449,32 @@
             <db:function>qmlRegisterSingletonType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&lt;QJSValue&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&lt;QJSValue&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&lt;QJSValue&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QJSValue&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;</db:type>
             <db:parameter>typeName</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QJSValue&lt;QQmlEngine&lt;QJSEngine&gt;&gt;</db:type>
             <db:parameter>callback</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qjsengine.html#QJSEngine">QJSEngine</db:type>
             <db:parameter>callback</db:parameter>
          </db:paramdef>
@@ -487,32 +487,32 @@
             <db:function>qmlRegisterSingletonType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&lt;QObject&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&lt;QObject&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&lt;QObject&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QObject&lt;QQmlEngine&lt;QJSEngine&gt;&gt;&gt;</db:type>
             <db:parameter>typeName</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QObject&lt;QQmlEngine&lt;QJSEngine&gt;&gt;</db:type>
             <db:parameter>callback</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qjsengine.html#QJSEngine">QJSEngine</db:type>
             <db:parameter>callback</db:parameter>
          </db:paramdef>
@@ -525,27 +525,27 @@
             <db:function>qmlRegisterSingletonType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QUrl&lt;char&lt;int&lt;int&lt;char&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>url</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
@@ -558,22 +558,22 @@
             <db:function>qmlRegisterType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
@@ -586,27 +586,27 @@
             <db:function>qmlRegisterType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QUrl&lt;char&lt;int&lt;int&lt;char&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>url</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
@@ -628,27 +628,27 @@
             <db:function>qmlRegisterTypeNotAvailable</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&lt;QString&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&lt;QString&gt;&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&lt;QString&gt;&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QString&gt;</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtcore/qstring.html">QString</db:type>
             <db:parameter>message</db:parameter>
          </db:paramdef>
@@ -661,27 +661,27 @@
             <db:function>qmlRegisterUncreatableType</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&lt;int&lt;char&lt;QString&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>uri</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&lt;char&lt;QString&gt;&gt;&gt;</db:type>
             <db:parameter>versionMajor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;char&lt;QString&gt;&gt;</db:type>
             <db:parameter>versionMinor</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QString&gt;</db:type>
             <db:parameter>qmlName</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtcore/qstring.html">QString</db:type>
             <db:parameter>message</db:parameter>
          </db:paramdef>

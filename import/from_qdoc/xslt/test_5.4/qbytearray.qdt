@@ -1096,12 +1096,12 @@
             <db:function>qChecksum</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;uint&gt;</db:type>
             <db:parameter>data</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtglobal.html#uint-typedef">uint</db:type>
             <db:parameter>len</db:parameter>
          </db:paramdef>
@@ -1114,12 +1114,12 @@
             <db:function>qCompress</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;int&gt;</db:type>
             <db:parameter>data</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int</db:type>
             <db:parameter>compressionLevel</db:parameter>
          </db:paramdef>
@@ -1132,17 +1132,17 @@
             <db:function>qCompress</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>uchar&lt;int&lt;int&gt;&gt;</db:type>
             <db:parameter>data</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int&lt;int&gt;</db:type>
             <db:parameter>nbytes</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int</db:type>
             <db:parameter>compressionLevel</db:parameter>
          </db:paramdef>
@@ -1155,7 +1155,7 @@
             <db:function>qUncompress</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>data</db:parameter>
          </db:paramdef>
@@ -1168,12 +1168,12 @@
             <db:function>qUncompress</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>uchar&lt;int&gt;</db:type>
             <db:parameter>data</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int</db:type>
             <db:parameter>nbytes</db:parameter>
          </db:paramdef>
@@ -1207,12 +1207,12 @@
             <db:function>qstrcmp</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;char&gt;</db:type>
             <db:parameter>str1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>str2</db:parameter>
          </db:paramdef>
@@ -1241,7 +1241,7 @@
             <db:function>qstrdup</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>src</db:parameter>
          </db:paramdef>
@@ -1254,12 +1254,12 @@
             <db:function>qstricmp</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;char&gt;</db:type>
             <db:parameter>str1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>str2</db:parameter>
          </db:paramdef>
@@ -1272,7 +1272,7 @@
             <db:function>qstrlen</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>str</db:parameter>
          </db:paramdef>
@@ -1285,17 +1285,17 @@
             <db:function>qstrncmp</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;char&lt;uint&gt;&gt;</db:type>
             <db:parameter>str1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;uint&gt;</db:type>
             <db:parameter>str2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtglobal.html#uint-typedef">uint</db:type>
             <db:parameter>len</db:parameter>
          </db:paramdef>
@@ -1328,17 +1328,17 @@
             <db:function>qstrnicmp</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;char&lt;uint&gt;&gt;</db:type>
             <db:parameter>str1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;uint&gt;</db:type>
             <db:parameter>str2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtglobal.html#uint-typedef">uint</db:type>
             <db:parameter>len</db:parameter>
          </db:paramdef>
@@ -1351,12 +1351,12 @@
             <db:function>qstrnlen</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;uint&gt;</db:type>
             <db:parameter>str</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtglobal.html#uint-typedef">uint</db:type>
             <db:parameter>maxlen</db:parameter>
          </db:paramdef>
@@ -1393,12 +1393,12 @@
             <db:function>operator!=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1411,12 +1411,12 @@
             <db:function>operator!=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1429,12 +1429,12 @@
             <db:function>operator!=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1447,12 +1447,12 @@
             <db:function>operator+</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1465,12 +1465,12 @@
             <db:function>operator+</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1483,12 +1483,12 @@
             <db:function>operator+</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1501,12 +1501,12 @@
             <db:function>operator+</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1535,12 +1535,12 @@
             <db:function>operator&lt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1553,12 +1553,12 @@
             <db:function>operator&lt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1571,12 +1571,12 @@
             <db:function>operator&lt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1605,12 +1605,12 @@
             <db:function>operator&lt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1623,12 +1623,12 @@
             <db:function>operator&lt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1641,12 +1641,12 @@
             <db:function>operator&lt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1659,12 +1659,12 @@
             <db:function>operator==</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1677,12 +1677,12 @@
             <db:function>operator==</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1695,12 +1695,12 @@
             <db:function>operator==</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1713,12 +1713,12 @@
             <db:function>operator&gt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1731,12 +1731,12 @@
             <db:function>operator&gt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1749,12 +1749,12 @@
             <db:function>operator&gt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1767,12 +1767,12 @@
             <db:function>operator&gt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1785,12 +1785,12 @@
             <db:function>operator&gt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QByteArray&lt;char&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>
@@ -1803,12 +1803,12 @@
             <db:function>operator&gt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>a1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html#QByteArray">QByteArray</db:type>
             <db:parameter>a2</db:parameter>
          </db:paramdef>

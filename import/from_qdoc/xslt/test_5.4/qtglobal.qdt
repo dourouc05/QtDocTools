@@ -1197,7 +1197,7 @@
             <db:function>qAbs</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T</db:type>
             <db:parameter>value</db:parameter>
          </db:paramdef>
@@ -1210,17 +1210,17 @@
             <db:function>qBound</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T&lt;T&lt;T&gt;&gt;</db:type>
             <db:parameter>min</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T&lt;T&gt;</db:type>
             <db:parameter>value</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T</db:type>
             <db:parameter>max</db:parameter>
          </db:paramdef>
@@ -1233,7 +1233,7 @@
             <db:function>qEnvironmentVariableIsEmpty</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>varName</db:parameter>
          </db:paramdef>
@@ -1246,7 +1246,7 @@
             <db:function>qEnvironmentVariableIsSet</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>varName</db:parameter>
          </db:paramdef>
@@ -1438,12 +1438,12 @@
             <db:function>qMax</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T&lt;T&gt;</db:type>
             <db:parameter>value1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T</db:type>
             <db:parameter>value2</db:parameter>
          </db:paramdef>
@@ -1456,12 +1456,12 @@
             <db:function>qMin</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T&lt;T&gt;</db:type>
             <db:parameter>value1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T</db:type>
             <db:parameter>value2</db:parameter>
          </db:paramdef>
@@ -1512,11 +1512,11 @@
    <db:funcsynopsis xlink:href="#qSetMessagePattern">
       <db:funcprototype>
          <db:funcdef>
-            <db:type>void</db:type>
+            <db:void/>
             <db:function>qSetMessagePattern</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qstring.html">QString</db:type>
             <db:parameter>pattern</db:parameter>
          </db:paramdef>
@@ -1550,7 +1550,7 @@
             <db:function>qgetenv</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>varName</db:parameter>
          </db:paramdef>
@@ -1563,12 +1563,12 @@
             <db:function>qputenv</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;QByteArray&gt;</db:type>
             <db:parameter>varName</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qbytearray.html">QByteArray</db:type>
             <db:parameter>value</db:parameter>
          </db:paramdef>
@@ -1586,7 +1586,7 @@
    <db:funcsynopsis xlink:href="#qsrand">
       <db:funcprototype>
          <db:funcdef>
-            <db:type>void</db:type>
+            <db:void/>
             <db:function>qsrand</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
@@ -1602,12 +1602,12 @@
             <db:function>qtTrId</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char&lt;int&gt;</db:type>
             <db:parameter>id</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>int</db:type>
             <db:parameter>n</db:parameter>
          </db:paramdef>
@@ -1620,7 +1620,7 @@
             <db:function>qunsetenv</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>char</db:type>
             <db:parameter>varName</db:parameter>
          </db:paramdef>

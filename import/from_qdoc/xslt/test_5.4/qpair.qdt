@@ -69,17 +69,17 @@
             <db:function>qMakePair</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T1&lt;T2&gt;</db:type>
             <db:parameter>value1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>value1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>value2</db:parameter>
          </db:paramdef>
@@ -92,22 +92,22 @@
             <db:function>operator!=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
@@ -120,22 +120,22 @@
             <db:function>operator&lt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
@@ -168,22 +168,22 @@
             <db:function>operator&lt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
@@ -196,22 +196,22 @@
             <db:function>operator==</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
@@ -224,22 +224,22 @@
             <db:function>operator&gt;</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
@@ -252,22 +252,22 @@
             <db:function>operator&gt;=</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2&lt;QPair&lt;T1&lt;T2&gt;&gt;&gt;</db:type>
             <db:parameter>p1</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QPair&lt;T1&lt;T2&gt;&gt;</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>T2</db:type>
             <db:parameter>p2</db:parameter>
          </db:paramdef>

@@ -655,12 +655,12 @@
             <db:function>qFindChildren</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QObject&lt;QRegExp&gt;</db:type>
             <db:parameter>obj</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qregexp.html">QRegExp</db:type>
             <db:parameter>regExp</db:parameter>
          </db:paramdef>
@@ -686,12 +686,12 @@
             <db:function>qFindChild</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QObject&lt;QString&gt;</db:type>
             <db:parameter>obj</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qstring.html">QString</db:type>
             <db:parameter>name</db:parameter>
          </db:paramdef>
@@ -705,12 +705,12 @@
             <db:function>qFindChildren</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type>QObject&lt;QString&gt;</db:type>
             <db:parameter>obj</db:parameter>
          </db:paramdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qstring.html">QString</db:type>
             <db:parameter>name</db:parameter>
          </db:paramdef>

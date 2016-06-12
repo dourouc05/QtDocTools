@@ -1474,7 +1474,8 @@
           <xsl:otherwise>
             <xsl:variable name="type" select="$node/text()"/>
             <xsl:choose>
-              <xsl:when test="$type = 'void' and not($voidAsType)">
+              <!-- TODO! GitHub issue https://github.com/docbook/docbook/issues/60: <db:void> not allowed in <db:funcdef>, but is otherwise! -->
+              <xsl:when test="$type = 'void' and not($voidAsType and $vocabulary != 'qtdoctools')">
                 <db:void/>
               </xsl:when>
               <xsl:otherwise>
@@ -1769,7 +1770,14 @@
                     <!-- Maybe this parameter is const. -->
                     <xsl:if test="normalize-space($textAfterName) = '(const'">
                       <!-- TODO: DocBook does not allow <db:modifier>!? ISSUE: https://github.com/docbook/docbook/issues/59 -->
-                      <db:type>const</db:type>
+                      <xsl:choose>
+                        <xsl:when test="$vocabulary = 'qtdoctools'">
+                          <db:modifier>const</db:modifier>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <db:type>const</db:type>
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </xsl:if>
 
                     <!-- Output the type. -->

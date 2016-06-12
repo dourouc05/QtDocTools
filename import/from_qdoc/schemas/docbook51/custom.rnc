@@ -11,6 +11,24 @@ include "docbookxi.rnc" {
        | db.fieldsynopsis
        | qdt.synopsis)*
     }
+    
+  # GitHub issue: https://github.com/docbook/docbook/issues/59
+  db.paramdef =
+    element paramdef {
+      db.paramdef.attlist,
+      (db._text
+       | db.initializer
+       | db.modifier
+       | db.type
+       | db.parameter
+       | db.funcparams)*
+    }
+  
+  # GitHub issue: https://github.com/docbook/docbook/issues/60
+  db.funcdef =
+    element funcdef {
+      db.funcdef.attlist, (db._text | db.type | db.void | db.function)*
+    }
 }
 qdt.synopsis = qdt.enumsynopsis | qdt.typedefsynopsis
 

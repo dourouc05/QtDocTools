@@ -12,7 +12,7 @@
             <db:function>qFromBigEndian</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtglobal.html#uchar-typedef">uchar</db:type>
             <db:parameter>src</db:parameter>
          </db:paramdef>
@@ -37,7 +37,7 @@
             <db:function>qFromLittleEndian</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
-            <db:type>const</db:type>
+            <db:modifier>const</db:modifier>
             <db:type xlink:href="qtglobal.html#uchar-typedef">uchar</db:type>
             <db:parameter>src</db:parameter>
          </db:paramdef>
@@ -58,7 +58,7 @@
    <db:funcsynopsis xlink:href="#qToBigEndian">
       <db:funcprototype>
          <db:funcdef>
-            <db:type>void</db:type>
+            <db:void/>
             <db:function>qToBigEndian</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
@@ -86,7 +86,7 @@
    <db:funcsynopsis xlink:href="#qToLittleEndian">
       <db:funcprototype>
          <db:funcdef>
-            <db:type>void</db:type>
+            <db:void/>
             <db:function>qToLittleEndian</db:function>
          </db:funcdef>
          <db:paramdef choice="req">
