@@ -28,7 +28,10 @@ version = [5, 4, 2]
 
 qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
 saxon9 = "F:/QtDoc/QtDoc/SaxonHE9-7-0-3J/saxon9he.jar"
+jing = "F:/QtDoc/QtDoc/jing-20140903-saxon95.jar"
+
 xslt2 = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl"
+rng = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/schemas/docbook51/custom.rng"
 postprocess = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/postprocessor/postprocessor.exe"
 
 configsFile = output + "configs.json"
@@ -38,6 +41,7 @@ prepare = False
 generate_html = False  # If prepare is not True when generate is, need an indexFolder.
 generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
+validate_db = True
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 
@@ -86,7 +90,7 @@ def get_configuration_files(configs_output=False, configs_file=None):
         for root, dirs, files in os.walk(src_path):
             for file in files:
                 if file.endswith(".qdocconf") and "global" not in root and "-dita" not in file:
-                    configs[file.replace(".qdocconf", "")] = root.replace("\\", "/") + "/" + file
+                    configs[file.replace(".qdocconf", "")] = root.replace("\\", '/') + '/' + file
                     found = True
         return found
 
@@ -94,7 +98,7 @@ def get_configuration_files(configs_output=False, configs_file=None):
     def retrieve_from_sources():
         configs = {}  # Accumulator for configuration files.
         for folder in get_folders():
-            path = sources + folder + "/"
+            path = sources + folder + '/'
 
             # Handle Qt Base modules, as they are all in the same folder.
             if folder == "qtbase":
@@ -115,7 +119,7 @@ def get_configuration_files(configs_output=False, configs_file=None):
                 for module in dirs:
                     prefixed_module = "qt" + module if module != "corelib" else "qtcore"
 
-                    module_path = path + "src/" + module + "/"
+                    module_path = path + "src/" + module + '/'
                     doc_file = module_path + "doc/" + prefixed_module + ".qdocconf"
 
                     if not os.path.isfile(doc_file):
@@ -125,7 +129,7 @@ def get_configuration_files(configs_output=False, configs_file=None):
 
                 # Finally play with the tools.
                 for tool in os.listdir(path + "src/tools/"):
-                    tool_path = path + "src/tools/" + tool + "/"
+                    tool_path = path + "src/tools/" + tool + '/'
                     doc_path = tool_path + "doc/"
                     if os.path.isdir(doc_path):
                         for doc_file in get_potential_file_names(doc_path, tool):
@@ -191,7 +195,7 @@ def get_configuration_files(configs_output=False, configs_file=None):
 # Generates the set of parameters to give to QDoc depending on the action.
 def parameters(configuration_file, module_name, prepare=True):
     params = [qdoc,
-              "-outputdir", output + module_name + "/",
+              "-outputdir", output + module_name + '/',
               "-installdir", output,
               "-log-progress",
               configuration_file,
@@ -222,7 +226,7 @@ def generate_module(module_name, configuration_file):
 # Convert the documentation HTML files as XML for the given module.
 def generate_module_xml(module_name):
     logging.info('Parsing as XML: starting to work with module %s' % module_name)
-    for root, subdirs, files in os.walk(output + module_name + "/"):
+    for root, subdirs, files in os.walk(output + module_name + '/'):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
 
@@ -292,7 +296,7 @@ def generate_module_db(module_name):
     count_db = 0
 
     logging.info('XML to DocBook: starting to work with module %s' % module_name)
-    for root, sub_dirs, files in os.walk(output + module_name + "/"):
+    for root, sub_dirs, files in os.walk(output + module_name + '/'):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
 
@@ -336,6 +340,44 @@ def generate_module_db(module_name):
     logging.info('XML to DocBook: done with module %s (%i DocBook files generated)' % (module_name, count_db))
 
 
+# Call an RNG validator on the given file.
+def call_rng(file, schema):
+    # result = subprocess.run(['java', '-jar', jing, '-c', schema, file], stderr=subprocess.PIPE) # For a compact schema
+    result = subprocess.run(['java', '-jar', jing, schema, file], stderr=subprocess.PIPE)
+    if len(result.stderr) > 0:
+        logging.warning("Problem(s) with file '%s' at validation: \n%s" % (file, result.stderr.decode('utf-8')))
+
+
+# Convert the documentation XML files as DocBook for the given module.
+def validate_module_db(module_name):
+    ext = '.db'  # Extension for files that are recognised here.
+    count_db = 0
+
+    logging.info('DocBook validation: starting to work with module %s' % module_name)
+    for root, sub_dirs, files in os.walk(output + module_name + '/'):
+        if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
+            continue
+
+        count = 0
+        n_files = len(files)
+        for file in files:
+            count += 1
+
+            # Handle a bit of output (even though the DocBook counter is not yet updated for this iteration).
+            if count % 10 == 0:
+                logging.info('DocBook validation: module %s, %i files done out of %i (%i DocBook files validated)'
+                             % (module_name, count, n_files, count_db))
+
+            if not file.endswith(ext):
+                continue
+            count_db += 1
+
+            # Actual processing.
+            file_name = os.path.join(root, file)
+            call_rng(file_name, rng)
+    logging.info('DocBook validation: done with module %s (%i DocBook files validated)' % (module_name, count_db))
+
+
 # Algorithm:
 # - retrieve the configuration files (*.qdocconf)
 # - create the indexes by going through all source directories
@@ -368,9 +410,15 @@ if __name__ == '__main__':
             generate_module_db(module_name=moduleName)
     time_db = time.perf_counter()
 
-    print("Total time: %f s" % (time_db - time_beginning))
+    if validate_db:
+        for moduleName, conf in configs.items():
+            validate_module_db(module_name=moduleName)
+    time_rng = time.perf_counter()
+
+    print("Total time: %f s" % (time_rng - time_beginning))
     print("Time to read configuration files: %f s" % (time_configs - time_beginning))
     print("Time to create indexes: %f s" % (time_prepare - time_configs))
     print("Time to generate HTML files: %f s" % (time_generate - time_prepare))
     print("Time to generate XML files: %f s" % (time_xml - time_generate))
     print("Time to generate DocBook files: %f s" % (time_db - time_xml))
+    print("Time to validate DocBook files: %f s" % (time_rng - time_db))
