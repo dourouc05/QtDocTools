@@ -1083,61 +1083,55 @@
         <xsl:message>WARNING: No precise output for namespace classes.</xsl:message>
       </xsl:if>
     </xsl:if>
-
-    <xsl:variable name="nsSynopsisTag" as="xs:string"
-      select="
-        if ($vocabulary = 'qtdoctools') then
-          'db:namespacesynopsis'
-        else
-          'db:classsynopsis'"/>
-    <xsl:variable name="nsTag" as="xs:string"
-      select="
-        if ($vocabulary = 'qtdoctools') then
-          'db:namespace'
-        else
-          'db:ooclass'"/>
-    <xsl:variable name="nsNameTag" as="xs:string"
-      select="
-        if ($vocabulary = 'qtdoctools') then
-          'db:namespacename'
-        else
-          'db:classname'"/>
-    <xsl:variable name="nsInfoTag" as="xs:string"
-      select="
-        if ($vocabulary = 'qtdoctools') then
-          'db:namespacesynopsisinfo'
-        else
-          'db:classsynopsisinfo'"/>
-
-    <xsl:element name="{$nsSynopsisTag}">
-      <xsl:element name="{$nsTag}">
-        <xsl:element name="{$nsNameTag}">
+    
+    <xsl:variable name="tags">
+      <tag name="synopsis">
+        <value case="qtdoctools">db:namespacesynopsis</value>
+        <value case="docbook">db:classsynopsis</value>
+      </tag>
+      <tag name="tag">
+        <value case="qtdoctools">db:namespace</value>
+        <value case="docbook">db:ooclass</value>
+      </tag>
+      <tag name="name">
+        <value case="qtdoctools">db:namespacename</value>
+        <value case="docbook">db:classname</value>
+      </tag>
+      <tag name="info">
+        <value case="qtdoctools">db:namespacesynopsisinfo</value>
+        <value case="docbook">db:classsynopsisinfo</value>
+      </tag>
+    </xsl:variable>
+    
+    <xsl:element name="{$tags/tag[@name = 'synopsis']/value[@case = $vocabulary]}">
+      <xsl:element name="{$tags/tag[@name = 'tag']/value[@case = $vocabulary]}">
+        <xsl:element name="{$tags/tag[@name = 'name']/value[@case = $vocabulary]}">
           <xsl:value-of select="$name"/>
         </xsl:element>
       </xsl:element>
 
       <xsl:if test="not($vocabulary = 'qtdoctools')">
-        <xsl:element name="{$nsInfoTag}">
+        <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
           <xsl:attribute name="role" select="'isNamespace'"/>
           <xsl:text>yes</xsl:text>
         </xsl:element>
       </xsl:if>
 
       <xsl:if test="$header">
-        <xsl:element name="{$nsInfoTag}">
+        <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
           <xsl:attribute name="role" select="'header'"/>
           <xsl:value-of select="$header"/>
         </xsl:element>
       </xsl:if>
       <xsl:if test="$qmake">
-        <xsl:element name="{$nsInfoTag}">
+        <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
           <xsl:attribute name="role" select="'qmake'"/>
           <xsl:value-of select="$qmake"/>
         </xsl:element>
       </xsl:if>
       <xsl:if test="$inherits">
         <xsl:for-each select="$inherits/html:a">
-          <xsl:element name="{$nsInfoTag}">
+          <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
             <xsl:attribute name="role" select="'inherits'"/>
             <db:link xlink:href="{@href}">
               <xsl:value-of select="text()"/>
@@ -1147,7 +1141,7 @@
       </xsl:if>
       <xsl:if test="$inheritedBy">
         <xsl:for-each select="$inheritedBy/html:p/html:a">
-          <xsl:element name="{$nsInfoTag}">
+          <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
             <xsl:attribute name="role" select="'inheritedBy'"/>
             <db:link xlink:href="{@href}">
               <xsl:value-of select="text()"/>
@@ -1156,7 +1150,7 @@
         </xsl:for-each>
       </xsl:if>
       <xsl:if test="$since">
-        <xsl:element name="{$nsInfoTag}">
+        <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
           <xsl:attribute name="role" select="'since'"/>
           <xsl:value-of select="$since"/>
         </xsl:element>
@@ -1183,7 +1177,6 @@
       <xsl:apply-templates mode="classListing" select="$classes/html:h3">
         <xsl:with-param name="name" select="$name"/>
       </xsl:apply-templates>
-
 
       <!-- Deal with functions, then types and macros. For raw DocBook, cannot use functions, but rather methods, due to the encoding of namespaces. -->
       <xsl:choose>
@@ -1453,6 +1446,7 @@
   </xsl:template>
   <xsl:template name="classListing_methodBody_analyseType">
     <xsl:param name="typeNodes" as="element()+"/>
+    <xsl:param name="voidAsType" as="xs:boolean" select="false()"/>
 
     <!-- 
     Type can be composed of one or multiple nodes: 
@@ -1480,7 +1474,7 @@
           <xsl:otherwise>
             <xsl:variable name="type" select="$node/text()"/>
             <xsl:choose>
-              <xsl:when test="$type = 'void'">
+              <xsl:when test="$type = 'void' and not($voidAsType)">
                 <db:void/>
               </xsl:when>
               <xsl:otherwise>
@@ -1728,10 +1722,10 @@
         </xsl:if>
 
         <db:funcdef>
-          <!-- Unhappily, DocBook does not allow <db:void> here… -->
-          <xsl:if test="$returnTypes and not(contains($returnTypes[1]/text(), 'void'))">
+          <xsl:if test="$returnTypes">
             <xsl:call-template name="classListing_methodBody_analyseType">
               <xsl:with-param name="typeNodes" select="$returnTypes"/>
+              <xsl:with-param name="voidAsType" select="true()"/>
             </xsl:call-template>
           </xsl:if>
 
