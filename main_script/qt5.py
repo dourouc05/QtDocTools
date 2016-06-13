@@ -89,8 +89,8 @@ def get_configuration_files(configs_output=False, configs_file=None):
         found = False  # Is (at least) one file found?
         for root, dirs, files in os.walk(src_path):
             for file in files:
-                if file.endswith(".qdocconf") and "global" not in root and "-dita" not in file:
-                    configs[file.replace(".qdocconf", "")] = root.replace("\\", '/') + '/' + file
+                if file.endswith('.qdocconf') and 'global' not in root and '-dita' not in file:
+                    configs[file.replace('.qdocconf', '')] = root.replace("\\", '/') + '/' + file
                     found = True
         return found
 
@@ -270,7 +270,7 @@ def call_xslt(file_in, file_out, stylesheet):
             with open(file_in, 'w') as file:
                 file.write("\n".join(lines))
 
-            # Restart the SXLT engine, see if changed anything in the process.
+            # Restart the XSLT engine, see if changed anything in the process.
             result = subprocess.run(command_line, stderr=subprocess.PIPE)
             if len(result.stderr) == 0:
                 return

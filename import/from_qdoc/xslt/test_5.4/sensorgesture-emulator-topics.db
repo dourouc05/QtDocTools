@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>QtSensorGestures Emulator</db:title>
+   <db:section xml:id="overview">
+      <db:title>Overview</db:title>
+      <db:para>The Emulator can be used for both creating client apps using
+                                    Qt's built-in sensor gestures, and for creating customized
+                                    recognizers.</db:para>
+   </db:section>
+   <db:section xml:id="developing-sensor-gesture-clients">
+      <db:title>Developing Sensor Gesture Clients</db:title>
+      <db:para>For instance, the Emulator can be used for writing a client
+                                    app that needs to use the "slam" gesture.</db:para>
+      <db:para>Under the "Sensors" heading in the Emulator control, you
+                                    will see an edit box for "Sensor gestures" that will contain a
+                                    list of signals available when your client instantiates a
+                                        <db:code><db:link xlink:href="qsensorgesture.html">QSensorGesture</db:link></db:code>.</db:para>
+      <db:para>Select "slam", and then click the "Send" button to send a
+                                    detected("slam") signal to the client.</db:para>
+   </db:section>
+</db:article>

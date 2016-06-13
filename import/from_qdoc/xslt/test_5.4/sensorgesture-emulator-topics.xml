@@ -1,0 +1,79 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qtsensorgestures-emulator.qdoc -->
+        <html:title>QtSensorGestures Emulator | Qt Sensors 5.4</html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li><html:a href="qtsensors-index.html">Qt
+                                Sensors</html:a></html:li>
+                            <html:li>QtSensorGestures Emulator</html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#overview"
+                                                >Overview</html:a></html:li>
+                                        <html:li class="level1"><html:a
+                                                href="#developing-sensor-gesture-clients">Developing
+                                                Sensor Gesture Clients</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">QtSensorGestures Emulator</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$sensorgesture_emulator_topics-description -->
+                            <html:div class="descr">
+                                <html:a name="details"></html:a>
+                                <html:p></html:p>
+                                <html:a name="overview"></html:a>
+                                <html:h4>Overview</html:h4>
+                                <html:p>The Emulator can be used for both creating client apps using
+                                    Qt's built-in sensor gestures, and for creating customized
+                                    recognizers.</html:p>
+                                <html:a name="developing-sensor-gesture-clients"></html:a>
+                                <html:h4>Developing Sensor Gesture Clients</html:h4>
+                                <html:p>For instance, the Emulator can be used for writing a client
+                                    app that needs to use the "slam" gesture.</html:p>
+                                <html:p>Under the "Sensors" heading in the Emulator control, you
+                                    will see an edit box for "Sensor gestures" that will contain a
+                                    list of signals available when your client instantiates a
+                                        <html:a href="qsensorgesture.html"
+                                    >QSensorGesture</html:a>.</html:p>
+                                <html:p>Select "slam", and then click the "Send" button to send a
+                                    detected("slam") signal to the client.</html:p>
+                            </html:div>
+                            <!-- @@@sensorgesture_emulator_topics -->
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

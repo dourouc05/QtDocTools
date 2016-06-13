@@ -130,7 +130,7 @@
         not(boolean(//html:a[@name = 'details']/following-sibling::html:div[@class = 'descr']))
         and not(boolean(//html:span[@class = 'subtitle']))"/>
 
-    <xsl:variable name="descriptionUsualPlace" as="element()?"
+    <xsl:variable name="descriptionUsualPlace" as="element(html:div)?"
       select="$content/html:div[@class = 'descr']"/>
     <xsl:variable name="description" as="element()?">
       <xsl:if test="not($hasActuallyNoDescription)">
@@ -141,37 +141,26 @@
             <!-- Easiest case: everything is at its own place. A distinction: add a title if there is none. -->
             <xsl:choose>
               <xsl:when
-                test="$descriptionUsualPlace/html:h2[text() = 'Detailed Description'] or $isConcept">
+                test="$descriptionUsualPlace/html:h2[text() = 'Detailed Description']">
                 <xsl:copy-of select="$descriptionUsualPlace"/>
+              </xsl:when>
+              <xsl:when test="$isConcept">
+                <!-- Potential problem for concepts: the highest title is not a <html:h2>. Found for <html:h4>. -->
+                <xsl:apply-templates mode="descr_increaseTitleLevelsToH2" select="$descriptionUsualPlace"/>
               </xsl:when>
               <xsl:otherwise>
                 <html:div class="descr">
                   <xsl:copy-of select="$descriptionUsualPlace/html:a[1]"/>
                   <html:h2 id="details">Detailed description</html:h2>
-                  <xsl:for-each select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*">
-                    <!-- 
-                       For each interesting element: 
-                         * for paragraphs: cannot be empty, except if there are children
-                         * for titles: avoid those that are not part of the description
-                         * for everything: not attached to another title than the description's 
-                    -->
-                    <xsl:choose>
-                      <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
-                      <xsl:when test="current()[self::html:h2]">
-                        <html:h3 xml:id="{current()/@id}">
-                          <xsl:value-of select="current()"/>
-                        </html:h3>
-                      </xsl:when>
-                      <xsl:when test="current()[self::html:h3]">
-                        <html:h4 xml:id="{current()/@id}">
-                          <xsl:value-of select="current()"/>
-                        </html:h4>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:copy-of select="current()"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </xsl:for-each>
+                  <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
+                  <xsl:variable name="content" as="element(html:div)">
+                    <html:div class="descr">
+                     <xsl:for-each select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*">
+                       <xsl:copy-of select="."/>
+                     </xsl:for-each>
+                    </html:div>
+                  </xsl:variable>
+                  <xsl:copy-of select="tc:decreaseTitleLevelsByOne($content)"/>
                 </html:div>
               </xsl:otherwise>
             </xsl:choose>
@@ -904,6 +893,105 @@
         </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:template mode="descr_increaseTitleLevelsToH2" match="html:div">
+    <xsl:choose>
+      <xsl:when test="html:h2">
+        <!-- The highest title is <html:h2>, nothing to do, happily! -->
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="html:h3">
+        <!-- The highest title is <html:h3>, increase by one level! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(.)"/>
+      </xsl:when>
+      <xsl:when test="html:h4">
+        <!-- The highest title is <html:h4>, increase by two level! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(.))"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- No titles, nothing to do, happily! -->
+        <xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:function name="tc:increaseTitleLevelsByOne">
+    <xsl:param name="data" as="element()+"/>
+    
+    <xsl:element name="{name($data)}">
+      <xsl:attribute name="class" select="$data/@class"/>
+      <xsl:for-each select="$data/html:*">
+        <xsl:choose>
+          <xsl:when test="current()[self::html:h2]">
+            <html:h1 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h1>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h3]">
+            <html:h2 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h2>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h4]">
+            <html:h3 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h3>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h5]">
+            <html:h4 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h4>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h6]">
+            <html:h5 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h5>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="current()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:element>
+  </xsl:function>
+  <xsl:function name="tc:decreaseTitleLevelsByOne">
+    <xsl:param name="data" as="element()+"/>
+    
+    <xsl:element name="{name($data)}">
+      <xsl:attribute name="class" select="$data/@class"/>
+      <xsl:for-each select="$data/html:*">
+        <xsl:choose>
+          <xsl:when test="current()[self::html:h1]">
+            <html:h2 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h2>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h2]">
+            <html:h3 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h3>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h3]">
+            <html:h4 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h4>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h4]">
+            <html:h5 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h5>
+          </xsl:when>
+          <xsl:when test="current()[self::html:h5]">
+            <html:h6 xml:id="{current()/@id}">
+              <xsl:value-of select="current()"/>
+            </html:h6>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="current()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+    </xsl:element>
   </xsl:function>
 
   <!-- Utility templates, to output DocBook tags. -->
