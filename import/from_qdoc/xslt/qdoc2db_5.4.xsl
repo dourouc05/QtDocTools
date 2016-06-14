@@ -146,21 +146,31 @@
               </xsl:when>
               <xsl:when test="$isConcept">
                 <!-- Potential problem for concepts: the highest title is not a <html:h2>. Found for <html:h4>. -->
-                <xsl:apply-templates mode="descr_increaseTitleLevelsToH2" select="$descriptionUsualPlace"/>
+                <xsl:apply-templates mode="descr_bringTitleLevelsToH2" select="$descriptionUsualPlace"/>
               </xsl:when>
               <xsl:otherwise>
                 <html:div class="descr">
                   <xsl:copy-of select="$descriptionUsualPlace/html:a[1]"/>
                   <html:h2 id="details">Detailed description</html:h2>
-                  <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title, i.e. decrease title level by one. -->
-                  <xsl:variable name="content" as="element(html:div)">
-                    <html:div class="descr">
-                     <xsl:for-each select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*">
-                       <xsl:copy-of select="."/>
-                     </xsl:for-each>
-                    </html:div>
+                  <!-- Selectively rewrite titles so there is only one h2, and the whole description is under the same title. -->
+                  <xsl:variable name="content">
+                    <xsl:variable name="content" as="element(html:div)">
+                      <xsl:choose>
+                        <xsl:when test="$descriptionUsualPlace/html:a[1]/following-sibling::html:*[1][self::html:div]">
+                          <xsl:copy-of select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*"></xsl:copy-of>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <html:div class="descr">
+                            <xsl:for-each select="$descriptionUsualPlace/html:a[1]/following-sibling::html:*">
+                              <xsl:copy-of select="."/>
+                            </xsl:for-each>
+                          </html:div>
+                        </xsl:otherwise>
+                      </xsl:choose>
+                    </xsl:variable>
+                    <xsl:apply-templates mode="descr_bringTitleLevelsToH3" select="$content"/>
                   </xsl:variable>
-                  <xsl:copy-of select="tc:decreaseTitleLevelsByOne($content)"/>
+                  <xsl:copy-of select="$content/html:div/child::html:*"/>
                 </html:div>
               </xsl:otherwise>
             </xsl:choose>
@@ -895,8 +905,12 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template mode="descr_increaseTitleLevelsToH2" match="html:div">
+  <xsl:template mode="descr_bringTitleLevelsToH2" match="html:div">
     <xsl:choose>
+      <xsl:when test="html:h1">
+        <!-- The highest title is <html:h1>, decrease by one! -->
+        <xsl:copy-of select="tc:decreaseTitleLevelsByOne(.)"/>
+      </xsl:when>
       <xsl:when test="html:h2">
         <!-- The highest title is <html:h2>, nothing to do, happily! -->
         <xsl:copy-of select="."/>
@@ -906,8 +920,48 @@
         <xsl:copy-of select="tc:increaseTitleLevelsByOne(.)"/>
       </xsl:when>
       <xsl:when test="html:h4">
-        <!-- The highest title is <html:h4>, increase by two level! -->
+        <!-- The highest title is <html:h4>, increase by two levels! -->
         <xsl:copy-of select="tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(.))"/>
+      </xsl:when>
+      <xsl:when test="html:h5">
+        <!-- The highest title is <html:h4>, increase by three levels! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(.)))"/>
+      </xsl:when>
+      <xsl:when test="html:h6">
+        <!-- The highest title is <html:h6>, increase by four levels! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(.))))"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- No titles, nothing to do, happily! -->
+        <xsl:copy-of select="."/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template mode="descr_bringTitleLevelsToH3" match="html:div">
+    <xsl:choose>
+      <xsl:when test="html:h1">
+        <!-- The highest title is <html:h1>, decrease by two levels! -->
+        <xsl:copy-of select="tc:decreaseTitleLevelsByOne(.)"/>
+      </xsl:when>
+      <xsl:when test="html:h2">
+        <!-- The highest title is <html:h2>, decrease by one level! -->
+        <xsl:copy-of select="tc:decreaseTitleLevelsByOne(.)"/>
+      </xsl:when>
+      <xsl:when test="html:h3">
+        <!-- The highest title is <html:h3>, nothing to do! -->
+        <xsl:copy-of select="."/>
+      </xsl:when>
+      <xsl:when test="html:h4">
+        <!-- The highest title is <html:h4>, increase by one level! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(.)"/>
+      </xsl:when>
+      <xsl:when test="html:h5">
+        <!-- The highest title is <html:h5>, increase by two levels! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(.))"/>
+      </xsl:when>
+      <xsl:when test="html:h6">
+        <!-- The highest title is <html:h6>, increase by two levels! -->
+        <xsl:copy-of select="tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(tc:increaseTitleLevelsByOne(.)))"/>
       </xsl:when>
       <xsl:otherwise>
         <!-- No titles, nothing to do, happily! -->
