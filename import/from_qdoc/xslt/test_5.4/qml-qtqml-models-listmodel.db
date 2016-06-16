@@ -34,10 +34,6 @@
          <db:type>object</db:type>
          <db:methodname>get</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>get</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
             <db:type>int</db:type>
             <db:parameter>index</db:parameter>
          </db:methodparam>

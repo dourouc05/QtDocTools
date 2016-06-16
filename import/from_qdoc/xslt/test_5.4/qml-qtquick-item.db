@@ -299,10 +299,6 @@
          <db:type>object</db:type>
          <db:methodname>contains</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>contains</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
             <db:type>point</db:type>
             <db:parameter>point</db:parameter>
          </db:methodparam>
@@ -324,10 +320,6 @@
          <db:type>bool</db:type>
          <db:methodname>grabToImage</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>bool</db:type>
-            <db:parameter>grabToImage</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
             <db:parameter>callback</db:parameter>
          </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
@@ -338,10 +330,6 @@
          <db:type>object</db:type>
          <db:methodname>mapFromItem</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>mapFromItem</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
@@ -366,10 +354,6 @@
          <db:type>object</db:type>
          <db:methodname>mapFromItem</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>mapFromItem</db:parameter>
-         </db:methodparam>
-         <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
          </db:methodparam>
@@ -385,10 +369,6 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapToItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>mapToItem</db:parameter>
-         </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>
@@ -413,10 +393,6 @@
       <db:methodsynopsis>
          <db:type>object</db:type>
          <db:methodname>mapToItem</db:methodname>
-         <db:methodparam rep="norepeat" choice="req">
-            <db:type>object</db:type>
-            <db:parameter>mapToItem</db:parameter>
-         </db:methodparam>
          <db:methodparam rep="norepeat" choice="req">
             <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
             <db:parameter>item</db:parameter>

@@ -2102,7 +2102,7 @@
         or that its <html:*> following siblings do not contain the method name. 
       -->
       <xsl:variable name="actualParameters" as="element(html:span)*"
-        select="$title/html:span[@class = 'type'][not(following-sibling::html:*) or following-sibling::html:* != $methodName]"/>
+        select="$title/html:span[@class = 'type'][not(following-sibling::html:*) or not(following-sibling::html:* = $methodName)]"/>
       <xsl:choose>
         <xsl:when test="count($actualParameters) = 0">
           <!-- Indicate there is no parameter. -->
@@ -2148,6 +2148,7 @@
              </xsl:choose>
            </xsl:variable>
  
+            <!-- Sometimes, the method name is exactly that of some parameters, especially for signals (MouseArea's wheel) -->
             <db:methodparam rep="norepeat" choice="req">
               <xsl:if test="$hasType">
                 <xsl:variable name="type">
@@ -2155,20 +2156,9 @@
                     <xsl:with-param name="typeNodes" select="$type"/>
                   </xsl:call-template>
                 </xsl:variable>
-                <xsl:if test="$type/db:type/text() = 'void' or boolean($type/db:void)">
-                  <xsl:message>WARNING: Found a void type! Bug in the style sheets!</xsl:message>
-                </xsl:if>
-                <xsl:if test="$type/db:type/text() = $methodName/text()">
-                  <xsl:message>WARNING: Type corresponds to method name! Bug in the style
-                    sheets!</xsl:message>
-                </xsl:if>
                 <xsl:copy-of select="$type"/>
               </xsl:if>
               <db:parameter>
-                <xsl:if test="normalize-space($name) = $methodName/text()">
-                  <xsl:message>WARNING: Parameter name corresponds to method name! Bug in the style
-                    sheets!</xsl:message>
-                </xsl:if>
                 <xsl:value-of select="normalize-space($name)"/>
               </db:parameter>
             </db:methodparam>
