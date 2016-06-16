@@ -2882,9 +2882,20 @@
     <xsl:param name="tag" as="element(html:table)"/>
 
     <xsl:if test="$tag/html:tbody/html:tr[1]/html:td[1] or $tag/html:tbody/html:tr[1]/html:th[1]">
-      <db:informaltable>
-        <xsl:apply-templates select="$tag/*" mode="content_table"/>
-      </db:informaltable>
+      <xsl:choose>
+        <xsl:when test="count($tag/html:thead) &gt; 1">
+          <xsl:for-each-group select="$tag/*" group-starting-with="html:thead">
+            <db:informaltable>
+              <xsl:apply-templates select="current-group()" mode="content_table"/>
+            </db:informaltable>
+          </xsl:for-each-group>
+        </xsl:when>
+        <xsl:otherwise>
+          <db:informaltable>
+            <xsl:apply-templates select="$tag/*" mode="content_table"/>
+          </db:informaltable>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
   <xsl:template mode="content_table" match="html:thead">
