@@ -3192,9 +3192,17 @@
     <xsl:apply-templates mode="content" select="."/>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:code | html:tt">
-    <db:code>
-      <xsl:apply-templates mode="content_paragraph"/>
-    </db:code>
+    <xsl:choose>
+      <xsl:when test="..[self::html:code]">
+        <!-- Sometimes <html:code> are nested. -->
+        <xsl:apply-templates mode="content_paragraph"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:code>
+          <xsl:apply-templates mode="content_paragraph"/>
+        </db:code>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:pre">
     <db:programlisting>
