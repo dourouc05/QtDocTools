@@ -31,8 +31,8 @@
                                     always present for editing purposes, and will not be displayed
                                     in the preview or in the finished window.</db:para>
       <db:para>Once created, the properties of a menu can be accessed using
-                                    the <db:link xlink:href="designer-widget-mode.html#the-property-editor">Property Editor</db:link>, and each menu can be accessed for
-                                    this purpose via the <db:link xlink:href="designer-widget-mode.html#the-object-inspector">The
+                                    the <db:link xlink:href="designer-widget-mode.db#the-property-editor">Property Editor</db:link>, and each menu can be accessed for
+                                    this purpose via the <db:link xlink:href="designer-widget-mode.db#the-object-inspector">The
                                         Object Inspector</db:link>.</db:para>
       <db:para>Existing menus can be removed by opening a context menu over
                                     the label in the menu bar, and selecting <db:emphasis role="bold">Remove Menu
@@ -159,7 +159,7 @@
          <db:para>Press <db:emphasis role="bold">Return</db:emphasis> or <db:emphasis role="bold">Enter</db:emphasis> to
                                     accept the new text, or press <db:emphasis role="bold">Escape</db:emphasis> to reject
                                     it. The action created for this menu entry will be accessible
-                                    via the <db:link xlink:href="designer-creating-mainwindows.html#theactioneditor">Action Editor</db:link>, and any associated keyboard
+                                    via the <db:link xlink:href="designer-creating-mainwindows.db#theactioneditor">Action Editor</db:link>, and any associated keyboard
                                     shortcut can be set there.</db:para>
          <db:para>Just like with
                                     menus, entries can be moved around simply by dragging and
@@ -191,7 +191,7 @@
       </db:section>
       <db:section xml:id="adding-and-removing-toolbar-buttons">
          <db:title>Adding and Removing Toolbar Buttons</db:title>
-         <db:para>Toolbar buttons are created as actions in the <db:link xlink:href="designer-creating-mainwindows.html#theactioneditor">Action Editor</db:link> and dragged onto the toolbar. Since
+         <db:para>Toolbar buttons are created as actions in the <db:link xlink:href="designer-creating-mainwindows.db#theactioneditor">Action Editor</db:link> and dragged onto the toolbar. Since
                                     actions can be represented by menu entries and toolbar buttons,
                                     they can be moved between menus and toolbars.</db:para>
          <db:informaltable>
@@ -220,7 +220,7 @@
          </db:informaltable>
          <db:para>To share an action between a menu and a toolbar,
                                     drag its icon from the action editor to the toolbar rather than
-                                    from the menu where its entry is located. See <db:link xlink:href="designer-creating-mainwindows.html#adding-an-action">Adding an Action</db:link> for more information about this
+                                    from the menu where its entry is located. See <db:link xlink:href="designer-creating-mainwindows.db#adding-an-action">Adding an Action</db:link> for more information about this
                                     process.</db:para>
          <db:para>Toolbar buttons are removed via the toolbar's context
                                     menu.</db:para>
@@ -308,7 +308,7 @@
    </db:section>
    <db:section xml:id="dock-widgets">
       <db:title>Dock Widgets</db:title>
-      <db:para>Since dock widgets are <db:link xlink:href="designer-using-containers.html">container
+      <db:para>Since dock widgets are <db:link xlink:href="designer-using-containers.db">container
                                         widgets</db:link>, they can be added to a form in the usual
                                     way. Once added to a form, dock widgets are not placed in any
                                     particular dock area by default; you need to set the
@@ -337,7 +337,7 @@
                                     widgets.</db:para>
          <db:para>Dock widgets can be optionally floated as independent tool
                                     windows. Hence, it is useful to give them window titles by
-                                    setting their <db:link xlink:href="qtwidgets/qdockwidget.html#windowTitle-prop">windowTitle</db:link> property. This also helps to identify
+                                    setting their <db:link xlink:href="qdockwidget.db#windowTitle-prop">windowTitle</db:link> property. This also helps to identify
                                     them on the form.</db:para>
       </db:section>
    </db:section>

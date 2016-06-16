@@ -44,16 +44,16 @@
       <db:section xml:id="appearance">
          <db:title>Appearance</db:title>
          <db:para>Each Rectangle item is painted using either a solid fill color,
-                                specified using the <db:link xlink:href="qml-qtquick-rectangle.html#color-prop">color</db:link>
+                                specified using the <db:link xlink:href="qml-qtquick-rectangle.db#color-prop">color</db:link>
                                 property, or a gradient, defined using a Gradient type and set using
-                                the <db:link xlink:href="qml-qtquick-rectangle.html#gradient-prop">gradient</db:link> property. If both a color and a gradient are
+                                the <db:link xlink:href="qml-qtquick-rectangle.db#gradient-prop">gradient</db:link> property. If both a color and a gradient are
                                 specified, the gradient is used.</db:para>
          <db:para>You can add an optional border to a rectangle with its own color
-                                and thickness by setting the <db:link xlink:href="qml-qtquick-rectangle.html#border.color-prop">border.color</db:link> and <db:link xlink:href="qml-qtquick-rectangle.html#border.width-prop">border.width</db:link> properties. Set the color to
+                                and thickness by setting the <db:link xlink:href="qml-qtquick-rectangle.db#border.color-prop">border.color</db:link> and <db:link xlink:href="qml-qtquick-rectangle.db#border.width-prop">border.width</db:link> properties. Set the color to
                                 "transparent" to paint a border without a fill color.</db:para>
-         <db:para>You can also create rounded rectangles using the <db:link xlink:href="qml-qtquick-rectangle.html#radius-prop">radius</db:link>
+         <db:para>You can also create rounded rectangles using the <db:link xlink:href="qml-qtquick-rectangle.db#radius-prop">radius</db:link>
                                 property. Since this introduces curved edges to the corners of a
-                                rectangle, it may be appropriate to set the <db:link xlink:href="qml-qtquick-item.html#antialiasing-prop">Item::antialiasing</db:link> property to improve its
+                                rectangle, it may be appropriate to set the <db:link xlink:href="qml-qtquick-item.db#antialiasing-prop">Item::antialiasing</db:link> property to improve its
                                 appearance.</db:para>
       </db:section>
       <db:section xml:id="example-usage">
@@ -72,7 +72,7 @@
       </db:section>
       <db:section xml:id="performance">
          <db:title>Performance</db:title>
-         <db:para>Using the <db:link xlink:href="qml-qtquick-item.html#antialiasing-prop">Item::antialiasing</db:link> property improves the appearance of
+         <db:para>Using the <db:link xlink:href="qml-qtquick-item.db#antialiasing-prop">Item::antialiasing</db:link> property improves the appearance of
                                 a rounded rectangle at the cost of rendering performance. You should
                                 consider unsetting this property for rectangles in motion, and only
                                 set it when they are stationary.</db:para>
@@ -80,7 +80,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-imageelements-example.html#image">Image</db:link>
+                  <db:link xlink:href="qtquick-imageelements-example.db#image">Image</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -91,7 +91,7 @@
       <db:section xml:id="antialiasing-prop">
          <db:title>antialiasing : bool</db:title>
          <db:para>Used to decide if the Rectangle should use
-                                        antialiasing or not. <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html#antialiasing">Antialiasing</db:link> provides information on the
+                                        antialiasing or not. <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.db#antialiasing">Antialiasing</db:link> provides information on the
                                         performance implications of this property.</db:para>
          <db:para>The default is true for Rectangles with a radius, and
                                         false otherwise.</db:para>
@@ -136,13 +136,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-rectangle.html#gradient-prop">gradient</db:link>
+                  <db:link xlink:href="qml-qtquick-rectangle.db#gradient-prop">gradient</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="gradient-prop">
-         <db:title>gradient : <db:link xlink:href="qml-qtquick-gradient.html">Gradient</db:link></db:title>
+         <db:title>gradient : <db:link xlink:href="qml-qtquick-gradient.db">Gradient</db:link></db:title>
          <db:para>The gradient to use to fill the rectangle.</db:para>
          <db:para>This property allows for the construction of simple
                                         vertical gradients. Other gradients may by formed by adding
@@ -161,10 +161,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-gradient.html">Gradient</db:link>
+                  <db:link xlink:href="qml-qtquick-gradient.db">Gradient</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-rectangle.html#color-prop">color</db:link>
+                  <db:link xlink:href="qml-qtquick-rectangle.db#color-prop">color</db:link>
                </db:member>
             </db:simplelist>
          </db:section>

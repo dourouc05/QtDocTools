@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Converts QDoc 5.4's HTML5 (first converted to XML) into DocBook. 
-  Hypothesis: tables have <tbody> tags in the input (ensured automatically by Python's html5lib). 
+  Hypothesis (in):  tables have <tbody> tags in the input (ensured automatically by Python's html5lib). 
+  Hypothesis (out): all output files have the same extension (otherwise, links won't work properly). Configurable with $extension parameter.
   
   
   
@@ -20,12 +21,17 @@
   <xsl:output method="xml" indent="yes"
     saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
-
-  <xsl:param name="vocabulary" select="'qtdoctools'" as="xs:string"/>
+  
   <!-- 'docbook' for raw DocBook 5.1; 'qtdoctools' for the custom QtDocTools extension. -->
-  <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()" as="xs:boolean"/>
+  <xsl:param name="vocabulary" select="'qtdoctools'" as="xs:string"/>
   <!-- Output warnings when some semantics cannot be translated in the chosen vocabulary. -->
+  <xsl:param name="warnVocabularyUnsupportedFeatures" select="false()" as="xs:boolean"/>
+  <!-- Warn when a member has no documentation (but not when the complete file is empty!). -->
   <xsl:param name="warnMissingDocumentation" select="false()" as="xs:boolean"/>
+  <!-- The extension of the output files. -->
+  <xsl:param name="extension" select="'.db'" as="xs:string"/>
+  <!-- Output folders are kept for each module. -->
+  <xsl:param name="outputFoldersKept" select="false()" as="xs:boolean"/>
 
   <!-- <xsl:import-schema schema-location="http://www.docbook.org/xml/5.0/xsd/docbook.xsd"/> -->
   <xsl:import-schema schema-location="../schemas/docbook50/docbook.xsd"
@@ -733,8 +739,54 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
+  
+  <xsl:function name="tc:translate-url" as="xs:string">
+    <!-- 
+      Rewrite inside links to be consistent with the storage options (i.e. extension, folder structure).
+      QDoc normally outputs every module in its own folder, with .html extensions — but these 
+      hypotheses are easily violated by this script! 
+      Normal links: 
+      - http://               -> do nothing
+      - qclass.html           -> same module, rewrite extension
+      - qtmodule/qclass.html  -> other module, rewrite path if needed, rewrite extension
+    -->
+    <xsl:param name="link" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="starts-with($link, 'http://') or starts-with($link, 'https://') or starts-with($link, 'ftp://')">
+        <!-- External link: kept as is. -->
+        <xsl:value-of select="$link"/>
+      </xsl:when>
+      <xsl:when test="starts-with($link, '#')">
+        <!-- Internal link to the page: kept as is. -->
+        <xsl:value-of select="$link"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Not an external link: must at least rewrite the extension. -->
+        <xsl:variable name="reworkedLink" as="xs:string">
+          <xsl:choose>
+            <xsl:when test="contains($link, '/')">
+              <xsl:variable name="parts" select="tokenize($link, '/')"/>
+              <xsl:choose>
+                <xsl:when test="$outputFoldersKept">
+                  <xsl:value-of select="concat($parts[last() - 1], '/', $parts[last()])"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="$parts[last()]"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="$link"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:value-of select="replace(replace($reworkedLink, '.html', $extension), '.xml', $extension)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
   <xsl:function name="tc:find-id">
+    <!-- In case of duplicate ID in the original document: do nothing! -->
     <xsl:param name="elt" as="element()"/>
     <xsl:value-of
       select="
@@ -1108,7 +1160,7 @@
           <xsl:variable name="part2" select="tokenize($part1[2], '\|\|\|\|\]')"/>
           <xsl:variable name="text" select="$part2[1]"/>
 
-          <db:link xlink:href="{$url}">
+          <db:link xlink:href="{tc:translate-url($url)}">
             <xsl:value-of select="$text"/>
           </db:link>
         </xsl:otherwise>
@@ -1275,7 +1327,7 @@
         <xsl:for-each select="$inherits/html:a">
           <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
             <xsl:attribute name="role" select="'inherits'"/>
-            <db:link xlink:href="{@href}">
+            <db:link xlink:href="{tc:translate-url(@href)}">
               <xsl:value-of select="text()"/>
             </db:link>
           </xsl:element>
@@ -1285,7 +1337,7 @@
         <xsl:for-each select="$inheritedBy/html:p/html:a">
           <xsl:element name="{$tags/tag[@name = 'info']/value[@case = $vocabulary]}">
             <xsl:attribute name="role" select="'inheritedBy'"/>
-            <db:link xlink:href="{@href}">
+            <db:link xlink:href="{tc:translate-url(@href)}">
               <xsl:value-of select="text()"/>
             </db:link>
           </xsl:element>
@@ -1381,7 +1433,7 @@
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
 
-    <db:classsynopsis xlink:href="{replace(tokenize(base-uri(), '/')[last()], '.xml', '.db')}">
+    <db:classsynopsis xlink:href="{tc:translate-url(base-uri())}">
       <db:ooclass>
         <db:classname>
           <xsl:value-of select="$name"/>
@@ -1406,7 +1458,7 @@
       <xsl:if test="$inherits">
         <xsl:for-each select="$inherits/html:a">
           <db:classsynopsisinfo role="inherits">
-            <db:link xlink:href="{@href}">
+            <db:link xlink:href="{tc:translate-url(@href)}">
               <xsl:value-of select="text()"/>
             </db:link>
           </db:classsynopsisinfo>
@@ -1415,7 +1467,7 @@
       <xsl:if test="$inheritedBy">
         <xsl:for-each select="$inheritedBy/html:p/html:a">
           <db:classsynopsisinfo role="inheritedBy">
-            <db:link xlink:href="{@href}">
+            <db:link xlink:href="{tc:translate-url(@href)}">
               <xsl:value-of select="text()"/>
             </db:link>
           </db:classsynopsisinfo>
@@ -1968,7 +2020,7 @@
     <xsl:param name="meths" as="element()?"/>
     <xsl:param name="signals" as="element()?"/>
     
-    <db:classsynopsis xlink:href="{replace(tokenize(base-uri(), '/')[last()], '.xml', '.db')}">
+    <db:classsynopsis xlink:href="{tc:translate-url(base-uri())}">
       <db:ooclass>
         <db:classname>
           <xsl:value-of select="$qmlTypeName"/>
@@ -2984,7 +3036,8 @@
       /></xsl:message>
   </xsl:template>
   <xsl:template mode="content_paragraph" match="html:br"/>
-  <xsl:template mode="content_paragraph" match="html:a">
+  <xsl:template mode="content_paragraph" match="html:a[@name]"/>
+  <xsl:template mode="content_paragraph" match="html:a[not(@name)]">
     <!-- 
       Output a link, maybe enclosing its content with <db:code> when it's a method (followed by parentheses) or a class. 
       Don't output the <db:code> if the element is already wrapped in some such tag. 
@@ -2997,7 +3050,7 @@
       <xsl:when test="starts-with(following-sibling::text()[1], '()')">
         <!-- Prepare to conditionnally output a <db:code> tag around the link (only if not yet done). -->
         <xsl:variable name="link">
-          <db:link xlink:href="{@href}">
+          <db:link xlink:href="{tc:translate-url(@href)}">
             <xsl:apply-templates mode="content_paragraph"/>
           </db:link>
           <xsl:variable name="toEndList" as="xs:string"
@@ -3019,7 +3072,7 @@
       <!-- Second case: only text, starts with a Q (hence a Qt C++ class). -->
       <xsl:when test="count(text()) = 1 and starts-with(text(), 'Q') and not(contains(text(), ' '))">
         <xsl:variable name="link">
-          <db:link xlink:href="{@href}">
+          <db:link xlink:href="{tc:translate-url(@href)}">
             <xsl:apply-templates mode="content_paragraph"/>
           </db:link>
           <!-- Maybe it's templated. -->
@@ -3047,7 +3100,7 @@
       <xsl:when
         test="count(text()) = 1 and starts-with(text(), '&lt;') and ends-with(text(), '&gt;')">
         <xsl:variable name="link">
-          <db:link xlink:href="{@href}">
+          <db:link xlink:href="{tc:translate-url(@href)}">
             <xsl:apply-templates mode="content_paragraph"/>
           </db:link>
         </xsl:variable>
@@ -3065,7 +3118,7 @@
       </xsl:when>
       <!-- No <db:code> should be inferred here. -->
       <xsl:otherwise>
-        <db:link xlink:href="{@href}">
+        <db:link xlink:href="{tc:translate-url(@href)}">
           <xsl:apply-templates mode="content_paragraph"/>
         </db:link>
       </xsl:otherwise>

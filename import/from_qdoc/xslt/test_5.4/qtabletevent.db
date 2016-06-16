@@ -13,7 +13,7 @@
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 gui</db:classsynopsisinfo>
       <db:classsynopsisinfo role="inherits">
-         <db:link xlink:href="qinputevent.html">QInputEvent</db:link>
+         <db:link xlink:href="qinputevent.db">QInputEvent</db:link>
       </db:classsynopsisinfo>
       <db:constructorsynopsis xlink:href="#QTabletEvent">
          <db:methodname>QTabletEvent</db:methodname>
@@ -198,41 +198,41 @@
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
-      <db:para>The <db:code><db:link xlink:href="qtabletevent.html">QTabletEvent</db:link></db:code>
+      <db:para>The <db:code><db:link xlink:href="qtabletevent.db">QTabletEvent</db:link></db:code>
                                     class contains parameters that describe a Tablet event.</db:para>
       <db:para>
          <db:emphasis>Tablet events</db:emphasis> are generated from tablet
                                     peripherals such as Wacom tablets and various other brands, and
                                     electromagnetic stylus devices included with some types of
-                                    tablet computers. (It is not the same as <db:code><db:link xlink:href="qtouchevent.html">QTouchEvent</db:link></db:code> which a
+                                    tablet computers. (It is not the same as <db:code><db:link xlink:href="qtouchevent.db">QTouchEvent</db:link></db:code> which a
                                     touchscreen generates, even when a passive stylus is used on a
                                     touchscreen.)</db:para>
       <db:para>Tablet events are similar to mouse events; for example, the
-                                        <db:code><db:link xlink:href="qtabletevent.html#x">x</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.html#y">y</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.html#pos">pos</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.html#globalX">globalX</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.html#globalY">globalY</db:link>()</db:code>, and
-                                        <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code> accessors provide the cursor position,
-                                    and you can see which <db:code><db:link xlink:href="qtabletevent.html#buttons">buttons</db:link>()</db:code> are pressed (pressing the stylus tip
+                                        <db:code><db:link xlink:href="qtabletevent.db#x">x</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.db#y">y</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.db#pos">pos</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.db#globalX">globalX</db:link>()</db:code>, <db:code><db:link xlink:href="qtabletevent.db#globalY">globalY</db:link>()</db:code>, and
+                                        <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code> accessors provide the cursor position,
+                                    and you can see which <db:code><db:link xlink:href="qtabletevent.db#buttons">buttons</db:link>()</db:code> are pressed (pressing the stylus tip
                                     against the tablet surface is equivalent to a left mouse
                                     button). But tablet events also pass through some extra
                                     information that the tablet device driver provides; for example,
                                     you might want to do subpixel rendering with higher resolution
-                                    coordinates (<db:code><db:link xlink:href="qtabletevent.html#hiResGlobalX">hiResGlobalX</db:link>()</db:code> and <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalY">hiResGlobalY</db:link>()</db:code>), adjust color brightness based on the
-                                        <db:code><db:link xlink:href="qtabletevent.html#pressure">pressure</db:link>()</db:code> of the tool against the tablet surface, use
-                                    different brushes depending on the type of tool in use (<db:code><db:link xlink:href="qtabletevent.html#device">device</db:link>()</db:code>), modulate
+                                    coordinates (<db:code><db:link xlink:href="qtabletevent.db#hiResGlobalX">hiResGlobalX</db:link>()</db:code> and <db:code><db:link xlink:href="qtabletevent.db#hiResGlobalY">hiResGlobalY</db:link>()</db:code>), adjust color brightness based on the
+                                        <db:code><db:link xlink:href="qtabletevent.db#pressure">pressure</db:link>()</db:code> of the tool against the tablet surface, use
+                                    different brushes depending on the type of tool in use (<db:code><db:link xlink:href="qtabletevent.db#device">device</db:link>()</db:code>), modulate
                                     the brush shape in some way according to the X-axis and Y-axis
-                                    tilt of the tool with respect to the tablet surface (<db:code><db:link xlink:href="qtabletevent.html#xTilt">xTilt</db:link>()</db:code> and <db:code><db:link xlink:href="qtabletevent.html#yTilt">yTilt</db:link>()</db:code>), and use a
+                                    tilt of the tool with respect to the tablet surface (<db:code><db:link xlink:href="qtabletevent.db#xTilt">xTilt</db:link>()</db:code> and <db:code><db:link xlink:href="qtabletevent.db#yTilt">yTilt</db:link>()</db:code>), and use a
                                     virtual eraser instead of a brush if the user switches to the
-                                    other end of a double-ended stylus (<db:code><db:link xlink:href="qtabletevent.html#pointerType">pointerType</db:link>()</db:code>).</db:para>
+                                    other end of a double-ended stylus (<db:code><db:link xlink:href="qtabletevent.db#pointerType">pointerType</db:link>()</db:code>).</db:para>
       <db:para>Every event contains an accept flag that indicates whether
-                                    the receiver wants the event. You should call <db:code><db:link xlink:href="qtcore/qevent.html#accept">QTabletEvent::accept</db:link>()</db:code> if you handle the tablet
+                                    the receiver wants the event. You should call <db:code><db:link xlink:href="qevent.db#accept">QTabletEvent::accept</db:link>()</db:code> if you handle the tablet
                                     event; otherwise it will be sent to the parent widget. The
-                                    exception are <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletEnterProximity</db:link> and <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletLeaveProximity</db:link> events: these are only sent
-                                    to <db:code><db:link xlink:href="qtwidgets/qapplication.html">QApplication</db:link></db:code> and do not check whether or not they
+                                    exception are <db:link xlink:href="qevent.db#Type-enum">TabletEnterProximity</db:link> and <db:link xlink:href="qevent.db#Type-enum">TabletLeaveProximity</db:link> events: these are only sent
+                                    to <db:code><db:link xlink:href="qapplication.db">QApplication</db:link></db:code> and do not check whether or not they
                                     are accepted.</db:para>
-      <db:para>The <db:code><db:link xlink:href="qtwidgets/qwidget.html#enabled-prop">QWidget::setEnabled</db:link>()</db:code> function can be used to
+      <db:para>The <db:code><db:link xlink:href="qwidget.db#enabled-prop">QWidget::setEnabled</db:link>()</db:code> function can be used to
                                     enable or disable mouse, tablet and keyboard events for a
                                     widget.</db:para>
-      <db:para>The event handler <db:code><db:link xlink:href="qtwidgets/qwidget.html#tabletEvent">QWidget::tabletEvent</db:link>()</db:code> receives <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletPress</db:link>,
-                                        <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletRelease</db:link> and <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletMove</db:link>
+      <db:para>The event handler <db:code><db:link xlink:href="qwidget.db#tabletEvent">QWidget::tabletEvent</db:link>()</db:code> receives <db:link xlink:href="qevent.db#Type-enum">TabletPress</db:link>,
+                                        <db:link xlink:href="qevent.db#Type-enum">TabletRelease</db:link> and <db:link xlink:href="qevent.db#Type-enum">TabletMove</db:link>
                                     events. Qt will first send a tablet event, then if it is not
                                     accepted by any widget, it will send a mouse event. This allows
                                     users of applications that are not designed for tablets to use a
@@ -242,8 +242,8 @@
                                     accurate drawing. If the tablet events are rejected, the
                                     synthetic mouse events may be compressed for
                                     efficiency.</db:para>
-      <db:para>New in Qt 5.4: <db:code><db:link xlink:href="qtabletevent.html">QTabletEvent</db:link></db:code> includes all information available
-                                    from the device, including <db:code><db:link xlink:href="qtabletevent.html#buttons">QTabletEvent::buttons</db:link>()</db:code>. Previously it was not
+      <db:para>New in Qt 5.4: <db:code><db:link xlink:href="qtabletevent.db">QTabletEvent</db:link></db:code> includes all information available
+                                    from the device, including <db:code><db:link xlink:href="qtabletevent.db#buttons">QTabletEvent::buttons</db:link>()</db:code>. Previously it was not
                                     possible to accept all tablet events and also know which stylus
                                     buttons were pressed.</db:para>
       <db:para>Note that pressing the stylus button while the stylus hovers
@@ -352,7 +352,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pointerType">pointerType</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pointerType">pointerType</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -476,7 +476,7 @@
    <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QTabletEvent">
-         <db:title>QTabletEvent::QTabletEvent(<db:link xlink:href="qtcore/qevent.html#Type-enum">Type</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qtglobal.html#qint64-typedef">qint64</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
+         <db:title>QTabletEvent::QTabletEvent(<db:link xlink:href="qevent.db#Type-enum">Type</db:link><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
          <db:para>Construct a tablet event of the given
                                     <db:emphasis>type</db:emphasis>.</db:para>
          <db:para>The <db:emphasis>pos</db:emphasis> parameter indicates where the event
@@ -509,10 +509,10 @@
                                     degrees. 4D mice and the Wacom Art Pen support rotation. If the
                                     device does not support rotation, pass 0 here.</db:para>
          <db:para>The <db:emphasis>button</db:emphasis> that caused the event is given
-                                    as a value from the <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link></db:code> enum. If the event
-                                        <db:emphasis>type</db:emphasis> is not <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletPress</db:link> or
-                                        <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletRelease</db:link>, the appropriate button for this
-                                    event is <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::NoButton</db:link></db:code>.</db:para>
+                                    as a value from the <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link></db:code> enum. If the event
+                                        <db:emphasis>type</db:emphasis> is not <db:link xlink:href="qevent.db#Type-enum">TabletPress</db:link> or
+                                        <db:link xlink:href="qevent.db#Type-enum">TabletRelease</db:link>, the appropriate button for this
+                                    event is <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::NoButton</db:link></db:code>.</db:para>
          <db:para>
             <db:emphasis>buttons</db:emphasis> is the state of all buttons at the
                                     time of the event.</db:para>
@@ -520,122 +520,122 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pos">pos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pos">pos</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#device">device</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#device">device</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pressure">pressure</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pressure">pressure</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#xTilt">xTilt</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#xTilt">xTilt</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#yTilt">yTilt</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#yTilt">yTilt</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#uniqueId">uniqueId</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#uniqueId">uniqueId</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#rotation">rotation</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#rotation">rotation</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#tangentialPressure">tangentialPressure</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#tangentialPressure">tangentialPressure</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#z">z</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#z">z</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="button">
-         <db:title><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link></db:title>
+         <db:title><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link></db:title>
          <db:para>Returns the button that caused the event.</db:para>
-         <db:para>Note that the returned value is always <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::NoButton</db:link></db:code>
-                                    for <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletMove</db:link>, <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletEnterProximity</db:link> and <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletLeaveProximity</db:link> events.</db:para>
+         <db:para>Note that the returned value is always <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::NoButton</db:link></db:code>
+                                    for <db:link xlink:href="qevent.db#Type-enum">TabletMove</db:link>, <db:link xlink:href="qevent.db#Type-enum">TabletEnterProximity</db:link> and <db:link xlink:href="qevent.db#Type-enum">TabletLeaveProximity</db:link> events.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#buttons">buttons</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#buttons">buttons</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link></db:code>
+                  <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="buttons">
-         <db:title><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
+         <db:title><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
          <db:para>Returns the button state when the event was generated. The
-                                    button state is a combination of buttons from the <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link></db:code> enum using the OR operator. For
-                                        <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletMove</db:link> events, this is all buttons that are
-                                    pressed down. For <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletPress</db:link> events this includes the button that
-                                    caused the event. For <db:link xlink:href="qtcore/qevent.html#Type-enum">TabletRelease</db:link>
+                                    button state is a combination of buttons from the <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link></db:code> enum using the OR operator. For
+                                        <db:link xlink:href="qevent.db#Type-enum">TabletMove</db:link> events, this is all buttons that are
+                                    pressed down. For <db:link xlink:href="qevent.db#Type-enum">TabletPress</db:link> events this includes the button that
+                                    caused the event. For <db:link xlink:href="qevent.db#Type-enum">TabletRelease</db:link>
                                     events this excludes the button that caused the event.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#button">button</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#button">button</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link></db:code>
+                  <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="device">
-         <db:title><db:link xlink:href="qtabletevent.html#TabletDevice-enum">TabletDevice</db:link></db:title>
+         <db:title><db:link xlink:href="qtabletevent.db#TabletDevice-enum">TabletDevice</db:link></db:title>
          <db:para>Returns the type of device that generated the
                                     event.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtabletevent.html#TabletDevice-enum">TabletDevice</db:link>
+                  <db:link xlink:href="qtabletevent.db#TabletDevice-enum">TabletDevice</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="globalPos">
-         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Returns the global position of the device <db:emphasis>at the
                                         time of the event</db:emphasis>. This is important on
                                     asynchronous windows systems like X11; whenever you move your
                                     widgets around in response to mouse events, globalPos() can
-                                    differ significantly from the current position <db:code><db:link xlink:href="qcursor.html#pos">QCursor::pos</db:link>()</db:code>.</db:para>
+                                    differ significantly from the current position <db:code><db:link xlink:href="qcursor.db#pos">QCursor::pos</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalX">globalX</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalX">globalX</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalY">globalY</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalY">globalY</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent-compat.html#hiResGlobalPos">hiResGlobalPos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent-compat.db#hiResGlobalPos">hiResGlobalPos</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="globalPosF">
-         <db:title>const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title>const <db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Returns the global position of the device <db:emphasis>at the
                                         time of the event</db:emphasis>. This is important on
                                     asynchronous windows systems like X11; whenever you move your
                                     widgets around in response to mouse events, globalPosF() can
-                                    differ significantly from the current position <db:code><db:link xlink:href="qcursor.html#pos">QCursor::pos</db:link>()</db:code>.</db:para>
+                                    differ significantly from the current position <db:code><db:link xlink:href="qcursor.db#pos">QCursor::pos</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#posF">posF</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#posF">posF</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -648,13 +648,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalY">globalY</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalY">globalY</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalX">hiResGlobalX</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#hiResGlobalX">hiResGlobalX</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -667,67 +667,67 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalX">globalX</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalX">globalX</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalY">hiResGlobalY</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#hiResGlobalY">hiResGlobalY</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="hiResGlobalX">
-         <db:title><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>The high precision x position of the tablet device.</db:para>
       </db:section>
       <db:section xml:id="hiResGlobalY">
-         <db:title><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>The high precision y position of the tablet device.</db:para>
       </db:section>
       <db:section xml:id="pointerType">
-         <db:title><db:link xlink:href="qtabletevent.html#PointerType-enum">PointerType</db:link></db:title>
+         <db:title><db:link xlink:href="qtabletevent.db#PointerType-enum">PointerType</db:link></db:title>
          <db:para>Returns the type of point that generated the event.</db:para>
       </db:section>
       <db:section xml:id="pos">
-         <db:title><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Returns the position of the device, relative to the widget
                                     that received the event.</db:para>
          <db:para>If you move widgets around in response to mouse events, use
-                                        <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code> instead of this function.</db:para>
+                                        <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code> instead of this function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#x">x</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#x">x</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#y">y</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#y">y</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="posF">
-         <db:title>const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title>const <db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Returns the position of the device, relative to the widget
                                     that received the event.</db:para>
          <db:para>If you move widgets around in response to mouse events, use
-                                        <db:code><db:link xlink:href="qtabletevent.html#globalPosF">globalPosF</db:link>()</db:code> instead of this function.</db:para>
+                                        <db:code><db:link xlink:href="qtabletevent.db#globalPosF">globalPosF</db:link>()</db:code> instead of this function.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#globalPosF">globalPosF</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#globalPosF">globalPosF</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="pressure">
-         <db:title><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Returns the pressure for the device. 0.0 indicates that the
                                     stylus is not on the tablet, 1.0 indicates the maximum amount of
                                     pressure for the stylus.</db:para>
@@ -735,19 +735,19 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#tangentialPressure">tangentialPressure</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#tangentialPressure">tangentialPressure</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="rotation">
-         <db:title><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Returns the rotation of the current device in degress. This
                                     is usually given by a 4D Mouse. If the device does not support
                                     rotation this value is always 0.0.</db:para>
       </db:section>
       <db:section xml:id="tangentialPressure">
-         <db:title><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Returns the tangential pressure for the device. This is
                                     typically given by a finger wheel on an airbrush tool. The range
                                     is from -1.0 to 1.0. 0.0 indicates a neutral position. Current
@@ -758,13 +758,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pressure">pressure</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pressure">pressure</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="uniqueId">
-         <db:title><db:link xlink:href="qtcore/qtglobal.html#qint64-typedef">qint64</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link></db:title>
          <db:para>Returns a unique ID for the current device, making it
                                     possible to differentiate between multiple devices being used at
                                     the same time on the tablet.</db:para>
@@ -782,7 +782,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pointerType">pointerType</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pointerType">pointerType</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -795,10 +795,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#y">y</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#y">y</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pos">pos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pos">pos</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -820,7 +820,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#yTilt">yTilt</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#yTilt">yTilt</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -833,10 +833,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#x">x</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#x">x</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pos">pos</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pos">pos</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -851,7 +851,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#xTilt">xTilt</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#xTilt">xTilt</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -866,7 +866,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtabletevent.html#pressure">pressure</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtabletevent.db#pressure">pressure</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -877,7 +877,7 @@
       <db:section xml:id="obsolete_memfunc">
          <db:title>Member Function Documentation</db:title>
          <db:section xml:id="QTabletEvent-2">
-            <db:title>QTabletEvent::QTabletEvent(<db:link xlink:href="qtcore/qevent.html#Type-enum">Type</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qtglobal.html#qint64-typedef">qint64</db:link></db:title>
+            <db:title>QTabletEvent::QTabletEvent(<db:link xlink:href="qevent.db#Type-enum">Type</db:link><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link></db:title>
             <db:para>Construct a tablet event of the given
                                 <db:emphasis>type</db:emphasis>.</db:para>
             <db:para>The <db:emphasis>pos</db:emphasis> parameter indicates where the event
@@ -911,34 +911,34 @@
                <db:title>See Also</db:title>
                <db:simplelist type="vert">
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#pos">pos</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#pos">pos</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#device">device</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#device">device</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#pressure">pressure</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#pressure">pressure</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#xTilt">xTilt</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#xTilt">xTilt</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#yTilt">yTilt</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#yTilt">yTilt</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#uniqueId">uniqueId</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#uniqueId">uniqueId</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#rotation">rotation</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#rotation">rotation</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#tangentialPressure">tangentialPressure</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#tangentialPressure">tangentialPressure</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#z">z</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#z">z</db:link>()</db:code>
                   </db:member>
                </db:simplelist>
             </db:section>
@@ -950,21 +950,21 @@
       <db:section xml:id="compat_memfunc">
          <db:title>Member Function Documentation</db:title>
          <db:section xml:id="hiResGlobalPos">
-            <db:title>const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+            <db:title>const <db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
             <db:para>The high precision coordinates delivered from the tablet
                                 expressed. Sub pixeling information is in the fractional part of the
-                                    <db:code><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:code>.</db:para>
+                                    <db:code><db:link xlink:href="qpointf.db">QPointF</db:link></db:code>.</db:para>
             <db:section>
                <db:title>See Also</db:title>
                <db:simplelist type="vert">
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#globalPos">globalPos</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#globalPos">globalPos</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalX">hiResGlobalX</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#hiResGlobalX">hiResGlobalX</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtabletevent.html#hiResGlobalY">hiResGlobalY</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtabletevent.db#hiResGlobalY">hiResGlobalY</db:link>()</db:code>
                   </db:member>
                </db:simplelist>
             </db:section>

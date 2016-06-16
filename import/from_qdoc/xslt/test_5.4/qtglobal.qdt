@@ -1628,8 +1628,8 @@
    </db:funcsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed description</db:title>
-      <db:para>The global declarations include <db:link xlink:href="qtglobal.html#types">types</db:link>, <db:link xlink:href="qtglobal.html#functions">functions</db:link> and
-                                        <db:link xlink:href="qtglobal.html#macros">macros</db:link>.</db:para>
+      <db:para>The global declarations include <db:link xlink:href="qtglobal.db#types">types</db:link>, <db:link xlink:href="qtglobal.db#functions">functions</db:link> and
+                                        <db:link xlink:href="qtglobal.db#macros">macros</db:link>.</db:para>
       <db:para>The type definitions are partly convenience definitions for
                                     basic types (some of which guarantee certain bit-sizes on all
                                     platforms supported by Qt), partly types related to Qt message
@@ -1642,25 +1642,25 @@
          <db:title>Types</db:title>
          <db:para>The header file declares several type definitions that
                                     guarantee a specified bit-size on all platforms supported by Qt
-                                    for various basic types, for example <db:link xlink:href="qtglobal.html#qint8-typedef">qint8</db:link> which is a
+                                    for various basic types, for example <db:link xlink:href="qtglobal.db#qint8-typedef">qint8</db:link> which is a
                                     signed char guaranteed to be 8-bit on all platforms supported by
-                                    Qt. The header file also declares the <db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link>
+                                    Qt. The header file also declares the <db:link xlink:href="qtglobal.db#qlonglong-typedef">qlonglong</db:link>
                                     type definition for <db:code>long long int</db:code>
                                         (<db:code>__int64</db:code> on Windows).</db:para>
-         <db:para>Several convenience type definitions are declared: <db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link> for
-                                        <db:code>double</db:code>, <db:link xlink:href="qtglobal.html#uchar-typedef">uchar</db:link> for
-                                        <db:code>unsigned</db:code> char, <db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link> for
-                                        <db:code>unsigned</db:code> int, <db:link xlink:href="qtglobal.html#ulong-typedef">ulong</db:link> for
-                                        <db:code>unsigned</db:code> long and <db:link xlink:href="qtglobal.html#ushort-typedef">ushort</db:link> for
+         <db:para>Several convenience type definitions are declared: <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link> for
+                                        <db:code>double</db:code>, <db:link xlink:href="qtglobal.db#uchar-typedef">uchar</db:link> for
+                                        <db:code>unsigned</db:code> char, <db:link xlink:href="qtglobal.db#uint-typedef">uint</db:link> for
+                                        <db:code>unsigned</db:code> int, <db:link xlink:href="qtglobal.db#ulong-typedef">ulong</db:link> for
+                                        <db:code>unsigned</db:code> long and <db:link xlink:href="qtglobal.db#ushort-typedef">ushort</db:link> for
                                         <db:code>unsigned</db:code> short.</db:para>
-         <db:para>Finally, the <db:code><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:code> definition identifies the various
+         <db:para>Finally, the <db:code><db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link></db:code> definition identifies the various
                                     messages that can be generated and sent to a Qt message handler;
-                                        <db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code> is a type definition for a
+                                        <db:code><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code> is a type definition for a
                                     pointer to a function with the signature <db:code>void
                                         myMessageHandler(QtMsgType, const QMessageLogContext &amp;,
-                                        const char *)</db:code>. <db:code><db:link xlink:href="qmessagelogcontext.html">QMessageLogContext</db:link></db:code>
+                                        const char *)</db:code>. <db:code><db:link xlink:href="qmessagelogcontext.db">QMessageLogContext</db:link></db:code>
                                     class contains the line, file, and function the message was
-                                    logged at. This information is created by the <db:code><db:link xlink:href="qmessagelogger.html">QMessageLogger</db:link></db:code>
+                                    logged at. This information is created by the <db:code><db:link xlink:href="qmessagelogger.db">QMessageLogger</db:link></db:code>
                                     class.</db:para>
       </db:section>
       <db:section xml:id="functions">
@@ -1668,12 +1668,12 @@
          <db:para>The &lt;QtGlobal&gt; header file contains several functions
                                     comparing and adjusting an object's value. These functions take
                                     a template type as argument: You can retrieve the absolute value
-                                    of an object using the <db:code><db:link xlink:href="qtglobal.html#qAbsx">qAbs</db:link>()</db:code> function, and you can bound a given
+                                    of an object using the <db:code><db:link xlink:href="qtglobal.db#qAbsx">qAbs</db:link>()</db:code> function, and you can bound a given
                                     object's value by given minimum and maximum values using the
-                                        <db:code><db:link xlink:href="qtglobal.html#qBound">qBound</db:link>()</db:code>
+                                        <db:code><db:link xlink:href="qtglobal.db#qBound">qBound</db:link>()</db:code>
                                     function. You can retrieve the minimum and maximum of two given
-                                    objects using <db:code><db:link xlink:href="qtglobal.html#qMinx">qMin</db:link>()</db:code>
-                                    and <db:code><db:link xlink:href="qtglobal.html#qMaxx">qMax</db:link>()</db:code>
+                                    objects using <db:code><db:link xlink:href="qtglobal.db#qMinx">qMin</db:link>()</db:code>
+                                    and <db:code><db:link xlink:href="qtglobal.db#qMaxx">qMax</db:link>()</db:code>
                                     respectively. All these functions return a corresponding
                                     template type; the template types can be replaced by any other
                                     type.</db:para>
@@ -1682,7 +1682,7 @@
                                     myValue =10; int minValue =2; int maxValue =6; int boundedValue =qBound(minValue, myValue, maxValue); //
                                         boundedValue == 6</db:programlisting>
          <db:para>&lt;QtGlobal&gt; also contains functions that generate
-                                    messages from the given string argument: <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>. These
+                                    messages from the given string argument: <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>. These
                                     functions call the message handler with the given
                                     message.</db:para>
          <db:para>Example:</db:para>
@@ -1690,11 +1690,11 @@
                                         (!driver()-&gt;isOpen() ||
                                         driver()-&gt;isOpenError()) { qWarning("QSqlQuery::exec: database not
                                         open"); returnfalse; }</db:programlisting>
-         <db:para>The remaining functions are <db:code><db:link xlink:href="qtglobal.html#qRound">qRound</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qRound64">qRound64</db:link>()</db:code>, which
-                                    both accept a <db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link> value as their argument returning the value
+         <db:para>The remaining functions are <db:code><db:link xlink:href="qtglobal.db#qRound">qRound</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#qRound64">qRound64</db:link>()</db:code>, which
+                                    both accept a <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link> value as their argument returning the value
                                     rounded up to the nearest integer and 64-bit integer
-                                    respectively, the <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code> function which installs
-                                    the given <db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>, and the <db:code><db:link xlink:href="qtglobal.html#qVersion">qVersion</db:link>()</db:code> function
+                                    respectively, the <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code> function which installs
+                                    the given <db:code><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>, and the <db:code><db:link xlink:href="qtglobal.db#qVersion">qVersion</db:link>()</db:code> function
                                     which returns the version number of Qt at run-time as a
                                     string.</db:para>
       </db:section>
@@ -1702,33 +1702,33 @@
          <db:title>Macros</db:title>
          <db:para>The &lt;QtGlobal&gt; header file provides a range of macros
                                     (Q_CC_*) that are defined if the application is compiled using
-                                    the specified platforms. For example, the <db:code><db:link xlink:href="qtglobal.html#Q_CC_SUN">Q_CC_SUN</db:link></db:code> macro is
+                                    the specified platforms. For example, the <db:code><db:link xlink:href="qtglobal.db#Q_CC_SUN">Q_CC_SUN</db:link></db:code> macro is
                                     defined if the application is compiled using Forte Developer, or
                                     Sun Studio C++. The header file also declares a range of macros
                                     (Q_OS_*) that are defined for the specified platforms. For
-                                    example, <db:code><db:link xlink:href="qtglobal.html#Q_OS_UNIX">Q_OS_UNIX</db:link></db:code> which is defined for the Unix-based
+                                    example, <db:code><db:link xlink:href="qtglobal.db#Q_OS_UNIX">Q_OS_UNIX</db:link></db:code> which is defined for the Unix-based
                                     systems.</db:para>
          <db:para>The purpose of these macros is to enable programmers to add
                                     compiler or platform specific code to their
                                     application.</db:para>
          <db:para>The remaining macros are convenience macros for larger
-                                    operations: The <db:code><db:link xlink:href="qtglobal.html#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code> macros
+                                    operations: The <db:code><db:link xlink:href="qtglobal.db#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code> macros
                                     provide the possibility of marking text for dynamic translation,
                                     i.e. translation without changing the stored source text. The
-                                        <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
-                                    and <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code> enables warning messages of various level
-                                    of refinement. The <db:code><db:link xlink:href="qtglobal.html#Q_FOREACH">Q_FOREACH</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#foreach">foreach</db:link>()</db:code> macros
+                                        <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
+                                    and <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code> enables warning messages of various level
+                                    of refinement. The <db:code><db:link xlink:href="qtglobal.db#Q_FOREACH">Q_FOREACH</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#foreach">foreach</db:link>()</db:code> macros
                                     implement Qt's foreach loop.</db:para>
-         <db:para>The <db:code><db:link xlink:href="qtglobal.html#Q_INT64_C">Q_INT64_C</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code> macros
+         <db:para>The <db:code><db:link xlink:href="qtglobal.db#Q_INT64_C">Q_INT64_C</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code> macros
                                     wrap signed and unsigned 64-bit integer literals in a
-                                    platform-independent way. The <db:code><db:link xlink:href="qtglobal.html#Q_CHECK_PTRx">Q_CHECK_PTR</db:link>()</db:code>
+                                    platform-independent way. The <db:code><db:link xlink:href="qtglobal.db#Q_CHECK_PTRx">Q_CHECK_PTR</db:link>()</db:code>
                                     macro prints a warning containing the source code's file name
                                     and line number, saying that the program ran out of memory, if
-                                    the pointer is 0. The <db:code><db:link xlink:href="qtglobal.html#qPrintable">qPrintable</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qUtf8Printable">qUtf8Printable</db:link>()</db:code> macros represent an easy way of
+                                    the pointer is 0. The <db:code><db:link xlink:href="qtglobal.db#qPrintable">qPrintable</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#qUtf8Printable">qUtf8Printable</db:link>()</db:code> macros represent an easy way of
                                     printing text.</db:para>
-         <db:para>Finally, the <db:code><db:link xlink:href="qtglobal.html#QT_POINTER_SIZE">QT_POINTER_SIZE</db:link></db:code> macro expands to the size of a
-                                    pointer in bytes, and the <db:code><db:link xlink:href="qtglobal.html#QT_VERSION">QT_VERSION</db:link></db:code> and
-                                        <db:code><db:link xlink:href="qtglobal.html#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code> macros expand to a numeric value or
+         <db:para>Finally, the <db:code><db:link xlink:href="qtglobal.db#QT_POINTER_SIZE">QT_POINTER_SIZE</db:link></db:code> macro expands to the size of a
+                                    pointer in bytes, and the <db:code><db:link xlink:href="qtglobal.db#QT_VERSION">QT_VERSION</db:link></db:code> and
+                                        <db:code><db:link xlink:href="qtglobal.db#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code> macros expand to a numeric value or
                                     a string, respectively, specifying Qt's version number, i.e the
                                     version the application is compiled against.</db:para>
       </db:section>
@@ -1736,10 +1736,10 @@
          <db:title>See Also</db:title>
          <db:simplelist type="vert">
             <db:member>
-               <db:code><db:link xlink:href="qtalgorithms.html">&lt;QtAlgorithms&gt;</db:link></db:code>
+               <db:code><db:link xlink:href="qtalgorithms.db">&lt;QtAlgorithms&gt;</db:link></db:code>
             </db:member>
             <db:member>
-               <db:code><db:link xlink:href="qsysinfo.html">QSysInfo</db:link></db:code>
+               <db:code><db:link xlink:href="qsysinfo.db">QSysInfo</db:link></db:code>
             </db:member>
          </db:simplelist>
       </db:section>
@@ -1763,10 +1763,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1774,7 +1774,7 @@
       <db:section xml:id="QtMsgType-enum">
          <db:title>enum QtMsgType</db:title>
          <db:para>This enum describes the messages that can be sent to a message
-                                handler (<db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>). You can use the enum to identify
+                                handler (<db:code><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>). You can use the enum to identify
                                 and associate the various message types with the appropriate
                                 actions.</db:para>
          <db:informaltable>
@@ -1803,7 +1803,7 @@
                   </db:td>
                   <db:td>
                      <db:para>A message generated by the
-                                                  <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code> function.</db:para>
+                                                  <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code> function.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1819,7 +1819,7 @@
                   </db:td>
                   <db:td>
                      <db:para>A message generated by the
-                                                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code> function.</db:para>
+                                                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code> function.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1835,7 +1835,7 @@
                   </db:td>
                   <db:td>
                      <db:para>A message generated by the
-                                                  <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code> function.</db:para>
+                                                  <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code> function.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1851,7 +1851,7 @@
                   </db:td>
                   <db:td>
                      <db:para>A message generated by the
-                                                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code> function.</db:para>
+                                                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code> function.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -1875,10 +1875,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1903,7 +1903,7 @@
          <db:para>Typedef for <db:code>long long int</db:code>
                                     (<db:code>__int64</db:code> on Windows). This type is
                                 guaranteed to be 64-bit on all platforms supported by Qt.</db:para>
-         <db:para>Literals of this type can be created using the <db:code><db:link xlink:href="qtglobal.html#Q_INT64_C">Q_INT64_C</db:link>()</db:code>
+         <db:para>Literals of this type can be created using the <db:code><db:link xlink:href="qtglobal.db#Q_INT64_C">Q_INT64_C</db:link>()</db:code>
                                 macro:</db:para>
          <db:programlisting>qint64 value
                                     =Q_INT64_C(932838457459459);</db:programlisting>
@@ -1911,13 +1911,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_INT64_C">Q_INT64_C</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_INT64_C">Q_INT64_C</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link>
+                  <db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link>
+                  <db:link xlink:href="qtglobal.db#qlonglong-typedef">qlonglong</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1937,13 +1937,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qptrdiff-typedef">qptrdiff</db:link>
+                  <db:link xlink:href="qtglobal.db#qptrdiff-typedef">qptrdiff</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint32-typedef">qint32</db:link>
+                  <db:link xlink:href="qtglobal.db#qint32-typedef">qint32</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link>
+                  <db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1952,15 +1952,15 @@
          <db:title>typedef qlonglong</db:title>
          <db:para>Typedef for <db:code>long long int</db:code>
                                     (<db:code>__int64</db:code> on Windows). This is the same as
-                                    <db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link>.</db:para>
+                                    <db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qulonglong-typedef">qulonglong</db:link>
+                  <db:link xlink:href="qtglobal.db#qulonglong-typedef">qulonglong</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link>
+                  <db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1979,13 +1979,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#quintptr-typedef">quintptr</db:link>
+                  <db:link xlink:href="qtglobal.db#quintptr-typedef">quintptr</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint32-typedef">qint32</db:link>
+                  <db:link xlink:href="qtglobal.db#qint32-typedef">qint32</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link>
+                  <db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2017,7 +2017,7 @@
                                     (<db:code>unsigned __int64</db:code> on Windows). This type
                                 is guaranteed to be 64-bit on all platforms supported by
                                 Qt.</db:para>
-         <db:para>Literals of this type can be created using the <db:code><db:link xlink:href="qtglobal.html#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code>
+         <db:para>Literals of this type can be created using the <db:code><db:link xlink:href="qtglobal.db#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code>
                                 macro:</db:para>
          <db:programlisting>quint64 value
                                     =Q_UINT64_C(932838457459459);</db:programlisting>
@@ -2025,13 +2025,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link>
+                  <db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qulonglong-typedef">qulonglong</db:link>
+                  <db:link xlink:href="qtglobal.db#qulonglong-typedef">qulonglong</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2051,13 +2051,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qptrdiff-typedef">qptrdiff</db:link>
+                  <db:link xlink:href="qtglobal.db#qptrdiff-typedef">qptrdiff</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#quint32-typedef">quint32</db:link>
+                  <db:link xlink:href="qtglobal.db#quint32-typedef">quint32</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link>
+                  <db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2066,15 +2066,15 @@
          <db:title>typedef qulonglong</db:title>
          <db:para>Typedef for <db:code>unsigned long long int</db:code>
                                     (<db:code>unsigned __int64</db:code> on Windows). This is
-                                the same as <db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link>.</db:para>
+                                the same as <db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link>
+                  <db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qlonglong-typedef">qlonglong</db:link>
+                  <db:link xlink:href="qtglobal.db#qlonglong-typedef">qlonglong</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2117,9 +2117,9 @@
       <db:section xml:id="qBound">
          <db:title>const T &amp; qBound(const T &amp; min, const T &amp; value, const T &amp; max)</db:title>
          <db:para>Returns <db:emphasis>value</db:emphasis> bounded by <db:emphasis>min</db:emphasis>
-                                and <db:emphasis>max</db:emphasis>. This is equivalent to <db:link xlink:href="qtglobal.html#qMaxx">qMax</db:link>
+                                and <db:emphasis>max</db:emphasis>. This is equivalent to <db:link xlink:href="qtglobal.db#qMaxx">qMax</db:link>
             <db:emphasis>min</db:emphasis>,
-                                    <db:link xlink:href="qtglobal.html#qMinx">qMin</db:link>
+                                    <db:link xlink:href="qtglobal.db#qMinx">qMin</db:link>
             <db:emphasis>value</db:emphasis>,
                                 <db:emphasis>max</db:emphasis>)).</db:para>
          <db:para>Example:</db:para>
@@ -2131,10 +2131,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qMinx">qMin</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qMinx">qMin</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qMaxx">qMax</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qMaxx">qMax</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2152,10 +2152,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qgetenv">qgetenv</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qgetenv">qgetenv</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qEnvironmentVariableIsSet">qEnvironmentVariableIsSet</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qEnvironmentVariableIsSet">qEnvironmentVariableIsSet</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2173,20 +2173,20 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qgetenv">qgetenv</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qgetenv">qgetenv</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qEnvironmentVariableIsEmpty">qEnvironmentVariableIsEmpty</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qEnvironmentVariableIsEmpty">qEnvironmentVariableIsEmpty</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qFloatDistance">
-         <db:title><db:link xlink:href="qtglobal.html#quint32-typedef">quint32</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#quint32-typedef">quint32</db:link></db:title>
          <db:para>Returns the number of representable floating-point numbers
                                 between <db:emphasis>a</db:emphasis> and <db:emphasis>b</db:emphasis>.</db:para>
          <db:para>This function provides an alternative way of doing approximated
-                                comparisons of floating-point numbers similar to <db:code><db:link xlink:href="qtglobal.html#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code>.
+                                comparisons of floating-point numbers similar to <db:code><db:link xlink:href="qtglobal.db#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code>.
                                 However, it returns the distance between two numbers, which gives
                                 the caller a possibility to choose the accepted error. Errors are
                                 relative, so for instance the distance between 1.0E-5 and 1.00001E-5
@@ -2201,7 +2201,7 @@
          <db:para>The function does not give meaningful results if any of the
                                 arguments are <db:code>Infinite</db:code> or
                                     <db:code>NaN</db:code>. You can check for this by calling
-                                    <db:code><db:link xlink:href="qtglobal.html#qIsFinite">qIsFinite</db:link>()</db:code>.</db:para>
+                                    <db:code><db:link xlink:href="qtglobal.db#qIsFinite">qIsFinite</db:link>()</db:code>.</db:para>
          <db:para>The return value can be considered as the "error", so if you for
                                 instance want to compare two 32-bit floating point numbers and all
                                 you need is an approximated 24-bit precision, you can use this
@@ -2215,13 +2215,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qFloatDistance-2">
-         <db:title><db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link></db:title>
          <db:para>Returns the number of representable floating-point numbers
                                 between <db:emphasis>a</db:emphasis> and <db:emphasis>b</db:emphasis>.</db:para>
          <db:para>This function serves the same purpose as
@@ -2235,17 +2235,17 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFuzzyCompare">qFuzzyCompare</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qFormatLogMessage">
-         <db:title><db:link xlink:href="qstring.html">QString</db:link><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtMsgType</db:link><db:link xlink:href="qmessagelogcontext.html">QMessageLogContext</db:link><db:link xlink:href="qstring.html">QString</db:link></db:title>
+         <db:title><db:link xlink:href="qstring.db">QString</db:link><db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link><db:link xlink:href="qmessagelogcontext.db">QMessageLogContext</db:link><db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>Generates a formatted string out of the <db:emphasis>type</db:emphasis>,
                                     <db:emphasis>context</db:emphasis>, <db:emphasis>str</db:emphasis>
                                 arguments.</db:para>
-         <db:para>qFormatLogMessage returns a <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> that is formatted according to the current
+         <db:para>qFormatLogMessage returns a <db:code><db:link xlink:href="qstring.db">QString</db:link></db:code> that is formatted according to the current
                                 message pattern. It can be used by custom message handlers to format
                                 output similar to Qt's default message handler.</db:para>
          <db:para>The function is thread-safe.</db:para>
@@ -2254,10 +2254,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qSetMessagePattern">qSetMessagePattern</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qSetMessagePattern">qSetMessagePattern</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2279,7 +2279,7 @@
          <db:para>The two numbers are compared in a relative way, where the
                                 exactness is stronger the smaller the numbers are.</db:para>
          <db:note>
-            <db:para> This function is <db:link xlink:href="qtdoc/threads-reentrancy.html#thread-safe">thread-safe</db:link>.</db:para>
+            <db:para> This function is <db:link xlink:href="threads-reentrancy.db#thread-safe">thread-safe</db:link>.</db:para>
          </db:note>
          <db:para>This function was introduced in Qt 4.4.</db:para>
       </db:section>
@@ -2292,7 +2292,7 @@
          <db:para>The two numbers are compared in a relative way, where the
                                 exactness is stronger the smaller the numbers are.</db:para>
          <db:note>
-            <db:para> This function is <db:link xlink:href="qtdoc/threads-reentrancy.html#thread-safe">thread-safe</db:link>.</db:para>
+            <db:para> This function is <db:link xlink:href="threads-reentrancy.db#thread-safe">thread-safe</db:link>.</db:para>
          </db:note>
          <db:para>This function was introduced in Qt 4.4.</db:para>
       </db:section>
@@ -2302,7 +2302,7 @@
                                 double.</db:para>
       </db:section>
       <db:section xml:id="qInstallMessageHandler">
-         <db:title><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link></db:title>
          <db:para>Installs a Qt message <db:emphasis>handler</db:emphasis> which has been
                                 defined previously. Returns a pointer to the previous message
                                 handler.</db:para>
@@ -2344,25 +2344,25 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QtMessageHandler-typedef">QtMessageHandler</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2409,10 +2409,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qMinx">qMin</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qMinx">qMin</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qBound">qBound</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qBound">qBound</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2429,10 +2429,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qMaxx">qMax</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qMaxx">qMax</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qBound">qBound</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qBound">qBound</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2442,7 +2442,7 @@
          <db:para>Returns the bit pattern of a quiet NaN as a double.</db:para>
       </db:section>
       <db:section xml:id="qRound64">
-         <db:title><db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link><db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Rounds <db:emphasis>value</db:emphasis> to the nearest 64-bit
                                 integer.</db:para>
          <db:para>Example:</db:para>
@@ -2450,7 +2450,7 @@
                                 42949672961</db:programlisting>
       </db:section>
       <db:section xml:id="qRound">
-         <db:title>int qRound(<db:link xlink:href="qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>int qRound(<db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Rounds <db:emphasis>value</db:emphasis> to the nearest integer.</db:para>
          <db:para>Example:</db:para>
          <db:programlisting>qreal valueA =2.3; qreal valueB =2.7; int roundedValueA = qRound(valueA); //
@@ -2462,9 +2462,9 @@
                                 double.</db:para>
       </db:section>
       <db:section xml:id="qSetMessagePattern">
-         <db:title>void qSetMessagePattern(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
+         <db:title>void qSetMessagePattern(const <db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>Changes the output of the default message handler.</db:para>
-         <db:para>Allows to tweak the output of <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>.</db:para>
+         <db:para>Allows to tweak the output of <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code> and <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>.</db:para>
          <db:para>Following placeholders are supported:</db:para>
          <db:informaltable>
             <db:thead>
@@ -2486,7 +2486,7 @@
                   </db:td>
                   <db:td>
                      <db:para>
-                        <db:code><db:link xlink:href="qcoreapplication.html#applicationName-prop">QCoreApplication::applicationName</db:link>()</db:code>
+                        <db:code><db:link xlink:href="qcoreapplication.db#applicationName-prop">QCoreApplication::applicationName</db:link>()</db:code>
                      </db:para>
                   </db:td>
                </db:tr>
@@ -2548,7 +2548,7 @@
                   </db:td>
                   <db:td>
                      <db:para>
-                        <db:code><db:link xlink:href="qcoreapplication.html#applicationPid">QCoreApplication::applicationPid</db:link>()</db:code>
+                        <db:code><db:link xlink:href="qcoreapplication.db#applicationPid">QCoreApplication::applicationPid</db:link>()</db:code>
                      </db:para>
                   </db:td>
                </db:tr>
@@ -2596,8 +2596,8 @@
                   <db:td>
                      <db:para>system time when the message occurred,
                                                 formatted by passing the
-                                                  <db:code>format</db:code> to <db:code><db:link xlink:href="qdatetime.html#toString">QDateTime::toString</db:link>()</db:code>. If the format is
-                                                not specified, the format of <db:code><db:link xlink:href="qt.html#DateFormat-enum">Qt::ISODate</db:link></db:code> is used.</db:para>
+                                                  <db:code>format</db:code> to <db:code><db:link xlink:href="qdatetime.db#toString">QDateTime::toString</db:link>()</db:code>. If the format is
+                                                not specified, the format of <db:code><db:link xlink:href="qt.db#DateFormat-enum">Qt::ISODate</db:link></db:code> is used.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -2647,17 +2647,17 @@
                                 setting the QT_MESSAGE_PATTERN environment variable; if both
                                 qSetMessagePattern() is called and QT_MESSAGE_PATTERN is set, the
                                 environment variable takes precedence.</db:para>
-         <db:para>Custom message handlers can use <db:code><db:link xlink:href="qtglobal.html#qFormatLogMessage">qFormatLogMessage</db:link>()</db:code> to take <db:emphasis>pattern</db:emphasis>
+         <db:para>Custom message handlers can use <db:code><db:link xlink:href="qtglobal.db#qFormatLogMessage">qFormatLogMessage</db:link>()</db:code> to take <db:emphasis>pattern</db:emphasis>
                                 into account.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2671,22 +2671,22 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="q_check_ptr">
          <db:title>T * q_check_ptr(T * pointer)</db:title>
-         <db:para>Uses <db:code><db:link xlink:href="qtglobal.html#Q_CHECK_PTRx">Q_CHECK_PTR</db:link></db:code> on <db:emphasis>pointer</db:emphasis>, then returns
+         <db:para>Uses <db:code><db:link xlink:href="qtglobal.db#Q_CHECK_PTRx">Q_CHECK_PTR</db:link></db:code> on <db:emphasis>pointer</db:emphasis>, then returns
                                     <db:emphasis>pointer</db:emphasis>.</db:para>
-         <db:para>This can be used as an inline version of <db:code><db:link xlink:href="qtglobal.html#Q_CHECK_PTRx">Q_CHECK_PTR</db:link></db:code>.</db:para>
+         <db:para>This can be used as an inline version of <db:code><db:link xlink:href="qtglobal.db#Q_CHECK_PTRx">Q_CHECK_PTR</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="qgetenv">
-         <db:title><db:link xlink:href="qbytearray.html">QByteArray</db:link></db:title>
+         <db:title><db:link xlink:href="qbytearray.db">QByteArray</db:link></db:title>
          <db:para>Returns the value of the environment variable with name
                                     <db:emphasis>varName</db:emphasis>. To get the variable string, use
-                                    <db:code><db:link xlink:href="qbytearray.html#constData">QByteArray::constData</db:link>()</db:code>.</db:para>
+                                    <db:code><db:link xlink:href="qbytearray.db#constData">QByteArray::constData</db:link>()</db:code>.</db:para>
          <db:note>
             <db:para>qgetenv() was introduced because getenv()
                                 from the standard C library was deprecated in VC2005 (and later
@@ -2698,26 +2698,26 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qputenv">qputenv</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qputenv">qputenv</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qEnvironmentVariableIsSet">qEnvironmentVariableIsSet</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qEnvironmentVariableIsSet">qEnvironmentVariableIsSet</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qEnvironmentVariableIsEmpty">qEnvironmentVariableIsEmpty</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qEnvironmentVariableIsEmpty">qEnvironmentVariableIsEmpty</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qputenv">
-         <db:title>bool qputenv(const char * varName, const <db:link xlink:href="qbytearray.html">QByteArray</db:link></db:title>
+         <db:title>bool qputenv(const char * varName, const <db:link xlink:href="qbytearray.db">QByteArray</db:link></db:title>
          <db:para>This function sets the <db:emphasis>value</db:emphasis> of the environment
                                 variable named <db:emphasis>varName</db:emphasis>. It will create the variable
                                 if it does not exist. It returns 0 if the variable could not be
                                 set.</db:para>
          <db:para>Calling qputenv with an empty value removes the environment
                                 variable on Windows, and makes it set (but empty) on Unix. Prefer
-                                using <db:code><db:link xlink:href="qtglobal.html#qunsetenv">qunsetenv</db:link>()</db:code>
+                                using <db:code><db:link xlink:href="qtglobal.db#qunsetenv">qunsetenv</db:link>()</db:code>
                                 for fully portable behavior.</db:para>
          <db:note>
             <db:para>qputenv() was introduced because putenv()
@@ -2730,7 +2730,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qgetenv">qgetenv</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qgetenv">qgetenv</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2750,34 +2750,34 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qsrand">qsrand</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qsrand">qsrand</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qsrand">
-         <db:title>void qsrand(<db:link xlink:href="qtglobal.html#uint-typedef">uint</db:link></db:title>
+         <db:title>void qsrand(<db:link xlink:href="qtglobal.db#uint-typedef">uint</db:link></db:title>
          <db:para>Thread-safe version of the standard C++
                                     <db:code>srand()</db:code> function.</db:para>
          <db:para>Sets the argument <db:emphasis>seed</db:emphasis> to be used to generate a
                                 new random number sequence of pseudo random integers to be returned
-                                by <db:code><db:link xlink:href="qtglobal.html#qrand">qrand</db:link>()</db:code>.</db:para>
+                                by <db:code><db:link xlink:href="qtglobal.db#qrand">qrand</db:link>()</db:code>.</db:para>
          <db:para>The sequence of random numbers generated is deterministic per
                                 thread. For example, if two threads call qsrand(1) and subsequently
-                                calls <db:code><db:link xlink:href="qtglobal.html#qrand">qrand</db:link>()</db:code>, the
+                                calls <db:code><db:link xlink:href="qtglobal.db#qrand">qrand</db:link>()</db:code>, the
                                 threads will get the same random number sequence.</db:para>
          <db:para>This function was introduced in Qt 4.2.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qrand">qrand</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qrand">qrand</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qtTrId">
-         <db:title><db:link xlink:href="qstring.html">QString</db:link></db:title>
+         <db:title><db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>The qtTrId function finds and returns a translated
                                 string.</db:para>
          <db:para>Returns a translated string identified by <db:emphasis>id</db:emphasis>.
@@ -2788,7 +2788,7 @@
                                 with a decimal representation of <db:emphasis>n</db:emphasis>. In addition,
                                 depending on <db:emphasis>n</db:emphasis>'s value, the translation text may
                                 vary.</db:para>
-         <db:para>Meta data and comments can be passed as documented for <db:code><db:link xlink:href="qobject.html#tr">QObject::tr</db:link>()</db:code>. In addition, it
+         <db:para>Meta data and comments can be passed as documented for <db:code><db:link xlink:href="qobject.db#tr">QObject::tr</db:link>()</db:code>. In addition, it
                                 is possible to supply a source string template like that:</db:para>
          <db:para>
             <db:code>//% &lt;C string&gt;</db:code>
@@ -2813,20 +2813,20 @@
                                 crashes or other undesirable behavior.</db:para>
          </db:warning>
          <db:note>
-            <db:para> This function is <db:link xlink:href="qtdoc/threads-reentrancy.html#reentrant">reentrant</db:link>.</db:para>
+            <db:para> This function is <db:link xlink:href="threads-reentrancy.db#reentrant">reentrant</db:link>.</db:para>
          </db:note>
          <db:para>This function was introduced in Qt 4.6.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qobject.html#tr">QObject::tr</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qobject.db#tr">QObject::tr</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qcoreapplication.html#translate">QCoreApplication::translate</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qcoreapplication.db#translate">QCoreApplication::translate</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/internationalization.html">Internationalization with
+                  <db:link xlink:href="internationalization.db">Internationalization with
                                     Qt</db:link>
                </db:member>
             </db:simplelist>
@@ -2842,10 +2842,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qputenv">qputenv</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qputenv">qputenv</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qgetenv">qgetenv</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qgetenv">qgetenv</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2918,13 +2918,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/internationalization.html">Internationalization with
+                  <db:link xlink:href="internationalization.db">Internationalization with
                                     Qt</db:link>
                </db:member>
             </db:simplelist>
@@ -2948,13 +2948,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_TR_NOOP">QT_TR_NOOP</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_TRANSLATE_NOOP3">QT_TRANSLATE_NOOP3</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_TRANSLATE_NOOP3">QT_TRANSLATE_NOOP3</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/internationalization.html">Internationalization with
+                  <db:link xlink:href="internationalization.db">Internationalization with
                                     Qt</db:link>
                </db:member>
             </db:simplelist>
@@ -2965,7 +2965,7 @@
          <db:para>The QT_TRID_NOOP macro marks an id for dynamic
                                 translation.</db:para>
          <db:para>The only purpose of this macro is to provide an anchor for
-                                attaching meta data like to <db:code><db:link xlink:href="qtglobal.html#qtTrId">qtTrId</db:link>()</db:code>.</db:para>
+                                attaching meta data like to <db:code><db:link xlink:href="qtglobal.db#qtTrId">qtTrId</db:link>()</db:code>.</db:para>
          <db:para>The macro expands to <db:emphasis>id</db:emphasis>.</db:para>
          <db:para>Example:</db:para>
          <db:programlisting>staticconstchar*const ids[]= { //% "This is the first text."
@@ -2978,10 +2978,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qtTrId">qtTrId</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qtTrId">qtTrId</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/internationalization.html">Internationalization with
+                  <db:link xlink:href="internationalization.db">Internationalization with
                                     Qt</db:link>
                </db:member>
             </db:simplelist>
@@ -2999,15 +2999,15 @@
                                 type) { staticconstchar*greeting_strings[]= { QT_TR_NOOP("Hello"), QT_TR_NOOP("Goodbye") }; return tr(greeting_strings[type]); }</db:programlisting>
          <db:para>The macro QT_TR_NOOP_UTF8() is identical except that it tells
                                 lupdate that the source string is encoded in UTF-8. Corresponding
-                                variants exist in the <db:code><db:link xlink:href="qtglobal.html#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code> family of macros, too.</db:para>
+                                variants exist in the <db:code><db:link xlink:href="qtglobal.db#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code> family of macros, too.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_TRANSLATE_NOOP">QT_TRANSLATE_NOOP</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/internationalization.html">Internationalization with
+                  <db:link xlink:href="internationalization.db">Internationalization with
                                     Qt</db:link>
                </db:member>
             </db:simplelist>
@@ -3029,10 +3029,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_VERSION_STR">QT_VERSION_STR</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qVersion">qVersion</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qVersion">qVersion</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3051,7 +3051,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_VERSION">QT_VERSION</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_VERSION">QT_VERSION</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3065,10 +3065,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qVersion">qVersion</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qVersion">qVersion</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#QT_VERSION">QT_VERSION</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#QT_VERSION">QT_VERSION</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3087,7 +3087,7 @@
                                     &lt;QtGlobal&gt;int divide(int a,int b) { Q_ASSERT(b !=0); return a /
                                 b; }</db:programlisting>
          <db:para>If <db:code>b</db:code> is zero, the Q_ASSERT statement will
-                                output the following message using the <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code> function:</db:para>
+                                output the following message using the <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code> function:</db:para>
          <db:programlisting>ASSERT: "b !=
                                     0" in file div.cpp, line
                                     7</db:programlisting>
@@ -3095,13 +3095,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3121,19 +3121,19 @@
                                     &lt;QtGlobal&gt;int divide(int a,int b) { Q_ASSERT_X(b !=0,"divide","division by zero");
                                     return a / b; }</db:programlisting>
          <db:para>If <db:code>b</db:code> is zero, the Q_ASSERT_X statement
-                                will output the following message using the <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code> function:</db:para>
+                                will output the following message using the <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code> function:</db:para>
          <db:programlisting>ASSERT failure in divide: "division by zero", file div.cpp, line 7</db:programlisting>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3146,7 +3146,7 @@
                                 conditions that it would not otherwise know about. However, there is
                                 no guarantee that the compiler will actually use those
                                 hints.</db:para>
-         <db:para>This macro could be considered a "lighter" version of <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>. While <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link></db:code> will abort the
+         <db:para>This macro could be considered a "lighter" version of <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link>()</db:code>. While <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link></db:code> will abort the
                                 program's execution if the condition is
                                 <db:code>false</db:code>, Q_ASSUME will tell the compiler not to
                                 generate code for those conditions. Therefore, it is important that
@@ -3155,12 +3155,12 @@
          <db:para>If <db:emphasis>expr</db:emphasis> is a constantly
                                     <db:code>false</db:code> condition, Q_ASSUME will tell the
                                 compiler that the current code execution cannot be reached. That is,
-                                Q_ASSUME(false) is equivalent to <db:code><db:link xlink:href="qtglobal.html#Q_UNREACHABLE">Q_UNREACHABLE</db:link>()</db:code>.</db:para>
+                                Q_ASSUME(false) is equivalent to <db:code><db:link xlink:href="qtglobal.db#Q_UNREACHABLE">Q_UNREACHABLE</db:link>()</db:code>.</db:para>
          <db:para>In debug builds the condition is enforced by an assert to
                                 facilitate debugging.</db:para>
          <db:note>
             <db:para>
-               <db:code><db:link xlink:href="qtglobal.html#Q_LIKELY">Q_LIKELY</db:link>()</db:code> tells the compiler that the expression is
+               <db:code><db:link xlink:href="qtglobal.db#Q_LIKELY">Q_LIKELY</db:link>()</db:code> tells the compiler that the expression is
                                 likely, but not the only possibility. Q_ASSUME tells the compiler
                                 that it is the only possibility.</db:para>
          </db:note>
@@ -3170,13 +3170,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_UNREACHABLE">Q_UNREACHABLE</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_UNREACHABLE">Q_UNREACHABLE</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_LIKELY">Q_LIKELY</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_LIKELY">Q_LIKELY</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3184,7 +3184,7 @@
       <db:section xml:id="Q_BIG_ENDIAN">
          <db:title>Q_BIG_ENDIAN</db:title>
          <db:para>This macro represents a value you can compare to the macro
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
                                 to determine the endian-ness of your system. In a big-endian system,
                                 the most significant byte is stored at the lowest address. The other
                                 bytes follow in decreasing order of significance.</db:para>
@@ -3194,10 +3194,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_LITTLE_ENDIAN">Q_LITTLE_ENDIAN</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_LITTLE_ENDIAN">Q_LITTLE_ENDIAN</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3207,7 +3207,7 @@
          <db:para>This macro can be used to determine the byte order your system
                                 uses for storing data in memory. i.e., whether your system is
                                 little-endian or big-endian. It is set by Qt to one of the macros
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_LITTLE_ENDIAN">Q_LITTLE_ENDIAN</db:link></db:code> or <db:code><db:link xlink:href="qtglobal.html#Q_BIG_ENDIAN">Q_BIG_ENDIAN</db:link></db:code>. You
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_LITTLE_ENDIAN">Q_LITTLE_ENDIAN</db:link></db:code> or <db:code><db:link xlink:href="qtglobal.db#Q_BIG_ENDIAN">Q_BIG_ENDIAN</db:link></db:code>. You
                                 normally won't need to worry about endian-ness, but you might, for
                                 example if you need to know which byte of an integer or UTF-16
                                 character is stored in the lowest address. Endian-ness is important
@@ -3221,10 +3221,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_BIG_ENDIAN">Q_BIG_ENDIAN</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_BIG_ENDIAN">Q_BIG_ENDIAN</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_LITTLE_ENDIAN">Q_LITTLE_ENDIAN</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_LITTLE_ENDIAN">Q_LITTLE_ENDIAN</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3335,10 +3335,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3347,7 +3347,7 @@
          <db:title>Q_DECLARE_TYPEINFO( Type, Flags)</db:title>
          <db:para>You can use this macro to specify information about a custom
                                 type <db:emphasis>Type</db:emphasis>. With accurate type information, Qt's
-                                    <db:link xlink:href="containers.html">generic containers</db:link> can
+                                    <db:link xlink:href="containers.db">generic containers</db:link> can
                                 choose appropriate storage methods and algorithms.</db:para>
          <db:para>
             <db:emphasis>Flags</db:emphasis> can be one of the following:</db:para>
@@ -3378,9 +3378,9 @@
          <db:programlisting>struct
                                 Point2D { int x; int y; };
                                     Q_DECLARE_TYPEINFO(Point2D, Q_PRIMITIVE_TYPE);</db:programlisting>
-         <db:para>An example of a non-POD "primitive" type is <db:code><db:link xlink:href="quuid.html">QUuid</db:link></db:code>: Even though <db:code><db:link xlink:href="quuid.html">QUuid</db:link></db:code> has constructors (and therefore
+         <db:para>An example of a non-POD "primitive" type is <db:code><db:link xlink:href="quuid.db">QUuid</db:link></db:code>: Even though <db:code><db:link xlink:href="quuid.db">QUuid</db:link></db:code> has constructors (and therefore
                                 isn't POD), every bit pattern still represents a valid object, and
-                                memcpy() can be used to create a valid independent copy of a <db:code><db:link xlink:href="quuid.html">QUuid</db:link></db:code> object.</db:para>
+                                memcpy() can be used to create a valid independent copy of a <db:code><db:link xlink:href="quuid.db">QUuid</db:link></db:code> object.</db:para>
          <db:para>Example of a movable type:</db:para>
          <db:programlisting>class
                                 Point2D { public: Point2D() {
@@ -3403,13 +3403,13 @@
       </db:section>
       <db:section xml:id="Q_DECL_EXPORT">
          <db:title>Q_DECL_EXPORT</db:title>
-         <db:para>This macro marks a symbol for shared library export (see <db:link xlink:href="qtdoc/sharedlibrary.html">Creating Shared
+         <db:para>This macro marks a symbol for shared library export (see <db:link xlink:href="sharedlibrary.db">Creating Shared
                                     Libraries</db:link>).</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_IMPORT">Q_DECL_IMPORT</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_IMPORT">Q_DECL_IMPORT</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3436,7 +3436,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_OVERRIDE">Q_DECL_OVERRIDE</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_OVERRIDE">Q_DECL_OVERRIDE</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3444,13 +3444,13 @@
       <db:section xml:id="Q_DECL_IMPORT">
          <db:title>Q_DECL_IMPORT</db:title>
          <db:para>This macro declares a symbol to be an import from a shared
-                                library (see <db:link xlink:href="qtdoc/sharedlibrary.html">Creating Shared
+                                library (see <db:link xlink:href="sharedlibrary.db">Creating Shared
                                     Libraries</db:link>).</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_EXPORT">Q_DECL_EXPORT</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_EXPORT">Q_DECL_EXPORT</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3462,19 +3462,19 @@
                                 is called.</db:para>
          <db:para>The macro expands to C++11 noexcept, if available, or to nothing
                                 otherwise.</db:para>
-         <db:para>If you need the operator version of C++11 noexcept, use <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link></db:code>.</db:para>
+         <db:para>If you need the operator version of C++11 noexcept, use <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link></db:code>.</db:para>
          <db:para>If you don't need C++11 noexcept semantics, e.g. because your
-                                function can't possibly throw, don't use this macro, use <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
+                                function can't possibly throw, don't use this macro, use <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
                                 instead.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3488,19 +3488,19 @@
          <db:para>The macro expands to C++11 noexcept(x), if available, or to
                                 nothing otherwise.</db:para>
          <db:para>If you need the always-true version of C++11 noexcept, use
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>.</db:para>
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>.</db:para>
          <db:para>If you don't need C++11 noexcept semantics, e.g. because your
-                                function can't possibly throw, don't use this macro, use <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
+                                function can't possibly throw, don't use this macro, use <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
                                 instead.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOTHROW">Q_DECL_NOTHROW</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3514,16 +3514,16 @@
                                 on the compiler, or to C++11 noexcept, if available, or to nothing
                                 otherwise.</db:para>
          <db:para>If you need C++11 noexcept semantics, don't use this macro, use
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>/<db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link></db:code> instead.</db:para>
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>/<db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link></db:code> instead.</db:para>
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT">Q_DECL_NOEXCEPT</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_NOEXCEPT_EXPR">Q_DECL_NOEXCEPT_EXPR</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3545,7 +3545,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_DECL_FINAL">Q_DECL_FINAL</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_DECL_FINAL">Q_DECL_FINAL</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3562,14 +3562,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#foreach">foreach</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#foreach">foreach</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="Q_FOREVER">
          <db:title>Q_FOREVER</db:title>
-         <db:para>Same as <db:link xlink:href="qtglobal.html#forever">forever</db:link>.</db:para>
+         <db:para>Same as <db:link xlink:href="qtglobal.db#forever">forever</db:link>.</db:para>
          <db:para>This macro is available even when
                                     <db:code>no_keywords</db:code> is specified using the
                                     <db:code>.pro</db:code> file's <db:code>CONFIG</db:code>
@@ -3578,7 +3578,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#foreach">foreach</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#foreach">foreach</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3615,7 +3615,7 @@
                                 in. How this string looks more specifically is compiler dependent.
                                 With GNU GCC it is typically the function signature, while with
                                 other compilers it might be the line and column number.</db:para>
-         <db:para>Q_FUNC_INFO can be conveniently used with <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>. For example, this
+         <db:para>Q_FUNC_INFO can be conveniently used with <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>. For example, this
                                 function:</db:para>
          <db:programlisting>template&lt;typename
                                     TInputType&gt;const TInputType &amp;myMin(const TInputType &amp;value1,const TInputType &amp;value2) { qDebug() &lt;&lt; Q_FUNC_INFO &lt;&lt;"was called with value1:"&lt;&lt; value1 &lt;&lt;"value2:"&lt;&lt; value2; if(value1 &lt; value2) return value1; elsereturn value2; }</db:programlisting>
@@ -3630,7 +3630,7 @@
                                 undefined.</db:para>
       </db:section>
       <db:section xml:id="Q_INT64_C">
-         <db:title><db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link></db:title>
          <db:para>Wraps the signed 64-bit integer <db:emphasis>literal</db:emphasis> in a
                                 platform-independent way.</db:para>
          <db:para>Example:</db:para>
@@ -3639,10 +3639,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#qint64-typedef">qint64</db:link>
+                  <db:link xlink:href="qtglobal.db#qint64-typedef">qint64</db:link>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_UINT64_C">Q_UINT64_C</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3664,7 +3664,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_UNLIKELY">Q_UNLIKELY</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_UNLIKELY">Q_UNLIKELY</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3672,7 +3672,7 @@
       <db:section xml:id="Q_LITTLE_ENDIAN">
          <db:title>Q_LITTLE_ENDIAN</db:title>
          <db:para>This macro represents a value you can compare to the macro
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
                                 to determine the endian-ness of your system. In a little-endian
                                 system, the least significant byte is stored at the lowest address.
                                 The other bytes follow in increasing order of significance.</db:para>
@@ -3682,10 +3682,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_BYTE_ORDER">Q_BYTE_ORDER</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_BIG_ENDIAN">Q_BIG_ENDIAN</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_BIG_ENDIAN">Q_BIG_ENDIAN</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3813,9 +3813,9 @@
       <db:section xml:id="Q_OS_WIN">
          <db:title>Q_OS_WIN</db:title>
          <db:para>Defined on all supported versions of Windows. That is, if
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_OS_WIN32">Q_OS_WIN32</db:link></db:code>,
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_OS_WIN64">Q_OS_WIN64</db:link></db:code> or
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_OS_WINCE">Q_OS_WINCE</db:link></db:code> is
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_OS_WIN32">Q_OS_WIN32</db:link></db:code>,
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_OS_WIN64">Q_OS_WIN64</db:link></db:code> or
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_OS_WINCE">Q_OS_WINCE</db:link></db:code> is
                                 defined.</db:para>
       </db:section>
       <db:section xml:id="Q_OS_WINCE">
@@ -3834,12 +3834,12 @@
       <db:section xml:id="Q_PROCESSOR_X86">
          <db:title>Q_PROCESSOR_X86</db:title>
          <db:para>Defined if the application is compiled for x86 processors. Qt
-                                currently supports two x86 variants: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_X86_32">Q_PROCESSOR_X86_32</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_X86_64">Q_PROCESSOR_X86_64</db:link></db:code>.</db:para>
+                                currently supports two x86 variants: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_X86_32">Q_PROCESSOR_X86_32</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_X86_64">Q_PROCESSOR_X86_64</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3847,12 +3847,12 @@
       <db:section xml:id="Q_PROCESSOR_S390">
          <db:title>Q_PROCESSOR_S390</db:title>
          <db:para>Defined if the application is compiled for S/390 processors. Qt
-                                supports one optional variant of S/390: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_S390_X">Q_PROCESSOR_S390_X</db:link></db:code>.</db:para>
+                                supports one optional variant of S/390: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_S390_X">Q_PROCESSOR_S390_X</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3865,7 +3865,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3873,12 +3873,12 @@
       <db:section xml:id="Q_PROCESSOR_ARM">
          <db:title>Q_PROCESSOR_ARM</db:title>
          <db:para>Defined if the application is compiled for ARM processors. Qt
-                                currently supports three optional ARM revisions: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V6">Q_PROCESSOR_ARM_V6</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V7">Q_PROCESSOR_ARM_V7</db:link></db:code>.</db:para>
+                                currently supports three optional ARM revisions: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM_V6">Q_PROCESSOR_ARM_V6</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM_V7">Q_PROCESSOR_ARM_V7</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3886,13 +3886,13 @@
       <db:section xml:id="Q_PROCESSOR_ARM_V5">
          <db:title>Q_PROCESSOR_ARM_V5</db:title>
          <db:para>Defined if the application is compiled for ARMv5 processors. The
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code> macro is also defined when
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_ARM_V5 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3900,13 +3900,13 @@
       <db:section xml:id="Q_PROCESSOR_ARM_V6">
          <db:title>Q_PROCESSOR_ARM_V6</db:title>
          <db:para>Defined if the application is compiled for ARMv6 processors. The
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code> macros are also defined when
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_ARM_V6 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3914,13 +3914,13 @@
       <db:section xml:id="Q_PROCESSOR_ARM_V7">
          <db:title>Q_PROCESSOR_ARM_V7</db:title>
          <db:para>Defined if the application is compiled for ARMv7 processors. The
-                                    <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_ARM_V6">Q_PROCESSOR_ARM_V6</db:link></db:code> macros are also defined when
+                                    <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM">Q_PROCESSOR_ARM</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM_V5">Q_PROCESSOR_ARM_V5</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_ARM_V6">Q_PROCESSOR_ARM_V6</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_ARM_V7 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3933,7 +3933,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3946,7 +3946,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3959,7 +3959,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3967,12 +3967,12 @@
       <db:section xml:id="Q_PROCESSOR_MIPS">
          <db:title>Q_PROCESSOR_MIPS</db:title>
          <db:para>Defined if the application is compiled for MIPS processors. Qt
-                                currently supports seven MIPS revisions: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_V">Q_PROCESSOR_MIPS_V</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_32">Q_PROCESSOR_MIPS_32</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_64">Q_PROCESSOR_MIPS_64</db:link></db:code>.</db:para>
+                                currently supports seven MIPS revisions: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_V">Q_PROCESSOR_MIPS_V</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_32">Q_PROCESSOR_MIPS_32</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_64">Q_PROCESSOR_MIPS_64</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3980,13 +3980,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_32">
          <db:title>Q_PROCESSOR_MIPS_32</db:title>
          <db:para>Defined if the application is compiled for MIPS32 processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code> macros are also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_MIPS_32 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3994,13 +3994,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_64">
          <db:title>Q_PROCESSOR_MIPS_64</db:title>
          <db:para>Defined if the application is compiled for MIPS64 processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_V">Q_PROCESSOR_MIPS_V</db:link></db:code> macros are also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_V">Q_PROCESSOR_MIPS_V</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_MIPS_64 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4008,13 +4008,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_I">
          <db:title>Q_PROCESSOR_MIPS_I</db:title>
          <db:para>Defined if the application is compiled for MIPS-I processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code> macro is also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_MIPS_I is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4022,13 +4022,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_II">
          <db:title>Q_PROCESSOR_MIPS_II</db:title>
          <db:para>Defined if the application is compiled for MIPS-II processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code> macros are also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_MIPS_II is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4036,13 +4036,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_III">
          <db:title>Q_PROCESSOR_MIPS_III</db:title>
          <db:para>Defined if the application is compiled for MIPS-III processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code> macros are also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_MIPS_III is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4050,13 +4050,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_IV">
          <db:title>Q_PROCESSOR_MIPS_IV</db:title>
          <db:para>Defined if the application is compiled for MIPS-IV processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code> macros are also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_MIPS_IV is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4064,13 +4064,13 @@
       <db:section xml:id="Q_PROCESSOR_MIPS_V">
          <db:title>Q_PROCESSOR_MIPS_V</db:title>
          <db:para>Defined if the application is compiled for MIPS-V processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code> macros are also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS">Q_PROCESSOR_MIPS</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_I">Q_PROCESSOR_MIPS_I</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_II">Q_PROCESSOR_MIPS_II</db:link></db:code>, <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_III">Q_PROCESSOR_MIPS_III</db:link></db:code>, and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_MIPS_IV">Q_PROCESSOR_MIPS_IV</db:link></db:code> macros are also defined when
                                 Q_PROCESSOR_MIPS_V is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4078,12 +4078,12 @@
       <db:section xml:id="Q_PROCESSOR_POWER">
          <db:title>Q_PROCESSOR_POWER</db:title>
          <db:para>Defined if the application is compiled for POWER processors. Qt
-                                currently supports two Power variants: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER_32">Q_PROCESSOR_POWER_32</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER_64">Q_PROCESSOR_POWER_64</db:link></db:code>.</db:para>
+                                currently supports two Power variants: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_POWER_32">Q_PROCESSOR_POWER_32</db:link></db:code> and <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_POWER_64">Q_PROCESSOR_POWER_64</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4091,13 +4091,13 @@
       <db:section xml:id="Q_PROCESSOR_POWER_32">
          <db:title>Q_PROCESSOR_POWER_32</db:title>
          <db:para>Defined if the application is compiled for 32-bit Power
-                                processors. The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER">Q_PROCESSOR_POWER</db:link></db:code> macro is also defined when
+                                processors. The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_POWER">Q_PROCESSOR_POWER</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_POWER_32 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4105,13 +4105,13 @@
       <db:section xml:id="Q_PROCESSOR_POWER_64">
          <db:title>Q_PROCESSOR_POWER_64</db:title>
          <db:para>Defined if the application is compiled for 64-bit Power
-                                processors. The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_POWER">Q_PROCESSOR_POWER</db:link></db:code> macro is also defined when
+                                processors. The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_POWER">Q_PROCESSOR_POWER</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_POWER_64 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4119,13 +4119,13 @@
       <db:section xml:id="Q_PROCESSOR_S390_X">
          <db:title>Q_PROCESSOR_S390_X</db:title>
          <db:para>Defined if the application is compiled for S/390x processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_S390">Q_PROCESSOR_S390</db:link></db:code> macro is also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_S390">Q_PROCESSOR_S390</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_S390_X is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4133,12 +4133,12 @@
       <db:section xml:id="Q_PROCESSOR_SH">
          <db:title>Q_PROCESSOR_SH</db:title>
          <db:para>Defined if the application is compiled for SuperH processors. Qt
-                                currently supports one SuperH revision: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SH_4A">Q_PROCESSOR_SH_4A</db:link></db:code>.</db:para>
+                                currently supports one SuperH revision: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_SH_4A">Q_PROCESSOR_SH_4A</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4146,13 +4146,13 @@
       <db:section xml:id="Q_PROCESSOR_SH_4A">
          <db:title>Q_PROCESSOR_SH_4A</db:title>
          <db:para>Defined if the application is compiled for SuperH 4A processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SH">Q_PROCESSOR_SH</db:link></db:code> macro is also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_SH">Q_PROCESSOR_SH</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_SH_4A is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4160,12 +4160,12 @@
       <db:section xml:id="Q_PROCESSOR_SPARC">
          <db:title>Q_PROCESSOR_SPARC</db:title>
          <db:para>Defined if the application is compiled for SPARC processors. Qt
-                                currently supports one optional SPARC revision: <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SPARC_V9">Q_PROCESSOR_SPARC_V9</db:link></db:code>.</db:para>
+                                currently supports one optional SPARC revision: <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_SPARC_V9">Q_PROCESSOR_SPARC_V9</db:link></db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4173,13 +4173,13 @@
       <db:section xml:id="Q_PROCESSOR_SPARC_V9">
          <db:title>Q_PROCESSOR_SPARC_V9</db:title>
          <db:para>Defined if the application is compiled for SPARC V9 processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_SPARC">Q_PROCESSOR_SPARC</db:link></db:code> macro is also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_SPARC">Q_PROCESSOR_SPARC</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_SPARC_V9 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4188,13 +4188,13 @@
          <db:title>Q_PROCESSOR_X86_32</db:title>
          <db:para>Defined if the application is compiled for 32-bit x86
                                 processors. This includes all i386, i486, i586, and i686 processors.
-                                The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_X86">Q_PROCESSOR_X86</db:link></db:code> macro is also defined when
+                                The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_X86">Q_PROCESSOR_X86</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_X86_32 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4203,19 +4203,19 @@
          <db:title>Q_PROCESSOR_X86_64</db:title>
          <db:para>Defined if the application is compiled for 64-bit x86
                                 processors. This includes all AMD64, Intel 64, and other x86_64/x64
-                                processors. The <db:code><db:link xlink:href="qtglobal.html#Q_PROCESSOR_X86">Q_PROCESSOR_X86</db:link></db:code> macro is also defined when
+                                processors. The <db:code><db:link xlink:href="qtglobal.db#Q_PROCESSOR_X86">Q_PROCESSOR_X86</db:link></db:code> macro is also defined when
                                 Q_PROCESSOR_X86_64 is defined.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsysinfo.html#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsysinfo.db#buildCpuArchitecture">QSysInfo::buildCpuArchitecture</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="Q_UINT64_C">
-         <db:title><db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link></db:title>
+         <db:title><db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link></db:title>
          <db:para>Wraps the unsigned 64-bit integer <db:emphasis>literal</db:emphasis> in a
                                 platform-independent way.</db:para>
          <db:para>Example:</db:para>
@@ -4224,10 +4224,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtglobal.html#quint64-typedef">quint64</db:link>
+                  <db:link xlink:href="qtglobal.db#quint64-typedef">quint64</db:link>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_INT64_C">Q_INT64_C</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_INT64_C">Q_INT64_C</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4247,7 +4247,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_LIKELY">Q_LIKELY</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_LIKELY">Q_LIKELY</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4282,13 +4282,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_ASSUME">Q_ASSUME</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_ASSUME">Q_ASSUME</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4308,7 +4308,7 @@
                                     <db:emphasis>variable</db:emphasis> parameter is a variable name or
                                 variable definition; the <db:emphasis>container</db:emphasis> parameter is a
                                 Qt container whose value type corresponds to the type of the
-                                variable. See <db:link xlink:href="containers.html#the-foreach-keyword">The
+                                variable. See <db:link xlink:href="containers.db#the-foreach-keyword">The
                                     foreach Keyword</db:link> for details.</db:para>
          <db:para>If you're worried about namespace pollution, you can disable
                                 this macro by adding the following line to your
@@ -4319,7 +4319,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_FOREACH">Q_FOREACH</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_FOREACH">Q_FOREACH</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4341,7 +4341,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#Q_FOREVER">Q_FOREVER</db:link></db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#Q_FOREVER">Q_FOREVER</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4368,24 +4368,24 @@
          <db:para>A space is inserted between the items, and a newline is appended
                                 at the end.</db:para>
          <db:para>To suppress the output at runtime, install your own message
-                                handler with <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
+                                handler with <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4410,29 +4410,29 @@
          <db:para>If you include <db:code>&lt;QtDebug&gt;</db:code>, a more
                                 convenient syntax is also available:</db:para>
          <db:programlisting>qDebug() &lt;&lt;"Brush:"&lt;&lt; myQBrush &lt;&lt;"Other value:"&lt;&lt; i;</db:programlisting>
-         <db:para>With this syntax, the function returns a <db:code><db:link xlink:href="qdebug.html">QDebug</db:link></db:code> object that is configured to
-                                use the <db:code><db:link xlink:href="qtglobal.html#QtMsgType-enum">QtDebugMsg</db:link></db:code> message type. It automatically puts a
+         <db:para>With this syntax, the function returns a <db:code><db:link xlink:href="qdebug.db">QDebug</db:link></db:code> object that is configured to
+                                use the <db:code><db:link xlink:href="qtglobal.db#QtMsgType-enum">QtDebugMsg</db:link></db:code> message type. It automatically puts a
                                 single space between each item, and outputs a newline at the end. It
                                 supports many C++ and Qt types.</db:para>
          <db:para>To suppress the output at run-time, install your own message
-                                handler with <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
+                                handler with <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4454,24 +4454,24 @@
          <db:programlisting>int
                                     divide(int a,int b) { if (b ==0) // program error qFatal("divide: cannot divide by zero"); return a / b; }</db:programlisting>
          <db:para>To suppress the output at runtime, install your own message
-                                handler with <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
+                                handler with <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4484,37 +4484,37 @@
                                     <db:emphasis>x</db:emphasis>, and converts it to an xvalue.</db:para>
       </db:section>
       <db:section xml:id="qPrintable">
-         <db:title>const char * qPrintable(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
+         <db:title>const char * qPrintable(const <db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>Returns <db:emphasis>str</db:emphasis> as a <db:code>const char
                                     *</db:code>. This is equivalent to
                                 <db:emphasis>str</db:emphasis>.toLocal8Bit().constData().</db:para>
          <db:para>The char pointer will be invalid after the statement in which
-                                qPrintable() is used. This is because the array returned by <db:code><db:link xlink:href="qstring.html#toLocal8Bit">QString::toLocal8Bit</db:link>()</db:code>
+                                qPrintable() is used. This is because the array returned by <db:code><db:link xlink:href="qstring.db#toLocal8Bit">QString::toLocal8Bit</db:link>()</db:code>
                                 will fall out of scope.</db:para>
          <db:note>
             <db:para>
-               <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code> expect %s arguments to be UTF-8 encoded,
+               <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code> expect %s arguments to be UTF-8 encoded,
                                 while qPrintable() converts to local 8-bit encoding. Therefore
-                                    <db:code><db:link xlink:href="qtglobal.html#qUtf8Printable">qUtf8Printable</db:link>()</db:code> should be used for logging strings
+                                    <db:code><db:link xlink:href="qtglobal.db#qUtf8Printable">qUtf8Printable</db:link>()</db:code> should be used for logging strings
                                 instead of qPrintable().</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qUtf8Printable">qUtf8Printable</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qUtf8Printable">qUtf8Printable</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qUtf8Printable">
-         <db:title>const char * qUtf8Printable(const <db:link xlink:href="qstring.html">QString</db:link></db:title>
+         <db:title>const char * qUtf8Printable(const <db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>Returns <db:emphasis>str</db:emphasis> as a <db:code>const char
                                     *</db:code>. This is equivalent to
                                 <db:emphasis>str</db:emphasis>.toUtf8().constData().</db:para>
          <db:para>The char pointer will be invalid after the statement in which
                                 qUtf8Printable() is used. This is because the array returned by
-                                    <db:code><db:link xlink:href="qstring.html#toUtf8">QString::toUtf8</db:link>()</db:code>
+                                    <db:code><db:link xlink:href="qstring.db#toUtf8">QString::toUtf8</db:link>()</db:code>
                                 will fall out of scope.</db:para>
          <db:para>Example:</db:para>
          <db:programlisting>qWarning("%s:
@@ -4526,19 +4526,19 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qPrintable">qPrintable</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qPrintable">qPrintable</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qWarning">qWarning</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -4565,24 +4565,24 @@
          <db:para>This syntax inserts a space between each item, and appends a
                                 newline at the end.</db:para>
          <db:para>To suppress the output at runtime, install your own message
-                                handler with <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
+                                handler with <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qDebug">qDebug</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qCritical">qCritical</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qCritical">qCritical</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qFatal">qFatal</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtglobal.html#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtglobal.db#qInstallMessageHandler">qInstallMessageHandler</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>
+                  <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>
                </db:member>
             </db:simplelist>
          </db:section>

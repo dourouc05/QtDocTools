@@ -41,7 +41,7 @@
                <db:tr>
                   <db:td>
                      <db:para>
-                        <db:code><db:link xlink:href="qtwidgets/qdial.html">QDial</db:link></db:code>
+                        <db:code><db:link xlink:href="qdial.db">QDial</db:link></db:code>
                      </db:para>
                   </db:td>
                   <db:td>
@@ -51,7 +51,7 @@
                <db:tr>
                   <db:td>
                      <db:para>
-                        <db:code><db:link xlink:href="qtwidgets/qdialog.html">QDialog</db:link></db:code>
+                        <db:code><db:link xlink:href="qdialog.db">QDialog</db:link></db:code>
                      </db:para>
                   </db:td>
                   <db:td>
@@ -61,7 +61,7 @@
                <db:tr>
                   <db:td>
                      <db:para>
-                        <db:code><db:link xlink:href="qtcore/qdir.html">QDir</db:link></db:code>
+                        <db:code><db:link xlink:href="qdir.db">QDir</db:link></db:code>
                      </db:para>
                   </db:td>
                   <db:td>
@@ -70,7 +70,7 @@
                </db:tr>
             </db:tbody>
          </db:informaltable>
-         <db:para>A C++ class is documented with the <db:link xlink:href="13-qdoc-commands-topics.html#class-command">\class</db:link> command. The annotation for the class is taken from the argument of the class comment's <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command.</db:para>
+         <db:para>A C++ class is documented with the <db:link xlink:href="13-qdoc-commands-topics.db#class-command">\class</db:link> command. The annotation for the class is taken from the argument of the class comment's <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command.</db:para>
       </db:section>
       <db:section xml:id="classes-op-lt-op-prefix-op-gt-op">
          <db:title/>
@@ -90,11 +90,11 @@
 
     \generatelist classes Q
 */</db:programlisting>
-         <db:para>A C++ class is documented with the <db:link xlink:href="13-qdoc-commands-topics.html#class-command">\class</db:link> command.</db:para>
+         <db:para>A C++ class is documented with the <db:link xlink:href="13-qdoc-commands-topics.db#class-command">\class</db:link> command.</db:para>
       </db:section>
       <db:section xml:id="classesbymodule">
          <db:title/>
-         <db:para>When this argument is used, a second argument is required, which specifies the module whose classes are to be listed. QDoc generates a table containing those classes. Each class is listed with the text of its <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command.</db:para>
+         <db:para>When this argument is used, a second argument is required, which specifies the module whose classes are to be listed. QDoc generates a table containing those classes. Each class is listed with the text of its <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command.</db:para>
          <db:para>For example, this command can be used on a module page as follows:</db:para>
          <db:programlisting>/*!
       \page phonon-module.html
@@ -107,7 +107,7 @@
       \generatelist{classesbymodule Phonon}
 
   ...*/</db:programlisting>
-         <db:para>Each class that is a member of the specified module must be marked with the <db:link xlink:href="19-qdoc-commands-grouping.html#inmodule-command">\inmodule</db:link> command in its \class comment.</db:para>
+         <db:para>Each class that is a member of the specified module must be marked with the <db:link xlink:href="19-qdoc-commands-grouping.db#inmodule-command">\inmodule</db:link> command in its \class comment.</db:para>
       </db:section>
       <db:section xml:id="compatclasses">
          <db:title/>
@@ -123,7 +123,7 @@
 
     \generatelist compatclasses
 */</db:programlisting>
-         <db:para>A support class is identified in the \class comment with the <db:link xlink:href="16-qdoc-commands-status.html#compat-command">\compat</db:link> command.</db:para>
+         <db:para>A support class is identified in the \class comment with the <db:link xlink:href="16-qdoc-commands-status.db#compat-command">\compat</db:link> command.</db:para>
       </db:section>
       <db:section xml:id="functionindex">
          <db:title/>
@@ -145,7 +145,7 @@
       </db:section>
       <db:section xml:id="legalese">
          <db:title/>
-         <db:para>The <db:code>legalese</db:code> argument tells QDoc to generate a complete list of licenses in the documentation. Each license is identified using the <db:link xlink:href="11-qdoc-commands-specialcontent.html#legalese-command">\legalese</db:link> command. This command is used to generate the <db:emphasis>Qt license information</db:emphasis> page this way:</db:para>
+         <db:para>The <db:code>legalese</db:code> argument tells QDoc to generate a complete list of licenses in the documentation. Each license is identified using the <db:link xlink:href="11-qdoc-commands-specialcontent.db#legalese-command">\legalese</db:link> command. This command is used to generate the <db:emphasis>Qt license information</db:emphasis> page this way:</db:para>
          <db:programlisting>/*!
     \page licenses.html
     \title Other Licenses Used in Qt
@@ -171,14 +171,14 @@
       </db:section>
       <db:section xml:id="mainclasses">
          <db:title/>
-         <db:para>The <db:code>mainclasses</db:code> argument tells QDoc to generate an alphabetical list of the main classes. A class is marked as a main class by including a <db:link xlink:href="19-qdoc-commands-grouping.html#mainclass-command">\mainclass</db:link> command in the \class comment.</db:para>
+         <db:para>The <db:code>mainclasses</db:code> argument tells QDoc to generate an alphabetical list of the main classes. A class is marked as a main class by including a <db:link xlink:href="19-qdoc-commands-grouping.db#mainclass-command">\mainclass</db:link> command in the \class comment.</db:para>
          <db:note>
             <db:para>The Qt documentation no longer includes a main classes page, but you can generate one for your main classes if you want it.</db:para>
          </db:note>
       </db:section>
       <db:section xml:id="overviews">
          <db:title/>
-         <db:para>The <db:code>overviews</db:code> argument is used to tell QDoc to generate a list by concatenating the contents of all the <db:link xlink:href="13-qdoc-commands-topics.html#group-command">\group</db:link> pages. Qt uses it to generate the <db:emphasis>overviews</db:emphasis> page this way:</db:para>
+         <db:para>The <db:code>overviews</db:code> argument is used to tell QDoc to generate a list by concatenating the contents of all the <db:link xlink:href="13-qdoc-commands-topics.db#group-command">\group</db:link> pages. Qt uses it to generate the <db:emphasis>overviews</db:emphasis> page this way:</db:para>
          <db:programlisting>/*!
     \page overviews.html
 
@@ -189,7 +189,7 @@
       </db:section>
       <db:section xml:id="related">
          <db:title/>
-         <db:para>The <db:code>related</db:code> argument is used in combination with the <db:link xlink:href="13-qdoc-commands-topics.html#group-command">\group</db:link> and <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> commands to list all the overviews related to a specified group. For example, the page for the <db:emphasis>Programming with Qt</db:emphasis> page is generated this way:</db:para>
+         <db:para>The <db:code>related</db:code> argument is used in combination with the <db:link xlink:href="13-qdoc-commands-topics.db#group-command">\group</db:link> and <db:link xlink:href="19-qdoc-commands-grouping.db#ingroup-command">\ingroup</db:link> commands to list all the overviews related to a specified group. For example, the page for the <db:emphasis>Programming with Qt</db:emphasis> page is generated this way:</db:para>
          <db:programlisting>/*!
     \group qt-basic-concepts
     \title Programming with Qt
@@ -208,9 +208,9 @@
       <db:section xml:id="service">
          <db:title/>
          <db:para>The <db:code>service</db:code> argument tells QDoc to generate an alphabetical list of the services. Each service name is a link to the service's reference documentation.</db:para>
-         <db:para>A service is identified with the <db:link xlink:href="13-qdoc-commands-topics.html#service-command">\service</db:link> command.</db:para>
+         <db:para>A service is identified with the <db:link xlink:href="13-qdoc-commands-topics.db#service-command">\service</db:link> command.</db:para>
          <db:note>
-            <db:para>This command and the <db:link xlink:href="13-qdoc-commands-topics.html#service-command">\service</db:link> command are not used in the Qt documentation.</db:para>
+            <db:para>This command and the <db:link xlink:href="13-qdoc-commands-topics.db#service-command">\service</db:link> command are not used in the Qt documentation.</db:para>
          </db:note>
       </db:section>
    </db:section>
@@ -227,21 +227,21 @@
 
            \endif
        */</db:programlisting>
-      <db:para>This QDoc comment will only be rendered if the <db:code>opensourceedition</db:code> preprocessor symbol is defined, and specified in the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> variable in the configuration file to make QDoc process the code within #ifdef and #endif:</db:para>
+      <db:para>This QDoc comment will only be rendered if the <db:code>opensourceedition</db:code> preprocessor symbol is defined, and specified in the <db:link xlink:href="22-qdoc-configuration-generalvariables.db#defines-variable">defines</db:link> variable in the configuration file to make QDoc process the code within #ifdef and #endif:</db:para>
       <db:programlisting>           defines = opensourceedition</db:programlisting>
-      <db:para>You can also define the preprocessor symbol manually on the command line. For more information see the documentation of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> variable.</db:para>
-      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</db:link>.</db:para>
+      <db:para>You can also define the preprocessor symbol manually on the command line. For more information see the documentation of the <db:link xlink:href="22-qdoc-configuration-generalvariables.db#defines-variable">defines</db:link> variable.</db:para>
+      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#endif-command">\endif</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.db#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.db#falsehoods-variable">falsehoods</db:link>.</db:para>
    </db:section>
    <db:section xml:id="endif">
       <db:title>\endif</db:title>
-      <db:para>The \endif command and the corresponding \if command enclose parts of a QDoc comment that will be included if the condition specified by the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link> command's argument is true.</db:para>
-      <db:para>For more information, see the documentation of the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link> command.</db:para>
-      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</db:link>.</db:para>
+      <db:para>The \endif command and the corresponding \if command enclose parts of a QDoc comment that will be included if the condition specified by the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#if-command">\if</db:link> command's argument is true.</db:para>
+      <db:para>For more information, see the documentation of the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#if-command">\if</db:link> command.</db:para>
+      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.db#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.db#falsehoods-variable">falsehoods</db:link>.</db:para>
    </db:section>
    <db:section xml:id="else">
       <db:title>\else</db:title>
-      <db:para>The \else command specifies an alternative if the condition in the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link> command is false.</db:para>
-      <db:para>The \else command can only be used within <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if...\endif</db:link> commands, but is useful when there is only two alternatives.</db:para>
+      <db:para>The \else command specifies an alternative if the condition in the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#if-command">\if</db:link> command is false.</db:para>
+      <db:para>The \else command can only be used within <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#if-command">\if...\endif</db:link> commands, but is useful when there is only two alternatives.</db:para>
       <db:programlisting>/*!
            The Qt3 support library is provided to keep old
            source code working.
@@ -290,7 +290,7 @@
          <db:para>To use the Qt 3 support library, you need to have the line QT += qt3support in your .pro file (qmake automatically define the QT3_SUPPORT symbol, turning on compatibility function support).</db:para>
          <db:para>You can also define the symbol manually (e.g., if you don't want to link against the <db:code>Qt3Support</db:code> library), or you can define <db:code>QT3_SUPPORT_WARNINGS</db:code> instead, telling the compiler to emit a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</db:para>
       </db:blockquote>
-      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable">falsehoods</db:link>.</db:para>
+      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#endif-command">\endif</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.db#defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.db#falsehoods-variable">falsehoods</db:link>.</db:para>
    </db:section>
    <db:section xml:id="include">
       <db:title>\include</db:title>
@@ -298,7 +298,7 @@
       <db:para>The command is useful when some snippet of commands and text is to be used in multiple places in the documentation. In that case, move the snippet into a separate file and use the \include command wherever you want to insert the snippet into the documentation. To prevent QDoc from reading the file as a stand-alone page of documentation, we recommend that you use the <db:code>.qdocinc</db:code> extension for these <db:emphasis>include</db:emphasis> files.</db:para>
       <db:para>The command can have either one or two arguments. The first argument is always a file name. The contents of the file must be QDoc input, in other words, a sequence of QDoc commands and text, but without the enclosing QDoc comment <db:code>/</db:code>
          <db:code>*!</db:code> ... <db:code>*</db:code>
-         <db:code>/</db:code> delimiters. If you want to include the entire named file, don't use the second argument. If you want to include only part of the file, see the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#2-argument-form">two argument form</db:link> below. Here is an example of the one argument form:</db:para>
+         <db:code>/</db:code> delimiters. If you want to include the entire named file, don't use the second argument. If you want to include only part of the file, see the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#2-argument-form">two argument form</db:link> below. Here is an example of the one argument form:</db:para>
       <db:programlisting>/*!
             \page corefeatures.html
             \title Core Features
@@ -307,7 +307,7 @@
             \include examples/objectmodel.qdocinc
             \include examples/layoutmanagement.qdocinc
         */</db:programlisting>
-      <db:para>QDoc renders this page <db:link xlink:href="corefeatures.html">as shown here</db:link>.</db:para>
+      <db:para>QDoc renders this page <db:link xlink:href="corefeatures.db">as shown here</db:link>.</db:para>
       <db:section xml:id="include-filename-snippet-identifier">
          <db:title>\include filename snippet-identifier</db:title>
          <db:para>It is a waste of time to make a separate <db:code>.qdocinc</db:code> file for every QDoc include snippet you want to use in multiple places in the documentation, especially given that you probably have to put the copyright/license notice in every one of these files. So if you have a large number of snippets to be included, you can put them all in a single file if you want, and surround each one with:</db:para>
@@ -340,7 +340,7 @@
 */</db:programlisting>
       <db:para>When running QDoc to generate HTML, the example above will have no effect on the generated output, but if you run QDoc to generate DITA XML, the example will generate the following:</db:para>
       <db:programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;!DOCTYPE cxxClass PUBLIC "-//NOKIA//DTD DITA C++ API Class Reference Type v0.6.0//EN""dtd/cxxClass.dtd"&gt;&lt;!--qwidget.cpp--&gt;&lt;cxxClass id="id-9a14268e-6b09-4eee-b940-21a00a0961df"&gt;&lt;apiName&gt;QWidget&lt;/apiName&gt;&lt;shortdesc&gt;the QWidgetclass is the base class of all user interface objects.&lt;/shortdesc&gt;&lt;prolog&gt;&lt;author&gt;Qt Development Frameworks&lt;/author&gt;&lt;publisher&gt;Qt Project&lt;/publisher&gt;&lt;copyright&gt;&lt;copyryear year="2015"/&gt;&lt;copyrholder&gt;Qt Project&lt;/copyrholder&gt;&lt;/copyright&gt;&lt;permissions view="all"/&gt;&lt;metadata&gt;&lt;audience type="designer"/&gt;&lt;audience type="programmer"/&gt;&lt;audience type="user"/&gt;&lt;category&gt;Class reference&lt;/category&gt;&lt;prodinfo&gt;&lt;prodname&gt;Qt Reference Documentation&lt;/prodname&gt;&lt;vrmlist&gt;&lt;vrm version="4" release="7" modification="3"/&gt;&lt;/vrmlist&gt;&lt;component&gt;QtGui&lt;/component&gt;&lt;/prodinfo&gt;&lt;othermeta name="platform" content="MeeGo"/&gt;&lt;othermeta name="platform" content="Symbian"/&gt;&lt;othermeta name="platform" content="OS X 10.6"/&gt;&lt;othermeta name="technology" content="User Interface"/&gt;&lt;/metadata&gt;&lt;/prolog&gt;</db:programlisting>
-      <db:para>In the example output, several values have been set using default values obtained from the QDoc configuration file. See <db:link xlink:href="21-3-qt-dita-xml-output.html">Generating DITA XML Output</db:link> for details.</db:para>
+      <db:para>In the example output, several values have been set using default values obtained from the QDoc configuration file. See <db:link xlink:href="21-3-qt-dita.db-output.db">Generating DITA XML Output</db:link> for details.</db:para>
    </db:section>
    <db:section xml:id="omit">
       <db:title>\omit</db:title>
@@ -391,7 +391,7 @@
       <db:title>\raw </db:title>
       <db:para>The \raw command and the corresponding \endraw command delimit a block of raw mark-up language code.</db:para>
       <db:note>
-         <db:para>Avoid using this command if possible, because it generates DITA XML code that causes problems. If you are trying to generate special table or list behavior, try to get the behavior you want using the <db:link xlink:href="04-qdoc-commands-textmarkup.html#span-command">\span</db:link> and <db:link xlink:href="04-qdoc-commands-textmarkup.html#div-command">\div</db:link> commands in your <db:link xlink:href="10-qdoc-commands-tablesandlists.html#table-command">\table</db:link> or <db:link xlink:href="10-qdoc-commands-tablesandlists.html#list-command">\list</db:link>.</db:para>
+         <db:para>Avoid using this command if possible, because it generates DITA XML code that causes problems. If you are trying to generate special table or list behavior, try to get the behavior you want using the <db:link xlink:href="04-qdoc-commands-textmarkup.db#span-command">\span</db:link> and <db:link xlink:href="04-qdoc-commands-textmarkup.db#div-command">\div</db:link> commands in your <db:link xlink:href="10-qdoc-commands-tablesandlists.db#table-command">\table</db:link> or <db:link xlink:href="10-qdoc-commands-tablesandlists.db#list-command">\list</db:link>.</db:para>
       </db:note>
       <db:para>The command takes an argument specifying the code's format. Currently, the only supported format is HTML.</db:para>
       <db:para>The \raw command is useful if you want some special HTML effects in your documentation.</db:para>
@@ -403,7 +403,7 @@
        */</db:programlisting>
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
-         <db:para>Qt has some predefined <db:code><db:link xlink:href="qtgui/qcolor.html">QColor</db:link></db:code> objects.</db:para>
+         <db:para>Qt has some predefined <db:code><db:link xlink:href="qcolor.db">QColor</db:link></db:code> objects.</db:para>
          <db:para>
             <db:code>Blue(#0000ff)</db:code>,
                <db:code>dark blue(#000080)</db:code> and

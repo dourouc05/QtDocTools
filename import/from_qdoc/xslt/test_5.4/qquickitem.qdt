@@ -13,16 +13,16 @@
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 quick</db:classsynopsisinfo>
       <db:classsynopsisinfo role="inherits">
-         <db:link xlink:href="qtcore/qobject.html">QObject</db:link>
+         <db:link xlink:href="qobject.db">QObject</db:link>
       </db:classsynopsisinfo>
       <db:classsynopsisinfo role="inherits">
-         <db:link xlink:href="qtqml/qqmlparserstatus.html">QQmlParserStatus</db:link>
+         <db:link xlink:href="qqmlparserstatus.db">QQmlParserStatus</db:link>
       </db:classsynopsisinfo>
       <db:classsynopsisinfo role="inheritedBy">
-         <db:link xlink:href="qquickframebufferobject.html">QQuickFramebufferObject</db:link>
+         <db:link xlink:href="qquickframebufferobject.db">QQuickFramebufferObject</db:link>
       </db:classsynopsisinfo>
       <db:classsynopsisinfo role="inheritedBy">
-         <db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link>
+         <db:link xlink:href="qquickpainteditem.db">QQuickPaintedItem</db:link>
       </db:classsynopsisinfo>
       <db:fieldsynopsis xlink:href="#activeFocus-prop">
          <db:modifier>(Qt property)</db:modifier>
@@ -764,56 +764,56 @@
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
-      <db:para>The <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> class
-                                    provides the most basic of all visual items in <db:link xlink:href="qtquick-index.html">Qt Quick</db:link>.</db:para>
-      <db:para>All visual items in Qt Quick inherit from <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code>. Although a
-                                        <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> instance
+      <db:para>The <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> class
+                                    provides the most basic of all visual items in <db:link xlink:href="qtquick-index.db">Qt Quick</db:link>.</db:para>
+      <db:para>All visual items in Qt Quick inherit from <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code>. Although a
+                                        <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> instance
                                     has no visual appearance, it defines all the attributes that are
                                     common across visual items, such as x and y position, width and
-                                    height, <db:link xlink:href="qtquick-positioning-anchors.html">anchoring</db:link> and key handling support.</db:para>
-      <db:para>You can subclass <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> to provide your own custom visual item
+                                    height, <db:link xlink:href="qtquick-positioning-anchors.db">anchoring</db:link> and key handling support.</db:para>
+      <db:para>You can subclass <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> to provide your own custom visual item
                                     that inherits these features.</db:para>
       <db:section xml:id="custom-scene-graph-items">
          <db:title>Custom Scene Graph Items</db:title>
          <db:para>All visual QML items are rendered using the scene graph, a
                                     low-level, high-performance rendering stack, closely tied to
-                                    OpenGL. It is possible for subclasses of <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> to add their own
-                                    custom content into the scene graph by setting the <db:code><db:link xlink:href="qquickitem.html#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> flag and
-                                    reimplementing the <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> function.</db:para>
+                                    OpenGL. It is possible for subclasses of <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> to add their own
+                                    custom content into the scene graph by setting the <db:code><db:link xlink:href="qquickitem.db#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> flag and
+                                    reimplementing the <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> function.</db:para>
          <db:warning>
             <db:para> It is crucial that OpenGL
                                     operations and interaction with the scene graph happens
                                     exclusively on the rendering thread, primarily during the
-                                        <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">updatePaintNode</db:link>()</db:code> call. The best rule of thumb is
-                                    to only use classes with the "QSG" prefix inside the <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> function.</db:para>
+                                        <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">updatePaintNode</db:link>()</db:code> call. The best rule of thumb is
+                                    to only use classes with the "QSG" prefix inside the <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> function.</db:para>
          </db:warning>
          <db:note>
             <db:para>All classes with QSG prefix should be
-                                    used solely on the scene graph's rendering thread. See <db:link xlink:href="qtquick-visualcanvas-scenegraph.html#scene-graph-and-rendering">Scene Graph and Rendering</db:link> for more
+                                    used solely on the scene graph's rendering thread. See <db:link xlink:href="qtquick-visualcanvas-scenegraph.db#scene-graph-and-rendering">Scene Graph and Rendering</db:link> for more
                                     information.</db:para>
          </db:note>
          <db:section xml:id="graphics-resource-handling">
             <db:title>Graphics Resource Handling</db:title>
             <db:para>The preferred way to handle cleanup of graphics resources
                                     used in the scene graph, is to rely on the automatic cleanup of
-                                    nodes. A <db:code><db:link xlink:href="qsgnode.html">QSGNode</db:link></db:code> returned
-                                    from <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> is automatically
-                                    deleted on the right thread at the right time. Trees of <db:code><db:link xlink:href="qsgnode.html">QSGNode</db:link></db:code> instances are managed
-                                    through the use of <db:code><db:link xlink:href="qsgnode.html#Flag-enum">QSGNode::OwnedByParent</db:link></db:code>, which is set by default.
+                                    nodes. A <db:code><db:link xlink:href="qsgnode.db">QSGNode</db:link></db:code> returned
+                                    from <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> is automatically
+                                    deleted on the right thread at the right time. Trees of <db:code><db:link xlink:href="qsgnode.db">QSGNode</db:link></db:code> instances are managed
+                                    through the use of <db:code><db:link xlink:href="qsgnode.db#Flag-enum">QSGNode::OwnedByParent</db:link></db:code>, which is set by default.
                                     So, for the majority of custom scene graph items, no extra work
                                     will be required.</db:para>
             <db:para>Implementations that store graphics resources outside the
-                                    node tree, such as an item implementing <db:code><db:link xlink:href="qquickitem.html#textureProvider">QQuickItem::textureProvider</db:link>()</db:code>, will need to take
+                                    node tree, such as an item implementing <db:code><db:link xlink:href="qquickitem.db#textureProvider">QQuickItem::textureProvider</db:link>()</db:code>, will need to take
                                     care in cleaning it up correctly depending on how the item is
                                     used in QML. The situations to handle are:</db:para>
             <db:itemizedlist>
                <db:listitem>
                   <db:para>The scene graph is invalidated; This can happen, for
-                                        instance, if the window is hidden using <db:code><db:link xlink:href="qtgui/qwindow.html#hide">QQuickWindow::hide</db:link>()</db:code>. If the item class
+                                        instance, if the window is hidden using <db:code><db:link xlink:href="qwindow.db#hide">QQuickWindow::hide</db:link>()</db:code>. If the item class
                                         implements a <db:code>slot</db:code> named
                                             <db:code>invalidateSceneGraph()</db:code>, this slot
                                         will be called on the rendering thread while the GUI thread
-                                        is blocked. This is equivalent to connecting to <db:code><db:link xlink:href="qquickwindow.html#sceneGraphInvalidated">QQuickWindow::sceneGraphInvalidated</db:link>()</db:code>. The
+                                        is blocked. This is equivalent to connecting to <db:code><db:link xlink:href="qquickwindow.db#sceneGraphInvalidated">QQuickWindow::sceneGraphInvalidated</db:link>()</db:code>. The
                                         OpenGL context of this item's window will be bound when this
                                         slot is called. The only exception is if the native OpenGL
                                         has been destroyed outside Qt's control, for instance
@@ -823,8 +823,8 @@
                   <db:para>The item is removed from the scene; If an item is taken
                                         out of the scene, for instance because it's parent was set
                                         to <db:code>null</db:code> or an item in another window,
-                                        the <db:code><db:link xlink:href="qquickitem.html#releaseResources">QQuickItem::releaseResources</db:link>()</db:code> will be called
-                                        on the GUI thread. <db:code><db:link xlink:href="qquickwindow.html#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code> should be
+                                        the <db:code><db:link xlink:href="qquickitem.db#releaseResources">QQuickItem::releaseResources</db:link>()</db:code> will be called
+                                        on the GUI thread. <db:code><db:link xlink:href="qquickwindow.db#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code> should be
                                         used to schedule cleanup of rendering resources.</db:para>
                </db:listitem>
                <db:listitem>
@@ -832,20 +832,20 @@
                                         runs, it should delete any graphics resources it has. If
                                         neither of the two conditions above were already met, the
                                         item will be part of a window and it is possible to use
-                                            <db:code><db:link xlink:href="qquickwindow.html#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code> to have them
-                                        cleaned up. If an implementation ignores the call to <db:code><db:link xlink:href="qquickitem.html#releaseResources">QQuickItem::releaseResources</db:link>()</db:code>, the item will
-                                        in many cases no longer have access to a <db:code><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:code> and thus
+                                            <db:code><db:link xlink:href="qquickwindow.db#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code> to have them
+                                        cleaned up. If an implementation ignores the call to <db:code><db:link xlink:href="qquickitem.db#releaseResources">QQuickItem::releaseResources</db:link>()</db:code>, the item will
+                                        in many cases no longer have access to a <db:code><db:link xlink:href="qquickwindow.db">QQuickWindow</db:link></db:code> and thus
                                         no means of scheduling cleanup.</db:para>
                </db:listitem>
             </db:itemizedlist>
-            <db:para>When scheduling cleanup of graphics resources using <db:code><db:link xlink:href="qquickwindow.html#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code>, one should use
-                                    either <db:code><db:link xlink:href="qquickwindow.html#RenderStage-enum">QQuickWindow::BeforeSynchronizingStage</db:link></db:code> or <db:code><db:link xlink:href="qquickwindow.html#RenderStage-enum">QQuickWindow::AfterSynchronizingStage</db:link></db:code>. The <db:link xlink:href="qtquick-visualcanvas-scenegraph.html#scene-graph-and-rendering">synchronization stage</db:link> is where the scene graph is
+            <db:para>When scheduling cleanup of graphics resources using <db:code><db:link xlink:href="qquickwindow.db#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code>, one should use
+                                    either <db:code><db:link xlink:href="qquickwindow.db#RenderStage-enum">QQuickWindow::BeforeSynchronizingStage</db:link></db:code> or <db:code><db:link xlink:href="qquickwindow.db#RenderStage-enum">QQuickWindow::AfterSynchronizingStage</db:link></db:code>. The <db:link xlink:href="qtquick-visualcanvas-scenegraph.db#scene-graph-and-rendering">synchronization stage</db:link> is where the scene graph is
                                     changed as a result of changes to the QML tree. If cleanup is
                                     scheduled at any other time, it may result in other parts of the
                                     scene graph referencing the newly deleted objects as these parts
                                     have not been updated.</db:para>
             <db:note>
-               <db:para>Use of <db:code><db:link xlink:href="qtcore/qobject.html#deleteLater">QObject::deleteLater</db:link>()</db:code> to clean up graphics
+               <db:para>Use of <db:code><db:link xlink:href="qobject.db#deleteLater">QObject::deleteLater</db:link>()</db:code> to clean up graphics
                                     resources is not recommended as this will run at an arbitrary
                                     time and it is unknown if there will be an OpenGL context bound
                                     when the deletion takes place.</db:para>
@@ -854,11 +854,11 @@
       </db:section>
       <db:section xml:id="custom-qpainter-items">
          <db:title>Custom QPainter Items</db:title>
-         <db:para>The <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code>
-                                    provides a subclass, <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>, which allows the users to
-                                    render content using <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code>.</db:para>
+         <db:para>The <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code>
+                                    provides a subclass, <db:code><db:link xlink:href="qquickpainteditem.db">QQuickPaintedItem</db:link></db:code>, which allows the users to
+                                    render content using <db:code><db:link xlink:href="qpainter.db">QPainter</db:link></db:code>.</db:para>
          <db:warning>
-            <db:para> Using <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>
+            <db:para> Using <db:code><db:link xlink:href="qquickpainteditem.db">QQuickPaintedItem</db:link></db:code>
                                     uses an indirect 2D surface to render its content, either using
                                     software rasterization or using an OpenGL framebuffer object
                                     (FBO), so the rendering is a two-step operation. First rasterize
@@ -868,24 +868,24 @@
       </db:section>
       <db:section xml:id="behavior-animations">
          <db:title>Behavior Animations</db:title>
-         <db:para>If your Item uses the <db:link xlink:href="qml-qtquick-behavior.html">Behavior</db:link> type to
+         <db:para>If your Item uses the <db:link xlink:href="qml-qtquick-behavior.db">Behavior</db:link> type to
                                     define animations for property changes, you should always use
-                                    either <db:code><db:link xlink:href="qtcore/qobject.html#setProperty">QObject::setProperty</db:link>()</db:code>, QQmlProperty(), or <db:code><db:link xlink:href="qtcore/qmetaproperty.html#write">QMetaProperty::write</db:link>()</db:code> when you need to modify
+                                    either <db:code><db:link xlink:href="qobject.db#setProperty">QObject::setProperty</db:link>()</db:code>, QQmlProperty(), or <db:code><db:link xlink:href="qmetaproperty.db#write">QMetaProperty::write</db:link>()</db:code> when you need to modify
                                     those properties from C++. This ensures that the QML engine
                                     knows about the property change. Otherwise, the engine won't be
                                     able to carry out your requested animation. Note that these
                                     functions incur a slight performance penalty. For more details,
-                                    see <db:link xlink:href="qtqml/qtqml-cppintegration-interactqmlfromcpp.html#accessing-members-of-a-qml-object-type-from-c">Accessing Members of a QML Object Type from
+                                    see <db:link xlink:href="qtqml-cppintegration-interactqmlfromcpp.db#accessing-members-of-a-qml-object-type-from-c">Accessing Members of a QML Object Type from
                                     C++</db:link>.</db:para>
       </db:section>
       <db:section>
          <db:title>See Also</db:title>
          <db:simplelist type="vert">
             <db:member>
-               <db:code><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:code>
+               <db:code><db:link xlink:href="qquickwindow.db">QQuickWindow</db:link></db:code>
             </db:member>
             <db:member>
-               <db:code><db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link></db:code>
+               <db:code><db:link xlink:href="qquickpainteditem.db">QQuickPaintedItem</db:link></db:code>
             </db:member>
          </db:simplelist>
       </db:section>
@@ -957,7 +957,7 @@
                   </db:td>
                   <db:td>
                      <db:para>Indicates the item is a
-                                                  focus scope. See <db:link xlink:href="qtquick-input-focus.html">Keyboard Focus in
+                                                  focus scope. See <db:link xlink:href="qtquick-input-focus.db">Keyboard Focus in
                                                   Qt Quick</db:link> for more information.</db:para>
                   </db:td>
                </db:tr>
@@ -996,26 +996,26 @@
                </db:tr>
             </db:tbody>
          </db:informaltable>
-         <db:para>The Flags type is a typedef for <db:code><db:link xlink:href="qtcore/qflags.html">QFlags</db:link>&lt;Flag&gt;</db:code>. It
+         <db:para>The Flags type is a typedef for <db:code><db:link xlink:href="qflags.db">QFlags</db:link>&lt;Flag&gt;</db:code>. It
                                     stores an OR combination of Flag values.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFlag">setFlag</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFlags">setFlags</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFlags">setFlags</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#flags">flags</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#flags">flags</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="ItemChange-enum">
          <db:title>enum QQuickItem::ItemChange</db:title>
-         <db:para>Used in conjunction with <db:code><db:link xlink:href="qquickitem.html#itemChange">QQuickItem::itemChange</db:link>()</db:code> to notify the item about
+         <db:para>Used in conjunction with <db:code><db:link xlink:href="qquickitem.db#itemChange">QQuickItem::itemChange</db:link>()</db:code> to notify the item about
                                     certain types of changes.</db:para>
          <db:informaltable>
             <db:tbody>
@@ -1042,7 +1042,7 @@
                      </db:para>
                   </db:td>
                   <db:td>
-                     <db:para>A child was added. <db:link xlink:href="qquickitem-itemchangedata.html#item-var">ItemChangeData::item</db:link> contains the added
+                     <db:para>A child was added. <db:link xlink:href="qquickitem-itemchangedata.db#item-var">ItemChangeData::item</db:link> contains the added
                                                   child.</db:para>
                   </db:td>
                </db:tr>
@@ -1059,7 +1059,7 @@
                   </db:td>
                   <db:td>
                      <db:para>A child was removed.
-                                                  <db:link xlink:href="qquickitem-itemchangedata.html#item-var">ItemChangeData::item</db:link> contains the
+                                                  <db:link xlink:href="qquickitem-itemchangedata.db#item-var">ItemChangeData::item</db:link> contains the
                                                   removed child.</db:para>
                   </db:td>
                </db:tr>
@@ -1076,8 +1076,8 @@
                   </db:td>
                   <db:td>
                      <db:para>The item was added to or
-                                                  removed from a scene. The <db:code><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:code>
-                                                  rendering the scene is specified in using <db:link xlink:href="qquickitem-itemchangedata.html#window-var">ItemChangeData::window</db:link>. The window
+                                                  removed from a scene. The <db:code><db:link xlink:href="qquickwindow.db">QQuickWindow</db:link></db:code>
+                                                  rendering the scene is specified in using <db:link xlink:href="qquickitem-itemchangedata.db#window-var">ItemChangeData::window</db:link>. The window
                                                   parameter is null when the item is removed from a
                                                   scene.</db:para>
                   </db:td>
@@ -1095,7 +1095,7 @@
                   </db:td>
                   <db:td>
                      <db:para>The item's visibility has
-                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.html#boolValue-var">ItemChangeData::boolValue</db:link> contains the
+                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.db#boolValue-var">ItemChangeData::boolValue</db:link> contains the
                                                   new visibility.</db:para>
                   </db:td>
                </db:tr>
@@ -1112,7 +1112,7 @@
                   </db:td>
                   <db:td>
                      <db:para>The item's parent has
-                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.html#item-var">ItemChangeData::item</db:link> contains the new
+                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.db#item-var">ItemChangeData::item</db:link> contains the new
                                                   parent.</db:para>
                   </db:td>
                </db:tr>
@@ -1129,7 +1129,7 @@
                   </db:td>
                   <db:td>
                      <db:para>The item's opacity has
-                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.html#realValue-var">ItemChangeData::realValue</db:link> contains the
+                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.db#realValue-var">ItemChangeData::realValue</db:link> contains the
                                                   new opacity.</db:para>
                   </db:td>
                </db:tr>
@@ -1146,7 +1146,7 @@
                   </db:td>
                   <db:td>
                      <db:para>The item's focus has
-                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.html#boolValue-var">ItemChangeData::boolValue</db:link> contains
+                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.db#boolValue-var">ItemChangeData::boolValue</db:link> contains
                                                   whether the item has focus or not.</db:para>
                   </db:td>
                </db:tr>
@@ -1163,7 +1163,7 @@
                   </db:td>
                   <db:td>
                      <db:para>The item's rotation has
-                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.html#realValue-var">ItemChangeData::realValue</db:link> contains the
+                                                  changed. <db:link xlink:href="qquickitem-itemchangedata.db#realValue-var">ItemChangeData::realValue</db:link> contains the
                                                   new rotation.</db:para>
                   </db:td>
                </db:tr>
@@ -1337,10 +1337,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#transformOrigin-prop">transformOrigin</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#transformOrigin-prop">transformOrigin</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#transformOrigin-prop">setTransformOrigin</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#transformOrigin-prop">setTransformOrigin</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1353,11 +1353,11 @@
          <db:para>This read-only property indicates whether the item has
                                     active focus.</db:para>
          <db:para>If activeFocus is true, either this item is the one that
-                                    currently receives keyboard input, or it is a <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link>
+                                    currently receives keyboard input, or it is a <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link>
                                     ancestor of the item that currently receives keyboard
                                     input.</db:para>
-         <db:para>Usually, activeFocus is gained by setting <db:link xlink:href="qquickitem.html#focus-prop">focus</db:link> on an item
-                                    and its enclosing <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> objects. In the following example, the
+         <db:para>Usually, activeFocus is gained by setting <db:link xlink:href="qquickitem.db#focus-prop">focus</db:link> on an item
+                                    and its enclosing <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link> objects. In the following example, the
                                         <db:code>input</db:code> and
                                         <db:code>focusScope</db:code> objects will have active
                                     focus, while the root rectangle object will not.</db:para>
@@ -1384,10 +1384,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qquickitem.html#focus-prop">focus</db:link>
+                  <db:link xlink:href="qquickitem.db#focus-prop">focus</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtquick-input-focus.html">Keyboard Focus in Qt
+                  <db:link xlink:href="qtquick-input-focus.db">Keyboard Focus in Qt
                                         Quick</db:link>
                </db:member>
             </db:simplelist>
@@ -1433,7 +1433,7 @@
          <db:para>Used by visual elements to decide if the item should use
                                     antialiasing or not. In some cases items with antialiasing
                                     require more memory and are potentially slower to render (see
-                                        <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html#antialiasing">Antialiasing</db:link> for more details).</db:para>
+                                        <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.db#antialiasing">Antialiasing</db:link> for more details).</db:para>
          <db:para>The default is false, but may be overridden by derived
                                     elements.</db:para>
          <db:para>
@@ -1476,10 +1476,10 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="baselineOffset-prop">
-         <db:title>baselineOffset : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>baselineOffset : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Specifies the position of the item's baseline in local
                                     coordinates.</db:para>
-         <db:para>The baseline of a <db:link xlink:href="qml-qtquick-text.html">Text</db:link> item is the imaginary line on which the text
+         <db:para>The baseline of a <db:link xlink:href="qml-qtquick-text.db">Text</db:link> item is the imaginary line on which the text
                                     sits. Controls containing text usually set their baseline to the
                                     baseline of their text.</db:para>
          <db:para>For non-text items, a default baseline offset of 0 is
@@ -1514,7 +1514,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="childrenRect-prop">
-         <db:title>childrenRect : const <db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title>childrenRect : const <db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>This property holds the collective position and size of the
                                     item's children.</db:para>
          <db:para>This property is useful if you need to access the collective
@@ -1590,7 +1590,7 @@
                                     returned to <db:code>true</db:code>, unless they have
                                     explicitly been set to <db:code>false</db:code>.</db:para>
          <db:para>Setting this property to <db:code>false</db:code>
-                                    automatically causes <db:link xlink:href="qquickitem.html#activeFocus-prop">activeFocus</db:link>
+                                    automatically causes <db:link xlink:href="qquickitem.db#activeFocus-prop">activeFocus</db:link>
                                     to be set to <db:code>false</db:code>, and this item will
                                     longer receive keyboard events.</db:para>
          <db:para>
@@ -1625,7 +1625,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qquickitem.html#visible-prop">visible</db:link>
+                  <db:link xlink:href="qquickitem.db#visible-prop">visible</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1633,8 +1633,8 @@
       <db:section xml:id="focus-prop">
          <db:title>focus : bool</db:title>
          <db:para>This property holds whether the item has focus within the
-                                    enclosing <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link>. If true, this item will gain active
-                                    focus when the enclosing <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> gains
+                                    enclosing <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link>. If true, this item will gain active
+                                    focus when the enclosing <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link> gains
                                     active focus.</db:para>
          <db:para>In the following example, <db:code>input</db:code> will
                                     be given active focus when <db:code>scope</db:code> gains
@@ -1689,17 +1689,17 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qquickitem.html#activeFocus-prop">activeFocus</db:link>
+                  <db:link xlink:href="qquickitem.db#activeFocus-prop">activeFocus</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtquick-input-focus.html">Keyboard Focus in Qt
+                  <db:link xlink:href="qtquick-input-focus.db">Keyboard Focus in Qt
                                         Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="height-prop">
-         <db:title>height : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>height : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>This property holds the height of this item.</db:para>
          <db:para>
             <db:emphasis role="bold">Access functions:</db:emphasis>
@@ -1741,10 +1741,10 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="implicitHeight-prop">
-         <db:title>implicitHeight : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>implicitHeight : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Defines the natural width or height of the Item if no
-                                        <db:link xlink:href="qquickitem.html#width-prop">width</db:link> or
-                                        <db:link xlink:href="qquickitem.html#height-prop">height</db:link>
+                                        <db:link xlink:href="qquickitem.db#width-prop">width</db:link> or
+                                        <db:link xlink:href="qquickitem.db#height-prop">height</db:link>
                                     is specified.</db:para>
          <db:para>The default implicit size for most items is 0x0, however
                                     some items have an inherent implicit size which cannot be
@@ -1757,7 +1757,7 @@
                                     { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
                                         parent.verticalCenter } }</db:programlisting>
          <db:note>
-            <db:para>Using<db:link xlink:href="qquickitem.html#implicitWidth-prop">implicitWidth</db:link> of Text or <db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and
+            <db:para>Using<db:link xlink:href="qquickitem.db#implicitWidth-prop">implicitWidth</db:link> of Text or <db:link xlink:href="qml-qtquick-textedit.db">TextEdit</db:link> and
                                     setting the width explicitly incurs a performance penalty as the
                                     text must be laid out twice.</db:para>
          </db:note>
@@ -1791,10 +1791,10 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="implicitWidth-prop">
-         <db:title>implicitWidth : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>implicitWidth : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Defines the natural width or height of the Item if no
-                                        <db:link xlink:href="qquickitem.html#width-prop">width</db:link> or
-                                        <db:link xlink:href="qquickitem.html#height-prop">height</db:link>
+                                        <db:link xlink:href="qquickitem.db#width-prop">width</db:link> or
+                                        <db:link xlink:href="qquickitem.db#height-prop">height</db:link>
                                     is specified.</db:para>
          <db:para>The default implicit size for most items is 0x0, however
                                     some items have an inherent implicit size which cannot be
@@ -1807,7 +1807,7 @@
                                     { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
                                         parent.verticalCenter } }</db:programlisting>
          <db:note>
-            <db:para>Using implicitWidth of Text or<db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link>
+            <db:para>Using implicitWidth of Text or<db:link xlink:href="qml-qtquick-textedit.db">TextEdit</db:link>
                                     and setting the width explicitly incurs a performance penalty as
                                     the text must be laid out twice.</db:para>
          </db:note>
@@ -1841,7 +1841,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="opacity-prop">
-         <db:title>opacity : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>opacity : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>This property holds the opacity of the item. Opacity is
                                     specified as a number between 0.0 (fully transparent) and 1.0
                                     (fully opaque). The default value is 1.0.</db:para>
@@ -1892,9 +1892,9 @@
             </db:tbody>
          </db:informaltable>
          <db:para>Changing an item's opacity does not affect whether the item
-                                    receives user input events. (In contrast, setting <db:link xlink:href="qquickitem.html#visible-prop">visible</db:link>
+                                    receives user input events. (In contrast, setting <db:link xlink:href="qquickitem.db#visible-prop">visible</db:link>
                                     property to <db:code>false</db:code> stops mouse events, and
-                                    setting the <db:link xlink:href="qquickitem.html#enabled-prop">enabled</db:link> property to <db:code>false</db:code>
+                                    setting the <db:link xlink:href="qquickitem.db#enabled-prop">enabled</db:link> property to <db:code>false</db:code>
                                     stops mouse and keyboard events, and also removes active focus
                                     from the item.)</db:para>
          <db:para>
@@ -1929,19 +1929,19 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qquickitem.html#visible-prop">visible</db:link>
+                  <db:link xlink:href="qquickitem.db#visible-prop">visible</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="parent-prop">
-         <db:title>parent : <db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
+         <db:title>parent : <db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>This property holds the visual parent of the item.</db:para>
          <db:note>
             <db:para>The concept of the <db:emphasis>visual
-                                        parent</db:emphasis> differs from that of the <db:emphasis><db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+                                        parent</db:emphasis> differs from that of the <db:emphasis><db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                                         parent</db:emphasis>. An item's visual parent may not necessarily
-                                    be the same as its object parent. See <db:link xlink:href="qtquick-visualcanvas-visualparent.html">Concepts -
+                                    be the same as its object parent. See <db:link xlink:href="qtquick-visualcanvas-visualparent.db">Concepts -
                                         Visual Parent in Qt Quick</db:link> for more
                                     details.</db:para>
          </db:note>
@@ -1977,9 +1977,9 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="rotation-prop">
-         <db:title>rotation : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>rotation : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>This property holds the rotation of the item in degrees
-                                    clockwise around its <db:link xlink:href="qquickitem.html#transformOrigin-prop">transformOrigin</db:link>.</db:para>
+                                    clockwise around its <db:link xlink:href="qquickitem.db#transformOrigin-prop">transformOrigin</db:link>.</db:para>
          <db:para>The default value is 0 degrees (that is, no
                                     rotation).</db:para>
          <db:informaltable>
@@ -2037,23 +2037,23 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
+                  <db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-rotation.html">Rotation</db:link>
+                  <db:link xlink:href="qml-qtquick-rotation.db">Rotation</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="scale-prop">
-         <db:title>scale : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>scale : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>This property holds the scale factor for this item.</db:para>
          <db:para>A scale of less than 1.0 causes the item to be rendered at a
                                     smaller size, and a scale greater than 1.0 renders the item at a
                                     larger size. A negative scale causes the item to be mirrored
                                     when rendered.</db:para>
          <db:para>The default value is 1.0.</db:para>
-         <db:para>Scaling is applied from the <db:link xlink:href="qquickitem.html#transformOrigin-prop">transformOrigin</db:link>.</db:para>
+         <db:para>Scaling is applied from the <db:link xlink:href="qquickitem.db#transformOrigin-prop">transformOrigin</db:link>.</db:para>
          <db:informaltable>
             <db:tbody>
                <db:tr>
@@ -2114,10 +2114,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
+                  <db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-scale.html">Scale</db:link>
+                  <db:link xlink:href="qml-qtquick-scale.db">Scale</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2163,7 +2163,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="state-prop">
-         <db:title>state : <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
+         <db:title>state : <db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>This property holds the name of the current state of the
                                     item.</db:para>
          <db:para>If the item is in its default state, that is, no explicit
@@ -2203,14 +2203,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick
+                  <db:link xlink:href="qtquick-statesanimations-states.db">Qt Quick
                                         States</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="transformOrigin-prop">
-         <db:title>transformOrigin : <db:link xlink:href="qquickitem.html#TransformOrigin-enum">TransformOrigin</db:link></db:title>
+         <db:title>transformOrigin : <db:link xlink:href="qquickitem.db#TransformOrigin-enum">TransformOrigin</db:link></db:title>
          <db:para>This property holds the origin point around which scale and
                                     rotation transform.</db:para>
          <db:para>Nine transform origins are available, as shown in the image
@@ -2270,18 +2270,18 @@
                                         <db:code>visible</db:code> property may not have the
                                     intended effect if a property binding should only respond to
                                     explicit property changes. In such cases it may be better to use
-                                    the <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link> property instead.)</db:para>
+                                    the <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link> property instead.)</db:para>
          <db:para>If this property is set to <db:code>false</db:code>, the
                                     item will no longer receive mouse events, but will continue to
-                                    receive key events and will retain the keyboard <db:link xlink:href="qquickitem.html#focus-prop">focus</db:link> if it has
-                                    been set. (In contrast, setting the <db:link xlink:href="qquickitem.html#enabled-prop">enabled</db:link>
+                                    receive key events and will retain the keyboard <db:link xlink:href="qquickitem.db#focus-prop">focus</db:link> if it has
+                                    been set. (In contrast, setting the <db:link xlink:href="qquickitem.db#enabled-prop">enabled</db:link>
                                     property to <db:code>false</db:code> stops both mouse and
                                     keyboard events, and also removes focus from the item.)</db:para>
          <db:note>
             <db:para>This property's value is only
                                     affected by changes to this property or the parent's
                                         <db:code>visible</db:code> property. It does not change,
-                                    for example, if this item moves off-screen, or if the <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link>
+                                    for example, if this item moves off-screen, or if the <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link>
                                     changes to 0.</db:para>
          </db:note>
          <db:para>
@@ -2317,16 +2317,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link>
+                  <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qquickitem.html#enabled-prop">enabled</db:link>
+                  <db:link xlink:href="qquickitem.db#enabled-prop">enabled</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="width-prop">
-         <db:title>width : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>width : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>This property holds the width of this item.</db:para>
          <db:para>
             <db:emphasis role="bold">Access functions:</db:emphasis>
@@ -2368,7 +2368,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="x-prop">
-         <db:title>x : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>x : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Defines the item's x position relative to its
                                     parent.</db:para>
          <db:para>
@@ -2401,7 +2401,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="y-prop">
-         <db:title>y : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>y : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Defines the item's y position relative to its
                                     parent.</db:para>
          <db:para>
@@ -2434,7 +2434,7 @@
          </db:informaltable>
       </db:section>
       <db:section xml:id="z-prop">
-         <db:title>z : <db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title>z : <db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Sets the stacking order of sibling items. By default the
                                     stacking order is 0.</db:para>
          <db:para>Items with a higher stacking value are drawn on top of
@@ -2561,13 +2561,13 @@
    <db:section xml:id="func">
       <db:title>Member Function Documentation</db:title>
       <db:section xml:id="QQuickItem">
-         <db:title>QQuickItem::QQuickItem(<db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
-         <db:para>Constructs a <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> with the given
+         <db:title>QQuickItem::QQuickItem(<db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
+         <db:para>Constructs a <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> with the given
                                     <db:emphasis>parent</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="dtor.QQuickItem">
          <db:title>[virtual] QQuickItem::~QQuickItem()</db:title>
-         <db:para>Destroys the <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code>.</db:para>
+         <db:para>Destroys the <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code>.</db:para>
       </db:section>
       <db:section xml:id="acceptHoverEvents">
          <db:title>bool QQuickItem::acceptHoverEvents() const</db:title>
@@ -2575,20 +2575,20 @@
                                     item.</db:para>
          <db:para>The default value is false.</db:para>
          <db:para>If this is false, then the item will not receive any hover
-                                    events through the <db:code><db:link xlink:href="qquickitem.html#hoverEnterEvent">hoverEnterEvent</db:link>()</db:code>, <db:code><db:link xlink:href="qquickitem.html#hoverMoveEvent">hoverMoveEvent</db:link>()</db:code> and <db:code><db:link xlink:href="qquickitem.html#hoverLeaveEvent">hoverLeaveEvent</db:link>()</db:code> functions.</db:para>
+                                    events through the <db:code><db:link xlink:href="qquickitem.db#hoverEnterEvent">hoverEnterEvent</db:link>()</db:code>, <db:code><db:link xlink:href="qquickitem.db#hoverMoveEvent">hoverMoveEvent</db:link>()</db:code> and <db:code><db:link xlink:href="qquickitem.db#hoverLeaveEvent">hoverLeaveEvent</db:link>()</db:code> functions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setAcceptHoverEvents">setAcceptHoverEvents</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setAcceptHoverEvents">setAcceptHoverEvents</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="acceptedMouseButtons">
-         <db:title><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
+         <db:title><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
          <db:para>Returns the mouse buttons accepted by this item.</db:para>
-         <db:para>The default value is <db:code><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::NoButton</db:link></db:code>; that is, no mouse buttons are
+         <db:para>The default value is <db:code><db:link xlink:href="qt.db#MouseButton-enum">Qt::NoButton</db:link></db:code>; that is, no mouse buttons are
                                     accepted.</db:para>
          <db:para>If an item does not accept the mouse button for a particular
                                     mouse event, the mouse event will not be delivered to the item
@@ -2598,27 +2598,27 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setAcceptedMouseButtons">setAcceptedMouseButtons</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setAcceptedMouseButtons">setAcceptedMouseButtons</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="childAt">
-         <db:title><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link></db:title>
+         <db:title><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link></db:title>
          <db:para>Returns the first visible child item found at point
                                         (<db:emphasis>x</db:emphasis>, <db:emphasis>y</db:emphasis>) within the
                                     coordinate system of this item.</db:para>
          <db:para>Returns 0 if there is no such item.</db:para>
       </db:section>
       <db:section xml:id="childItems">
-         <db:title><db:link xlink:href="qtcore/qlist.html">QList</db:link><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
+         <db:title><db:link xlink:href="qlist.db">QList</db:link><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>Returns the children of this item.</db:para>
       </db:section>
       <db:section xml:id="childMouseEventFilter">
-         <db:title>[virtual protected] bool QQuickItem::childMouseEventFilter(<db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
+         <db:title>[virtual protected] bool QQuickItem::childMouseEventFilter(<db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link><db:link xlink:href="qevent.db">QEvent</db:link></db:title>
          <db:para>Reimplement this method to filter the mouse events that are
                                     received by this item's children.</db:para>
-         <db:para>This method will only be called if <db:code><db:link xlink:href="qquickitem.html#filtersChildMouseEvents">filtersChildMouseEvents</db:link>()</db:code> is true.</db:para>
+         <db:para>This method will only be called if <db:code><db:link xlink:href="qquickitem.db#filtersChildMouseEvents">filtersChildMouseEvents</db:link>()</db:code> is true.</db:para>
          <db:para>Return true if the specified <db:emphasis>event</db:emphasis> should
                                     not be passed onto the specified child <db:emphasis>item</db:emphasis>,
                                     and false otherwise.</db:para>
@@ -2626,26 +2626,26 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="classBegin">
          <db:title>[virtual protected] void QQuickItem::classBegin()</db:title>
-         <db:para>Reimplemented from <db:code><db:link xlink:href="qtqml/qqmlparserstatus.html#classBegin">QQmlParserStatus::classBegin</db:link>()</db:code>.</db:para>
+         <db:para>Reimplemented from <db:code><db:link xlink:href="qqmlparserstatus.db#classBegin">QQmlParserStatus::classBegin</db:link>()</db:code>.</db:para>
          <db:para>Derived classes should call the base class method before
                                     adding their own action to perform at classBegin.</db:para>
       </db:section>
       <db:section xml:id="componentComplete">
          <db:title>[virtual protected] void QQuickItem::componentComplete()</db:title>
-         <db:para>Reimplemented from <db:code><db:link xlink:href="qtqml/qqmlparserstatus.html#componentComplete">QQmlParserStatus::componentComplete</db:link>()</db:code>.</db:para>
+         <db:para>Reimplemented from <db:code><db:link xlink:href="qqmlparserstatus.db#componentComplete">QQmlParserStatus::componentComplete</db:link>()</db:code>.</db:para>
          <db:para>Derived classes should call the base class method before
                                     adding their own actions to perform at
                                     componentComplete.</db:para>
       </db:section>
       <db:section xml:id="contains">
-         <db:title>[virtual] bool QQuickItem::contains(const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title>[virtual] bool QQuickItem::contains(const <db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Returns true if this item contains <db:emphasis>point</db:emphasis>,
                                     which is in local coordinates; returns false otherwise.</db:para>
          <db:para>This function can be overwritten in order to handle point
@@ -2658,111 +2658,111 @@
                                     possible.</db:para>
       </db:section>
       <db:section xml:id="cursor">
-         <db:title><db:link xlink:href="qtgui/qcursor.html">QCursor</db:link></db:title>
+         <db:title><db:link xlink:href="qcursor.db">QCursor</db:link></db:title>
          <db:para>Returns the cursor shape for this item.</db:para>
          <db:para>The mouse cursor will assume this shape when it is over this
-                                    item, unless an override cursor is set. See the <db:link xlink:href="qtcore/qt.html#CursorShape-enum">list of predefined
+                                    item, unless an override cursor is set. See the <db:link xlink:href="qt.db#CursorShape-enum">list of predefined
                                         cursor objects</db:link> for a range of useful
                                     shapes.</db:para>
          <db:para>If no cursor shape has been set this returns a cursor with
-                                    the <db:code><db:link xlink:href="qtcore/qt.html#CursorShape-enum">Qt::ArrowCursor</db:link></db:code> shape, however another cursor
+                                    the <db:code><db:link xlink:href="qt.db#CursorShape-enum">Qt::ArrowCursor</db:link></db:code> shape, however another cursor
                                     shape may be displayed if an overlapping item has a valid
                                     cursor.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setCursor">setCursor</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setCursor">setCursor</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#unsetCursor">unsetCursor</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#unsetCursor">unsetCursor</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="dragEnterEvent">
-         <db:title>[virtual protected] void QQuickItem::dragEnterEvent(<db:link xlink:href="qtgui/qdragenterevent.html">QDragEnterEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::dragEnterEvent(<db:link xlink:href="qdragenterevent.db">QDragEnterEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive drag-enter events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.html#Flag-enum">ItemAcceptsDrops</db:link>
+         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.db#Flag-enum">ItemAcceptsDrops</db:link>
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
+                  <db:link xlink:href="qml-qtquick-drag.db">Drag</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/3rdparty.html#drag-and-drop">Drag and
+                  <db:link xlink:href="3rdparty.db#drag-and-drop">Drag and
                                         Drop</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="dragLeaveEvent">
-         <db:title>[virtual protected] void QQuickItem::dragLeaveEvent(<db:link xlink:href="qtgui/qdragleaveevent.html">QDragLeaveEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::dragLeaveEvent(<db:link xlink:href="qdragleaveevent.db">QDragLeaveEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive drag-leave events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.html#Flag-enum">ItemAcceptsDrops</db:link>
+         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.db#Flag-enum">ItemAcceptsDrops</db:link>
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
+                  <db:link xlink:href="qml-qtquick-drag.db">Drag</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/3rdparty.html#drag-and-drop">Drag and
+                  <db:link xlink:href="3rdparty.db#drag-and-drop">Drag and
                                         Drop</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="dragMoveEvent">
-         <db:title>[virtual protected] void QQuickItem::dragMoveEvent(<db:link xlink:href="qtgui/qdragmoveevent.html">QDragMoveEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::dragMoveEvent(<db:link xlink:href="qdragmoveevent.db">QDragMoveEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive drag-move events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.html#Flag-enum">ItemAcceptsDrops</db:link>
+         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.db#Flag-enum">ItemAcceptsDrops</db:link>
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
+                  <db:link xlink:href="qml-qtquick-drag.db">Drag</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/3rdparty.html#drag-and-drop">Drag and
+                  <db:link xlink:href="3rdparty.db#drag-and-drop">Drag and
                                         Drop</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="dropEvent">
-         <db:title>[virtual protected] void QQuickItem::dropEvent(<db:link xlink:href="qtgui/qdropevent.html">QDropEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::dropEvent(<db:link xlink:href="qdropevent.db">QDropEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive drop events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.html#Flag-enum">ItemAcceptsDrops</db:link>
+         <db:para>Drag and drop events are only provided if the <db:link xlink:href="qquickitem.db#Flag-enum">ItemAcceptsDrops</db:link>
                                     flag has been set for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-drag.html">Drag</db:link>
+                  <db:link xlink:href="qml-qtquick-drag.db">Drag</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtdoc/3rdparty.html#drag-and-drop">Drag and
+                  <db:link xlink:href="3rdparty.db#drag-and-drop">Drag and
                                         Drop</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="event">
-         <db:title>[virtual protected] bool QQuickItem::event(<db:link xlink:href="qtcore/qevent.html">QEvent</db:link></db:title>
-         <db:para>Reimplemented from <db:code><db:link xlink:href="qtcore/qobject.html#event">QObject::event</db:link>()</db:code>.</db:para>
+         <db:title>[virtual protected] bool QQuickItem::event(<db:link xlink:href="qevent.db">QEvent</db:link></db:title>
+         <db:para>Reimplemented from <db:code><db:link xlink:href="qobject.db#event">QObject::event</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="filtersChildMouseEvents">
          <db:title>bool QQuickItem::filtersChildMouseEvents() const</db:title>
@@ -2772,37 +2772,37 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFiltersChildMouseEvents">setFiltersChildMouseEvents</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#childMouseEventFilter">childMouseEventFilter</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#childMouseEventFilter">childMouseEventFilter</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="flags">
-         <db:title><db:link xlink:href="qquickitem.html#Flag-enum">Flags</db:link></db:title>
+         <db:title><db:link xlink:href="qquickitem.db#Flag-enum">Flags</db:link></db:title>
          <db:para>Returns the item flags for this item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFlags">setFlags</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFlags">setFlags</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFlag">setFlag</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="focusInEvent">
-         <db:title>[virtual protected] void QQuickItem::focusInEvent(<db:link xlink:href="qtgui/qfocusevent.html">QFocusEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::focusInEvent(<db:link xlink:href="qfocusevent.db">QFocusEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive focus-in events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
       </db:section>
       <db:section xml:id="focusOutEvent">
-         <db:title>[virtual protected] void QQuickItem::focusOutEvent(<db:link xlink:href="qtgui/qfocusevent.html">QFocusEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::focusOutEvent(<db:link xlink:href="qfocusevent.db">QFocusEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive focus-out events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
@@ -2812,11 +2812,11 @@
          <db:para/>
       </db:section>
       <db:section xml:id="forceActiveFocus-2">
-         <db:title>void QQuickItem::forceActiveFocus(<db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:title>
+         <db:title>void QQuickItem::forceActiveFocus(<db:link xlink:href="qt.db#FocusReason-enum">Qt::FocusReason</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="geometryChanged">
-         <db:title>[virtual protected] void QQuickItem::geometryChanged(const <db:link xlink:href="qtcore/qrectf.html">QRectF</db:link><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::geometryChanged(const <db:link xlink:href="qrectf.db">QRectF</db:link><db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>This function is called to handle this item's changes in
                                     geometry from <db:emphasis>oldGeometry</db:emphasis> to
                                         <db:emphasis>newGeometry</db:emphasis>. If the two geometries are the
@@ -2827,7 +2827,7 @@
       <db:section xml:id="grabMouse">
          <db:title>void QQuickItem::grabMouse()</db:title>
          <db:para>Grabs the mouse input.</db:para>
-         <db:para>This item will receive all mouse events until <db:code><db:link xlink:href="qquickitem.html#ungrabMouse">ungrabMouse</db:link>()</db:code> is
+         <db:para>This item will receive all mouse events until <db:code><db:link xlink:href="qquickitem.db#ungrabMouse">ungrabMouse</db:link>()</db:code> is
                                     called.</db:para>
          <db:warning>
             <db:para> This function should be used with
@@ -2835,9 +2835,9 @@
          </db:warning>
       </db:section>
       <db:section xml:id="grabToImage">
-         <db:title><db:link xlink:href="qtcore/qsharedpointer.html">QSharedPointer</db:link><db:link xlink:href="qquickitemgrabresult.html">QQuickItemGrabResult</db:link><db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
+         <db:title><db:link xlink:href="qsharedpointer.db">QSharedPointer</db:link><db:link xlink:href="qquickitemgrabresult.db">QQuickItemGrabResult</db:link><db:link xlink:href="qsize.db">QSize</db:link></db:title>
          <db:para>Grabs the item into an in-memory image.</db:para>
-         <db:para>The grab happens asynchronously and the signal <db:code><db:link xlink:href="qquickitemgrabresult.html#ready">QQuickItemGrabResult::ready</db:link>()</db:code> is emitted when the
+         <db:para>The grab happens asynchronously and the signal <db:code><db:link xlink:href="qquickitemgrabresult.db#ready">QQuickItemGrabResult::ready</db:link>()</db:code> is emitted when the
                                     grab has been completed.</db:para>
          <db:para>Use <db:emphasis>targetSize</db:emphasis> to specify the size of the
                                     target image. By default, the result will have the same size as
@@ -2848,29 +2848,29 @@
             <db:para>This function will render the item to
                                     an offscreen surface and copy that surface from the GPU's memory
                                     into the CPU's memory, which can be quite costly. For "live"
-                                    preview, use <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layers</db:link> or <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.</db:para>
+                                    preview, use <db:link xlink:href="qml-qtquick-item.db#layer.enabled-prop">layers</db:link> or <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.</db:para>
          </db:note>
          <db:para>
             <db:emphasis role="bold">See
                                         also </db:emphasis>
-            <db:code><db:link xlink:href="qquickwindow.html#grabWindow">QQuickWindow::grabWindow</db:link>()</db:code>.</db:para>
+            <db:code><db:link xlink:href="qquickwindow.db#grabWindow">QQuickWindow::grabWindow</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="grabTouchPoints">
-         <db:title>void QQuickItem::grabTouchPoints(const <db:link xlink:href="qtcore/qvector.html">QVector</db:link></db:title>
+         <db:title>void QQuickItem::grabTouchPoints(const <db:link xlink:href="qvector.db">QVector</db:link></db:title>
          <db:para>Grabs the touch points specified by
                                     <db:emphasis>ids</db:emphasis>.</db:para>
          <db:para>These touch points will be owned by the item until they are
                                     released. Alternatively, the grab can be stolen by a filtering
-                                    item like Flickable. Use <db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code> to prevent the grab from being
+                                    item like Flickable. Use <db:code><db:link xlink:href="qquickitem.db#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code> to prevent the grab from being
                                     stolen.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#ungrabTouchPoints">ungrabTouchPoints</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#ungrabTouchPoints">ungrabTouchPoints</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2881,34 +2881,34 @@
                                     explicitly.</db:para>
       </db:section>
       <db:section xml:id="hoverEnterEvent">
-         <db:title>[virtual protected] void QQuickItem::hoverEnterEvent(<db:link xlink:href="qtgui/qhoverevent.html">QHoverEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::hoverEnterEvent(<db:link xlink:href="qhoverevent.db">QHoverEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive hover-enter events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Hover events are only provided if <db:code><db:link xlink:href="qquickitem.html#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code> is true.</db:para>
+         <db:para>Hover events are only provided if <db:code><db:link xlink:href="qquickitem.db#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code> is true.</db:para>
       </db:section>
       <db:section xml:id="hoverLeaveEvent">
-         <db:title>[virtual protected] void QQuickItem::hoverLeaveEvent(<db:link xlink:href="qtgui/qhoverevent.html">QHoverEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::hoverLeaveEvent(<db:link xlink:href="qhoverevent.db">QHoverEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive hover-leave events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Hover events are only provided if <db:code><db:link xlink:href="qquickitem.html#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code> is true.</db:para>
+         <db:para>Hover events are only provided if <db:code><db:link xlink:href="qquickitem.db#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code> is true.</db:para>
       </db:section>
       <db:section xml:id="hoverMoveEvent">
-         <db:title>[virtual protected] void QQuickItem::hoverMoveEvent(<db:link xlink:href="qtgui/qhoverevent.html">QHoverEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::hoverMoveEvent(<db:link xlink:href="qhoverevent.db">QHoverEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive hover-move events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
-         <db:para>Hover events are only provided if <db:code><db:link xlink:href="qquickitem.html#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code> is true.</db:para>
+         <db:para>Hover events are only provided if <db:code><db:link xlink:href="qquickitem.db#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code> is true.</db:para>
       </db:section>
       <db:section xml:id="inputMethodEvent">
-         <db:title>[virtual protected] void QQuickItem::inputMethodEvent(<db:link xlink:href="qtgui/qinputmethodevent.html">QInputMethodEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::inputMethodEvent(<db:link xlink:href="qinputmethodevent.db">QInputMethodEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive input method events for an item. The event information
                                     is provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
       </db:section>
       <db:section xml:id="inputMethodQuery">
-         <db:title>[virtual] <db:link xlink:href="qtcore/qvariant.html">QVariant</db:link><db:link xlink:href="qtcore/qt.html#InputMethodQuery-enum">Qt::InputMethodQuery</db:link></db:title>
+         <db:title>[virtual] <db:link xlink:href="qvariant.db">QVariant</db:link><db:link xlink:href="qt.db#InputMethodQuery-enum">Qt::InputMethodQuery</db:link></db:title>
          <db:para>This method is only relevant for input items.</db:para>
          <db:para>If this item is an input item, this method should be
                                     reimplemented to return the relevant input method flags for the
@@ -2917,7 +2917,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtwidgets/qwidget.html#inputMethodQuery">QWidget::inputMethodQuery</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qwidget.db#inputMethodQuery">QWidget::inputMethodQuery</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2932,7 +2932,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#componentComplete">componentComplete</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#componentComplete">componentComplete</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2949,7 +2949,7 @@
          <db:para>This function can be called from any thread.</db:para>
       </db:section>
       <db:section xml:id="itemChange">
-         <db:title>[virtual protected] void QQuickItem::itemChange(<db:link xlink:href="qquickitem.html#ItemChange-enum">ItemChange</db:link><db:link xlink:href="qquickitem-itemchangedata.html">ItemChangeData</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::itemChange(<db:link xlink:href="qquickitem.db#ItemChange-enum">ItemChange</db:link><db:link xlink:href="qquickitem-itemchangedata.db">ItemChangeData</db:link></db:title>
          <db:para>Called when <db:emphasis>change</db:emphasis> occurs for this
                                     item.</db:para>
          <db:para>
@@ -2959,7 +2959,7 @@
                                     call</db:para>
          <db:programlisting>QQuickItem::itemChange(change, value);</db:programlisting>
          <db:para>typically at the end of your implementation, to ensure the
-                                        <db:code><db:link xlink:href="qquickitem.html#windowChanged">windowChanged</db:link>()</db:code> signal will be emitted.</db:para>
+                                        <db:code><db:link xlink:href="qquickitem.db#windowChanged">windowChanged</db:link>()</db:code> signal will be emitted.</db:para>
       </db:section>
       <db:section xml:id="keepMouseGrab">
          <db:title>bool QQuickItem::keepMouseGrab() const</db:title>
@@ -2969,7 +2969,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2982,28 +2982,28 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setKeepTouchGrab">setKeepTouchGrab</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#keepMouseGrab">keepMouseGrab</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyPressEvent">
-         <db:title>[virtual protected] void QQuickItem::keyPressEvent(<db:link xlink:href="qtgui/qkeyevent.html">QKeyEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::keyPressEvent(<db:link xlink:href="qkeyevent.db">QKeyEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive key press events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
       </db:section>
       <db:section xml:id="keyReleaseEvent">
-         <db:title>[virtual protected] void QQuickItem::keyReleaseEvent(<db:link xlink:href="qtgui/qkeyevent.html">QKeyEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::keyReleaseEvent(<db:link xlink:href="qkeyevent.db">QKeyEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive key release events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
       </db:section>
       <db:section xml:id="mapFromItem">
-         <db:title><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link><db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>point</db:emphasis> in
                                         <db:emphasis>item</db:emphasis>'s coordinate system to the equivalent
                                     point within this item's coordinate system, and returns the
@@ -3015,14 +3015,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapFromScene">
-         <db:title><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>point</db:emphasis> in the scene's
                                     coordinate system to the equivalent point within this item's
                                     coordinate system, and returns the mapped coordinate.</db:para>
@@ -3030,14 +3030,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapRectFromItem">
-         <db:title><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title><db:link xlink:href="qrectf.db">QRectF</db:link><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link><db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>rect</db:emphasis> in
                                         <db:emphasis>item</db:emphasis>'s coordinate system to the equivalent
                                     rectangular area within this item's coordinate system, and
@@ -3049,14 +3049,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapRectFromScene">
-         <db:title><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title><db:link xlink:href="qrectf.db">QRectF</db:link><db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>rect</db:emphasis> in the scene's
                                     coordinate system to the equivalent rectangular area within this
                                     item's coordinate system, and returns the mapped rectangle
@@ -3065,14 +3065,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapRectToItem">
-         <db:title><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title><db:link xlink:href="qrectf.db">QRectF</db:link><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link><db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>rect</db:emphasis> in this item's
                                     coordinate system to the equivalent rectangular area within
                                         <db:emphasis>item</db:emphasis>'s coordinate system, and returns the
@@ -3084,14 +3084,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapRectToScene">
-         <db:title><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link><db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title><db:link xlink:href="qrectf.db">QRectF</db:link><db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>rect</db:emphasis> in this item's
                                     coordinate system to the equivalent rectangular area within the
                                     scene's coordinate system, and returns the mapped rectangle
@@ -3100,14 +3100,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapToItem">
-         <db:title><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link><db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>point</db:emphasis> in this item's
                                     coordinate system to the equivalent point within
                                         <db:emphasis>item</db:emphasis>'s coordinate system, and returns the
@@ -3119,14 +3119,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mapToScene">
-         <db:title><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link><db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title><db:link xlink:href="qpointf.db">QPointF</db:link><db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>Maps the given <db:emphasis>point</db:emphasis> in this item's
                                     coordinate system to the equivalent point within the scene's
                                     coordinate system, and returns the mapped coordinate.</db:para>
@@ -3134,33 +3134,33 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-coordinates.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-coordinates.db">Concepts -
                                         Visual Coordinates in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseDoubleClickEvent">
-         <db:title>[virtual protected] void QQuickItem::mouseDoubleClickEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::mouseDoubleClickEvent(<db:link xlink:href="qmouseevent.db">QMouseEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive mouse double-click events for an item. The event
                                     information is provided by the <db:emphasis>event</db:emphasis>
                                     parameter.</db:para>
       </db:section>
       <db:section xml:id="mouseMoveEvent">
-         <db:title>[virtual protected] void QQuickItem::mouseMoveEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::mouseMoveEvent(<db:link xlink:href="qmouseevent.db">QMouseEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive mouse move events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
       </db:section>
       <db:section xml:id="mousePressEvent">
-         <db:title>[virtual protected] void QQuickItem::mousePressEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::mousePressEvent(<db:link xlink:href="qmouseevent.db">QMouseEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive mouse press events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
       </db:section>
       <db:section xml:id="mouseReleaseEvent">
-         <db:title>[virtual protected] void QQuickItem::mouseReleaseEvent(<db:link xlink:href="qtgui/qmouseevent.html">QMouseEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::mouseReleaseEvent(<db:link xlink:href="qmouseevent.db">QMouseEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive mouse release events for an item. The event information
                                     is provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
@@ -3174,13 +3174,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#ungrabMouse">ungrabMouse</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#ungrabMouse">ungrabMouse</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="nextItemInFocusChain">
-         <db:title><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
+         <db:title><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>Returns the item in the focus chain which is next to this
                                     item. If <db:emphasis>forward</db:emphasis> is
                                     <db:code>true</db:code>, or not supplied, it is the next
@@ -3192,33 +3192,33 @@
          <db:title>void QQuickItem::polish()</db:title>
          <db:para>Schedules a polish event for this item.</db:para>
          <db:para>When the scene graph processes the request, it will call
-                                        <db:code><db:link xlink:href="qquickitem.html#updatePolish">updatePolish</db:link>()</db:code> on this item.</db:para>
+                                        <db:code><db:link xlink:href="qquickitem.db#updatePolish">updatePolish</db:link>()</db:code> on this item.</db:para>
       </db:section>
       <db:section xml:id="releaseResources">
          <db:title>[virtual protected] void QQuickItem::releaseResources()</db:title>
          <db:para>This function is called when an item should release graphics
                                     resources which are not already managed by the nodes returend
-                                    from <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code>.</db:para>
+                                    from <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code>.</db:para>
          <db:para>This happens when the item is about to be removed from
                                     window it was previously rendering to. The item is guaranteed to
-                                    have a <db:link xlink:href="qquickitem.html#window">window</db:link>
+                                    have a <db:link xlink:href="qquickitem.db#window">window</db:link>
                                     when the function is called.</db:para>
          <db:para>The function is called on the GUI thread and the state of
                                     the rendering thread, when it is used, is unknown. Objects
                                     should not be deleted directly, but instead scheduled for
-                                    cleanup using <db:code><db:link xlink:href="qquickwindow.html#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code>.</db:para>
+                                    cleanup using <db:code><db:link xlink:href="qquickwindow.db#scheduleRenderJob">QQuickWindow::scheduleRenderJob</db:link>()</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qquickitem.html#graphics-resource-handling">Graphics
+                  <db:link xlink:href="qquickitem.db#graphics-resource-handling">Graphics
                                         Resource Handling</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="scopedFocusItem">
-         <db:title><db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
+         <db:title><db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>If this item is a focus scope, this returns the item in its
                                     focus chain that currently has focus.</db:para>
          <db:para>Returns 0 if this item is not a focus scope.</db:para>
@@ -3232,36 +3232,36 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#acceptHoverEvents">acceptHoverEvents</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="setAcceptedMouseButtons">
-         <db:title>void QQuickItem::setAcceptedMouseButtons(<db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
+         <db:title>void QQuickItem::setAcceptedMouseButtons(<db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButtons</db:link></db:title>
          <db:para>Sets the mouse buttons accepted by this item to
                                         <db:emphasis>buttons</db:emphasis>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#acceptedMouseButtons">acceptedMouseButtons</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#acceptedMouseButtons">acceptedMouseButtons</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="setCursor">
-         <db:title>void QQuickItem::setCursor(const <db:link xlink:href="qtgui/qcursor.html">QCursor</db:link></db:title>
+         <db:title>void QQuickItem::setCursor(const <db:link xlink:href="qcursor.db">QCursor</db:link></db:title>
          <db:para>Sets the <db:emphasis>cursor</db:emphasis> shape for this
                                     item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#cursor">cursor</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#cursor">cursor</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#unsetCursor">unsetCursor</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#unsetCursor">unsetCursor</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3270,40 +3270,40 @@
          <db:title>void QQuickItem::setFiltersChildMouseEvents(bool filter)</db:title>
          <db:para>Sets whether mouse events of this item's children should be
                                     filtered through this item.</db:para>
-         <db:para>If <db:emphasis>filter</db:emphasis> is true, <db:code><db:link xlink:href="qquickitem.html#childMouseEventFilter">childMouseEventFilter</db:link>()</db:code> will be called when a
+         <db:para>If <db:emphasis>filter</db:emphasis> is true, <db:code><db:link xlink:href="qquickitem.db#childMouseEventFilter">childMouseEventFilter</db:link>()</db:code> will be called when a
                                     mouse event is triggered for a child item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#filtersChildMouseEvents">filtersChildMouseEvents</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#filtersChildMouseEvents">filtersChildMouseEvents</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="setFlag">
-         <db:title>void QQuickItem::setFlag(<db:link xlink:href="qquickitem.html#Flag-enum">Flag</db:link></db:title>
+         <db:title>void QQuickItem::setFlag(<db:link xlink:href="qquickitem.db#Flag-enum">Flag</db:link></db:title>
          <db:para>Enables the specified <db:emphasis>flag</db:emphasis> for this item if
                                         <db:emphasis>enabled</db:emphasis> is true; if
                                         <db:emphasis>enabled</db:emphasis> is false, the flag is
                                     disabled.</db:para>
          <db:para>These provide various hints for the item; for example, the
-                                        <db:link xlink:href="qquickitem.html#Flag-enum">ItemClipsChildrenToShape</db:link> flag indicates that all
+                                        <db:link xlink:href="qquickitem.db#Flag-enum">ItemClipsChildrenToShape</db:link> flag indicates that all
                                     children of this item should be clipped to fit within the item
                                     area.</db:para>
       </db:section>
       <db:section xml:id="setFlags">
-         <db:title>void QQuickItem::setFlags(<db:link xlink:href="qquickitem.html#Flag-enum">Flags</db:link></db:title>
+         <db:title>void QQuickItem::setFlags(<db:link xlink:href="qquickitem.db#Flag-enum">Flags</db:link></db:title>
          <db:para>Enables the specified <db:emphasis>flags</db:emphasis> for this
                                     item.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#flags">flags</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#flags">flags</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setFlag">setFlag</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setFlag">setFlag</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3314,18 +3314,18 @@
                                     this item.</db:para>
          <db:para>This is useful for items that wish to grab and keep mouse
                                     interaction following a predefined gesture. For example, an item
-                                    that is interested in horizontal mouse movement may set <db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>
-                                    to true once a threshold has been exceeded. Once <db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>
+                                    that is interested in horizontal mouse movement may set <db:link xlink:href="qquickitem.db#keepMouseGrab">keepMouseGrab</db:link>
+                                    to true once a threshold has been exceeded. Once <db:link xlink:href="qquickitem.db#keepMouseGrab">keepMouseGrab</db:link>
                                     has been set to true, filtering items will not react to mouse
                                     events.</db:para>
          <db:para>If <db:emphasis>keep</db:emphasis> is false, a filtering item may
-                                    steal the grab. For example, <db:link xlink:href="qtquick-touchinteraction-example.html#flickable">Flickable</db:link> may attempt to steal a mouse grab if it
+                                    steal the grab. For example, <db:link xlink:href="qtquick-touchinteraction-example.db#flickable">Flickable</db:link> may attempt to steal a mouse grab if it
                                     detects that the user has begun to move the viewport.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#keepMouseGrab">keepMouseGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#keepMouseGrab">keepMouseGrab</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3341,63 +3341,63 @@
                                     Once setKeepTouchGrab has been set to true, filtering items will
                                     not react to the relevant touch points.</db:para>
          <db:para>If <db:emphasis>keep</db:emphasis> is false, a filtering item may
-                                    steal the grab. For example, <db:link xlink:href="qtquick-touchinteraction-example.html#flickable">Flickable</db:link> may attempt to steal a touch point grab
+                                    steal the grab. For example, <db:link xlink:href="qtquick-touchinteraction-example.db#flickable">Flickable</db:link> may attempt to steal a touch point grab
                                     if it detects that the user has begun to move the
                                     viewport.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#keepTouchGrab">keepTouchGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#keepTouchGrab">keepTouchGrab</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setKeepMouseGrab">setKeepMouseGrab</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="stackAfter">
-         <db:title>void QQuickItem::stackAfter(const <db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
+         <db:title>void QQuickItem::stackAfter(const <db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>Moves the specified <db:emphasis>sibling</db:emphasis> item to the
                                     index after this item within the visual stacking order.</db:para>
          <db:para>The given <db:emphasis>sibling</db:emphasis> must be a sibling of this
-                                    item; that is, they must have the same immediate <db:link xlink:href="qquickitem.html#parent-prop">parent</db:link>.</db:para>
+                                    item; that is, they must have the same immediate <db:link xlink:href="qquickitem.db#parent-prop">parent</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-visualparent.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-visualparent.db">Concepts -
                                         Visual Parent in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="stackBefore">
-         <db:title>void QQuickItem::stackBefore(const <db:link xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:link></db:title>
+         <db:title>void QQuickItem::stackBefore(const <db:link xlink:href="qquickitem.db#QQuickItem">QQuickItem</db:link></db:title>
          <db:para>Moves the specified <db:emphasis>sibling</db:emphasis> item to the
                                     index before this item within the visual stacking
                                     order.</db:para>
          <db:para>The given <db:emphasis>sibling</db:emphasis> must be a sibling of this
-                                    item; that is, they must have the same immediate <db:link xlink:href="qquickitem.html#parent-prop">parent</db:link>.</db:para>
+                                    item; that is, they must have the same immediate <db:link xlink:href="qquickitem.db#parent-prop">parent</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-visualcanvas-visualparent.html">Concepts -
+                  <db:link xlink:href="qtquick-visualcanvas-visualparent.db">Concepts -
                                         Visual Parent in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="textureProvider">
-         <db:title>[virtual] <db:link xlink:href="qsgtextureprovider.html">QSGTextureProvider</db:link></db:title>
+         <db:title>[virtual] <db:link xlink:href="qsgtextureprovider.db">QSGTextureProvider</db:link></db:title>
          <db:para>Returns the texture provider for an item. The default
                                     implementation returns 0.</db:para>
          <db:para>This function may only be called on the rendering
                                     thread.</db:para>
       </db:section>
       <db:section xml:id="touchEvent">
-         <db:title>[virtual protected] void QQuickItem::touchEvent(<db:link xlink:href="qtgui/qtouchevent.html">QTouchEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::touchEvent(<db:link xlink:href="qtouchevent.db">QTouchEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive touch events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
@@ -3410,7 +3410,7 @@
       </db:section>
       <db:section xml:id="ungrabMouse">
          <db:title>void QQuickItem::ungrabMouse()</db:title>
-         <db:para>Releases the mouse grab following a call to <db:code><db:link xlink:href="qquickitem.html#grabMouse">grabMouse</db:link>()</db:code>.</db:para>
+         <db:para>Releases the mouse grab following a call to <db:code><db:link xlink:href="qquickitem.db#grabMouse">grabMouse</db:link>()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="ungrabTouchPoints">
          <db:title>void QQuickItem::ungrabTouchPoints()</db:title>
@@ -3419,7 +3419,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#grabTouchPoints">grabTouchPoints</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#grabTouchPoints">grabTouchPoints</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3431,50 +3431,50 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#cursor">cursor</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#cursor">cursor</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qquickitem.html#setCursor">setCursor</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qquickitem.db#setCursor">setCursor</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="update">
          <db:title>[slot] void QQuickItem::update()</db:title>
-         <db:para>Schedules a call to <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">updatePaintNode</db:link>()</db:code> for this item.</db:para>
-         <db:para>The call to <db:code><db:link xlink:href="qquickitem.html#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> will always happen
-                                    if the item is showing in a <db:code><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:code>.</db:para>
-         <db:para>Only items which specifies <db:code><db:link xlink:href="qquickitem.html#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> are allowed to call
+         <db:para>Schedules a call to <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">updatePaintNode</db:link>()</db:code> for this item.</db:para>
+         <db:para>The call to <db:code><db:link xlink:href="qquickitem.db#updatePaintNode">QQuickItem::updatePaintNode</db:link>()</db:code> will always happen
+                                    if the item is showing in a <db:code><db:link xlink:href="qquickwindow.db">QQuickWindow</db:link></db:code>.</db:para>
+         <db:para>Only items which specifies <db:code><db:link xlink:href="qquickitem.db#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> are allowed to call
                                     QQuickItem::update().</db:para>
       </db:section>
       <db:section xml:id="updateInputMethod">
-         <db:title>[protected] void QQuickItem::updateInputMethod(<db:link xlink:href="qtcore/qt.html#InputMethodQuery-enum">Qt::InputMethodQueries</db:link></db:title>
+         <db:title>[protected] void QQuickItem::updateInputMethod(<db:link xlink:href="qt.db#InputMethodQuery-enum">Qt::InputMethodQueries</db:link></db:title>
          <db:para>Notify input method on updated query values if needed.
                                         <db:emphasis>queries</db:emphasis> indicates the changed
                                     attributes.</db:para>
       </db:section>
       <db:section xml:id="updatePaintNode">
-         <db:title>[virtual protected] <db:link xlink:href="qsgnode.html">QSGNode</db:link><db:link xlink:href="qsgnode.html">QSGNode</db:link><db:link xlink:href="qquickitem-updatepaintnodedata.html">UpdatePaintNodeData</db:link></db:title>
+         <db:title>[virtual protected] <db:link xlink:href="qsgnode.db">QSGNode</db:link><db:link xlink:href="qsgnode.db">QSGNode</db:link><db:link xlink:href="qquickitem-updatepaintnodedata.db">UpdatePaintNodeData</db:link></db:title>
          <db:para>Called on the render thread when it is time to sync the
                                     state of the item with the scene graph.</db:para>
-         <db:para>The function is called as a result of <db:code><db:link xlink:href="qquickitem.html#update">QQuickItem::update</db:link>()</db:code>,
-                                    if the user has set the <db:code><db:link xlink:href="qquickitem.html#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> flag on the
+         <db:para>The function is called as a result of <db:code><db:link xlink:href="qquickitem.db#update">QQuickItem::update</db:link>()</db:code>,
+                                    if the user has set the <db:code><db:link xlink:href="qquickitem.db#Flag-enum">QQuickItem::ItemHasContents</db:link></db:code> flag on the
                                     item.</db:para>
          <db:para>The function should return the root of the scene graph
                                     subtree for this item. Most implementations will return a single
-                                        <db:code><db:link xlink:href="qsggeometrynode.html">QSGGeometryNode</db:link></db:code>
+                                        <db:code><db:link xlink:href="qsggeometrynode.db">QSGGeometryNode</db:link></db:code>
                                     containing the visual representation of this item.
                                         <db:emphasis>oldNode</db:emphasis> is the node that was returned the
                                     last time the function was called.
                                         <db:emphasis>updatePaintNodeData</db:emphasis> provides a pointer to
-                                    the <db:code><db:link xlink:href="qsgtransformnode.html">QSGTransformNode</db:link></db:code> associated with this <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code>.</db:para>
+                                    the <db:code><db:link xlink:href="qsgtransformnode.db">QSGTransformNode</db:link></db:code> associated with this <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code>.</db:para>
          <db:programlisting>QSGNode*MyItem::updatePaintNode(QSGNode*node, UpdatePaintNodeData
                                         *) { QSGSimpleRectNode*n =static_cast&lt;QSGSimpleRectNode*&gt;(node); if (!n) { n =newQSGSimpleRectNode(); n-&gt;setColor(Qt::red); } n-&gt;setRect(boundingRect()); return n; }</db:programlisting>
          <db:para>The main thread is blocked while this function is executed
-                                    so it is safe to read values from the <db:code><db:link xlink:href="qquickitem.html">QQuickItem</db:link></db:code> instance and
+                                    so it is safe to read values from the <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> instance and
                                     other objects in the main thread.</db:para>
          <db:para>If no call to QQuickItem::updatePaintNode() result in actual
-                                    scene graph changes, like <db:code><db:link xlink:href="qsgnode.html#markDirty">QSGNode::markDirty</db:link>()</db:code> or adding and removing nodes,
+                                    scene graph changes, like <db:code><db:link xlink:href="qsgnode.db#markDirty">QSGNode::markDirty</db:link>()</db:code> or adding and removing nodes,
                                     then the underlying implementation may decide to not render the
                                     scene again as the visual outcome is identical.</db:para>
          <db:warning>
@@ -3496,35 +3496,35 @@
          </db:warning>
          <db:note>
             <db:para>All classes with QSG prefix should be
-                                    used solely on the scene graph's rendering thread. See <db:link xlink:href="qtquick-visualcanvas-scenegraph.html#scene-graph-and-rendering">Scene Graph and Rendering</db:link> for more
+                                    used solely on the scene graph's rendering thread. See <db:link xlink:href="qtquick-visualcanvas-scenegraph.db#scene-graph-and-rendering">Scene Graph and Rendering</db:link> for more
                                     information.</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qsgmaterial.html">QSGMaterial</db:link></db:code>
+                  <db:code><db:link xlink:href="qsgmaterial.db">QSGMaterial</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsgsimplematerial.html">QSGSimpleMaterial</db:link></db:code>
+                  <db:code><db:link xlink:href="qsgsimplematerial.db">QSGSimpleMaterial</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsggeometrynode.html">QSGGeometryNode</db:link></db:code>
+                  <db:code><db:link xlink:href="qsggeometrynode.db">QSGGeometryNode</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsggeometry.html">QSGGeometry</db:link></db:code>
+                  <db:code><db:link xlink:href="qsggeometry.db">QSGGeometry</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsgflatcolormaterial.html">QSGFlatColorMaterial</db:link></db:code>
+                  <db:code><db:link xlink:href="qsgflatcolormaterial.db">QSGFlatColorMaterial</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsgtexturematerial.html">QSGTextureMaterial</db:link></db:code>
+                  <db:code><db:link xlink:href="qsgtexturematerial.db">QSGTextureMaterial</db:link></db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsgnode.html#markDirty">QSGNode::markDirty</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsgnode.db#markDirty">QSGNode::markDirty</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qquickitem.html#graphics-resource-handling">Graphics
+                  <db:link xlink:href="qquickitem.db#graphics-resource-handling">Graphics
                                         Resource Handling</db:link>
                </db:member>
             </db:simplelist>
@@ -3534,14 +3534,14 @@
          <db:title>[virtual protected] void QQuickItem::updatePolish()</db:title>
          <db:para>This function should perform any layout as required for this
                                     item.</db:para>
-         <db:para>When <db:code><db:link xlink:href="qquickitem.html#polish">polish</db:link>()</db:code>
+         <db:para>When <db:code><db:link xlink:href="qquickitem.db#polish">polish</db:link>()</db:code>
                                     is called, the scene graph schedules a polish event for this
                                     item. When the scene graph is ready to render this item, it
                                     calls updatePolish() to do any item layout as required before it
                                     renders the next frame.</db:para>
       </db:section>
       <db:section xml:id="wheelEvent">
-         <db:title>[virtual protected] void QQuickItem::wheelEvent(<db:link xlink:href="qtgui/qwheelevent.html">QWheelEvent</db:link></db:title>
+         <db:title>[virtual protected] void QQuickItem::wheelEvent(<db:link xlink:href="qwheelevent.db">QWheelEvent</db:link></db:title>
          <db:para>This event handler can be reimplemented in a subclass to
                                     receive wheel events for an item. The event information is
                                     provided by the <db:emphasis>event</db:emphasis> parameter.</db:para>
@@ -3552,15 +3552,15 @@
                                     explicitly.</db:para>
       </db:section>
       <db:section xml:id="window">
-         <db:title><db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:title>
+         <db:title><db:link xlink:href="qquickwindow.db">QQuickWindow</db:link></db:title>
          <db:para>Returns the window in which this item is rendered.</db:para>
          <db:para>The item does not have a window until it has been assigned
-                                    into a scene. The <db:code><db:link xlink:href="qquickitem.html#windowChanged">windowChanged</db:link>()</db:code> signal provides a notification
+                                    into a scene. The <db:code><db:link xlink:href="qquickitem.db#windowChanged">windowChanged</db:link>()</db:code> signal provides a notification
                                     both when the item is entered into a scene and when it is
                                     removed from a scene.</db:para>
       </db:section>
       <db:section xml:id="windowChanged">
-         <db:title>[signal] void QQuickItem::windowChanged(<db:link xlink:href="qquickwindow.html">QQuickWindow</db:link></db:title>
+         <db:title>[signal] void QQuickItem::windowChanged(<db:link xlink:href="qquickwindow.db">QQuickWindow</db:link></db:title>
          <db:para>This signal is emitted when the item's
                                         <db:emphasis>window</db:emphasis> changes.</db:para>
       </db:section>

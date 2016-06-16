@@ -14,19 +14,19 @@
    <db:para>One
                                     of the most useful basic features of Qt is the support for buddy
                                     widgets. A buddy widget accepts the input focus on behalf of a
-                                        <db:code><db:link xlink:href="qtwidgets/qlabel.html">QLabel</db:link></db:code> when
+                                        <db:code><db:link xlink:href="qlabel.db">QLabel</db:link></db:code> when
                                     the user types the label's shortcut key combination. The buddy
-                                    concept is also used in Qt's <db:link xlink:href="qtwidgets/model-view-programming.html">model/view</db:link> framework.</db:para>
+                                    concept is also used in Qt's <db:link xlink:href="model-view-programming.db">model/view</db:link> framework.</db:para>
    <db:section xml:id="linking-labels-to-buddy-widgets">
       <db:title>Linking Labels to
                                     Buddy Widgets</db:title>
       <db:para>To enter buddy editing mode, open the <db:emphasis role="bold">Edit</db:emphasis>
                                     menu and select <db:emphasis role="bold">Edit Buddies</db:emphasis>. This mode
-                                    presents the widgets on the form in a similar way to <db:link xlink:href="designer-connection-mode.html">signals and slots
+                                    presents the widgets on the form in a similar way to <db:link xlink:href="designer-connection-mode.db">signals and slots
                                         editing mode</db:link> but in this mode, connections must
                                     start at label widgets. Ideally, you should connect each label
                                     widget that provides a shortcut with a suitable input widget,
-                                    such as a <db:code><db:link xlink:href="qtwidgets/qlineedit.html">QLineEdit</db:link></db:code>.</db:para>
+                                    such as a <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>.</db:para>
       <db:informaltable>
          <db:tbody>
             <db:tr>

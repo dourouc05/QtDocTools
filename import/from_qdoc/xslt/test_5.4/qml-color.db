@@ -4,7 +4,7 @@
             version="5.1"
             xml:lang="en">
    <db:title>color QML Basic Type</db:title>
-   <db:para>an ARGB color value. <db:link xlink:href=""/> The <db:code>color</db:code> type refers to an
+   <db:para>an ARGB color value.  The <db:code>color</db:code> type refers to an
                                     ARGB color value. It can be specified in a number of
                                     ways:</db:para>
    <db:itemizedlist>
@@ -22,7 +22,7 @@
                                             <db:code>"#800000FF"</db:code>.</db:para>
       </db:listitem>
       <db:listitem>
-         <db:para>Using the <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html#rgba-method">Qt.rgba()</db:link></db:code>, <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html#hsla-method">Qt.hsla()</db:link></db:code>, <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html#darker-method">Qt.darker()</db:link></db:code>, <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html#lighter-method">Qt.lighter()</db:link></db:code> or <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html#tint-method">Qt.tint()</db:link></db:code> functions.</db:para>
+         <db:para>Using the <db:code><db:link xlink:href="qml-qtqml-qt.db#rgba-method">Qt.rgba()</db:link></db:code>, <db:code><db:link xlink:href="qml-qtqml-qt.db#hsla-method">Qt.hsla()</db:link></db:code>, <db:code><db:link xlink:href="qml-qtqml-qt.db#darker-method">Qt.darker()</db:link></db:code>, <db:code><db:link xlink:href="qml-qtqml-qt.db#lighter-method">Qt.lighter()</db:link></db:code> or <db:code><db:link xlink:href="qml-qtqml-qt.db#tint-method">Qt.tint()</db:link></db:code> functions.</db:para>
       </db:listitem>
    </db:itemizedlist>
    <db:para>Example:</db:para>
@@ -47,11 +47,11 @@
                                         console.log(color.r,
                                         color.g, color.b,
                                         color.a) }</db:programlisting>
-   <db:para>To test color values for equality, use the <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html#colorEqual-method">Qt.colorEqual()</db:link></db:code> function. This allows colors to be
+   <db:para>To test color values for equality, use the <db:code><db:link xlink:href="qml-qtqml-qt.db#colorEqual-method">Qt.colorEqual()</db:link></db:code> function. This allows colors to be
                                     accurately compared whether they are in property form or in any
                                     of the acceptable string specification forms.</db:para>
-   <db:para>When integrating with C++, note that any <db:code><db:link xlink:href="qtgui/qcolor.html">QColor</db:link></db:code> value <db:link xlink:href="qtqml/qtqml-cppintegration-data.html">passed into QML
+   <db:para>When integrating with C++, note that any <db:code><db:link xlink:href="qcolor.db">QColor</db:link></db:code> value <db:link xlink:href="qtqml-cppintegration-data.db">passed into QML
                                         from C++</db:link> is automatically converted into a
                                         <db:code>color</db:code> value, and vice-versa.</db:para>
-   <db:para>This basic type is provided by the <db:code><db:link xlink:href="qtquick-module.html">QtQuick</db:link></db:code> import.</db:para>
+   <db:para>This basic type is provided by the <db:code><db:link xlink:href="qtquick-module.db">QtQuick</db:link></db:code> import.</db:para>
 </db:article>

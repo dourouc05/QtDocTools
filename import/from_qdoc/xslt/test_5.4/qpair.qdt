@@ -295,36 +295,36 @@
    </db:funcsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
-      <db:para>The <db:code><db:link xlink:href="qpair.html">QPair</db:link></db:code> class is a
+      <db:para>The <db:code><db:link xlink:href="qpair.db">QPair</db:link></db:code> class is a
                                     template class that stores a pair of items.</db:para>
       <db:para>
-         <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1, T2&gt;</db:code> can
+         <db:code><db:link xlink:href="qpair.db">QPair</db:link>&lt;T1, T2&gt;</db:code> can
                                     be used in your application if the STL
                                         <db:code>pair</db:code> type is not available. It stores
                                     one value of type T1 and one value of type T2. It can be used as
                                     a return value for a function that needs to return two values,
-                                    or as the value type of a <db:link xlink:href="containers.html">generic
+                                    or as the value type of a <db:link xlink:href="containers.db">generic
                                         container</db:link>.</db:para>
-      <db:para>Here's an example of a <db:code><db:link xlink:href="qpair.html">QPair</db:link></db:code> that stores one <db:code><db:link xlink:href="qstring.html">QString</db:link></db:code> and one <db:code>double</db:code>
+      <db:para>Here's an example of a <db:code><db:link xlink:href="qpair.db">QPair</db:link></db:code> that stores one <db:code><db:link xlink:href="qstring.db">QString</db:link></db:code> and one <db:code>double</db:code>
                                     value:</db:para>
       <db:programlisting>QPair&lt;QString,double&gt; pair;</db:programlisting>
       <db:para>The components are accessible as public data members called
-                                        <db:link xlink:href="qpair.html#first-var">first</db:link> and
-                                        <db:link xlink:href="qpair.html#second-var">second</db:link>. For
+                                        <db:link xlink:href="qpair.db#first-var">first</db:link> and
+                                        <db:link xlink:href="qpair.db#second-var">second</db:link>. For
                                     example:</db:para>
       <db:programlisting>pair.first ="pi"; pair.second =3.14159265358979323846;</db:programlisting>
       <db:para>
-         <db:code><db:link xlink:href="qpair.html">QPair</db:link></db:code>'s template data
-                                    types (T1 and T2) must be <db:link xlink:href="containers.html#assignable-data-types">assignable data
-                                        types</db:link>. You cannot, for example, store a <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> as a value;
-                                    instead, store a <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> *. A few functions have additional
+         <db:code><db:link xlink:href="qpair.db">QPair</db:link></db:code>'s template data
+                                    types (T1 and T2) must be <db:link xlink:href="containers.db#assignable-data-types">assignable data
+                                        types</db:link>. You cannot, for example, store a <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code> as a value;
+                                    instead, store a <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code> *. A few functions have additional
                                     requirements; these requirements are documented on a
                                     per-function basis.</db:para>
       <db:section>
          <db:title>See Also</db:title>
          <db:simplelist type="vert">
             <db:member>
-               <db:link xlink:href="containers.html">Container Classes</db:link>
+               <db:link xlink:href="containers.db">Container Classes</db:link>
             </db:member>
          </db:simplelist>
       </db:section>
@@ -338,7 +338,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qpair.html#first-var">first</db:link>
+                  <db:link xlink:href="qpair.db#first-var">first</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -350,7 +350,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qpair.html#second-var">second</db:link>
+                  <db:link xlink:href="qpair.db#second-var">second</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -362,7 +362,7 @@
          <db:title>QPair::QPair()</db:title>
          <db:para>Constructs an empty pair. The <db:code>first</db:code>
                                     and <db:code>second</db:code> elements are initialized with
-                                        <db:link xlink:href="containers.html#default-constructed-value">default-constructed value</db:link>s.</db:para>
+                                        <db:link xlink:href="containers.db#default-constructed-value">default-constructed value</db:link>s.</db:para>
       </db:section>
       <db:section xml:id="QPair-2">
          <db:title>QPair::QPair(const T1 &amp; value1, const T2 &amp; value2)</db:title>
@@ -375,13 +375,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qpair.db#qMakePair">qMakePair</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="QPair-3">
-         <db:title>QPair::QPair(const <db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>QPair::QPair(const <db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Constructs a pair from the other pair <db:emphasis>p</db:emphasis>, of
                                     types TT1 and TT2. This constructor will fail if
                                         <db:code>first</db:code> cannot be initialized from
@@ -393,48 +393,48 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qpair.db#qMakePair">qMakePair</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="QPair-4">
-         <db:title>QPair::QPair(<db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>QPair::QPair(<db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para/>
       </db:section>
       <db:section xml:id="operator-eq">
-         <db:title><db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title><db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Copies the pair <db:emphasis>p</db:emphasis> onto this pair.</db:para>
          <db:para>This function was introduced in Qt 5.2.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qpair.html#qMakePair">qMakePair</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qpair.db#qMakePair">qMakePair</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="operator-eq-2">
-         <db:title><db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title><db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para/>
       </db:section>
    </db:section>
    <db:section xml:id="relnonmem">
       <db:title>Related Non-Members</db:title>
       <db:section xml:id="qMakePair">
-         <db:title><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
-         <db:para>Returns a <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1,
+         <db:title><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
+         <db:para>Returns a <db:code><db:link xlink:href="qpair.db">QPair</db:link>&lt;T1,
                                     T2&gt;</db:code> that contains <db:emphasis>value1</db:emphasis> and
                                         <db:emphasis>value2</db:emphasis>. Example:</db:para>
          <db:programlisting>QList&lt;QPair&lt;int,double&gt;&gt; list;
                                         list.append(qMakePair(66,3.14159));</db:programlisting>
-         <db:para>This is equivalent to <db:code><db:link xlink:href="qpair.html">QPair</db:link>&lt;T1, T2&gt;</db:code>(<db:emphasis>value1</db:emphasis>,
+         <db:para>This is equivalent to <db:code><db:link xlink:href="qpair.db">QPair</db:link>&lt;T1, T2&gt;</db:code>(<db:emphasis>value1</db:emphasis>,
                                         <db:emphasis>value2</db:emphasis>), but usually requires less
                                     typing.</db:para>
       </db:section>
       <db:section xml:id="operator-not-eq-17">
-         <db:title>bool operator!=(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>bool operator!=(const <db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is not equal to <db:emphasis>p2</db:emphasis>; otherwise returns false.
                                     Two pairs compare as not equal if their
@@ -445,7 +445,7 @@
                                     implementation of <db:code>operator==()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-lt-5">
-         <db:title>bool operator&lt;(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>bool operator&lt;(const <db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is less than <db:emphasis>p2</db:emphasis>; otherwise returns false. The
                                     comparison is done on the <db:code>first</db:code> members
@@ -457,7 +457,7 @@
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-lt-lt-11">
-         <db:title><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title><db:link xlink:href="qdatastream.db">QDataStream</db:link><db:link xlink:href="qdatastream.db">QDataStream</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Writes the pair <db:emphasis>pair</db:emphasis> to stream
                                         <db:emphasis>out</db:emphasis>.</db:para>
          <db:para>This function requires the T1 and T2 types to implement
@@ -466,14 +466,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="datastreamformat.html">Serializing Qt Data
+                  <db:link xlink:href="datastreamformat.db">Serializing Qt Data
                                         Types</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="operator-lt-eq-2">
-         <db:title>bool operator&lt;=(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>bool operator&lt;=(const <db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is less than or equal to <db:emphasis>p2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>. The comparison is done on the
@@ -486,7 +486,7 @@
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-eq-eq-25">
-         <db:title>bool operator==(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>bool operator==(const <db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is equal to <db:emphasis>p2</db:emphasis>; otherwise returns
                                         <db:code>false</db:code>. Two pairs compare equal if
@@ -497,7 +497,7 @@
                                     implementation of <db:code>operator==()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-gt-2">
-         <db:title>bool operator&gt;(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>bool operator&gt;(const <db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is greater than <db:emphasis>p2</db:emphasis>; otherwise returns false.
                                     The comparison is done on the <db:code>first</db:code>
@@ -509,7 +509,7 @@
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-gt-eq-2">
-         <db:title>bool operator&gt;=(const <db:link xlink:href="qpair.html#QPair">QPair</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title>bool operator&gt;=(const <db:link xlink:href="qpair.db#QPair">QPair</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Returns <db:code>true</db:code> if <db:emphasis>p1</db:emphasis>
                                     is greater than or equal to <db:emphasis>p2</db:emphasis>; otherwise
                                     returns <db:code>false</db:code>. The comparison is done on
@@ -522,7 +522,7 @@
                                     <db:code>operator&lt;()</db:code>.</db:para>
       </db:section>
       <db:section xml:id="operator-gt-gt-11">
-         <db:title><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qdatastream.html">QDataStream</db:link><db:link xlink:href="qpair.html#QPair">QPair</db:link></db:title>
+         <db:title><db:link xlink:href="qdatastream.db">QDataStream</db:link><db:link xlink:href="qdatastream.db">QDataStream</db:link><db:link xlink:href="qpair.db#QPair">QPair</db:link></db:title>
          <db:para>Reads a pair from stream <db:emphasis>in</db:emphasis> into
                                         <db:emphasis>pair</db:emphasis>.</db:para>
          <db:para>This function requires the T1 and T2 types to implement
@@ -531,7 +531,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="datastreamformat.html">Serializing Qt Data
+                  <db:link xlink:href="datastreamformat.db">Serializing Qt Data
                                         Types</db:link>
                </db:member>
             </db:simplelist>

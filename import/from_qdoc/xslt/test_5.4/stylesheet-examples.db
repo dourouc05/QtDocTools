@@ -12,22 +12,22 @@
       <db:section xml:id="customizing-the-foreground-and-background-colors">
          <db:title>Customizing the Foreground and Background Colors</db:title>
          <db:para>Let's start by setting yellow as the background color of all
-                                        <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>s in an
+                                        <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>s in an
                                     application. This could be achieved like this:</db:para>
          <db:programlisting>qApp-&gt;setStyleSheet("QLineEdit { background-color: yellow
                                     }");</db:programlisting>
-         <db:para>If we want the property to apply only to the <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>s that are children
+         <db:para>If we want the property to apply only to the <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>s that are children
                                     (or grandchildren or grand-grandchildren) of a specific dialog,
                                     we would rather do this:</db:para>
          <db:programlisting>myDialog-&gt;setStyleSheet("QLineEdit { background-color: yellow
                                     }");</db:programlisting>
          <db:para>If we want the property to apply only to one specific
-                                        <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>, we can
-                                    give it a name using <db:code><db:link xlink:href="qtcore/qobject.html#objectName-prop">QObject::setObjectName</db:link>()</db:code> and use an ID Selector to
+                                        <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>, we can
+                                    give it a name using <db:code><db:link xlink:href="qobject.db#objectName-prop">QObject::setObjectName</db:link>()</db:code> and use an ID Selector to
                                     refer to it:</db:para>
          <db:programlisting>myDialog-&gt;setStyleSheet("QLineEdit#nameEdit { background-color: yellow
                                         }");</db:programlisting>
-         <db:para>Alternatively, we can set the <db:link xlink:href="stylesheet-reference.html#background-prop">background-color</db:link> property directly on the <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>, omitting the
+         <db:para>Alternatively, we can set the <db:link xlink:href="stylesheet-reference.db#background-prop">background-color</db:link> property directly on the <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>, omitting the
                                     selector:</db:para>
          <db:programlisting>nameEdit-&gt;setStyleSheet("background-color: yellow");</db:programlisting>
          <db:para>To ensure a good contrast, we should also specify a suitable
@@ -62,7 +62,7 @@
       </db:section>
       <db:section xml:id="customizing-a-qpushbutton-using-the-box-model">
          <db:title>Customizing a QPushButton Using the Box Model</db:title>
-         <db:para>This time, we will show how to create a red <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>. This <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> would
+         <db:para>This time, we will show how to create a red <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>. This <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> would
                                     presumably be connected to a very destructive piece of
                                     code.</db:para>
          <db:para>First, we are tempted to use this style sheet:</db:para>
@@ -91,7 +91,7 @@
                                         sheets.</db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>We haven't specified any values for <db:link xlink:href="stylesheet-reference.html#border-width-prop">border-width</db:link> and <db:link xlink:href="stylesheet-reference.html#border-style-prop">border-style</db:link>, so by default we obtain a
+               <db:para>We haven't specified any values for <db:link xlink:href="stylesheet-reference.db#border-width-prop">border-width</db:link> and <db:link xlink:href="stylesheet-reference.db#border-style-prop">border-style</db:link>, so by default we obtain a
                                         0-pixel wide border of style
                                         <db:code>none</db:code>.</db:para>
             </db:listitem>
@@ -112,7 +112,7 @@
          </db:informalfigure>
          <db:para>Things look already a lot better. But the
                                     button looks a bit cramped. Let's specify some spacing between
-                                    the border and the text using the <db:link xlink:href="stylesheet-reference.html#padding-prop">padding</db:link>. Additionally, we will enforce a minimum
+                                    the border and the text using the <db:link xlink:href="stylesheet-reference.db#padding-prop">padding</db:link>. Additionally, we will enforce a minimum
                                     width, round the corners, and specify a larger font to make the
                                     button look nicer:</db:para>
          <db:programlisting>QPushButton#evilButton {
@@ -146,41 +146,41 @@
          <db:title>Customizing the QPushButton's Menu Indicator
                                     Sub-Control</db:title>
          <db:para>Subcontrols give access to the sub-elements of a widget. For
-                                    example, a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>
-                                    associated with a menu (using <db:code><db:link xlink:href="qpushbutton.html#setMenu">QPushButton::setMenu</db:link>()</db:code>) has a menu indicator.
+                                    example, a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>
+                                    associated with a menu (using <db:code><db:link xlink:href="qpushbutton.db#setMenu">QPushButton::setMenu</db:link>()</db:code>) has a menu indicator.
                                     Let's customize the menu indicator for the red push
                                     button:</db:para>
          <db:programlisting>QPushButton#evilButton::menu-indicator
                                         { image: url(myindicator.png); }</db:programlisting>
          <db:para>By default, the menu indicator is located at the
                                     bottom-right corner of the padding rectangle. We can change this
-                                    by specifying <db:link xlink:href="stylesheet-reference.html#subcontrol-position-prop">subcontrol-position</db:link> and <db:link xlink:href="stylesheet-reference.html#subcontrol-origin-prop">subcontrol-origin</db:link> to anchor the indicator
-                                    differently. We can also use <db:link xlink:href="stylesheet-reference.html#top-prop">top</db:link> and
-                                        <db:link xlink:href="stylesheet-reference.html#left-prop">left</db:link> to move the indicator by a few pixels. For
+                                    by specifying <db:link xlink:href="stylesheet-reference.db#subcontrol-position-prop">subcontrol-position</db:link> and <db:link xlink:href="stylesheet-reference.db#subcontrol-origin-prop">subcontrol-origin</db:link> to anchor the indicator
+                                    differently. We can also use <db:link xlink:href="stylesheet-reference.db#top-prop">top</db:link> and
+                                        <db:link xlink:href="stylesheet-reference.db#left-prop">left</db:link> to move the indicator by a few pixels. For
                                     example:</db:para>
          <db:programlisting>QPushButton::menu-indicator { image: url(myindicator.png); subcontrol-position: right center;
                                         subcontrol-origin:
                                     padding; left: -2px;
                                     }</db:programlisting>
          <db:para>This positions the <db:code>myindicator.png</db:code> to
-                                    the center right of the <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>'s <db:link xlink:href="stylesheet-reference.html#padding-prop">padding</db:link> rectangle (see <db:link xlink:href="stylesheet-reference.html#subcontrol-origin-prop">subcontrol-origin</db:link> for more information).</db:para>
+                                    the center right of the <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>'s <db:link xlink:href="stylesheet-reference.db#padding-prop">padding</db:link> rectangle (see <db:link xlink:href="stylesheet-reference.db#subcontrol-origin-prop">subcontrol-origin</db:link> for more information).</db:para>
       </db:section>
       <db:section xml:id="complex-selector-example">
          <db:title>Complex Selector Example</db:title>
          <db:para>Since red seems to be our favorite color, let's make the
-                                    text in <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> red by
+                                    text in <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code> red by
                                     setting the following application-wide stylesheet:</db:para>
          <db:programlisting>QLineEdit {
                                     color: red }</db:programlisting>
          <db:para>However, we would like to give a visual indication that a
-                                        <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> is
+                                        <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code> is
                                     read-only by making it appear gray:</db:para>
          <db:programlisting>QLineEdit {
                                     color: red } QLineEdit[readOnly="true"]
                                     { color: gray }</db:programlisting>
          <db:para>At some point, our design team comes with the requirement
-                                    that all <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>s in
-                                    the registration form (with the <db:link xlink:href="qtcore/qobject.html#objectName-prop">object
+                                    that all <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>s in
+                                    the registration form (with the <db:link xlink:href="qobject.db#objectName-prop">object
                                         name</db:link>
             <db:code>registrationDialog</db:code>) to be brown:</db:para>
          <db:programlisting>QLineEdit {
@@ -188,13 +188,13 @@
                                     { color: gray } #registrationDialog QLineEdit { color: brown
                                     }</db:programlisting>
          <db:para>A few UI design meetings later, we decide that all our
-                                        <db:code><db:link xlink:href="qdialog.html">QDialog</db:link></db:code>s should have
-                                    brown colored <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code>s:</db:para>
+                                        <db:code><db:link xlink:href="qdialog.db">QDialog</db:link></db:code>s should have
+                                    brown colored <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code>s:</db:para>
          <db:programlisting>QLineEdit {
                                     color: red } QLineEdit[readOnly="true"]
                                     { color: gray } QDialogQLineEdit { color: brown
                                     }</db:programlisting>
-         <db:para>Quiz: What happens if we have a read-only <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> in a <db:code><db:link xlink:href="qdialog.html">QDialog</db:link></db:code>? [Hint: The <db:link xlink:href="stylesheet-syntax.html#conflict-resolution">Conflict
+         <db:para>Quiz: What happens if we have a read-only <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code> in a <db:code><db:link xlink:href="qdialog.db">QDialog</db:link></db:code>? [Hint: The <db:link xlink:href="stylesheet-syntax.db#conflict-resolution">Conflict
                                         Resolution</db:link> section above explains what happens in
                                     cases like this.]</db:para>
       </db:section>
@@ -202,14 +202,14 @@
          <db:title>See Also</db:title>
          <db:simplelist type="vert">
             <db:member>
-               <db:link xlink:href="qtwidgets-widgets-stylesheet-example.html">Style Sheet
+               <db:link xlink:href="qtwidgets-widgets-stylesheet-example.db">Style Sheet
                                     Example</db:link>
             </db:member>
             <db:member>
-               <db:link xlink:href="qtgui/richtext-html-subset.html">Supported HTML Subset</db:link>
+               <db:link xlink:href="richtext.db-subset.db">Supported HTML Subset</db:link>
             </db:member>
             <db:member>
-               <db:code><db:link xlink:href="qstyle.html">QStyle</db:link></db:code>
+               <db:code><db:link xlink:href="qstyle.db">QStyle</db:link></db:code>
             </db:member>
          </db:simplelist>
       </db:section>
@@ -221,9 +221,9 @@
                                     using Style Sheets.</db:para>
       <db:section xml:id="customizing-qabstractscrollarea">
          <db:title>Customizing QAbstractScrollArea</db:title>
-         <db:para>The background of any <db:code><db:link xlink:href="qabstractscrollarea.html">QAbstractScrollArea</db:link></db:code>
-                                    (Item views, <db:code><db:link xlink:href="qtextedit.html">QTextEdit</db:link></db:code>
-                                    and <db:code><db:link xlink:href="qtextbrowser.html">QTextBrowser</db:link></db:code>) can
+         <db:para>The background of any <db:code><db:link xlink:href="qabstractscrollarea.db">QAbstractScrollArea</db:link></db:code>
+                                    (Item views, <db:code><db:link xlink:href="qtextedit.db">QTextEdit</db:link></db:code>
+                                    and <db:code><db:link xlink:href="qtextbrowser.db">QTextBrowser</db:link></db:code>) can
                                     be set using the background properties. For example, to set a
                                     background-image that scrolls with the scroll bar:</db:para>
          <db:programlisting>QTextEdit,QListView { background-color: white;
@@ -239,8 +239,8 @@
       </db:section>
       <db:section xml:id="customizing-qcheckbox">
          <db:title>Customizing QCheckBox</db:title>
-         <db:para>Styling of a <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code> is almost identical to styling a <db:code><db:link xlink:href="qradiobutton.html">QRadioButton</db:link></db:code>. The main
-                                    difference is that a tristate <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code> has an indeterminate state.</db:para>
+         <db:para>Styling of a <db:code><db:link xlink:href="qcheckbox.db">QCheckBox</db:link></db:code> is almost identical to styling a <db:code><db:link xlink:href="qradiobutton.db">QRadioButton</db:link></db:code>. The main
+                                    difference is that a tristate <db:code><db:link xlink:href="qcheckbox.db">QCheckBox</db:link></db:code> has an indeterminate state.</db:para>
          <db:programlisting>QCheckBox {
                                     spacing: 5px; } QCheckBox::indicator { width: 13px; height: 13px; } QCheckBox::indicator:unchecked { image: url(:/images/checkbox_unchecked.png); } QCheckBox::indicator:unchecked:hover {
                                     image: url(:/images/checkbox_unchecked_hover.png); } QCheckBox::indicator:unchecked:pressed {
@@ -254,7 +254,7 @@
       <db:section xml:id="customizing-qcombobox">
          <db:title>Customizing QComboBox</db:title>
          <db:para>We will look at an example where the drop down button of a
-                                        <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> appears
+                                        <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code> appears
                                     "merged" with the combo box frame.</db:para>
          <db:programlisting>QComboBox {
                                     border: 1px solid gray;
@@ -283,7 +283,7 @@
                                         */ border-bottom-right-radius: 3px;
                                     } QComboBox::down-arrow { image: url(/usr/share/icons/crystalsvg/16x16/actions/1downarrow.png); } QComboBox::down-arrow:on { /* shift the
                                         arrow when popup is open */ top: 1px; left: 1px; }</db:programlisting>
-         <db:para>The pop-up of the <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> is a <db:code><db:link xlink:href="qabstractitemview.html">QAbstractItemView</db:link></db:code> and
+         <db:para>The pop-up of the <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code> is a <db:code><db:link xlink:href="qabstractitemview.db">QAbstractItemView</db:link></db:code> and
                                     is styled using the descendant selector:</db:para>
          <db:programlisting>QComboBoxQAbstractItemView { border:
                                         2px solid darkgray;
@@ -291,7 +291,7 @@
       </db:section>
       <db:section xml:id="customizing-qdockwidget">
          <db:title>Customizing QDockWidget</db:title>
-         <db:para>The title bar and the buttons of a <db:code><db:link xlink:href="qdockwidget.html">QDockWidget</db:link></db:code> can be
+         <db:para>The title bar and the buttons of a <db:code><db:link xlink:href="qdockwidget.db">QDockWidget</db:link></db:code> can be
                                     customized as follows:</db:para>
          <db:programlisting>QDockWidget
                                     { border: 1px solid
@@ -314,20 +314,20 @@
                                         0px; width: 14px; }</db:programlisting>
          <db:note>
             <db:para>To customize the separator (resize
-                                    handle) of a <db:code><db:link xlink:href="qdockwidget.html">QDockWidget</db:link></db:code>, use
+                                    handle) of a <db:code><db:link xlink:href="qdockwidget.db">QDockWidget</db:link></db:code>, use
                                     QMainWindow::separator.</db:para>
          </db:note>
       </db:section>
       <db:section xml:id="customizing-qframe">
          <db:title>Customizing QFrame</db:title>
-         <db:para>A <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code> is styled using
-                                    the <db:link xlink:href="stylesheet-customizing.html#the-box-model">The
+         <db:para>A <db:code><db:link xlink:href="qframe.db">QFrame</db:link></db:code> is styled using
+                                    the <db:link xlink:href="stylesheet-customizing.db#the-box-model">The
                                         Box Model</db:link>.</db:para>
          <db:programlisting>QFrame,QLabel,QToolTip { border: 2px solid green; border-radius: 4px; padding: 2px; background-image: url(images/welcome.png); }</db:programlisting>
       </db:section>
       <db:section xml:id="customizing-qgroupbox">
          <db:title>Customizing QGroupBox</db:title>
-         <db:para>Let us look at an example that moves the <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code>'s title to the
+         <db:para>Let us look at an example that moves the <db:code><db:link xlink:href="qgroupbox.db">QGroupBox</db:link></db:code>'s title to the
                                     center.</db:para>
          <db:programlisting>QGroupBox {
                                         background-color:
@@ -343,15 +343,15 @@
                                         0, y2: 1,
                                     stop: 0#FF0ECE, stop: 1
                                         #FFFFFF); }</db:programlisting>
-         <db:para>For a checkable <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code>, use the {#indicator-sub}{::indicator}
-                                    subcontrol and style it exactly like a <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code> (i.e)</db:para>
+         <db:para>For a checkable <db:code><db:link xlink:href="qgroupbox.db">QGroupBox</db:link></db:code>, use the {#indicator-sub}{::indicator}
+                                    subcontrol and style it exactly like a <db:code><db:link xlink:href="qcheckbox.db">QCheckBox</db:link></db:code> (i.e)</db:para>
          <db:programlisting>QGroupBox::indicator { width: 13px; height: 13px; } QGroupBox::indicator:unchecked { image: url(:/images/checkbox_unchecked.png); } /* proceed with styling just like QCheckBox
                                         */</db:programlisting>
       </db:section>
       <db:section xml:id="customizing-qheaderview">
          <db:title>Customizing QHeaderView</db:title>
          <db:para>
-            <db:code><db:link xlink:href="qheaderview.html">QHeaderView</db:link></db:code> is
+            <db:code><db:link xlink:href="qheaderview.db">QHeaderView</db:link></db:code> is
                                     customized as follows:</db:para>
          <db:programlisting>QHeaderView::section { background-color:
                                         qlineargradient(x1:0,
@@ -367,7 +367,7 @@
       </db:section>
       <db:section xml:id="customizing-qlineedit">
          <db:title>Customizing QLineEdit</db:title>
-         <db:para>The frame of a <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> is styled using the <db:link xlink:href="stylesheet-customizing.html#the-box-model">The Box
+         <db:para>The frame of a <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code> is styled using the <db:link xlink:href="stylesheet-customizing.db#the-box-model">The Box
                                         Model</db:link>. To create a line edit with rounded corners,
                                     we can set:</db:para>
          <db:programlisting>QLineEdit {
@@ -376,11 +376,11 @@
                                         10px; padding:
                                         08px; background: yellow;
                                         selection-background-color: darkgray; }</db:programlisting>
-         <db:para>The password character of line edits that have <db:code><db:link xlink:href="qlineedit.html#EchoMode-enum">QLineEdit::Password</db:link></db:code> echo mode can be set
+         <db:para>The password character of line edits that have <db:code><db:link xlink:href="qlineedit.db#EchoMode-enum">QLineEdit::Password</db:link></db:code> echo mode can be set
                                     using:</db:para>
          <db:programlisting>QLineEdit[echoMode="2"] {
                                         lineedit-password-character: 9679; }</db:programlisting>
-         <db:para>The background of a read only <db:code><db:link xlink:href="qlineedit.html">QLineEdit</db:link></db:code> can be modified as below:</db:para>
+         <db:para>The background of a read only <db:code><db:link xlink:href="qlineedit.db">QLineEdit</db:link></db:code> can be modified as below:</db:para>
          <db:programlisting>QLineEdit:read-only { background:
                                     lightblue;</db:programlisting>
       </db:section>
@@ -391,7 +391,7 @@
          <db:programlisting>QListView {
                                         alternate-background-color: yellow; }</db:programlisting>
          <db:para>To provide a special background when you hover over items,
-                                    we can use the <db:link xlink:href="stylesheet-reference.html#item-sub">::item</db:link> subcontrol. For example,</db:para>
+                                    we can use the <db:link xlink:href="stylesheet-reference.db#item-sub">::item</db:link> subcontrol. For example,</db:para>
          <db:programlisting>QListView {
                                         show-decoration-selected: 1; /* make the
                                         selection span the entire width of the view */ }
@@ -414,7 +414,7 @@
       </db:section>
       <db:section xml:id="customizing-qmainwindow">
          <db:title>Customizing QMainWindow</db:title>
-         <db:para>The separator of a <db:code><db:link xlink:href="qmainwindow.html">QMainWindow</db:link></db:code> can be styled as follows:</db:para>
+         <db:para>The separator of a <db:code><db:link xlink:href="qmainwindow.db">QMainWindow</db:link></db:code> can be styled as follows:</db:para>
          <db:programlisting>QMainWindow::separator { background: yellow; width:
                                         10px; /* when vertical */ height:
                                         10px; /* when horizontal */ }
@@ -423,7 +423,7 @@
       </db:section>
       <db:section xml:id="customizing-qmenu">
          <db:title>Customizing QMenu</db:title>
-         <db:para>Individual items of a <db:code><db:link xlink:href="qmenu.html">QMenu</db:link></db:code> are styled using the 'item' subcontrol as
+         <db:para>Individual items of a <db:code><db:link xlink:href="qmenu.db">QMenu</db:link></db:code> are styled using the 'item' subcontrol as
                                     follows:</db:para>
          <db:programlisting>QMenu {
                                         background-color:
@@ -464,7 +464,7 @@
       <db:section xml:id="customizing-qmenubar">
          <db:title>Customizing QMenuBar</db:title>
          <db:para>
-            <db:code><db:link xlink:href="qmenubar.html">QMenuBar</db:link></db:code> is styled as
+            <db:code><db:link xlink:href="qmenubar.db">QMenuBar</db:link></db:code> is styled as
                                     follows:</db:para>
          <db:programlisting>QMenuBar {
                                         background-color:
@@ -478,9 +478,9 @@
       </db:section>
       <db:section xml:id="customizing-qprogressbar">
          <db:title>Customizing QProgressBar</db:title>
-         <db:para>The <db:code><db:link xlink:href="qprogressbar.html">QProgressBar</db:link></db:code>'s
-                                        <db:link xlink:href="stylesheet-reference.html#border-prop">border</db:link>, <db:link xlink:href="stylesheet-reference.html#chunk-sub">chunk</db:link>,
-                                    and <db:link xlink:href="stylesheet-reference.html#text-align-prop">text-align</db:link> can be customized using style sheets.
+         <db:para>The <db:code><db:link xlink:href="qprogressbar.db">QProgressBar</db:link></db:code>'s
+                                        <db:link xlink:href="stylesheet-reference.db#border-prop">border</db:link>, <db:link xlink:href="stylesheet-reference.db#chunk-sub">chunk</db:link>,
+                                    and <db:link xlink:href="stylesheet-reference.db#text-align-prop">text-align</db:link> can be customized using style sheets.
                                     However, if one property or sub-control is customized, all the
                                     other properties or sub-controls must be customized as
                                     well.</db:para>
@@ -491,14 +491,14 @@
                </db:imageobject>
             </db:mediaobject>
          </db:informalfigure>
-         <db:para>For example, we change the <db:link xlink:href="stylesheet-reference.html#border-prop">border</db:link>
-                                    to grey and the <db:link xlink:href="stylesheet-reference.html#chunk-sub">chunk</db:link> to
+         <db:para>For example, we change the <db:link xlink:href="stylesheet-reference.db#border-prop">border</db:link>
+                                    to grey and the <db:link xlink:href="stylesheet-reference.db#chunk-sub">chunk</db:link> to
                                     cerulean.</db:para>
          <db:programlisting>QProgressBar { border: 2px solid grey; border-radius: 5px; } QProgressBar::chunk { background-color: #05B8CC; width: 20px; }</db:programlisting>
-         <db:para>This leaves the <db:link xlink:href="stylesheet-reference.html#text-align-prop">text-align</db:link>, which we customize by positioning the
+         <db:para>This leaves the <db:link xlink:href="stylesheet-reference.db#text-align-prop">text-align</db:link>, which we customize by positioning the
                                     text in the center of the progress bar.</db:para>
          <db:programlisting>QProgressBar { border: 2px solid grey; border-radius: 5px; text-align: center; }</db:programlisting>
-         <db:para>A <db:link xlink:href="stylesheet-reference.html#margin-prop">margin</db:link> can be included to obtain more visible
+         <db:para>A <db:link xlink:href="stylesheet-reference.db#margin-prop">margin</db:link> can be included to obtain more visible
                                     chunks.</db:para>
          <db:informalfigure>
             <db:mediaobject>
@@ -507,13 +507,13 @@
                </db:imageobject>
             </db:mediaobject>
          </db:informalfigure>
-         <db:para>In the screenshot above, we use a <db:link xlink:href="stylesheet-reference.html#margin-prop">margin</db:link>
+         <db:para>In the screenshot above, we use a <db:link xlink:href="stylesheet-reference.db#margin-prop">margin</db:link>
                                     of 0.5 pixels.</db:para>
          <db:programlisting>QProgressBar::chunk { background-color: #CD96CD; width: 10px; margin: 0.5px; }</db:programlisting>
       </db:section>
       <db:section xml:id="customizing-qpushbutton">
          <db:title>Customizing QPushButton</db:title>
-         <db:para>A <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> is
+         <db:para>A <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> is
                                     styled as follows:</db:para>
          <db:programlisting>QPushButton
                                     { border: 2px solid
@@ -533,8 +533,8 @@
                                         button */ } QPushButton:default { border-color: navy; /*
                                         make the default button prominent */
                                     }</db:programlisting>
-         <db:para>For a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>
-                                    with a menu, use the <db:link xlink:href="stylesheet-reference.html#menu-indicator-sub">::menu-indicator</db:link> subcontrol.</db:para>
+         <db:para>For a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>
+                                    with a menu, use the <db:link xlink:href="stylesheet-reference.db#menu-indicator-sub">::menu-indicator</db:link> subcontrol.</db:para>
          <db:programlisting>QPushButton:open { /* when the button has its menu open
                                         */ background-color: qlineargradient(x1: 0, y1: 0, x2:
                                         0, y2: 1,
@@ -545,11 +545,11 @@
                                     relative; top: 2px; left:
                                         2px; /* shift the arrow by 2 px */
                                     }</db:programlisting>
-         <db:para>Checkable <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> have the <db:link xlink:href="stylesheet-reference.html#checked-ps">:checked</db:link> pseudo state set.</db:para>
+         <db:para>Checkable <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> have the <db:link xlink:href="stylesheet-reference.db#checked-ps">:checked</db:link> pseudo state set.</db:para>
       </db:section>
       <db:section xml:id="customizing-qradiobutton">
          <db:title>Customizing QRadioButton</db:title>
-         <db:para>The indicator of a <db:code><db:link xlink:href="qradiobutton.html">QRadioButton</db:link></db:code> can be changed using:</db:para>
+         <db:para>The indicator of a <db:code><db:link xlink:href="qradiobutton.db">QRadioButton</db:link></db:code> can be changed using:</db:para>
          <db:programlisting>QRadioButton::indicator { width: 13px; height: 13px; } QRadioButton::indicator::unchecked { image:
                                         url(:/images/radiobutton_unchecked.png); } QRadioButton::indicator:unchecked:hover {
                                     image: url(:/images/radiobutton_unchecked_hover.png); } QRadioButton::indicator:unchecked:pressed {
@@ -560,9 +560,9 @@
       </db:section>
       <db:section xml:id="customizing-qscrollbar">
          <db:title>Customizing QScrollBar</db:title>
-         <db:para>The <db:code><db:link xlink:href="qscrollbar.html">QScrollBar</db:link></db:code> can
-                                    be styled using its subcontrols like <db:link xlink:href="stylesheet-reference.html#handle-sub">handle</db:link>,
-                                        <db:link xlink:href="stylesheet-reference.html#add-line-sub">add-line</db:link>, <db:link xlink:href="stylesheet-reference.html#sub-line-sub">sub-line</db:link>, and so on. Note that if one property or
+         <db:para>The <db:code><db:link xlink:href="qscrollbar.db">QScrollBar</db:link></db:code> can
+                                    be styled using its subcontrols like <db:link xlink:href="stylesheet-reference.db#handle-sub">handle</db:link>,
+                                        <db:link xlink:href="stylesheet-reference.db#add-line-sub">add-line</db:link>, <db:link xlink:href="stylesheet-reference.db#sub-line-sub">sub-line</db:link>, and so on. Note that if one property or
                                     sub-control is customized, all the other properties or
                                     sub-controls must be customized as well.</db:para>
          <db:informalfigure>
@@ -590,7 +590,7 @@
                                         subcontrol-position:
                                     left; subcontrol-origin:
                                     margin; }</db:programlisting>
-         <db:para>The <db:link xlink:href="stylesheet-reference.html#left-arrow-sub">left-arrow</db:link> and <db:link xlink:href="stylesheet-reference.html#right-arrow-sub">right-arrow</db:link> have a solid grey border with a white
+         <db:para>The <db:link xlink:href="stylesheet-reference.db#left-arrow-sub">left-arrow</db:link> and <db:link xlink:href="stylesheet-reference.db#right-arrow-sub">right-arrow</db:link> have a solid grey border with a white
                                     background. As an alternative, you could also embed the image of
                                     an arrow.</db:para>
          <db:programlisting>QScrollBar:left-arrow:horizontal,QScrollBar::right-arrow:horizontal { border:
@@ -653,7 +653,7 @@
       <db:section xml:id="customizing-qsizegrip">
          <db:title>Customizing QSizeGrip</db:title>
          <db:para>
-            <db:code><db:link xlink:href="qsizegrip.html">QSizeGrip</db:link></db:code> is usually
+            <db:code><db:link xlink:href="qsizegrip.db">QSizeGrip</db:link></db:code> is usually
                                     styled by just setting an image.</db:para>
          <db:programlisting>QSizeGrip {
                                     image: url(:/images/sizegrip.png); width: 16px; height: 16px; }</db:programlisting>
@@ -686,7 +686,7 @@
       <db:section xml:id="customizing-qspinbox">
          <db:title>Customizing QSpinBox</db:title>
          <db:para>
-            <db:code><db:link xlink:href="qspinbox.html">QSpinBox</db:link></db:code> can be
+            <db:code><db:link xlink:href="qspinbox.db">QSpinBox</db:link></db:code> can be
                                     completely customized as below (the style sheet has commentary
                                     inline):</db:para>
          <db:programlisting>QSpinBox {
@@ -717,10 +717,10 @@
       </db:section>
       <db:section xml:id="customizing-qsplitter">
          <db:title>Customizing QSplitter</db:title>
-         <db:para>A <db:code><db:link xlink:href="qsplitter.html">QSplitter</db:link></db:code> derives
-                                    from a <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code> and hence can
-                                    be styled like a <db:code><db:link xlink:href="qframe.html">QFrame</db:link></db:code>. The
-                                    grip or the handle is customized using the <db:link xlink:href="stylesheet-reference.html#handle-sub">::handle</db:link> subcontrol.</db:para>
+         <db:para>A <db:code><db:link xlink:href="qsplitter.db">QSplitter</db:link></db:code> derives
+                                    from a <db:code><db:link xlink:href="qframe.db">QFrame</db:link></db:code> and hence can
+                                    be styled like a <db:code><db:link xlink:href="qframe.db">QFrame</db:link></db:code>. The
+                                    grip or the handle is customized using the <db:link xlink:href="stylesheet-reference.db#handle-sub">::handle</db:link> subcontrol.</db:para>
          <db:programlisting>QSplitter::handle { image: url(images/splitter.png); } QSplitter::handle:horizontal { width:
                                         2px; } QSplitter::handle:vertical { height:
                                         2px; } QSplitter::handle:pressed {
@@ -732,7 +732,7 @@
                                     for items inside the status bar as follows:</db:para>
          <db:programlisting>QStatusBar {
                                     background: brown; } QStatusBar::item { border: 1px solid red; border-radius: 3px; }</db:programlisting>
-         <db:para>Note that widgets that have been added to the <db:code><db:link xlink:href="qstatusbar.html">QStatusBar</db:link></db:code> can be styled
+         <db:para>Note that widgets that have been added to the <db:code><db:link xlink:href="qstatusbar.db">QStatusBar</db:link></db:code> can be styled
                                     using the descendant declaration (i.e)</db:para>
          <db:programlisting>QStatusBarQLabel { border: 3px solid white; }</db:programlisting>
       </db:section>
@@ -852,7 +852,7 @@
       </db:section>
       <db:section xml:id="customizing-qtableview">
          <db:title>Customizing QTableView</db:title>
-         <db:para>Suppose we'd like our selected item in <db:code><db:link xlink:href="qtableview.html">QTableView</db:link></db:code> to have bubblegum
+         <db:para>Suppose we'd like our selected item in <db:code><db:link xlink:href="qtableview.db">QTableView</db:link></db:code> to have bubblegum
                                     pink fade to white as its background.</db:para>
          <db:informalfigure>
             <db:mediaobject>
@@ -861,7 +861,7 @@
                </db:imageobject>
             </db:mediaobject>
          </db:informalfigure>
-         <db:para>This is possible with the <db:link xlink:href="stylesheet-reference.html#selection-background-color-prop">selection-background-color</db:link> property and the syntax
+         <db:para>This is possible with the <db:link xlink:href="stylesheet-reference.db#selection-background-color-prop">selection-background-color</db:link> property and the syntax
                                     required is:</db:para>
          <db:programlisting>QTableView {
                                         selection-background-color: qlineargradient(x1: 0, y1: 0, x2:
@@ -876,7 +876,7 @@
       </db:section>
       <db:section xml:id="customizing-qtoolbar">
          <db:title>Customizing QToolBar</db:title>
-         <db:para>The background and the handle of a <db:code><db:link xlink:href="qtoolbar.html">QToolBar</db:link></db:code> is customized as
+         <db:para>The background and the handle of a <db:code><db:link xlink:href="qtoolbar.db">QToolBar</db:link></db:code> is customized as
                                     below:</db:para>
          <db:programlisting>QToolBar {
                                     background: red; spacing: 3px; /* spacing
@@ -884,7 +884,7 @@
       </db:section>
       <db:section xml:id="customizing-qtoolbox">
          <db:title>Customizing QToolBox</db:title>
-         <db:para>The tabs of the <db:code><db:link xlink:href="qtoolbox.html">QToolBox</db:link></db:code> are customized using the 'tab'
+         <db:para>The tabs of the <db:code><db:link xlink:href="qtoolbox.db">QToolBox</db:link></db:code> are customized using the 'tab'
                                     subcontrol.</db:para>
          <db:programlisting>QToolBox::tab { background: qlineargradient(x1:
                                         0, y1: 0, x2:
@@ -900,19 +900,19 @@
          <db:para>There are three types of QToolButtons.</db:para>
          <db:itemizedlist>
             <db:listitem>
-               <db:para>The <db:code><db:link xlink:href="qtoolbutton.html">QToolButton</db:link></db:code> has no menu. In this case, the
-                                            <db:code><db:link xlink:href="qtoolbutton.html">QToolButton</db:link></db:code> is
-                                        styled exactly like <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>. See <db:link xlink:href="stylesheet-examples.html#customizing-qpushbutton">Customizing QPushButton</db:link> for an
+               <db:para>The <db:code><db:link xlink:href="qtoolbutton.db">QToolButton</db:link></db:code> has no menu. In this case, the
+                                            <db:code><db:link xlink:href="qtoolbutton.db">QToolButton</db:link></db:code> is
+                                        styled exactly like <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>. See <db:link xlink:href="stylesheet-examples.db#customizing-qpushbutton">Customizing QPushButton</db:link> for an
                                         example.</db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>The <db:code><db:link xlink:href="qtoolbutton.html">QToolButton</db:link></db:code> has a menu and has the <db:code><db:link xlink:href="qtoolbutton.html#popupMode-prop">QToolButton::popupMode</db:link></db:code> set to <db:code><db:link xlink:href="qtoolbutton.html#ToolButtonPopupMode-enum">QToolButton::DelayedPopup</db:link></db:code> or <db:code><db:link xlink:href="qtoolbutton.html#ToolButtonPopupMode-enum">QToolButton::InstantPopup</db:link></db:code>. In this case, the
-                                            <db:code><db:link xlink:href="qtoolbutton.html">QToolButton</db:link></db:code> is
-                                        styled exactly like a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> with a menu. See <db:link xlink:href="stylesheet-examples.html#customizing-qpushbutton">Customizing QPushButton</db:link> for an example of the
+               <db:para>The <db:code><db:link xlink:href="qtoolbutton.db">QToolButton</db:link></db:code> has a menu and has the <db:code><db:link xlink:href="qtoolbutton.db#popupMode-prop">QToolButton::popupMode</db:link></db:code> set to <db:code><db:link xlink:href="qtoolbutton.db#ToolButtonPopupMode-enum">QToolButton::DelayedPopup</db:link></db:code> or <db:code><db:link xlink:href="qtoolbutton.db#ToolButtonPopupMode-enum">QToolButton::InstantPopup</db:link></db:code>. In this case, the
+                                            <db:code><db:link xlink:href="qtoolbutton.db">QToolButton</db:link></db:code> is
+                                        styled exactly like a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> with a menu. See <db:link xlink:href="stylesheet-examples.db#customizing-qpushbutton">Customizing QPushButton</db:link> for an example of the
                                         usage of the menu-indicator pseudo state.</db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>The <db:code><db:link xlink:href="qtoolbutton.html">QToolButton</db:link></db:code> has its <db:code><db:link xlink:href="qtoolbutton.html#popupMode-prop">QToolButton::popupMode</db:link></db:code> set to <db:code><db:link xlink:href="qtoolbutton.html#ToolButtonPopupMode-enum">QToolButton::MenuButtonPopup</db:link></db:code>. In this case, we
+               <db:para>The <db:code><db:link xlink:href="qtoolbutton.db">QToolButton</db:link></db:code> has its <db:code><db:link xlink:href="qtoolbutton.db#popupMode-prop">QToolButton::popupMode</db:link></db:code> set to <db:code><db:link xlink:href="qtoolbutton.db#ToolButtonPopupMode-enum">QToolButton::MenuButtonPopup</db:link></db:code>. In this case, we
                                         style it as follows:</db:para>
             </db:listitem>
          </db:itemizedlist>
@@ -939,8 +939,8 @@
       <db:section xml:id="customizing-qtooltip">
          <db:title>Customizing QToolTip</db:title>
          <db:para>
-            <db:code><db:link xlink:href="qtooltip.html">QToolTip</db:link></db:code> is customized
-                                    exactly like a <db:code><db:link xlink:href="qlabel.html">QLabel</db:link></db:code>. In
+            <db:code><db:link xlink:href="qtooltip.db">QToolTip</db:link></db:code> is customized
+                                    exactly like a <db:code><db:link xlink:href="qlabel.db">QLabel</db:link></db:code>. In
                                     addition, for platforms that support it, the opacity property
                                     may be set to adjust the opacity.</db:para>
          <db:para>For example,</db:para>
@@ -958,7 +958,7 @@
          <db:programlisting>QTreeView {
                                         alternate-background-color: yellow; }</db:programlisting>
          <db:para>To provide a special background when you hover over items,
-                                    we can use the <db:link xlink:href="stylesheet-reference.html#item-sub">::item</db:link> subcontrol. For example,</db:para>
+                                    we can use the <db:link xlink:href="stylesheet-reference.db#item-sub">::item</db:link> subcontrol. For example,</db:para>
          <db:programlisting>QTreeView {
                                         show-decoration-selected: 1; } QTreeView::item { border: 1px solid #d9d9d9; border-top-color: transparent; border-bottom-color: transparent; }
                                         QTreeView::item:hover { background:
@@ -974,7 +974,7 @@
                                         0, y2: 1,
                                     stop: 0#6b9be8, stop: 1
                                         #577fbf); }</db:programlisting>
-         <db:para>The branches of a <db:code><db:link xlink:href="qtreeview.html">QTreeView</db:link></db:code> are styled using the <db:link xlink:href="stylesheet-reference.html#branch-sub">::branch</db:link> subcontrol. The following stylesheet
+         <db:para>The branches of a <db:code><db:link xlink:href="qtreeview.db">QTreeView</db:link></db:code> are styled using the <db:link xlink:href="stylesheet-reference.db#branch-sub">::branch</db:link> subcontrol. The following stylesheet
                                     color codes the various states when drawing a branch.</db:para>
          <db:programlisting>QTreeView::branch { background: palette(base); }
                                         QTreeView::branch:has-siblings:!adjoins-item { background: cyan; }
@@ -1074,14 +1074,14 @@
                                     stylesheets.</db:para>
       <db:section xml:id="qpushbutton-and-images">
          <db:title>QPushButton and images</db:title>
-         <db:para>When styling a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>, it is often desirable to use an image
-                                    as the button graphic. It is common to try the <db:link xlink:href="stylesheet-reference.html#background-image-prop">background-image</db:link> property, but this has a number
+         <db:para>When styling a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>, it is often desirable to use an image
+                                    as the button graphic. It is common to try the <db:link xlink:href="stylesheet-reference.db#background-image-prop">background-image</db:link> property, but this has a number
                                     of drawbacks: For instance, the background will often appear
                                     hidden behind the button decoration, because it is not
                                     considered a background. In addition, if the button is resized,
                                     the entire background will be stretched or tiled, which does not
                                     always look good.</db:para>
-         <db:para>It is better to use the <db:link xlink:href="stylesheet-reference.html#border-image-prop">border-image</db:link> property, as it will always display
+         <db:para>It is better to use the <db:link xlink:href="stylesheet-reference.db#border-image-prop">border-image</db:link> property, as it will always display
                                     the image, regardless of the background (you can combine it with
                                     a background if it has alpha values in it), and it has special
                                     settings to deal with button resizing.</db:para>

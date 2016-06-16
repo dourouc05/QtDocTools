@@ -1770,19 +1770,19 @@
    </db:namespacesynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
-      <db:para>The <db:code><db:link xlink:href="qtest.html">QTest</db:link></db:code> namespace
+      <db:para>The <db:code><db:link xlink:href="qtest.db">QTest</db:link></db:code> namespace
                                     contains all the functions and declarations that are related to
                                     Qt Test.</db:para>
-      <db:para>See the <db:link xlink:href="qtest-overview.html">Qt Test
+      <db:para>See the <db:link xlink:href="qtest-overview.db">Qt Test
                                         Overview</db:link> for information about how to write unit
                                     tests.</db:para>
    </db:section>
    <db:section xml:id="classes">
       <db:title>Classes</db:title>
       <db:section>
-         <db:title>class <db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:title>
-         <db:para>The <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> class is used to simulate a
-                                    sequence of touch events. <db:link xlink:href="qtest-qtoucheventsequence.html#details">More...</db:link>
+         <db:title>class <db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link></db:title>
+         <db:para>The <db:code><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link></db:code> class is used to simulate a
+                                    sequence of touch events. <db:link xlink:href="qtest-qtoucheventsequence.db#details">More...</db:link>
          </db:para>
       </db:section>
    </db:section>
@@ -2792,17 +2792,17 @@
          </db:informaltable>
          <db:para>Note that <db:code>WalltimeNanoseconds</db:code> and
                                         <db:code>BytesAllocated</db:code> are only provided for
-                                    use via <db:code><db:link xlink:href="qtest.html#setBenchmarkResult">setBenchmarkResult</db:link>()</db:code>, and results in those metrics
-                                    are not able to be provided automatically by the <db:code><db:link xlink:href="qtest.html">QTest</db:link></db:code> framework.</db:para>
+                                    use via <db:code><db:link xlink:href="qtest.db#setBenchmarkResult">setBenchmarkResult</db:link>()</db:code>, and results in those metrics
+                                    are not able to be provided automatically by the <db:code><db:link xlink:href="qtest.db">QTest</db:link></db:code> framework.</db:para>
          <db:para>This enum was introduced or modified in Qt 4.7.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#benchmarkMetricName">QTest::benchmarkMetricName</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#benchmarkMetricName">QTest::benchmarkMetricName</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#benchmarkMetricUnit">QTest::benchmarkMetricUnit</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#benchmarkMetricUnit">QTest::benchmarkMetricUnit</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2810,7 +2810,7 @@
       <db:section xml:id="TestFailMode-enum">
          <db:title>enum QTest::TestFailMode</db:title>
          <db:para>This enum describes the modes for handling an expected
-                                    failure of the <db:code><db:link xlink:href="qtest.html#QVERIFY">QVERIFY</db:link>()</db:code> or <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> macros.</db:para>
+                                    failure of the <db:code><db:link xlink:href="qtest.db#QVERIFY">QVERIFY</db:link>()</db:code> or <db:code><db:link xlink:href="qtest.db#QCOMPARE">QCOMPARE</db:link>()</db:code> macros.</db:para>
          <db:informaltable>
             <db:tbody>
                <db:tr>
@@ -2864,7 +2864,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QEXPECT_FAIL">QEXPECT_FAIL</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#QEXPECT_FAIL">QEXPECT_FAIL</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -2878,45 +2878,45 @@
                                     current test data. <db:emphasis>name</db:emphasis> is the name of the
                                     column. <db:emphasis>dummy</db:emphasis> is a workaround for buggy
                                     compilers and can be ignored.</db:para>
-         <db:para>To populate the column with values, <db:code><db:link xlink:href="qtest.html#newRow">newRow</db:link>()</db:code> can be used. Use
-                                        <db:code><db:link xlink:href="qtest.html#QFETCH">QFETCH</db:link>()</db:code> to fetch
+         <db:para>To populate the column with values, <db:code><db:link xlink:href="qtest.db#newRow">newRow</db:link>()</db:code> can be used. Use
+                                        <db:code><db:link xlink:href="qtest.db#QFETCH">QFETCH</db:link>()</db:code> to fetch
                                     the data in the actual test.</db:para>
          <db:para>Example:</db:para>
          <db:programlisting>void
                                     myTestFunction_data() { QTest::addColumn&lt;int&gt;("intval"); QTest::addColumn&lt;QString&gt;("str"); QTest::addColumn&lt;double&gt;("dbl"); QTest::newRow("row1") &lt;&lt;1&lt;&lt;"hello"&lt;&lt;1.5; }</db:programlisting>
          <db:para>To add custom types to the testdata, the type must be
-                                    registered with <db:code><db:link xlink:href="qtcore/qmetatype.html">QMetaType</db:link></db:code> via <db:code><db:link xlink:href="qtcore/qmetatype.html#Q_DECLARE_METATYPE">Q_DECLARE_METATYPE</db:link>()</db:code>.</db:para>
+                                    registered with <db:code><db:link xlink:href="qmetatype.db">QMetaType</db:link></db:code> via <db:code><db:link xlink:href="qmetatype.db#Q_DECLARE_METATYPE">Q_DECLARE_METATYPE</db:link>()</db:code>.</db:para>
          <db:note>
             <db:para> This macro can only be used in a
                                     test's data function that is invoked by the test
                                     framework.</db:para>
          </db:note>
-         <db:para>See <db:link xlink:href="qttestlib-tutorial2-example.html">Data
+         <db:para>See <db:link xlink:href="qttestlib-tutorial2-example.db">Data
                                         Driven Testing</db:link> for a more extensive
                                     example.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#newRow">QTest::newRow</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#newRow">QTest::newRow</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QFETCH">QFETCH</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#QFETCH">QFETCH</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtcore/qmetatype.html">QMetaType</db:link></db:code>
+                  <db:code><db:link xlink:href="qmetatype.db">QMetaType</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="benchmarkMetricName">
-         <db:title>const char * QTest::benchmarkMetricName(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
+         <db:title>const char * QTest::benchmarkMetricName(<db:link xlink:href="qtest.db#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
          <db:para>Returns the enum value <db:emphasis>metric</db:emphasis> as a
                                     character string.</db:para>
          <db:para>This function was introduced in Qt 4.7.</db:para>
       </db:section>
       <db:section xml:id="benchmarkMetricUnit">
-         <db:title>const char * QTest::benchmarkMetricUnit(<db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
+         <db:title>const char * QTest::benchmarkMetricUnit(<db:link xlink:href="qtest.db#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
          <db:para>Retuns the units of measure for the specified
                                         <db:emphasis>metric</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 4.7.</db:para>
@@ -2948,9 +2948,9 @@
                                         connections closeAllDatabases(); } }</db:programlisting>
       </db:section>
       <db:section xml:id="ignoreMessage">
-         <db:title>void QTest::ignoreMessage(<db:link xlink:href="qtcore/qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:title>
-         <db:para>Ignores messages created by <db:code><db:link xlink:href="qtcore/qtglobal.html#qDebug">qDebug</db:link>()</db:code> or
-                                        <db:code><db:link xlink:href="qtcore/qtglobal.html#qWarning">qWarning</db:link>()</db:code>. If the <db:emphasis>message</db:emphasis> with
+         <db:title>void QTest::ignoreMessage(<db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link></db:title>
+         <db:para>Ignores messages created by <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code> or
+                                        <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>. If the <db:emphasis>message</db:emphasis> with
                                     the corresponding <db:emphasis>type</db:emphasis> is outputted, it will be
                                     removed from the test log. If the test finished and the
                                         <db:emphasis>message</db:emphasis> was not outputted, a test failure
@@ -2965,15 +2965,15 @@
          <db:programlisting>QDir dir;
                                         QTest::ignoreMessage(QtWarningMsg,"QDir::mkdir: Empty or null file
                                         name(s)"); dir.mkdir("");</db:programlisting>
-         <db:para>The example above tests that <db:code><db:link xlink:href="qtcore/qdir.html#mkdir">QDir::mkdir</db:link>()</db:code> outputs
+         <db:para>The example above tests that <db:code><db:link xlink:href="qdir.db#mkdir">QDir::mkdir</db:link>()</db:code> outputs
                                     the right warning when invoked with an invalid file
                                     name.</db:para>
       </db:section>
       <db:section xml:id="ignoreMessage-2">
-         <db:title>void QTest::ignoreMessage(<db:link xlink:href="qtcore/qtglobal.html#QtMsgType-enum">QtMsgType</db:link><db:link xlink:href="qtcore/qregularexpression.html">QRegularExpression</db:link></db:title>
+         <db:title>void QTest::ignoreMessage(<db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link><db:link xlink:href="qregularexpression.db">QRegularExpression</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
-         <db:para>Ignores messages created by <db:code><db:link xlink:href="qtcore/qtglobal.html#qDebug">qDebug</db:link>()</db:code> or
-                                        <db:code><db:link xlink:href="qtcore/qtglobal.html#qWarning">qWarning</db:link>()</db:code>. If the message matching
+         <db:para>Ignores messages created by <db:code><db:link xlink:href="qtglobal.db#qDebug">qDebug</db:link>()</db:code> or
+                                        <db:code><db:link xlink:href="qtglobal.db#qWarning">qWarning</db:link>()</db:code>. If the message matching
                                         <db:emphasis>messagePattern</db:emphasis> with the corresponding
                                         <db:emphasis>type</db:emphasis> is outputted, it will be removed from
                                     the test log. If the test finished and the message was not
@@ -2981,13 +2981,13 @@
          <db:note>
             <db:para> Invoking this function will only
                                     ignore one message. If the message you want to ignore is
-                                    outputted twice, you have to call <db:code><db:link xlink:href="qtest.html#ignoreMessage">ignoreMessage</db:link>()</db:code>
+                                    outputted twice, you have to call <db:code><db:link xlink:href="qtest.db#ignoreMessage">ignoreMessage</db:link>()</db:code>
                                     twice, too.</db:para>
          </db:note>
          <db:para>This function was introduced in Qt 5.3.</db:para>
       </db:section>
       <db:section xml:id="keyClick">
-         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
                                         <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
@@ -3006,13 +3006,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClicks">QTest::keyClicks</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyClick-2">
-         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
@@ -3029,13 +3029,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClicks">QTest::keyClicks</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyClick-3">
-         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
@@ -3056,13 +3056,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClicks">QTest::keyClicks</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyClick-4">
-         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyClick(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates clicking of <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
@@ -3080,13 +3080,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClicks">QTest::keyClicks</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClicks">QTest::keyClicks</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyClicks">
-         <db:title>[static] void QTest::keyClicks(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qstring.html">QString</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyClicks(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qstring.db">QString</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>Simulates clicking a <db:emphasis>sequence</db:emphasis> of keys on a
                                         <db:emphasis>widget</db:emphasis>. Optionally, a keyboard
                                         <db:emphasis>modifier</db:emphasis> can be specified as well as a
@@ -3102,13 +3102,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyEvent">
-         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.db#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>Sends a Qt key event to <db:emphasis>widget</db:emphasis> with the
                                     given <db:emphasis>key</db:emphasis> and an associated
                                         <db:emphasis>action</db:emphasis>. Optionally, a keyboard
@@ -3117,7 +3117,7 @@
                                     sending the event.</db:para>
       </db:section>
       <db:section xml:id="keyEvent-2">
-         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.db#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sends a Qt key event to <db:emphasis>widget</db:emphasis> with the
                                     given key <db:emphasis>ascii</db:emphasis> and an associated
@@ -3127,7 +3127,7 @@
                                     sending the event.</db:para>
       </db:section>
       <db:section xml:id="keyEvent-3">
-         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.db#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sends a Qt key event to <db:emphasis>window</db:emphasis> with the
                                     given <db:emphasis>key</db:emphasis> and an associated
@@ -3138,7 +3138,7 @@
          <db:para>This function was introduced in Qt 5.0.</db:para>
       </db:section>
       <db:section xml:id="keyEvent-4">
-         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.html#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyEvent(<db:link xlink:href="qtest.db#KeyAction-enum">KeyAction</db:link><db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Sends a Qt key event to <db:emphasis>window</db:emphasis> with the
                                     given key <db:emphasis>ascii</db:emphasis> and an associated
@@ -3149,7 +3149,7 @@
          <db:para>This function was introduced in Qt 5.0.</db:para>
       </db:section>
       <db:section xml:id="keyPress">
-         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
                                         <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
@@ -3157,22 +3157,22 @@
                                     key.</db:para>
          <db:note>
             <db:para> At some point you should release the
-                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+                                    key using <db:code><db:link xlink:href="qtest.db#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyRelease">QTest::keyRelease</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyPress-2">
-         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
@@ -3181,22 +3181,22 @@
                                     key.</db:para>
          <db:note>
             <db:para> At some point you should release the
-                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+                                    key using <db:code><db:link xlink:href="qtest.db#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyRelease">QTest::keyRelease</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyPress-3">
-         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
@@ -3205,23 +3205,23 @@
                                     key.</db:para>
          <db:note>
             <db:para> At some point you should release the
-                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+                                    key using <db:code><db:link xlink:href="qtest.db#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
          </db:note>
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyRelease">QTest::keyRelease</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyPress-4">
-         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyPress(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates pressing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
@@ -3230,23 +3230,23 @@
                                     key.</db:para>
          <db:note>
             <db:para> At some point you should release the
-                                    key using <db:code><db:link xlink:href="qtest.html#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
+                                    key using <db:code><db:link xlink:href="qtest.db#keyRelease">keyRelease</db:link>()</db:code>.</db:para>
          </db:note>
          <db:para>This function was introduced in Qt 5.0.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyRelease">QTest::keyRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyRelease">QTest::keyRelease</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyRelease">
-         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
                                         <db:emphasis>delay</db:emphasis> is larger than 0, the test will wait
@@ -3256,16 +3256,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyPress">QTest::keyPress</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyPress">QTest::keyPress</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyRelease-2">
-         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>. If
@@ -3276,13 +3276,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyRelease-3">
-         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#Key-enum">Qt::Key</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#Key-enum">Qt::Key</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
@@ -3294,16 +3294,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyPress">QTest::keyPress</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyPress">QTest::keyPress</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="keyRelease-4">
-         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
+         <db:title>[static] void QTest::keyRelease(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates releasing a <db:emphasis>key</db:emphasis> with an optional
                                         <db:emphasis>modifier</db:emphasis> on a <db:emphasis>window</db:emphasis>. If
@@ -3315,13 +3315,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#keyClick">QTest::keyClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#keyClick">QTest::keyClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseClick">
-         <db:title>void QTest::mouseClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseClick(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Simulates clicking a mouse <db:emphasis>button</db:emphasis> with an
                                     optional <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>.
                                     The position of the click is defined by <db:emphasis>pos</db:emphasis>;
@@ -3333,16 +3333,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mousePress">QTest::mousePress</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseClick-2">
-         <db:title>void QTest::mouseClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseClick(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates clicking a mouse <db:emphasis>button</db:emphasis> with an
                                     optional <db:emphasis>stateKey</db:emphasis> modifier on a
@@ -3356,16 +3356,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mousePress">QTest::mousePress</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseDClick">
-         <db:title>void QTest::mouseDClick(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseDClick(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Simulates double clicking a mouse <db:emphasis>button</db:emphasis>
                                     with an optional <db:emphasis>modifier</db:emphasis> on a
                                         <db:emphasis>widget</db:emphasis>. The position of the click is
@@ -3377,13 +3377,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseClick">QTest::mouseClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseDClick-2">
-         <db:title>void QTest::mouseDClick(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseDClick(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates double clicking a mouse <db:emphasis>button</db:emphasis>
                                     with an optional <db:emphasis>stateKey</db:emphasis> modifier on a
@@ -3397,13 +3397,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseClick">QTest::mouseClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseMove">
-         <db:title>void QTest::mouseMove(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseMove(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Moves the mouse pointer to a <db:emphasis>widget</db:emphasis>. If
                                         <db:emphasis>pos</db:emphasis> is not specified, the mouse pointer
                                     moves to the center of the widget. If a <db:emphasis>delay</db:emphasis>
@@ -3411,7 +3411,7 @@
                                     mouse pointer.</db:para>
       </db:section>
       <db:section xml:id="mouseMove-2">
-         <db:title>void QTest::mouseMove(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseMove(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Moves the mouse pointer to a <db:emphasis>window</db:emphasis>. If
                                         <db:emphasis>pos</db:emphasis> is not specified, the mouse pointer
@@ -3421,7 +3421,7 @@
          <db:para>This function was introduced in Qt 5.0.</db:para>
       </db:section>
       <db:section xml:id="mousePress">
-         <db:title>void QTest::mousePress(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mousePress(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Simulates pressing a mouse <db:emphasis>button</db:emphasis> with an
                                     optional <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>.
                                     The position is defined by <db:emphasis>pos</db:emphasis>; the default
@@ -3432,16 +3432,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseClick">QTest::mouseClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mousePress-2">
-         <db:title>void QTest::mousePress(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mousePress(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates pressing a mouse <db:emphasis>button</db:emphasis> with an
                                     optional <db:emphasis>stateKey</db:emphasis> modifier on a
@@ -3455,16 +3455,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseRelease">QTest::mouseRelease</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseClick">QTest::mouseClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseRelease">
-         <db:title>void QTest::mouseRelease(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseRelease(<db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>Simulates releasing a mouse <db:emphasis>button</db:emphasis> with an
                                     optional <db:emphasis>modifier</db:emphasis> on a <db:emphasis>widget</db:emphasis>.
                                     The position of the release is defined by <db:emphasis>pos</db:emphasis>;
@@ -3476,16 +3476,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mousePress">QTest::mousePress</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseClick">QTest::mouseClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="mouseRelease-2">
-         <db:title>void QTest::mouseRelease(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qtcore/qt.html#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>void QTest::mouseRelease(<db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qt.db#MouseButton-enum">Qt::MouseButton</db:link><db:link xlink:href="qt.db#KeyboardModifier-enum">Qt::KeyboardModifiers</db:link><db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Simulates releasing a mouse <db:emphasis>button</db:emphasis> with an
                                     optional <db:emphasis>stateKey</db:emphasis> modifier on a
@@ -3499,10 +3499,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mousePress">QTest::mousePress</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mousePress">QTest::mousePress</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#mouseClick">QTest::mouseClick</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#mouseClick">QTest::mouseClick</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3521,34 +3521,34 @@
                                     test's data function that is invoked by the test
                                     framework.</db:para>
          </db:note>
-         <db:para>See <db:link xlink:href="qttestlib-tutorial2-example.html">Data
+         <db:para>See <db:link xlink:href="qttestlib-tutorial2-example.db">Data
                                         Driven Testing</db:link> for a more extensive
                                     example.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#addColumn">addColumn</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#addColumn">addColumn</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QFETCH">QFETCH</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#QFETCH">QFETCH</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qExec">
-         <db:title>int QTest::qExec(<db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:title>
+         <db:title>int QTest::qExec(<db:link xlink:href="qobject.db">QObject</db:link></db:title>
          <db:para>Executes tests declared in <db:emphasis>testObject</db:emphasis>. In
                                     addition, the private slots
                                         <db:code>initTestCase()</db:code>,
                                         <db:code>cleanupTestCase()</db:code>,
                                         <db:code>init()</db:code> and
                                         <db:code>cleanup()</db:code> are executed if they exist.
-                                    See <db:link xlink:href="qtest-overview.html#creating-a-test">Creating
+                                    See <db:link xlink:href="qtest-overview.db#creating-a-test">Creating
                                         a Test</db:link> for more details.</db:para>
          <db:para>Optionally, the command line arguments <db:emphasis>argc</db:emphasis>
                                     and <db:emphasis>argv</db:emphasis> can be provided. For a list of
-                                    recognized arguments, read <db:link xlink:href="qtest-overview.html#qt-test-command-line-arguments">Qt
+                                    recognized arguments, read <db:link xlink:href="qtest-overview.db#qt-test-command-line-arguments">Qt
                                         Test Command Line Arguments</db:link>.</db:para>
          <db:para>The following example will run all tests in
                                         <db:code>MyTestObject</db:code>:</db:para>
@@ -3558,12 +3558,12 @@
                                     exceptions. (Skipped tests do not influence the return
                                     value.)</db:para>
          <db:para>For stand-alone test applications, the convenience macro
-                                        <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
+                                        <db:code><db:link xlink:href="qtest.db#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
                                     can be used to declare a main() function that parses the command
                                     line arguments and executes the tests, avoiding the need to call
                                     this function explicitly.</db:para>
          <db:para>The return value from this function is also the exit code of
-                                    the test application when the <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code> macro is
+                                    the test application when the <db:code><db:link xlink:href="qtest.db#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code> macro is
                                     used.</db:para>
          <db:para>For stand-alone test applications, this function should not
                                     be called more than once, as command-line options for logging
@@ -3576,22 +3576,22 @@
          <db:para>If you have programatically created the arguments, as
                                     opposed to getting them from the arguments in
                                         <db:code>main()</db:code>, it is likely of interest to
-                                    use QTest::qExec(<db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code> *, const <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> &amp;)
+                                    use QTest::qExec(<db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code> *, const <db:code><db:link xlink:href="qstringlist.db">QStringList</db:link></db:code> &amp;)
                                     since it is Unicode safe.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#QTEST_MAIN">QTEST_MAIN</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qExec-2">
-         <db:title>int QTest::qExec(<db:link xlink:href="qtcore/qobject.html">QObject</db:link><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:title>
+         <db:title>int QTest::qExec(<db:link xlink:href="qobject.db">QObject</db:link><db:link xlink:href="qstringlist.db">QStringList</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
-         <db:para>Behaves identically to <db:link xlink:href="qtest.html#qExec">qExec</db:link>
-            <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code> *, int, char**) but takes a <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> of
+         <db:para>Behaves identically to <db:link xlink:href="qtest.db#qExec">qExec</db:link>
+            <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code> *, int, char**) but takes a <db:code><db:link xlink:href="qstringlist.db">QStringList</db:link></db:code> of
                                         <db:emphasis>arguments</db:emphasis> instead of a
                                         <db:code>char**</db:code> list.</db:para>
          <db:para>This function was introduced in Qt 4.4.</db:para>
@@ -3601,7 +3601,7 @@
          <db:para>Sleeps for <db:emphasis>ms</db:emphasis> milliseconds, blocking
                                     execution of the test. qSleep() will not do any event processing
                                     and leave your test unresponsive. Network communication might
-                                    time out while sleeping. Use <db:code><db:link xlink:href="qtest.html#qWait">qWait</db:link>()</db:code> to do non-blocking sleeping.</db:para>
+                                    time out while sleeping. Use <db:code><db:link xlink:href="qtest.db#qWait">qWait</db:link>()</db:code> to do non-blocking sleeping.</db:para>
          <db:para>
             <db:emphasis>ms</db:emphasis> must be greater than 0.</db:para>
          <db:note>
@@ -3617,7 +3617,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qWait">qWait</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#qWait">qWait</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -3637,16 +3637,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qSleep">QTest::qSleep</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#qSleep">QTest::qSleep</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qsignalspy.html#wait">QSignalSpy::wait</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qsignalspy.db#wait">QSignalSpy::wait</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qWaitForWindowActive">
-         <db:title>[static] bool QTest::qWaitForWindowActive(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:title>
+         <db:title>[static] bool QTest::qWaitForWindowActive(<db:link xlink:href="qwindow.db">QWindow</db:link></db:title>
          <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
                                         <db:emphasis>window</db:emphasis> is active.</db:para>
          <db:para>Returns <db:code>true</db:code> if
@@ -3658,16 +3658,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtgui/qwindow.html#active-prop">QWindow::isActive</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qwindow.db#active-prop">QWindow::isActive</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qWaitForWindowActive-2">
-         <db:title>[static] bool QTest::qWaitForWindowActive(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
+         <db:title>[static] bool QTest::qWaitForWindowActive(<db:link xlink:href="qwidget.db">QWidget</db:link></db:title>
          <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
                                         <db:emphasis>widget</db:emphasis>'s window is active.</db:para>
          <db:para>Returns <db:code>true</db:code> if
@@ -3679,16 +3679,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtwidgets/qwidget.html#isActiveWindow-prop">QWidget::isActiveWindow</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qwidget.db#isActiveWindow-prop">QWidget::isActiveWindow</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qWaitForWindowExposed">
-         <db:title>[static] bool QTest::qWaitForWindowExposed(<db:link xlink:href="qtgui/qwindow.html">QWindow</db:link></db:title>
+         <db:title>[static] bool QTest::qWaitForWindowExposed(<db:link xlink:href="qwindow.db">QWindow</db:link></db:title>
          <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
                                         <db:emphasis>window</db:emphasis> is exposed. Returns
                                         <db:code>true</db:code> if <db:code>window</db:code>
@@ -3702,16 +3702,16 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtgui/qwindow.html#isExposed">QWindow::isExposed</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qwindow.db#isExposed">QWindow::isExposed</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="qWaitForWindowExposed-2">
-         <db:title>[static] bool QTest::qWaitForWindowExposed(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
+         <db:title>[static] bool QTest::qWaitForWindowExposed(<db:link xlink:href="qwidget.db">QWidget</db:link></db:title>
          <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the
                                         <db:emphasis>widget</db:emphasis>'s window is exposed. Returns
                                         <db:code>true</db:code> if
@@ -3726,13 +3726,13 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="setBenchmarkResult">
-         <db:title>void QTest::setBenchmarkResult(<db:link xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:link><db:link xlink:href="qtest.html#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
+         <db:title>void QTest::setBenchmarkResult(<db:link xlink:href="qtglobal.db#qreal-typedef">qreal</db:link><db:link xlink:href="qtest.db#QBenchmarkMetric-enum">QBenchmarkMetric</db:link></db:title>
          <db:para>Sets the benchmark result for this test function to
                                         <db:emphasis>result</db:emphasis>.</db:para>
          <db:para>Use this function if you want to report benchmark results
@@ -3760,7 +3760,7 @@
       <db:section xml:id="toString">
          <db:title>char * QTest::toString(const T &amp; value)</db:title>
          <db:para>Returns a textual representation of <db:emphasis>value</db:emphasis>.
-                                    This function is used by <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code> to output verbose information in case
+                                    This function is used by <db:code><db:link xlink:href="qtest.db#QCOMPARE">QCOMPARE</db:link>()</db:code> to output verbose information in case
                                     of a test failure.</db:para>
          <db:para>You can add specializations of this function to your test to
                                     enable verbose output.</db:para>
@@ -3768,39 +3768,39 @@
             <db:para> The caller of toString() must delete
                                     the returned data using <db:code>delete[]</db:code>. Your
                                     implementation should return a string created with
-                                        <db:code>new[]</db:code> or <db:code><db:link xlink:href="qtcore/qbytearray.html#qstrdup">qstrdup</db:link>()</db:code>.</db:para>
+                                        <db:code>new[]</db:code> or <db:code><db:link xlink:href="qbytearray.db#qstrdup">qstrdup</db:link>()</db:code>.</db:para>
          </db:note>
          <db:para>Example:</db:para>
          <db:programlisting>namespaceQTest { template&lt;&gt;char*toString(const MyPoint &amp;point) { QByteArray ba ="MyPoint("; ba +=QByteArray::number(point.x()) +", "+QByteArray::number(point.y()); ba +=")"; return qstrdup(ba.data()); } }</db:programlisting>
          <db:para>The example above defines a toString() specialization for a
                                     class called <db:code>MyPoint</db:code>. Whenever a
                                     comparison of two instances of <db:code>MyPoint</db:code>
-                                    fails, <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+                                    fails, <db:code><db:link xlink:href="qtest.db#QCOMPARE">QCOMPARE</db:link>()</db:code>
                                     will call this function to output the contents of
                                         <db:code>MyPoint</db:code> to the test log.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#QCOMPARE">QCOMPARE</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#QCOMPARE">QCOMPARE</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="toString-4">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qlatin1string.html">QLatin1String</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qlatin1string.db">QLatin1String</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>string</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-5">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qstring.html">QString</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qstring.db">QString</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>string</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-6">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qbytearray.html">QByteArray</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qbytearray.db">QByteArray</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the byte array
                                         <db:emphasis>ba</db:emphasis>.</db:para>
@@ -3808,87 +3808,87 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qtest.html#toHexRepresentation">QTest::toHexRepresentation</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qtest.db#toHexRepresentation">QTest::toHexRepresentation</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="toString-7">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qtime.html">QTime</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qtime.db">QTime</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>time</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-8">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qdate.html">QDate</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qdate.db">QDate</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>date</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-9">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qdatetime.html">QDateTime</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qdatetime.db">QDateTime</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the date and time
                                     specified by <db:emphasis>dateTime</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-10">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qchar.html">QChar</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qchar.db">QChar</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>character</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-11">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qpoint.html">QPoint</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qpoint.db">QPoint</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>point</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-12">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qsize.html">QSize</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qsize.db">QSize</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>size</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-13">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qrect.html">QRect</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qrect.db">QRect</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>rectangle</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-14">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qurl.html">QUrl</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qurl.db">QUrl</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>url</db:emphasis>.</db:para>
          <db:para>This function was introduced in Qt 4.4.</db:para>
       </db:section>
       <db:section xml:id="toString-15">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qpointf.html">QPointF</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qpointf.db">QPointF</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>point</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-16">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qsizef.html">QSizeF</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qsizef.db">QSizeF</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>size</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-17">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qrectf.html">QRectF</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qrectf.db">QRectF</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>rectangle</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="toString-18">
-         <db:title>char * QTest::toString(const <db:link xlink:href="qtcore/qvariant.html">QVariant</db:link></db:title>
+         <db:title>char * QTest::toString(const <db:link xlink:href="qvariant.db">QVariant</db:link></db:title>
          <db:para>This is an overloaded function.</db:para>
          <db:para>Returns a textual representation of the given
                                         <db:emphasis>variant</db:emphasis>.</db:para>
       </db:section>
       <db:section xml:id="touchEvent">
-         <db:title><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link><db:link xlink:href="qtgui/qtouchdevice.html">QTouchDevice</db:link></db:title>
-         <db:para>Creates and returns a <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> for the
+         <db:title><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link><db:link xlink:href="qwidget.db">QWidget</db:link><db:link xlink:href="qtouchdevice.db">QTouchDevice</db:link></db:title>
+         <db:para>Creates and returns a <db:code><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link></db:code> for the
                                         <db:emphasis>device</db:emphasis> to simulate events for
                                         <db:emphasis>widget</db:emphasis>.</db:para>
          <db:para>When adding touch events to the sequence,
@@ -3897,14 +3897,14 @@
                                     is provided in the respective calls to press(), move()
                                     etc.</db:para>
          <db:para>The touch events are committed to the event system when the
-                                    destructor of the <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> is called (ie when the object
+                                    destructor of the <db:code><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link></db:code> is called (ie when the object
                                     returned runs out of scope), unless <db:emphasis>autoCommit</db:emphasis>
                                     is set to false. When <db:emphasis>autoCommit</db:emphasis> is false,
                                     commit() has to be called manually.</db:para>
       </db:section>
       <db:section xml:id="touchEvent-2">
-         <db:title><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link><db:link xlink:href="qtgui/qwindow.html">QWindow</db:link><db:link xlink:href="qtgui/qtouchdevice.html">QTouchDevice</db:link></db:title>
-         <db:para>Creates and returns a <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> for the
+         <db:title><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link><db:link xlink:href="qwindow.db">QWindow</db:link><db:link xlink:href="qtouchdevice.db">QTouchDevice</db:link></db:title>
+         <db:para>Creates and returns a <db:code><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link></db:code> for the
                                         <db:emphasis>device</db:emphasis> to simulate events for
                                         <db:emphasis>window</db:emphasis>.</db:para>
          <db:para>When adding touch events to the sequence,
@@ -3913,7 +3913,7 @@
                                     is provided in the respective calls to press(), move()
                                     etc.</db:para>
          <db:para>The touch events are committed to the event system when the
-                                    destructor of the <db:code><db:link xlink:href="qtest-qtoucheventsequence.html">QTouchEventSequence</db:link></db:code> is called (ie when the object
+                                    destructor of the <db:code><db:link xlink:href="qtest-qtoucheventsequence.db">QTouchEventSequence</db:link></db:code> is called (ie when the object
                                     returned runs out of scope), unless <db:emphasis>autoCommit</db:emphasis>
                                     is set to false. When <db:emphasis>autoCommit</db:emphasis> is false,
                                     commit() has to be called manually.</db:para>
@@ -3925,9 +3925,9 @@
       <db:section xml:id="obsolete_func">
          <db:title>Function Documentation</db:title>
          <db:section xml:id="qWaitForWindowShown">
-            <db:title>[static] bool QTest::qWaitForWindowShown(<db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:title>
+            <db:title>[static] bool QTest::qWaitForWindowShown(<db:link xlink:href="qwidget.db">QWidget</db:link></db:title>
             <db:para>Waits for <db:emphasis>timeout</db:emphasis> milliseconds or until the <db:emphasis>widget</db:emphasis>'s window is exposed. Returns <db:code>true</db:code> if <db:code>widget</db:code>'s window is exposed within <db:emphasis>timeout</db:emphasis> milliseconds, otherwise returns <db:code>false</db:code>.</db:para>
-            <db:para>This function does the same as <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">qWaitForWindowExposed</db:link>()</db:code>.</db:para>
+            <db:para>This function does the same as <db:code><db:link xlink:href="qtest.db#qWaitForWindowExposed">qWaitForWindowExposed</db:link>()</db:code>.</db:para>
             <db:para>Example:</db:para>
             <db:programlisting>QWidget widget;
 widget.show();
@@ -3937,10 +3937,10 @@ QTest::qWaitForWindowShown(&amp;widget);</db:programlisting>
                <db:title>See Also</db:title>
                <db:simplelist type="vert">
                   <db:member>
-                     <db:code><db:link xlink:href="qtest.html#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtest.db#qWaitForWindowActive">QTest::qWaitForWindowActive</db:link>()</db:code>
                   </db:member>
                   <db:member>
-                     <db:code><db:link xlink:href="qtest.html#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
+                     <db:code><db:link xlink:href="qtest.db#qWaitForWindowExposed">QTest::qWaitForWindowExposed</db:link>()</db:code>
                   </db:member>
                </db:simplelist>
             </db:section>

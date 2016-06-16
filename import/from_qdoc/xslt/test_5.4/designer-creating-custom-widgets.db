@@ -20,7 +20,7 @@
          </db:imageobject>
       </db:mediaobject>
    </db:informalfigure>
-   <db:para>The <db:code><db:link xlink:href="qtdesigner-module.html">QtDesigner</db:link></db:code> module provides you with the ability to
+   <db:para>The <db:code><db:link xlink:href="qtdesigner-module.db">QtDesigner</db:link></db:code> module provides you with the ability to
                                     create custom widgets in <db:emphasis>Qt Designer</db:emphasis>.</db:para>
    <db:section xml:id="getting-started">
       <db:title>Getting Started</db:title>
@@ -31,7 +31,7 @@
       <db:section xml:id="providing-an-interface-description">
          <db:title>Providing an Interface Description</db:title>
          <db:para>To inform <db:emphasis>Qt Designer</db:emphasis> about the type of
-                                    widget you want to provide, create a subclass of <db:code><db:link xlink:href="qdesignercustomwidgetinterface.html">QDesignerCustomWidgetInterface</db:link></db:code> that describes the
+                                    widget you want to provide, create a subclass of <db:code><db:link xlink:href="qdesignercustomwidgetinterface.db">QDesignerCustomWidgetInterface</db:link></db:code> that describes the
                                     various properties your widget exposes. Most of these are
                                     supplied by functions that are pure virtual in the base class,
                                     because only the author of the plugin can provide this
@@ -139,7 +139,7 @@
                      </db:para>
                   </db:td>
                   <db:td>
-                     <db:para>A <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> pointer to an instance of the
+                     <db:para>A <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code> pointer to an instance of the
                                                   custom widget, constructed with the parent
                                                   supplied.</db:para>
                      <db:note>
@@ -159,7 +159,7 @@
                   <db:td>
                      <db:para>A description of the widget's properties,
                                                   such as its object name, size hint, and other
-                                                  standard <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> properties.</db:para>
+                                                  standard <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code> properties.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -188,8 +188,8 @@
                   <db:td>
                      <db:para>Sets up extensions and other features for
                                                   custom widgets. Custom container extensions (see
-                                                  <db:code><db:link xlink:href="qdesignercontainerextension.html">QDesignerContainerExtension</db:link></db:code>) and task
-                                                  menu extensions (see <db:code><db:link xlink:href="qdesignertaskmenuextension.html">QDesignerTaskMenuExtension</db:link></db:code>) should be
+                                                  <db:code><db:link xlink:href="qdesignercontainerextension.db">QDesignerContainerExtension</db:link></db:code>) and task
+                                                  menu extensions (see <db:code><db:link xlink:href="qdesignertaskmenuextension.db">QDesignerTaskMenuExtension</db:link></db:code>) should be
                                                   set up in this function.</db:para>
                   </db:td>
                </db:tr>
@@ -231,7 +231,7 @@
                                     string returned by the <db:code>domXml()</db:code> function
                                     in your subclass. For example, the
                                         <db:code>AnalogClockPlugin</db:code> provided by the
-                                        <db:link xlink:href="qtdesigner-customwidgetplugin-example.html">Custom Widget Plugin</db:link> example, defines a default
+                                        <db:link xlink:href="qtdesigner-customwidgetplugin-example.db">Custom Widget Plugin</db:link> example, defines a default
                                     widgetgeometry in the following way:</db:para>
          <db:programlisting language="qml"> ... " &lt;property
                                         name=\"geometry\"&gt;\n"" &lt;rect&gt;\n"" &lt;x&gt;0&lt;/x&gt;\n"" &lt;y&gt;0&lt;/y&gt;\n""
@@ -308,7 +308,7 @@
             </db:tbody>
          </db:informaltable>
          <db:para>The <db:code>&lt;addpagemethod&gt;</db:code> tag tells
-                                        <db:emphasis>Qt Designer</db:emphasis> and <db:link xlink:href="qtdoc/uic.html#uic">uic</db:link> which method should
+                                        <db:emphasis>Qt Designer</db:emphasis> and <db:link xlink:href="uic.db#uic">uic</db:link> which method should
                                     be used to add pages to a container widget. This applies to
                                     container widgets that require calling a particular method to
                                     add a child rather than adding the child by passing the parent.
@@ -476,8 +476,8 @@
                                         Designer</db:emphasis>.</db:para>
       <db:para>First of all, the plugin class must be exported in order for
                                     the plugin to be loaded by <db:emphasis>Qt Designer</db:emphasis>. Use the
-                                        <db:code><db:link xlink:href="qtcore/qtplugin.html#Q_PLUGIN_METADATA">Q_PLUGIN_METADATA</db:link>()</db:code> macro to do this. Also, the
-                                        <db:code><db:link xlink:href="qdesignercustomwidgetinterface.html#QDESIGNER_WIDGET_EXPORT">QDESIGNER_WIDGET_EXPORT</db:link></db:code> macro must be used to
+                                        <db:code><db:link xlink:href="qtplugin.db#Q_PLUGIN_METADATA">Q_PLUGIN_METADATA</db:link>()</db:code> macro to do this. Also, the
+                                        <db:code><db:link xlink:href="qdesignercustomwidgetinterface.db#QDESIGNER_WIDGET_EXPORT">QDESIGNER_WIDGET_EXPORT</db:link></db:code> macro must be used to
                                     define each custom widget class within a plugin, that <db:emphasis>Qt
                                         Designer</db:emphasis> will instantiate.</db:para>
    </db:section>
@@ -488,7 +488,7 @@
                                     that may make them behave differently to many of the standard
                                     widgets found in <db:emphasis>Qt Designer</db:emphasis>. Specifically, if
                                     a custom widget grabs the keyboard as a result of a call to
-                                        <db:code><db:link xlink:href="qtwidgets/qwidget.html#grabKeyboard">QWidget::grabKeyboard</db:link>()</db:code>, the operation of
+                                        <db:code><db:link xlink:href="qwidget.db#grabKeyboard">QWidget::grabKeyboard</db:link>()</db:code>, the operation of
                                         <db:emphasis>Qt Designer</db:emphasis> will be affected.</db:para>
       <db:para>To give custom widgets special behavior in <db:emphasis>Qt
                                         Designer</db:emphasis>, provide an implementation of the
@@ -505,7 +505,7 @@
       <db:para/>
       <db:section xml:id="a-simple-plugin">
          <db:title>A Simple Plugin</db:title>
-         <db:para>The <db:link xlink:href="qtdesigner-customwidgetplugin-example.html">Custom
+         <db:para>The <db:link xlink:href="qtdesigner-customwidgetplugin-example.db">Custom
                                         Widget Plugin Example</db:link> demonstrates a simple
                                         <db:emphasis>Qt Designer</db:emphasis> plugin.</db:para>
          <db:para>The <db:code>.pro</db:code> file for a plugin must
@@ -526,7 +526,7 @@
          <db:programlisting>CONFIG += release</db:programlisting>
          <db:para>If plugins are built in a mode that is incompatible with
                                         <db:emphasis>Qt Designer</db:emphasis>, they will not be loaded and
-                                    installed. For more information about plugins, see the <db:link xlink:href="qtdoc/plugins-howto.html">Plugins HOWTO</db:link>
+                                    installed. For more information about plugins, see the <db:link xlink:href="plugins-howto.db">Plugins HOWTO</db:link>
                                     document.</db:para>
          <db:para>It is also necessary to ensure that the plugin is installed
                                     together with other <db:emphasis>Qt Designer</db:emphasis> widget
@@ -545,7 +545,7 @@
                                     look for a <db:code>designer</db:code> subdirectory in each
                                     path supplied.</db:para>
          </db:note>
-         <db:para>See <db:code><db:link xlink:href="qtcore/qcoreapplication.html#libraryPaths">QCoreApplication::libraryPaths</db:link>()</db:code> for more
+         <db:para>See <db:code><db:link xlink:href="qcoreapplication.db#libraryPaths">QCoreApplication::libraryPaths</db:link>()</db:code> for more
                                     information about customizing paths for libraries and plugins
                                     with Qt applications.</db:para>
       </db:section>
@@ -574,7 +574,7 @@
             </db:listitem>
             <db:listitem>
                <db:para>Create a standalone shared library containing the
-                                        custom widgets only as described in <db:link xlink:href="qtdoc/sharedlibrary.html">Creating Shared
+                                        custom widgets only as described in <db:link xlink:href="sharedlibrary.db">Creating Shared
                                             Libraries</db:link>.</db:para>
                <db:para>This library would then be
                                             used by the application as well as by the <db:emphasis>Qt
@@ -588,11 +588,11 @@
    <db:section xml:id="related-examples">
       <db:title>Related Examples</db:title>
       <db:para>For more information on using custom widgets in <db:emphasis>Qt
-                                        Designer</db:emphasis>, refer to the <db:link xlink:href="qtdesigner-customwidgetplugin-example.html">Custom
-                                        Widget Plugin</db:link> and <db:link xlink:href="qtdesigner-worldtimeclockplugin-example.html">World
+                                        Designer</db:emphasis>, refer to the <db:link xlink:href="qtdesigner-customwidgetplugin-example.db">Custom
+                                        Widget Plugin</db:link> and <db:link xlink:href="qtdesigner-worldtimeclockplugin-example.db">World
                                         Time Clock Plugin</db:link> examples for more information
                                     about using custom widgets in <db:emphasis>Qt Designer</db:emphasis>.
-                                    Also, you can use the <db:code><db:link xlink:href="qdesignercustomwidgetcollectioninterface.html">QDesignerCustomWidgetCollectionInterface</db:link></db:code> class to
+                                    Also, you can use the <db:code><db:link xlink:href="qdesignercustomwidgetcollectioninterface.db">QDesignerCustomWidgetCollectionInterface</db:link></db:code> class to
                                     combine several custom widgets into a single library.</db:para>
    </db:section>
 </db:article>

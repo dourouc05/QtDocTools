@@ -5,7 +5,7 @@
             xml:lang="en">
    <db:title>Third-Party Licenses Used in Qt</db:title>
    <db:para>Qt includes a number of third-party libraries that are used to provide
-                  certain features. Unlike the code described in the <db:link xlink:href="licenses.html">code used in Qt</db:link> document, these libraries are supplied alongside the
+                  certain features. Unlike the code described in the <db:link xlink:href="licenses.db">code used in Qt</db:link> document, these libraries are supplied alongside the
                   Qt modules.</db:para>
    <db:para>Third Party Software may impose additional restrictions and it is the user's
                   responsibility to ensure that they have met the licensing requirements of the LGPL
@@ -20,7 +20,7 @@
       <db:title>FreeType 2 (freetype) version
                   2.3.12</db:title>
       <db:para>
-         <db:emphasis>The <db:link xlink:href="qt-embedded-fonts.html#freetype">FreeType</db:link>
+         <db:emphasis>The <db:link xlink:href="qt-embedded-fonts.db#freetype">FreeType</db:link>
                     project is a team of volunteers who develop free, portable and high-quality
                     software solutions for digital typography. We specifically target embedded
                     systems and focus on bringing small, efficient and ubiquitous products.</db:emphasis>
@@ -30,8 +30,8 @@
                     <db:code>qtbase/src/3rdparty/freetype/docs/GPL.txt</db:code> for license
                   details.</db:para>
       <db:para>See also the files in <db:code>qtbase/src/3rdparty/harfbuzz</db:code>,
-                  which are used by <db:link xlink:href="qt-embedded-fonts.html#freetype">FreeType</db:link>.</db:para>
-      <db:para>Parts of the <db:link xlink:href="qt-embedded-fonts.html#freetype">FreeType</db:link> projects have been modified and put into Qt for use in the
+                  which are used by <db:link xlink:href="qt-embedded-fonts.db#freetype">FreeType</db:link>.</db:para>
+      <db:para>Parts of the <db:link xlink:href="qt-embedded-fonts.db#freetype">FreeType</db:link> projects have been modified and put into Qt for use in the
                   painting subsystem. These files are ftraster.h, ftraster.c, ftgrays.h and
                   ftgrays.c. The following modifications has been made to these files:</db:para>
       <db:itemizedlist>
@@ -91,7 +91,7 @@
                   DAMAGE.</db:para>
       <db:itemizedlist>
          <db:listitem>
-            <db:para>Parts of the <db:link xlink:href="qt-embedded-fonts.html#freetype">FreeType</db:link> library</db:para>
+            <db:para>Parts of the <db:link xlink:href="qt-embedded-fonts.db#freetype">FreeType</db:link> library</db:para>
          </db:listitem>
       </db:itemizedlist>
       <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
@@ -101,7 +101,7 @@
                   should come with this file under the name `CatharonLicense.txt'. By continuing to
                   use, modify, or distribute this file you indicate that you have read the license
                   and understand and accept it fully.</db:para>
-      <db:para>Note that this license is compatible with the <db:link xlink:href="qt-embedded-fonts.html#freetype">FreeType</db:link> license.</db:para>
+      <db:para>Note that this license is compatible with the <db:link xlink:href="qt-embedded-fonts.db#freetype">FreeType</db:link> license.</db:para>
       <db:programlisting> The Catharon Open Source LICENSE ----------------------------
                   2000-Jul-04 Copyright (C) 2000 by Catharon Productions, Inc. Introduction
                   ============ This license applies to source files distributed by Catharon
@@ -837,7 +837,7 @@
          </db:listitem>
       </db:itemizedlist>
       <db:para>The public suffix list is used inside Qt to avoid such "supercookies"
-                  mentioned above being set in the cookie jar supported by Qt (by the <db:code><db:link xlink:href="qtnetwork/qnetworkcookiejar.html">QNetworkCookieJar</db:link></db:code>
+                  mentioned above being set in the cookie jar supported by Qt (by the <db:code><db:link xlink:href="qnetworkcookiejar.db">QNetworkCookieJar</db:link></db:code>
                   class).</db:para>
       <db:para>See
                     <db:code>qtbase/src/network/access/qnetworkcookiejartlds_p.h.INFO</db:code>
@@ -1486,7 +1486,7 @@
    <db:section xml:id="poly2tri">
       <db:title>Poly2tri</db:title>
       <db:para>
-         <db:emphasis><db:link xlink:href="3rdparty.html#poly2tri">Poly2Tri</db:link> is a
+         <db:emphasis><db:link xlink:href="3rdparty.db#poly2tri">Poly2Tri</db:link> is a
                     sweepline constrained Delaunay Polygon Triangulation Library.</db:emphasis>
       </db:para>
       <db:programlisting>Poly2Tri Copyright (c) 2009-2010, Poly2Tri Contributors

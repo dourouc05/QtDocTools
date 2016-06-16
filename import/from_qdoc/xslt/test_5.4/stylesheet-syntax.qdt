@@ -19,14 +19,14 @@
                                     { color: red }</db:programlisting>
       <db:para>In the above style rule, <db:code>QPushButton</db:code>
                                     is the selector and <db:code>{ color: red }</db:code> is the
-                                    declaration. The rule specifies that <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> and its
+                                    declaration. The rule specifies that <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> and its
                                     subclasses (e.g., <db:code>MyPushButton</db:code>) should
                                     use red as their foreground color.</db:para>
       <db:para>Qt Style Sheet is generally case insensitive (i.e.,
                                         <db:code>color</db:code>, <db:code>Color</db:code>,
                                         <db:code>COLOR</db:code>, and
                                         <db:code>cOloR</db:code> refer to the same property).
-                                    The only exceptions are class names, <db:link xlink:href="qtcore/qobject.html#objectName-prop">object
+                                    The only exceptions are class names, <db:link xlink:href="qobject.db#objectName-prop">object
                                         names</db:link>, and Qt property names, which are case
                                     sensitive.</db:para>
       <db:para>Several selectors can be specified for the same declaration,
@@ -46,7 +46,7 @@
                                     semicolons. For example:</db:para>
       <db:programlisting>QPushButton
                                     { color: red; background-color: white }</db:programlisting>
-      <db:para>See the <db:link xlink:href="stylesheet-reference.html#list-of-properties">List of
+      <db:para>See the <db:link xlink:href="stylesheet-reference.db#list-of-properties">List of
                                         Properties</db:link> section below for the list of properties
                                     provided by Qt widgets.</db:para>
    </db:section>
@@ -93,7 +93,7 @@
                   </db:para>
                </db:td>
                <db:td>
-                  <db:para>Matches instances of <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> and
+                  <db:para>Matches instances of <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> and
                                                   of its subclasses.</db:para>
                </db:td>
             </db:tr>
@@ -107,20 +107,20 @@
                   </db:para>
                </db:td>
                <db:td>
-                  <db:para>Matches instances of <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> that
-                                                  are not <db:link xlink:href="qpushbutton.html#flat-prop">flat</db:link>. You may use this selector to test
-                                                  for any Qt <db:link xlink:href="qtcore/properties.html#qt-s-property-system">property</db:link> that supports <db:code><db:link xlink:href="qtcore/qvariant.html#toString">QVariant::toString</db:link>()</db:code> (see the <db:link xlink:href="qtcore/qvariant.html#toString">toString()</db:link> function documentation for
+                  <db:para>Matches instances of <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> that
+                                                  are not <db:link xlink:href="qpushbutton.db#flat-prop">flat</db:link>. You may use this selector to test
+                                                  for any Qt <db:link xlink:href="properties.db#qt-s-property-system">property</db:link> that supports <db:code><db:link xlink:href="qvariant.db#toString">QVariant::toString</db:link>()</db:code> (see the <db:link xlink:href="qvariant.db#toString">toString()</db:link> function documentation for
                                                   details). In addition, the special
                                                   <db:code>class</db:code> property is
                                                   supported, for the name of the class.</db:para>
                   <db:para>This
                                                   selector may also be used to test dynamic
                                                   properties. For more information on customization
-                                                  using dynamic properties, refer to <db:link xlink:href="stylesheet-examples.html#customizing-using-dynamic-properties">Customizing Using Dynamic
+                                                  using dynamic properties, refer to <db:link xlink:href="stylesheet-examples.db#customizing-using-dynamic-properties">Customizing Using Dynamic
                                                   Properties</db:link>.</db:para>
                   <db:para>Instead of <db:code>=</db:code>, you
                                                   can also use <db:code>~=</db:code> to test
-                                                  whether a Qt property of type <db:code><db:link xlink:href="qtcore/qstringlist.html">QStringList</db:link></db:code> contains a given <db:code><db:link xlink:href="qtcore/qstring.html">QString</db:link></db:code>.</db:para>
+                                                  whether a Qt property of type <db:code><db:link xlink:href="qstringlist.db">QStringList</db:link></db:code> contains a given <db:code><db:link xlink:href="qstring.db">QString</db:link></db:code>.</db:para>
                   <db:warning>
                      <db:para> If the value of
                                                   the Qt property changes after the style sheet has
@@ -140,7 +140,7 @@
                   </db:para>
                </db:td>
                <db:td>
-                  <db:para>Matches instances of <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>, but
+                  <db:para>Matches instances of <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>, but
                                                   not of its subclasses.</db:para>
                   <db:para>This is equivalent
                                                   to
@@ -149,7 +149,7 @@
             </db:tr>
             <db:tr>
                <db:td>
-                  <db:para>ID <db:link xlink:href=""/>
+                  <db:para>ID 
                                                   Selector</db:para>
                </db:td>
                <db:td>
@@ -158,7 +158,7 @@
                   </db:para>
                </db:td>
                <db:td>
-                  <db:para>Matches all <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> instances whose <db:link xlink:href="qtcore/qobject.html#objectName-prop">object
+                  <db:para>Matches all <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> instances whose <db:link xlink:href="qobject.db#objectName-prop">object
                                                   name</db:link> is
                                                   <db:code>okButton</db:code>.</db:para>
                </db:td>
@@ -174,9 +174,9 @@
                   </db:para>
                </db:td>
                <db:td>
-                  <db:para>Matches all instances of <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> that
+                  <db:para>Matches all instances of <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> that
                                                   are descendants (children, grandchildren, etc.) of
-                                                  a <db:code><db:link xlink:href="qdialog.html">QDialog</db:link></db:code>.</db:para>
+                                                  a <db:code><db:link xlink:href="qdialog.db">QDialog</db:link></db:code>.</db:para>
                </db:td>
             </db:tr>
             <db:tr>
@@ -190,8 +190,8 @@
                   </db:para>
                </db:td>
                <db:td>
-                  <db:para>Matches all instances of <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> that
-                                                  are direct children of a <db:code><db:link xlink:href="qdialog.html">QDialog</db:link></db:code>.</db:para>
+                  <db:para>Matches all instances of <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> that
+                                                  are direct children of a <db:code><db:link xlink:href="qdialog.db">QDialog</db:link></db:code>.</db:para>
                </db:td>
             </db:tr>
          </db:tbody>
@@ -201,58 +201,58 @@
       <db:title>Sub-Controls</db:title>
       <db:para>For styling complex widgets, it is necessary to access
                                     subcontrols of the widget, such as the drop-down button of a
-                                        <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> or the up
-                                    and down arrows of a <db:code><db:link xlink:href="qspinbox.html">QSpinBox</db:link></db:code>. Selectors may contain
+                                        <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code> or the up
+                                    and down arrows of a <db:code><db:link xlink:href="qspinbox.db">QSpinBox</db:link></db:code>. Selectors may contain
                                         <db:emphasis>subcontrols</db:emphasis> that make it possible to
                                     restrict the application of a rule to specific widget
                                     subcontrols. For example:</db:para>
       <db:programlisting>QComboBox::drop-down { image: url(dropdown.png) }</db:programlisting>
-      <db:para>The above rule styles the drop-down button of all <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code>es. Although the
+      <db:para>The above rule styles the drop-down button of all <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code>es. Although the
                                     double-colon (<db:code>::</db:code>) syntax is reminiscent
                                     of CSS3 Pseudo-Elements, Qt Sub-Controls differ conceptually
                                     from these and have different cascading semantics.</db:para>
       <db:para>Sub-controls are always positioned with respect to another
                                     element - a reference element. This reference element could be
-                                    the widget or another Sub-control. For example, the <db:link xlink:href="stylesheet-reference.html#drop-down-sub">::drop-down</db:link> of a <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> is placed, by default, in the top right
-                                    corner of the Padding rectangle of the <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code>. The <db:link xlink:href="stylesheet-reference.html#drop-down-sub">::drop-down</db:link> is placed, by default, in the Center
-                                    of the Contents rectangle of the <db:link xlink:href="stylesheet-reference.html#drop-down-sub">::drop-down</db:link> Sub-control. See the <db:link xlink:href="stylesheet-reference.html#list-of-stylable-widgets">List of Stylable Widgets</db:link> below for the
+                                    the widget or another Sub-control. For example, the <db:link xlink:href="stylesheet-reference.db#drop-down-sub">::drop-down</db:link> of a <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code> is placed, by default, in the top right
+                                    corner of the Padding rectangle of the <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code>. The <db:link xlink:href="stylesheet-reference.db#drop-down-sub">::drop-down</db:link> is placed, by default, in the Center
+                                    of the Contents rectangle of the <db:link xlink:href="stylesheet-reference.db#drop-down-sub">::drop-down</db:link> Sub-control. See the <db:link xlink:href="stylesheet-reference.db#list-of-stylable-widgets">List of Stylable Widgets</db:link> below for the
                                     Sub-controls to use to style a widget and their default
                                     positions.</db:para>
       <db:para>The origin rectangle to be used can be changed using the
-                                        <db:link xlink:href="stylesheet-reference.html#subcontrol-origin-prop">subcontrol-origin</db:link> property. For example, if we
+                                        <db:link xlink:href="stylesheet-reference.db#subcontrol-origin-prop">subcontrol-origin</db:link> property. For example, if we
                                     want to place the drop-down in the margin rectangle of the
-                                        <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> instead of
+                                        <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code> instead of
                                     the default Padding rectangle, we can specify:</db:para>
       <db:programlisting>QComboBox {
                                         margin-right:
                                         20px; } QComboBox::drop-down { subcontrol-origin: margin; }</db:programlisting>
       <db:para>The alignment of the drop-down within the Margin rectangle
-                                    is changed using <db:link xlink:href="stylesheet-reference.html#subcontrol-position-prop">subcontrol-position</db:link> property.</db:para>
-      <db:para>The <db:link xlink:href="stylesheet-reference.html#width-prop">width</db:link> and <db:link xlink:href="stylesheet-reference.html#height-prop">height</db:link>
+                                    is changed using <db:link xlink:href="stylesheet-reference.db#subcontrol-position-prop">subcontrol-position</db:link> property.</db:para>
+      <db:para>The <db:link xlink:href="stylesheet-reference.db#width-prop">width</db:link> and <db:link xlink:href="stylesheet-reference.db#height-prop">height</db:link>
                                     properties can be used to control the size of the Sub-control.
-                                    Note that setting a <db:link xlink:href="stylesheet-reference.html#image-prop">image</db:link>
+                                    Note that setting a <db:link xlink:href="stylesheet-reference.db#image-prop">image</db:link>
                                     implicitly sets the size of a Sub-control.</db:para>
-      <db:para>The relative positioning scheme (<db:link xlink:href="stylesheet-reference.html#position-prop">position</db:link> : relative), allows the position of the
+      <db:para>The relative positioning scheme (<db:link xlink:href="stylesheet-reference.db#position-prop">position</db:link> : relative), allows the position of the
                                     Sub-Control to be offset from its initial position. For example,
-                                    when the <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code>'s
+                                    when the <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code>'s
                                     drop-down button is pressed, we might like the arrow inside to
                                     be offset to give a "pressed" effect. To achieve this, we can
                                     specify:</db:para>
       <db:programlisting>QComboBox::down-arrow { image: url(down_arrow.png); } QComboBox::down-arrow:pressed { position:
                                     relative; top: 1px; left:
                                         1px; }</db:programlisting>
-      <db:para>The absolute positioning scheme (<db:link xlink:href="stylesheet-reference.html#position-prop">position</db:link> : absolute), allows the position and size
+      <db:para>The absolute positioning scheme (<db:link xlink:href="stylesheet-reference.db#position-prop">position</db:link> : absolute), allows the position and size
                                     of the Sub-control to be changed with respect to the reference
                                     element.</db:para>
       <db:para>Once positioned, they are treated the same as widgets and
-                                    can be styled using the <db:link xlink:href="stylesheet-customizing.html#box-model">box
+                                    can be styled using the <db:link xlink:href="stylesheet-customizing.db#box-model">box
                                         model</db:link>.</db:para>
-      <db:para>See the <db:link xlink:href="stylesheet-reference.html#list-of-sub-controls">List
+      <db:para>See the <db:link xlink:href="stylesheet-reference.db#list-of-sub-controls">List
                                         of Sub-Controls</db:link> below for a list of supported
-                                    sub-controls, and <db:link xlink:href="stylesheet-examples.html#customizing-the-qpushbutton-s-menu-indicator-sub-control">Customizing the QPushButton's Menu Indicator
+                                    sub-controls, and <db:link xlink:href="stylesheet-examples.db#customizing-the-qpushbutton-s-menu-indicator-sub-control">Customizing the QPushButton's Menu Indicator
                                         Sub-Control</db:link> for a realistic example.</db:para>
       <db:note>
-         <db:para>With complex widgets such as <db:code><db:link xlink:href="qcombobox.html">QComboBox</db:link></db:code> and <db:code><db:link xlink:href="qscrollbar.html">QScrollBar</db:link></db:code>, if one property
+         <db:para>With complex widgets such as <db:code><db:link xlink:href="qcombobox.db">QComboBox</db:link></db:code> and <db:code><db:link xlink:href="qscrollbar.db">QScrollBar</db:link></db:code>, if one property
                                     or sub-control is customized, <db:emphasis role="bold">all</db:emphasis> the other
                                     properties or sub-controls must be customized as
                                     well.</db:para>
@@ -264,22 +264,22 @@
                                     denote that restrict the application of the rule based on the
                                     widget's state. Pseudo-states appear at the end of the selector,
                                     with a colon (<db:code>:</db:code>) in between. For example,
-                                    the following rule applies when the mouse hovers over a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>:</db:para>
+                                    the following rule applies when the mouse hovers over a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>:</db:para>
       <db:programlisting>QPushButton:hover { color: white
                                     }</db:programlisting>
       <db:para>Pseudo-states can be negated using the exclamation operator.
                                     For example, the following rule applies when the mouse does not
-                                    hover over a <db:code><db:link xlink:href="qradiobutton.html">QRadioButton</db:link></db:code>:</db:para>
+                                    hover over a <db:code><db:link xlink:href="qradiobutton.db">QRadioButton</db:link></db:code>:</db:para>
       <db:programlisting>QRadioButton:!hover { color: red
                                     }</db:programlisting>
       <db:para>Pseudo-states can be chained, in which case a logical AND is
                                     implied. For example, the following rule applies to when the
-                                    mouse hovers over a checked <db:code><db:link xlink:href="qcheckbox.html">QCheckBox</db:link></db:code>:</db:para>
+                                    mouse hovers over a checked <db:code><db:link xlink:href="qcheckbox.db">QCheckBox</db:link></db:code>:</db:para>
       <db:programlisting>QCheckBox:hover:checked { color: white
                                     }</db:programlisting>
       <db:para>Negated Pseudo-states may appear in Pseudo-state chains. For
                                     example, the following rule applies when the mouse hovers over a
-                                        <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> that is
+                                        <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> that is
                                     not pressed:</db:para>
       <db:programlisting>QPushButton:hover:!pressed { color: blue;
                                     }</db:programlisting>
@@ -290,7 +290,7 @@
       <db:para>Pseudo-states can appear in combination with subcontrols.
                                     For example:</db:para>
       <db:programlisting>QComboBox::drop-down:hover { image: url(dropdown_bright.png) }</db:programlisting>
-      <db:para>See the <db:link xlink:href="stylesheet-reference.html#list-of-pseudo-states">List
+      <db:para>See the <db:link xlink:href="stylesheet-reference.db#list-of-pseudo-states">List
                                         of Pseudo-States</db:link> section below for the list of
                                     pseudo-states provided by Qt widgets.</db:para>
    </db:section>
@@ -301,7 +301,7 @@
                                     sheet:</db:para>
       <db:programlisting>QPushButton#okButton { color: gray }QPushButton { color: red
                                     }</db:programlisting>
-      <db:para>Both rules match <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> instances called
+      <db:para>Both rules match <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> instances called
                                         <db:code>okButton</db:code> and there is a conflict for
                                     the <db:code>color</db:code> property. To resolve this
                                     conflict, we must take into account the
@@ -312,7 +312,7 @@
                                     to a single object, not to all instances of a class.</db:para>
       <db:para>Similarly, selectors with pseudo-states are more specific
                                     than ones that do not specify pseudo-states. Thus, the following
-                                    style sheet specifies that a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> should have white text when the mouse
+                                    style sheet specifies that a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> should have white text when the mouse
                                     is hovering over it, otherwise red text:</db:para>
       <db:programlisting>QPushButton:hover { color: white }
                                         QPushButton { color: red
@@ -338,17 +338,17 @@
       <db:programlisting>QPushButton
                                     { color: red } QAbstractButton { color: gray
                                     }</db:programlisting>
-      <db:para>Both rules apply to <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> instances (since <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> inherits
-                                        <db:code><db:link xlink:href="qabstractbutton.html">QAbstractButton</db:link></db:code>) and there is a conflict for the
-                                        <db:link xlink:href="stylesheet-reference.html#color-prop">color</db:link> property. Because <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> inherits
-                                        <db:code><db:link xlink:href="qabstractbutton.html">QAbstractButton</db:link></db:code>, it might be tempting to assume that
+      <db:para>Both rules apply to <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> instances (since <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> inherits
+                                        <db:code><db:link xlink:href="qabstractbutton.db">QAbstractButton</db:link></db:code>) and there is a conflict for the
+                                        <db:link xlink:href="stylesheet-reference.db#color-prop">color</db:link> property. Because <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> inherits
+                                        <db:code><db:link xlink:href="qabstractbutton.db">QAbstractButton</db:link></db:code>, it might be tempting to assume that
                                         <db:code>QPushButton</db:code> is more specific than
                                         <db:code>QAbstractButton</db:code>. However, for style
                                     sheet computations, all Type Selectors have the same
                                     specificity, and the rule that appears last takes precedence. In
-                                    other words, <db:link xlink:href="stylesheet-reference.html#color-prop">color</db:link> is set to <db:code>gray</db:code> for
-                                    all <db:code><db:link xlink:href="qabstractbutton.html">QAbstractButton</db:link></db:code>s, including <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>s. If we really
-                                    want <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>s to
+                                    other words, <db:link xlink:href="stylesheet-reference.db#color-prop">color</db:link> is set to <db:code>gray</db:code> for
+                                    all <db:code><db:link xlink:href="qabstractbutton.db">QAbstractButton</db:link></db:code>s, including <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>s. If we really
+                                    want <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>s to
                                     have red text, we can always reorder the rules.</db:para>
       <db:para>For determining the specificity of a rule, Qt Style Sheets
                                     follow the <db:link xlink:href="http://www.w3.org/TR/REC-CSS2/cascade.html#specificity">CSS2 Specification</db:link>:</db:para>
@@ -379,7 +379,7 @@
             </db:listitem>
             <db:listitem>
                <db:para>
-                  <db:emphasis>ignore pseudo-elements [i.e., <db:link xlink:href="stylesheet-reference.html#subcontrols">subcontrols</db:link>].</db:emphasis>
+                  <db:emphasis>ignore pseudo-elements [i.e., <db:link xlink:href="stylesheet-reference.db#subcontrols">subcontrols</db:link>].</db:emphasis>
                </db:para>
             </db:listitem>
          </db:itemizedlist>
@@ -408,11 +408,11 @@
    </db:section>
    <db:section xml:id="cascading">
       <db:title>Cascading</db:title>
-      <db:para>Style sheets can be set on the <db:code><db:link xlink:href="qapplication.html">QApplication</db:link></db:code>, on parent
+      <db:para>Style sheets can be set on the <db:code><db:link xlink:href="qapplication.db">QApplication</db:link></db:code>, on parent
                                     widgets, and on child widgets. An arbitrary widget's effective
                                     style sheet is obtained by merging the style sheets set on the
                                     widget's ancestors (parent, grandparent, etc.), as well as any
-                                    style sheet set on the <db:code><db:link xlink:href="qapplication.html">QApplication</db:link></db:code>.</db:para>
+                                    style sheet set on the <db:code><db:link xlink:href="qapplication.db">QApplication</db:link></db:code>.</db:para>
       <db:para>When conflicts arise, the widget's own style sheet is always
                                     preferred to any inherited style sheet, irrespective of the
                                     specificity of the conflicting rules. Likewise, the parent
@@ -420,21 +420,21 @@
                                     etc.</db:para>
       <db:para>One consequence of this is that setting a style rule on a
                                     widget automatically gives it precedence over other rules
-                                    specified in the ancestor widgets' style sheets or the <db:code><db:link xlink:href="qapplication.html">QApplication</db:link></db:code> style sheet.
+                                    specified in the ancestor widgets' style sheets or the <db:code><db:link xlink:href="qapplication.db">QApplication</db:link></db:code> style sheet.
                                     Consider the following example. First, we set a style sheet on
-                                    the <db:code><db:link xlink:href="qapplication.html">QApplication</db:link></db:code>:</db:para>
+                                    the <db:code><db:link xlink:href="qapplication.db">QApplication</db:link></db:code>:</db:para>
       <db:programlisting>qApp-&gt;setStyleSheet("QPushButton { color: white }");</db:programlisting>
-      <db:para>Then we set a style sheet on a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>
+      <db:para>Then we set a style sheet on a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>
                                     object:</db:para>
       <db:programlisting>myPushButton-&gt;setStyleSheet("*
                                         { color: blue }");</db:programlisting>
-      <db:para>The style sheet on the <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> forces the <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> (and any child
+      <db:para>The style sheet on the <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> forces the <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> (and any child
                                     widget) to have blue text, in spite of the more specific rule
                                     set provided by the application-wide style sheet.</db:para>
       <db:para>The result would have been the same if we had
                                     written</db:para>
       <db:programlisting>myPushButton-&gt;setStyleSheet("color: blue");</db:programlisting>
-      <db:para>except that if the <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> had children (which is unlikely), the
+      <db:para>except that if the <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> had children (which is unlikely), the
                                     style sheet would have no impact on them.</db:para>
       <db:para>Style sheet cascading is a complex topic. Refer to the
                                         <db:link xlink:href="http://www.w3.org/TR/CSS2/cascade.html#cascade">CSS2
@@ -449,16 +449,16 @@
                                     When using Qt Style Sheets, a widget does <db:emphasis role="bold">not</db:emphasis>
                                     automatically inherit its font and color setting from its parent
                                     widget.</db:para>
-      <db:para>For example, consider a <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code> inside a <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code>:</db:para>
+      <db:para>For example, consider a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> inside a <db:code><db:link xlink:href="qgroupbox.db">QGroupBox</db:link></db:code>:</db:para>
       <db:programlisting>qApp-&gt;setStyleSheet("QGroupBox { color: red; } ");</db:programlisting>
-      <db:para>The <db:code><db:link xlink:href="qpushbutton.html">QPushButton</db:link></db:code>
+      <db:para>The <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code>
                                     does not have an explicit color set. Hence, instead of
-                                    inheriting color of its parent <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code>, it has the system color. If we want to
-                                    set the color on a <db:code><db:link xlink:href="qgroupbox.html">QGroupBox</db:link></db:code> and its children, we can write:</db:para>
+                                    inheriting color of its parent <db:code><db:link xlink:href="qgroupbox.db">QGroupBox</db:link></db:code>, it has the system color. If we want to
+                                    set the color on a <db:code><db:link xlink:href="qgroupbox.db">QGroupBox</db:link></db:code> and its children, we can write:</db:para>
       <db:programlisting>qApp-&gt;setStyleSheet("QGroupBox, QGroupBox * { color: red;
                                     }");</db:programlisting>
-      <db:para>In contrast, setting a font and propagate using <db:code><db:link xlink:href="qwidget.html#font-prop">QWidget::setFont</db:link>()</db:code>
-                                    and <db:code><db:link xlink:href="qwidget.html#palette-prop">QWidget::setPalette</db:link>()</db:code> propagates to child
+      <db:para>In contrast, setting a font and propagate using <db:code><db:link xlink:href="qwidget.db#font-prop">QWidget::setFont</db:link>()</db:code>
+                                    and <db:code><db:link xlink:href="qwidget.db#palette-prop">QWidget::setPalette</db:link>()</db:code> propagates to child
                                     widgets.</db:para>
    </db:section>
    <db:section xml:id="widgets-inside-c-namespaces">
@@ -473,7 +473,7 @@
                                     determine when to apply the Type Selector. When custom widgets
                                     are inside namespaces, the QObject::className() returns
                                     &lt;namespace&gt;::&lt;classname&gt;. This conflicts with the
-                                    syntax for <db:link xlink:href="stylesheet-syntax.html#sub-controls">Sub-Controls</db:link>. To overcome this problem, when using
+                                    syntax for <db:link xlink:href="stylesheet-syntax.db#sub-controls">Sub-Controls</db:link>. To overcome this problem, when using
                                     the Type Selector for widgets inside namespaces, we must replace
                                     the "::" with "--". For example,</db:para>
       <db:programlisting>namespace ns { class MyPushButton : publicQPushButton { // ... } } // ... qApp-&gt;setStyleSheet("ns--MyPushButton { background: yellow;
@@ -482,12 +482,12 @@
    <db:section xml:id="setting-qobject-properties">
       <db:title>Setting QObject
                                     Properties</db:title>
-      <db:para>From 4.3 and above, any designable <db:code><db:link xlink:href="qtcore/qobject.html#Q_PROPERTY">Q_PROPERTY</db:link></db:code>
+      <db:para>From 4.3 and above, any designable <db:code><db:link xlink:href="qobject.db#Q_PROPERTY">Q_PROPERTY</db:link></db:code>
                                     can be set using the qproperty-&lt;property name&gt;
                                     syntax.</db:para>
       <db:para>For example,</db:para>
       <db:programlisting>MyLabel { qproperty-pixmap: url(pixmap.png); } MyGroupBox { qproperty-titleColor: rgb(100,200,100); } QPushButton { qproperty-iconSize: 20px20px; }</db:programlisting>
-      <db:para>If the property references an enum declared with <db:code><db:link xlink:href="qtcore/qobject.html#Q_ENUMS">Q_ENUMS</db:link></db:code>, you
+      <db:para>If the property references an enum declared with <db:code><db:link xlink:href="qobject.db#Q_ENUMS">Q_ENUMS</db:link></db:code>, you
                                     should reference its constants by name, i.e., not their numeric
                                     value.</db:para>
    </db:section>

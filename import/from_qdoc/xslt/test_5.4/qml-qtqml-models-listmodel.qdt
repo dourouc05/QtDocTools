@@ -114,19 +114,19 @@
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
-      <db:para>The <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> is a simple container of <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link>
+      <db:para>The <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link> is a simple container of <db:link xlink:href="qml-qtqml-models-listelement.db">ListElement</db:link>
                                 definitions, each containing data roles. The contents can be defined
                                 dynamically, or explicitly in QML.</db:para>
       <db:para>The number of elements in the model can be obtained from its
-                                    <db:link xlink:href="qml-qtqml-models-listmodel.html#count-prop">count</db:link> property. A number of familiar methods are also
-                                provided to manipulate the contents of the model, including <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#insert-method">insert()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#move-method">move()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#remove-method">remove()</db:link> and <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>. These methods accept dictionaries as their
-                                arguments; these are translated to <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link>
+                                    <db:link xlink:href="qml-qtqml-models-listmodel.db#count-prop">count</db:link> property. A number of familiar methods are also
+                                provided to manipulate the contents of the model, including <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.db#insert-method">insert()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.db#move-method">move()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.db#remove-method">remove()</db:link> and <db:link xlink:href="qml-qtqml-models-listmodel.db#set-method">set()</db:link>. These methods accept dictionaries as their
+                                arguments; these are translated to <db:link xlink:href="qml-qtqml-models-listelement.db">ListElement</db:link>
                                 objects by the model.</db:para>
-      <db:para>Elements can be manipulated via the model using the <db:link xlink:href="qml-qtqml-models-listmodel.html#setProperty-method">setProperty()</db:link> method, which allows the roles of the
+      <db:para>Elements can be manipulated via the model using the <db:link xlink:href="qml-qtqml-models-listmodel.db#setProperty-method">setProperty()</db:link> method, which allows the roles of the
                                 specified element to be set and changed.</db:para>
       <db:section xml:id="example-usage">
          <db:title>Example Usage</db:title>
-         <db:para>The following example shows a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link>
+         <db:para>The following example shows a <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link>
                                 containing three elements, with the roles "name" and
                                 "cost".</db:para>
          <db:informalfigure>
@@ -138,11 +138,11 @@
          </db:informalfigure>
          <db:programlisting language="qml">import QtQuick 2.0 ListModel { id: fruitModelListElement { name: "Apple"cost: 2.45 } ListElement { name: "Orange"cost: 3.25 } ListElement { name: "Banana"cost: 1.95 } }</db:programlisting>
          <db:para>Roles (properties) in each element must begin with a lower-case
-                                letter and should be common to all elements in a model. The <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link>
+                                letter and should be common to all elements in a model. The <db:link xlink:href="qml-qtqml-models-listelement.db">ListElement</db:link>
                                 documentation provides more guidelines for how elements should be
                                 defined.</db:para>
          <db:para>Since the example model contains an <db:code>id</db:code>
-                                property, it can be referenced by views, such as the <db:link xlink:href="qtquick/qml-qtquick-listview.html">ListView</db:link> in
+                                property, it can be referenced by views, such as the <db:link xlink:href="qml-qtquick-listview.db">ListView</db:link> in
                                 this example:</db:para>
          <db:programlisting language="qml">import QtQuick 2.0 Rectangle { width: 200;
                                     height: 200ListModel { id: fruitModel
@@ -167,8 +167,8 @@
       </db:section>
       <db:section xml:id="modifying-list-models">
          <db:title>Modifying List Models</db:title>
-         <db:para>The content of a <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> may be created and modified using the
-                                    <db:link xlink:href="qml-qtqml-models-listmodel.html#clear-method">clear()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.html#insert-method">insert()</db:link> and <db:link xlink:href="qml-qtqml-models-listmodel.html#setProperty-method">setProperty()</db:link> methods. For example:</db:para>
+         <db:para>The content of a <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link> may be created and modified using the
+                                    <db:link xlink:href="qml-qtqml-models-listmodel.db#clear-method">clear()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.db#set-method">set()</db:link>, <db:link xlink:href="qml-qtqml-models-listmodel.db#insert-method">insert()</db:link> and <db:link xlink:href="qml-qtqml-models-listmodel.db#setProperty-method">setProperty()</db:link> methods. For example:</db:para>
          <db:programlisting language="qml">Component { id: fruitDelegateItem { width: 200;
                                     height: 50Text { text: name }
                                     Text { text: '$'+cost; anchors.right: parent.right }
@@ -183,12 +183,12 @@
          <db:title>Using
                                 Threaded List Models with WorkerScript</db:title>
          <db:para>
-            <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> can be used together with <db:link xlink:href="qml-workerscript.html">WorkerScript</db:link> access a list
+            <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link> can be used together with <db:link xlink:href="qml-workerscript.db">WorkerScript</db:link> access a list
                                 model from multiple threads. This is useful if list modifications
                                 are synchronous and take some time: the list operations can be moved
                                 to a different thread to avoid blocking of the main GUI
                                 thread.</db:para>
-         <db:para>Here is an example that uses <db:link xlink:href="qml-workerscript.html">WorkerScript</db:link> to
+         <db:para>Here is an example that uses <db:link xlink:href="qml-workerscript.db">WorkerScript</db:link> to
                                 periodically append the current time to a list model:</db:para>
          <db:programlisting language="qml">Timer { id: timerinterval: 2000; repeat: truerunning: truetriggeredOnStart: trueonTriggered: { var msg = {'action': 'appendCurrentTime', 'model':
                                     listModel}; worker.sendMessage(msg); } }</db:programlisting>
@@ -201,25 +201,25 @@
                                     // updates the changes to the
                                     list } }</db:programlisting>
          <db:para>The timer in the main example sends messages to the worker
-                                script by calling <db:link xlink:href="qml-workerscript.html#sendMessage-method">WorkerScript::sendMessage()</db:link>. When this message is
+                                script by calling <db:link xlink:href="qml-workerscript.db#sendMessage-method">WorkerScript::sendMessage()</db:link>. When this message is
                                 received, <db:code>WorkerScript.onMessage()</db:code> is invoked
                                 in <db:code>dataloader.js</db:code>, which appends the current
                                 time to the list model.</db:para>
-         <db:para>Note the call to <db:link xlink:href="qml-qtqml-models-listmodel.html#sync-method">sync()</db:link> from the external thread. You must call <db:link xlink:href="qml-qtqml-models-listmodel.html#sync-method">sync()</db:link> or else the changes made to the list from that
+         <db:para>Note the call to <db:link xlink:href="qml-qtqml-models-listmodel.db#sync-method">sync()</db:link> from the external thread. You must call <db:link xlink:href="qml-qtqml-models-listmodel.db#sync-method">sync()</db:link> or else the changes made to the list from that
                                 thread will not be reflected in the list model in the main
                                 thread.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick/qtquick-modelviewsdata-modelview.html#qml-data-models">Data Models</db:link>
+                  <db:link xlink:href="qtquick-modelviewsdata-modelview.db#qml-data-models">Data Models</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtquick/qtquick-threading-example.html">Qt Quick Examples
+                  <db:link xlink:href="qtquick-threading-example.db">Qt Quick Examples
                                     - Threading</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtqml-index.html">Qt
+                  <db:link xlink:href="qtqml-index.db">Qt
                                     QML</db:link>
                </db:member>
             </db:simplelist>
@@ -241,13 +241,13 @@
                                         dynamicRoles property is enabled, the type of a given role
                                         is not fixed and can be different between elements.</db:para>
          <db:para>The dynamicRoles property must be set before any data is
-                                        added to the <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link>, and must be set from the main
+                                        added to the <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link>, and must be set from the main
                                         thread.</db:para>
-         <db:para>A <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> that has data statically defined
-                                        (via the <db:link xlink:href="qml-qtqml-models-listelement.html">ListElement</db:link> QML syntax) cannot have the
+         <db:para>A <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link> that has data statically defined
+                                        (via the <db:link xlink:href="qml-qtqml-models-listelement.db">ListElement</db:link> QML syntax) cannot have the
                                         dynamicRoles property enabled.</db:para>
          <db:para>There is a significant performance cost to using a
-                                            <db:link xlink:href="qml-qtqml-models-listmodel.html">ListModel</db:link> with dynamic roles enabled. The cost
+                                            <db:link xlink:href="qml-qtqml-models-listmodel.db">ListModel</db:link> with dynamic roles enabled. The cost
                                         varies from platform to platform but is typically somewhere
                                         between 4-6x slower than using static role types.</db:para>
          <db:para>Due to the performance cost of using dynamic roles, they
@@ -266,10 +266,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#set-method">set()</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#remove-method">remove()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#remove-method">remove()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -281,10 +281,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#remove-method">remove()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#remove-method">remove()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -307,14 +307,14 @@
                                             "green"</db:programlisting>
          <db:warning>
             <db:para> The returned object is not
-                                        guaranteed to remain valid. It should not be used in <db:link xlink:href="qtqml-syntax-propertybinding.html">property
+                                        guaranteed to remain valid. It should not be used in <db:link xlink:href="qtqml-syntax-propertybinding.db">property
                                             bindings</db:link>.</db:para>
          </db:warning>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -336,10 +336,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#set-method">set()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#set-method">set()</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -360,7 +360,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -375,7 +375,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#clear-method">clear()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#clear-method">clear()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -399,7 +399,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -407,7 +407,7 @@
       <db:section xml:id="setProperty-method">
          <db:title>setProperty(int<db:emphasis>
                                                   index</db:emphasis>, string<db:emphasis> property</db:emphasis>,
-                                                  <db:link xlink:href="qml-variant.html">variant</db:link><db:emphasis>
+                                                  <db:link xlink:href="qml-variant.db">variant</db:link><db:emphasis>
                                                   value</db:emphasis>)</db:title>
          <db:para>Changes the <db:emphasis>property</db:emphasis> of the item
                                         at <db:emphasis>index</db:emphasis> in the list model to
@@ -419,7 +419,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtqml-models-listmodel.html#append-method">append()</db:link>
+                  <db:link xlink:href="qml-qtqml-models-listmodel.db#append-method">append()</db:link>
                </db:member>
             </db:simplelist>
          </db:section>

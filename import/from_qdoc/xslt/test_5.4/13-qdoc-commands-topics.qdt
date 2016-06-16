@@ -15,13 +15,13 @@
                                     code element that immediately follows the comment. If it can't
                                     do either of these and if there is no topic command that
                                     indicates the comment does not have an underlying source code
-                                    element (e.g. <db:link xlink:href="13-qdoc-commands-topics.html#page-command">\page</db:link>), then the comment is discarded.</db:para>
+                                    element (e.g. <db:link xlink:href="13-qdoc-commands-topics.db#page-command">\page</db:link>), then the comment is discarded.</db:para>
    <db:para>The name of the
                                     entity being documented is usually the only argument for a topic
                                     command. Use the complete name. Sometimes there can be a second
-                                    parameter in the argument. See e.g. <db:link xlink:href="13-qdoc-commands-topics.html#page-command">\page</db:link>.</db:para>
+                                    parameter in the argument. See e.g. <db:link xlink:href="13-qdoc-commands-topics.db#page-command">\page</db:link>.</db:para>
    <db:programlisting>\enumQComboBox::InsertPolicy</db:programlisting>
-   <db:para>The <db:link xlink:href="13-qdoc-commands-topics.html#fn-command">\fn</db:link> command is a special case. For the <db:link xlink:href="13-qdoc-commands-topics.html#fn-command">\fn</db:link>
+   <db:para>The <db:link xlink:href="13-qdoc-commands-topics.db#fn-command">\fn</db:link> command is a special case. For the <db:link xlink:href="13-qdoc-commands-topics.db#fn-command">\fn</db:link>
                                     command, use the function's signature including the class
                                     qualifier.</db:para>
    <db:programlisting>\fn voidQGraphicsWidget::setWindowFlags(Qt::WindowFlags wFlags)</db:programlisting>
@@ -66,7 +66,7 @@
                                     members: a list of the class's types, properties, functions,
                                     signals, and slots.</db:para>
       <db:para>In addition to the detailed description of the class, the
-                                    \class comment typically contains a <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command and one or more <db:link xlink:href="03-qdoc-commands-markup.html">Markup
+                                    \class comment typically contains a <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command and one or more <db:link xlink:href="03-qdoc-commands-markup.db">Markup
                                     Commands</db:link>. See the \class command for any of the Qt
                                     class for examples. Here is a very simple example:</db:para>
       <db:programlisting>/*! \class PreviewWindow \brief The PreviewWindow
@@ -87,16 +87,16 @@
          <db:bridgehead renderas="sect1">PreviewWindow Class Reference</db:bridgehead>
          <db:para>The PreviewWindow class is a custom widget displaying
                                         the names of its currently set window flags in a read-only
-                                        text editor. <db:link xlink:href="13-qdoc-commands-topics.html#preview-window">More...</db:link>
+                                        text editor. <db:link xlink:href="13-qdoc-commands-topics.db#preview-window">More...</db:link>
          </db:para>
          <db:bridgehead renderas="sect3">Properties</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
-               <db:para>52 properties inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+               <db:para>52 properties inherited from <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>1 property inherited from <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+               <db:para>1 property inherited from <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                </db:para>
             </db:listitem>
          </db:itemizedlist>
@@ -104,60 +104,60 @@
          <db:itemizedlist>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="13-qdoc-commands-topics.html#constructor">PreviewWindow</db:link>
-                  <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+                  <db:link xlink:href="13-qdoc-commands-topics.db#constructor">PreviewWindow</db:link>
+                  <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                                             *parent = 0)</db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>void <db:link xlink:href="13-qdoc-commands-topics.html#function">setWindowFlags</db:link>
-                  <db:code><db:link xlink:href="qtcore/qt.html#WindowType-enum">Qt::WindowFlags</db:link></db:code> flags)</db:para>
+               <db:para>void <db:link xlink:href="13-qdoc-commands-topics.db#function">setWindowFlags</db:link>
+                  <db:code><db:link xlink:href="qt.db#WindowType-enum">Qt::WindowFlags</db:link></db:code> flags)</db:para>
             </db:listitem>
          </db:itemizedlist>
          <db:itemizedlist>
             <db:listitem>
-               <db:para>183 public functions inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+               <db:para>183 public functions inherited from <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>28 public functions inherited from <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+               <db:para>28 public functions inherited from <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                </db:para>
             </db:listitem>
          </db:itemizedlist>
          <db:bridgehead renderas="sect3">Public Slots</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
-               <db:para>17 public slots inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+               <db:para>17 public slots inherited from <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>1 public slot inherited from <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+               <db:para>1 public slot inherited from <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                </db:para>
             </db:listitem>
          </db:itemizedlist>
          <db:bridgehead renderas="sect3">Additional Inherited Members</db:bridgehead>
          <db:itemizedlist>
             <db:listitem>
-               <db:para>1 signal inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+               <db:para>1 signal inherited from <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>1 signal inherited from <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+               <db:para>1 signal inherited from <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>4 static public members inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+               <db:para>4 static public members inherited from <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>4 static public members inherited from <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+               <db:para>4 static public members inherited from <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>39 protected functions inherited from <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>
+               <db:para>39 protected functions inherited from <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>
                </db:para>
             </db:listitem>
             <db:listitem>
-               <db:para>7 protected functions inherited from <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+               <db:para>7 protected functions inherited from <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                </db:para>
             </db:listitem>
          </db:itemizedlist>
@@ -166,19 +166,19 @@
          <db:para>The PreviewWindow class is a custom widget displaying
                                         the names of its currently set window flags in a read-only
                                         text editor.</db:para>
-         <db:para>The PreviewWindow class inherits <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>. The
+         <db:para>The PreviewWindow class inherits <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>. The
                                         widget displays the names of its window flags set with the
-                                            <db:link xlink:href="13-qdoc-commands-topics.html#function">setWindowFlags()</db:link> function. It is also provided
-                                        with a <db:code><db:link xlink:href="qtwidgets/qpushbutton.html">QPushButton</db:link></db:code> that closes the window.</db:para>
+                                            <db:link xlink:href="13-qdoc-commands-topics.db#function">setWindowFlags()</db:link> function. It is also provided
+                                        with a <db:code><db:link xlink:href="qpushbutton.db">QPushButton</db:link></db:code> that closes the window.</db:para>
          <db:para>...</db:para>
-         <db:para>See also <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code>.</db:para>
+         <db:para>See also <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code>.</db:para>
          <db:bridgehead renderas="sect1">&#x97;</db:bridgehead>
          <db:bridgehead renderas="sect2">Member Function Documentation</db:bridgehead>
          <db:bridgehead renderas="sect3">PreviewWindow(QWidget *parent = 0)</db:bridgehead>
          <db:para>Constructs a preview window widget with
                                             <db:emphasis>parent</db:emphasis>.</db:para>
          <db:bridgehead renderas="sect3">setWindowFlags(Qt::WindowFlags flags)</db:bridgehead>
-         <db:para>Sets the widgets flags using the <db:code><db:link xlink:href="qtwidgets/qwidget.html#windowFlags-prop">QWidget::setWindowFlags</db:link>()</db:code> function.</db:para>
+         <db:para>Sets the widgets flags using the <db:code><db:link xlink:href="qwidget.db#windowFlags-prop">QWidget::setWindowFlags</db:link>()</db:code> function.</db:para>
          <db:para>Then runs through the available window flags, creating a
                                         text that contains the names of the flags that matches the
                                         flags parameter, displaying the text in the widgets text
@@ -190,9 +190,9 @@
       <db:para>The \enum command is for documenting a C++ enum type. The
                                     argument is the full name of the enum type.</db:para>
       <db:para>The enum values are documented in the \enum comment using
-                                    the <db:link xlink:href="10-qdoc-commands-tablesandlists.html#value-command">\value</db:link> command. If an enum value is not documented
+                                    the <db:link xlink:href="10-qdoc-commands-tablesandlists.db#value-command">\value</db:link> command. If an enum value is not documented
                                     with \value, QDoc emits a warning. These warnings can be avoided
-                                    using the <db:link xlink:href="10-qdoc-commands-tablesandlists.html#omitvalue-command">\omitvalue</db:link> command to tell QDoc that an enum value
+                                    using the <db:link xlink:href="10-qdoc-commands-tablesandlists.db#omitvalue-command">\omitvalue</db:link> command to tell QDoc that an enum value
                                     should not be documented. The enum documentation will be
                                     included on the class reference page, header file page, or
                                     namespace page where the enum type is defined. For example,
@@ -299,19 +299,19 @@
             </db:tbody>
          </db:informaltable>
       </db:blockquote>
-      <db:para>See also <db:link xlink:href="10-qdoc-commands-tablesandlists.html#value-command">\value</db:link> and <db:link xlink:href="10-qdoc-commands-tablesandlists.html#omitvalue-command">\omitvalue</db:link>.</db:para>
+      <db:para>See also <db:link xlink:href="10-qdoc-commands-tablesandlists.db#value-command">\value</db:link> and <db:link xlink:href="10-qdoc-commands-tablesandlists.db#omitvalue-command">\omitvalue</db:link>.</db:para>
    </db:section>
    <db:section xml:id="example">
       <db:title>\example</db:title>
       <db:para>The \example command is for documenting an example. The
                                     argument is the example's path relative to omne of the paths
-                                    listed in the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#exampledirs-variable">exampledirs</db:link> variable in the QDoc configuration
+                                    listed in the <db:link xlink:href="22-qdoc-configuration-generalvariables.db#exampledirs-variable">exampledirs</db:link> variable in the QDoc configuration
                                     file.</db:para>
       <db:para>The documentation page will be output to
                                         <db:code>path-to-example</db:code>.html. QDoc will add a
                                     list of all the example's source files at the top of the
                                     page.</db:para>
-      <db:para>For example, if <db:link xlink:href="22-qdoc-configuration-generalvariables.html#exampledirs-variable">exampledirs</db:link> contains
+      <db:para>For example, if <db:link xlink:href="22-qdoc-configuration-generalvariables.db#exampledirs-variable">exampledirs</db:link> contains
                                         <db:code>$QTDIR/examples/widgets/imageviewer</db:code>,
                                     then</db:para>
       <db:programlisting>/*! \example widgets/imageviewer \title ImageViewer
@@ -340,7 +340,7 @@
                </db:para>
             </db:listitem>
          </db:itemizedlist>
-         <db:para>The example shows how to combine <db:code><db:link xlink:href="qtwidgets/qlabel.html">QLabel</db:link></db:code> and <db:code><db:link xlink:href="qtwidgets/qscrollarea.html">QScrollArea</db:link></db:code>
+         <db:para>The example shows how to combine <db:code><db:link xlink:href="qlabel.db">QLabel</db:link></db:code> and <db:code><db:link xlink:href="qscrollarea.db">QScrollArea</db:link></db:code>
                                         to display an image.</db:para>
          <db:para>...</db:para>
       </db:blockquote>
@@ -402,23 +402,23 @@
                                         dockable in the given <db:emphasis>area</db:emphasis>; otherwise
                                         returns <db:code>false</db:code>.</db:para>
       </db:blockquote>
-      <db:para>See also <db:link xlink:href="18-qdoc-commands-relating.html#overload-command">\overload</db:link>.</db:para>
+      <db:para>See also <db:link xlink:href="18-qdoc-commands-relating.db#overload-command">\overload</db:link>.</db:para>
    </db:section>
    <db:section xml:id="group">
       <db:title>\group</db:title>
       <db:para>The \group command creates a separate page that lists the
                                     classes belonging to the group. The argument is the group
                                     name.</db:para>
-      <db:para>A class is included in a group by using the <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> command. Overview pages can also be
+      <db:para>A class is included in a group by using the <db:link xlink:href="19-qdoc-commands-grouping.db#ingroup-command">\ingroup</db:link> command. Overview pages can also be
                                     related to a group using the same command, but the list of
-                                    overview pages must be requested explicitly using the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#generatelist-command">\generatelist</db:link> command (see example
+                                    overview pages must be requested explicitly using the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#generatelist-command">\generatelist</db:link> command (see example
                                     below).</db:para>
-      <db:para>The \group command is typically followed by a <db:link xlink:href="20-qdoc-commands-namingthings.html#title-command">\title</db:link> command and a short introduction to the
+      <db:para>The \group command is typically followed by a <db:link xlink:href="20-qdoc-commands-namingthings.db#title-command">\title</db:link> command and a short introduction to the
                                     group. The HTML page for the group is written to a
                                         <db:code>.html</db:code> file put in
                                         &lt;lower-case&gt;<db:emphasis>group</db:emphasis>.html.</db:para>
       <db:para>Each class name is listed as a link to the class reference
-                                    page followed by the text from the class's <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> texts.</db:para>
+                                    page followed by the text from the class's <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> texts.</db:para>
       <db:programlisting>/*! \group io \title
                                         Input/Output and
                                     Networking These classes are used to handle input and output to
@@ -471,14 +471,14 @@
          </db:informaltable>
       </db:blockquote>
       <db:para>Note that overview pages related to the group, must be
-                                    listed explicitly using the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#generatelist-command">\generatelist</db:link> command with the
+                                    listed explicitly using the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#generatelist-command">\generatelist</db:link> command with the
                                         <db:code>related</db:code> argument.</db:para>
       <db:programlisting>/*! \group architecture \title
                                     Architecture These documents describe aspects of Qt's
                                         architecture and design, including overviews of core Qt
                                         features and technologies. \generatelist{related} * /
                                     </db:programlisting>
-      <db:para>See also <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> and <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#generatelist-command">\generatelist</db:link>.</db:para>
+      <db:para>See also <db:link xlink:href="19-qdoc-commands-grouping.db#ingroup-command">\ingroup</db:link> and <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#generatelist-command">\generatelist</db:link>.</db:para>
    </db:section>
    <db:section xml:id="headerfile">
       <db:title>\headerfile</db:title>
@@ -489,7 +489,7 @@
                                     file constructed from the header file argument.</db:para>
       <db:para>The documentation for a function, type, or macro that is
                                     declared in the header file being documented, is included in the
-                                    header file page using the <db:link xlink:href="18-qdoc-commands-relating.html#relates-command">\relates</db:link> command.</db:para>
+                                    header file page using the <db:link xlink:href="18-qdoc-commands-relating.db#relates-command">\relates</db:link> command.</db:para>
       <db:para>If the argument doesn't exist as a header file, the
                                     \headerfile command creates a documentation page for the header
                                     file anyway.</db:para>
@@ -530,9 +530,9 @@
       <db:title>\macro</db:title>
       <db:para>The \macro command is for documenting a C++ macro. The
                                     argument is the macro in one of three styles: function-like
-                                    macros like <db:code><db:link xlink:href="qtcore/qtglobal.html#Q_ASSERT">Q_ASSERT</db:link>()</db:code>, declaration-style macros like <db:code><db:link xlink:href="qtcore/qobject.html#Q_PROPERTY">Q_PROPERTY</db:link>()</db:code>,
-                                    and macros without parentheses like <db:code><db:link xlink:href="qtcore/qobject.html#Q_OBJECT">Q_OBJECT</db:link></db:code>.</db:para>
-      <db:para>The \macro comment must contain a <db:link xlink:href="18-qdoc-commands-relating.html#relates-command">\relates</db:link> command that attaches the macro comment
+                                    macros like <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT">Q_ASSERT</db:link>()</db:code>, declaration-style macros like <db:code><db:link xlink:href="qobject.db#Q_PROPERTY">Q_PROPERTY</db:link>()</db:code>,
+                                    and macros without parentheses like <db:code><db:link xlink:href="qobject.db#Q_OBJECT">Q_OBJECT</db:link></db:code>.</db:para>
+      <db:para>The \macro comment must contain a <db:link xlink:href="18-qdoc-commands-relating.db#relates-command">\relates</db:link> command that attaches the macro comment
                                     to a class, header file, or namespace. Otherwise, the
                                     documentation will be lost. Here are three example macro
                                     comments followed by what they might look like in
@@ -547,8 +547,8 @@
                                         name and line number if <db:emphasis>test</db:emphasis> is
                                         false.</db:para>
          <db:para>...</db:para>
-         <db:para>See also <db:code><db:link xlink:href="qtcore/qtglobal.html#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code>, <db:code><db:link xlink:href="qtcore/qtglobal.html#qFatal">qFatal</db:link>()</db:code> and
-                                            <db:link xlink:href="qtdoc/testing-and-debugging.html#debugging-techniques">Debugging Techniques</db:link>.</db:para>
+         <db:para>See also <db:code><db:link xlink:href="qtglobal.db#Q_ASSERT_X">Q_ASSERT_X</db:link>()</db:code>, <db:code><db:link xlink:href="qtglobal.db#qFatal">qFatal</db:link>()</db:code> and
+                                            <db:link xlink:href="testing-and-debugging.db#debugging-techniques">Debugging Techniques</db:link>.</db:para>
       </db:blockquote>
       <db:programlisting>/*! \macro Q_PROPERTY(...)
                                     \relates QObject
@@ -557,9 +557,9 @@
                                     is: ... \sa {Qt's Property System} * / </db:programlisting>
       <db:blockquote>
          <db:bridgehead renderas="sect3">Q_PROPERTY ( ... )</db:bridgehead>
-         <db:para>This macro declares a <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code> property. The syntax is:</db:para>
+         <db:para>This macro declares a <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code> property. The syntax is:</db:para>
          <db:para>...</db:para>
-         <db:para>See also <db:link xlink:href="qtcore/properties.html#qt-s-property-system">Qt's
+         <db:para>See also <db:link xlink:href="properties.db#qt-s-property-system">Qt's
                                             Property System</db:link>.</db:para>
       </db:blockquote>
       <db:programlisting>/*! \macro Q_OBJECT \relates
@@ -572,13 +572,13 @@
                                     System} */</db:programlisting>
       <db:blockquote>
          <db:bridgehead renderas="sect3">Q_OBJECT</db:bridgehead>
-         <db:para>The <db:code><db:link xlink:href="qtcore/qobject.html#Q_OBJECT">Q_OBJECT</db:link></db:code> macro must appear in the private
+         <db:para>The <db:code><db:link xlink:href="qobject.db#Q_OBJECT">Q_OBJECT</db:link></db:code> macro must appear in the private
                                         section of a class definition that declares its own signals
                                         and slots or that uses other services provided by Qt's
                                         meta-object system.</db:para>
          <db:para>...</db:para>
-         <db:para>See also <db:link xlink:href="qtcore/metaobjects.html#meta-object-system">Meta-Object System</db:link>, <db:link xlink:href="qtcore/signalsandslots.html">Signals &amp;
-                                            Slots</db:link> and <db:link xlink:href="qtcore/properties.html#qt-s-property-system">Qt's
+         <db:para>See also <db:link xlink:href="metaobjects.db#meta-object-system">Meta-Object System</db:link>, <db:link xlink:href="signalsandslots.db">Signals &amp;
+                                            Slots</db:link> and <db:link xlink:href="properties.db#qt-s-property-system">Qt's
                                             Property System</db:link>.</db:para>
       </db:blockquote>
    </db:section>
@@ -586,10 +586,10 @@
       <db:title>\module</db:title>
       <db:para>The \module creates a page that lists the classes belonging
                                     to the module specified by the command's argument. A class
-                                    included in the module by including the <db:link xlink:href="19-qdoc-commands-grouping.html#inmodule-command">\inmodule</db:link> command in the \class comment.</db:para>
-      <db:para>The \module command is typically followed by a <db:link xlink:href="20-qdoc-commands-namingthings.html#title-command">\title</db:link> and a <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command. Each class is listed as a link to
+                                    included in the module by including the <db:link xlink:href="19-qdoc-commands-grouping.db#inmodule-command">\inmodule</db:link> command in the \class comment.</db:para>
+      <db:para>The \module command is typically followed by a <db:link xlink:href="20-qdoc-commands-namingthings.db#title-command">\title</db:link> and a <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command. Each class is listed as a link to
                                     the class reference page followed by the text from the class's
-                                        <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command. For example:</db:para>
+                                        <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command. For example:</db:para>
       <db:programlisting>/*! \module QtNetwork \title Qt Network Module \brief Contains
                                     classes for writing
                                         TCP/IP clients and
@@ -604,7 +604,7 @@
       <db:blockquote>
          <db:bridgehead renderas="sect1">Qt Network Module</db:bridgehead>
          <db:para>The Qt Network module offers classes that allow you to
-                                        write TCP/IP clients and servers.<db:link xlink:href="13-qdoc-commands-topics.html#module-details">More...</db:link>
+                                        write TCP/IP clients and servers.<db:link xlink:href="13-qdoc-commands-topics.db#module-details">More...</db:link>
          </db:para>
          <db:informaltable>
             <db:tbody>
@@ -651,7 +651,7 @@
                                         QTcpSocket, QTcpServer, and QUdpSocket. </db:para>
          <db:para>...</db:para>
       </db:blockquote>
-      <db:para>See also <db:link xlink:href="19-qdoc-commands-grouping.html#inmodule-command">\inmodule</db:link>
+      <db:para>See also <db:link xlink:href="19-qdoc-commands-grouping.db#inmodule-command">\inmodule</db:link>
       </db:para>
    </db:section>
    <db:section xml:id="namespace">
@@ -669,7 +669,7 @@
          <db:bridgehead renderas="sect1">Qt Namespace
                                         Reference</db:bridgehead>
          <db:para>The Qt namespace contains miscellaneous identifiers used
-                                        throughout the Qt library. <db:link xlink:href="13-qdoc-commands-topics.html#name">More...</db:link>
+                                        throughout the Qt library. <db:link xlink:href="13-qdoc-commands-topics.db#name">More...</db:link>
          </db:para>
          <db:programlisting>#include &lt;Qt&gt;</db:programlisting>
          <db:itemizedlist>
@@ -732,7 +732,7 @@
                                         reserved for qdoc.</db:para>
          </db:listitem>
       </db:itemizedlist>
-      <db:para>The page title is set using the <db:link xlink:href="20-qdoc-commands-namingthings.html#title-command">\title</db:link> command.</db:para>
+      <db:para>The page title is set using the <db:link xlink:href="20-qdoc-commands-namingthings.db#title-command">\title</db:link> command.</db:para>
       <db:programlisting>/*! \page aboutqt.html \title About QtQt is a C++ toolkit for cross-platform GUI application development.Qt provides single-source portability across
                                     Microsoft Windows, Mac
                                     OS X, Linux, and all major commercial Unix
@@ -747,7 +747,7 @@
       <db:title>\property</db:title>
       <db:para>The \property command is for documenting a Qt property. The
                                     argument is the full property name.</db:para>
-      <db:para>A property is defined using the <db:code><db:link xlink:href="qtcore/qobject.html#Q_PROPERTY">Q_PROPERTY</db:link>()</db:code>
+      <db:para>A property is defined using the <db:code><db:link xlink:href="qobject.db#Q_PROPERTY">Q_PROPERTY</db:link>()</db:code>
                                     macro. The macro takes as arguments the property's name and its
                                     set, reset and get functions.</db:para>
       <db:programlisting>Q_PROPERTY(QString
@@ -757,9 +757,9 @@
                                     generate a list of the access function that will appear in the
                                     property documentation which in turn will be located in the
                                     documentation of the class that defines the property.</db:para>
-      <db:para>The \property command comment typically includes a <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command. For properties the <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command's argument is a sentence fragment
+      <db:para>The \property command comment typically includes a <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command. For properties the <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command's argument is a sentence fragment
                                     that will be included in a one line description of the property.
-                                    The command follows the same rules for the <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-property">description</db:link> as the <db:link xlink:href="13-qdoc-commands-topics.html#variable-command">\variable</db:link> command.</db:para>
+                                    The command follows the same rules for the <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-property">description</db:link> as the <db:link xlink:href="13-qdoc-commands-topics.db#variable-command">\variable</db:link> command.</db:para>
       <db:programlisting>/*! \property QPushButton::flat \brief Whether the
                                     border is disabled. This
                                         property's default is false. * /
@@ -798,7 +798,7 @@
          <db:bridgehead renderas="sect3">width : const int</db:bridgehead>
          <db:para>This property holds the width of the widget excluding
                                         any window frame.</db:para>
-         <db:para>See the <db:link xlink:href="qtwidgets/application-windows.html#window-geometry">Window Geometry</db:link> documentation for an overview
+         <db:para>See the <db:link xlink:href="application-windows.db#window-geometry">Window Geometry</db:link> documentation for an overview
                                         of window geometry.</db:para>
          <db:para>Access functions:</db:para>
          <db:itemizedlist>
@@ -808,7 +808,7 @@
                </db:para>
             </db:listitem>
          </db:itemizedlist>
-         <db:para>See also <db:link xlink:href="qtwidgets/qwidget.html#geometry-prop">geometry</db:link>, <db:link xlink:href="qtwidgets/qwidget.html#height-prop">height</db:link>, and <db:link xlink:href="qtwidgets/qwidget.html#size-prop">size</db:link>.</db:para>
+         <db:para>See also <db:link xlink:href="qwidget.db#geometry-prop">geometry</db:link>, <db:link xlink:href="qwidget.db#height-prop">height</db:link>, and <db:link xlink:href="qwidget.db#size-prop">size</db:link>.</db:para>
       </db:blockquote>
    </db:section>
    <db:section xml:id="service">
@@ -821,7 +821,7 @@
                                         ...*/class TimeService :
                                         publicQCopObjectService {
                                         ... }</db:programlisting>
-      <db:para>See also <db:link xlink:href="13-qdoc-commands-topics.html#class-command">\class</db:link> and <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#generatelist-command">\generatelist</db:link>.</db:para>
+      <db:para>See also <db:link xlink:href="13-qdoc-commands-topics.db#class-command">\class</db:link> and <db:link xlink:href="12-0-qdoc-commands-miscellaneous.db#generatelist-command">\generatelist</db:link>.</db:para>
    </db:section>
    <db:section xml:id="qmlattachedproperty">
       <db:title>\qmlattachedproperty</db:title>
@@ -848,8 +848,8 @@
    <db:section xml:id="qmlattachedsignal">
       <db:title>\qmlattachedsignal</db:title>
       <db:para>The \qmlattachedsignal command is for documenting an
-                                    attachable <db:link xlink:href="qtqml/qtqml-syntax-signals.html">signal</db:link>. The \qmlattachedsignal command is used
-                                    just like the <db:link xlink:href="13-qdoc-commands-topics.html#qmlsignal-command">\qmlsignal</db:link> command.</db:para>
+                                    attachable <db:link xlink:href="qtqml-syntax-signals.db">signal</db:link>. The \qmlattachedsignal command is used
+                                    just like the <db:link xlink:href="13-qdoc-commands-topics.db#qmlsignal-command">\qmlsignal</db:link> command.</db:para>
       <db:para>The argument is the rest of the line. It should be the name
                                     of the QML type where the signal is declared, the
                                         <db:code>::</db:code> qualifier, and finally the signal
@@ -862,14 +862,14 @@
                                     attached signal is emitted immediately after an item is added to
                                     the view.*/</db:programlisting>
       <db:para>QDoc includes this documentation on the QML reference page
-                                    for the <db:link xlink:href="qtquick/qtquick-draganddrop-example.html#gridview">GridView</db:link> element.</db:para>
+                                    for the <db:link xlink:href="qtquick-draganddrop-example.db#gridview">GridView</db:link> element.</db:para>
    </db:section>
    <db:section xml:id="qmlbasictype">
       <db:title>\qmlbasictype</db:title>
       <db:para>The \qmlbasictype command is for documenting a basic type
                                     for QML. The argument is the type name. The type must be
-                                    included in the QML basic types group using the <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> command as shown below. This will cause
-                                    QDoc to include the documentation for the type on the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qdeclarativebasictypes.html">QML Basic Types</db:link> page. The <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command is also required, because it
+                                    included in the QML basic types group using the <db:link xlink:href="19-qdoc-commands-grouping.db#ingroup-command">\ingroup</db:link> command as shown below. This will cause
+                                    QDoc to include the documentation for the type on the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qdeclarativebasictypes.html">QML Basic Types</db:link> page. The <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command is also required, because it
                                     appears on the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qdeclarativebasictypes.html">QML Basic Types</db:link> page as well.</db:para>
       <db:programlisting>/*! \qmlbasictype int \ingroup qmlbasictypes \brief
                                     An integer is a whole number,for example 0,10,or-20. An integer is a whole
@@ -882,7 +882,7 @@
    </db:section>
    <db:section xml:id="qmlclass">
       <db:title>\qmlclass</db:title>
-      <db:para>This command is deprecated. Use <db:link xlink:href="13-qdoc-commands-topics.html#qmltype-command">\qmltype</db:link> instead.</db:para>
+      <db:para>This command is deprecated. Use <db:link xlink:href="13-qdoc-commands-topics.db#qmltype-command">\qmltype</db:link> instead.</db:para>
       <db:para>The \qmlclass command is for documenting a QML type that is
                                     instantiated by a C++ class. The command has two arguments. The
                                     first argument is the name of the QML type. The second argument
@@ -902,9 +902,9 @@
                                         order, one at a
                                         time.*/</db:programlisting>
       <db:para>This example generates the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qml-transform.html">QML Transform</db:link> page. The \qmlclass comment should
-                                    include the <db:link xlink:href="16-qdoc-commands-status.html#since-command">\since</db:link> command, because all QML types are new. It
-                                    should also include the <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command. If a type is a member of a group
-                                    of QML types, it should also include one or more <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> commands.</db:para>
+                                    include the <db:link xlink:href="16-qdoc-commands-status.db#since-command">\since</db:link> command, because all QML types are new. It
+                                    should also include the <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command. If a type is a member of a group
+                                    of QML types, it should also include one or more <db:link xlink:href="19-qdoc-commands-grouping.db#ingroup-command">\ingroup</db:link> commands.</db:para>
    </db:section>
    <db:section xml:id="qmlmethod">
       <db:title>\qmlmethod</db:title>
@@ -929,7 +929,7 @@
                                     command has one argument, which is the name of the QML
                                     type.</db:para>
       <db:para>If the QML type is instantiated by a C++ class, that class
-                                    must be specified using the <db:link xlink:href="13-qdoc-commands-topics.html#instantiates-command">\instantiates</db:link> context command.</db:para>
+                                    must be specified using the <db:link xlink:href="13-qdoc-commands-topics.db#instantiates-command">\instantiates</db:link> context command.</db:para>
       <db:programlisting>/*! \qmltype Transform
                                     \instantiates QGraphicsTransform \ingroup
                                         qml-transform-elements \since 4.7 \brief The Transform elements provide a way
@@ -944,12 +944,12 @@
                                         order, one at a
                                         time.*/</db:programlisting>
       <db:para>The example generates the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qml-transform.html">QML Transform</db:link> page. The <db:emphasis>\qmltype</db:emphasis>
-                                    comment includes <db:link xlink:href="13-qdoc-commands-topics.html#instantiates-command">\instantiates</db:link> to specify that a Transform is
-                                    instantiated by the C++ class <db:code><db:link xlink:href="qtwidgets/qgraphicstransform.html">QGraphicsTransform</db:link></db:code>. A \qmltype comment should
-                                    always include a <db:link xlink:href="16-qdoc-commands-status.html#since-command">\since</db:link> command, because all QML types are new. It
-                                    should also include a <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> description. If a QML type is a member of a
+                                    comment includes <db:link xlink:href="13-qdoc-commands-topics.db#instantiates-command">\instantiates</db:link> to specify that a Transform is
+                                    instantiated by the C++ class <db:code><db:link xlink:href="qgraphicstransform.db">QGraphicsTransform</db:link></db:code>. A \qmltype comment should
+                                    always include a <db:link xlink:href="16-qdoc-commands-status.db#since-command">\since</db:link> command, because all QML types are new. It
+                                    should also include a <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> description. If a QML type is a member of a
                                     QML type group, the \qmltype comment should include one or more
-                                        <db:link xlink:href="19-qdoc-commands-grouping.html#ingroup-command">\ingroup</db:link> commands.</db:para>
+                                        <db:link xlink:href="19-qdoc-commands-grouping.db#ingroup-command">\ingroup</db:link> commands.</db:para>
    </db:section>
    <db:section xml:id="qmlproperty">
       <db:title>\qmlproperty</db:title>
@@ -968,7 +968,7 @@
       <db:para>QDoc includes this QML property on the QML reference page
                                     for the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qml-translate.html">Translate</db:link> element.</db:para>
       <db:para>If the QML property is of enumeration type, or it holds a
-                                    bit-wise combination of flags, the <db:link xlink:href="10-qdoc-commands-tablesandlists.html#value-command">\value</db:link> command can be used to document the
+                                    bit-wise combination of flags, the <db:link xlink:href="10-qdoc-commands-tablesandlists.db#value-command">\value</db:link> command can be used to document the
                                     acceptable values.</db:para>
    </db:section>
    <db:section xml:id="qmlsignal">
@@ -993,8 +993,8 @@
       <db:para>Insert the <db:code>\\qmlmodule</db:code> command to
                                     create a <db:code>QML</db:code> module page. A QML module is
                                     a collection of QML types or any related material. This command
-                                    is similar to the <db:link xlink:href="13-qdoc-commands-topics.html#group-command">group-command</db:link>.</db:para>
-      <db:para>A QML class may belong to a module by inserting the <db:link xlink:href="13-qdoc-commands-topics.html#inqmlmodule-command">\inqmlmodule</db:link> command as a topic command. Every
+                                    is similar to the <db:link xlink:href="13-qdoc-commands-topics.db#group-command">group-command</db:link>.</db:para>
+      <db:para>A QML class may belong to a module by inserting the <db:link xlink:href="13-qdoc-commands-topics.db#inqmlmodule-command">\inqmlmodule</db:link> command as a topic command. Every
                                     member of a group must be linked to using the module name and
                                     two colons (<db:code>::</db:code>).</db:para>
       <db:programlisting>\beginqdoc A link to the TabWidget of the UI
@@ -1004,13 +1004,13 @@
       <db:programlisting> \qmlmodule ClickableComponents This is a list
                                     of the Clickable Components set. A Clickable component responds to a \c
                                     clicked() event.</db:programlisting>
-      <db:para>The <db:link xlink:href="qdoc-componentset-example.html">UIComponents</db:link> example demonstrates proper usage of
+      <db:para>The <db:link xlink:href="qdoc-componentset-example.db">UIComponents</db:link> example demonstrates proper usage of
                                     QDoc commands to document QML types and QML modules.</db:para>
    </db:section>
    <db:section xml:id="inqmlmodule">
       <db:title>\inqmlmodule</db:title>
-      <db:para>A QML class may belong to a <db:link xlink:href="13-qdoc-commands-topics.html#qmlmodule-command">QML
-                                        module</db:link> by inserting the <db:link xlink:href="13-qdoc-commands-topics.html#inqmlmodule-command">\inqmlmodule</db:link> command as a topic command, with the
+      <db:para>A QML class may belong to a <db:link xlink:href="13-qdoc-commands-topics.db#qmlmodule-command">QML
+                                        module</db:link> by inserting the <db:link xlink:href="13-qdoc-commands-topics.db#inqmlmodule-command">\inqmlmodule</db:link> command as a topic command, with the
                                     module name (without a version number) as the only argument.
                                     Every member of a group must be linked to using the module name
                                     and two colons (<db:code>::</db:code>).</db:para>
@@ -1021,12 +1021,12 @@
                                     the <db:code>\l
                                         ClickableComponents::ClickableButton</db:code>
                                     format.</db:para>
-      <db:para>The <db:link xlink:href="qdoc-componentset-example.html">UIComponents</db:link> example demonstrates proper usage of
+      <db:para>The <db:link xlink:href="qdoc-componentset-example.db">UIComponents</db:link> example demonstrates proper usage of
                                     QDoc commands to document QML types and QML modules.</db:para>
    </db:section>
    <db:section xml:id="instantiates">
       <db:title>\instantiates</db:title>
-      <db:para>The \instantiates command is used in the <db:link xlink:href="13-qdoc-commands-topics.html#qmltype-command">QML
+      <db:para>The \instantiates command is used in the <db:link xlink:href="13-qdoc-commands-topics.db#qmltype-command">QML
                                         type</db:link> comment of an elemental QML type to specify
                                     the name of the C++ class that instantiates the QML
                                     type.</db:para>
@@ -1038,8 +1038,8 @@
                                     build advanced transformations on Items. The Transform element is a
                                     base type which cannot be instantiated directly.*/</db:programlisting>
       <db:para>The example generates the <db:link xlink:href="http://qt-project.org/doc/qt-4.7/qml-transform.html">QML Transform</db:link> page. The <db:emphasis>\qmltype</db:emphasis>
-                                    comment includes <db:link xlink:href="13-qdoc-commands-topics.html#instantiates-command">\instantiates</db:link> to specify that a Transform is
-                                    instantiated by the C++ class <db:code><db:link xlink:href="qtwidgets/qgraphicstransform.html">QGraphicsTransform</db:link></db:code>. A \qmltype comment
+                                    comment includes <db:link xlink:href="13-qdoc-commands-topics.db#instantiates-command">\instantiates</db:link> to specify that a Transform is
+                                    instantiated by the C++ class <db:code><db:link xlink:href="qgraphicstransform.db">QGraphicsTransform</db:link></db:code>. A \qmltype comment
                                     should</db:para>
    </db:section>
    <db:section xml:id="typedef">
@@ -1049,14 +1049,14 @@
                                     typedef will be included in the reference documentation for the
                                     class, namespace, or header file in which the typedef is
                                     declared. To relate the \typedef to a class, namespace, or
-                                    header file, the \typedef comment must contain a <db:link xlink:href="18-qdoc-commands-relating.html#relates-command">\relates</db:link> command.</db:para>
+                                    header file, the \typedef comment must contain a <db:link xlink:href="18-qdoc-commands-relating.db#relates-command">\relates</db:link> command.</db:para>
       <db:programlisting>/*! \typedefQObjectList \relates QObject Synonym forQList&lt;QObject&gt;.*/</db:programlisting>
       <db:para>QDoc includes this in <db:code>qobject.html</db:code>
                                     as:</db:para>
       <db:blockquote>
          <db:bridgehead renderas="sect3">typedef QObjectList</db:bridgehead>
-         <db:para>Synonym for <db:code><db:link xlink:href="qtcore/qlist.html">QList</db:link>&lt;&gt;</db:code>
-            <db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>&gt;.</db:para>
+         <db:para>Synonym for <db:code><db:link xlink:href="qlist.db">QList</db:link>&lt;&gt;</db:code>
+            <db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>&gt;.</db:para>
       </db:blockquote>
       <db:para>Another, although more rare, example:</db:para>
       <db:programlisting>/*! \typedefQMsgHandler \relates
@@ -1072,24 +1072,24 @@
                                         following signature:</db:para>
          <db:programlisting> void myMsgHandler(QtMsgType, const char
                                             *);</db:programlisting>
-         <db:para>See also <db:code><db:link xlink:href="qtcore/qtglobal.html#QtMsgType-enum">QtMsgType</db:link></db:code> and qInstallMsgHandler().</db:para>
+         <db:para>See also <db:code><db:link xlink:href="qtglobal.db#QtMsgType-enum">QtMsgType</db:link></db:code> and qInstallMsgHandler().</db:para>
       </db:blockquote>
       <db:para>Other typedefs are located on the reference page for the
                                     class that defines them.</db:para>
       <db:programlisting>/*! \typedefQLinkedList::Iterator Qt-style synonym forQList::iterator.*/</db:programlisting>
       <db:para>QDoc includes this one on the reference page for class
-                                        <db:code><db:link xlink:href="qtcore/qlinkedlist.html">QLinkedList</db:link></db:code>
+                                        <db:code><db:link xlink:href="qlinkedlist.db">QLinkedList</db:link></db:code>
                                     as:</db:para>
       <db:blockquote>
          <db:bridgehead renderas="sect3">typedef QLinkedList::Iterator</db:bridgehead>
-         <db:para>Qt-style synonym for <db:code><db:link xlink:href="qtcore/qlist-iterator.html">QList::iterator</db:link></db:code>.</db:para>
+         <db:para>Qt-style synonym for <db:code><db:link xlink:href="qlist-iterator.db">QList::iterator</db:link></db:code>.</db:para>
       </db:blockquote>
    </db:section>
    <db:section xml:id="variable">
       <db:title>\variable</db:title>
       <db:para>The \variable command is for documenting a class member
                                     variable or a constant. The argument is the variable or constant
-                                    name. The \variable command comment includes a <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command">\brief</db:link> command. QDoc generates the documentation
+                                    name. The \variable command comment includes a <db:link xlink:href="11-qdoc-commands-specialcontent.db#brief-command">\brief</db:link> command. QDoc generates the documentation
                                     based on the text from \brief command.</db:para>
       <db:para>The documentation will be located in the in the associated
                                     class, header file, or namespace documentation.</db:para>
@@ -1105,7 +1105,7 @@
       </db:blockquote>
       <db:para>You can also document constants with the \variable command.
                                     For example, suppose you have the <db:code>Type</db:code>
-                                    and <db:code>UserType</db:code> constants in the <db:code><db:link xlink:href="qtwidgets/qtreewidgetitem.html">QTreeWidgetItem</db:link></db:code> class:</db:para>
+                                    and <db:code>UserType</db:code> constants in the <db:code><db:link xlink:href="qtreewidgetitem.db">QTreeWidgetItem</db:link></db:code> class:</db:para>
       <db:programlisting>enum {
                                     Type =0, UserType =1000 };</db:programlisting>
       <db:para>For these, the \variable command can be used this
@@ -1119,11 +1119,11 @@
       <db:blockquote>
          <db:bridgehead renderas="sect3"> const int QTreeWidgetItem::Type </db:bridgehead>
          <db:para>The default type for tree widget items.</db:para>
-         <db:para>See also <db:link xlink:href="qtwidgets/qtreewidgetitem.html#ItemType-enum">UserType</db:link> and <db:link xlink:href="qtwidgets/qtreewidgetitem.html#type">type()</db:link>.</db:para>
+         <db:para>See also <db:link xlink:href="qtreewidgetitem.db#ItemType-enum">UserType</db:link> and <db:link xlink:href="qtreewidgetitem.db#type">type()</db:link>.</db:para>
          <db:bridgehead renderas="sect3"> const int QTreeWidgetItem::UserType </db:bridgehead>
          <db:para>The minimum value for custom types. Values below
                                         UserType are reserved by Qt.</db:para>
-         <db:para>See also <db:link xlink:href="qtwidgets/qtreewidgetitem.html#ItemType-enum">Type</db:link> and <db:link xlink:href="qtwidgets/qtreewidgetitem.html#type">type()</db:link>.</db:para>
+         <db:para>See also <db:link xlink:href="qtreewidgetitem.db#ItemType-enum">Type</db:link> and <db:link xlink:href="qtreewidgetitem.db#type">type()</db:link>.</db:para>
       </db:blockquote>
    </db:section>
 </db:article>

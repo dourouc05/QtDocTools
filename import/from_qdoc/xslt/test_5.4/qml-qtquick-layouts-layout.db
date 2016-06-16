@@ -94,17 +94,17 @@
                                 to provide layout specific information about the item. The
                                 properties of the attached object influences how the layout will
                                 arrange the items.</db:para>
-      <db:para>For instance, you can specify <db:link xlink:href="qml-qtquick-layouts-layout.html#minimumWidth-attached-prop">minimumWidth</db:link>, <db:link xlink:href="qml-qtquick-layouts-layout.html#preferredWidth-attached-prop">preferredWidth</db:link>, and <db:link xlink:href="qml-qtquick-layouts-layout.html#maximumWidth-attached-prop">maximumWidth</db:link> if the default values are not
+      <db:para>For instance, you can specify <db:link xlink:href="qml-qtquick-layouts-layout.db#minimumWidth-attached-prop">minimumWidth</db:link>, <db:link xlink:href="qml-qtquick-layouts-layout.db#preferredWidth-attached-prop">preferredWidth</db:link>, and <db:link xlink:href="qml-qtquick-layouts-layout.db#maximumWidth-attached-prop">maximumWidth</db:link> if the default values are not
                                 satisfactory.</db:para>
       <db:para>When a layout is resized, items may grow or shrink. Due to this,
-                                items have a <db:link xlink:href="qml-qtquick-layouts-layout.html#minimumWidth-attached-prop">minimum size</db:link>, <db:link xlink:href="qml-qtquick-layouts-layout.html#preferredWidth-attached-prop">preferred size</db:link> and a <db:link xlink:href="qml-qtquick-layouts-layout.html#maximumWidth-attached-prop">maximum size</db:link>.</db:para>
+                                items have a <db:link xlink:href="qml-qtquick-layouts-layout.db#minimumWidth-attached-prop">minimum size</db:link>, <db:link xlink:href="qml-qtquick-layouts-layout.db#preferredWidth-attached-prop">preferred size</db:link> and a <db:link xlink:href="qml-qtquick-layouts-layout.db#maximumWidth-attached-prop">maximum size</db:link>.</db:para>
       <db:para>If minimum size have not been explicitly specified on an item,
                                 the size is set to <db:code>0</db:code>. If maximum size have
                                 not been explicitly specified on an item, the size is set to
                                     <db:code>Number.POSITIVE_INFINITY</db:code>.</db:para>
       <db:para>For layouts, the implicit minimum and maximum size depends on
                                 the content of the layouts.</db:para>
-      <db:para>The <db:link xlink:href="qml-qtquick-layouts-layout.html#fillWidth-attached-prop">fillWidth</db:link> and <db:link xlink:href="qml-qtquick-layouts-layout.html#fillHeight-attached-prop">fillHeight</db:link> properties can either be
+      <db:para>The <db:link xlink:href="qml-qtquick-layouts-layout.db#fillWidth-attached-prop">fillWidth</db:link> and <db:link xlink:href="qml-qtquick-layouts-layout.db#fillHeight-attached-prop">fillHeight</db:link> properties can either be
                                     <db:code>true</db:code> or <db:code>false</db:code>. If
                                 it is <db:code>false</db:code>, the item's size will be fixed to
                                 its preferred size. Otherwise, it will grow or shrink between its
@@ -119,13 +119,13 @@
          <db:title>See Also</db:title>
          <db:simplelist type="vert">
             <db:member>
-               <db:link xlink:href="qml-qtquick-layouts-gridlayout.html">GridLayout</db:link>
+               <db:link xlink:href="qml-qtquick-layouts-gridlayout.db">GridLayout</db:link>
             </db:member>
             <db:member>
-               <db:link xlink:href="qml-qtquick-layouts-rowlayout.html">RowLayout</db:link>
+               <db:link xlink:href="qml-qtquick-layouts-rowlayout.db">RowLayout</db:link>
             </db:member>
             <db:member>
-               <db:link xlink:href="qml-qtquick-layouts-columnlayout.html">ColumnLayout</db:link>
+               <db:link xlink:href="qml-qtquick-layouts-columnlayout.db">ColumnLayout</db:link>
             </db:member>
          </db:simplelist>
       </db:section>
@@ -134,7 +134,7 @@
       <db:title>Attached Properties Documentation</db:title>
       <db:section xml:id="alignment-attached-prop">
          <db:title>Layout.alignment :
-                                                  <db:code><db:link xlink:href="qtqml/qml-qtqml-qt.html">Qt</db:link></db:code>.Alignment</db:title>
+                                                  <db:code><db:link xlink:href="qml-qtqml-qt.db">Qt</db:link></db:code>.Alignment</db:title>
          <db:para>This property allows you to specify the alignment
                                         of an item within the cell(s) it occupies.</db:para>
          <db:para>The default value is <db:code>0</db:code>, which
@@ -171,18 +171,18 @@
          <db:title>Layout.column :
                                                   int</db:title>
          <db:para>This property allows you to specify the column
-                                        position of an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.html">GridLayout</db:link>.</db:para>
-         <db:para>If both <db:link xlink:href="qml-qtquick-layouts-layout.html#row-attached-prop">row</db:link> and this property are not set, it is up to
+                                        position of an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.db">GridLayout</db:link>.</db:para>
+         <db:para>If both <db:link xlink:href="qml-qtquick-layouts-layout.db#row-attached-prop">row</db:link> and this property are not set, it is up to
                                         the layout to assign a cell to the item.</db:para>
          <db:para>The default value is <db:code>0</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#row-attached-prop">row</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#row-attached-prop">row</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#columnSpan-attached-prop">columnSpan</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#columnSpan-attached-prop">columnSpan</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -190,16 +190,16 @@
       <db:section xml:id="columnSpan-attached-prop">
          <db:title>Layout.columnSpan : int</db:title>
          <db:para>This property allows you to specify the column span
-                                        of an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.html">GridLayout</db:link>.</db:para>
+                                        of an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.db">GridLayout</db:link>.</db:para>
          <db:para>The default value is <db:code>1</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#rowSpan-attached-prop">rowSpan</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#rowSpan-attached-prop">rowSpan</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#column-attached-prop">column</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#column-attached-prop">column</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -218,7 +218,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#fillWidth-attached-prop">fillWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#fillWidth-attached-prop">fillWidth</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -238,7 +238,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#fillHeight-attached-prop">fillHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#fillHeight-attached-prop">fillHeight</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -258,10 +258,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#minimumHeight-attached-prop">minimumHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#minimumHeight-attached-prop">minimumHeight</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#preferredHeight-attached-prop">preferredHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#preferredHeight-attached-prop">preferredHeight</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -282,10 +282,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#minimumWidth-attached-prop">minimumWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#minimumWidth-attached-prop">minimumWidth</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#preferredWidth-attached-prop">preferredWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#preferredWidth-attached-prop">preferredWidth</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -305,10 +305,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#preferredHeight-attached-prop">preferredHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#preferredHeight-attached-prop">preferredHeight</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#maximumHeight-attached-prop">maximumHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#maximumHeight-attached-prop">maximumHeight</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -329,10 +329,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#preferredWidth-attached-prop">preferredWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#preferredWidth-attached-prop">preferredWidth</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#maximumWidth-attached-prop">maximumWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#maximumWidth-attached-prop">maximumWidth</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -341,16 +341,16 @@
          <db:title>Layout.preferredHeight : real</db:title>
          <db:para>This property holds the preferred height of an item
                                         in a layout. If the preferred height is -1 it will be
-                                        ignored, and the layout will use <db:link xlink:href="qtquick/qml-qtquick-item.html#implicitHeight-prop">implicitHeight</db:link> instead. The default is
+                                        ignored, and the layout will use <db:link xlink:href="qml-qtquick-item.db#implicitHeight-prop">implicitHeight</db:link> instead. The default is
                                             <db:code>-1</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#minimumHeight-attached-prop">minimumHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#minimumHeight-attached-prop">minimumHeight</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#maximumHeight-attached-prop">maximumHeight</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#maximumHeight-attached-prop">maximumHeight</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -359,16 +359,16 @@
          <db:title>Layout.preferredWidth : real</db:title>
          <db:para>This property holds the preferred width of an item
                                         in a layout. If the preferred width is -1 it will be
-                                        ignored, and the layout will use <db:link xlink:href="qtquick/qml-qtquick-item.html#implicitWidth-prop">implicitWidth</db:link> instead. The default is
+                                        ignored, and the layout will use <db:link xlink:href="qml-qtquick-item.db#implicitWidth-prop">implicitWidth</db:link> instead. The default is
                                             <db:code>-1</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#minimumWidth-attached-prop">minimumWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#minimumWidth-attached-prop">minimumWidth</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#maximumWidth-attached-prop">maximumWidth</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#maximumWidth-attached-prop">maximumWidth</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -376,18 +376,18 @@
       <db:section xml:id="row-attached-prop">
          <db:title>Layout.row : int</db:title>
          <db:para>This property allows you to specify the row
-                                        position of an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.html">GridLayout</db:link>.</db:para>
-         <db:para>If both <db:link xlink:href="qml-qtquick-layouts-layout.html#column-attached-prop">column</db:link> and this property are not set, it is up
+                                        position of an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.db">GridLayout</db:link>.</db:para>
+         <db:para>If both <db:link xlink:href="qml-qtquick-layouts-layout.db#column-attached-prop">column</db:link> and this property are not set, it is up
                                         to the layout to assign a cell to the item.</db:para>
          <db:para>The default value is <db:code>0</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#column-attached-prop">column</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#column-attached-prop">column</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#rowSpan-attached-prop">rowSpan</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#rowSpan-attached-prop">rowSpan</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -396,16 +396,16 @@
          <db:title>Layout.rowSpan :
                                                   int</db:title>
          <db:para>This property allows you to specify the row span of
-                                        an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.html">GridLayout</db:link>.</db:para>
+                                        an item in a <db:link xlink:href="qml-qtquick-layouts-gridlayout.db">GridLayout</db:link>.</db:para>
          <db:para>The default value is <db:code>1</db:code>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#columnSpan-attached-prop">columnSpan</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#columnSpan-attached-prop">columnSpan</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-layouts-layout.html#row-attached-prop">row</db:link>
+                  <db:link xlink:href="qml-qtquick-layouts-layout.db#row-attached-prop">row</db:link>
                </db:member>
             </db:simplelist>
          </db:section>

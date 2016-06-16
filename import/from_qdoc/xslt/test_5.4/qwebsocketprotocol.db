@@ -18,14 +18,14 @@
    </db:classsynopsis>
    <db:section xml:id="details">
       <db:title>Detailed Description</db:title>
-      <db:para>Contains constants related to the <db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>
+      <db:para>Contains constants related to the <db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>
                                     standard.</db:para>
    </db:section>
    <db:section xml:id="nonmemtypes">
       <db:title>Type Documentation</db:title>
       <db:section xml:id="CloseCode-enum">
          <db:title>enum QWebSocketProtocol::CloseCode</db:title>
-         <db:para>The close codes supported by <db:link xlink:href="qtdoc/topics-network-connectivity.html#websockets">WebSockets</db:link> V13</db:para>
+         <db:para>The close codes supported by <db:link xlink:href="topics-network-connectivity.db#websockets">WebSockets</db:link> V13</db:para>
          <db:informaltable>
             <db:tbody>
                <db:tr>
@@ -245,14 +245,14 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:code><db:link xlink:href="qwebsocket.html#close">QWebSocket::close</db:link>()</db:code>
+                  <db:code><db:link xlink:href="qwebsocket.db#close">QWebSocket::close</db:link>()</db:code>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="Version-enum">
          <db:title>enum QWebSocketProtocol::Version</db:title>
-         <db:para>The different defined versions of the <db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>
+         <db:para>The different defined versions of the <db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>
                                     protocol.</db:para>
          <db:para>For an overview of the differences between the different
                                     protocols, see
@@ -303,8 +303,8 @@
                                                   &amp; hybi-00:
                                                   http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-00.
                                                   Works with key1, key2 and a key in the payload.
-                                                  Attribute: Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Draft value 0. Not supported
-                                                  by <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  Attribute: Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Draft value 0. Not supported
+                                                  by <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -322,8 +322,8 @@
                      <db:para>hybi-04:
                                                   http://tools.ietf.org/id/draft-ietf-hybi-thewebsocketprotocol-04.txt.
                                                   Changed handshake: key1, key2, key3 ==&gt;
-                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Key, Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Nonce, Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Accept Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Draft renamed to Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 4. Not supported by
-                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Key, Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Nonce, Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Accept Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Draft renamed to Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Version Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Version = 4. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -340,9 +340,9 @@
                   <db:td>
                      <db:para>hybi-05:
                                                   http://tools.ietf.org/id/draft-ietf-hybi-thewebsocketprotocol-05.txt.
-                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 5 Removed
-                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Nonce Added Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Accept. Not supported by
-                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Version = 5 Removed
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Nonce Added Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Accept. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -357,8 +357,8 @@
                      </db:para>
                   </db:td>
                   <db:td>
-                     <db:para>Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 6. Not supported by
-                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                     <db:para>Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Version = 6. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -375,8 +375,8 @@
                   <db:td>
                      <db:para>hybi-07:
                                                   http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-07.
-                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 7. Not supported by
-                                                  <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Version = 7. Not supported by
+                                                  <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -394,7 +394,7 @@
                      <db:para>hybi-8, hybi-9, hybi-10,
                                                   hybi-11 and hybi-12. Status codes 1005 and 1006
                                                   are added and all codes are now unsigned Internal
-                                                  error results in 1006. Not supported by <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  error results in 1006. Not supported by <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -410,10 +410,10 @@
                   </db:td>
                   <db:td>
                      <db:para>hybi-13, hybi14, hybi-15,
-                                                  hybi-16, hybi-17 and RFC 6455. Sec-<db:link xlink:href="qml-qt-websockets-websocket.html">WebSocket</db:link>-Version = 13 Status code 1004
+                                                  hybi-16, hybi-17 and RFC 6455. Sec-<db:link xlink:href="qml-qt-websockets-websocket.db">WebSocket</db:link>-Version = 13 Status code 1004
                                                   is now reserved Added 1008, 1009 and 1010 Must
                                                   support TLS Clarify multiple version support.
-                                                  Supported by <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  Supported by <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
                <db:tr>
@@ -429,7 +429,7 @@
                   </db:td>
                   <db:td>
                      <db:para>Refers to the latest known
-                                                  version to <db:code><db:link xlink:href="qtwebsockets-module.html">QtWebSockets</db:link></db:code>.</db:para>
+                                                  version to <db:code><db:link xlink:href="qtwebsockets-module.db">QtWebSockets</db:link></db:code>.</db:para>
                   </db:td>
                </db:tr>
             </db:tbody>

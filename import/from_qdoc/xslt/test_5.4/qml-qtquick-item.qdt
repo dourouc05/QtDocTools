@@ -422,7 +422,7 @@
       <db:para>All visual items in Qt Quick inherit from Item. Although an Item
                                 object has no visual appearance, it defines all the attributes that
                                 are common across visual items, such as x and y position, width and
-                                height, <db:link xlink:href="qtquick-positioning-anchors.html">anchoring</db:link> and key handling support.</db:para>
+                                height, <db:link xlink:href="qtquick-positioning-anchors.db">anchoring</db:link> and key handling support.</db:para>
       <db:para>The Item type can be useful for grouping several items under a
                                 single root visual item. For example:</db:para>
       <db:programlisting language="qml">import QtQuick 2.0 Item {
@@ -431,10 +431,10 @@
       <db:section xml:id="key-handling">
          <db:title>Key Handling</db:title>
          <db:para>Key handling is available to all Item-based visual types via the
-                                    <db:link xlink:href="qml-qtquick-keys.html">Keys</db:link> attached
+                                    <db:link xlink:href="qml-qtquick-keys.db">Keys</db:link> attached
                                 property. The <db:emphasis>Keys</db:emphasis> attached property provides basic
-                                signals such as <db:link xlink:href="qml-qtquick-keys.html#pressed-signal">pressed</db:link> and <db:link xlink:href="qml-qtquick-keys.html#released-signal">released</db:link>,
-                                as well as signals for specific keys, such as <db:link xlink:href="qml-qtquick-keys.html#spacePressed-signal">spacePressed</db:link>. The example below assigns <db:link xlink:href="qtquick-input-focus.html">keyboard focus</db:link> to the
+                                signals such as <db:link xlink:href="qml-qtquick-keys.db#pressed-signal">pressed</db:link> and <db:link xlink:href="qml-qtquick-keys.db#released-signal">released</db:link>,
+                                as well as signals for specific keys, such as <db:link xlink:href="qml-qtquick-keys.db#spacePressed-signal">spacePressed</db:link>. The example below assigns <db:link xlink:href="qtquick-input-focus.db">keyboard focus</db:link> to the
                                 item and handles the left key via the general
                                     <db:code>onPressed</db:code> handler and the return key via
                                 the <db:code>onReturnPressed</db:code> handler:</db:para>
@@ -442,37 +442,37 @@
                                     focus: trueKeys.onPressed: { if (event.key==Qt.Key_Left) { console.log("move
                                     left"); event.accepted=true; } } Keys.onReturnPressed: console.log("Pressed
                                     return"); }</db:programlisting>
-         <db:para>See the <db:link xlink:href="qml-qtquick-keys.html">Keys</db:link>
+         <db:para>See the <db:link xlink:href="qml-qtquick-keys.db">Keys</db:link>
                                 attached property for detailed documentation.</db:para>
       </db:section>
       <db:section xml:id="layout-mirroring">
          <db:title>Layout Mirroring</db:title>
-         <db:para>Item layouts can be mirrored using the <db:link xlink:href="qml-qtquick-layoutmirroring.html">LayoutMirroring</db:link>
-                                attached property. This causes <db:link xlink:href="qml-qtquick-item.html#anchors.top-prop">anchors</db:link>
+         <db:para>Item layouts can be mirrored using the <db:link xlink:href="qml-qtquick-layoutmirroring.db">LayoutMirroring</db:link>
+                                attached property. This causes <db:link xlink:href="qml-qtquick-item.db#anchors.top-prop">anchors</db:link>
                                 to be horizontally reversed, and also causes items that lay out or
-                                position their children (such as <db:link xlink:href="qml-qtquick-listview.html">ListView</db:link> or <db:link xlink:href="qtquick-positioning-layouts.html#row">Row</db:link>) to
+                                position their children (such as <db:link xlink:href="qml-qtquick-listview.db">ListView</db:link> or <db:link xlink:href="qtquick-positioning-layouts.db#row">Row</db:link>) to
                                 horizontally reverse the direction of their layouts.</db:para>
-         <db:para>See <db:link xlink:href="qml-qtquick-layoutmirroring.html">LayoutMirroring</db:link> for more details.</db:para>
+         <db:para>See <db:link xlink:href="qml-qtquick-layoutmirroring.db">LayoutMirroring</db:link> for more details.</db:para>
       </db:section>
       <db:section xml:id="item-layers">
          <db:title>Item Layers</db:title>
          <db:para>An Item will normally be rendered directly into the window it
-                                belongs to. However, by setting <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link>, it is possible to delegate the item and
+                                belongs to. However, by setting <db:link xlink:href="qml-qtquick-item.db#layer.enabled-prop">layer.enabled</db:link>, it is possible to delegate the item and
                                 its entire subtree into an offscreen surface. Only the offscreen
                                 surface, a texture, will be then drawn into the window.</db:para>
          <db:para>If it is desired to have a texture size different from that of
-                                the item, this is possible using <db:link xlink:href="qml-qtquick-item.html#layer.textureSize-prop">layer.textureSize</db:link>. To render only a section of the
-                                item into the texture, use <db:link xlink:href="qml-qtquick-item.html#layer.sourceRect-prop">layer.sourceRect</db:link>. It is also possible to specify
-                                    <db:link xlink:href="qml-qtquick-item.html#layer.sourceRect-prop">layer.sourceRect</db:link> so it extends beyond the bounds of
+                                the item, this is possible using <db:link xlink:href="qml-qtquick-item.db#layer.textureSize-prop">layer.textureSize</db:link>. To render only a section of the
+                                item into the texture, use <db:link xlink:href="qml-qtquick-item.db#layer.sourceRect-prop">layer.sourceRect</db:link>. It is also possible to specify
+                                    <db:link xlink:href="qml-qtquick-item.db#layer.sourceRect-prop">layer.sourceRect</db:link> so it extends beyond the bounds of
                                 the item. In this case, the exterior will be padded with transparent
                                 pixels.</db:para>
-         <db:para>The item will use linear interpolation for scaling if <db:link xlink:href="qml-qtquick-item.html#layer.smooth-prop">layer.smooth</db:link> is set to <db:code>true</db:code> and
-                                will use mipmap for downsampling if <db:link xlink:href="qml-qtquick-item.html#layer.mipmap-prop">layer.mipmap</db:link> is set to <db:code>true</db:code>.
+         <db:para>The item will use linear interpolation for scaling if <db:link xlink:href="qml-qtquick-item.db#layer.smooth-prop">layer.smooth</db:link> is set to <db:code>true</db:code> and
+                                will use mipmap for downsampling if <db:link xlink:href="qml-qtquick-item.db#layer.mipmap-prop">layer.mipmap</db:link> is set to <db:code>true</db:code>.
                                 Mipmapping may improve visual quality of downscaled items. For
-                                mipmapping of single Image items, prefer <db:link xlink:href="qml-qtquick-image.html#mipmap-prop">Image::mipmap</db:link>.</db:para>
+                                mipmapping of single Image items, prefer <db:link xlink:href="qml-qtquick-image.db#mipmap-prop">Image::mipmap</db:link>.</db:para>
          <db:section xml:id="layer-opacity-vs-item-opacity">
             <db:title>Layer Opacity vs Item Opacity</db:title>
-            <db:para>When applying <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link> to an item hierarchy the opacity is applied to
+            <db:para>When applying <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link> to an item hierarchy the opacity is applied to
                                 each item individually. This can lead to undesired visual results
                                 when the opacity is applied to a subtree. Consider the following
                                 example:</db:para>
@@ -534,10 +534,10 @@
          </db:section>
          <db:section xml:id="combined-with-shadereffects">
             <db:title>Combined with ShaderEffects</db:title>
-            <db:para>Setting <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link> to true will turn the item into a
-                                    <db:link xlink:href="qquickitem.html#isTextureProvider">texture
+            <db:para>Setting <db:link xlink:href="qml-qtquick-item.db#layer.enabled-prop">layer.enabled</db:link> to true will turn the item into a
+                                    <db:link xlink:href="qquickitem.db#isTextureProvider">texture
                                     provider</db:link>, making it possible to use the item directly
-                                as a texture, for instance in combination with the <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link>
+                                as a texture, for instance in combination with the <db:link xlink:href="qml-qtquick-shadereffect.db">ShaderEffect</db:link>
                                 type.</db:para>
             <db:para>It is possible to apply an effect on a layer at runtime using
                                 layer.effect:</db:para>
@@ -550,14 +550,14 @@
                                     0.156)); gl_FragColor = vec4(g, g, g, p.a) * qt_Opacity;
                                     }" }</db:programlisting>
             <db:para>In this example, we implement the shader effect manually. The
-                                    <db:link xlink:href="qtgraphicaleffects/qtgraphicaleffects-index.html">Qt Graphical Effects</db:link> module contains a suite of
+                                    <db:link xlink:href="qtgraphicaleffects-index.db">Qt Graphical Effects</db:link> module contains a suite of
                                 ready-made effects for use with Qt Quick.</db:para>
-            <db:para>See <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link> for more information about using
+            <db:para>See <db:link xlink:href="qml-qtquick-shadereffect.db">ShaderEffect</db:link> for more information about using
                                 effects.</db:para>
             <db:note>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layer.enabled</db:link> is actually just a more convenient way
-                                of using <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.</db:para>
+                  <db:link xlink:href="qml-qtquick-item.db#layer.enabled-prop">layer.enabled</db:link> is actually just a more convenient way
+                                of using <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.</db:para>
             </db:note>
          </db:section>
          <db:section xml:id="memory-and-performance">
@@ -566,18 +566,18 @@
                                 memory in the GPU equal to <db:code>width x height x
                                 4</db:code>. In memory constrained configurations, large layers
                                 should be used with care.</db:para>
-            <db:para>In the <db:code><db:link xlink:href="qtgui/qpainter.html">QPainter</db:link></db:code> /
-                                    <db:code><db:link xlink:href="qtwidgets/qwidget.html">QWidget</db:link></db:code> world, it
+            <db:para>In the <db:code><db:link xlink:href="qpainter.db">QPainter</db:link></db:code> /
+                                    <db:code><db:link xlink:href="qwidget.db">QWidget</db:link></db:code> world, it
                                 is some times favorable to cache complex content in a pixmap, image
                                 or texture. In Qt Quick, because of the techniques already applied
-                                by the <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html">scene graph renderer</db:link>, this will in most cases not be
+                                by the <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.db">scene graph renderer</db:link>, this will in most cases not be
                                 the case. Excessive draw calls are already reduced because of
                                 batching and a cache will in most cases end up blending more pixels
                                 than the original content. The overhead of rendering to an offscreen
                                 and the blending involved with drawing the resulting texture is
                                 therefore often more costly than simply letting the item and its
                                 children be drawn normally.</db:para>
-            <db:para>Also, an item using a layer can not be <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html#batching">batched</db:link> during rendering. This means that a scene with
+            <db:para>Also, an item using a layer can not be <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.db#batching">batched</db:link> during rendering. This means that a scene with
                                 many layered items may have performance problems.</db:para>
             <db:para>Layering can be convenient and useful for visual effects, but
                                 should in most cases be enabled for the duration of the effect and
@@ -592,11 +592,11 @@
          <db:para>This read-only property indicates whether the item
                                         has active focus.</db:para>
          <db:para>If activeFocus is true, either this item is the one that
-                                        currently receives keyboard input, or it is a <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link>
+                                        currently receives keyboard input, or it is a <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link>
                                         ancestor of the item that currently receives keyboard
                                         input.</db:para>
-         <db:para>Usually, activeFocus is gained by setting <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>
-                                        on an item and its enclosing <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link>
+         <db:para>Usually, activeFocus is gained by setting <db:link xlink:href="qml-qtquick-item.db#focus-prop">focus</db:link>
+                                        on an item and its enclosing <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link>
                                         objects. In the following example, the
                                             <db:code>input</db:code> and
                                             <db:code>focusScope</db:code> objects will have
@@ -607,10 +607,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#focus-prop">focus</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtquick-input-focus.html">Keyboard Focus
+                  <db:link xlink:href="qtquick-input-focus.db">Keyboard Focus
                                             in Qt Quick</db:link>
                </db:member>
             </db:simplelist>
@@ -627,8 +627,8 @@
                                         the tab focus chain will move keyboard focus to the next
                                         item in the chain. Pressing BackTab (normally Shift+Tab)
                                         will move focus to the previous item.</db:para>
-         <db:para>To set up a manual tab focus chain, see <db:link xlink:href="qml-qtquick-keynavigation.html">KeyNavigation</db:link>. Tab key events used by Keys or
-                                            <db:link xlink:href="qml-qtquick-keynavigation.html">KeyNavigation</db:link> have precedence over focus chain
+         <db:para>To set up a manual tab focus chain, see <db:link xlink:href="qml-qtquick-keynavigation.db">KeyNavigation</db:link>. Tab key events used by Keys or
+                                            <db:link xlink:href="qml-qtquick-keynavigation.db">KeyNavigation</db:link> have precedence over focus chain
                                         behavior, ignore the events in other key handlers to allow
                                         it to propagate.</db:para>
       </db:section>
@@ -642,9 +642,9 @@
          <db:bridgehead renderas="sect3">anchors.horizontalCenter : AnchorLine</db:bridgehead>
          <db:bridgehead renderas="sect3">anchors.verticalCenter : AnchorLine</db:bridgehead>
          <db:bridgehead renderas="sect3">anchors.baseline : AnchorLine</db:bridgehead>
-         <db:bridgehead renderas="sect3">anchors.fill : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+         <db:bridgehead renderas="sect3">anchors.fill : <db:link xlink:href="qml-qtquick-item.db">Item</db:link>
          </db:bridgehead>
-         <db:bridgehead renderas="sect3">anchors.centerIn : <db:link xlink:href="qml-qtquick-item.html">Item</db:link>
+         <db:bridgehead renderas="sect3">anchors.centerIn : <db:link xlink:href="qml-qtquick-item.db">Item</db:link>
          </db:bridgehead>
          <db:bridgehead renderas="sect3">anchors.margins : real</db:bridgehead>
          <db:bridgehead renderas="sect3">anchors.topMargin : real</db:bridgehead>
@@ -658,7 +658,7 @@
          <db:para>Anchors provide a way to position an item by
                                         specifying its relationship with other items.</db:para>
          <db:para>Margins apply to top, bottom, left, right, and fill
-                                        anchors. The <db:link xlink:href="qml-qtquick-item.html#anchors.margins-prop">anchors.margins</db:link> property can be used to set
+                                        anchors. The <db:link xlink:href="qml-qtquick-item.db#anchors.margins-prop">anchors.margins</db:link> property can be used to set
                                         all of the various margins at once, to the same value. It
                                         will not override a specific margin that has been previously
                                         set; to clear an explicit margin set its value to
@@ -712,17 +712,17 @@
             </db:tbody>
          </db:informaltable>
          <db:para>
-            <db:link xlink:href="qml-qtquick-item.html#anchors.fill-prop">anchors.fill</db:link> provides a convenient way for one
+            <db:link xlink:href="qml-qtquick-item.db#anchors.fill-prop">anchors.fill</db:link> provides a convenient way for one
                                         item to have the same geometry as another item, and is
                                         equivalent to connecting all four directional
                                         anchors.</db:para>
          <db:para>To clear an anchor value, set it to
                                             <db:code>undefined</db:code>.</db:para>
          <db:para>
-            <db:link xlink:href="qml-qtquick-item.html#anchors.alignWhenCentered-prop">anchors.alignWhenCentered</db:link> (default
+            <db:link xlink:href="qml-qtquick-item.db#anchors.alignWhenCentered-prop">anchors.alignWhenCentered</db:link> (default
                                             <db:code>true</db:code>) forces centered anchors to
                                         align to a whole pixel; if the item being centered has an
-                                        odd <db:link xlink:href="qml-qtquick-item.html#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.html#height-prop">height</db:link>, the item will be positioned on a whole
+                                        odd <db:link xlink:href="qml-qtquick-item.db#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.db#height-prop">height</db:link>, the item will be positioned on a whole
                                         pixel rather than being placed on a half-pixel. This ensures
                                         the item is painted crisply. There are cases where this is
                                         not desirable, for example when rotating the item jitters
@@ -732,14 +732,14 @@
                                         siblings or a parent.</db:para>
          </db:note>
          <db:para>For more information
-                                        see <db:link xlink:href="qtquick-positioning-anchors.html#anchor-layout">Anchor Layouts</db:link>.</db:para>
+                                        see <db:link xlink:href="qtquick-positioning-anchors.db#anchor-layout">Anchor Layouts</db:link>.</db:para>
       </db:section>
       <db:section xml:id="antialiasing-prop">
          <db:title>antialiasing : bool</db:title>
          <db:para>Used by visual elements to decide if the item
                                         should use antialiasing or not. In some cases items with
                                         antialiasing require more memory and are potentially slower
-                                        to render (see <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.html#antialiasing">Antialiasing</db:link> for more details).</db:para>
+                                        to render (see <db:link xlink:href="qtquick-visualcanvas-scenegraph-renderer.db#antialiasing">Antialiasing</db:link> for more details).</db:para>
          <db:para>The default is false, but may be overridden by derived
                                         elements.</db:para>
       </db:section>
@@ -748,24 +748,24 @@
                                                   int</db:title>
          <db:para>Specifies the position of the item's baseline in
                                         local coordinates.</db:para>
-         <db:para>The baseline of a <db:link xlink:href="qml-qtquick-text.html">Text</db:link> item is the imaginary line on which the
+         <db:para>The baseline of a <db:link xlink:href="qml-qtquick-text.db">Text</db:link> item is the imaginary line on which the
                                         text sits. Controls containing text usually set their
                                         baseline to the baseline of their text.</db:para>
          <db:para>For non-text items, a default baseline offset of 0 is
                                         used.</db:para>
       </db:section>
       <db:section xml:id="children-prop">
-         <db:title>children : list&lt;<db:link xlink:href="qml-qtquick-item.html">Item</db:link>&gt;</db:title>
+         <db:title>children : list&lt;<db:link xlink:href="qml-qtquick-item.db">Item</db:link>&gt;</db:title>
          <db:para>The children property contains the list of visual
                                         children of this item. The resources property contains
                                         non-visual resources that you want to reference by
                                         name.</db:para>
          <db:para>It is not generally necessary to refer to these
                                         properties when adding child items or resources, as the
-                                        default <db:link xlink:href="qml-qtquick-item.html#data-prop">data</db:link> property will automatically assign child
+                                        default <db:link xlink:href="qml-qtquick-item.db#data-prop">data</db:link> property will automatically assign child
                                         objects to the <db:code>children</db:code> and
                                             <db:code>resources</db:code> properties as
-                                        appropriate. See the <db:link xlink:href="qml-qtquick-item.html#data-prop">data</db:link>
+                                        appropriate. See the <db:link xlink:href="qml-qtquick-item.db#data-prop">data</db:link>
                                         documentation for details.</db:para>
       </db:section>
       <db:section xml:id="childrenRect-prop">
@@ -820,14 +820,14 @@
                                         explicitly been set to
                                         <db:code>false</db:code>.</db:para>
          <db:para>Setting this property to <db:code>false</db:code>
-                                        automatically causes <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link> to be set to
+                                        automatically causes <db:link xlink:href="qml-qtquick-item.db#activeFocus-prop">activeFocus</db:link> to be set to
                                             <db:code>false</db:code>, and this item will longer
                                         receive keyboard events.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#visible-prop">visible</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -835,9 +835,9 @@
       <db:section xml:id="focus-prop">
          <db:title>focus : bool</db:title>
          <db:para>This property holds whether the item has focus
-                                        within the enclosing <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link>.
+                                        within the enclosing <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link>.
                                         If true, this item will gain active focus when the enclosing
-                                            <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> gains active focus.</db:para>
+                                            <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link> gains active focus.</db:para>
          <db:para>In the following example, <db:code>input</db:code>
                                         will be given active focus when <db:code>scope</db:code>
                                         gains active focus:</db:para>
@@ -851,10 +851,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#activeFocus-prop">activeFocus</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qtquick-input-focus.html">Keyboard Focus in Qt
+                  <db:link xlink:href="qtquick-input-focus.db">Keyboard Focus in Qt
                                             Quick</db:link>
                </db:member>
             </db:simplelist>
@@ -863,7 +863,7 @@
       <db:section xml:id="height-prop">
          <db:title>height : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
-         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
+         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.db#parent-prop">parent</db:link>.</db:para>
          <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
@@ -871,7 +871,7 @@
          <db:title>implicitHeight :
                                                   real</db:title>
          <db:para>Defines the natural width or height of the Item if
-                                        no <db:link xlink:href="qml-qtquick-item.html#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.html#height-prop">height</db:link>
+                                        no <db:link xlink:href="qml-qtquick-item.db#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.db#height-prop">height</db:link>
                                         is specified.</db:para>
          <db:para>The default implicit size for most items is 0x0, however
                                         some items have an inherent implicit size which cannot be
@@ -885,7 +885,7 @@
                                             Math.max(text.implicitHeight, image.implicitHeight) Image { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
                                             parent.verticalCenter } }</db:programlisting>
          <db:note>
-            <db:para>Using<db:link xlink:href="qml-qtquick-item.html#implicitWidth-prop">implicitWidth</db:link> of Text or <db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and
+            <db:para>Using<db:link xlink:href="qml-qtquick-item.db#implicitWidth-prop">implicitWidth</db:link> of Text or <db:link xlink:href="qml-qtquick-textedit.db">TextEdit</db:link> and
                                         setting the width explicitly incurs a performance penalty as
                                         the text must be laid out twice.</db:para>
          </db:note>
@@ -894,7 +894,7 @@
          <db:title>implicitWidth :
                                                   real</db:title>
          <db:para>Defines the natural width or height of the Item if
-                                        no <db:link xlink:href="qml-qtquick-item.html#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.html#height-prop">height</db:link>
+                                        no <db:link xlink:href="qml-qtquick-item.db#width-prop">width</db:link> or <db:link xlink:href="qml-qtquick-item.db#height-prop">height</db:link>
                                         is specified.</db:para>
          <db:para>The default implicit size for most items is 0x0, however
                                         some items have an inherent implicit size which cannot be
@@ -908,23 +908,23 @@
                                             Math.max(text.implicitHeight, image.implicitHeight) Image { id: image } Text { id: textwrapMode: Text.Wrapanchors.left: image.right; anchors.right: parent.rightanchors.verticalCenter:
                                             parent.verticalCenter } }</db:programlisting>
          <db:note>
-            <db:para>Using implicitWidth of Text or<db:link xlink:href="qml-qtquick-textedit.html">TextEdit</db:link> and setting the width explicitly
+            <db:para>Using implicitWidth of Text or<db:link xlink:href="qml-qtquick-textedit.db">TextEdit</db:link> and setting the width explicitly
                                         incurs a performance penalty as the text must be laid out
                                         twice.</db:para>
          </db:note>
       </db:section>
       <db:section xml:id="layer.effect-prop">
-         <db:title>layer.effect : <db:link xlink:href="qtqml/qml-qtqml-component.html">Component</db:link></db:title>
+         <db:title>layer.effect : <db:link xlink:href="qml-qtqml-component.db">Component</db:link></db:title>
          <db:para>Holds the effect that is applied to this
                                         layer.</db:para>
-         <db:para>The effect is typically a <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link> component, although any <db:link xlink:href="qml-qtquick-item.html">Item</db:link> component can
+         <db:para>The effect is typically a <db:link xlink:href="qml-qtquick-shadereffect.db">ShaderEffect</db:link> component, although any <db:link xlink:href="qml-qtquick-item.db">Item</db:link> component can
                                         be assigned. The effect should have a source texture
-                                        property with a name matching <db:link xlink:href="qml-qtquick-item.html#layer.samplerName-prop">layer.samplerName</db:link>.</db:para>
+                                        property with a name matching <db:link xlink:href="qml-qtquick-item.db#layer.samplerName-prop">layer.samplerName</db:link>.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#layer.samplerName-prop">layer.samplerName</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#layer.samplerName-prop">layer.samplerName</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -951,22 +951,22 @@
          <db:itemizedlist>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.Alpha -
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.Alpha -
                                             GL_ALPHA;</db:para>
             </db:listitem>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.RGB - GL_RGB</db:para>
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.RGB - GL_RGB</db:para>
             </db:listitem>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.RGBA -
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.RGBA -
                                             GL_RGBA</db:para>
             </db:listitem>
          </db:itemizedlist>
          <db:note>
             <db:para>
-               <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.RGB and <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.Alpha should be used with
+               <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.RGB and <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.Alpha should be used with
                                         caution, as support for these formats in the underlying
                                         hardare and driver is often not
                                 present.</db:para>
@@ -994,10 +994,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#layer.effect-prop">layer.effect</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#layer.effect-prop">layer.effect</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-shadereffect.html">ShaderEffect</db:link>
+                  <db:link xlink:href="qml-qtquick-shadereffect.db">ShaderEffect</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1009,7 +1009,7 @@
       </db:section>
       <db:section xml:id="layer.sourceRect-prop">
          <db:title>layer.sourceRect :
-                                                  <db:link xlink:href="qtqml/qml-rect.html">rect</db:link></db:title>
+                                                  <db:link xlink:href="qml-rect.db">rect</db:link></db:title>
          <db:para>This property defines the rectangular area of the
                                         item that should be rendered into the texture. The source
                                         rectangle can be larger than the item itself. If the
@@ -1039,25 +1039,25 @@
          <db:itemizedlist>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.ClampToEdge -
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.ClampToEdge -
                                             GL_CLAMP_TO_EDGE both horizontally and
                                             vertically</db:para>
             </db:listitem>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.RepeatHorizontally -
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.RepeatHorizontally -
                                             GL_REPEAT horizontally, GL_CLAMP_TO_EDGE
                                             vertically</db:para>
             </db:listitem>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.RepeatVertically -
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.RepeatVertically -
                                             GL_CLAMP_TO_EDGE horizontally, GL_REPEAT
                                             vertically</db:para>
             </db:listitem>
             <db:listitem>
                <db:para>
-                  <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.Repeat - GL_REPEAT both
+                  <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.Repeat - GL_REPEAT both
                                             horizontally and vertically</db:para>
             </db:listitem>
          </db:itemizedlist>
@@ -1121,9 +1121,9 @@
          </db:informaltable>
          <db:para>Changing an item's opacity does not affect whether the
                                         item receives user input events. (In contrast, setting
-                                            <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link> property to
+                                            <db:link xlink:href="qml-qtquick-item.db#visible-prop">visible</db:link> property to
                                             <db:code>false</db:code> stops mouse events, and
-                                        setting the <db:link xlink:href="qml-qtquick-item.html#enabled-prop">enabled</db:link> property to
+                                        setting the <db:link xlink:href="qml-qtquick-item.db#enabled-prop">enabled</db:link> property to
                                             <db:code>false</db:code> stops mouse and keyboard
                                         events, and also removes active focus from the
                                         item.)</db:para>
@@ -1131,20 +1131,20 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#visible-prop">visible</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#visible-prop">visible</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="parent-prop">
-         <db:title>parent : <db:link xlink:href="qml-qtquick-item.html">Item</db:link></db:title>
+         <db:title>parent : <db:link xlink:href="qml-qtquick-item.db">Item</db:link></db:title>
          <db:para>This property holds the visual parent of the
                                         item.</db:para>
          <db:note>
             <db:para>The concept of the <db:emphasis>visual
-                                            parent</db:emphasis> differs from that of the <db:emphasis><db:code><db:link xlink:href="qtcore/qobject.html">QObject</db:link></db:code>
+                                            parent</db:emphasis> differs from that of the <db:emphasis><db:code><db:link xlink:href="qobject.db">QObject</db:link></db:code>
                                             parent</db:emphasis>. An item's visual parent may not
-                                        necessarily be the same as its object parent. See <db:link xlink:href="qtquick-visualcanvas-visualparent.html">Concepts -
+                                        necessarily be the same as its object parent. See <db:link xlink:href="qtquick-visualcanvas-visualparent.db">Concepts -
                                             Visual Parent in Qt Quick</db:link> for more
                                         details.</db:para>
          </db:note>
@@ -1157,16 +1157,16 @@
                                         name.</db:para>
          <db:para>It is not generally necessary to refer to these
                                         properties when adding child items or resources, as the
-                                        default <db:link xlink:href="qml-qtquick-item.html#data-prop">data</db:link> property will automatically assign child
+                                        default <db:link xlink:href="qml-qtquick-item.db#data-prop">data</db:link> property will automatically assign child
                                         objects to the <db:code>children</db:code> and
                                             <db:code>resources</db:code> properties as
-                                        appropriate. See the <db:link xlink:href="qml-qtquick-item.html#data-prop">data</db:link>
+                                        appropriate. See the <db:link xlink:href="qml-qtquick-item.db#data-prop">data</db:link>
                                         documentation for details.</db:para>
       </db:section>
       <db:section xml:id="rotation-prop">
          <db:title>rotation : real</db:title>
          <db:para>This property holds the rotation of the item in
-                                        degrees clockwise around its <db:link xlink:href="qml-qtquick-item.html#transformOrigin-prop">transformOrigin</db:link>.</db:para>
+                                        degrees clockwise around its <db:link xlink:href="qml-qtquick-item.db#transformOrigin-prop">transformOrigin</db:link>.</db:para>
          <db:para>The default value is 0 degrees (that is, no
                                         rotation).</db:para>
          <db:informaltable>
@@ -1196,10 +1196,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
+                  <db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-rotation.html">Rotation</db:link>
+                  <db:link xlink:href="qml-qtquick-rotation.db">Rotation</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1213,7 +1213,7 @@
                                         item at a larger size. A negative scale causes the item to
                                         be mirrored when rendered.</db:para>
          <db:para>The default value is 1.0.</db:para>
-         <db:para>Scaling is applied from the <db:link xlink:href="qml-qtquick-item.html#transformOrigin-prop">transformOrigin</db:link>.</db:para>
+         <db:para>Scaling is applied from the <db:link xlink:href="qml-qtquick-item.db#transformOrigin-prop">transformOrigin</db:link>.</db:para>
          <db:informaltable>
             <db:tbody>
                <db:tr>
@@ -1246,10 +1246,10 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>
+                  <db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-scale.html">Scale</db:link>
+                  <db:link xlink:href="qml-qtquick-scale.db">Scale</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1277,39 +1277,39 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick
+                  <db:link xlink:href="qtquick-statesanimations-states.db">Qt Quick
                                             States</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="states-prop">
-         <db:title>states : list&lt;<db:link xlink:href="qml-qtquick-state.html">State</db:link>&gt;</db:title>
+         <db:title>states : list&lt;<db:link xlink:href="qml-qtquick-state.db">State</db:link>&gt;</db:title>
          <db:para>This property holds the list of possible states for
-                                        this item. To change the state of this item, set the <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>
-                                        property to one of these states, or set the <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>
+                                        this item. To change the state of this item, set the <db:link xlink:href="qml-qtquick-item.db#state-prop">state</db:link>
+                                        property to one of these states, or set the <db:link xlink:href="qml-qtquick-item.db#state-prop">state</db:link>
                                         property to an empty string to revert the item to its
                                         default state.</db:para>
-         <db:para>This property is specified as a list of <db:link xlink:href="qml-qtquick-state.html">State</db:link> objects.
+         <db:para>This property is specified as a list of <db:link xlink:href="qml-qtquick-state.db">State</db:link> objects.
                                         For example, below is an item with "red_color" and
                                         "blue_color" states:</db:para>
          <db:programlisting language="qml">import QtQuick 2.0 Rectangle { id: rootwidth: 100; height: 100states: [ State { name: "red_color"PropertyChanges { target: root; color: "red" } }, State { name: "blue_color"PropertyChanges { target: root; color: "blue" } } ] }</db:programlisting>
-         <db:para>See <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick States</db:link> and <db:link xlink:href="qtquick-statesanimations-animations.html">Animation and Transitions in Qt Quick</db:link> for more
+         <db:para>See <db:link xlink:href="qtquick-statesanimations-states.db">Qt Quick States</db:link> and <db:link xlink:href="qtquick-statesanimations-animations.db">Animation and Transitions in Qt Quick</db:link> for more
                                         details on using states and transitions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-statesanimations-topic.html#transitions">transitions</db:link>
+                  <db:link xlink:href="qtquick-statesanimations-topic.db#transitions">transitions</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="transform-prop">
-         <db:title>transform : list&lt;<db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>&gt;</db:title>
+         <db:title>transform : list&lt;<db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>&gt;</db:title>
          <db:para>This property holds the list of transformations to
                                         apply.</db:para>
-         <db:para>For more information see <db:link xlink:href="qml-qtquick-transform.html">Transform</db:link>.</db:para>
+         <db:para>For more information see <db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>.</db:para>
       </db:section>
       <db:section xml:id="transformOrigin-prop">
          <db:title>transformOrigin :
@@ -1331,23 +1331,23 @@
          <db:programlisting language="qml">Image { source: "myimage.png"transformOrigin:
                                             Item.BottomRightrotation: 45 }</db:programlisting>
          <db:para>To set an arbitrary transform origin point use the
-                                            <db:link xlink:href="qml-qtquick-scale.html">Scale</db:link> or
-                                            <db:link xlink:href="qml-qtquick-rotation.html">Rotation</db:link> transform types with <db:link xlink:href="qml-qtquick-item.html#transform-prop">transform</db:link>.</db:para>
+                                            <db:link xlink:href="qml-qtquick-scale.db">Scale</db:link> or
+                                            <db:link xlink:href="qml-qtquick-rotation.db">Rotation</db:link> transform types with <db:link xlink:href="qml-qtquick-item.db#transform-prop">transform</db:link>.</db:para>
       </db:section>
       <db:section xml:id="transitions-prop">
-         <db:title>transitions : list&lt;<db:link xlink:href="qml-qtquick-transition.html">Transition</db:link>&gt;</db:title>
+         <db:title>transitions : list&lt;<db:link xlink:href="qml-qtquick-transition.db">Transition</db:link>&gt;</db:title>
          <db:para>This property holds the list of transitions for
                                         this item. These define the transitions to be applied to the
-                                        item whenever it changes its <db:link xlink:href="qml-qtquick-item.html#state-prop">state</db:link>.</db:para>
-         <db:para>This property is specified as a list of <db:link xlink:href="qmlexampletoggleswitch.html#transition">Transition</db:link> objects. For example:</db:para>
+                                        item whenever it changes its <db:link xlink:href="qml-qtquick-item.db#state-prop">state</db:link>.</db:para>
+         <db:para>This property is specified as a list of <db:link xlink:href="qmlexampletoggleswitch.db#transition">Transition</db:link> objects. For example:</db:para>
          <db:programlisting language="qml">import QtQuick 2.0 Item { transitions: [ Transition { //... }, Transition { //... } ] }</db:programlisting>
-         <db:para>See <db:link xlink:href="qtquick-statesanimations-states.html">Qt Quick States</db:link> and <db:link xlink:href="qtquick-statesanimations-animations.html">Animation and Transitions in Qt Quick</db:link> for more
+         <db:para>See <db:link xlink:href="qtquick-statesanimations-states.db">Qt Quick States</db:link> and <db:link xlink:href="qtquick-statesanimations-animations.db">Animation and Transitions in Qt Quick</db:link> for more
                                         details on using states and transitions.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-statesanimations-topic.html#states">states</db:link>
+                  <db:link xlink:href="qtquick-statesanimations-topic.db#states">states</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1370,12 +1370,12 @@
                                             <db:code>visible</db:code> property may not have the
                                         intended effect if a property binding should only respond to
                                         explicit property changes. In such cases it may be better to
-                                        use the <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link> property instead.)</db:para>
+                                        use the <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link> property instead.)</db:para>
          <db:para>If this property is set to <db:code>false</db:code>,
                                         the item will no longer receive mouse events, but will
                                         continue to receive key events and will retain the keyboard
-                                            <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link> if it has been set. (In contrast,
-                                        setting the <db:link xlink:href="qml-qtquick-item.html#enabled-prop">enabled</db:link> property to
+                                            <db:link xlink:href="qml-qtquick-item.db#focus-prop">focus</db:link> if it has been set. (In contrast,
+                                        setting the <db:link xlink:href="qml-qtquick-item.db#enabled-prop">enabled</db:link> property to
                                             <db:code>false</db:code> stops both mouse and
                                         keyboard events, and also removes focus from the
                                         item.)</db:para>
@@ -1384,24 +1384,24 @@
                                         affected by changes to this property or the parent's
                                             <db:code>visible</db:code> property. It does not
                                         change, for example, if this item moves off-screen, or if
-                                        the <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link> changes to
+                                        the <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link> changes to
                                             0.</db:para>
          </db:note>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qtquick-effects-topic.html#opacity">opacity</db:link>
+                  <db:link xlink:href="qtquick-effects-topic.db#opacity">opacity</db:link>
                </db:member>
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#enabled-prop">enabled</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#enabled-prop">enabled</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
       </db:section>
       <db:section xml:id="visibleChildren-prop">
          <db:title>visibleChildren :
-                                                  list&lt;<db:link xlink:href="qml-qtquick-item.html">Item</db:link>&gt;</db:title>
+                                                  list&lt;<db:link xlink:href="qml-qtquick-item.db">Item</db:link>&gt;</db:title>
          <db:para>This read-only property lists all of the item's
                                         children that are currently visible. Note that a child's
                                         visibility may have changed explicitly, or because the
@@ -1411,21 +1411,21 @@
       <db:section xml:id="width-prop">
          <db:title>width : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
-         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
+         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.db#parent-prop">parent</db:link>.</db:para>
          <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="x-prop">
          <db:title>x : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
-         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
+         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.db#parent-prop">parent</db:link>.</db:para>
          <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
       <db:section xml:id="y-prop">
          <db:title>y : real</db:title>
          <db:para>Defines the item's position and size.</db:para>
-         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.html#parent-prop">parent</db:link>.</db:para>
+         <db:para>The (x,y) position is relative to the <db:link xlink:href="qml-qtquick-item.db#parent-prop">parent</db:link>.</db:para>
          <db:programlisting language="qml">Item { x: 100; y:
                                             100; width: 100; height: 100 }</db:programlisting>
       </db:section>
@@ -1546,22 +1546,22 @@
                                         returns false otherwise.</db:para>
       </db:section>
       <db:section xml:id="forceActiveFocus-method-2">
-         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code><db:emphasis>
+         <db:title>forceActiveFocus(<db:code><db:link xlink:href="qt.db#FocusReason-enum">Qt::FocusReason</db:link></db:code><db:emphasis>
                                                   reason</db:emphasis>)</db:title>
          <db:para>Forces active focus on the item with the given
                                             <db:emphasis>reason</db:emphasis>.</db:para>
          <db:para>This method sets focus on the item and ensures that all
-                                        ancestor <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> objects in the object hierarchy are
-                                        also given <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>.</db:para>
+                                        ancestor <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link> objects in the object hierarchy are
+                                        also given <db:link xlink:href="qml-qtquick-item.db#focus-prop">focus</db:link>.</db:para>
          <db:para>This QML method was introduced in Qt 5.1.</db:para>
          <db:section>
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#activeFocus-prop">activeFocus</db:link>
                </db:member>
                <db:member>
-                  <db:code><db:link xlink:href="qtcore/qt.html#FocusReason-enum">Qt::FocusReason</db:link></db:code>
+                  <db:code><db:link xlink:href="qt.db#FocusReason-enum">Qt::FocusReason</db:link></db:code>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1571,8 +1571,8 @@
          <db:para>This is an overloaded function.</db:para>
          <db:para>Forces active focus on the item.</db:para>
          <db:para>This method sets focus on the item and ensures that all
-                                        ancestor <db:link xlink:href="qml-qtquick-focusscope.html">FocusScope</db:link> objects in the object hierarchy are
-                                        also given <db:link xlink:href="qml-qtquick-item.html#focus-prop">focus</db:link>.</db:para>
+                                        ancestor <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link> objects in the object hierarchy are
+                                        also given <db:link xlink:href="qml-qtquick-item.db#focus-prop">focus</db:link>.</db:para>
          <db:para>The reason for the focus change will be
                                             <db:emphasis>Qt::OtherFocusReason</db:emphasis>. Use the
                                         overloaded method to specify the focus reason to enable
@@ -1581,7 +1581,7 @@
             <db:title>See Also</db:title>
             <db:simplelist type="vert">
                <db:member>
-                  <db:link xlink:href="qml-qtquick-item.html#activeFocus-prop">activeFocus</db:link>
+                  <db:link xlink:href="qml-qtquick-item.db#activeFocus-prop">activeFocus</db:link>
                </db:member>
             </db:simplelist>
          </db:section>
@@ -1609,11 +1609,11 @@
             <db:para>This function will render the
                                         item to an offscreen surface and copy that surface from the
                                         GPU's memory into the CPU's memory, which can be quite
-                                        costly. For "live" preview, use <db:link xlink:href="qml-qtquick-item.html#layer.enabled-prop">layers</db:link> or <db:link xlink:href="qml-qtquick-shadereffectsource.html">ShaderEffectSource</db:link>.</db:para>
+                                        costly. For "live" preview, use <db:link xlink:href="qml-qtquick-item.db#layer.enabled-prop">layers</db:link> or <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>.</db:para>
          </db:note>
       </db:section>
       <db:section xml:id="mapFromItem-method-2">
-         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
+         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.db">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis> y</db:emphasis>, real<db:emphasis>
                                                   width</db:emphasis>, real<db:emphasis>
@@ -1634,7 +1634,7 @@
                                         view.</db:para>
       </db:section>
       <db:section xml:id="mapFromItem-method">
-         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
+         <db:title>mapFromItem(<db:link xlink:href="qml-qtquick-item.db">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis>
                                                   y</db:emphasis>)</db:title>
@@ -1654,7 +1654,7 @@
                                         view.</db:para>
       </db:section>
       <db:section xml:id="mapToItem-method-2">
-         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
+         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.db">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis> y</db:emphasis>, real<db:emphasis>
                                                   width</db:emphasis>, real<db:emphasis>
@@ -1675,7 +1675,7 @@
                                         view.</db:para>
       </db:section>
       <db:section xml:id="mapToItem-method">
-         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.html">Item</db:link><db:emphasis> item</db:emphasis>,
+         <db:title>mapToItem(<db:link xlink:href="qml-qtquick-item.db">Item</db:link><db:emphasis> item</db:emphasis>,
                                                   real<db:emphasis>
                                                   x</db:emphasis>, real<db:emphasis>
                                                   y</db:emphasis>)</db:title>
