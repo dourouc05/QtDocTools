@@ -2041,7 +2041,7 @@
       <xsl:variable name="anchor" select="$row/@id"/>
 
       <xsl:if test="$title/html:span[@class = 'name']">
-        <db:fieldsynopsis>
+        <db:fieldsynopsis xlink:href="#{$title/html:a/@name}">
           <xsl:if test="$attached">
             <db:modifier>attached</db:modifier>
           </xsl:if>
@@ -2069,7 +2069,7 @@
     <xsl:variable name="title" select="$row/html:td/html:p"/>
     <xsl:variable name="anchor" select="$row/@id"/>
 
-    <db:methodsynopsis>
+    <db:methodsynopsis xlink:href="#{$title/html:a/@name}">
       <xsl:if test="string-length($type) &gt;= 1">
         <db:modifier>
           <xsl:value-of select="$type"/>

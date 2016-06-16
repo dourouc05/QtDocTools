@@ -10,106 +10,106 @@
       </db:ooclass>
       <db:classsynopsisinfo role="import">import QtQuick 2.4</db:classsynopsisinfo>
       <db:classsynopsisinfo role="inherits"/>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#acceptedButtons-prop">
          <db:type xlink:href="qtcore/qt.html#MouseButton-enum">Qt::MouseButtons</db:type>
          <db:varname>acceptedButtons</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#containsMouse-prop">
          <db:type>bool</db:type>
          <db:varname>containsMouse</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#containsPress-prop">
          <db:type>bool</db:type>
          <db:varname>containsPress</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#cursorShape-prop">
          <db:type xlink:href="qtcore/qt.html#CursorShape-enum">Qt::CursorShape</db:type>
          <db:varname>cursorShape</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.target-prop">
          <db:modifier>(group)</db:modifier>
          <db:type xlink:href="qml-qtquick-item.html">Item</db:type>
          <db:varname>drag.target</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.active-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>drag.active</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.axis-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>enumeration</db:type>
          <db:varname>drag.axis</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.minimumX-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.minimumX</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.maximumX-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.maximumX</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.minimumY-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.minimumY</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.maximumY-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.maximumY</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.filterChildren-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>drag.filterChildren</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#drag.threshold-prop">
          <db:modifier>(group)</db:modifier>
          <db:type>real</db:type>
          <db:varname>drag.threshold</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#enabled-prop">
          <db:type>bool</db:type>
          <db:varname>enabled</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#hoverEnabled-prop">
          <db:type>bool</db:type>
          <db:varname>hoverEnabled</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#mouseX-prop">
          <db:type>real</db:type>
          <db:varname>mouseX</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#mouseY-prop">
          <db:type>real</db:type>
          <db:varname>mouseY</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#pressed-prop">
          <db:type>bool</db:type>
          <db:varname>pressed</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#pressedButtons-prop">
          <db:type>MouseButtons</db:type>
          <db:varname>pressedButtons</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#preventStealing-prop">
          <db:type>bool</db:type>
          <db:varname>preventStealing</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#propagateComposedEvents-prop">
          <db:type>bool</db:type>
          <db:varname>propagateComposedEvents</db:varname>
       </db:fieldsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#canceled-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>canceled</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#clicked-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>clicked</db:methodname>
@@ -118,7 +118,7 @@
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#doubleClicked-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>doubleClicked</db:methodname>
@@ -127,19 +127,19 @@
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#entered-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>entered</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#exited-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>exited</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#positionChanged-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>positionChanged</db:methodname>
@@ -148,7 +148,7 @@
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#pressAndHold-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>pressAndHold</db:methodname>
@@ -157,7 +157,7 @@
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#pressed-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>pressed</db:methodname>
@@ -166,7 +166,7 @@
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#released-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>released</db:methodname>
@@ -175,7 +175,7 @@
             <db:parameter>mouse</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#wheel-signal">
          <db:modifier>signal</db:modifier>
          <db:void/>
          <db:methodname>wheel</db:methodname>

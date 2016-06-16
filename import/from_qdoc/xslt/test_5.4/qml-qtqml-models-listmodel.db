@@ -9,15 +9,15 @@
          <db:classname>ListModel</db:classname>
       </db:ooclass>
       <db:classsynopsisinfo role="import">import QtQml.Models 2.1</db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#count-prop">
          <db:type>int</db:type>
          <db:varname>count</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#dynamicRoles-prop">
          <db:type>bool</db:type>
          <db:varname>dynamicRoles</db:varname>
       </db:fieldsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#append-method">
          <db:void/>
          <db:methodname>append</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -25,12 +25,12 @@
             <db:parameter>dict</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#clear-method">
          <db:void/>
          <db:methodname>clear</db:methodname>
          <db:void/>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#get-method">
          <db:type>object</db:type>
          <db:methodname>get</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -38,7 +38,7 @@
             <db:parameter>index</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#insert-method">
          <db:void/>
          <db:methodname>insert</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -50,7 +50,7 @@
             <db:parameter>dict</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#move-method">
          <db:void/>
          <db:methodname>move</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -66,7 +66,7 @@
             <db:parameter>n</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#remove-method">
          <db:void/>
          <db:methodname>remove</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -78,7 +78,7 @@
             <db:parameter>count</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#set-method">
          <db:void/>
          <db:methodname>set</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -90,7 +90,7 @@
             <db:parameter>dict</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#setProperty-method">
          <db:void/>
          <db:methodname>setProperty</db:methodname>
          <db:methodparam rep="norepeat" choice="req">
@@ -106,7 +106,7 @@
             <db:parameter>value</db:parameter>
          </db:methodparam>
       </db:methodsynopsis>
-      <db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#sync-method">
          <db:void/>
          <db:methodname>sync</db:methodname>
          <db:void/>
