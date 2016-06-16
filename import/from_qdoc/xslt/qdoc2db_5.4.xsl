@@ -1381,7 +1381,7 @@
     <xsl:param name="inheritedBy" as="element()?"/>
     <xsl:param name="since" as="element()?"/>
 
-    <db:classsynopsis>
+    <db:classsynopsis xlink:href="{replace(tokenize(base-uri(), '/')[last()], '.xml', '.db')}">
       <db:ooclass>
         <db:classname>
           <xsl:value-of select="$name"/>
@@ -1468,7 +1468,7 @@
     <xsl:param name="kind" as="xs:string"/>
     <xsl:variable name="anchor" select="@id"/>
 
-    <db:fieldsynopsis>
+    <db:fieldsynopsis xlink:href="#{@id}">
       <xsl:if test="$kind">
         <db:modifier>
           <xsl:text>(</xsl:text>

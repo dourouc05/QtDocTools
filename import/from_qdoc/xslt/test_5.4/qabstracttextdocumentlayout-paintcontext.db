@@ -4,7 +4,7 @@
             version="5.1"
             xml:lang="en">
    <db:title>PaintContext Class</db:title>
-   <db:classsynopsis>
+   <db:classsynopsis xlink:href="qabstracttextdocumentlayout-paintcontext.db">
       <db:ooclass>
          <db:classname>PaintContext</db:classname>
       </db:ooclass>
@@ -12,22 +12,22 @@
                                                   &lt;PaintContext&gt;</db:classsynopsisinfo>
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 gui</db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#clip-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type xlink:href="qtcore/qrectf.html">QRectF</db:type>
          <db:varname>clip</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#cursorPosition-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type>int</db:type>
          <db:varname>cursorPosition</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#palette-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type xlink:href="qpalette.html">QPalette</db:type>
          <db:varname>palette</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#selections-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type>QVector&lt;Selection&gt;</db:type>
          <db:varname>selections</db:varname>

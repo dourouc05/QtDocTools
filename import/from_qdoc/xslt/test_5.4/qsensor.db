@@ -4,7 +4,7 @@
             version="5.1"
             xml:lang="en">
    <db:title>QSensor Class</db:title>
-   <db:classsynopsis>
+   <db:classsynopsis xlink:href="qsensor.db">
       <db:ooclass>
          <db:classname>QSensor</db:classname>
       </db:ooclass>
@@ -68,102 +68,102 @@
       </db:classsynopsisinfo>
       <db:classsynopsisinfo role="since"> Qt
                                                 5.1</db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#active-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>active</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#alwaysOn-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>alwaysOn</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#availableDataRates-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qsensor.html#qrangelist-typedef">qrangelist</db:type>
          <db:varname>availableDataRates</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#axesOrientationMode-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qsensor.html#AxesOrientationMode-enum">AxesOrientationMode</db:type>
          <db:varname>axesOrientationMode</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#bufferSize-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>bufferSize</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#busy-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>busy</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#connectedToBackend-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>connectedToBackend</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#currentOrientation-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>currentOrientation</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#dataRate-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>dataRate</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#description-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qstring.html">QString</db:type>
          <db:varname>description</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#efficientBufferSize-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>efficientBufferSize</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#error-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>error</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#identifier-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qbytearray.html">QByteArray</db:type>
          <db:varname>identifier</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#maxBufferSize-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>maxBufferSize</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#outputRange-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>outputRange</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#outputRanges-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qsensor.html#qoutputrangelist-typedef">qoutputrangelist</db:type>
          <db:varname>outputRanges</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#reading-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qsensorreading.html">QSensorReading</db:type>
          <db:varname>reading</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#skipDuplicates-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>skipDuplicates</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#type-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qbytearray.html">QByteArray</db:type>
          <db:varname>type</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#userOrientation-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>int</db:type>
          <db:varname>userOrientation</db:varname>

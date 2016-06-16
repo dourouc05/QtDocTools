@@ -4,7 +4,7 @@
             version="5.1"
             xml:lang="en">
    <db:title>QQuickItem Class</db:title>
-   <db:classsynopsis>
+   <db:classsynopsis xlink:href="qquickitem.db">
       <db:ooclass>
          <db:classname>QQuickItem</db:classname>
       </db:ooclass>
@@ -24,117 +24,117 @@
       <db:classsynopsisinfo role="inheritedBy">
          <db:link xlink:href="qquickpainteditem.html">QQuickPaintedItem</db:link>
       </db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#activeFocus-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>activeFocus</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#activeFocusOnTab-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>activeFocusOnTab</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#antialiasing-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>antialiasing</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#baselineOffset-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>baselineOffset</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#childrenRect-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qrectf.html">QRectF</db:type>
          <db:varname>childrenRect</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#clip-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>clip</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#enabled-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>enabled</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#focus-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>focus</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#height-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>height</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#implicitHeight-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>implicitHeight</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#implicitWidth-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>implicitWidth</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#opacity-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>opacity</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#parent-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:type>
          <db:varname>parent</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#rotation-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>rotation</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#scale-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>scale</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#smooth-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>smooth</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#state-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qstring.html">QString</db:type>
          <db:varname>state</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#transformOrigin-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qquickitem.html#TransformOrigin-enum">TransformOrigin</db:type>
          <db:varname>transformOrigin</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#visible-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>visible</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#width-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>width</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#x-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>x</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#y-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>y</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#z-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>z</db:varname>

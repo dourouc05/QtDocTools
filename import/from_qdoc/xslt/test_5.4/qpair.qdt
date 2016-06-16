@@ -4,7 +4,7 @@
             version="5.1-extension qtdoctools-1.0"
             xml:lang="en">
    <db:title>QPair Class</db:title>
-   <db:classsynopsis>
+   <db:classsynopsis xlink:href="qpair.db">
       <db:ooclass>
          <db:classname>QPair</db:classname>
       </db:ooclass>
@@ -12,12 +12,12 @@
                                                   &lt;QPair&gt;</db:classsynopsisinfo>
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 core</db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#first-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type>T1</db:type>
          <db:varname>first</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#second-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type>T2</db:type>
          <db:varname>second</db:varname>

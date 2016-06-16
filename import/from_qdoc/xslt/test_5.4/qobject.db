@@ -4,7 +4,7 @@
             version="5.1"
             xml:lang="en">
    <db:title>QObject Class</db:title>
-   <db:classsynopsis>
+   <db:classsynopsis xlink:href="qobject.db">
       <db:ooclass>
          <db:classname>QObject</db:classname>
       </db:ooclass>
@@ -90,12 +90,12 @@
       <db:classsynopsisinfo role="inheritedBy">
          <db:link xlink:href="qwineventnotifier.html">QWinEventNotifier</db:link>
       </db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#objectName-prop">
          <db:modifier>(Qt property)</db:modifier>
          <db:type xlink:href="qstring.html">QString</db:type>
          <db:varname>objectName</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#staticMetaObject-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type xlink:href="qmetaobject.html">QMetaObject</db:type>
          <db:varname>staticMetaObject</db:varname>

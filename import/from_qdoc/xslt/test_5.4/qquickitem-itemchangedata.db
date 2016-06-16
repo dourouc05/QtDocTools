@@ -4,7 +4,7 @@
             version="5.1"
             xml:lang="en">
    <db:title>ItemChangeData Class</db:title>
-   <db:classsynopsis>
+   <db:classsynopsis xlink:href="qquickitem-itemchangedata.db">
       <db:ooclass>
          <db:classname>ItemChangeData</db:classname>
       </db:ooclass>
@@ -12,22 +12,22 @@
                                                   &lt;ItemChangeData&gt;</db:classsynopsisinfo>
       <db:classsynopsisinfo role="qmake"> QT +=
                                                 quick</db:classsynopsisinfo>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#boolValue-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type>bool</db:type>
          <db:varname>boolValue</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#item-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type xlink:href="qquickitem.html#QQuickItem">QQuickItem</db:type>
          <db:varname>item</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#realValue-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type xlink:href="qtcore/qtglobal.html#qreal-typedef">qreal</db:type>
          <db:varname>realValue</db:varname>
       </db:fieldsynopsis>
-      <db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#window-var">
          <db:modifier>(public variable)</db:modifier>
          <db:type xlink:href="qquickwindow.html">QQuickWindow</db:type>
          <db:varname>window</db:varname>
