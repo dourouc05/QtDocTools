@@ -1943,7 +1943,7 @@
   </xsl:template>
   <xsl:template mode="functionListing"
     match="html:h3[not(@class = 'fn')][starts-with(normalize-space(.), 'class')]">
-    <db:classsynopsis>
+    <db:classsynopsis xlink:href="{html:a/@href}">
       <db:ooclass>
         <db:classname xlink:href="{html:a/@href}">
           <xsl:value-of select="html:a"/>
@@ -1967,8 +1967,8 @@
     <xsl:param name="attachedProps" as="element()?"/>
     <xsl:param name="meths" as="element()?"/>
     <xsl:param name="signals" as="element()?"/>
-
-    <db:classsynopsis>
+    
+    <db:classsynopsis xlink:href="{replace(tokenize(base-uri(), '/')[last()], '.xml', '.db')}">
       <db:ooclass>
         <db:classname>
           <xsl:value-of select="$qmlTypeName"/>
