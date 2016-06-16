@@ -2888,9 +2888,14 @@
     </xsl:if>
   </xsl:template>
   <xsl:template mode="content_table" match="html:thead">
-    <db:thead>
-      <xsl:apply-templates select="*" mode="content_table"/>
-    </db:thead>
+    <xsl:variable name="head">
+      <db:thead>
+        <xsl:apply-templates select="*" mode="content_table"/>
+      </db:thead>
+    </xsl:variable>
+    <xsl:if test="$head/db:thead/db:tr">
+      <xsl:copy-of select="$head"/>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="content_table" match="html:tbody">
     <db:tbody>
@@ -2898,9 +2903,14 @@
     </db:tbody>
   </xsl:template>
   <xsl:template mode="content_table" match="html:tr">
-    <db:tr>
-      <xsl:apply-templates select="*" mode="content_table"/>
-    </db:tr>
+    <xsl:variable name="row">
+      <db:tr>
+        <xsl:apply-templates select="*" mode="content_table"/>
+      </db:tr>
+    </xsl:variable>
+    <xsl:if test="$row/db:tr/db:th or $row/db:tr/db:td">
+      <xsl:copy-of select="$row"/>
+    </xsl:if>
   </xsl:template>
   <xsl:template mode="content_table" match="html:th">
     <db:th>
