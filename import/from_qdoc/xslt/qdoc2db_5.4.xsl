@@ -2096,59 +2096,69 @@
 
       <!-- Parameters. -->
       <xsl:choose>
-        <xsl:when test="count($title/html:span[@class = 'type']) = 0">
+        <xsl:when test="count($title/html:span[@class = 'type']) &lt;= 1">
+          <!-- Indicate there is no parameter. -->
           <db:void/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:for-each select="$title/html:span[@class = 'type']">
-            <!-- 
-              Peculiarity: could very well see a type, but nothing else in the vicinity! Example from Item: 
-              <html:tr class="odd" id="grabToImage-method" valign="top">
-                <html:td class="tblQmlFuncNode">
-                  <html:p>
-                    <html:a name="grabToImage-method"/>
-                    <html:span class="type">bool</html:span>
-                    <html:span class="name">grabToImage</html:span> 
-                    (
-                      <html:span class="type">callback</html:span>, 
-                      <html:span class="type">targetSize</html:span> 
-                    )
-                  </html:p>
-                </html:td>
-              </html:tr>
-            -->
-            <xsl:variable name="potentialType" select="." as="element(html:span)"/>
-            <xsl:variable name="nextNode" select="$potentialType/following-sibling::node()[1]"
-              as="node()"/>
-            <xsl:variable name="hasType" as="xs:boolean"
-              select="$nextNode and not($nextNode[self::text()])"/>
-
-            <xsl:variable name="type" as="element(html:span)?">
-              <xsl:if test="$hasType">
-                <xsl:copy-of select="$potentialType"/>
-              </xsl:if>
-            </xsl:variable>
-            <xsl:variable name="name" as="text()">
-              <xsl:choose>
-                <xsl:when test="$hasType">
-                  <xsl:value-of select="$nextNode"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$potentialType"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </xsl:variable>
-
-            <db:methodparam rep="norepeat" choice="req">
-              <xsl:if test="$hasType">
-                <xsl:call-template name="classListing_methodBody_analyseType">
-                  <xsl:with-param name="typeNodes" select="$type"/>
-                </xsl:call-template>
-              </xsl:if>
-              <db:parameter>
-                <xsl:value-of select="normalize-space($name)"/>
-              </db:parameter>
-            </db:methodparam>
+            <!-- The first element is always the return type. -->
+            <xsl:if test="true() or position() != 1">
+             <!-- 
+               Peculiarity: could very well see a type, but nothing else in the vicinity! Example from Item: 
+               <html:tr class="odd" id="grabToImage-method" valign="top">
+                 <html:td class="tblQmlFuncNode">
+                   <html:p>
+                     <html:a name="grabToImage-method"/>
+                     <html:span class="type">bool</html:span>
+                     <html:span class="name">grabToImage</html:span> 
+                     (
+                       <html:span class="type">callback</html:span>, 
+                       <html:span class="type">targetSize</html:span> 
+                     )
+                   </html:p>
+                 </html:td>
+               </html:tr>
+             -->
+             <xsl:variable name="potentialType" select="." as="element(html:span)"/>
+             <xsl:variable name="nextNode" select="$potentialType/following-sibling::node()[1]"
+               as="node()"/>
+             <xsl:variable name="hasType" as="xs:boolean"
+               select="$nextNode and not($nextNode[self::text()])"/>
+ 
+             <xsl:variable name="type" as="element(html:span)?">
+               <xsl:if test="$hasType">
+                 <xsl:copy-of select="$potentialType"/>
+               </xsl:if>
+             </xsl:variable>
+             <xsl:variable name="name" as="text()">
+               <xsl:choose>
+                 <xsl:when test="$hasType">
+                   <xsl:value-of select="$nextNode"/>
+                 </xsl:when>
+                 <xsl:otherwise>
+                   <xsl:value-of select="$potentialType"/>
+                 </xsl:otherwise>
+               </xsl:choose>
+             </xsl:variable>
+ 
+             <db:methodparam rep="norepeat" choice="req">
+               <xsl:if test="$hasType">
+                 <xsl:variable name="type">
+                   <xsl:call-template name="classListing_methodBody_analyseType">
+                     <xsl:with-param name="typeNodes" select="$type"/>
+                   </xsl:call-template>
+                 </xsl:variable>
+                 <xsl:if test="$type/db:type/text() = 'void' or boolean($type/db:void)">
+                   <xsl:message>WARNING: Found a void type! Bug in the style sheets!</xsl:message>
+                 </xsl:if>
+                 <xsl:copy-of select="$type"/>
+               </xsl:if>
+               <db:parameter>
+                 <xsl:value-of select="normalize-space($name)"/>
+               </db:parameter>
+             </db:methodparam>
+            </xsl:if>
           </xsl:for-each>
         </xsl:otherwise>
       </xsl:choose>
