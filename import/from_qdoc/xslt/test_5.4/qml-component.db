@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>Component QML Type</db:title>
+   <db:classsynopsis xlink:href="qml-component.db">
+      <db:ooclass>
+         <db:classname>Component</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="import">import .</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="instantiates">QDeclarativeComponent</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="since"> Qt
+                                                4.7</db:classsynopsisinfo>
+      <db:fieldsynopsis xlink:href="#progress-prop">
+         <db:type>real</db:type>
+         <db:varname>progress</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#status-prop">
+         <db:type>enumeration</db:type>
+         <db:varname>status</db:varname>
+      </db:fieldsynopsis>
+      <db:fieldsynopsis xlink:href="#url-prop">
+         <db:type xlink:href="qml-component.html#url-prop">url</db:type>
+         <db:varname>url</db:varname>
+      </db:fieldsynopsis>
+      <db:methodsynopsis xlink:href="#createObject-method">
+         <db:type>object</db:type>
+         <db:methodname>createObject</db:methodname>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type xlink:href="qml-item.html">Item</db:type>
+            <db:parameter>parent</db:parameter>
+         </db:methodparam>
+         <db:methodparam rep="norepeat" choice="req">
+            <db:type>object</db:type>
+            <db:parameter>properties</db:parameter>
+         </db:methodparam>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#errorString-method">
+         <db:type>string</db:type>
+         <db:methodname>errorString</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#onCompleted-signal">
+         <db:modifier>attached</db:modifier>
+         <db:modifier>signal</db:modifier>
+         <db:void/>
+         <db:methodname>onCompleted</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+      <db:methodsynopsis xlink:href="#onDestruction-signal">
+         <db:modifier>attached</db:modifier>
+         <db:modifier>signal</db:modifier>
+         <db:void/>
+         <db:methodname>onDestruction</db:methodname>
+         <db:void/>
+      </db:methodsynopsis>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>Components are reusable, encapsulated QML elements with
+                                well-defined interfaces.</db:para>
+      <db:para>Components are often defined by <db:link xlink:href="qdeclarativedocuments.db">component files</db:link> -
+                                that is, <db:code>.qml</db:code> files. The
+                                    <db:emphasis>Component</db:emphasis> element essentially allows QML
+                                components to be defined inline, within a QML document, rather than
+                                as a separate QML file. This may be useful for reusing a small
+                                component within a QML file, or for defining a component that
+                                logically belongs with other QML components within a file.</db:para>
+      <db:para>For example, here is a component that is used by multiple
+                                    <db:link xlink:href="qml-loader.db">Loader</db:link> objects. It
+                                contains a single item, a <db:link xlink:href="qml-rectangle.db">Rectangle</db:link>:</db:para>
+      <db:programlisting language="qml"/>
+      <db:para>Notice that while a <db:link xlink:href="qml-rectangle.db">Rectangle</db:link> by itself would be automatically rendered
+                                and displayed, this is not the case for the above rectangle because
+                                it is defined inside a <db:code>Component</db:code>. The
+                                component encapsulates the QML elements within, as if they were
+                                defined in a separate QML file, and is not loaded until requested
+                                (in this case, by the two <db:link xlink:href="qml-loader.db">Loader</db:link> objects).</db:para>
+      <db:para>Defining a <db:code>Component</db:code> is similar to
+                                defining a QML document. A QML document has a single top-level item
+                                that defines the behaviors and properties of that component, and
+                                cannot define properties or behaviors outside of that top-level
+                                item. In the same way, a <db:code>Component</db:code> definition
+                                contains a single top level item (which in the above example is a
+                                    <db:link xlink:href="qml-rectangle.db">Rectangle</db:link>) and cannot
+                                define any data outside of this item, with the exception of an
+                                    <db:emphasis>id</db:emphasis> (which in the above example is
+                                    <db:emphasis>redSquare</db:emphasis>).</db:para>
+      <db:para>The <db:code>Component</db:code> element is commonly used to
+                                provide graphical components for views. For example, the <db:link xlink:href="qml-listview.db#delegate-prop">ListView::delegate</db:link> property requires a
+                                    <db:code>Component</db:code> to specify how each list item
+                                is to be displayed.</db:para>
+      <db:para>
+         <db:code>Component</db:code> objects can also be created
+                                dynamically using Qt.createComponent().</db:para>
+   </db:section>
+   <db:section xml:id="prop">
+      <db:title>Properties Documentation</db:title>
+      <db:section xml:id="progress-prop">
+         <db:title>progress : real</db:title>
+         <db:para>The progress of loading the component, from 0.0
+                                        (nothing loaded) to 1.0 (finished).</db:para>
+      </db:section>
+      <db:section xml:id="status-prop">
+         <db:title>status : enumeration</db:title>
+         <db:para>This property holds the status of component
+                                        loading. It can be one of:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>Component.Null - no data is available for the
+                                            component</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Component.Ready - the component has been loaded,
+                                            and can be used to create instances.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Component.Loading - the component is currently
+                                            being loaded</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>Component.Error - an error occurred while loading
+                                            the component. Calling <db:link xlink:href="qml-component.db#errorString-method">errorString()</db:link> will provide a
+                                            human-readable description of any errors.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+      </db:section>
+      <db:section xml:id="url-prop">
+         <db:title>url : <db:link xlink:href="qml-component.db#url-prop">url</db:link></db:title>
+         <db:para>The component URL. This is the URL that was used to
+                                        construct the component.</db:para>
+      </db:section>
+   </db:section>
+   <db:section xml:id="qml-meths">
+      <db:title>Methods Documentation</db:title>
+      <db:section xml:id="createObject-method">
+         <db:title>createObject(<db:link xlink:href="qml-item.db">Item</db:link><db:emphasis>
+                                                  parent</db:emphasis>, object<db:emphasis>
+                                                  properties</db:emphasis>)</db:title>
+         <db:para>Creates and returns an object instance of this
+                                        component that will have the given <db:emphasis>parent</db:emphasis>
+                                        and <db:emphasis>properties</db:emphasis>. The
+                                            <db:emphasis>properties</db:emphasis> argument is optional.
+                                        Returns null if object creation fails.</db:para>
+         <db:para>The object will be created in the same context as the
+                                        one in which the component was created. This function will
+                                        always return null when called on components which were not
+                                        created in QML.</db:para>
+         <db:para>If you wish to create an object without setting a
+                                        parent, specify <db:code>null</db:code> for the
+                                            <db:emphasis>parent</db:emphasis> value. Note that if the returned
+                                        object is to be displayed, you must provide a valid
+                                            <db:emphasis>parent</db:emphasis> value or set the returned
+                                        object's <db:link xlink:href="qml-item.db#parent-prop">parent</db:link> property, or else the object will not
+                                        be visible.</db:para>
+         <db:para>If a <db:emphasis>parent</db:emphasis> is not provided to
+                                        createObject(), a reference to the returned object must be
+                                        held so that it is not destroyed by the garbage collector.
+                                        This is true regardless of whether <db:link xlink:href="qml-item.db#parent-prop">Item::parent</db:link>
+                                        is set afterwards, since setting the Item parent does not
+                                        change object ownership; only the graphical parent is
+                                        changed.</db:para>
+         <db:para>As of QtQuick 1.1, this method accepts an optional
+                                            <db:emphasis>properties</db:emphasis> argument that specifies a
+                                        map of initial property values for the created object. These
+                                        values are applied before object creation is finalized.
+                                        (This is more efficient than setting property values after
+                                        object creation, particularly where large sets of property
+                                        values are defined, and also allows property bindings to be
+                                        set up before the object is created.)</db:para>
+         <db:para>The <db:emphasis>properties</db:emphasis> argument is specified as
+                                        a map of property-value items. For example, the code below
+                                        creates an object with initial <db:code>x</db:code> and
+                                            <db:code>y</db:code> values of 100 and 200,
+                                        respectively:</db:para>
+         <db:programlisting language="js">var component = Qt.createComponent("Button.qml"); if (component.status==Component.Ready) component.createObject(parent, {"x": 100, "y": 100});</db:programlisting>
+         <db:para>Dynamically created instances can be deleted with the
+                                            <db:code>destroy()</db:code> method. See <db:link xlink:href="qdeclarativedynamicobjects.db">Dynamic Object
+                                            Management in QML</db:link> for more
+                                        information.</db:para>
+      </db:section>
+      <db:section xml:id="errorString-method">
+         <db:title>errorString()</db:title>
+         <db:para>Returns a human-readable description of any
+                                        errors.</db:para>
+         <db:para>The string includes the file, location, and description
+                                        of each error. If multiple errors are present they are
+                                        separated by a newline character.</db:para>
+         <db:para>If no errors are present, an empty string is
+                                        returned.</db:para>
+      </db:section>
+   </db:section>
+   <db:section xml:id="qml-signals">
+      <db:title>Attached Signal Documentation</db:title>
+      <db:section xml:id="onCompleted-signal">
+         <db:title>onCompleted()</db:title>
+         <db:para>Emitted after component "startup" has completed.
+                                        This can be used to execute script code at startup, once the
+                                        full QML environment has been established.</db:para>
+         <db:para>The <db:code>Component::onCompleted</db:code>
+                                        attached property can be applied to any element. The order
+                                        of running the <db:code>onCompleted</db:code> scripts is
+                                        undefined.</db:para>
+         <db:programlisting language="qml">Rectangle { Component.onCompleted:
+                                            console.log("Completed Running!") Rectangle { Component.onCompleted:
+                                            console.log("Nested Completed Running!") } }</db:programlisting>
+      </db:section>
+      <db:section xml:id="onDestruction-signal">
+         <db:title>onDestruction()</db:title>
+         <db:para>Emitted as the component begins destruction. This
+                                        can be used to undo work done in the <db:link xlink:href="qml-component.db#onCompleted-signal">onCompleted</db:link> signal, or other imperative code
+                                        in your application.</db:para>
+         <db:para>The <db:code>Component::onDestruction</db:code>
+                                        attached property can be applied to any element. However, it
+                                        applies to the destruction of the component as a whole, and
+                                        not the destruction of the specific object. The order of
+                                        running the <db:code>onDestruction</db:code> scripts is
+                                        undefined.</db:para>
+         <db:programlisting language="qml">Rectangle { Component.onDestruction:
+                                            console.log("Destruction Beginning!") Rectangle { Component.onDestruction:
+                                            console.log("Nested Destruction Beginning!") }
+                                        }</db:programlisting>
+         <db:section>
+            <db:title>See Also</db:title>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qtdeclarative-module.db">QtDeclarative</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:section>
+      </db:section>
+   </db:section>
+</db:article>

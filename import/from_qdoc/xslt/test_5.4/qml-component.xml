@@ -1,0 +1,418 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en">
+    <html:head>
+        <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <!-- qdeclarativecomponent.cpp -->
+        <html:title>Component QML Type | Qt 5.4 </html:title>
+        <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+    </html:head>
+    <html:body>
+        <html:div class="header" id="qtdocheader">
+            <html:div class="main">
+                <html:div class="main-rounded">
+                    <html:div class="navigationbar">
+                        <html:ul>
+                            <html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+                            <html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+                        </html:ul>
+                    </html:div>
+                </html:div>
+                <html:div class="content">
+                    <html:div class="line">
+                        <html:div class="content mainContent">
+                            <html:div class="sidebar">
+                                <html:div class="toc">
+                                    <html:h3><html:a name="toc">Contents</html:a></html:h3>
+                                    <html:ul>
+                                        <html:li class="level1"><html:a href="#properties"
+                                                >Properties</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#signals">Attached
+                                                Signals</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#methods"
+                                                >Methods</html:a></html:li>
+                                        <html:li class="level1"><html:a href="#details">Detailed
+                                                Description</html:a></html:li>
+                                    </html:ul>
+                                </html:div>
+                                <html:div class="sidebar-content" id="sidebar-content"
+                                ></html:div></html:div>
+                            <html:h1 class="title">Component QML Type</html:h1>
+                            <html:span class="subtitle"></html:span>
+                            <!-- $$$Component-brief -->
+                            <html:p>The Component element encapsulates a QML component definition.
+                                    <html:a href="#details">More...</html:a></html:p>
+                            <!-- @@@Component -->
+                            <html:div class="table"><html:table class="alignedsummary">
+                                    <html:tbody>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign"> Import
+                                                Statement:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> import
+                                                .</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Since:</html:td>
+                                            <html:td class="memItemRight bottomAlign"> Qt
+                                                4.7</html:td>
+                                        </html:tr>
+                                        <html:tr>
+                                            <html:td class="memItemLeft rightAlign topAlign">
+                                                Instantiates:</html:td>
+                                            <html:td class="memItemRight bottomAlign">
+                                                <html:a href="qml-component.html"></html:a><html:a
+                                                  href="qdeclarativecomponent.html"
+                                                  >QDeclarativeComponent</html:a></html:td>
+                                        </html:tr>
+                                    </html:tbody>
+                                </html:table></html:div><html:ul>
+                                <html:li><html:a href="qml-component-members.html">List of all
+                                        members, including inherited members</html:a></html:li>
+                            </html:ul>
+                            <html:a name="properties"></html:a>
+                            <html:h2 id="properties">Properties</html:h2>
+                            <html:ul>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-component.html#progress-prop"
+                                                >progress</html:a></html:b></html:b> :
+                                    real</html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-component.html#status-prop"
+                                                >status</html:a></html:b></html:b> :
+                                    enumeration</html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-component.html#url-prop"
+                                            >url</html:a></html:b></html:b> : url</html:li>
+                            </html:ul>
+                            <html:a name="attached-signals"></html:a>
+                            <html:h2 id="attached-signals">Attached Signals</html:h2>
+                            <html:ul>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-component.html#onCompleted-signal"
+                                                >onCompleted</html:a></html:b></html:b>()</html:li>
+                                <html:li class="fn"><html:b><html:b><html:a
+                                                href="qml-component.html#onDestruction-signal"
+                                                >onDestruction</html:a></html:b></html:b>()</html:li>
+                            </html:ul>
+                            <html:a name="methods"></html:a>
+                            <html:h2 id="methods">Methods</html:h2>
+                            <html:ul>
+                                <html:li class="fn">object <html:b><html:b><html:a
+                                                href="qml-component.html#createObject-method"
+                                                >createObject</html:a></html:b></html:b>(Item
+                                        <html:i> parent</html:i>, object <html:i>
+                                        properties</html:i>)</html:li>
+                                <html:li class="fn">string <html:b><html:b><html:a
+                                                href="qml-component.html#errorString-method"
+                                                >errorString</html:a></html:b></html:b>()</html:li>
+                            </html:ul>
+                            <!-- $$$Component-description -->
+                            <html:a name="details"></html:a>
+                            <html:h2 id="details">Detailed Description</html:h2>
+                            <html:p></html:p>
+                            <html:p>Components are reusable, encapsulated QML elements with
+                                well-defined interfaces.</html:p>
+                            <html:p>Components are often defined by <html:a
+                                    href="qdeclarativedocuments.html">component files</html:a> -
+                                that is, <html:code>.qml</html:code> files. The
+                                    <html:i>Component</html:i> element essentially allows QML
+                                components to be defined inline, within a QML document, rather than
+                                as a separate QML file. This may be useful for reusing a small
+                                component within a QML file, or for defining a component that
+                                logically belongs with other QML components within a file.</html:p>
+                            <html:p>For example, here is a component that is used by multiple
+                                    <html:a href="qml-loader.html">Loader</html:a> objects. It
+                                contains a single item, a <html:a href="qml-rectangle.html"
+                                    >Rectangle</html:a>:</html:p>
+                            <html:pre class="qml"></html:pre>
+                            <html:p>Notice that while a <html:a href="qml-rectangle.html"
+                                    >Rectangle</html:a> by itself would be automatically rendered
+                                and displayed, this is not the case for the above rectangle because
+                                it is defined inside a <html:code>Component</html:code>. The
+                                component encapsulates the QML elements within, as if they were
+                                defined in a separate QML file, and is not loaded until requested
+                                (in this case, by the two <html:a href="qml-loader.html"
+                                    >Loader</html:a> objects).</html:p>
+                            <html:p>Defining a <html:code>Component</html:code> is similar to
+                                defining a QML document. A QML document has a single top-level item
+                                that defines the behaviors and properties of that component, and
+                                cannot define properties or behaviors outside of that top-level
+                                item. In the same way, a <html:code>Component</html:code> definition
+                                contains a single top level item (which in the above example is a
+                                    <html:a href="qml-rectangle.html">Rectangle</html:a>) and cannot
+                                define any data outside of this item, with the exception of an
+                                    <html:i>id</html:i> (which in the above example is
+                                    <html:i>redSquare</html:i>).</html:p>
+                            <html:p>The <html:code>Component</html:code> element is commonly used to
+                                provide graphical components for views. For example, the <html:a
+                                    href="qml-listview.html#delegate-prop"
+                                    >ListView::delegate</html:a> property requires a
+                                    <html:code>Component</html:code> to specify how each list item
+                                is to be displayed.</html:p>
+                            <html:p><html:code>Component</html:code> objects can also be created
+                                dynamically using Qt.createComponent().</html:p>
+                            <!-- @@@Component -->
+                            <html:h2>Property Documentation</html:h2>
+                            <!-- $$$progress -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="progress-prop" valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="progress-prop"></html:a><html:span
+                                                  class="name">progress</html:span> : <html:span
+                                                  class="type">real</html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>The progress of loading the component, from 0.0
+                                        (nothing loaded) to 1.0 (finished).</html:p>
+                                </html:div></html:div><!-- @@@progress -->
+                            <html:br />
+                            <!-- $$$status -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="status-prop" valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="status-prop"></html:a><html:span
+                                                  class="name">status</html:span> : <html:span
+                                                  class="type"
+                                                  >enumeration</html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>This property holds the status of component
+                                        loading. It can be one of:</html:p>
+                                    <html:ul>
+                                        <html:li>Component.Null - no data is available for the
+                                            component</html:li>
+                                        <html:li>Component.Ready - the component has been loaded,
+                                            and can be used to create instances.</html:li>
+                                        <html:li>Component.Loading - the component is currently
+                                            being loaded</html:li>
+                                        <html:li>Component.Error - an error occurred while loading
+                                            the component. Calling <html:a
+                                                href="qml-component.html#errorString-method"
+                                                >errorString()</html:a> will provide a
+                                            human-readable description of any errors.</html:li>
+                                    </html:ul>
+                                </html:div></html:div><!-- @@@status -->
+                            <html:br />
+                            <!-- $$$url -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="url-prop" valign="top">
+                                                  <html:td class="tblQmlPropNode"><html:p><html:a
+                                                  name="url-prop"></html:a><html:span class="name"
+                                                  >url</html:span> : <html:span class="type"><html:a
+                                                  href="qml-component.html#url-prop"
+                                                  >url</html:a></html:span></html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>The component URL. This is the URL that was used to
+                                        construct the component.</html:p>
+                                </html:div></html:div><!-- @@@url -->
+                            <html:br />
+                            <html:h2>Attached Signal Documentation</html:h2>
+                            <!-- $$$onCompleted -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="onCompleted-signal"
+                                                  valign="top">
+                                                  <html:td class="tblQmlFuncNode"><html:p><html:a
+                                                  name="onCompleted-signal"></html:a><html:span
+                                                  class="name"
+                                                  >onCompleted</html:span>()</html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>Emitted after component "startup" has completed.
+                                        This can be used to execute script code at startup, once the
+                                        full QML environment has been established.</html:p>
+                                    <html:p>The <html:code>Component::onCompleted</html:code>
+                                        attached property can be applied to any element. The order
+                                        of running the <html:code>onCompleted</html:code> scripts is
+                                        undefined.</html:p>
+                                    <html:pre class="qml"><html:span class="type"><html:a
+                                                href="qml-rectangle.html"
+                                            >Rectangle</html:a></html:span> { <html:span
+                                            class="name">Component</html:span>.onCompleted:
+                                            <html:span class="name">console</html:span>.<html:span
+                                            class="name">log</html:span>(<html:span class="string"
+                                            >"Completed Running!"</html:span>) <html:span
+                                            class="type"><html:a href="qml-rectangle.html"
+                                                >Rectangle</html:a></html:span> { <html:span
+                                            class="name">Component</html:span>.onCompleted:
+                                            <html:span class="name">console</html:span>.<html:span
+                                            class="name">log</html:span>(<html:span class="string"
+                                            >"Nested Completed Running!"</html:span>) } }</html:pre>
+                                </html:div></html:div><!-- @@@onCompleted -->
+                            <html:br />
+                            <!-- $$$onDestruction -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="onDestruction-signal"
+                                                  valign="top">
+                                                  <html:td class="tblQmlFuncNode"><html:p><html:a
+                                                  name="onDestruction-signal"></html:a><html:span
+                                                  class="name"
+                                                  >onDestruction</html:span>()</html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>Emitted as the component begins destruction. This
+                                        can be used to undo work done in the <html:a
+                                            href="qml-component.html#onCompleted-signal"
+                                            >onCompleted</html:a> signal, or other imperative code
+                                        in your application.</html:p>
+                                    <html:p>The <html:code>Component::onDestruction</html:code>
+                                        attached property can be applied to any element. However, it
+                                        applies to the destruction of the component as a whole, and
+                                        not the destruction of the specific object. The order of
+                                        running the <html:code>onDestruction</html:code> scripts is
+                                        undefined.</html:p>
+                                    <html:pre class="qml"><html:span class="type"><html:a
+                                                href="qml-rectangle.html"
+                                            >Rectangle</html:a></html:span> { <html:span
+                                            class="name">Component</html:span>.onDestruction:
+                                            <html:span class="name">console</html:span>.<html:span
+                                            class="name">log</html:span>(<html:span class="string"
+                                            >"Destruction Beginning!"</html:span>) <html:span
+                                            class="type"><html:a href="qml-rectangle.html"
+                                                >Rectangle</html:a></html:span> { <html:span
+                                            class="name">Component</html:span>.onDestruction:
+                                            <html:span class="name">console</html:span>.<html:span
+                                            class="name">log</html:span>(<html:span class="string"
+                                            >"Nested Destruction Beginning!"</html:span>) }
+                                        }</html:pre>
+                                    <html:p><html:b>See also </html:b><html:a
+                                            href="qtdeclarative-module.html"
+                                        >QtDeclarative</html:a>.</html:p>
+                                </html:div></html:div><!-- @@@onDestruction -->
+                            <html:br />
+                            <html:h2>Method Documentation</html:h2>
+                            <!-- $$$createObject -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="createObject-method"
+                                                  valign="top">
+                                                  <html:td class="tblQmlFuncNode"><html:p><html:a
+                                                  name="createObject-method"></html:a><html:span
+                                                  class="type">object</html:span>
+                                                  <html:span class="name"
+                                                  >createObject</html:span>(<html:span class="type"
+                                                  ><html:a href="qml-item.html"
+                                                  >Item</html:a></html:span><html:i>
+                                                  parent</html:i>, <html:span class="type"
+                                                  >object</html:span><html:i>
+                                                  properties</html:i>)</html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>Creates and returns an object instance of this
+                                        component that will have the given <html:i>parent</html:i>
+                                        and <html:i>properties</html:i>. The
+                                            <html:i>properties</html:i> argument is optional.
+                                        Returns null if object creation fails.</html:p>
+                                    <html:p>The object will be created in the same context as the
+                                        one in which the component was created. This function will
+                                        always return null when called on components which were not
+                                        created in QML.</html:p>
+                                    <html:p>If you wish to create an object without setting a
+                                        parent, specify <html:code>null</html:code> for the
+                                            <html:i>parent</html:i> value. Note that if the returned
+                                        object is to be displayed, you must provide a valid
+                                            <html:i>parent</html:i> value or set the returned
+                                        object's <html:a href="qml-item.html#parent-prop"
+                                            >parent</html:a> property, or else the object will not
+                                        be visible.</html:p>
+                                    <html:p>If a <html:i>parent</html:i> is not provided to
+                                        createObject(), a reference to the returned object must be
+                                        held so that it is not destroyed by the garbage collector.
+                                        This is true regardless of whether <html:a
+                                            href="qml-item.html#parent-prop">Item::parent</html:a>
+                                        is set afterwards, since setting the Item parent does not
+                                        change object ownership; only the graphical parent is
+                                        changed.</html:p>
+                                    <html:p>As of QtQuick 1.1, this method accepts an optional
+                                            <html:i>properties</html:i> argument that specifies a
+                                        map of initial property values for the created object. These
+                                        values are applied before object creation is finalized.
+                                        (This is more efficient than setting property values after
+                                        object creation, particularly where large sets of property
+                                        values are defined, and also allows property bindings to be
+                                        set up before the object is created.)</html:p>
+                                    <html:p>The <html:i>properties</html:i> argument is specified as
+                                        a map of property-value items. For example, the code below
+                                        creates an object with initial <html:code>x</html:code> and
+                                            <html:code>y</html:code> values of 100 and 200,
+                                        respectively:</html:p>
+                                    <html:pre class="js">var <html:span class="name"
+                                            >component</html:span> = <html:span class="name"
+                                            >Qt</html:span>.<html:span class="name"
+                                            >createComponent</html:span>(<html:span class="string"
+                                            >"Button.qml"</html:span>); <html:span class="keyword"
+                                            >if</html:span> (<html:span class="name"
+                                            >component</html:span>.<html:span class="name"
+                                            >status</html:span>
+                                        <html:span class="operator">==</html:span>
+                                        <html:span class="name">Component</html:span>.<html:span
+                                            class="name">Ready</html:span>) <html:span class="name"
+                                            >component</html:span>.<html:span class="name"
+                                            >createObject</html:span>(<html:span class="name"
+                                            >parent</html:span>, {"x": <html:span class="number"
+                                            >100</html:span>, "y": <html:span class="number"
+                                            >100</html:span>});</html:pre>
+                                    <html:p>Dynamically created instances can be deleted with the
+                                            <html:code>destroy()</html:code> method. See <html:a
+                                            href="qdeclarativedynamicobjects.html">Dynamic Object
+                                            Management in QML</html:a> for more
+                                        information.</html:p>
+                                </html:div></html:div><!-- @@@createObject -->
+                            <html:br />
+                            <!-- $$$errorString -->
+                            <html:div class="qmlitem"><html:div class="qmlproto"><html:div
+                                        class="table"><html:table class="qmlname">
+                                            <html:tbody>
+                                                <html:tr class="odd" id="errorString-method"
+                                                  valign="top">
+                                                  <html:td class="tblQmlFuncNode"><html:p><html:a
+                                                  name="errorString-method"></html:a><html:span
+                                                  class="type">string</html:span>
+                                                  <html:span class="name"
+                                                  >errorString</html:span>()</html:p></html:td>
+                                                </html:tr>
+                                            </html:tbody>
+                                        </html:table></html:div></html:div><html:div class="qmldoc"
+                                        ><html:p>Returns a human-readable description of any
+                                        errors.</html:p>
+                                    <html:p>The string includes the file, location, and description
+                                        of each error. If multiple errors are present they are
+                                        separated by a newline character.</html:p>
+                                    <html:p>If no errors are present, an empty string is
+                                        returned.</html:p>
+                                </html:div></html:div><!-- @@@errorString -->
+                            <html:br />
+                        </html:div>
+                    </html:div>
+                </html:div>
+            </html:div>
+        </html:div>
+        <html:div class="footer">
+            <html:p>
+                <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+                Documentation contributions included herein are the copyrights of their respective
+                owners.<html:br /> The documentation provided herein is licensed under the terms of
+                the <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation
+                    License version 1.3</html:a> as published by the Free Software
+                Foundation.<html:br /> Qt and respective logos are trademarks of The Qt Company Ltd.
+                in Finland and/or other countries worldwide. All other trademarks are property of
+                their respective owners. </html:p>
+        </html:div>
+    </html:body>
+</html:html>

@@ -192,7 +192,7 @@
             <!-- Deal with QML descriptions. -->
             <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
             <xsl:variable name="forbiddenTitles"
-              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Signal Documentation')]"/>
+              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Signal Documentation', 'Attached Signal Documentation')]"/>
 
             <html:div class="descr">
               <html:h2 id="details">Detailed Description</html:h2>
@@ -358,6 +358,14 @@
         <xsl:with-param name="anchor" select="'qml-signals'"/>
         <!-- No anchor! -->
         <xsl:with-param name="title" select="'Signal Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
+    <xsl:variable name="qmlAttachedSignals" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'qml-attached-signals'"/>
+        <!-- No anchor! -->
+        <xsl:with-param name="title" select="'Attached Signal Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
 
@@ -609,6 +617,7 @@
           <xsl:with-param name="attachedProps" select="$qmlAttachedProps"/>
           <xsl:with-param name="meths" select="$qmlMeths"/>
           <xsl:with-param name="signals" select="$qmlSignals"/>
+          <xsl:with-param name="attachedSignals" select="$qmlAttachedSignals"/>
         </xsl:call-template>
       </xsl:if>
 
@@ -699,6 +708,12 @@
       <xsl:call-template name="content_qmlMeths">
         <xsl:with-param name="data" select="$qmlSignals"/>
         <xsl:with-param name="title" select="'Signals Documentation'"/>
+        <xsl:with-param name="anchor" select="'qml-signals'"/>
+        <xsl:with-param name="type" select="'signal'"/>
+      </xsl:call-template>
+      <xsl:call-template name="content_qmlMeths">
+        <xsl:with-param name="data" select="$qmlAttachedSignals"/>
+        <xsl:with-param name="title" select="'Attached Signal Documentation'"/>
         <xsl:with-param name="anchor" select="'qml-signals'"/>
         <xsl:with-param name="type" select="'signal'"/>
       </xsl:call-template>
@@ -2019,6 +2034,7 @@
     <xsl:param name="attachedProps" as="element()?"/>
     <xsl:param name="meths" as="element()?"/>
     <xsl:param name="signals" as="element()?"/>
+    <xsl:param name="attachedSignals" as="element()?"/>
     
     <db:classsynopsis xlink:href="{tc:translate-url(base-uri())}">
       <db:ooclass>
@@ -2079,6 +2095,13 @@
           <xsl:with-param name="type" select="'signal'"/>
         </xsl:apply-templates>
       </xsl:if>
+      
+      <xsl:if test="$attachedSignals">
+        <xsl:apply-templates mode="qmlMethodsListing" select="$attachedSignals/html:div[@class = 'qmlitem']">
+          <xsl:with-param name="type" select="'signal'"/>
+          <xsl:with-param name="attached" select="true()"/>
+        </xsl:apply-templates>
+      </xsl:if>
     </db:classsynopsis>
   </xsl:template>
   <xsl:template mode="qmlPropertiesListing" match="html:div[@class = 'qmlitem']">
@@ -2115,6 +2138,7 @@
   </xsl:template>
   <xsl:template mode="qmlMethodsListing" match="html:div[@class = 'qmlitem']">
     <xsl:param name="type" as="xs:string" select="''"/>
+    <xsl:param name="attached" as="xs:boolean" select="false()"/>
 
     <xsl:variable name="row"
       select="html:div[@class = 'qmlproto']/html:div[@class = 'table']/html:table[@class = 'qmlname']/html:tbody/html:tr"/>
@@ -2122,6 +2146,10 @@
     <xsl:variable name="anchor" select="$row/@id"/>
 
     <db:methodsynopsis xlink:href="#{$title/html:a/@name}">
+      <xsl:if test="$attached">
+        <db:modifier>attached</db:modifier>
+      </xsl:if>
+      
       <xsl:if test="string-length($type) &gt;= 1">
         <db:modifier>
           <xsl:value-of select="$type"/>

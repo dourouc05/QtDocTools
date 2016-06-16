@@ -317,10 +317,7 @@ def generate_module_db(module_name):
             if any([file.endswith(fs + ext) for fs in ignored_suffixes]):
                 continue
             if any([file.endswith(fs + ext) for fs in forbidden_suffixes]):
-                base_names = [file.replace(fs + ext, '') for fs in forbidden_suffixes if file.endswith(fs + ext)]
-                base_file = base_names[0] + ext
-                if os.path.isfile(os.path.join(root, base_file)):
-                    continue
+                continue
             if module_name in ignored_files and file in ignored_files[module_name]:
                 continue
             count_db += 1
