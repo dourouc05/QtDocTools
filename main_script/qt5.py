@@ -10,6 +10,7 @@ import time
 import subprocess
 import json
 import logging
+import re
 import xml.etree.ElementTree as ETree
 
 try:
@@ -41,7 +42,7 @@ prepare = False
 generate_html = False  # If prepare is not True when generate is, need an indexFolder.
 generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
-validate_db = True
+validate_db = False
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 
@@ -248,7 +249,7 @@ def generate_module_xml(module_name):
 # Call an XSLT 2 engine to convert a single XHTML5 file into DocBook. If there is a comment issue (something like
 # <!-- -- -->), then deal with it.
 # Here, specific to one XSLT2 engine: Saxon 9. Displays errors to the user.
-def call_xslt(file_in, file_out, stylesheet):
+def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
     command_line = ['java', '-jar', saxon9,
                     '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out,
                     'vocabulary=%s' % db_vocabulary]
@@ -256,26 +257,77 @@ def call_xslt(file_in, file_out, stylesheet):
     result = subprocess.run(command_line, stderr=subprocess.PIPE)
     if len(result.stderr) > 0:
         error_msg = result.stderr.decode('utf-8')
-        if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
-            # Try to rewrite the comments before retrying (caused by one-line comments about operator--).
-            def remove_comments(line):
-                l = line.strip()
-                if l.startswith('<!--') and l.endswith('-->'):
-                    return ''
-                return line
 
-            with open(file_in, 'r') as file:
-                lines = file.readlines()
-            lines = [remove_comments(l) for l in lines]
-            with open(file_in, 'w') as file:
-                file.write("\n".join(lines))
+        if error_recovery:
+            # One-line comments about the function operator--; remove all one-line comments.
+            if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
+                def remove_comments(line):
+                    l = line.strip()
+                    if l.startswith('<!--') and l.endswith('-->'):
+                        return ''
+                    return line
+
+                with open(file_in, 'r') as file:
+                    lines = file.readlines()
+                lines = [remove_comments(l) for l in lines]
+                with open(file_in, 'w') as file:
+                    file.write("\n".join(lines))
+
+            # Invalid characters happening in the XML files (i.e. binary output within the doc!).
+            elif 'SXXP0003: Error reported by XML parser: An invalid XML character' in error_msg:
+                with open(file_in, 'r') as file:
+                    lines = file.readlines()
+                regex = re.compile('[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-\u10FFF]')
+                lines = [regex.sub('', l) for l in lines]
+                with open(file_in, 'w') as file:
+                    file.write("\n".join(lines))
+
+            # Identifiers occurring multiple times: rewrite the next occurrences.
+            elif 'XTMM9000: Processing terminated by xsl:message' in error_msg \
+                    and 'ERROR: Some ids are not unique!' in error_msg:
+                with open(file_in, 'r') as file:
+                    lines = file.readlines()
+
+                a_seen = {}  # Number of times this ID was seen for a <a name=""> tag.
+                h_seen = {}  # Number of times this ID was seen for a <h? id="">  tag.
+                lines_new = []
+                for line in lines:
+                    # Detect an identifier.
+                    if '<html:a name="' in line or ('<html:h' in line and 'id="' in line):
+                        found_id = line.split('"')[1]
+                        is_a = '<html:a' in line
+                        is_h = '<html:h' in line
+
+                        # Count this occurrence in what has been seen.
+                        if is_a:
+                            if found_id in a_seen:
+                                a_seen[found_id] += 1
+                            else:
+                                a_seen[found_id] = 1
+                        elif is_h:
+                            if found_id in h_seen:
+                                h_seen[found_id] += 1
+                            else:
+                                h_seen[found_id] = 1
+
+                        # Rewrite the line if need be.
+                        increment = max(a_seen[found_id] if found_id in a_seen else 0,
+                                        h_seen[found_id] if found_id in h_seen else 0)
+                        if increment >= 2:
+                            line = line.replace(found_id, '%s-%d' % (found_id, increment))
+                            print("error")
+
+                    lines_new.append(line)
+
+                with open(file_in, 'w') as file:
+                    file.write("\n".join(lines_new))
 
             # Restart the XSLT engine, see if changed anything in the process.
             result = subprocess.run(command_line, stderr=subprocess.PIPE)
             if len(result.stderr) == 0:
                 return
 
-        # Not a comment issue, nothing you can do. .
+        # Not a comment issue, nothing you can do.
         logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
 
 
@@ -403,12 +455,15 @@ if __name__ == '__main__':
     time_xml = time.perf_counter()
 
     if generate_db:
-        for moduleName, conf in configs.items():
+        # for moduleName, conf in configs.items():
+        # for moduleName in ['qtscript', 'qtquick']:
+        for moduleName in ['test']:
             generate_module_db(module_name=moduleName)
     time_db = time.perf_counter()
 
     if validate_db:
-        for moduleName, conf in configs.items():
+        # for moduleName, conf in configs.items():
+        for moduleName in ['qtscript', 'qtquick']:
             validate_module_db(module_name=moduleName)
     time_rng = time.perf_counter()
 
