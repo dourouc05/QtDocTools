@@ -465,7 +465,7 @@ if __name__ == '__main__':
             validate_module_db(module_name=moduleName)
     time_rng = time.perf_counter()
 
-    # Finally: deploy, i.e. copy all generated files, change their extensions, copy the images. 
+    # Finally: deploy, i.e. copy all generated files, change their extensions, copy the images.
 
     print("Total time: %f s" % (time_rng - time_beginning))
     print("Time to read configuration files: %f s" % (time_configs - time_beginning))

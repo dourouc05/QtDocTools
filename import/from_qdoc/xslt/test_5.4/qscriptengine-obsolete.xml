@@ -1,0 +1,99 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en"><html:head>
+  <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- qscriptengine.cpp -->
+  <html:title>Obsolete Members for QScriptEngine | Qt Script </html:title>
+  <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+</html:head>
+<html:body>
+<html:div class="header" id="qtdocheader">
+    <html:div class="main">
+    <html:div class="main-rounded">
+        <html:div class="navigationbar">
+        <html:ul>
+<html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+<html:li><html:a href="qtscript-index.html">Qt Script</html:a></html:li>
+<html:li><html:a href="qtscript-module.html">C++ Classes</html:a></html:li>
+<html:li>QScriptEngine</html:li>
+<html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+    </html:ul>
+    </html:div>
+</html:div>
+<html:div class="content">
+<html:div class="line">
+<html:div class="content mainContent">
+<html:div class="sidebar"><html:div class="sidebar-content" id="sidebar-content" /></html:div>
+<html:h1 class="title">Obsolete Members for QScriptEngine</html:h1>
+<html:p><html:b>The following members of class <html:a href="qscriptengine.html">QScriptEngine</html:a> are obsolete.</html:b> They are provided to keep old source code working. We strongly advise against using them in new code.</html:p>
+<html:h2>Public Functions</html:h2>
+<html:div class="table"><html:table class="alignedsummary">
+<html:tbody><html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>bool </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qscriptengine-obsolete.html#canEvaluate">canEvaluate</html:a></html:b>(const QString &amp;<html:i> program</html:i>) const</html:td></html:tr>
+</html:tbody></html:table></html:div>
+<html:h2>Related Non-Members</html:h2>
+<html:div class="table"><html:table class="alignedsummary">
+<html:tbody><html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>QScriptValue </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qscriptengine-obsolete.html#qScriptValueFromQMetaObject">qScriptValueFromQMetaObject</html:a></html:b>(QScriptEngine *<html:i> engine</html:i>)</html:td></html:tr>
+<html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>QScriptValue </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qscriptengine-obsolete.html#qScriptValueFromValue-2">qScriptValueFromValue</html:a></html:b>(QScriptEngine *<html:i> engine</html:i>, const T &amp;<html:i> value</html:i>)</html:td></html:tr>
+<html:tr><html:td class="memItemLeft topAlign rightAlign"> <html:code>(obsolete) </html:code>T </html:td><html:td class="memItemRight bottomAlign"><html:b><html:a href="qscriptengine-obsolete.html#qScriptValueToValue">qScriptValueToValue</html:a></html:b>(const QScriptValue &amp;<html:i> value</html:i>)</html:td></html:tr>
+</html:tbody></html:table></html:div>
+<html:h2>Member Function Documentation</html:h2>
+<!-- $$$canEvaluate[overload1]$$$canEvaluateconstQString& -->
+<html:h3 class="fn" id="canEvaluate"><html:a name="canEvaluate" /><html:span class="type">bool</html:span> QScriptEngine::<html:span class="name">canEvaluate</html:span>(const <html:span class="type"><html:a href="qtcore/qstring.html">QString</html:a></html:span> &amp;<html:i> program</html:i>) const</html:h3>
+<html:p>Returns true if <html:i>program</html:i> can be evaluated; i.e. the code is sufficient to determine whether it appears to be a syntactically correct program, or contains a syntax error.</html:p>
+<html:p>This function returns false if <html:i>program</html:i> is incomplete; i.e. the input is syntactically correct up to the point where the input is terminated.</html:p>
+<html:p>Note that this function only does a static check of <html:i>program</html:i>; e.g. it does not check whether references to variables are valid, and so on.</html:p>
+<html:p>A typical usage of canEvaluate() is to implement an interactive interpreter for Qt Script. The user is repeatedly queried for individual lines of code; the lines are concatened internally, and only when canEvaluate() returns true for the resulting program is it passed to <html:a href="qscriptengine.html#evaluate">evaluate</html:a>().</html:p>
+<html:p>The following are some examples to illustrate the behavior of canEvaluate(). (Note that all example inputs are assumed to have an explicit newline as their last character, since otherwise the Qt Script parser would automatically insert a semi-colon character at the end of the input, and this could cause canEvaluate() to produce different results.)</html:p>
+<html:p>Given the input</html:p>
+<html:pre class="cpp"><html:span class="keyword">if</html:span> (hello <html:span class="operator">&amp;</html:span><html:span class="operator">&amp;</html:span> world)
+    print(<html:span class="string">"hello world"</html:span>);</html:pre>
+<html:p>canEvaluate() will return true, since the program appears to be complete.</html:p>
+<html:p>Given the input</html:p>
+<html:pre class="cpp"><html:span class="keyword">if</html:span> (hello <html:span class="operator">&amp;</html:span><html:span class="operator">&amp;</html:span></html:pre>
+<html:p>canEvaluate() will return false, since the if-statement is not complete, but is syntactically correct so far.</html:p>
+<html:p>Given the input</html:p>
+<html:pre class="cpp"><html:span class="number">0</html:span> <html:span class="operator">=</html:span> <html:span class="number">0</html:span></html:pre>
+<html:p>canEvaluate() will return true, but <html:a href="qscriptengine.html#evaluate">evaluate</html:a>() will throw a SyntaxError given the same input.</html:p>
+<html:p>Given the input</html:p>
+<html:pre class="cpp"><html:span class="operator">.</html:span><html:span class="operator">/</html:span>test<html:span class="operator">.</html:span>js</html:pre>
+<html:p>canEvaluate() will return true, even though the code is clearly not syntactically valid Qt Script code. <html:a href="qscriptengine.html#evaluate">evaluate</html:a>() will throw a SyntaxError when this code is evaluated.</html:p>
+<html:p>Given the input</html:p>
+<html:pre class="cpp">foo<html:span class="operator">[</html:span><html:span class="string">"bar"</html:span><html:span class="operator">]</html:span></html:pre>
+<html:p>canEvaluate() will return true, but <html:a href="qscriptengine.html#evaluate">evaluate</html:a>() will throw a ReferenceError if <html:code>foo</html:code> is not defined in the script environment.</html:p>
+<html:p><html:b>See also </html:b><html:a href="qscriptengine.html#evaluate">evaluate</html:a>() and <html:a href="qscriptengine.html#checkSyntax">checkSyntax</html:a>().</html:p>
+<!-- @@@canEvaluate -->
+<html:h2>Related Non-Members</html:h2>
+<!-- $$$qScriptValueFromQMetaObject[overload1]$$$qScriptValueFromQMetaObjectQScriptEngine* -->
+<html:h3 class="fn" id="qScriptValueFromQMetaObject"><html:a name="qScriptValueFromQMetaObject" /><html:span class="type"><html:a href="qscriptvalue.html">QScriptValue</html:a></html:span> <html:span class="name">qScriptValueFromQMetaObject</html:span>(<html:span class="type"><html:a href="qscriptengine.html#QScriptEngine">QScriptEngine</html:a></html:span> *<html:i> engine</html:i>)</html:h3>
+<html:p>Uses <html:i>engine</html:i> to create a <html:a href="qscriptvalue.html">QScriptValue</html:a> that represents the Qt class <html:code>T</html:code>.</html:p>
+<html:p>This function is equivalent to <html:a href="qscriptengine.html#scriptValueFromQMetaObject">QScriptEngine::scriptValueFromQMetaObject</html:a>().</html:p>
+<html:p><html:b>Note: </html:b>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</html:p><html:p>This function was introduced in  Qt 4.3.</html:p>
+<html:p><html:b>See also </html:b><html:a href="qscriptengine.html#newQMetaObject">QScriptEngine::newQMetaObject</html:a>().</html:p>
+<!-- @@@qScriptValueFromQMetaObject -->
+<!-- $$$qScriptValueFromValue$$$qScriptValueFromValueQScriptEngine*constT& -->
+<html:h3 class="fn" id="qScriptValueFromValue-2"><html:a name="qScriptValueFromValue-2" /><html:span class="type"><html:a href="qscriptvalue.html">QScriptValue</html:a></html:span> <html:span class="name">qScriptValueFromValue</html:span>(<html:span class="type"><html:a href="qscriptengine.html#QScriptEngine">QScriptEngine</html:a></html:span> *<html:i> engine</html:i>, const <html:span class="type">T</html:span> &amp;<html:i> value</html:i>)</html:h3>
+<html:p>Creates a <html:a href="qscriptvalue.html">QScriptValue</html:a> using the given <html:i>engine</html:i> with the given <html:i>value</html:i> of template type <html:code>T</html:code>.</html:p>
+<html:p>This function is equivalent to <html:a href="qscriptengine.html#toScriptValue">QScriptEngine::toScriptValue</html:a>().</html:p>
+<html:p><html:b>Note: </html:b>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</html:p><html:p>This function was introduced in  Qt 4.3.</html:p>
+<html:p><html:b>See also </html:b><html:a href="qscriptengine.html#toScriptValue">QScriptEngine::toScriptValue</html:a>() and <html:a href="qscriptvalue.html#qscriptvalue_cast">qscriptvalue_cast</html:a>().</html:p>
+<!-- @@@qScriptValueFromValue -->
+<!-- $$$qScriptValueToValue[overload1]$$$qScriptValueToValueconstQScriptValue& -->
+<html:h3 class="fn" id="qScriptValueToValue"><html:a name="qScriptValueToValue" /><html:span class="type">T</html:span> <html:span class="name">qScriptValueToValue</html:span>(const <html:span class="type"><html:a href="qscriptvalue.html">QScriptValue</html:a></html:span> &amp;<html:i> value</html:i>)</html:h3>
+<html:p>Returns the given <html:i>value</html:i> converted to the template type <html:code>T</html:code>.</html:p>
+<html:p>This function is equivalent to <html:a href="qscriptengine.html#fromScriptValue">QScriptEngine::fromScriptValue</html:a>().</html:p>
+<html:p><html:b>Note: </html:b>This function was provided as a workaround for MSVC 6 which did not support member template functions. It is advised to use the other form in new code.</html:p><html:p>This function was introduced in  Qt 4.3.</html:p>
+<html:p><html:b>See also </html:b><html:a href="qscriptengine.html#fromScriptValue">QScriptEngine::fromScriptValue</html:a>().</html:p>
+<!-- @@@qScriptValueToValue -->
+        </html:div>
+       </html:div>
+   </html:div>
+   </html:div>
+</html:div>
+<html:div class="footer">
+   <html:p>
+   <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<html:br />    The documentation provided herein is licensed under the terms of the    <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</html:a> as published by the Free Software Foundation.<html:br />    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </html:p>
+</html:div>
+
+
+</html:body></html:html>
