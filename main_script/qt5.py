@@ -10,6 +10,7 @@ import time
 import subprocess
 import json
 import logging
+from collections import Counter
 import re
 import xml.etree.ElementTree as ETree
 
@@ -42,7 +43,7 @@ prepare = False
 generate_html = False  # If prepare is not True when generate is, need an indexFolder.
 generate_xml = False and not no_html5
 generate_db = True  # Needs XML to be generated first.
-validate_db = False
+validate_db = True
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 
@@ -263,9 +264,7 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
             if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
                 def remove_comments(line):
                     l = line.strip()
-                    if l.startswith('<!--') and l.endswith('-->'):
-                        return ''
-                    return line
+                    return '' if l.startswith('<!--') and l.endswith('-->') else line
 
                 with open(file_in, 'r') as file:
                     lines = file.readlines()
@@ -288,8 +287,12 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
                 with open(file_in, 'r') as file:
                     lines = file.readlines()
 
-                a_seen = {}  # Number of times this ID was seen for a <a name=""> tag.
-                h_seen = {}  # Number of times this ID was seen for a <h? id="">  tag.
+                # Algorithm: remember the number of times each ID was ever seen in the document; if it is higher
+                # than two, then rewrite the line containing the ID. Pay attention to the fact that those IDs are
+                # sometimes duplicated, i.e. present at the same time within a <a name> tag and
+                # within the title <h? id> tag.
+                h_seen = Counter()  # Number of times this ID was seen for a <h? id="">  tag.
+                a_seen = Counter()  # Number of times this ID was seen for a <a name=""> tag.
                 lines_new = []
                 for line in lines:
                     # Detect an identifier.
@@ -300,22 +303,14 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
 
                         # Count this occurrence in what has been seen.
                         if is_a:
-                            if found_id in a_seen:
-                                a_seen[found_id] += 1
-                            else:
-                                a_seen[found_id] = 1
+                            a_seen[found_id] += 1
                         elif is_h:
-                            if found_id in h_seen:
-                                h_seen[found_id] += 1
-                            else:
-                                h_seen[found_id] = 1
+                            h_seen[found_id] += 1
 
                         # Rewrite the line if need be.
-                        increment = max(a_seen[found_id] if found_id in a_seen else 0,
-                                        h_seen[found_id] if found_id in h_seen else 0)
+                        increment = max(a_seen.get(found_id, 0), h_seen.get(found_id, 0))
                         if increment >= 2:
                             line = line.replace(found_id, '%s-%d' % (found_id, increment))
-                            print("error")
 
                     lines_new.append(line)
 
@@ -327,7 +322,7 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
             if len(result.stderr) == 0:
                 return
 
-        # Not a comment issue, nothing you can do.
+        # Not a recognised issue, nothing you can do.
         logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
 
 
@@ -456,8 +451,7 @@ if __name__ == '__main__':
 
     if generate_db:
         # for moduleName, conf in configs.items():
-        # for moduleName in ['qtscript', 'qtquick']:
-        for moduleName in ['test']:
+        for moduleName in ['qtscript', 'qtquick']:
             generate_module_db(module_name=moduleName)
     time_db = time.perf_counter()
 
