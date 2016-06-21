@@ -199,7 +199,7 @@
             <!-- Deal with QML descriptions. -->
             <xsl:variable name="descTitle" select="$content/html:h2[@id = 'details']" as="element()"/>
             <xsl:variable name="forbiddenTitles"
-              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Signal Documentation', 'Attached Signal Documentation')]"/>
+              select="$content/html:h2[text() = ('Property Documentation', 'Attached Property Documentation', 'Method Documentation', 'Attached Method Documentation', 'Signal Documentation', 'Attached Signal Documentation')]"/>
 
             <html:div class="descr">
               <html:h2 id="details">Detailed Description</html:h2>
@@ -2122,7 +2122,7 @@
       </xsl:if>
       
       <xsl:if test="$attachedMeths">
-        <xsl:apply-templates mode="qmlMethodsListing" select="$meths/html:div[@class = 'qmlitem']">
+        <xsl:apply-templates mode="qmlMethodsListing" select="$attachedMeths/html:div[@class = 'qmlitem']">
           <xsl:with-param name="attached" select="true()"/>
         </xsl:apply-templates>
       </xsl:if>

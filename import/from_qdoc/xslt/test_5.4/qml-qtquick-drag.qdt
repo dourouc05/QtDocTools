@@ -63,6 +63,36 @@
             <db:type>Object</db:type>
             <db:varname>Drag.target</db:varname>
         </db:fieldsynopsis>
+        <db:methodsynopsis xlink:href="#cancel-method">
+            <db:modifier>attached</db:modifier>
+            <db:void/>
+            <db:methodname>cancel</db:methodname>
+            <db:void/>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="#drop-method">
+            <db:modifier>attached</db:modifier>
+            <db:type>enumeration</db:type>
+            <db:methodname>drop</db:methodname>
+            <db:void/>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="#start-method">
+            <db:modifier>attached</db:modifier>
+            <db:void/>
+            <db:methodname>start</db:methodname>
+            <db:methodparam rep="norepeat" choice="req">
+                <db:type>flags</db:type>
+                <db:parameter>supportedActions</db:parameter>
+            </db:methodparam>
+        </db:methodsynopsis>
+        <db:methodsynopsis xlink:href="#startDrag-method">
+            <db:modifier>attached</db:modifier>
+            <db:void/>
+            <db:methodname>startDrag</db:methodname>
+            <db:methodparam rep="norepeat" choice="req">
+                <db:type>flags</db:type>
+                <db:parameter>supportedActions</db:parameter>
+            </db:methodparam>
+        </db:methodsynopsis>
         <db:methodsynopsis xlink:href="#dragFinished-signal">
             <db:modifier>attached</db:modifier>
             <db:modifier>signal</db:modifier>
@@ -102,67 +132,6 @@
             }
             }</db:programlisting>
         <db:para>A drag can be terminated either by canceling it with Drag.<db:link xlink:href="qml-qtquick-drag.db#cancel-method">cancel()</db:link> or setting Drag.active to false, or it can be terminated with a drop event by calling Drag.<db:link xlink:href="qml-qtquick-drag.db#drop-method">drop()</db:link>. If the drop event is accepted, Drag.<db:link xlink:href="qml-qtquick-drag.db#drop-method">drop()</db:link> will return the <db:link xlink:href="qml-qtquick-drag.db#supportedActions-attached-prop">drop action</db:link> chosen by the recipient of the event, otherwise it will return Qt.IgnoreAction.</db:para>
-        <db:section xml:id="">
-            <db:title>Attached Method Documentation</db:title>
-            <db:informaltable>
-                <db:tbody>
-                    <db:tr>
-                        <db:td>
-                            <db:para>voidcancel()</db:para>
-                        </db:td>
-                    </db:tr>
-                </db:tbody>
-            </db:informaltable>
-            <db:para>Ends a drag sequence.</db:para>
-            <db:informaltable>
-                <db:tbody>
-                    <db:tr>
-                        <db:td>
-                            <db:para>enumerationdrop()</db:para>
-                        </db:td>
-                    </db:tr>
-                </db:tbody>
-            </db:informaltable>
-            <db:para>Ends a drag sequence by sending a drop event to the target item.</db:para>
-            <db:para>Returns the action accepted by the target item. If the target item or a parent doesn't accept the drop event then Qt.IgnoreAction will be returned.</db:para>
-            <db:para>The returned drop action may be one of:</db:para>
-            <db:itemizedlist>
-                <db:listitem>
-                    <db:para>Qt.CopyAction Copy the data to the target</db:para>
-                </db:listitem>
-                <db:listitem>
-                    <db:para>Qt.MoveAction Move the data from the source to the target</db:para>
-                </db:listitem>
-                <db:listitem>
-                    <db:para>Qt.LinkAction Create a link from the source to the target.</db:para>
-                </db:listitem>
-                <db:listitem>
-                    <db:para>Qt.IgnoreAction Ignore the action (do nothing with the data).</db:para>
-                </db:listitem>
-            </db:itemizedlist>
-            <db:informaltable>
-                <db:tbody>
-                    <db:tr>
-                        <db:td>
-                            <db:para>voidstart(flags<db:emphasis> supportedActions</db:emphasis>)</db:para>
-                        </db:td>
-                    </db:tr>
-                </db:tbody>
-            </db:informaltable>
-            <db:para>Starts sending drag events. Used for starting old-style internal drags. <db:link xlink:href="qml-qtquick-drag.db#startDrag-method">startDrag</db:link> is the new-style, preferred method of starting drags.</db:para>
-            <db:para>The optional <db:emphasis>supportedActions</db:emphasis> argument can be used to override the <db:link xlink:href="qml-qtquick-drag.db#supportedActions-attached-prop">supportedActions</db:link> property for the started sequence.</db:para>
-            <db:informaltable>
-                <db:tbody>
-                    <db:tr>
-                        <db:td>
-                            <db:para>voidstartDrag(flags<db:emphasis> supportedActions</db:emphasis>)</db:para>
-                        </db:td>
-                    </db:tr>
-                </db:tbody>
-            </db:informaltable>
-            <db:para>Starts sending drag events.</db:para>
-            <db:para>The optional <db:emphasis>supportedActions</db:emphasis> argument can be used to override the <db:link xlink:href="qml-qtquick-drag.db#supportedActions-attached-prop">supportedActions</db:link> property for the started sequence.</db:para>
-        </db:section>
     </db:section>
     <db:section xml:id="qml-attached-props">
         <db:title>Attached Properties Documentation</db:title>
@@ -227,6 +196,43 @@
             <db:title>Drag.target : Object</db:title>
             <db:para>While a drag is active this property holds the last object to accept an enter event from the dragged item, if the current drag position doesn't intersect any accepting targets it is null.</db:para>
             <db:para>When a drag is not active this property holds the object that accepted the drop event that ended the drag, if no object accepted the drop or the drag was canceled the target will then be null.</db:para>
+        </db:section>
+    </db:section>
+    <db:section xml:id="qml-attached-meths">
+        <db:title>Attached Method Documentation</db:title>
+        <db:section xml:id="cancel-method">
+            <db:title>cancel()</db:title>
+            <db:para>Ends a drag sequence.</db:para>
+        </db:section>
+        <db:section xml:id="drop-method">
+            <db:title>drop()</db:title>
+            <db:para>Ends a drag sequence by sending a drop event to the target item.</db:para>
+            <db:para>Returns the action accepted by the target item. If the target item or a parent doesn't accept the drop event then Qt.IgnoreAction will be returned.</db:para>
+            <db:para>The returned drop action may be one of:</db:para>
+            <db:itemizedlist>
+                <db:listitem>
+                    <db:para>Qt.CopyAction Copy the data to the target</db:para>
+                </db:listitem>
+                <db:listitem>
+                    <db:para>Qt.MoveAction Move the data from the source to the target</db:para>
+                </db:listitem>
+                <db:listitem>
+                    <db:para>Qt.LinkAction Create a link from the source to the target.</db:para>
+                </db:listitem>
+                <db:listitem>
+                    <db:para>Qt.IgnoreAction Ignore the action (do nothing with the data).</db:para>
+                </db:listitem>
+            </db:itemizedlist>
+        </db:section>
+        <db:section xml:id="start-method">
+            <db:title>start(flags<db:emphasis> supportedActions</db:emphasis>)</db:title>
+            <db:para>Starts sending drag events. Used for starting old-style internal drags. <db:link xlink:href="qml-qtquick-drag.db#startDrag-method">startDrag</db:link> is the new-style, preferred method of starting drags.</db:para>
+            <db:para>The optional <db:emphasis>supportedActions</db:emphasis> argument can be used to override the <db:link xlink:href="qml-qtquick-drag.db#supportedActions-attached-prop">supportedActions</db:link> property for the started sequence.</db:para>
+        </db:section>
+        <db:section xml:id="startDrag-method">
+            <db:title>startDrag(flags<db:emphasis> supportedActions</db:emphasis>)</db:title>
+            <db:para>Starts sending drag events.</db:para>
+            <db:para>The optional <db:emphasis>supportedActions</db:emphasis> argument can be used to override the <db:link xlink:href="qml-qtquick-drag.db#supportedActions-attached-prop">supportedActions</db:link> property for the started sequence.</db:para>
         </db:section>
     </db:section>
     <db:section xml:id="qml-signals">
