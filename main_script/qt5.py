@@ -259,7 +259,9 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
     if len(result.stderr) > 0:
         error_msg = result.stderr.decode('utf-8')
 
-        if error_recovery:
+        if not error_recovery:
+            logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
+        else:
             # One-line comments about the function operator--; remove all one-line comments.
             if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
                 def remove_comments(line):
@@ -297,7 +299,9 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
                 for line in lines:
                     # Detect an identifier.
                     if '<html:a name="' in line or ('<html:h' in line and 'id="' in line):
-                        found_id = line.split('"')[1]
+                        found_id_results = re.search('id="(.*)"|name="(.*)"', line, re.IGNORECASE)
+                        found_id = (found_id_results.group(0) if found_id_results.group(0) is not None
+                                    else found_id_results.group(1)).split('"')[1]
                         is_a = '<html:a' in line
                         is_h = '<html:h' in line
 
@@ -315,15 +319,15 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
                     lines_new.append(line)
 
                 with open(file_in, 'w') as file:
-                    file.write("\n".join(lines_new))
+                    file.write("".join(lines_new))
 
             # Restart the XSLT engine, see if changed anything in the process.
             result = subprocess.run(command_line, stderr=subprocess.PIPE)
             if len(result.stderr) == 0:
                 return
 
-        # Not a recognised issue, nothing you can do.
-        logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
+            # Not a recognised issue, nothing you can do.
+            logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
 
 
 # Call the C++ parser for prototypes.
@@ -460,6 +464,8 @@ if __name__ == '__main__':
         for moduleName in ['qtscript', 'qtquick']:
             validate_module_db(module_name=moduleName)
     time_rng = time.perf_counter()
+
+    # Finally: deploy, i.e. copy all generated files, change their extensions, copy the images. 
 
     print("Total time: %f s" % (time_rng - time_beginning))
     print("Time to read configuration files: %f s" % (time_configs - time_beginning))

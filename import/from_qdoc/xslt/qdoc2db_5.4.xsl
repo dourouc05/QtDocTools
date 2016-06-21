@@ -60,8 +60,8 @@
       <xsl:message terminate="yes">ERROR: This page has no content!</xsl:message>
     </xsl:if>
     
-    <xsl:variable name="unsortedIds" select="//@name" as="attribute()*"/>
-    <xsl:variable name="sortedIds" select="distinct-values(//@name)" as="xs:string*"/>
+    <xsl:variable name="unsortedIds" select="//@name" as="xs:string*"/>
+    <xsl:variable name="sortedIds" select="distinct-values($unsortedIds)" as="xs:string*"/>
     <xsl:if test="count($unsortedIds) != count($sortedIds)">
       <!-- This exact error message is looked after by the main script! -->
       <xsl:message terminate="yes">ERROR: Some ids are not unique!</xsl:message>
