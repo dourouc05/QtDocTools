@@ -47,9 +47,6 @@ validate_db = True
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 
-keep_html = False  # TODO!
-keep_xhtml = True  # TODO!
-
 logging.basicConfig(format='%(levelname)s at %(asctime)s: %(message)s', level=logging.DEBUG)
 
 # Off-line configuration, should be altered only infrequently.
@@ -241,9 +238,6 @@ def generate_module_xml(module_name):
                     tree = html5lib.parse(f)
                 with open(out_file_name, 'wb') as f:
                     f.write(ETree.tostring(tree))
-
-                if not keep_html:
-                    os.remove(file)
     logging.info('Parsing as XML: done with module %s' % module_name)
 
 
@@ -293,6 +287,8 @@ def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
                 # than two, then rewrite the line containing the ID. Pay attention to the fact that those IDs are
                 # sometimes duplicated, i.e. present at the same time within a <a name> tag and
                 # within the title <h? id> tag.
+                # If there are multiple <html:a>, they have the same ID and lie on the same line
+                # (qtquick-cppextensionpoints).
                 h_seen = Counter()  # Number of times this ID was seen for a <h? id="">  tag.
                 a_seen = Counter()  # Number of times this ID was seen for a <a name=""> tag.
                 lines_new = []
@@ -379,9 +375,6 @@ def generate_module_db(module_name):
             out_file_name = base_file_name + '.db'
             call_xslt(in_file_name, out_file_name, xslt2)
 
-            # if not keep_xhtml:
-            #     os.remove(file)
-
             # For C++ classes, also handle the function prototypes with the C++ application.
             if file.startswith('q') and not file.startswith('qml-'):
                 call_cpp_parser(out_file_name, out_file_name)
@@ -455,13 +448,13 @@ if __name__ == '__main__':
 
     if generate_db:
         # for moduleName, conf in configs.items():
-        for moduleName in ['qtscript', 'qtquick']:
+        for moduleName in ['qtquick']:
             generate_module_db(module_name=moduleName)
     time_db = time.perf_counter()
 
     if validate_db:
         # for moduleName, conf in configs.items():
-        for moduleName in ['qtscript', 'qtquick']:
+        for moduleName in ['qtquick']:
             validate_module_db(module_name=moduleName)
     time_rng = time.perf_counter()
 

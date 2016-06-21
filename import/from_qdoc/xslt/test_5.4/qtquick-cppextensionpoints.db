@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1"
+            xml:lang="en">
+   <db:title>C++ Extension Points Provided By Qt Quick</db:title>
+   <db:para>All QML applications can be extended from C++ in order to use additional functionality implemented in C++ code or to provide a C++ based QML plugin. This topic of extending QML from C++ is covered in the <db:link xlink:href="qtqml-cppintegration-topic.db">Integrating QML and C++</db:link> documentation.</db:para>
+   <db:para>Additionally, the Qt Quick module provides several extension and integration points for C++ developers, specific to this module. In particular, it allows C++ developers to create and register custom <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code>-derived types which can be rendered by Qt Quick. It also provides several scene graph-related classes which allow developers to define their own rendering primitives.</db:para>
+   <db:section xml:id="user-defined-qquickitem-derived-types">
+      <db:title>User-Defined QQuickItem-Derived Types</db:title>
+      <db:para>While the Qt Quick module already provides a rich library of visual item types for use in a QML application, some developers may wish to define their own item-derived types in C++ and expose them to the QML type system. The easiest way to do this is to subclass <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code>, which is the base type for all visual types in the Qt Quick module. See the <db:code><db:link xlink:href="qquickitem.db">QQuickItem</db:link></db:code> documentation for more details.</db:para>
+   </db:section>
+   <db:section xml:id="scene-graph-related-classes">
+      <db:title>Scene Graph-Related Classes</db:title>
+      <db:para>Qt Quick 2 makes use of a dedicated scene graph based on OpenGL ES 2.0 or OpenGL 2.0 for its rendering. Using a scene graph for graphics rather than the traditional imperative painting systems (<db:code><db:link xlink:href="qpainter.db">QPainter</db:link></db:code> and similar), means the scene to be rendered can be retained between frames and the complete set of primitives to render is known before rendering starts. This opens up for a number of optimizations, such as batching the OpenGL draw calls to minimize state changes or discarding obscured primitives.</db:para>
+      <db:para>The <db:link xlink:href="qtquick-module.db">Qt Quick C++ API</db:link> provides various classes to enable custom nodes to be created in C++.</db:para>
+      <db:para>See the <db:link xlink:href="qtquick-visualcanvas-scenegraph.db">Qt Quick Scene Graph</db:link> documentation for details.</db:para>
+   </db:section>
+   <db:section xml:id="pixmap-and-threaded-image-support">
+      <db:title>Pixmap and Threaded Image Support</db:title>
+      <db:para>While the QML engine allows QML application to load images from filesystem or network resources, some applications may require the additional option of loading images from C++ based processes. This can be implemented through the <db:code><db:link xlink:href="qquickimageprovider.db">QQuickImageProvider</db:link></db:code> class, which provides support for pixmap loading and threaded image requests for QML applications. Any QML application that requests an image through the special "image:" URL scheme will be directed to an appropriate image provider to load the image.</db:para>
+      <db:para>For more information, see the <db:code><db:link xlink:href="qquickimageprovider.db">QQuickImageProvider</db:link></db:code> documentation.</db:para>
+   </db:section>
+</db:article>

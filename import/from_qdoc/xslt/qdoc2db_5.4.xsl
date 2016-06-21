@@ -60,7 +60,7 @@
       <xsl:message terminate="yes">ERROR: This page has no content!</xsl:message>
     </xsl:if>
     
-    <xsl:variable name="unsortedIds" select="//@name" as="xs:string*"/>
+    <xsl:variable name="unsortedIds" select="$content//html:a[not(preceding-sibling::html:*[1][self::html:a and @name])]/@name" as="xs:string*"/>
     <xsl:variable name="sortedIds" select="distinct-values($unsortedIds)" as="xs:string*"/>
     <xsl:if test="count($unsortedIds) != count($sortedIds)">
       <!-- This exact error message is looked after by the main script! -->
@@ -359,6 +359,14 @@
         <xsl:with-param name="title" select="'Method Documentation'"/>
       </xsl:call-template>
     </xsl:variable>
+    <xsl:variable name="qmlAttachedMeths" as="element(html:div)?">
+      <xsl:call-template name="lookupSection">
+        <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
+        <xsl:with-param name="anchor" select="'qml-attached-meths'"/>
+        <!-- No anchor! -->
+        <xsl:with-param name="title" select="'Attached Method Documentation'"/>
+      </xsl:call-template>
+    </xsl:variable>
     <xsl:variable name="qmlSignals" as="element(html:div)?">
       <xsl:call-template name="lookupSection">
         <xsl:with-param name="globalList" select="$remainingAfterIndex"/>
@@ -390,6 +398,15 @@
     </xsl:if>
     <xsl:if test="$isClass and boolean($qmlMeths)">
       <xsl:message terminate="no">WARNING: A C++ class has QML methods.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isClass and boolean($qmlAttachedMeths)">
+      <xsl:message terminate="no">WARNING: A C++ class has QML attached methods.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isClass and boolean($qmlSignals)">
+      <xsl:message terminate="no">WARNING: A C++ class has QML signals.</xsl:message>
+    </xsl:if>
+    <xsl:if test="$isClass and boolean($qmlAttachedSignals)">
+      <xsl:message terminate="no">WARNING: A C++ class has QML attached signals.</xsl:message>
     </xsl:if>
     <xsl:if test="not($isQdocDocumentation)">
       <xsl:if test="$isConcept and boolean($types)">
@@ -623,6 +640,7 @@
           <xsl:with-param name="props" select="$properties"/>
           <xsl:with-param name="attachedProps" select="$qmlAttachedProps"/>
           <xsl:with-param name="meths" select="$qmlMeths"/>
+          <xsl:with-param name="attachedMeths" select="$qmlAttachedMeths"/>
           <xsl:with-param name="signals" select="$qmlSignals"/>
           <xsl:with-param name="attachedSignals" select="$qmlAttachedSignals"/>
         </xsl:call-template>
@@ -711,6 +729,11 @@
         <xsl:with-param name="data" select="$qmlMeths"/>
         <xsl:with-param name="title" select="'Methods Documentation'"/>
         <xsl:with-param name="anchor" select="'qml-meths'"/>
+      </xsl:call-template>
+      <xsl:call-template name="content_qmlMeths">
+        <xsl:with-param name="data" select="$qmlAttachedMeths"/>
+        <xsl:with-param name="title" select="'Attached Method Documentation'"/>
+        <xsl:with-param name="anchor" select="'qml-attached-meths'"/>
       </xsl:call-template>
       <xsl:call-template name="content_qmlMeths">
         <xsl:with-param name="data" select="$qmlSignals"/>
@@ -2040,6 +2063,7 @@
     <xsl:param name="props" as="element()?"/>
     <xsl:param name="attachedProps" as="element()?"/>
     <xsl:param name="meths" as="element()?"/>
+    <xsl:param name="attachedMeths" as="element()?"/>
     <xsl:param name="signals" as="element()?"/>
     <xsl:param name="attachedSignals" as="element()?"/>
     
@@ -2095,6 +2119,12 @@
 
       <xsl:if test="$meths">
         <xsl:apply-templates mode="qmlMethodsListing" select="$meths/html:div[@class = 'qmlitem']"/>
+      </xsl:if>
+      
+      <xsl:if test="$attachedMeths">
+        <xsl:apply-templates mode="qmlMethodsListing" select="$meths/html:div[@class = 'qmlitem']">
+          <xsl:with-param name="attached" select="true()"/>
+        </xsl:apply-templates>
       </xsl:if>
 
       <xsl:if test="$signals">
