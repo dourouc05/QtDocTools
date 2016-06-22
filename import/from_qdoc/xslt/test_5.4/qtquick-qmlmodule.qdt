@@ -1,0 +1,1372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.1-extension qtdoctools-1.0"
+            xml:lang="en">
+   <db:title>Qt Quick QML Types</db:title>
+   <db:para>The <db:link xlink:href="qtquick-index.db">Qt Quick</db:link>
+                                    module provides graphical primitive types. These types are only
+                                    available in a QML document if that document imports the
+                                        <db:code>QtQuick</db:code> namespace.</db:para>
+   <db:para>The current version of the <db:code>QtQuick</db:code>
+                                    module is version 2.4, and thus it may be imported via the
+                                    following statement:</db:para>
+   <db:programlisting language="qml">import QtQuick 2.4</db:programlisting>
+   <db:para>Visit the <db:link xlink:href="qtquick-index.db">Qt
+                                        Quick</db:link> module documentation for more information
+                                    about the concepts which are central to
+                                        <db:code>QtQuick</db:code>.</db:para>
+   <db:section xml:id="submodules">
+      <db:title>Submodules</db:title>
+      <db:para>Qt Quick includes several submodules which contain
+                                    additional types.</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick.dblistmodel-qmlmodule.db">XML
+                                            List Model</db:link> - contains types for creating models
+                                        from XML data</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-localstorage-qmlmodule.db">Local Storage</db:link> - a submodule containing a
+                                        JavaScript interface for an SQLite database</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-particles-qmlmodule.db">Particles</db:link> - provides a particle system for QML
+                                        applications</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-window-qmlmodule.db">Window</db:link> - contains types for creating top-level
+                                        windows and accessing screen information</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-dialogs-qmlmodule.db">Dialogs</db:link> - contains types for creating and
+                                        interacting with system dialogs</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-controls-qmlmodule.db">Controls</db:link> - provides a set of reusable UI
+                                        components</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-layouts-qmlmodule.db">Layouts</db:link> - contains types that are used to
+                                        arrange items in the user interface</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qttest-qmlmodule.db">Tests</db:link> -
+                                        types for testing QML applications.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="basic-types">
+      <db:title>Basic Types</db:title>
+      <db:para>There are a number of basic types that are <db:link xlink:href="qtqml-typesystem-basictypes.db">supported by
+                                        default in the QML language</db:link>.</db:para>
+      <db:para>In addition, the <db:code>QtQuick</db:code> import
+                                    provides the following basic types: </db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-color.db">color</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>ARGB color value.
+                                                  The type refers to an ARGB color value. It can be
+                                                  specified in a number of ways:</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-font.db">font</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Font value with
+                                                  the properties of QFont. The type refers to a font
+                                                  value with the properties of
+                                                  QFont</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-matrix4x4.db">matrix4x4</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>A matrix4x4 type
+                                                  is a 4-row and 4-column matrix</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-quaternion.db">quaternion</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>A quaternion type
+                                                  has scalar, x, y, and z
+                                                  attributes</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-vector2d.db">vector2d</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>A vector2d type
+                                                  has x and y attributes</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-vector3d.db">vector3d</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Value with x, y,
+                                                  and z attributes</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-vector4d.db">vector4d</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>A vector4d type
+                                                  has x, y, z and w attributes</db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="object-types">
+      <db:title>Object Types</db:title>
+      <db:para>All object types provided by the
+                                        <db:code>QtQuick</db:code> import are based on the
+                                        <db:link xlink:href="qml-qtquick-item.db">Item</db:link> type,
+                                    which itself derives from QtObject. <db:link xlink:href="qtqml-qmlmodule.db#object-types">QML object
+                                        types</db:link> provided by the Qt QML module (such as
+                                    QtObject and Component) are also available when you import
+                                        <db:code>QtQuick</db:code>.</db:para>
+      <db:informaltable>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-accessible.db">Accessible</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables accessibility
+                                                  of QML items</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-anchoranimation.db">AnchorAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  anchor values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-anchorchanges.db">AnchorChanges</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies how to
+                                                  change the anchors of an item in a
+                                                state</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-animatedimage.db">AnimatedImage</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Plays animations
+                                                  stored as a series of images</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-animatedsprite.db">AnimatedSprite</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Draws a sprite
+                                                  animation</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-animation.db">Animation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Is the base of all QML
+                                                  animations</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-animationcontroller.db">AnimationController</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables manual control
+                                                  of animations</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-animator.db">Animator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Is the base of all QML
+                                                  animators</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-behavior.db">Behavior</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a default
+                                                  animation for a property change</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-borderimage.db">BorderImage</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Paints a border based
+                                                  on an image</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-canvas.db">Canvas</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a 2D canvas
+                                                  item enabling drawing via
+                                                JavaScript</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-canvasgradient.db">CanvasGradient</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides an opaque
+                                                  CanvasGradient interface</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-canvasimagedata.db">CanvasImageData</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Contains image pixel
+                                                  data in RGBA order</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-canvaspixelarray.db">CanvasPixelArray</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides ordered and
+                                                  indexed access to the components of each pixel in
+                                                  image data</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-coloranimation.db">ColorAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  color values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-column.db">Column</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Positions its children
+                                                  in a column</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-context2d.db">Context2D</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides 2D context
+                                                  for shapes on a Canvas item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-doublevalidator.db">DoubleValidator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a validator
+                                                  for non-integer numbers</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-drag.db">Drag</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>For specifying drag
+                                                  and drop events for moved Items</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-dragevent.db">DragEvent</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides information
+                                                  about a drag event</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-droparea.db">DropArea</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>For specifying drag
+                                                  and drop handling in an area</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-flickable.db">Flickable</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a surface
+                                                  that can be "flicked"</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-flipable.db">Flipable</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a surface
+                                                  that can be flipped</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-flow.db">Flow</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Positions its children
+                                                  side by side, wrapping as
+                                                necessary</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-focusscope.db">FocusScope</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Explicitly creates a
+                                                  focus scope</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-fontloader.db">FontLoader</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Allows fonts to be
+                                                  loaded by name or URL</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-fontmetrics.db">FontMetrics</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides metrics for a
+                                                  given font</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-gradient.db">Gradient</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a gradient
+                                                  fill</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-gradientstop.db">GradientStop</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines the color at a
+                                                  position in a Gradient</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-grid.db">Grid</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Positions its children
+                                                  in grid formation</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-gridmesh.db">GridMesh</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a mesh with
+                                                  vertices arranged in a grid</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-gridview.db">GridView</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>For specifying a grid
+                                                  view of items provided by a
+                                                model</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-image.db">Image</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Displays an
+                                                  image</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-intvalidator.db">IntValidator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a validator
+                                                  for integer values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-item.db">Item</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>A basic visual QML
+                                                  type</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-itemgrabresult.db">ItemGrabResult</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Contains the results
+                                                  from a call to
+                                                Item::grabToImage()</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-keyevent.db">KeyEvent</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides information
+                                                  about a key event</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-keynavigation.db">KeyNavigation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Supports key
+                                                  navigation by arrow keys</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-keys.db">Keys</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides key handling
+                                                  to Items</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-layoutmirroring.db">LayoutMirroring</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Property used to
+                                                  mirror layout behavior</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-listview.db">ListView</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a list view
+                                                  of items provided by a model</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-loader.db">Loader</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Allows dynamic loading
+                                                  of a subtree from a URL or
+                                                Component</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-matrix4x4.db">Matrix4x4</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a way to
+                                                  apply a 4x4 tranformation matrix to an
+                                                  Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-mousearea.db">MouseArea</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables simple mouse
+                                                  handling</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-mouseevent.db">MouseEvent</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides information
+                                                  about a mouse event</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-multipointtoucharea.db">MultiPointTouchArea</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables handling of
+                                                  multiple touch points</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-numberanimation.db">NumberAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  qreal-type values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-opacityanimator.db">OpacityAnimator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Type animates the
+                                                  opacity of an Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-openglinfo.db">OpenGLInfo</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides information
+                                                  about the used OpenGL version</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-parallelanimation.db">ParallelAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables animations to
+                                                  be run in parallel</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-parentanimation.db">ParentAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  parent values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-parentchange.db">ParentChange</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies how to
+                                                  reparent an Item in a state
+                                                change</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-path.db">Path</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a path for use
+                                                  by PathView</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathanimation.db">PathAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates an item along
+                                                  a path</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-patharc.db">PathArc</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines an arc with
+                                                  the given radius</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathattribute.db">PathAttribute</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies how to set
+                                                  an attribute at a given position in a
+                                                  Path</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathcubic.db">PathCubic</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a cubic Bezier
+                                                  curve with two control points</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathcurve.db">PathCurve</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a point on a
+                                                  Catmull-Rom curve</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathelement.db">PathElement</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>The base path
+                                                  type</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathinterpolator.db">PathInterpolator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies how to
+                                                  manually animate along a path</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathline.db">PathLine</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a straight
+                                                  line</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathpercent.db">PathPercent</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Manipulates the way a
+                                                  path is interpreted</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathquad.db">PathQuad</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a quadratic
+                                                  Bezier curve with a control
+                                                point</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathsvg.db">PathSvg</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines a path using
+                                                  an SVG path data string</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pathview.db">PathView</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Lays out
+                                                  model-provided items on a path</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pauseanimation.db">PauseAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a pause for
+                                                  an animation</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pincharea.db">PinchArea</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Enables simple pinch
+                                                  gesture handling</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-pinchevent.db">PinchEvent</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>For specifying
+                                                  information about a pinch event</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-positioner.db">Positioner</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides attached
+                                                  properties that contain details on where an item
+                                                  exists in a positioner</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-propertyaction.db">PropertyAction</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies immediate
+                                                  property changes during
+                                                animation</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-propertyanimation.db">PropertyAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  property values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-propertychanges.db">PropertyChanges</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Describes new property
+                                                  bindings or values for a state</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-rectangle.db">Rectangle</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Paints a filled
+                                                  rectangle with an optional
+                                                border</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-regexpvalidator.db">RegExpValidator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a string
+                                                  validator</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-repeater.db">Repeater</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Instantiates a number
+                                                  of Item-based components using a provided
+                                                  model</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-rotation.db">Rotation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a way to
+                                                  rotate an Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-rotationanimation.db">RotationAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  rotation values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-rotationanimator.db">RotationAnimator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Type animates the
+                                                  rotation of an Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-row.db">Row</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Positions its children
+                                                  in a row</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-scale.db">Scale</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a way to
+                                                  scale an Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-scaleanimator.db">ScaleAnimator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Type animates the
+                                                  scale factor of an Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-scriptaction.db">ScriptAction</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines scripts to be
+                                                  run during an animation</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-sequentialanimation.db">SequentialAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Allows animations to
+                                                  be run sequentially</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-shadereffect.db">ShaderEffect</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Applies custom shaders
+                                                  to a rectangle</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-shadereffectsource.db">ShaderEffectSource</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Renders a Qt Quick
+                                                  item into a texture and displays
+                                                it</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-smoothedanimation.db">SmoothedAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Allows a property to
+                                                  smoothly track a value</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-springanimation.db">SpringAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Allows a property to
+                                                  track a value in a spring-like
+                                                motion</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-sprite.db">Sprite</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies sprite
+                                                  animations</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-spritesequence.db">SpriteSequence</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Draws a sprite
+                                                  animation</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-state.db">State</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines configurations
+                                                  of objects and properties</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-statechangescript.db">StateChangeScript</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies how to run a
+                                                  script in a state</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-stategroup.db">StateGroup</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides built-in
+                                                  state support for non-Item
+                                                types</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-systempalette.db">SystemPalette</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides access to the
+                                                  Qt palettes</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-text.db">Text</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies how to add
+                                                  formatted text to a scene</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-textedit.db">TextEdit</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Displays multiple
+                                                  lines of editable formatted
+                                                text</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-textinput.db">TextInput</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Displays an editable
+                                                  line of text</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-textmetrics.db">TextMetrics</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides metrics for a
+                                                  given font and text</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-touchpoint.db">TouchPoint</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Describes a touch
+                                                  point in a MultiPointTouchArea</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-transform.db">Transform</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>For specifying
+                                                  advanced transformations on
+                                                Items</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-transition.db">Transition</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Defines animated
+                                                  transitions that occur on state
+                                                changes</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-translate.db">Translate</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides a way to move
+                                                  an Item without changing its x or y
+                                                  properties</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-uniformanimator.db">UniformAnimator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Type animates a
+                                                  uniform of a ShaderEffect</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-vector3danimation.db">Vector3dAnimation</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Animates changes in
+                                                  QVector3d values</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-viewtransition.db">ViewTransition</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Specifies items under
+                                                  transition in a view</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-wheelevent.db">WheelEvent</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Provides information
+                                                  about a mouse wheel event</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-xanimator.db">XAnimator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Type animates the x
+                                                  position of an Item</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qml-qtquick-yanimator.db">YAnimator</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Type animates the y
+                                                  position of an Item</db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+   </db:section>
+</db:article>

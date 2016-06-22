@@ -268,11 +268,9 @@
 
     <xsl:variable name="index" as="element()?"
       select="$siblingAfterSeeAlso[self::html:div][@class = 'table'][html:table[@class = 'annotated']]"/>
-    <!-- For pages that contain only an index, like accessibility -->
-    <xsl:if
-      test="$isQmlType and //html:*[self::html:div][@class = 'table'][html:table[@class = 'annotated']]">
-      <xsl:message>WARNING: QML type seems to have an index page; not implemented. </xsl:message>
-    </xsl:if>
+    <!-- For pages that contain only an index, like accessibility, plus pages that do contain an index, but at strange places (qtquick-qmlmodule). -->
+    <xsl:variable name="isRawIndex" as="xs:boolean"
+      select="not(boolean($index/../html:div[@class = 'descr']/html:p/node()))"/>
 
     <xsl:variable name="remainingAfterIndex" as="element(html:div)*"
       select="$siblingAfterSeeAlso[self::html:div] | $siblingAfterSeeAlso/following-sibling::html:div"/>
@@ -649,11 +647,14 @@
       <!-- Extract the description, i.e. the long text, plus the See also paragraph (meaning a paragraph just after the description for classes). -->
       <xsl:call-template name="content_withTitles">
         <xsl:with-param name="data" select="$description"/>
+        <xsl:with-param name="lastElement" select="$index"/>
         <xsl:with-param name="seeAlso" select="$seeAlso"/>
       </xsl:call-template>
 
       <!-- There may be a table for generated index pages. -->
-      <xsl:apply-templates mode="indexTable" select="$index"/>
+      <xsl:if test="$isRawIndex">
+        <xsl:apply-templates mode="indexTable" select="$index"/>
+      </xsl:if>
 
       <!-- There may be types, properties, functions, and macros for C++ classes and namespaces. -->
       <xsl:if test="not($isQdocDocumentation)">
@@ -2833,17 +2834,27 @@
     </xsl:for-each>
   </xsl:template>
   <xsl:template name="content_withTitles">
-    <xsl:param name="data"/>
-    <xsl:param name="seeAlso"/>
+    <xsl:param name="data" as="element(html:div)?"/>
+    <xsl:param name="lastElement" as="element()?"/>
+    <xsl:param name="seeAlso" as="element()?"/>
 
-    <xsl:call-template name="content_withTitles_before">
-      <xsl:with-param name="data" select="$data"/>
-    </xsl:call-template>
-    <xsl:variable name="firstTitle" select="$data/html:h2[1]"/>
-    <xsl:variable name="afterFirstTitleIncluded"
-      select="($firstTitle, $firstTitle/following-sibling::*)"/>
-
-    <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
+    <xsl:if test="$data">
+     <xsl:call-template name="content_withTitles_before">
+       <xsl:with-param name="data" select="$data"/>
+     </xsl:call-template>
+     <xsl:variable name="firstTitle" select="$data/html:h2[1]"/>
+     <xsl:variable name="afterFirstTitleIncluded"
+       select="($firstTitle, $firstTitle/following-sibling::*)"/>
+     
+     <xsl:variable name="hasNoH2" select="not(boolean($data/html:h2))"/>
+     <xsl:variable name="hasNoH3" select="not(boolean($data/html:h3))"/>
+     <xsl:variable name="hasNoH4" select="not(boolean($data/html:h4))"/>
+     <xsl:variable name="hasNoH5" select="not(boolean($data/html:h5))"/>
+     <xsl:variable name="hasNoH6" select="not(boolean($data/html:h6))"/>
+ 
+     <xsl:for-each-group select="$afterFirstTitleIncluded" group-starting-with="html:h2">
+      <xsl:variable name="isLastH2" select="position() = last()"/>
+      
       <db:section xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
         <!-- Handle title then subsections. In rare occasions, some sections are empty, and are directly followed by another title. -->
         <db:title>
@@ -2853,7 +2864,10 @@
           test="following-sibling::html:*[1][self::html:a] and (following-sibling::html:*[2][self::html:h2 or self::html:h3])">
           <db:para/>
         </xsl:if>
+        
         <xsl:for-each-group select="current-group()" group-starting-with="html:h3">
+          <xsl:variable name="isLastH3" select="position() = last()"/>
+          
           <xsl:choose>
             <xsl:when test="current-group()[self::html:h3]">
               <db:section xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
@@ -2866,6 +2880,8 @@
                 </xsl:if>
 
                 <xsl:for-each-group select="current-group()" group-starting-with="html:h4">
+                  <xsl:variable name="isLastH4" select="position() = last()"/>
+                  
                   <xsl:choose>
                     <xsl:when test="current-group()[self::html:h4]">
                       <db:section xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
@@ -2878,6 +2894,8 @@
                         </xsl:if>
 
                         <xsl:for-each-group select="current-group()" group-starting-with="html:h5">
+                          <xsl:variable name="isLastH5" select="position() = last()"/>
+                          
                           <xsl:choose>
                             <xsl:when test="current-group()[self::html:h5]">
                               <db:section xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
@@ -2891,6 +2909,8 @@
 
                                 <xsl:for-each-group select="current-group()"
                                   group-starting-with="html:h6">
+                                  <xsl:variable name="isLastH6" select="position() = last()"/>
+                                  
                                   <xsl:choose>
                                     <xsl:when test="current-group()[self::html:h6]">
                                       <db:section xml:id="{tc:rewrite-xml-id(tc:find-id(.))}">
@@ -2902,8 +2922,11 @@
                                           <db:para/>
                                         </xsl:if>
 
-                                        <xsl:apply-templates select="current-group()" mode="content"
-                                        />
+                                        <xsl:apply-templates select="current-group()" mode="content"/>
+                                        
+                                        <xsl:if test="boolean($lastElement) and $isLastH2 and $isLastH3 and $isLastH4 and $isLastH5 and $isLastH6">
+                                          <xsl:apply-templates select="$lastElement" mode="content"/>
+                                        </xsl:if>
                                       </db:section>
                                     </xsl:when>
                                     <xsl:otherwise>
@@ -2911,6 +2934,10 @@
                                     </xsl:otherwise>
                                   </xsl:choose>
                                 </xsl:for-each-group>
+                                
+                                <xsl:if test="boolean($lastElement) and $isLastH2 and $isLastH3 and $isLastH4 and $isLastH5 and $hasNoH6">
+                                  <xsl:apply-templates select="$lastElement" mode="content"/>
+                                </xsl:if>
                               </db:section>
                             </xsl:when>
                             <xsl:otherwise>
@@ -2918,6 +2945,10 @@
                             </xsl:otherwise>
                           </xsl:choose>
                         </xsl:for-each-group>
+                        
+                        <xsl:if test="boolean($lastElement) and $isLastH2 and $isLastH3 and $isLastH4 and $hasNoH5 and $hasNoH6">
+                          <xsl:apply-templates select="$lastElement" mode="content"/>
+                        </xsl:if>
                       </db:section>
                     </xsl:when>
                     <xsl:otherwise>
@@ -2925,6 +2956,10 @@
                     </xsl:otherwise>
                   </xsl:choose>
                 </xsl:for-each-group>
+                
+                <xsl:if test="boolean($lastElement) and $isLastH2 and $isLastH3 and $hasNoH4 and $hasNoH5 and $hasNoH6">
+                  <xsl:apply-templates select="$lastElement" mode="content"/>
+                </xsl:if>
               </db:section>
             </xsl:when>
             <xsl:otherwise>
@@ -2938,8 +2973,13 @@
             <xsl:with-param name="seeAlso" select="$seeAlso"/>
           </xsl:call-template>
         </xsl:if>
+        
+        <xsl:if test="boolean($lastElement) and $isLastH2 and $hasNoH3 and $hasNoH4 and $hasNoH5 and $hasNoH6">
+          <xsl:apply-templates select="$lastElement" mode="content"/>
+        </xsl:if>
       </db:section>
     </xsl:for-each-group>
+    </xsl:if>  
   </xsl:template>
 
   <!-- Handle tables. -->
