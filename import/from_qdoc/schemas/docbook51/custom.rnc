@@ -13,6 +13,7 @@ include "docbookxi.rnc" {
     }
     
   # GitHub issue: https://github.com/docbook/docbook/issues/59
+  # Solved for DocBook 5.2. 
   db.paramdef =
     element paramdef {
       db.paramdef.attlist,
@@ -25,6 +26,7 @@ include "docbookxi.rnc" {
     }
   
   # GitHub issue: https://github.com/docbook/docbook/issues/60
+  # Solved for DocBook 5.2. 
   db.funcdef =
     element funcdef {
       db.funcdef.attlist, (db._text | db.type | db.void | db.function)*
