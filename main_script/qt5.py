@@ -4,15 +4,10 @@ This script runs qdoc to generate a XML-formatted version of the documentation i
 TODO: actual CLI parameters.
 """
 
-import os
-import os.path
 import time
-import subprocess
-import json
 import logging
-from collections import Counter
-import re
-import xml.etree.ElementTree as ETree
+
+from qt5_lib import Qt5Worker
 
 try:
     import html5lib
@@ -20,12 +15,10 @@ try:
 except ImportError:
     no_html5 = True
     html5lib = None
-    ETree = None
 
 # Command-line configuration.
 sources = "F:/QtDoc/QtDoc/QtSrc/qt-everywhere-opensource-src-5.4.2/"
 output = "F:/QtDoc/output/html/"
-indexFolder = output
 version = [5, 4, 2]
 
 qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
@@ -37,7 +30,6 @@ rng = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/schemas/docbook51/custom.rng"
 postprocess = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/postprocessor/postprocessor.exe"
 
 configsFile = output + "configs.json"
-outputConfigs = True  # Read the file if it exists (and skip this phase), write it otherwise.
 
 prepare = False
 generate_html = False  # If prepare is not True when generate is, need an indexFolder.
@@ -55,368 +47,7 @@ ignored = ["qttranslations", "qtwayland", "qlalr"]
 # Folders to ignore inside Qt Base sources (/Qt/5.4/Src/qtbase/src). This is mostly to avoid spending time on them.
 qt_base_ignore = ["3rdparty", "android", "angle", "winmain", "openglextensions", "platformsupport", "plugins"]
 
-# Make the environment variables needed by QDoc.
-versionString = [str(x) for x in version]
-environment = {"QT_INSTALL_DOCS": sources + "qtbase/doc",
-               "QT_VERSION_TAG": ''.join(versionString),  # E.g.: 531
-               "QT_VER": '.'.join(versionString[:2]),  # E.g.: 5.3
-               "QT_VERSION": '.'.join(versionString)}  # E.g.: 5.3.1
-
-
-# Retrieve the list of modules in the sources: get the list of files, ensure it is a directory, and a module (first
-# letter is q). Handle ignore list.
-def get_folders():
-    return [folder for folder in os.listdir(sources)
-            if os.path.isdir(sources + folder) and folder.startswith('q') and folder not in ignored]
-
-
-# In order to create the indexes, retrieve the list of configuration files.
-def get_configuration_files(configs_output=False, configs_file=None):
-    # Generate potential places to find the configuration file for the given module.
-    def get_potential_file_names(doc_path, module):
-        # qtwebkit-examples is the name of the folder, but the file is named qtwebkitexamples.qdoc!
-        return [doc_path + module + ".qdocconf", doc_path + "config/" + module + ".qdocconf",
-                doc_path + module.replace("-", "") + ".qdocconf",
-                doc_path + "config/" + module.replace("-", "") + ".qdocconf"]
-
-    # Find a configuration file within the given source folder; returns true if one is found, which is put inside the
-    # given map. This function is made for modules outside Qt Base.
-    def find_configuration_file(src_path, configs):
-        # This loop is quite slow, but there is too much variety in those modules (such as a folder containing
-        # multiple modules: the loop cannot be stopped at the first file!).
-        # One more strange thing with Qt Multimedia: a qtmultimedia-dita.qdocconf file, at least for Qt 5.3.
-        found = False  # Is (at least) one file found?
-        for root, dirs, files in os.walk(src_path):
-            for file in files:
-                if file.endswith('.qdocconf') and 'global' not in root and '-dita' not in file:
-                    configs[file.replace('.qdocconf', '')] = root.replace("\\", '/') + '/' + file
-                    found = True
-        return found
-
-    # Start the loop to retrieve the configuration files from the file system (Qt sources).
-    def retrieve_from_sources():
-        configs = {}  # Accumulator for configuration files.
-        for folder in get_folders():
-            path = sources + folder + '/'
-
-            # Handle Qt Base modules, as they are all in the same folder.
-            if folder == "qtbase":
-                logging.debug("Handling preparation of Qt Base; path: " + path)
-
-                # Handle QMake, as it does not live inside src/.
-                configs["qmake"] = path + "qmake/doc/qmake.qdocconf"
-                if not os.path.isfile(configs["qmake"]):
-                    logging.error("qmake's qdocconf not found!")
-
-                # Then deal with the modules in Qt Base. Don't do a brute force search on *.qdocconf as it takes a while
-                # as long as possible.
-                dirs = os.listdir(path + "src/")
-                dirs = [x for x in dirs if x not in qt_base_ignore and x != "tools"]  # Folders to ignore.
-                dirs = [x for x in dirs if os.path.isdir(path + "src/" + x)]  # Get rid of files.
-
-                # For each Qt Base module, look for documentation configuration files.
-                for module in dirs:
-                    prefixed_module = "qt" + module if module != "corelib" else "qtcore"
-
-                    module_path = path + "src/" + module + '/'
-                    doc_file = module_path + "doc/" + prefixed_module + ".qdocconf"
-
-                    if not os.path.isfile(doc_file):
-                        logging.error("Qt Base " + module + "'s qdocconf not found!")
-                    else:
-                        configs[prefixed_module] = doc_file
-
-                # Finally play with the tools.
-                for tool in os.listdir(path + "src/tools/"):
-                    tool_path = path + "src/tools/" + tool + '/'
-                    doc_path = tool_path + "doc/"
-                    if os.path.isdir(doc_path):
-                        for doc_file in get_potential_file_names(doc_path, tool):
-                            if os.path.isfile(doc_file):
-                                configs[tool] = doc_file
-                                break
-                        else:
-                            logging.error("Qt Base tool " + tool + "'s qdocconf not found!")
-            # Other modules are directly inside the folder variable.
-            else:
-                logging.debug("Handling preparation of: " + folder + "; path: " + path)
-                has_something = False
-
-                # If the folder has a doc/ subfolder, it may contain a qdocconf file. Qt Sensors 5.3 has such a file,
-                # but it should not be used (prefer the one in src/). This case is mainly for documentation-only
-                # modules, such as qtdoc and qtwebkit-examples.
-                # Qt Sensors has a configuration files in both doc/ and src/sensors/doc/, but the first one is outdated
-                # (plus the doc/ folder has many other .qdocconf files which are just useless for this script).
-                # @TODO: Enginio seems to have other idiosyncrasies... (documentation both in src/ and doc/).
-                if os.path.isdir(path + "doc/") and folder != "qtsensors":
-                    for doc_file in get_potential_file_names(path + "doc/", folder):
-                        if os.path.isfile(doc_file):
-                            configs[folder] = doc_file
-                            has_something = True
-                            break
-                            # @TODO: May it happen there is more than one file?
-
-                # Second try: the sources folder (src/ for most, Source/ for WebKit). This case is not exclusive: some
-                # documentation could get lost, as the folder doc/ may exist (Enginio, Quick 1).
-                if os.path.isdir(path + "src/"):
-                    has_something = find_configuration_file(path + "src/", configs)
-                elif os.path.isdir(path + "Source/"):
-                    has_something = find_configuration_file(path + "Source/", configs)
-
-                # Final check: there should be something in this directory (otherwise, if there is no bug, add it
-                # manually in the ignore list).
-                if not has_something:
-                    logging.error("Module " + folder + "'s qdocconf not found!")
-
-        return configs
-
-    # Not asking to handle a file: return directly.
-    if not configs_output or configs_file is None:
-        logging.info("Looking for configuration files...")
-        return retrieve_from_sources()
-    else:
-        if os.path.isfile(configs_file):  # The target file exists: read it and return it.
-            logging.info("Reading existing list of configuration files...")
-            with open(configs_file) as jsonFile:
-                return json.load(jsonFile)
-        else:  # It does not exist: retrieve the information and write the file.
-            logging.info("Looking for configuration files and building a list...")
-            configs = retrieve_from_sources()
-
-            # Create the file (and its containing directory!).
-            os.makedirs(os.path.dirname(configs_file), exist_ok=True)
-            with open(configs_file, 'w') as jsonFile:
-                json.dump(configs, jsonFile)
-
-            return configs
-
-
-# Generates the set of parameters to give to QDoc depending on the action.
-def parameters(configuration_file, module_name, prepare=True):
-    params = [qdoc,
-              "-outputdir", output + module_name + '/',
-              "-installdir", output,
-              "-log-progress",
-              configuration_file,
-              "-prepare" if prepare else "-generate"]
-
-    if prepare:
-        params.extend(["-no-link-errors"])
-    else:
-        params.extend(["-indexdir", indexFolder])
-
-    return params
-
-
-# Prepare a module, meaning creating sub-folders for assets and (most importantly) the indexes.
-def prepare_module(module_name, configuration_file):
-    params = parameters(configuration_file, module_name, prepare=True)
-    logging.debug(params)
-    subprocess.call(params, env=environment)
-
-
-# Build the documentation for the given module.
-def generate_module(module_name, configuration_file):
-    params = parameters(configuration_file, module_name, prepare=False)
-    logging.debug(params)
-    subprocess.call(params, env=environment)
-
-
-# Convert the documentation HTML files as XML for the given module.
-def generate_module_xml(module_name):
-    count_xml = 0
-    for root, subdirs, files in os.walk(output + module_name + '/'):
-        if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
-            continue
-
-        for file in files:
-            if file.endswith('.html'):
-                base_file_name = os.path.join(root, file[:-5])
-                in_file_name = base_file_name + '.html'
-                out_file_name = base_file_name + '.xml'
-                with open(in_file_name, "rb") as f:
-                    tree = html5lib.parse(f)
-                with open(out_file_name, 'wb') as f:
-                    f.write(ETree.tostring(tree))
-                count_xml += 1
-    return count_xml
-
-
-# Call an XSLT 2 engine to convert a single XHTML5 file into DocBook. If there is a comment issue (something like
-# <!-- -- -->), then deal with it.
-# Here, specific to one XSLT2 engine: Saxon 9. Displays errors to the user.
-def call_xslt(file_in, file_out, stylesheet, error_recovery=True):
-    command_line = ['java', '-jar', saxon9,
-                    '-s:%s' % file_in, '-xsl:%s' % stylesheet, '-o:%s' % file_out,
-                    'vocabulary=%s' % db_vocabulary]
-
-    result = subprocess.run(command_line, stderr=subprocess.PIPE)
-    if len(result.stderr) > 0:
-        error_msg = result.stderr.decode('utf-8')
-
-        if not error_recovery:
-            logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
-        else:
-            # One-line comments about the function operator--; remove all one-line comments.
-            if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
-                def remove_comments(line):
-                    l = line.strip()
-                    return '' if l.startswith('<!--') and l.endswith('-->') else line
-
-                with open(file_in, 'r') as file:
-                    lines = file.readlines()
-                lines = [remove_comments(l) for l in lines]
-                with open(file_in, 'w') as file:
-                    file.write("\n".join(lines))
-
-            # Invalid characters happening in the XML files (i.e. binary output within the doc!).
-            elif 'SXXP0003: Error reported by XML parser: An invalid XML character' in error_msg:
-                with open(file_in, 'r') as file:
-                    lines = file.readlines()
-                regex = re.compile('[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-\u10FFF]')
-                lines = [regex.sub('', l) for l in lines]
-                with open(file_in, 'w') as file:
-                    file.write("\n".join(lines))
-
-            # Identifiers occurring multiple times: rewrite the next occurrences.
-            elif 'XTMM9000: Processing terminated by xsl:message' in error_msg \
-                    and 'ERROR: Some ids are not unique!' in error_msg:
-                with open(file_in, 'r') as file:
-                    lines = file.readlines()
-
-                # Algorithm: remember the number of times each ID was ever seen in the document; if it is higher
-                # than two, then rewrite the line containing the ID. Pay attention to the fact that those IDs are
-                # sometimes duplicated, i.e. present at the same time within a <a name> tag and
-                # within the title <h? id> tag.
-                # If there are multiple <html:a>, they have the same ID and lie on the same line
-                # (qtquick-cppextensionpoints).
-                h_seen = Counter()  # Number of times this ID was seen for a <h? id="">  tag.
-                a_seen = Counter()  # Number of times this ID was seen for a <a name=""> tag.
-                lines_new = []
-                for line in lines:
-                    # Detect an identifier.
-                    if '<html:a name="' in line or ('<html:h' in line and 'id="' in line):
-                        found_id_results = re.search('id="(.*)"|name="(.*)"', line, re.IGNORECASE)
-                        found_id = (found_id_results.group(0) if found_id_results.group(0) is not None
-                                    else found_id_results.group(1)).split('"')[1]
-                        is_a = '<html:a' in line
-                        is_h = '<html:h' in line
-
-                        # Count this occurrence in what has been seen.
-                        if is_a:
-                            a_seen[found_id] += 1
-                        elif is_h:
-                            h_seen[found_id] += 1
-
-                        # Rewrite the line if need be.
-                        increment = max(a_seen.get(found_id, 0), h_seen.get(found_id, 0))
-                        if increment >= 2:
-                            line = line.replace(found_id, '%s-%d' % (found_id, increment))
-
-                    lines_new.append(line)
-
-                with open(file_in, 'w') as file:
-                    file.write("".join(lines_new))
-
-            # Restart the XSLT engine, see if changed anything in the process.
-            result = subprocess.run(command_line, stderr=subprocess.PIPE)
-            if len(result.stderr) == 0:
-                return
-
-            # Not a recognised issue, nothing you can do.
-            logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
-
-
-# Call the C++ parser for prototypes.
-def call_cpp_parser(file_in, file_out):
-    result = subprocess.run([postprocess, '-s:%s' % file_in, '-o:%s' % file_out], stderr=subprocess.PIPE)
-    if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s' at C++ prototypes: \n%s" % (file_in, result.stderr.decode('utf-8')))
-
-
-# Convert the documentation XML files as DocBook for the given module.
-def generate_module_db(module_name):
-    ext = '.xml'  # Extension for files that are recognised here.
-    forbidden_suffixes = ['-members', '-compat', '-obsolete']  # Suffixes for supplementary files (they have a base file
-    # for which they provide some more information).
-    ignored_suffixes = ['-manifest']  # Suffixes for ignored files.
-    ignored_files = {'qtdoc': ['classes.xml', 'obsoleteclasses.xml', 'hierarchy.xml', 'qmlbasictypes.xml', 'qmltypes.xml']}  # TODO? Specifically ignored files (generated elsewhere).
-    count_db = 0
-
-    for root, sub_dirs, files in os.walk(output + module_name + '/'):
-        if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
-            continue
-
-        count = 0
-        n_files = len(files)
-        for file in files:
-            count += 1
-
-            # Handle a bit of output (even though the DocBook counter is not yet updated for this iteration).
-            if count % 10 == 0:
-                logging.info('XML to DocBook: module %s, %i files done out of %i (%i DocBook files generated)'
-                             % (module_name, count, n_files, count_db))
-
-            # Avoid lists of examples (-manifest.xml) and files automatically included within the output with the XSLT
-            # stylesheet (-members.xml, -obsolete.xml, -compat.xml). But only if the base file exists!
-            if not file.endswith(ext):
-                continue
-            if any([file.endswith(fs + ext) for fs in ignored_suffixes]):
-                continue
-            if any([file.endswith(fs + ext) for fs in forbidden_suffixes]):
-                continue
-            if module_name in ignored_files and file in ignored_files[module_name]:
-                continue
-            count_db += 1
-
-            # Actual processing.
-            base_file_name = os.path.join(root, file[:-4])
-            in_file_name = base_file_name + '.xml'
-            out_file_name = base_file_name + '.db'
-            call_xslt(in_file_name, out_file_name, xslt2)
-
-            # For C++ classes, also handle the function prototypes with the C++ application.
-            if file.startswith('q') and not file.startswith('qml-'):
-                call_cpp_parser(out_file_name, out_file_name)
-
-    return count_db
-
-
-# Call an RNG validator on the given file.
-def call_rng(file, schema):
-    # result = subprocess.run(['java', '-jar', jing, '-c', schema, file], stderr=subprocess.PIPE) # For a compact schema
-    result = subprocess.run(['java', '-jar', jing, schema, file], stderr=subprocess.PIPE)
-    if len(result.stderr) > 0:
-        logging.warning("Problem(s) with file '%s' at validation: \n%s" % (file, result.stderr.decode('utf-8')))
-
-
-# Convert the documentation XML files as DocBook for the given module.
-def validate_module_db(module_name):
-    ext = '.db'  # Extension for files that are recognised here.
-    count_db = 0
-
-    for root, sub_dirs, files in os.walk(output + module_name + '/'):
-        if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
-            continue
-
-        count = 0
-        n_files = len(files)
-        for file in files:
-            count += 1
-
-            # Handle a bit of output (even though the DocBook counter is not yet updated for this iteration).
-            if count % 10 == 0:
-                logging.info('DocBook validation: module %s, %i files done out of %i (%i DocBook files validated)'
-                             % (module_name, count, n_files, count_db))
-
-            if not file.endswith(ext):
-                continue
-            count_db += 1
-
-            # Actual processing.
-            file_name = os.path.join(root, file)
-            call_rng(file_name, rng)
-    return count_db
+ignored_files = {'qtdoc': ['classes.xml', 'obsoleteclasses.xml', 'hierarchy.xml', 'qmlbasictypes.xml', 'qmltypes.xml']}  # TODO? Specifically ignored files (generated elsewhere).
 
 
 # Process:
@@ -425,7 +56,10 @@ def validate_module_db(module_name):
 # - start building things
 if __name__ == '__main__':
     time_beginning = time.perf_counter()
-    configs = get_configuration_files(outputConfigs, configsFile)
+    worker = Qt5Worker(folders={'sources': sources, 'output': output}, version=version,
+                       binaries={'qdoc': qdoc, 'saxon9': saxon9, 'jing': jing},
+                       stylesheet=xslt2, schema=rng, vocabulary='qdoctools',
+                       ignores={'modules': ignored, 'qt_base': qt_base_ignore, 'files': ignored_files})
     time_configs = time.perf_counter()
 
     # Dependencies: first prepare all modules to get the indexes, then can start conversion in parallel. Once one module
@@ -434,10 +68,10 @@ if __name__ == '__main__':
         module_count = 1
         for module_name, conf in configs.items():
             logging.info('QDoc bootstrapping: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             prepare_module(module_name=module_name, configuration_file=conf)
             logging.info('QDoc bootstrapping: done with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             module_count = 0
     time_prepare = time.perf_counter()
 
@@ -445,38 +79,38 @@ if __name__ == '__main__':
         module_count = 1
         for module_name, conf in configs.items():
             logging.info('Generating QDoc HTML: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             generate_module(module_name=module_name, configuration_file=conf)
             logging.info('Generating QDoc HTML: done with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             module_count = 0
     time_generate = time.perf_counter()
 
     if generate_xml:
         for module_name, conf in configs.items():
             logging.info('Parsing as XML: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             count_xml = generate_module_xml(module_name=module_name)
             logging.info('Parsing as XML: done with module %s (#%i out of %i); %i XML files generated'
-                         % (module_name, module_count, len(configs), count_xml))
+                         % (module_name, module_count, worker.n_modules(), count_xml))
     time_xml = time.perf_counter()
 
     if generate_db:
         for moduleName, conf in configs.items():
             logging.info('XML to DocBook: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             count_db = generate_module_db(module_name=module_name)
             logging.info('XML to DocBook: done with module %s (#%i out of %i); %i DocBook files generated'
-                         % (module_name, module_count, len(configs), count_db))
+                         % (module_name, module_count, worker.n_modules(), count_db))
     time_db = time.perf_counter()
 
     if validate_db:
         for moduleName, conf in configs.items():
             logging.info('DocBook validation: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, len(configs)))
+                         % (module_name, module_count, worker.n_modules()))
             count_db = validate_module_db(module_name=module_name)
             logging.info('DocBook validation: done with module %s (#%i out of %i); %i DocBook files validated'
-                         % (module_name, module_count, len(configs), count_db))
+                         % (module_name, module_count, worker.n_modules(), count_db))
     time_rng = time.perf_counter()
 
     # Finally: deploy, i.e. copy all generated files, change their extensions, copy the images.
