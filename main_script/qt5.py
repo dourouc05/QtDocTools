@@ -224,7 +224,7 @@ def generate_module(module_name, configuration_file):
 
 # Convert the documentation HTML files as XML for the given module.
 def generate_module_xml(module_name):
-    logging.info('Parsing as XML: starting to work with module %s' % module_name)
+    count_xml = 0
     for root, subdirs, files in os.walk(output + module_name + '/'):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
@@ -238,7 +238,8 @@ def generate_module_xml(module_name):
                     tree = html5lib.parse(f)
                 with open(out_file_name, 'wb') as f:
                     f.write(ETree.tostring(tree))
-    logging.info('Parsing as XML: done with module %s' % module_name)
+                count_xml += 1
+    return count_xml
 
 
 # Call an XSLT 2 engine to convert a single XHTML5 file into DocBook. If there is a comment issue (something like
@@ -342,7 +343,6 @@ def generate_module_db(module_name):
     ignored_files = {'qtdoc': ['classes.xml', 'obsoleteclasses.xml', 'hierarchy.xml', 'qmlbasictypes.xml', 'qmltypes.xml']}  # TODO? Specifically ignored files (generated elsewhere).
     count_db = 0
 
-    logging.info('XML to DocBook: starting to work with module %s' % module_name)
     for root, sub_dirs, files in os.walk(output + module_name + '/'):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
@@ -378,7 +378,8 @@ def generate_module_db(module_name):
             # For C++ classes, also handle the function prototypes with the C++ application.
             if file.startswith('q') and not file.startswith('qml-'):
                 call_cpp_parser(out_file_name, out_file_name)
-    logging.info('XML to DocBook: done with module %s (%i DocBook files generated)' % (module_name, count_db))
+
+    return count_db
 
 
 # Call an RNG validator on the given file.
@@ -394,7 +395,6 @@ def validate_module_db(module_name):
     ext = '.db'  # Extension for files that are recognised here.
     count_db = 0
 
-    logging.info('DocBook validation: starting to work with module %s' % module_name)
     for root, sub_dirs, files in os.walk(output + module_name + '/'):
         if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
             continue
@@ -416,10 +416,10 @@ def validate_module_db(module_name):
             # Actual processing.
             file_name = os.path.join(root, file)
             call_rng(file_name, rng)
-    logging.info('DocBook validation: done with module %s (%i DocBook files validated)' % (module_name, count_db))
+    return count_db
 
 
-# Algorithm:
+# Process:
 # - retrieve the configuration files (*.qdocconf)
 # - create the indexes by going through all source directories
 # - start building things
@@ -428,37 +428,59 @@ if __name__ == '__main__':
     configs = get_configuration_files(outputConfigs, configsFile)
     time_configs = time.perf_counter()
 
-    # @TODO: Seek for parallelism when running qdoc to fully use multiple cores (HDD may become a bottleneck).
     # Dependencies: first prepare all modules to get the indexes, then can start conversion in parallel. Once one module
     # is converted (or even started, as long as one file is out), the conversion to XML can start.
     if prepare:
-        for moduleName, conf in configs.items():
-            prepare_module(module_name=moduleName, configuration_file=conf)
+        module_count = 1
+        for module_name, conf in configs.items():
+            logging.info('QDoc bootstrapping: starting to work with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            prepare_module(module_name=module_name, configuration_file=conf)
+            logging.info('QDoc bootstrapping: done with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            module_count = 0
     time_prepare = time.perf_counter()
 
     if generate_html:
-        for moduleName, conf in configs.items():
-            generate_module(module_name=moduleName, configuration_file=conf)
+        module_count = 1
+        for module_name, conf in configs.items():
+            logging.info('Generating QDoc HTML: starting to work with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            generate_module(module_name=module_name, configuration_file=conf)
+            logging.info('Generating QDoc HTML: done with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            module_count = 0
     time_generate = time.perf_counter()
 
     if generate_xml:
-        for moduleName, conf in configs.items():
-            generate_module_xml(module_name=moduleName)
+        for module_name, conf in configs.items():
+            logging.info('Parsing as XML: starting to work with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            count_xml = generate_module_xml(module_name=module_name)
+            logging.info('Parsing as XML: done with module %s (#%i out of %i); %i XML files generated'
+                         % (module_name, module_count, len(configs), count_xml))
     time_xml = time.perf_counter()
 
     if generate_db:
-        # for moduleName, conf in configs.items():
-        for moduleName in ['qtquick']:
-            generate_module_db(module_name=moduleName)
+        for moduleName, conf in configs.items():
+            logging.info('XML to DocBook: starting to work with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            count_db = generate_module_db(module_name=module_name)
+            logging.info('XML to DocBook: done with module %s (#%i out of %i); %i DocBook files generated'
+                         % (module_name, module_count, len(configs), count_db))
     time_db = time.perf_counter()
 
     if validate_db:
-        # for moduleName, conf in configs.items():
-        for moduleName in ['qtquick']:
-            validate_module_db(module_name=moduleName)
+        for moduleName, conf in configs.items():
+            logging.info('DocBook validation: starting to work with module %s (#%i out of %i)'
+                         % (module_name, module_count, len(configs)))
+            count_db = validate_module_db(module_name=module_name)
+            logging.info('DocBook validation: done with module %s (#%i out of %i); %i DocBook files validated'
+                         % (module_name, module_count, len(configs), count_db))
     time_rng = time.perf_counter()
 
     # Finally: deploy, i.e. copy all generated files, change their extensions, copy the images.
+    # TODO
 
     print("Total time: %f s" % (time_rng - time_beginning))
     print("Time to read configuration files: %f s" % (time_configs - time_beginning))
