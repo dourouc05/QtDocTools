@@ -6,19 +6,12 @@ import logging
 from collections import Counter
 import re
 import xml.etree.ElementTree as ETree
-
-try:
-    import html5lib
-    no_html5 = False
-except ImportError:
-    no_html5 = True
-    html5lib = None
-    ETree = None
+import html5lib
 
 
 class Qt5Worker:
     def __init__(self, folders, version, binaries, stylesheet, schema, vocabulary='qdoctools', ignores=None,
-                 write_list_configuration=True):
+                 list_configuration_cache=True):
         if ignores is None:
             ignores = {}
 
@@ -68,8 +61,8 @@ class Qt5Worker:
                             "QT_VERSION": '.'.join(version_string)}  # E.g.: 5.3.1
 
         # Deal with the list of configuration files.
-        self.configuration_file = folders['output'] + "configs.json"
-        self.configuration_list = self._get_configuration(write_config=write_list_configuration)
+        self.configuration_cache = folders['output'] + "configs.json"
+        self.configuration_list = self._get_configuration(write_config=list_configuration_cache)
 
     def __get_folders(self):
         """ Retrieve the list of modules in the sources: get the list of files, ensure it is a directory, and a module
@@ -192,29 +185,29 @@ class Qt5Worker:
         if not write_config:
             logging.info("Looking for configuration files...")
             return self.__retrieve_configuration_from_sources()
-        elif os.path.isfile(self.configuration_file):  # The target file exists: read it and return it.
+        elif os.path.isfile(self.configuration_cache):  # The target file exists: read it and return it.
             logging.info("Reading existing list of configuration files...")
-            with open(self.configuration_file) as jsonFile:
+            with open(self.configuration_cache) as jsonFile:
                 return json.load(jsonFile)
         else:  # It does not exist: retrieve the information and write the file.
             logging.info("Looking for configuration files and building a list...")
             configs = self.__retrieve_configuration_from_sources()
 
             # Create the file (and its containing directory!).
-            os.makedirs(os.path.dirname(self.configuration_file), exist_ok=True)
-            with open(self.configuration_file, 'w') as jsonFile:
+            os.makedirs(os.path.dirname(self.configuration_cache), exist_ok=True)
+            with open(self.configuration_cache, 'w') as jsonFile:
                 json.dump(configs, jsonFile)
 
             return configs
 
-    def _qdoc_parameters(self, qdocconf, module_name, prepare):
+    def _qdoc_parameters(self, module_name, prepare):
         """Generates the set of parameters to give to QDoc depending on the action."""
 
         params = [self.binaries['qdoc'],
                   "-outputdir", self.folders['output'] + module_name + '/',
                   "-installdir", self.folders['output'],
                   "-log-progress",
-                  qdocconf,
+                  self.configuration_list[module_name],
                   "-prepare" if prepare else "-generate"]
         params.extend(["-no-link-errors"] if prepare else ["-indexdir", self.folders['index_folder']])
         return params
@@ -233,16 +226,16 @@ class Qt5Worker:
 
         result = subprocess.run(self.__saxon_parameters(file_in, file_out), stderr=subprocess.PIPE)
         if len(result.stderr) > 0:
-            error_msg = result.stderr.decode('utf-8')
+            error = result.stderr.decode('utf-8')
 
             if not error_recovery:
-                logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
+                logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error))
             else:
                 # One-line comments about the function operator--; remove all one-line comments.
-                if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error_msg:
-                    def remove_comments(line):
-                        l = line.strip()
-                        return '' if l.startswith('<!--') and l.endswith('-->') else line
+                if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error:
+                    def remove_comments(l):
+                        ls = l.strip()
+                        return '' if ls.startswith('<!--') and ls.endswith('-->') else l
 
                     with open(file_in, 'r') as file:
                         lines = file.readlines()
@@ -251,7 +244,7 @@ class Qt5Worker:
                         file.write("\n".join(lines))
 
                 # Invalid characters happening in the XML files (i.e. binary output within the doc!).
-                elif 'SXXP0003: Error reported by XML parser: An invalid XML character' in error_msg:
+                elif 'SXXP0003: Error reported by XML parser: An invalid XML character' in error:
                     with open(file_in, 'r') as file:
                         lines = file.readlines()
                     regex = re.compile('[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-\u10FFF]')
@@ -260,8 +253,8 @@ class Qt5Worker:
                         file.write("\n".join(lines))
 
                 # Identifiers occurring multiple times: rewrite the next occurrences.
-                elif 'XTMM9000: Processing terminated by xsl:message' in error_msg \
-                        and 'ERROR: Some ids are not unique!' in error_msg:
+                elif 'XTMM9000: Processing terminated by xsl:message' in error \
+                        and 'ERROR: Some ids are not unique!' in error:
                     with open(file_in, 'r') as file:
                         lines = file.readlines()
 
@@ -301,14 +294,14 @@ class Qt5Worker:
 
                 # Not a recognised issue, nothing you can do.
                 else:
-                    logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
+                    logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error))
 
                 # Restart the XSLT engine, see if changed anything in the process.
                 result = subprocess.run(self.__saxon_parameters(file_in, file_out), stderr=subprocess.PIPE)
                 if len(result.stderr) == 0:
                     return
                 else:
-                    logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error_msg))
+                    logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error))
 
     def _call_cpp_parser(self, file_in, file_out):
         """Call the C++ parser for prototypes."""
@@ -339,17 +332,17 @@ class Qt5Worker:
     def n_modules(self):
         return len(self.configuration_list)
 
-    def prepare_module(self, module_name, configuration_file):
+    def prepare_module(self, module_name):
         """Prepare a module, meaning creating sub-folders for assets and (most importantly) the indexes."""
 
-        params = self._qdoc_parameters(configuration_file, module_name, prepare=True)
+        params = self._qdoc_parameters(module_name, prepare=True)
         logging.debug(params)
         subprocess.call(params, env=self.environment)
 
-    def generate_module(self, module_name, configuration_file):
+    def generate_module(self, module_name):
         """Build the documentation for the given module."""
 
-        params = self._qdoc_parameters(configuration_file, module_name, prepare=False)
+        params = self._qdoc_parameters(module_name, prepare=False)
         logging.debug(params)
         subprocess.call(params, env=self.environment)
 

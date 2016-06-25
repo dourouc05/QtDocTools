@@ -9,13 +9,6 @@ import logging
 
 from qt5_lib import Qt5Worker
 
-try:
-    import html5lib
-    no_html5 = False
-except ImportError:
-    no_html5 = True
-    html5lib = None
-
 # Command-line configuration.
 sources = "F:/QtDoc/QtDoc/QtSrc/qt-everywhere-opensource-src-5.4.2/"
 output = "F:/QtDoc/output/html/"
@@ -33,7 +26,7 @@ configsFile = output + "configs.json"
 
 prepare = False
 generate_html = False  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = False and not no_html5
+generate_xml = False
 generate_db = True  # Needs XML to be generated first.
 validate_db = True
 
@@ -66,51 +59,57 @@ if __name__ == '__main__':
     # is converted (or even started, as long as one file is out), the conversion to XML can start.
     if prepare:
         module_count = 1
-        for module_name, conf in configs.items():
+        for module in worker.modules_list():
             logging.info('QDoc bootstrapping: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            prepare_module(module_name=module_name, configuration_file=conf)
+                         % (module, module_count, worker.n_modules()))
+            worker.prepare_module(module_name=module)
             logging.info('QDoc bootstrapping: done with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            module_count = 0
+                         % (module, module_count, worker.n_modules()))
+            module_count += 1
     time_prepare = time.perf_counter()
 
     if generate_html:
         module_count = 1
-        for module_name, conf in configs.items():
+        for module in worker.modules_list():
             logging.info('Generating QDoc HTML: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            generate_module(module_name=module_name, configuration_file=conf)
+                         % (module, module_count, worker.n_modules()))
+            worker.generate_module(module_name=module)
             logging.info('Generating QDoc HTML: done with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            module_count = 0
+                         % (module, module_count, worker.n_modules()))
+            module_count += 1
     time_generate = time.perf_counter()
 
     if generate_xml:
-        for module_name, conf in configs.items():
+        module_count = 1
+        for module in worker.modules_list():
             logging.info('Parsing as XML: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            count_xml = generate_module_xml(module_name=module_name)
+                         % (module, module_count, worker.n_modules()))
+            count_xml = worker.generate_module_xml(module_name=module)
             logging.info('Parsing as XML: done with module %s (#%i out of %i); %i XML files generated'
-                         % (module_name, module_count, worker.n_modules(), count_xml))
+                         % (module, module_count, worker.n_modules(), count_xml))
+            module_count += 1
     time_xml = time.perf_counter()
 
     if generate_db:
-        for moduleName, conf in configs.items():
+        module_count = 1
+        for module in worker.modules_list():
             logging.info('XML to DocBook: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            count_db = generate_module_db(module_name=module_name)
+                         % (module, module_count, worker.n_modules()))
+            count_db = worker.generate_module_db(module_name=module)
             logging.info('XML to DocBook: done with module %s (#%i out of %i); %i DocBook files generated'
-                         % (module_name, module_count, worker.n_modules(), count_db))
+                         % (module, module_count, worker.n_modules(), count_db))
+            module_count += 1
     time_db = time.perf_counter()
 
     if validate_db:
-        for moduleName, conf in configs.items():
+        module_count = 1
+        for module in worker.modules_list():
             logging.info('DocBook validation: starting to work with module %s (#%i out of %i)'
-                         % (module_name, module_count, worker.n_modules()))
-            count_db = validate_module_db(module_name=module_name)
+                         % (module, module_count, worker.n_modules()))
+            count_db = worker.validate_module_db(module_name=module)
             logging.info('DocBook validation: done with module %s (#%i out of %i); %i DocBook files validated'
-                         % (module_name, module_count, worker.n_modules(), count_db))
+                         % (module, module_count, worker.n_modules(), count_db))
+            module_count += 1
     time_rng = time.perf_counter()
 
     # Finally: deploy, i.e. copy all generated files, change their extensions, copy the images.
