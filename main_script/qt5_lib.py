@@ -38,6 +38,7 @@ class Qt5Worker:
         assert 'saxon9' in self.binaries
         assert 'jing' in self.binaries
         assert 'postprocess' in self.binaries
+        # If 'launcher' in self.binaries, then use this to run Saxon; otherwise, full Python implementation.
 
         # Check the lists of items to ignore.
         if 'modules' not in self.ignores:
@@ -303,6 +304,16 @@ class Qt5Worker:
                 else:
                     logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error))
 
+    def _call_xslt_launcher(self, folder, error_recovery=True):
+        """Call the XSLT launcher script. As it reuses the JVM for the operations, this is much faster than the
+        pure Java solution."""
+
+        params = ['java', '-cp', self.binaries['launcher'], self.stylesheet, folder, 'true' if error_recovery else 'false']
+        result = subprocess.run(params, stderr=subprocess.PIPE)
+        if len(result.stderr) > 0:
+            error = result.stderr.decode('utf-8')
+            logging.warning("Problem(s) at stage XSLT: \n%s" % error)
+
     def _call_cpp_parser(self, file_in, file_out):
         """Call the C++ parser for prototypes."""
 
@@ -369,48 +380,65 @@ class Qt5Worker:
     def generate_module_db(self, module_name):
         """Convert the documentation XML files as DocBook for the given module."""
 
-        ext = '.xml'  # Extension for files that are recognised here.
-        forbidden_suffixes = ['-members', '-compat', '-obsolete']  # Supplementary files to some base class.
-        ignored_suffixes = ['-manifest']  # Suffixes for ignored files.
-        count_db = 0
+        # Launcher not present in the arguments:
+        if 'launcher' not in self.binaries:
+            ext = '.xml'  # Extension for files that are recognised here.
+            forbidden_suffixes = ['-members', '-compat', '-obsolete']  # Supplementary files to some base class.
+            ignored_suffixes = ['-manifest']  # Suffixes for ignored files.
+            count_db = 0
 
-        for root, sub_dirs, files in os.walk(self.folders['output'] + module_name + '/'):
-            if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
-                continue
-
-            count = 0
-            n_files = len(files)
-            for file in files:
-                count += 1
-
-                # Handle a bit of output (even though the DocBook counter is not yet updated for this iteration).
-                if count % 10 == 0:
-                    logging.info('XML to DocBook: module %s, %i files done out of %i (%i DocBook files generated)'
-                                 % (module_name, count, n_files, count_db))
-
-                # Avoid lists of examples (-manifest.xml) and files automatically included within the output
-                # with the XSLT stylesheet (-members.xml, -obsolete.xml, -compat.xml).
-                if not file.endswith(ext):
+            for root, sub_dirs, files in os.walk(self.folders['output'] + module_name + '/'):
+                if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
                     continue
-                if any([file.endswith(fs + ext) for fs in ignored_suffixes]):
-                    continue
-                if any([file.endswith(fs + ext) for fs in forbidden_suffixes]):
-                    continue
-                if module_name in self.ignores['files'] and file in self.ignores['files'][module_name]:
-                    continue
-                count_db += 1
 
-                # Actual processing.
-                base_file_name = os.path.join(root, file[:-4])
-                in_file_name = base_file_name + '.xml'
-                out_file_name = base_file_name + '.db'
-                self._call_xslt(in_file_name, out_file_name)
+                count = 0
+                n_files = len(files)
+                for file in files:
+                    count += 1
 
-                # For C++ classes, also handle the function prototypes with the C++ application.
-                if file.startswith('q') and not file.startswith('qml-'):
-                    self._call_cpp_parser(out_file_name, out_file_name)
+                    # Handle a bit of output (even though the DocBook counter is not yet updated for this iteration).
+                    if count % 10 == 0:
+                        logging.info('XML to DocBook: module %s, %i files done out of %i (%i DocBook files generated)'
+                                     % (module_name, count, n_files, count_db))
 
-        return count_db
+                    # Avoid lists of examples (-manifest.xml) and files automatically included within the output
+                    # with the XSLT stylesheet (-members.xml, -obsolete.xml, -compat.xml).
+                    if not file.endswith(ext):
+                        continue
+                    if any([file.endswith(fs + ext) for fs in ignored_suffixes]):
+                        continue
+                    if any([file.endswith(fs + ext) for fs in forbidden_suffixes]):
+                        continue
+                    if module_name in self.ignores['files'] and file in self.ignores['files'][module_name]:
+                        continue
+                    count_db += 1
+
+                    # Actual processing.
+                    base_file_name = os.path.join(root, file[:-4])
+                    in_file_name = base_file_name + '.xml'
+                    out_file_name = base_file_name + '.db'
+                    self._call_xslt(in_file_name, out_file_name)
+
+                    # For C++ classes, also handle the function prototypes with the C++ application.
+                    if file.startswith('q') and not file.startswith('qml-'):
+                        self._call_cpp_parser(out_file_name, out_file_name)
+
+            return count_db
+        else:
+            count_db = 0
+
+            # Start the launcher; it does not do anything with the C++ parser, so do it afterwards.
+            self._call_xslt_launcher(self.folders['output'] + module_name, error_recovery=True)
+            for root, sub_dirs, files in os.walk(self.folders['output'] + module_name + '/'):
+                if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
+                    continue
+
+                for file in files:
+                    out_file_name = os.path.join(root, file[:-4]) + '.db'
+                    if file.startswith('q') and not file.startswith('qml-'):
+                        self._call_cpp_parser(out_file_name, out_file_name)
+
+            return count_db
 
     def validate_module_db(self, module_name):
         """"Convert the documentation XML files as DocBook for the given module."""

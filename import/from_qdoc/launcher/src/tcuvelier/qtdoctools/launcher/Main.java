@@ -34,13 +34,16 @@ public class Main {
         args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtdoc2"};
 
         // Parse the command line.
-        if (args.length != 2) {
-            throw new RuntimeException("Usage: xsl folder");
+        if (args.length >= 2 && args.length <= 3) {
+            throw new RuntimeException("Usage: xsl folder [true|false for error recovery]");
         }
+
         String xslt = args[0];
         String dir = args[1];
         Path folder = Paths.get(dir);
         String moduleName = folder.getFileName().toString();
+        boolean errorRecovery = (args.length > 2) && Boolean.parseBoolean(args[2]);
+
         if (! xslt.endsWith(".xsl") || xslt.length() == 4) {
             throw new RuntimeException("Unrecognised style sheet name: " + xslt);
         }
@@ -83,6 +86,10 @@ public class Main {
                  try {
                      transformer.transform(new StreamSource(in), new StreamResult(out));
                  } catch (TransformerException e) {
+                     if (errorRecovery) {
+                         System.out.println("ERROR RECOVERY NOT YET IMPLEMENTED");
+                     }
+
                      System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \\n");
                      e.printStackTrace();
                  }

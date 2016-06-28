@@ -17,6 +17,7 @@ version = [5, 4, 2]
 qdoc = "D:/Qt/5.5/mingw492_32/bin/qdoc.exe"
 saxon9 = "F:/QtDoc/QtDoc/SaxonHE9-7-0-3J/saxon9he.jar"
 jing = "F:/QtDoc/QtDoc/jing-20140903-saxon95.jar"
+launcher = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/launcher"  # Containing the .class file (Java-imposed hierarchy).
 
 xslt2 = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/xslt/qdoc2db_5.4.xsl"
 rng = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/schemas/docbook51/custom.rng"
@@ -50,7 +51,7 @@ ignored_files = {'qtdoc': ['classes.xml', 'obsoleteclasses.xml', 'hierarchy.xml'
 if __name__ == '__main__':
     time_beginning = time.perf_counter()
     worker = Qt5Worker(folders={'sources': sources, 'output': output}, version=version,
-                       binaries={'qdoc': qdoc, 'saxon9': saxon9, 'jing': jing},
+                       binaries={'qdoc': qdoc, 'saxon9': saxon9, 'jing': jing, 'launcher': launcher},
                        stylesheet=xslt2, schema=rng, vocabulary='qdoctools',
                        ignores={'modules': ignored, 'qt_base': qt_base_ignore, 'files': ignored_files})
     time_configs = time.perf_counter()
