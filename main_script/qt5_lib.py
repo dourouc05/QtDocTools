@@ -9,6 +9,8 @@ import xml.etree.ElementTree as ETree
 import html5lib
 
 
+# TODO: investigate replacing html5lib by http://doc.scrapy.org/en/1.1/topics/feed-exports.html, should be much faster!
+
 class Qt5Worker:
     def __init__(self, folders, version, binaries, stylesheet, schema, vocabulary='qdoctools', ignores=None,
                  list_configuration_cache=True):
@@ -265,8 +267,8 @@ class Qt5Worker:
                     # within the title <h? id> tag.
                     # If there are multiple <html:a>, they have the same ID and lie on the same line
                     # (qtquick-cppextensionpoints).
-                    h_seen = Counter()  # Number of times this ID was seen for a <h? id="">  tag.
                     a_seen = Counter()  # Number of times this ID was seen for a <a name=""> tag.
+                    h_seen = Counter()  # Number of times this ID was seen for a <h? id="">  tag.
                     lines_new = []
                     for line in lines:
                         # Detect an identifier.

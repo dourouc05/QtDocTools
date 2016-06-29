@@ -27,9 +27,9 @@ configsFile = output + "configs.json"
 
 prepare = False
 generate_html = False  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = False
-generate_db = True  # Needs XML to be generated first.
-validate_db = True
+generate_xml = True
+generate_db = False  # Needs XML to be generated first.
+validate_db = False
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 
@@ -51,8 +51,9 @@ ignored_files = {'qtdoc': ['classes.xml', 'obsoleteclasses.xml', 'hierarchy.xml'
 if __name__ == '__main__':
     time_beginning = time.perf_counter()
     worker = Qt5Worker(folders={'sources': sources, 'output': output}, version=version,
-                       binaries={'qdoc': qdoc, 'saxon9': saxon9, 'jing': jing, 'launcher': launcher},
-                       stylesheet=xslt2, schema=rng, vocabulary='qdoctools',
+                       binaries={'qdoc': qdoc, 'saxon9': saxon9, 'jing': jing,
+                                 'postprocess': postprocess, 'launcher': launcher},
+                       stylesheet=xslt2, schema=rng, vocabulary='qtdoctools',
                        ignores={'modules': ignored, 'qt_base': qt_base_ignore, 'files': ignored_files})
     time_configs = time.perf_counter()
 
@@ -82,7 +83,7 @@ if __name__ == '__main__':
 
     if generate_xml:
         module_count = 1
-        for module in worker.modules_list():
+        for module in ['qtdoc']: #worker.modules_list():
             logging.info('Parsing as XML: starting to work with module %s (#%i out of %i)'
                          % (module, module_count, worker.n_modules()))
             count_xml = worker.generate_module_xml(module_name=module)

@@ -63,8 +63,11 @@
     <xsl:variable name="unsortedIds" select="$content//html:a[not(preceding-sibling::html:*[1][self::html:a and @name])]/@name" as="xs:string*"/>
     <xsl:variable name="sortedIds" select="distinct-values($unsortedIds)" as="xs:string*"/>
     <xsl:if test="count($unsortedIds) != count($sortedIds)">
-      <!-- This exact error message is looked after by the main script! -->
-      <xsl:message terminate="yes">ERROR: Some ids are not unique!</xsl:message>
+      <xsl:message terminate="yes">
+        <!-- This exact error message is looked after by the main script! -->
+        <xsl:text>ERROR: Some ids are not unique! </xsl:text>
+        <xsl:value-of select="$unsortedIds"/>
+      </xsl:message>
     </xsl:if>
 
     <!-- Extract the metadata. -->
