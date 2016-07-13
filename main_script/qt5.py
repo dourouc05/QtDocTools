@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
     if generate_xml:
         module_count = 1
-        for module in ['qtdoc']: #worker.modules_list():
+        for module in ['qtquick']: #worker.modules_list():
             logging.info('Parsing as XML: starting to work with module %s (#%i out of %i)'
                          % (module, module_count, worker.n_modules()))
             count_xml = worker.generate_module_xml(module_name=module)

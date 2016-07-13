@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.sf.saxon.expr.instruct.TerminationException;
+import net.sf.saxon.trans.XPathException;
 
 public class Main {
     // Saxon HE: run with -Djava.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl.
@@ -34,7 +35,7 @@ public class Main {
 
     // Arguments: XSLT file, folder.
     public static void main(String[] args) throws TransformerConfigurationException, IOException {
-        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtdoc", "true"};
+        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtquick", "true"};
 
         // Parse the command line.
         if (args.length < 2 || args.length > 3) {
@@ -90,14 +91,6 @@ public class Main {
                      transformer.transform(new StreamSource(in), new StreamResult(out));
                  } catch (TransformerException e) {
                      if (errorRecovery) {
-
-//                         switch (te.getErrorCodeLocalPart()) {
-//                             case "SXXP0003":
-//                                 // One-line comments about the function operator--; remove all one-line comments.
-//                                 // Invalid characters happening in the XML files (i.e. binary output within the doc!).
-//                                 break;
-//                         }
-
                          // Terminated by <xsl:message>.
                          if (e instanceof TerminationException) {
                              TerminationException te = (TerminationException) e;
@@ -115,13 +108,15 @@ public class Main {
                                      Map<String, MutableInt> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
                                      Map<String, MutableInt> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
 
+                                     Pattern idRegex = Pattern.compile("id=\"(.*)\"|name=\"(.*)\"");
                                      Stream<String> outputLines = Files.lines(in.toPath()).map(line -> {
                                          // Detect an identifier.
                                          if (line.contains("<html:a name=\"")
                                                  || (line.contains("<html:h") && line.contains("id=\""))) {
-                                             Pattern idRegex = Pattern.compile("id=\"(.*)\"|name=\"(.*)\"");
                                              Matcher matcher = idRegex.matcher(line);
-                                             boolean hasMatched = matcher.find(); // Force to allow matches after the beginning of the line.
+                                             if (! matcher.find()) { // Force to allow matches after the beginning of the line, hence mandatory call to find().
+                                                 throw new AssertionError("Could not find an identifier in line '" + line + "'.");
+                                             }
                                              String foundId = matcher.group().split("\"")[1];
 
                                              // Count this occurrence in what has been seen.
@@ -162,36 +157,55 @@ public class Main {
                                      e1.printStackTrace();
                                  }
                              }
+                             // No else: if it is another error message from the XSLT, then it is not corrected, and
+                             // caught by the next try.
                          }
-
-                         /**
-                          #
-                          if 'SXXP0003: Error reported by XML parser: The string "--" is not permitted within comments.' in error:
-                          def remove_comments(l):
-                          ls = l.strip()
-                          return '' if ls.startswith('<!--') and ls.endswith('-->') else l
-
-                          with open(file_in, 'r') as file:
-                          lines = file.readlines()
-                          lines = [remove_comments(l) for l in lines]
-                          with open(file_in, 'w') as file:
-                          file.write("\n".join(lines))
-
-                          # Invalid characters happening in the XML files (i.e. binary output within the doc!).
-                          elif 'SXXP0003: Error reported by XML parser: An invalid XML character' in error:
-                          with open(file_in, 'r') as file:
-                          lines = file.readlines()
-                          regex = re.compile('[^\x09\x0A\x0D\x20-\uD7FF\uE000-\uFFFD\u10000-\u10FFF]')
-                          lines = [regex.sub('', l) for l in lines]
-                          with open(file_in, 'w') as file:
-                          file.write("\n".join(lines))
-
-                          # Identifiers occurring multiple times: rewrite the next occurrences.
-                          elif 'XTMM9000: Processing terminated by xsl:message' in error \
-                          and 'ERROR: Some ids are not unique!' in error:
-                          with open(file_in, 'r') as file:
-                          lines = file.readlines()
-                          */
+                         // Terminated by the XML parser.
+                         else if (e instanceof XPathException) {
+                             XPathException xe = (XPathException) e;
+                             if (xe.getErrorCodeLocalPart().equals("SXXP0003")) {
+                                 // One-line comments about the function operator--; remove all one-line comments.
+                                 if (xe.getMessage().contains("The string \"--\" is not permitted within comments.")) {
+                                     try {
+                                         Stream<String> outputLines = Files.lines(in.toPath()).map(line -> {
+                                             String chomped = line.trim();
+                                             if (chomped.startsWith("<!--") && chomped.endsWith("-->")) {
+                                                 return "";
+                                             } else {
+                                                 return line;
+                                             }
+                                         });
+                                         String newContents = outputLines.collect(Collectors.joining("\n"));
+                                         try (PrintWriter pw = new PrintWriter(in)) {
+                                             pw.write(newContents);
+                                         }
+                                     } catch (IOException e1) {
+                                         e1.printStackTrace();
+                                     }
+                                 }
+                                 // Invalid characters happening in the XML files (i.e. binary output within the doc!).
+                                 else if (xe.getMessage().contains("An invalid XML character")) {
+                                     try {
+                                         Pattern idRegex = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFF]");
+                                         Stream<String> outputLines = Files.lines(in.toPath()).map(line -> idRegex.matcher(line).replaceAll(""));
+                                         String newContents = outputLines.collect(Collectors.joining("\n"));
+                                         try (PrintWriter pw = new PrintWriter(in)) {
+                                             pw.write(newContents);
+                                         }
+                                     } catch (IOException e1) {
+                                         e1.printStackTrace();
+                                     }
+                                 }
+                                 // Otherwise: unknown error!
+                                 else {
+                                     throw new RuntimeException(e);
+                                 }
+                             }
+                         }
+                         // Otherwise: unknown error!
+                         else {
+                             throw new RuntimeException(e);
+                         }
 
                         // Retry.
                          try {
