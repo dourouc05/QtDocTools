@@ -58,6 +58,10 @@ public class Main {
             throw new IOException("Input folder does not exist: " + dir);
         }
 
+        // Deal with the standard error, to avoid Saxon outputting anything when this code deals with the error.
+        PrintStream stderr = System.err;
+        System.setErr(NullOutputStream.nullStream());
+
         // Compile the style sheet.
         Templates templates = TransformerFactory.newInstance().newTemplates(new StreamSource(xslt));
         Transformer transformer = templates.newTransformer();
@@ -207,12 +211,15 @@ public class Main {
                              throw new RuntimeException(e);
                          }
 
-                        // Retry.
+                        // Restore the outputs and retry.
                          try {
+                             System.setErr(stderr);
                              transformer.transform(new StreamSource(in), new StreamResult(out));
                          } catch (TransformerException e1) {
                              System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
                              e1.printStackTrace();
+                         } finally {
+                             System.setErr(NullOutputStream.nullStream());
                          }
                      } else {
                          System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
@@ -232,5 +239,14 @@ public class Main {
                 return 0;
             }
         };
+    }
+
+    private static class NullOutputStream extends OutputStream {
+        @Override
+        public void write(int b) throws IOException {}
+
+        private static PrintStream nullStream() {
+            return new PrintStream(new NullOutputStream());
+        }
     }
 }
