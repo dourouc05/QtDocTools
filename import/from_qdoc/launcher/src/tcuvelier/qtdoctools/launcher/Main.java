@@ -35,7 +35,8 @@ public class Main {
 
     // Arguments: XSLT file, folder.
     public static void main(String[] args) throws TransformerConfigurationException, IOException {
-        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtquick", "true"};
+        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\test_5.4_rewrite", "true"};
+//        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtquick", "true"};
 
         // Parse the command line.
         if (args.length < 2 || args.length > 3) {
@@ -94,136 +95,71 @@ public class Main {
                  try {
                      transformer.transform(new StreamSource(in), new StreamResult(out));
                  } catch (TransformerException e) {
-                     if (errorRecovery) {
-                         // Terminated by <xsl:message>.
-                         if (e instanceof TerminationException) {
-                             TerminationException te = (TerminationException) e;
-                             if (te.getErrorCodeLocalPart().equals("XTMM9000")) {
-                                 /* Identifiers occurring multiple times: rewrite the next occurrences. */
+                     // There was an error: print it to stderr, as it will be understood by the calling script.
+                     // Subtlety: that stream has been suppressed!
+                     if (! errorRecovery) {
+                         System.setErr(stderr);
+                         System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
+                         e.printStackTrace();
+                         System.setErr(nullStream());
+                     }
 
-                                 // Algorithm: remember the number of times each ID was ever seen in the document; if it is higher
-                                 // than two, then rewrite the line containing the ID. Pay attention to the fact that those IDs are
-                                 // sometimes duplicated, i.e. present at the same time within a <a name> tag and
-                                 // within the title <h? id> tag.
-                                 //         If there are multiple <html:a>, they have the same ID and lie on the same line
-                                 // (qtquick-cppextensionpoints).
-                                 // TODO: Check the message from the XSLT! "ERROR: Some ids are not unique!"
+                     // Terminated by <xsl:message>.
+                     if (e instanceof TerminationException) {
+                         TerminationException te = (TerminationException) e;
+                         if (te.getErrorCodeLocalPart().equals("XTMM9000")) {
+                             /* Identifiers occurring multiple times: rewrite the next occurrences. */
+                             // TODO: Check the message from the XSLT! "ERROR: Some ids are not unique!"
+                             try {
+                                 rewriteFile(in, eliminateDuplicateIDs(in));
+                             } catch (IOException e1) {
+                                 // Cannot happen: file existence already checked by Saxon!
+                                 e1.printStackTrace();
+                             }
+                         } else {
+                             throw new RuntimeException(e);
+                         }
+                     }
+                     // Terminated by the XML parser.
+                     else if (e instanceof XPathException) {
+                         XPathException xe = (XPathException) e;
+                         if (xe.getErrorCodeLocalPart().equals("SXXP0003")) {
+                             // One-line comments about the function operator--; remove all one-line comments.
+                             if (xe.getMessage().contains("The string \"--\" is not permitted within comments.")) {
                                  try {
-                                     Map<String, MutableInt> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
-                                     Map<String, MutableInt> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
-
-                                     Pattern idRegex = Pattern.compile("id=\"(.*)\"|name=\"(.*)\"");
-                                     Stream<String> outputLines = Files.lines(in.toPath()).map(line -> {
-                                         // Detect an identifier.
-                                         if (line.contains("<html:a name=\"")
-                                                 || (line.contains("<html:h") && line.contains("id=\""))) {
-                                             Matcher matcher = idRegex.matcher(line);
-                                             if (! matcher.find()) { // Force to allow matches after the beginning of the line, hence mandatory call to find().
-                                                 throw new AssertionError("Could not find an identifier in line '" + line + "'.");
-                                             }
-                                             String foundId = matcher.group().split("\"")[1];
-
-                                             // Count this occurrence in what has been seen.
-                                             if (line.contains("<html:a")) {
-                                                 if (aSeen.get(foundId) == null) {
-                                                     aSeen.put(foundId, new MutableInt());
-                                                 } else {
-                                                     aSeen.get(foundId).increment();
-                                                 }
-                                             } else {
-                                                 if (hSeen.get(foundId) == null) {
-                                                     hSeen.put(foundId, new MutableInt());
-                                                 } else {
-                                                     hSeen.get(foundId).increment();
-                                                 }
-                                             }
-
-                                             // Rewrite the line if need be.
-                                             int increment = Math.max(
-                                                     aSeen.getOrDefault(foundId, MutableInt.zero).get(),
-                                                     hSeen.getOrDefault(foundId, MutableInt.zero).get()
-                                             );
-                                             if (increment >= 2) {
-                                                 return line.replace(foundId, foundId + "-" + increment);
-                                             } else {
-                                                 return line;
-                                             }
-                                         } else {
-                                             return line;
-                                         }
-                                     });
-                                     String newContents = outputLines.collect(Collectors.joining("\n"));
-                                     try (PrintWriter pw = new PrintWriter(in)) {
-                                         pw.write(newContents);
-                                     }
+                                     rewriteFile(in, eliminateComments(in));
                                  } catch (IOException e1) {
-                                     // Cannot happen: file existence already checked by Saxon!
                                      e1.printStackTrace();
                                  }
                              }
-                             // No else: if it is another error message from the XSLT, then it is not corrected, and
-                             // caught by the next try.
-                         }
-                         // Terminated by the XML parser.
-                         else if (e instanceof XPathException) {
-                             XPathException xe = (XPathException) e;
-                             if (xe.getErrorCodeLocalPart().equals("SXXP0003")) {
-                                 // One-line comments about the function operator--; remove all one-line comments.
-                                 if (xe.getMessage().contains("The string \"--\" is not permitted within comments.")) {
-                                     try {
-                                         Stream<String> outputLines = Files.lines(in.toPath()).map(line -> {
-                                             String chomped = line.trim();
-                                             if (chomped.startsWith("<!--") && chomped.endsWith("-->")) {
-                                                 return "";
-                                             } else {
-                                                 return line;
-                                             }
-                                         });
-                                         String newContents = outputLines.collect(Collectors.joining("\n"));
-                                         try (PrintWriter pw = new PrintWriter(in)) {
-                                             pw.write(newContents);
-                                         }
-                                     } catch (IOException e1) {
-                                         e1.printStackTrace();
-                                     }
-                                 }
-                                 // Invalid characters happening in the XML files (i.e. binary output within the doc!).
-                                 else if (xe.getMessage().contains("An invalid XML character")) {
-                                     try {
-                                         Pattern idRegex = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFF]");
-                                         Stream<String> outputLines = Files.lines(in.toPath()).map(line -> idRegex.matcher(line).replaceAll(""));
-                                         String newContents = outputLines.collect(Collectors.joining("\n"));
-                                         try (PrintWriter pw = new PrintWriter(in)) {
-                                             pw.write(newContents);
-                                         }
-                                     } catch (IOException e1) {
-                                         e1.printStackTrace();
-                                     }
-                                 }
-                                 // Otherwise: unknown error!
-                                 else {
-                                     throw new RuntimeException(e);
+                             // Invalid characters happening in the XML files (i.e. binary output within the doc!).
+                             else if (xe.getMessage().contains("An invalid XML character")) {
+                                 try {
+                                     rewriteFile(in, eliminateNonstandardCharacters(in));
+                                 } catch (IOException e1) {
+                                     e1.printStackTrace();
                                  }
                              }
+                             // Otherwise: unknown error!
+                             else {
+                                 throw new RuntimeException(e);
+                             }
                          }
-                         // Otherwise: unknown error!
-                         else {
-                             throw new RuntimeException(e);
-                         }
+                     }
+                     // Otherwise: unknown error!
+                     else {
+                         throw new RuntimeException(e);
+                     }
 
-                        // Restore the outputs and retry.
-                         try {
-                             System.setErr(stderr);
-                             transformer.transform(new StreamSource(in), new StreamResult(out));
-                         } catch (TransformerException e1) {
-                             System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
-                             e1.printStackTrace();
-                         } finally {
-                             System.setErr(nullStream());
-                         }
-                     } else {
+                    // Restore the outputs and retry.
+                     try {
+                         System.setErr(stderr);
+                         transformer.transform(new StreamSource(in), new StreamResult(out));
+                     } catch (TransformerException e1) {
                          System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
-                         e.printStackTrace();
+                         e1.printStackTrace();
+                     } finally {
+                         System.setErr(nullStream());
                      }
                  }
              });
@@ -246,5 +182,84 @@ public class Main {
                 return 0;
             }
         };
+    }
+
+    private static void rewriteFile(File in, Stream<String> newLines) {
+        try {
+            String newContents = newLines.collect(Collectors.joining("\n"));
+            try (PrintWriter pw = new PrintWriter(in)) {
+                pw.write(newContents);
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    // Algorithm: remember the number of times each ID was ever seen in the document; if it is higher
+    // than two, then rewrite the line containing the ID. Pay attention to the fact that those IDs are
+    // sometimes duplicated, i.e. present at the same time within a <a name> tag and
+    // within the title <h? id> tag.
+    //         If there are multiple <html:a>, they have the same ID and lie on the same line
+    // (qtquick-cppextensionpoints).
+    private static Stream<String> eliminateDuplicateIDs(File in) throws IOException {
+        Map<String, MutableInt> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
+        Map<String, MutableInt> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
+
+        Pattern idRegex = Pattern.compile("id=\"(.*)\"|name=\"(.*)\"");
+        return Files.lines(in.toPath()).map(line -> {
+            // Detect an identifier.
+            if (line.contains("<html:a name=\"")
+                    || (line.contains("<html:h") && line.contains("id=\""))) {
+                Matcher matcher = idRegex.matcher(line);
+                if (! matcher.find()) { // Force to allow matches after the beginning of the line, hence mandatory call to find().
+                    throw new AssertionError("Could not find an identifier in line '" + line + "'.");
+                }
+                String foundId = matcher.group().split("\"")[1];
+
+                // Count this occurrence in what has been seen.
+                if (line.contains("<html:a")) {
+                    if (aSeen.get(foundId) == null) {
+                        aSeen.put(foundId, new MutableInt());
+                    } else {
+                        aSeen.get(foundId).increment();
+                    }
+                } else {
+                    if (hSeen.get(foundId) == null) {
+                        hSeen.put(foundId, new MutableInt());
+                    } else {
+                        hSeen.get(foundId).increment();
+                    }
+                }
+
+                // Rewrite the line if need be.
+                int increment = Math.max(
+                        aSeen.getOrDefault(foundId, MutableInt.zero).get(),
+                        hSeen.getOrDefault(foundId, MutableInt.zero).get()
+                );
+                if (increment >= 2) {
+                    return line.replace(foundId, foundId + "-" + increment);
+                } else {
+                    return line;
+                }
+            } else {
+                return line;
+            }
+        });
+    }
+
+    private static Stream<String> eliminateComments(File in) throws IOException {
+        return Files.lines(in.toPath()).map(line -> {
+            String chomped = line.trim();
+            if (chomped.startsWith("<!--") && chomped.endsWith("-->")) {
+                return "";
+            } else {
+                return line;
+            }
+        });
+    }
+
+    private static Stream<String> eliminateNonstandardCharacters(File in) throws IOException {
+        Pattern idRegex = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFF]");
+        return Files.lines(in.toPath()).map(line -> idRegex.matcher(line).replaceAll(""));
     }
 }

@@ -1,0 +1,67 @@
+<html:html xmlns:html="http://www.w3.org/1999/xhtml" lang="en"><html:head>
+  <html:meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<!-- cppextensionpoints.qdoc -->
+  <html:title>C++ Extension Points Provided By Qt Quick | Qt Quick 5.4</html:title>
+  <html:link href="style/offline.css" rel="stylesheet" type="text/css" />
+</html:head>
+<html:body>
+<html:div class="header" id="qtdocheader">
+    <html:div class="main">
+    <html:div class="main-rounded">
+        <html:div class="navigationbar">
+        <html:ul>
+<html:li><html:a href="qtdoc/index.html">Qt 5.4</html:a></html:li>
+<html:li><html:a href="qtquick-index.html">Qt Quick</html:a></html:li>
+<html:li>C++ Extension Points Provided By Qt Quick</html:li>
+<html:li id="buildversion">Qt 5.4.2 Reference Documentation</html:li>
+    </html:ul>
+    </html:div>
+</html:div>
+<html:div class="content">
+<html:div class="line">
+<html:div class="content mainContent">
+<html:div class="sidebar">
+<html:div class="toc">
+<html:h3><html:a name="toc">Contents</html:a></html:h3>
+<html:ul>
+<html:li class="level1"><html:a href="#user-defined-qquickitem-derived-types">User-Defined QQuickItem-Derived Types</html:a></html:li>
+<html:li class="level1"><html:a href="#scene-graph-related-classes">Scene Graph-Related Classes</html:a></html:li>
+<html:li class="level1"><html:a href="#pixmap-and-threaded-image-support">Pixmap and Threaded Image Support</html:a></html:li>
+</html:ul>
+</html:div>
+<html:div class="sidebar-content" id="sidebar-content" /></html:div>
+<html:h1 class="title">C++ Extension Points Provided By Qt Quick</html:h1>
+<html:span class="subtitle" />
+<!-- $$$qtquick-cppextensionpoints.html-description -->
+<html:div class="descr"> <html:a name="details" />
+<html:p>All QML applications can be extended from C++ in order to use additional functionality implemented in C++ code or to provide a C++ based QML plugin. This topic of extending QML from C++ is covered in the <html:a href="qtqml/qtqml-cppintegration-topic.html">Integrating QML and C++</html:a> documentation.</html:p>
+<html:p>Additionally, the Qt Quick module provides several extension and integration points for C++ developers, specific to this module. In particular, it allows C++ developers to create and register custom <html:a href="qquickitem.html">QQuickItem</html:a>-derived types which can be rendered by Qt Quick. It also provides several scene graph-related classes which allow developers to define their own rendering primitives.</html:p>
+<html:a name="user-defined-qquickitem-derived-types" /><html:a name="user-defined-qquickitem-derived-types" />
+<html:h2 id="user-defined-qquickitem-derived-types">User-Defined QQuickItem-Derived Types</html:h2>
+<html:p>While the Qt Quick module already provides a rich library of visual item types for use in a QML application, some developers may wish to define their own item-derived types in C++ and expose them to the QML type system. The easiest way to do this is to subclass <html:a href="qquickitem.html">QQuickItem</html:a>, which is the base type for all visual types in the Qt Quick module. See the <html:a href="qquickitem.html">QQuickItem</html:a> documentation for more details.</html:p>
+<html:a name="scene-graph-related-classes" /><html:a name="scene-graph-related-classes" />
+<html:h2 id="scene-graph-related-classes">Scene Graph-Related Classes</html:h2>
+<html:p>Qt Quick 2 makes use of a dedicated scene graph based on OpenGL ES 2.0 or OpenGL 2.0 for its rendering. Using a scene graph for graphics rather than the traditional imperative painting systems (<html:a href="qtgui/qpainter.html">QPainter</html:a> and similar), means the scene to be rendered can be retained between frames and the complete set of primitives to render is known before rendering starts. This opens up for a number of optimizations, such as batching the OpenGL draw calls to minimize state changes or discarding obscured primitives.</html:p>
+<html:p>The <html:a href="qtquick-module.html">Qt Quick C++ API</html:a> provides various classes to enable custom nodes to be created in C++.</html:p>
+<html:p>See the <html:a href="qtquick-visualcanvas-scenegraph.html">Qt Quick Scene Graph</html:a> documentation for details.</html:p>
+<html:a name="pixmap-and-threaded-image-support" /><html:a name="pixmap-and-threaded-image-support" />
+<html:h2 id="pixmap-and-threaded-image-support">Pixmap and Threaded Image Support</html:h2>
+<html:p>While the QML engine allows QML application to load images from filesystem or network resources, some applications may require the additional option of loading images from C++ based processes. This can be implemented through the <html:a href="qquickimageprovider.html">QQuickImageProvider</html:a> class, which provides support for pixmap loading and threaded image requests for QML applications. Any QML application that requests an image through the special "image:" URL scheme will be directed to an appropriate image provider to load the image.</html:p>
+<html:p>For more information, see the <html:a href="qquickimageprovider.html">QQuickImageProvider</html:a> documentation.</html:p>
+</html:div>
+<!-- @@@qtquick-cppextensionpoints.html -->
+        </html:div>
+       </html:div>
+   </html:div>
+   </html:div>
+</html:div>
+<html:div class="footer">
+   <html:p>
+   <html:acronym title="Copyright">&#169;</html:acronym> 2015 The Qt Company Ltd.
+   Documentation contributions included herein are the copyrights of
+   their respective owners.<html:br />    The documentation provided herein is licensed under the terms of the    <html:a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation    License version 1.3</html:a> as published by the Free Software Foundation.<html:br />    Qt and respective logos are trademarks of The Qt Company Ltd.     in Finland and/or other countries worldwide. All other trademarks are property
+   of their respective owners. </html:p>
+</html:div>
+
+
+</html:body></html:html>
