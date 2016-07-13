@@ -60,7 +60,7 @@ public class Main {
 
         // Deal with the standard error, to avoid Saxon outputting anything when this code deals with the error.
         PrintStream stderr = System.err;
-        System.setErr(NullOutputStream.nullStream());
+        System.setErr(nullStream());
 
         // Compile the style sheet.
         Templates templates = TransformerFactory.newInstance().newTemplates(new StreamSource(xslt));
@@ -109,8 +109,8 @@ public class Main {
                                  // (qtquick-cppextensionpoints).
                                  // TODO: Check the message from the XSLT! "ERROR: Some ids are not unique!"
                                  try {
-                                     Map<String, MutableInt> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
-                                     Map<String, MutableInt> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
+                                     Map<String, Integer> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
+                                     Map<String, Integer> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
 
                                      Pattern idRegex = Pattern.compile("id=\"(.*)\"|name=\"(.*)\"");
                                      Stream<String> outputLines = Files.lines(in.toPath()).map(line -> {
@@ -126,22 +126,22 @@ public class Main {
                                              // Count this occurrence in what has been seen.
                                              if (line.contains("<html:a")) {
                                                  if (aSeen.get(foundId) == null) {
-                                                     aSeen.put(foundId, new MutableInt());
+                                                     aSeen.put(foundId, 0);
                                                  } else {
-                                                     aSeen.get(foundId).increment();
+                                                     aSeen.put(foundId, aSeen.get(foundId) + 1);
                                                  }
                                              } else {
                                                  if (hSeen.get(foundId) == null) {
-                                                     hSeen.put(foundId, new MutableInt());
+                                                     hSeen.put(foundId, 0);
                                                  } else {
-                                                     hSeen.get(foundId).increment();
+                                                     hSeen.put(foundId, hSeen.get(foundId) + 1);
                                                  }
                                              }
 
                                              // Rewrite the line if need be.
                                              int increment = Math.max(
-                                                     aSeen.getOrDefault(foundId, MutableInt.zero).get(),
-                                                     hSeen.getOrDefault(foundId, MutableInt.zero).get()
+                                                     aSeen.getOrDefault(foundId, 0),
+                                                     hSeen.getOrDefault(foundId, 0)
                                              );
                                              if (increment >= 2) {
                                                  return line.replace(foundId, foundId + "-" + increment);
@@ -219,7 +219,7 @@ public class Main {
                              System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
                              e1.printStackTrace();
                          } finally {
-                             System.setErr(NullOutputStream.nullStream());
+                             System.setErr(nullStream());
                          }
                      } else {
                          System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
@@ -229,24 +229,9 @@ public class Main {
              });
     }
 
-    private static class MutableInt {
-        private int value = 1; // Starts at 1 when created.
-        private void increment() { value += 1; }
-        private int get() { return value; }
-
-        private static MutableInt zero = new MutableInt() {
-            private int get() {
-                return 0;
-            }
-        };
-    }
-
-    private static class NullOutputStream extends OutputStream {
-        @Override
-        public void write(int b) throws IOException {}
-
-        private static PrintStream nullStream() {
-            return new PrintStream(new NullOutputStream());
-        }
+    private static PrintStream nullStream() {
+        // This is bad with lots of output; however, here, only one error (a few lines at most) is generated
+        // before this buffer is thrown away.
+        return new PrintStream(new ByteArrayOutputStream());
     }
 }
