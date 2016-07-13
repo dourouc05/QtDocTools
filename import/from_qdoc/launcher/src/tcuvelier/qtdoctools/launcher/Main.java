@@ -109,8 +109,8 @@ public class Main {
                                  // (qtquick-cppextensionpoints).
                                  // TODO: Check the message from the XSLT! "ERROR: Some ids are not unique!"
                                  try {
-                                     Map<String, Integer> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
-                                     Map<String, Integer> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
+                                     Map<String, MutableInt> aSeen = new HashMap<>(); // Number of times this ID was seen for a <a name=""> tag.
+                                     Map<String, MutableInt> hSeen = new HashMap<>(); // Number of times this ID was seen for a <h? id="">  tag.
 
                                      Pattern idRegex = Pattern.compile("id=\"(.*)\"|name=\"(.*)\"");
                                      Stream<String> outputLines = Files.lines(in.toPath()).map(line -> {
@@ -126,22 +126,22 @@ public class Main {
                                              // Count this occurrence in what has been seen.
                                              if (line.contains("<html:a")) {
                                                  if (aSeen.get(foundId) == null) {
-                                                     aSeen.put(foundId, 0);
+                                                     aSeen.put(foundId, new MutableInt());
                                                  } else {
-                                                     aSeen.put(foundId, aSeen.get(foundId) + 1);
+                                                     aSeen.get(foundId).increment();
                                                  }
                                              } else {
                                                  if (hSeen.get(foundId) == null) {
-                                                     hSeen.put(foundId, 0);
+                                                     hSeen.put(foundId, new MutableInt());
                                                  } else {
-                                                     hSeen.put(foundId, hSeen.get(foundId) + 1);
+                                                     hSeen.get(foundId).increment();
                                                  }
                                              }
 
                                              // Rewrite the line if need be.
                                              int increment = Math.max(
-                                                     aSeen.getOrDefault(foundId, 0),
-                                                     hSeen.getOrDefault(foundId, 0)
+                                                     aSeen.getOrDefault(foundId, MutableInt.zero).get(),
+                                                     hSeen.getOrDefault(foundId, MutableInt.zero).get()
                                              );
                                              if (increment >= 2) {
                                                  return line.replace(foundId, foundId + "-" + increment);
@@ -230,8 +230,21 @@ public class Main {
     }
 
     private static PrintStream nullStream() {
-        // This is bad with lots of output; however, here, only one error (a few lines at most) is generated
-        // before this buffer is thrown away.
-        return new PrintStream(new ByteArrayOutputStream());
+        return new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {}
+        });
+    }
+
+    private static class MutableInt {
+        private int value = 1; // Starts at 1 when created.
+        private void increment() { value += 1; }
+        private int get() { return value; }
+
+        private static MutableInt zero = new MutableInt() {
+            private int get() {
+                return 0;
+            }
+        };
     }
 }
