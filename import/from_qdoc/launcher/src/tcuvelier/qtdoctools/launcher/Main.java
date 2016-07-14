@@ -35,9 +35,6 @@ public class Main {
 
     // Arguments: XSLT file, folder.
     public static void main(String[] args) throws TransformerConfigurationException, IOException {
-        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\test_5.4_rewrite", "true"};
-//        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtquick", "true"};
-
         // Parse the command line.
         if (args.length < 2 || args.length > 3) {
             throw new RuntimeException("Usage: xsl folder [true|false for error recovery]");
@@ -166,10 +163,11 @@ public class Main {
     }
 
     private static PrintStream nullStream() {
-        return new PrintStream(new OutputStream() {
-            @Override
-            public void write(int b) throws IOException {}
-        });
+//        return new PrintStream(new OutputStream() {
+//            @Override
+//            public void write(int b) throws IOException {}
+//        });
+        return System.err;
     }
 
     private static class MutableInt {

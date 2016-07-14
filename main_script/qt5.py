@@ -26,10 +26,10 @@ postprocess = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/postprocessor/postproc
 configsFile = output + "configs.json"
 
 prepare = False
-generate_html = False  # If prepare is not True when generate is, need an indexFolder.
-generate_xml = True
-generate_db = False  # Needs XML to be generated first.
-validate_db = False
+generate_html = False  # If prepare is not True when generate_html is, need an indexFolder.
+generate_xml = False
+generate_db = True  # Needs XML to be generated first.
+validate_db = True
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 

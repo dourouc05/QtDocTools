@@ -310,7 +310,11 @@ class Qt5Worker:
         """Call the XSLT launcher script. As it reuses the JVM for the operations, this is much faster than the
         pure Java solution."""
 
-        params = ['java', '-cp', self.binaries['launcher'], self.stylesheet, folder, 'true' if error_recovery else 'false']
+        params = ['java',
+                  '-cp', self.binaries['launcher'] + os.pathsep + self.binaries['saxon9'],
+                  'tcuvelier.qtdoctools.launcher.Main',
+                  self.stylesheet, folder,
+                  'true' if error_recovery else 'false']
         result = subprocess.run(params, stderr=subprocess.PIPE)
         if len(result.stderr) > 0:
             error = result.stderr.decode('utf-8')
@@ -436,9 +440,9 @@ class Qt5Worker:
                     continue
 
                 for file in files:
-                    out_file_name = os.path.join(root, file[:-4]) + '.db'
-                    if file.startswith('q') and not file.startswith('qml-'):
-                        self._call_cpp_parser(out_file_name, out_file_name)
+                    if file.startswith('q') and not file.startswith('qml-') and file.endswith('.db'):
+                        file_name = os.path.join(root, file)
+                        self._call_cpp_parser(file_name, file_name)
 
             return count_db
 
