@@ -10,6 +10,8 @@ import html5lib
 
 
 # TODO: investigate replacing html5lib by http://doc.scrapy.org/en/1.1/topics/feed-exports.html, should be much faster!
+import time
+
 
 class Qt5Worker:
     def __init__(self, folders, version, binaries, stylesheet, schema, vocabulary='qdoctools', ignores=None,
@@ -306,7 +308,7 @@ class Qt5Worker:
                 else:
                     logging.warning("Problem(s) with file '%s' at stage XSLT: \n%s" % (file_in, error))
 
-    def _call_xslt_launcher(self, folder, error_recovery=True):
+    def _call_xslt_launcher(self, folder, error_recovery=True, java_unbullshitting=False):
         """Call the XSLT launcher script. As it reuses the JVM for the operations, this is much faster than the
         pure Java solution."""
 
@@ -318,7 +320,17 @@ class Qt5Worker:
         result = subprocess.run(params, stderr=subprocess.PIPE)
         if len(result.stderr) > 0:
             error = result.stderr.decode('utf-8')
-            logging.warning("Problem(s) at stage XSLT: \n%s" % error)
+
+            if java_unbullshitting:
+                # The Java caller causes lots of troubles in terms of when each operation is implemented...
+                # Then restart the process on the problematic files.
+                for line in error.split('\n'):
+                    if 'Problem(s) with file' in line:
+                        file = line.split("'")[1]
+                        self._call_xslt(folder + '/' + file, folder + '/' + file.replace('.xml', '.db'))
+            else:
+                logging.warning("Problem(s) at stage XSLT: \n%s" % error)
+        time.sleep(2)  # A bit of sleep so that more files get written to disk...
 
     def _call_cpp_parser(self, file_in, file_out):
         """Call the C++ parser for prototypes."""
@@ -431,10 +443,8 @@ class Qt5Worker:
 
             return count_db
         else:
-            count_db = 0
-
             # Start the launcher; it does not do anything with the C++ parser, so do it afterwards.
-            self._call_xslt_launcher(self.folders['output'] + module_name, error_recovery=True)
+            self._call_xslt_launcher(self.folders['output'] + module_name, error_recovery=True, java_unbullshitting=True)
             for root, sub_dirs, files in os.walk(self.folders['output'] + module_name + '/'):
                 if root.endswith('/style') or root.endswith('/scripts') or root.endswith('/images'):
                     continue
@@ -444,7 +454,7 @@ class Qt5Worker:
                         file_name = os.path.join(root, file)
                         self._call_cpp_parser(file_name, file_name)
 
-            return count_db
+            return -1  # Not counting files!
 
     def validate_module_db(self, module_name):
         """"Convert the documentation XML files as DocBook for the given module."""

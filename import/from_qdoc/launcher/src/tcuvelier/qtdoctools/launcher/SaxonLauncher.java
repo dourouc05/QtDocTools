@@ -35,6 +35,8 @@ public class SaxonLauncher {
 
     // Arguments: XSLT file, folder.
     public static void main(String[] args) throws TransformerConfigurationException, IOException {
+//        args = new String[] { "F:\\QtDoc\\QtDoc\\QtDocTools\\import\\from_qdoc\\xslt\\qdoc2db_5.4.xsl", "F:\\QtDoc\\output\\html\\qtcore\\tst", "true" };
+
         // Parse the command line.
         if (args.length < 2 || args.length > 3) {
             throw new RuntimeException("Usage: xsl folder [true|false for error recovery]");
@@ -57,8 +59,7 @@ public class SaxonLauncher {
         }
 
         // Deal with the standard error, to avoid Saxon outputting anything when this code deals with the error.
-        PrintStream stderr = System.err;
-        System.setErr(nullStream());
+        StdErr.disableStdErr();
 
         // Compile the style sheet.
         Templates templates = TransformerFactory.newInstance().newTemplates(new StreamSource(xslt));
@@ -95,10 +96,10 @@ public class SaxonLauncher {
                      // There was an error: print it to stderr, as it will be understood by the calling script.
                      // Subtlety: that stream has been suppressed!
                      if (! errorRecovery) {
-                         System.setErr(stderr);
+                         StdErr.enableStdErr();
                          System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
                          e.printStackTrace();
-                         System.setErr(nullStream());
+                         StdErr.disableStdErr();
                      }
 
                      // Terminated by <xsl:message>.
@@ -150,24 +151,21 @@ public class SaxonLauncher {
 
                     // Restore the outputs and retry.
                      try {
-                         System.setErr(stderr);
+                         StdErr.enableStdErr();
                          transformer.transform(new StreamSource(in), new StreamResult(out));
                      } catch (TransformerException e1) {
                          System.err.println("Problem(s) with file '" + path.getFileName().toFile() + "' at stage XSLT: \n");
                          e1.printStackTrace();
                      } finally {
-                         System.setErr(nullStream());
+                         StdErr.disableStdErr();
                      }
                  }
              });
-    }
 
-    private static PrintStream nullStream() {
-//        return new PrintStream(new OutputStream() {
-//            @Override
-//            public void write(int b) throws IOException {}
-//        });
-        return System.err;
+        // Wait one second, in the hope that all files will be written on disk.
+        try {
+            Thread.sleep(1000);
+        } catch(InterruptedException ignored) {}
     }
 
     private static class MutableInt {
@@ -187,6 +185,7 @@ public class SaxonLauncher {
             String newContents = newLines.collect(Collectors.joining("\n"));
             try (PrintWriter pw = new PrintWriter(in)) {
                 pw.write(newContents);
+                pw.flush();
             }
         } catch (IOException e1) {
             e1.printStackTrace();

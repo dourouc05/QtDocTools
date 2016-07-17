@@ -29,7 +29,7 @@ prepare = False
 generate_html = False  # If prepare is not True when generate_html is, need an indexFolder.
 generate_xml = False
 generate_db = True  # Needs XML to be generated first.
-validate_db = True
+validate_db = False
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
 
@@ -98,8 +98,12 @@ if __name__ == '__main__':
             logging.info('XML to DocBook: starting to work with module %s (#%i out of %i)'
                          % (module, module_count, worker.n_modules()))
             count_db = worker.generate_module_db(module_name=module)
-            logging.info('XML to DocBook: done with module %s (#%i out of %i); %i DocBook files generated'
-                         % (module, module_count, worker.n_modules(), count_db))
+            if count_db >= 0:
+                logging.info('XML to DocBook: done with module %s (#%i out of %i); %i DocBook files generated'
+                             % (module, module_count, worker.n_modules(), count_db))
+            else:  # Saxon launcher not giving files count information.
+                logging.info('XML to DocBook: done with module %s (#%i out of %i)'
+                             % (module, module_count, worker.n_modules()))
             module_count += 1
     time_db = time.perf_counter()
 
