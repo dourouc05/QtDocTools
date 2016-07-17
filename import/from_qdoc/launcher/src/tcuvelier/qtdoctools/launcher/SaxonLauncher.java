@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import net.sf.saxon.expr.instruct.TerminationException;
 import net.sf.saxon.trans.XPathException;
 
-public class Main {
+public class SaxonLauncher {
     // Saxon HE: run with -Djava.xml.transform.TransformerFactory=net.sf.saxon.TransformerFactoryImpl.
     // Saxon PE: run with -Djava.xml.transform.TransformerFactory=com.saxonica.config.ProfessionalTransformerFactory.
     // Saxon EE: run with -Djava.xml.transform.TransformerFactory=com.saxonica.config.EnterpriseTransformerFactory.

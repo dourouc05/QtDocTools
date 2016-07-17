@@ -312,7 +312,7 @@ class Qt5Worker:
 
         params = ['java',
                   '-cp', self.binaries['launcher'] + os.pathsep + self.binaries['saxon9'],
-                  'tcuvelier.qtdoctools.launcher.Main',
+                  'tcuvelier.qtdoctools.launcher.SaxonLauncher',
                   self.stylesheet, folder,
                   'true' if error_recovery else 'false']
         result = subprocess.run(params, stderr=subprocess.PIPE)
