@@ -25,10 +25,11 @@ postprocess = "F:/QtDoc/QtDoc/QtDocTools/import/from_qdoc/postprocessor/postproc
 
 configsFile = output + "configs.json"
 
+explore = True
 prepare = False
 generate_html = False  # If prepare is not True when generate_html is, need an indexFolder.
 generate_xml = False
-generate_db = True  # Needs XML to be generated first.
+generate_db = False  # Needs XML to be generated first.
 validate_db = False
 
 db_vocabulary = 'qtdoctools'  # Choose between: docbook and qtdoctools
@@ -56,6 +57,9 @@ if __name__ == '__main__':
                        stylesheet=xslt2, schema=rng, vocabulary='qtdoctools',
                        ignores={'modules': ignored, 'qt_base': qt_base_ignore, 'files': ignored_files})
     time_configs = time.perf_counter()
+
+    if explore:
+        worker.force_recreate_configs()
 
     # Dependencies: first prepare all modules to get the indexes, then can start conversion in parallel. Once one module
     # is converted (or even started, as long as one file is out), the conversion to XML can start.

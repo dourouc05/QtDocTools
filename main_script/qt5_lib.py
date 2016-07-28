@@ -78,8 +78,7 @@ class Qt5Worker:
         return [folder for folder in os.listdir(sources)
                 if os.path.isdir(sources + folder) and folder.startswith('q') and folder not in ignored]
 
-    @staticmethod
-    def __find_qdocconf_file(src_path, configs):
+    def __find_qdocconf_file(self, src_path, configs):
         """Find a configuration file within the given source folder; returns true if one is found, which is put
         inside the given map. This function is made for modules outside Qt Base.
         """
@@ -90,6 +89,10 @@ class Qt5Worker:
         # Many cases to ignore...
         found = False  # Is (at least) one file found?
         for root, dirs, files in os.walk(src_path):
+            for ignored_module in self.ignores['modules']:
+                if ignored_module in root:
+                    end = True
+
             for file in files:
                 if file.endswith('.qdocconf') and 'global' not in root and '-dita' not in file:
                     configs[file.replace('.qdocconf', '')] = root.replace("\\", '/') + '/' + file
@@ -360,6 +363,11 @@ class Qt5Worker:
 
     def n_modules(self):
         return len(self.configuration_list)
+
+    def force_recreate_configs(self):
+        """Recreates the list of configuration from scratch."""
+        os.remove(self.configuration_cache)
+        self._get_configuration()
 
     def prepare_module(self, module_name):
         """Prepare a module, meaning creating sub-folders for assets and (most importantly) the indexes."""
