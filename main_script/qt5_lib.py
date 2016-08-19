@@ -89,9 +89,12 @@ class Qt5Worker:
         # Many cases to ignore...
         found = False  # Is (at least) one file found?
         for root, dirs, files in os.walk(src_path):
+            end = False  # Don't perform this iteration of the loop because the folder should be ignored?
             for ignored_module in self.ignores['modules']:
                 if ignored_module in root:
                     end = True
+            if end:
+                continue
 
             for file in files:
                 if file.endswith('.qdocconf') and 'global' not in root and '-dita' not in file:
@@ -134,6 +137,9 @@ class Qt5Worker:
                 for module in dirs:
                     prefixed_module = "qt" + module if module != "corelib" else "qtcore"
 
+                    if module in self.ignores['modules'] or prefixed_module in self.ignores['modules']:
+                        continue
+
                     module_path = path + "src/" + module + '/'
                     doc_file = module_path + "doc/" + prefixed_module + ".qdocconf"
 
@@ -144,6 +150,9 @@ class Qt5Worker:
 
                 # Finally play with the tools.
                 for tool in os.listdir(path + "src/tools/"):
+                    if tool in self.ignores['modules']:
+                        continue
+
                     tool_path = path + "src/tools/" + tool + '/'
                     doc_path = tool_path + "doc/"
                     if os.path.isdir(doc_path):
@@ -165,16 +174,17 @@ class Qt5Worker:
                 # outdated (plus the doc/ folder has many other .qdocconf files which are just useless
                 # for this script).
                 # @TODO: Enginio seems to have other idiosyncrasies... (documentation both in src/ and doc/).
-                if os.path.isdir(path + "doc/") and folder != "qtsensors":
+                if os.path.isdir(path + "doc/") and folder != "qtsensors" and folder not in self.ignores['modules']:
                     for doc_file in self.__get_potential_qdocconf_file_names(path + "doc/", folder):
                         if os.path.isfile(doc_file):
                             configs[folder] = doc_file
                             has_something = True
                             break
-                            # @TODO: May it happen there is more than one file?
+                            # Hypothesis: there is only one file per module. (No exception found to date.)
 
                 # Second try: the sources folder (src/ for most, Source/ for WebKit). This case is not exclusive:
                 # some documentation could get lost, as the folder doc/ may exist (Enginio, Quick 1).
+                # TODO: Clean up the has_something part.
                 if os.path.isdir(path + "src/"):
                     has_something = self.__find_qdocconf_file(path + "src/", configs)
                 elif os.path.isdir(path + "Source/"):
