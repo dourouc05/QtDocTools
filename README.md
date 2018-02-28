@@ -2,7 +2,7 @@
 
 The goal of this step is to take Qt's sources and to turn them into DocBook documents. 
 Qt's internal documentation system is QDoc, whose output formats are HTML and WebXML
-([http://lists.qt-project.org/pipermail/development/2013-June/011311.html](it used to have DITA)). 
+([it used to have DITA](http://lists.qt-project.org/pipermail/development/2013-June/011311.html)). 
 Overall, the process is to run QDoc to get HTML files, then to turn them into DocBook
 with some XML-to-XML transformation. 
 
