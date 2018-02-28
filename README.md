@@ -6,6 +6,10 @@ Qt's internal documentation system is QDoc, whose output formats are HTML and We
 Overall, the process is to run QDoc to get HTML files, then to turn them into DocBook
 with some XML-to-XML transformation. 
 
+The end goal is to produce the best DocBook output as possible, to encode a lot of information, 
+so that the transformation does not need to be repeated often to add new tags to 
+have a better representation of the content. 
+
 In more details, the following steps are required: 
 
 - Apply QDoc on Qt's sources (`main_script/qt5.py`): 
@@ -22,7 +26,8 @@ In more details, the following steps are required:
   it parses the prototypes to generate the corresponding DocBook tags and separate the 
   return type from the function name and from its arguments. 
    
-The first two steps are performed within the main Python script `main_script/qt5.py`. 
+The first two steps are performed within the main Python script `main_script/qt5.py`, 
+which also automates all the other steps. 
 The QDoc automation is also available as a stand-alone script in 
 `import/from_qdoc/qdoc2html`. The HMLT5-to-XML transformation is also available as a 
 stand-alone script in `import/from_qdoc/html2xml`. The XSL transformations is performed 
