@@ -17,7 +17,10 @@ In more details, the following steps are required:
 - Transform the HTML5 files into XML content (`main_script/qt5.py`)
 - Perform an XSL transformation from this XML into DocBook (`import/from_qdoc/xslt/qdoc2db_5.4.xsl`)
 - Use a C++ parser to deal with the function prototypes and make the DocBook content
-  fully exploitable (`import/from_qdoc/postprocessor/main.cpp`)
+  fully exploitable (`import/from_qdoc/postprocessor/main.cpp`). Before the script, 
+  only the C++ prototype is available in DocBook (with things like `int main()`); 
+  it parses the prototypes to generate the corresponding DocBook tags and separate the 
+  return type from the function name and from its arguments. 
    
 The first two steps are performed within the main Python script `main_script/qt5.py`. 
 The QDoc automation is also available as a stand-alone script in 
