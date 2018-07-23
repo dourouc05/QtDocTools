@@ -211,8 +211,12 @@ class Qt5Worker:
             logging.info("Looking for configuration files and building a list...")
             configs = self.__retrieve_configuration_from_sources()
 
-            # Create the file (and its containing directory!).
+            # Create the file (and its containing directory!). Also ensure the file does not exist before writing.
             os.makedirs(os.path.dirname(self.configuration_cache), exist_ok=True)
+            try:
+                os.remove(self.configuration_cache)
+            except FileNotFoundError:
+                pass
             with open(self.configuration_cache, 'w') as jsonFile:
                 json.dump(configs, jsonFile)
 
