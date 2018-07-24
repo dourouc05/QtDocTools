@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,7 +26,7 @@ public class Main {
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
     private List<String> pureQtQuickModules; // A list of modules that only have a Qt Quick plugin.
-    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
+//    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
     // modules in them (like qtconnectivity: bluetooth and nfc).
     private Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level folders in the source code
     // that have multiple modules in them, but the qdocconf files have nonstandard names (like qtquickcontrols:
@@ -40,14 +41,14 @@ public class Main {
 
         ignoredModules = Arrays.asList("qttranslations", "qtwayland", "qlalr");
         pureQtQuickModules = Arrays.asList("qtcanvas3d");
-        submodules = Map.of(
+        Map<String, List<String>> submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
                 "qtdeclarative", Arrays.asList("qml", "qmltest", "quick")
         );
         submodulesSpecificNames = Map.of(
                 "qtquickcontrols",
                 Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
-                        new Pair<>("dialogs", "sqtquickdialogs"),
+                        new Pair<>("dialogs", "qtquickdialogs"),
                         new Pair<>("extras", "qtquickextras"))
         );
         renamedSubfolder = Map.of(
@@ -56,7 +57,12 @@ public class Main {
                 "qtnetworkauth", "oauth"
         );
 
-        //
+        // Rewrite submodules into submodulesSpecificNames.
+        Map<String, List<Pair<String, String>>> tmp = new HashMap<>(submodulesSpecificNames);
+        for (Map.Entry<String, List<String>> entry : submodules.entrySet()) {
+            tmp.put(entry.getKey(), entry.getValue().stream().map(s -> new Pair<>(s, "qt" + s)).collect(Collectors.toList()));
+        }
+        submodulesSpecificNames = Collections.unmodifiableMap(tmp);
     }
 
     private void findModules() {
@@ -77,7 +83,7 @@ public class Main {
         for (String directory : directories) {
             if (directory.equals("qtbase")) {
                 // Qt Core is a really special case.
-            } else if (submodules.containsKey(directory)) {
+            } else if (submodulesSpecificNames.containsKey(directory)) {
                 // Find the qdocconf file, skip if it does not exist at known places.
                 Path modulePath = sourceFolder.resolve(directory);
                 String moduleName = directory.replaceFirst("qt", "");
@@ -85,26 +91,26 @@ public class Main {
                 // TODO: Any kind of Qt Quick handling? Not for Qt Connectivity.
 
                 // Find the path to the documentation folders for each of the submodule.
-                for (String submodule : submodules.get(directory)) {
+                for (Pair<String, String> submodule : submodulesSpecificNames.get(directory)) {
                     Path docDirectoryPath = modulePath.resolve("src");
-                    docDirectoryPath = docDirectoryPath.resolve(submodule);
+                    docDirectoryPath = docDirectoryPath.resolve(submodule.first);
                     docDirectoryPath = docDirectoryPath.resolve("doc");
 
                     if (!docDirectoryPath.toFile().isDirectory()) {
-                        System.out.println("Skipped submodule: " + directory + " / " + submodule + "; expected a doc folder at: " + docDirectoryPath.toString());
+                        System.out.println("Skipped submodule: " + directory + " / " + submodule.first + "; expected a doc folder at: " + docDirectoryPath.toString());
                         continue;
                     }
 
                     // Find the exact qdocconf file.
-                    Path qdocconfPath = docDirectoryPath.resolve("qt" + submodule + ".qdocconf");
+                    Path qdocconfPath = docDirectoryPath.resolve(submodule.second + ".qdocconf");
 
                     if (! qdocconfPath.toFile().isFile()) {
-                        System.out.println("Skipped submodule: " + directory + " / " + submodule + "; expected a qdocconf at: " + qdocconfPath.toString());
+                        System.out.println("Skipped submodule: " + directory + " / " + submodule.first + "; expected a qdocconf at: " + qdocconfPath.toString());
                         continue;
                     }
 
                     // Everything seems OK: push this module so that it will be handled later on.
-                    System.out.println("--> Found submodule: " + directory + " / " + submodule + "; qdocconf: " + qdocconfPath.toString());
+                    System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath.toString());
                     Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + directory + ".qdocconf");
                     modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
                 }
