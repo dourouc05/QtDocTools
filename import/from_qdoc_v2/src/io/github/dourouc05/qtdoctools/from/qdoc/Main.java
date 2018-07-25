@@ -139,18 +139,13 @@ public class Main {
                     Path docDirectoryPath = srcDirectoryPath.resolve(submodule.first).resolve("doc");
                     Path docImportsDirectoryPath = importsDirectoryPath.resolve(submodule.first).resolve("doc");
 
-                    // Find the exact qdocconf file. First the "qt" variants, then the no-"qt" variants.
+                    // Find the exact qdocconf file.
                     List<Path> potentialQdocconfPaths = Arrays.asList(
-                            docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // ActiveQt.
                             modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"), // Qt Doc.
-                            modulePath.resolve("doc").resolve("config").resolve("qt" + submodule.second + ".qdocconf"),
                             srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"), // Qt Speech.
-                            srcDirectoryPath.resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
                             docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"), // Qt Quick modules like Controls 2.
-                            docImportsDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
                             srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"), // Qt Quick modules.
-                            srcDirectoryPath.resolve("imports").resolve("qt" + submodule.second + ".qdocconf"),
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
@@ -181,18 +176,14 @@ public class Main {
                 }
                 docDirectoryPath = docDirectoryPath.resolve("doc");
 
-                // Find the exact qdocconf file. First the "qt" variants, then the no-"qt" variants.
+                // Find the exact qdocconf file.
                 List<Path> potentialQdocconfPaths = Arrays.asList(
                         docDirectoryPath.resolve(directory + ".qdocconf"),
                         docDirectoryPath.resolve(directory.replaceFirst("qt", "") + ".qdocconf"), // ActiveQt. E.g.: doc\activeqt.qdocconf
                         modulePath.resolve("doc").resolve("config").resolve(directory + ".qdocconf"), // Qt Doc.
-                        modulePath.resolve("doc").resolve("config").resolve("qt" + directory + ".qdocconf"),
                         srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt Speech.
-                        srcDirectoryPath.resolve("doc").resolve("qt" + directory + ".qdocconf"),
                         srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve(directory + ".qdocconf"), // Qt Quick modules.
-                        srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve("qt" + directory + ".qdocconf"),
-                        docDirectoryPath.resolve(directory + ".qdocconf"), // Base case. E.g.: doc\qtdeclarative.qdocconf
-                        docDirectoryPath.resolve("qt" + directory + ".qdocconf")
+                        docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.: doc\qtdeclarative.qdocconf
                 );
                 if (directory.equals("qtdoc")) {
                     docDirectoryPath = modulePath.resolve("doc").resolve("config");
