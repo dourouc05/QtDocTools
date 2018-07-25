@@ -12,13 +12,31 @@ public class Main {
     public static void main(String[] args) {
         // 1. Index all modules.
         // 2. Create the new qdocconf files.
-        // 3. Generate the attributions.
+        // 3. Generate the attributions. TODO!
         //    C:\Qt\Qt-5.11.1\bin\qtattributionsscanner.exe C:/Qt/5.11.1/Src/qtbase --filter QDocModule=qtcore -o C:/Qt/5.11.1_build/qtbase/src/corelib/codeattributions.qdoc
-        // 4. Generate indices.
-        // 5. Run QDoc for good to get the WebXML files.
-        // 6. Run Saxon to retrieve DocBook files.
+        // 4. Run QDoc to get the WebXML files.
+        // 5. Run Saxon to retrieve the DocBook files.
+
         Main m = new Main();
-        m.findModules();
+        List<Pair<String, Path>> modules = m.findModules();
+
+        // Rewrite the needed qdocconf files (one per module, may be multiple times per folder).
+        for (Pair<String, Path> module : modules) {
+            try {
+                m.rewriteQdocconf(module.first, module.second);
+                System.out.println("++> Module qdocconf rewritten: " + module.first);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        // Generate the main qdocconf file.
+        Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
+        try {
+            m.makeMainQdocconf(modules, mainQdocconfPath);
+        } catch (WriteQdocconfException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private Path sourceFolder; // Containing Qt's sources.
@@ -38,11 +56,16 @@ public class Main {
     private Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within Qt Base.
 
     private Main() {
-        qdocPath = "";
+        qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
+        qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO:
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
+        generateFileMappings();
+    }
+
+    private void generateFileMappings() {
         ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");
         Map<String, List<String>> submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
@@ -108,7 +131,7 @@ public class Main {
         submodulesSpecificNames = Collections.unmodifiableMap(tmp);
     }
 
-    private void findModules() {
+    public List<Pair<String, Path>> findModules() {
         // List all folders within Qt's sources that correspond to modules.
         String[] directories = sourceFolder.toFile().list((current, name) ->
                 name.startsWith("q")
@@ -235,19 +258,10 @@ public class Main {
         }
 
         System.out.println("::: " + modules.size() + " modules found");
-
-        // Based on the previous loop, rewrite the needed qdocconf files (one per module, may be multiple times per folder).
-        for (Pair<String, Path> module : modules) {
-            try {
-                rewriteQdocconf(module.first, module.second);
-                System.out.println("++> Module qdocconf rewritten: " + module.first);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+        return modules;
     }
 
-    private void rewriteQdocconf(String module, Path originalFile) throws ReadQdocconfException, WriteQdocconfException {
+    public void rewriteQdocconf(String module, Path originalFile) throws ReadQdocconfException, WriteQdocconfException {
         // Read the existing qdocconf file.
         String qdocconf;
         try {
@@ -268,6 +282,19 @@ public class Main {
             Files.write(originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf"), qdocconf.getBytes());
         } catch (IOException e) {
             throw new WriteQdocconfException(module, originalFile, destinationFile, e);
+        }
+    }
+
+    public void makeMainQdocconf(List<Pair<String, Path>> modules, Path mainFile) throws WriteQdocconfException {
+        StringBuilder b = new StringBuilder();
+        for (Pair<String, Path> module : modules) {
+            b.append(module.second.toString());
+        }
+
+        try {
+            Files.write(mainFile, b.toString().getBytes());
+        } catch (IOException e) {
+            throw new WriteQdocconfException(mainFile, e);
         }
     }
 }
