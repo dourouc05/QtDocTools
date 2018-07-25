@@ -40,8 +40,7 @@ public class Main {
     private Main() {
         qdocPath = "";
 
-//        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
-        sourceFolder = Paths.get("C:\\Qt\\5.0.2\\Src\\");
+        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
         ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");
@@ -124,7 +123,7 @@ public class Main {
         // Loop over all these folders and identify the modules (and their associated qdocconf file).
         // Process based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/pyside2/doc/CMakeLists.txt
         // Find the qdocconf files, skip if it does not exist at known places.
-        List<Triple<String, Path, Path>> modules = new ArrayList<>(directories.length);
+        List<Pair<String, Path>> modules = new ArrayList<>(directories.length);
         for (String directory : directories) {
             Path modulePath = sourceFolder.resolve(directory);
             Path srcDirectoryPath = modulePath.resolve("src");
@@ -141,8 +140,7 @@ public class Main {
                     }
 
                     System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
-                    Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
-                    modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
+                    modules.add(new Pair<>(directory, qdocconfPath));
                 }
             } else if (submodulesSpecificNames.containsKey(directory)) {
                 // Find the path to the documentation folders for each of the submodule.
@@ -161,9 +159,6 @@ public class Main {
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
-                    if (directory.equals("qtdoc")) {
-                        docDirectoryPath = modulePath.resolve("doc").resolve("config");
-                    }
 
                     Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
@@ -175,8 +170,7 @@ public class Main {
                     // Everything seems OK: push this module so that it will be handled later on.
                     Path qdocconfPath = qdocconfOptionalPath.get();
                     System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath.toString());
-                    Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + directory + ".qdocconf");
-                    modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
+                    modules.add(new Pair<>(directory, qdocconfPath));
                 }
             } else {
                 // Find the path to the documentation folder.
@@ -194,9 +188,6 @@ public class Main {
                         modulePath.resolve("doc").resolve(directory.replaceAll("-a(.*)", "").replace("-", "") + ".qdocconf"), // Qt WebKit Examples and Demos (5.0).
                         docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.: doc\qtdeclarative.qdocconf
                 );
-                if (directory.equals("qtdoc")) {
-                    docDirectoryPath = modulePath.resolve("doc").resolve("config");
-                }
 
                 Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
@@ -208,8 +199,7 @@ public class Main {
                 // Everything seems OK: push this module so that it will be handled later on.
                 Path qdocconfPath = qdocconfOptionalPath.get();
                 System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath.toString());
-                Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + directory + ".qdocconf");
-                modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
+                modules.add(new Pair<>(directory, qdocconfPath));
             }
         }
 
@@ -226,8 +216,7 @@ public class Main {
                 }
 
                 System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
-                Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
-                modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
+                modules.add(new Pair<>("qtbase", qdocconfPath));
             }
         }
 
@@ -241,25 +230,24 @@ public class Main {
                 System.out.println("Skipped module: qtdoc / qmake (old Qt 5 only)");
             } else {
                 System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath.toString());
-                Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-qmake.qdocconf");
-                modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
+                modules.add(new Pair<>("qtbase", qdocconfPath));
             }
         }
 
         System.out.println("::: " + modules.size() + " modules found");
 
         // Based on the previous loop, rewrite the needed qdocconf files (one per module, may be multiple times per folder).
-//        for (Triple<String, Path, Path> module : modules) {
-//            try {
-//                rewriteQdocconf(module.first, module.second, module.third);
-//                System.out.println("++> Module qdocconf rewritten: " + module.first);
-//            } catch (IOException e) {
-//                System.out.println(e.getMessage());
-//            }
-//        }
+        for (Pair<String, Path> module : modules) {
+            try {
+                rewriteQdocconf(module.first, module.second);
+                System.out.println("++> Module qdocconf rewritten: " + module.first);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
-    private void rewriteQdocconf(String module, Path originalFile, Path destinationFile) throws ReadQdocconfException, WriteQdocconfException {
+    private void rewriteQdocconf(String module, Path originalFile) throws ReadQdocconfException, WriteQdocconfException {
         // Read the existing qdocconf file.
         String qdocconf;
         try {
@@ -275,8 +263,9 @@ public class Main {
         qdocconf += "WebXML.nosubdirs          = true\n";
         qdocconf += "WebXML.outputsubdir       = webxml\n";
 
+        Path destinationFile = originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf");
         try {
-            Files.write(destinationFile, qdocconf.getBytes());
+            Files.write(originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf"), qdocconf.getBytes());
         } catch (IOException e) {
             throw new WriteQdocconfException(module, originalFile, destinationFile, e);
         }
