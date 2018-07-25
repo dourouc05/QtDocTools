@@ -12,9 +12,11 @@ public class Main {
     public static void main(String[] args) {
         // 1. Index all modules.
         // 2. Create the new qdocconf files.
-        // 3. Generate indices.
-        // 4. Run QDoc for good to get the WebXML files.
-        // 5. Run Saxon to retrieve DocBook files.
+        // 3. Generate the attributions.
+        //    C:\Qt\Qt-5.11.1\bin\qtattributionsscanner.exe C:/Qt/5.11.1/Src/qtbase --filter QDocModule=qtcore -o C:/Qt/5.11.1_build/qtbase/src/corelib/codeattributions.qdoc
+        // 4. Generate indices.
+        // 5. Run QDoc for good to get the WebXML files.
+        // 6. Run Saxon to retrieve DocBook files.
         Main m = new Main();
         m.findModules();
     }
@@ -22,7 +24,8 @@ public class Main {
     private Path sourceFolder; // Containing Qt's sources.
     private Path outputFolder; // Where all the generated files should be put.
 
-    private String qdocPath; // Path to QDoc.
+    private String qtattributionsscannerPath; // Path to qtattributionsscanner.
+    private String qdocPath; // Path to qdoc.
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
     private List<String> pureQtQuickModules; // A list of modules that only have a Qt Quick plugin.
@@ -65,7 +68,11 @@ public class Main {
                         new Pair<>("sql", "qtsql"),
                         new Pair<>("testlib", "qttestlib"),
                         new Pair<>("widgets", "qtwidgets"),
-                        new Pair<>("xml", "qtxml"))
+                        new Pair<>("xml", "qtxml")),
+                "qtquickcontrols2",
+                Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
+                        new Pair<>("controls", "qtquickcontrols2"),
+                        new Pair<>("platform", "qtlabsplatform"))
         );
         renamedSubfolder = Map.of(
                 "qtdatavis3d", "datavisualization",
@@ -127,12 +134,12 @@ public class Main {
                 // Find the qdocconf file, skip if it does not exist at known places.
                 Path modulePath = sourceFolder.resolve(directory);
 
-                // TODO: Any kind of Qt Quick handling? Not for Qt Connectivity.
-
                 // Find the path to the documentation folders for each of the submodule.
                 for (Pair<String, String> submodule : submodulesSpecificNames.get(directory)) {
                     Path srcDirectoryPath = modulePath.resolve("src");
+                    Path importsDirectoryPath = srcDirectoryPath.resolve("imports");
                     Path docDirectoryPath = srcDirectoryPath.resolve(submodule.first).resolve("doc");
+                    Path docImportsDirectoryPath = importsDirectoryPath.resolve(submodule.first).resolve("doc");
 
                     // Find the exact qdocconf file. First the "qt" variants, then the no-"qt" variants.
                     List<Path> potentialQdocconfPaths = Arrays.asList(
@@ -142,6 +149,8 @@ public class Main {
                             modulePath.resolve("doc").resolve("config").resolve("qt" + submodule.second + ".qdocconf"),
                             srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"), // Qt Speech.
                             srcDirectoryPath.resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
+                            docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"), // Qt Quick modules like Controls 2.
+                            docImportsDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
