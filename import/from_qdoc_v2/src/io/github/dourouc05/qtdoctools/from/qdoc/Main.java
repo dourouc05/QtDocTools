@@ -40,7 +40,8 @@ public class Main {
     private Main() {
         qdocPath = "";
 
-        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
+//        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
+        sourceFolder = Paths.get("C:\\Qt\\5.3\\Src\\");
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
         ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");
@@ -58,7 +59,7 @@ public class Main {
                 "qtwayland", Arrays.asList(new Pair<>("compositor", "qtwaylandcompositor")),
                 "qtbase",
                 Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
-                        new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules.
+                        new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific conf file name).
                         new Pair<>("dbus", "qtdbus"),
                         new Pair<>("gui", "qtgui"),
                         new Pair<>("network", "qtnetwork"),
@@ -72,7 +73,10 @@ public class Main {
                 "qtquickcontrols2",
                 Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
                         new Pair<>("controls", "qtquickcontrols2"),
-                        new Pair<>("platform", "qtlabsplatform"))
+                        new Pair<>("platform", "qtlabsplatform")),
+                "qtquick1", Collections.singletonList(new Pair<>("", "qtdeclarative")), // Needed for Qt 5.3 and previous.
+                "qtenginio", Arrays.asList(new Pair<>("enginio_client", "qtenginio"),
+                        new Pair<>("enginio_plugin", "qtenginioqml")) // Needed for Qt 5.3 and previous.
         );
         Map<String, String> renamedSubfolder = Map.of(
                 "qtdatavis3d", "datavisualization",
@@ -90,7 +94,8 @@ public class Main {
         );
         qtBaseTools = Map.of(
                 "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr"),
-                "qmake", new Pair<>(Paths.get("qmake/doc/"), "qmake")
+                "qmake", new Pair<>(Paths.get("qmake/doc/"), "qmake"),
+                "qdoc", new Pair<>(Paths.get("src/tools/qdoc/doc/config"), "qdoc") // Needed for Qt 5.3 and previous.
         );
 
         // Rewrite submodules and renamedSubfolder into submodulesSpecificNames.
@@ -184,6 +189,8 @@ public class Main {
                         modulePath.resolve("doc").resolve("config").resolve(directory + ".qdocconf"), // Qt Doc.
                         srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt Speech.
                         srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve(directory + ".qdocconf"), // Qt Quick modules.
+                        modulePath.resolve("Source").resolve(directory + ".qdocconf"), // Qt WebKit.
+                        modulePath.resolve("doc").resolve(directory.replace("-", "") + ".qdocconf"), // Qt WebKit Examples.
                         docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.: doc\qtdeclarative.qdocconf
                 );
                 if (directory.equals("qtdoc")) {
