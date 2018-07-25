@@ -214,19 +214,36 @@ public class Main {
         }
 
         // Tools within Qt Base are another source of headaches...
-        Path qtBasePath = sourceFolder.resolve("qtbase");
-        for (Map.Entry<String, Pair<Path, String>> entry : qtBaseTools.entrySet()) {
-            Path docDirectoryPath = qtBasePath.resolve(entry.getValue().first);
-            Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
+        {
+            Path qtBasePath = sourceFolder.resolve("qtbase");
+            for (Map.Entry<String, Pair<Path, String>> entry : qtBaseTools.entrySet()) {
+                Path docDirectoryPath = qtBasePath.resolve(entry.getValue().first);
+                Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
-            if (! qdocconfPath.toFile().isFile()) {
-                System.out.println("Skipped module: qtbase / " + entry.getKey());
-                continue;
+                if (!qdocconfPath.toFile().isFile()) {
+                    System.out.println("Skipped module: qtbase / " + entry.getKey());
+                    continue;
+                }
+
+                System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
+                Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
+                modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
             }
+        }
 
-            System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
-            Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
-            modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
+        // Qt 5.0 has qmake in an awkward place.
+        {
+            Path qtDocPath = sourceFolder.resolve("qtdoc");
+            Path docDirectoryPath = qtDocPath.resolve("doc").resolve("config");
+            Path qdocconfPath = docDirectoryPath.resolve("qmake.qdocconf");
+
+            if (!qdocconfPath.toFile().isFile()) {
+                System.out.println("Skipped module: qtdoc / qmake (old Qt 5 only)");
+            } else {
+                System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath.toString());
+                Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-qmake.qdocconf");
+                modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
+            }
         }
 
         System.out.println("::: " + modules.size() + " modules found");
