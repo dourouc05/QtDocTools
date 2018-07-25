@@ -32,6 +32,8 @@ public class Main {
     // that have multiple modules in them, but the qdocconf files have nonstandard names (like qtquickcontrols:
     // controls->qtquickcontrols, dialogs->qtquickdialogs, extras->qtquickextras).
     private Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like qtdatavis3d: datavisualization).
+    private Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other pattern.
+    private Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within Qt Base.
 
     private Main() {
         qdocPath = "";
@@ -39,7 +41,7 @@ public class Main {
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
-        ignoredModules = Arrays.asList("qttranslations", "qtwayland", "qlalr");
+        ignoredModules = Arrays.asList("qttranslations", "qlalr", "qtwebglplugin");
         pureQtQuickModules = Arrays.asList("qtcanvas3d");
         Map<String, List<String>> submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
@@ -49,18 +51,43 @@ public class Main {
                 "qtquickcontrols",
                 Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
                         new Pair<>("dialogs", "qtquickdialogs"),
-                        new Pair<>("extras", "qtquickextras"))
+                        new Pair<>("extras", "qtquickextras")),
+                "qtwayland", Arrays.asList(new Pair<>("compositor", "qtwaylandcompositor")),
+                "qtbase",
+                Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
+                        new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules.
+                        new Pair<>("dbus", "qtdbus"),
+                        new Pair<>("gui", "qtgui"),
+                        new Pair<>("network", "qtnetwork"),
+                        new Pair<>("opengl", "qtopengl"),
+                        new Pair<>("platformheaders", "qtplatformheaders"),
+                        new Pair<>("printsupport", "qtprintsupport"),
+                        new Pair<>("sql", "qtsql"),
+                        new Pair<>("testlib", "qttestlib"),
+                        new Pair<>("widgets", "qtwidgets"),
+                        new Pair<>("xml", "qtxml"))
         );
         renamedSubfolder = Map.of(
                 "qtdatavis3d", "datavisualization",
                 "qtgraphicaleffects", "effects",
                 "qtnetworkauth", "oauth"
         );
+        qtTools = Map.of(
+                "assistant", new Pair<>(Paths.get("src/assistant/assistant/doc/"), "qtassistant"),
+                "help", new Pair<>(Paths.get("src/assistant/help/doc/"), "qthelp"),
+                "designer", new Pair<>(Paths.get("src/designer/src/designer/doc/"), "qtdesigner"),
+                "uitools", new Pair<>(Paths.get("src/designer/src/uitools/doc/"), "qtuitools"),
+                "linguist", new Pair<>(Paths.get("src/linguist/linguist/doc/"), "qtlinguist"),
+                "qdoc", new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc")
+        );
+        qtBaseTools = Map.of(
+                "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr")
+        );
 
         // Rewrite submodules into submodulesSpecificNames.
         Map<String, List<Pair<String, String>>> tmp = new HashMap<>(submodulesSpecificNames);
         for (Map.Entry<String, List<String>> entry : submodules.entrySet()) {
-            tmp.put(entry.getKey(), entry.getValue().stream().map(s -> new Pair<>(s, "qt" + s)).collect(Collectors.toList()));
+            tmp.put(entry.getKey(), entry.getValue().stream().map(s -> new Pair<>(s, s)).collect(Collectors.toList()));
         }
         submodulesSpecificNames = Collections.unmodifiableMap(tmp);
     }
@@ -81,35 +108,56 @@ public class Main {
         // Process based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/pyside2/doc/CMakeLists.txt
         List<Triple<String, Path, Path>> modules = new ArrayList<>(directories.length);
         for (String directory : directories) {
-            if (directory.equals("qtbase")) {
-                // Qt Core is a really special case.
+            if (directory.equals("qttools")) {
+                Path modulePath = sourceFolder.resolve(directory);
+                for (Map.Entry<String, Pair<Path, String>> entry : qtTools.entrySet()) {
+                    Path docDirectoryPath = modulePath.resolve(entry.getValue().first);
+                    Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
+
+                    if (! qdocconfPath.toFile().isFile()) {
+                        System.out.println("Skipped module: qttools / " + entry.getKey());
+                        continue;
+                    }
+
+                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
+                    Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
+                    modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
+                }
             } else if (submodulesSpecificNames.containsKey(directory)) {
                 // Find the qdocconf file, skip if it does not exist at known places.
                 Path modulePath = sourceFolder.resolve(directory);
-                String moduleName = directory.replaceFirst("qt", "");
 
                 // TODO: Any kind of Qt Quick handling? Not for Qt Connectivity.
 
                 // Find the path to the documentation folders for each of the submodule.
                 for (Pair<String, String> submodule : submodulesSpecificNames.get(directory)) {
-                    Path docDirectoryPath = modulePath.resolve("src");
-                    docDirectoryPath = docDirectoryPath.resolve(submodule.first);
-                    docDirectoryPath = docDirectoryPath.resolve("doc");
+                    Path srcDirectoryPath = modulePath.resolve("src");
+                    Path docDirectoryPath = srcDirectoryPath.resolve(submodule.first).resolve("doc");
 
-                    if (!docDirectoryPath.toFile().isDirectory()) {
-                        System.out.println("Skipped submodule: " + directory + " / " + submodule.first + "; expected a doc folder at: " + docDirectoryPath.toString());
-                        continue;
+                    // Find the exact qdocconf file. First the "qt" variants, then the no-"qt" variants.
+                    List<Path> potentialQdocconfPaths = Arrays.asList(
+                            docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
+                            docDirectoryPath.resolve(submodule.second + ".qdocconf"), // ActiveQt.
+                            modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"), // Qt Doc.
+                            modulePath.resolve("doc").resolve("config").resolve("qt" + submodule.second + ".qdocconf"),
+                            srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"), // Qt Speech.
+                            srcDirectoryPath.resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
+                            docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
+                            docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
+                    );
+                    if (directory.equals("qtdoc")) {
+                        docDirectoryPath = modulePath.resolve("doc").resolve("config");
                     }
 
-                    // Find the exact qdocconf file.
-                    Path qdocconfPath = docDirectoryPath.resolve(submodule.second + ".qdocconf");
+                    Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
-                    if (! qdocconfPath.toFile().isFile()) {
-                        System.out.println("Skipped submodule: " + directory + " / " + submodule.first + "; expected a qdocconf at: " + qdocconfPath.toString());
+                    if (! qdocconfOptionalPath.isPresent()) {
+                        System.out.println("Skipped module: " + directory + " / " + submodule.first);
                         continue;
                     }
 
                     // Everything seems OK: push this module so that it will be handled later on.
+                    Path qdocconfPath = qdocconfOptionalPath.get();
                     System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath.toString());
                     Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + directory + ".qdocconf");
                     modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
@@ -117,47 +165,67 @@ public class Main {
             } else {
                 // Find the qdocconf file, skip if it does not exist at known places.
                 Path modulePath = sourceFolder.resolve(directory);
-                String moduleName = directory.replaceFirst("qt", "");
                 boolean isPureQtQuick = pureQtQuickModules.stream().anyMatch(directory::equals);
 
                 // Find the path to the documentation folder.
-                Path docDirectoryPath = modulePath.resolve("src");
+                Path srcDirectoryPath = modulePath.resolve("src");
+                Path docDirectoryPath;
                 if (isPureQtQuick) {
-                    docDirectoryPath = docDirectoryPath.resolve("imports").resolve(directory);
+                    docDirectoryPath = srcDirectoryPath.resolve("imports").resolve(directory);
                 } else if (renamedSubfolder.containsKey(directory)) {
-                    docDirectoryPath = docDirectoryPath.resolve(renamedSubfolder.get(directory));
+                    docDirectoryPath = srcDirectoryPath.resolve(renamedSubfolder.get(directory));
                 } else {
-                    docDirectoryPath = docDirectoryPath.resolve(moduleName);
+                    docDirectoryPath = srcDirectoryPath.resolve(directory.replaceFirst("qt", ""));
                 }
                 docDirectoryPath = docDirectoryPath.resolve("doc");
 
-                if (! docDirectoryPath.toFile().isDirectory() && ! directory.equals("qtdoc")) {
-                    System.out.println("Skipped module: " + directory + "; expected a doc folder at: " + docDirectoryPath.toString());
-                    continue;
-                }
-
-                // Find the exact qdocconf file.
-                Path qdocconfPath;
-                if (directory.equals("qtactiveqt")) { // ActiveQt is a real exception: only module to have Qt at the end of the name.
-                    qdocconfPath = docDirectoryPath.resolve(moduleName + ".qdocconf"); // E.g.: doc\activeqt.qdocconf
-                } else if (directory.equals("qtdoc")) { // Qt Doc is the only real exception, as it does not contain code, only doc.
+                // Find the exact qdocconf file. First the "qt" variants, then the no-"qt" variants.
+                List<Path> potentialQdocconfPaths = Arrays.asList(
+                        docDirectoryPath.resolve(directory + ".qdocconf"),
+                        docDirectoryPath.resolve(directory.replaceFirst("qt", "") + ".qdocconf"), // ActiveQt. E.g.: doc\activeqt.qdocconf
+                        modulePath.resolve("doc").resolve("config").resolve(directory + ".qdocconf"), // Qt Doc.
+                        modulePath.resolve("doc").resolve("config").resolve("qt" + directory + ".qdocconf"),
+                        srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt Speech.
+                        srcDirectoryPath.resolve("doc").resolve("qt" + directory + ".qdocconf"),
+                        docDirectoryPath.resolve(directory + ".qdocconf"), // Base case. E.g.: doc\qtdeclarative.qdocconf
+                        docDirectoryPath.resolve("qt" + directory + ".qdocconf")
+                );
+                if (directory.equals("qtdoc")) {
                     docDirectoryPath = modulePath.resolve("doc").resolve("config");
-                    qdocconfPath = docDirectoryPath.resolve(directory + ".qdocconf");
-                } else {
-                    qdocconfPath = docDirectoryPath.resolve(directory + ".qdocconf"); // E.g.: doc\qtdeclarative.qdocconf
                 }
 
-                if (! qdocconfPath.toFile().isFile()) {
-                    System.out.println("Skipped module: " + directory + "; expected a qdocconf at: " + qdocconfPath.toString());
+                Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
+
+                if (! qdocconfOptionalPath.isPresent()) {
+                    System.out.println("Skipped module: " + directory);
                     continue;
                 }
 
                 // Everything seems OK: push this module so that it will be handled later on.
+                Path qdocconfPath = qdocconfOptionalPath.get();
                 System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath.toString());
                 Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + directory + ".qdocconf");
                 modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
             }
         }
+
+        // Tools within Qt Base are another source of headaches...
+        Path qtBasePath = sourceFolder.resolve("qtbase");
+        for (Map.Entry<String, Pair<Path, String>> entry : qtBaseTools.entrySet()) {
+            Path docDirectoryPath = qtBasePath.resolve(entry.getValue().first);
+            Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
+
+            if (! qdocconfPath.toFile().isFile()) {
+                System.out.println("Skipped module: qttools / " + entry.getKey());
+                continue;
+            }
+
+            System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
+            Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
+            modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
+        }
+
+        System.out.println("::: " + modules.size() + " modules found");
 
         // Based on the previous loop, rewrite the needed qdocconf files (one per module, may be multiple times per folder).
 //        for (Triple<String, Path, Path> module : modules) {
