@@ -111,10 +111,14 @@ public class Main {
 
         // Loop over all these folders and identify the modules (and their associated qdocconf file).
         // Process based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/pyside2/doc/CMakeLists.txt
+        // Find the qdocconf files, skip if it does not exist at known places.
         List<Triple<String, Path, Path>> modules = new ArrayList<>(directories.length);
         for (String directory : directories) {
+            Path modulePath = sourceFolder.resolve(directory);
+            Path srcDirectoryPath = modulePath.resolve("src");
+
             if (directory.equals("qttools")) {
-                Path modulePath = sourceFolder.resolve(directory);
+                // The most annoying case: Qt Tools, everything seems ad-hoc.
                 for (Map.Entry<String, Pair<Path, String>> entry : qtTools.entrySet()) {
                     Path docDirectoryPath = modulePath.resolve(entry.getValue().first);
                     Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
@@ -129,12 +133,8 @@ public class Main {
                     modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
                 }
             } else if (submodulesSpecificNames.containsKey(directory)) {
-                // Find the qdocconf file, skip if it does not exist at known places.
-                Path modulePath = sourceFolder.resolve(directory);
-
                 // Find the path to the documentation folders for each of the submodule.
                 for (Pair<String, String> submodule : submodulesSpecificNames.get(directory)) {
-                    Path srcDirectoryPath = modulePath.resolve("src");
                     Path importsDirectoryPath = srcDirectoryPath.resolve("imports");
                     Path docDirectoryPath = srcDirectoryPath.resolve(submodule.first).resolve("doc");
                     Path docImportsDirectoryPath = importsDirectoryPath.resolve(submodule.first).resolve("doc");
@@ -149,8 +149,8 @@ public class Main {
                             srcDirectoryPath.resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
                             docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"), // Qt Quick modules like Controls 2.
                             docImportsDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
-                            srcDirectoryPath.resolve("imports").resolve(directory + ".qdocconf"), // Qt Quick modules.
-                            srcDirectoryPath.resolve("imports").resolve("qt" + directory + ".qdocconf"),
+                            srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"), // Qt Quick modules.
+                            srcDirectoryPath.resolve("imports").resolve("qt" + submodule.second + ".qdocconf"),
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
@@ -172,11 +172,7 @@ public class Main {
                     modules.add(new Triple<>(directory, qdocconfPath, qdocconfRewrittenPath));
                 }
             } else {
-                // Find the qdocconf file, skip if it does not exist at known places.
-                Path modulePath = sourceFolder.resolve(directory);
-
                 // Find the path to the documentation folder.
-                Path srcDirectoryPath = modulePath.resolve("src");
                 Path docDirectoryPath;
                 if (renamedSubfolder.containsKey(directory)) {
                     docDirectoryPath = srcDirectoryPath.resolve(renamedSubfolder.get(directory));
@@ -266,43 +262,6 @@ public class Main {
             Files.write(destinationFile, qdocconf.getBytes());
         } catch (IOException e) {
             throw new WriteQdocconfException(module, originalFile, destinationFile, e);
-        }
-    }
-
-    private class ReadQdocconfException extends IOException {
-        ReadQdocconfException(String module, Path originalFile, Throwable cause) {
-            super("Problem while reading module's qdocconf: " + module + "; " +
-                    "reading from: " + originalFile.toString(), cause);
-        }
-    }
-
-    private class WriteQdocconfException extends IOException {
-        WriteQdocconfException(String module, Path originalFile, Path destinationFile, Throwable cause) {
-            super("Problem while writing module's qdocconf: " + module + "; " +
-                    "reading from: " + originalFile.toString() + "; " +
-                    "writing to: " + destinationFile.toString(), cause);
-        }
-    }
-
-    private class Pair<T, U> {
-        private final T first;
-        private final U second;
-
-        Pair(T first, U second) {
-            this.first = first;
-            this.second = second;
-        }
-    }
-
-    private class Triple<T, U, V> {
-        private final T first;
-        private final U second;
-        private final V third;
-
-        Triple(T first, U second, V third) {
-            this.first = first;
-            this.second = second;
-            this.third = third;
         }
     }
 }
