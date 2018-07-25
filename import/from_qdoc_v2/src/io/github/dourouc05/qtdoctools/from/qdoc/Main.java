@@ -33,7 +33,7 @@ public class Main {
     private Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level folders in the source code
     // that have multiple modules in them, but the qdocconf files have nonstandard names (like qtquickcontrols:
     // controls->qtquickcontrols, dialogs->qtquickdialogs, extras->qtquickextras).
-    private Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like qtdatavis3d: datavisualization).
+//    private Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like qtdatavis3d: datavisualization).
     private Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other pattern.
     private Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within Qt Base.
 
@@ -43,7 +43,7 @@ public class Main {
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
-        ignoredModules = Arrays.asList("qttranslations", "qlalr", "qtwebglplugin");
+        ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");
         Map<String, List<String>> submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
                 "qtdeclarative", Arrays.asList("qml", "qmltest", "quick"),
@@ -74,7 +74,7 @@ public class Main {
                         new Pair<>("controls", "qtquickcontrols2"),
                         new Pair<>("platform", "qtlabsplatform"))
         );
-        renamedSubfolder = Map.of(
+        Map<String, String> renamedSubfolder = Map.of(
                 "qtdatavis3d", "datavisualization",
                 "qtgraphicaleffects", "effects",
                 "qtnetworkauth", "oauth"
@@ -93,10 +93,13 @@ public class Main {
                 "qmake", new Pair<>(Paths.get("qmake/doc/"), "qmake")
         );
 
-        // Rewrite submodules into submodulesSpecificNames.
+        // Rewrite submodules and renamedSubfolder into submodulesSpecificNames.
         Map<String, List<Pair<String, String>>> tmp = new HashMap<>(submodulesSpecificNames);
         for (Map.Entry<String, List<String>> entry : submodules.entrySet()) {
             tmp.put(entry.getKey(), entry.getValue().stream().map(s -> new Pair<>(s, s)).collect(Collectors.toList()));
+        }
+        for (Map.Entry<String, String> entry : renamedSubfolder.entrySet()) {
+            tmp.put(entry.getKey(), Collections.singletonList(new Pair<>(entry.getValue(), entry.getKey())));
         }
         submodulesSpecificNames = Collections.unmodifiableMap(tmp);
     }
@@ -172,13 +175,7 @@ public class Main {
                 }
             } else {
                 // Find the path to the documentation folder.
-                Path docDirectoryPath;
-                if (renamedSubfolder.containsKey(directory)) {
-                    docDirectoryPath = srcDirectoryPath.resolve(renamedSubfolder.get(directory));
-                } else {
-                    docDirectoryPath = srcDirectoryPath.resolve(directory.replaceFirst("qt", ""));
-                }
-                docDirectoryPath = docDirectoryPath.resolve("doc");
+                Path docDirectoryPath = srcDirectoryPath.resolve(directory.replaceFirst("qt", "")).resolve("doc");
 
                 // Find the exact qdocconf file.
                 List<Path> potentialQdocconfPaths = Arrays.asList(
