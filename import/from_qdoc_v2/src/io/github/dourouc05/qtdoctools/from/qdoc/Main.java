@@ -28,7 +28,6 @@ public class Main {
     private String qdocPath; // Path to qdoc.
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
-    private List<String> pureQtQuickModules; // A list of modules that only have a Qt Quick plugin.
 //    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
     // modules in them (like qtconnectivity: bluetooth and nfc).
     private Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level folders in the source code
@@ -45,7 +44,6 @@ public class Main {
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
         ignoredModules = Arrays.asList("qttranslations", "qlalr", "qtwebglplugin");
-        pureQtQuickModules = Arrays.asList("qtcanvas3d");
         Map<String, List<String>> submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
                 "qtdeclarative", Arrays.asList("qml", "qmltest", "quick")
@@ -151,6 +149,8 @@ public class Main {
                             srcDirectoryPath.resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
                             docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"), // Qt Quick modules like Controls 2.
                             docImportsDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
+                            srcDirectoryPath.resolve("imports").resolve(directory + ".qdocconf"), // Qt Quick modules.
+                            srcDirectoryPath.resolve("imports").resolve("qt" + directory + ".qdocconf"),
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
@@ -174,14 +174,11 @@ public class Main {
             } else {
                 // Find the qdocconf file, skip if it does not exist at known places.
                 Path modulePath = sourceFolder.resolve(directory);
-                boolean isPureQtQuick = pureQtQuickModules.stream().anyMatch(directory::equals);
 
                 // Find the path to the documentation folder.
                 Path srcDirectoryPath = modulePath.resolve("src");
                 Path docDirectoryPath;
-                if (isPureQtQuick) {
-                    docDirectoryPath = srcDirectoryPath.resolve("imports").resolve(directory);
-                } else if (renamedSubfolder.containsKey(directory)) {
+                if (renamedSubfolder.containsKey(directory)) {
                     docDirectoryPath = srcDirectoryPath.resolve(renamedSubfolder.get(directory));
                 } else {
                     docDirectoryPath = srcDirectoryPath.resolve(directory.replaceFirst("qt", ""));
@@ -196,6 +193,8 @@ public class Main {
                         modulePath.resolve("doc").resolve("config").resolve("qt" + directory + ".qdocconf"),
                         srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt Speech.
                         srcDirectoryPath.resolve("doc").resolve("qt" + directory + ".qdocconf"),
+                        srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve(directory + ".qdocconf"), // Qt Quick modules.
+                        srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve("qt" + directory + ".qdocconf"),
                         docDirectoryPath.resolve(directory + ".qdocconf"), // Base case. E.g.: doc\qtdeclarative.qdocconf
                         docDirectoryPath.resolve("qt" + directory + ".qdocconf")
                 );
