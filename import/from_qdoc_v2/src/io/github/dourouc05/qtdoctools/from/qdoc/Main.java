@@ -46,7 +46,9 @@ public class Main {
         ignoredModules = Arrays.asList("qttranslations", "qlalr", "qtwebglplugin");
         Map<String, List<String>> submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
-                "qtdeclarative", Arrays.asList("qml", "qmltest", "quick")
+                "qtdeclarative", Arrays.asList("qml", "qmltest", "quick"),
+                "qtscript", Arrays.asList("script", "scripttools"),
+                "qtlocation", Arrays.asList("location", "positioning")
         );
         submodulesSpecificNames = Map.of(
                 "qtquickcontrols",
@@ -79,6 +81,7 @@ public class Main {
         );
         qtTools = Map.of(
                 "assistant", new Pair<>(Paths.get("src/assistant/assistant/doc/"), "qtassistant"),
+                // TODO: What to do about Src\qttools\src\assistant\assistant\doc\internal\assistant.qdocconf?
                 "help", new Pair<>(Paths.get("src/assistant/help/doc/"), "qthelp"),
                 "designer", new Pair<>(Paths.get("src/designer/src/designer/doc/"), "qtdesigner"),
                 "uitools", new Pair<>(Paths.get("src/designer/src/uitools/doc/"), "qtuitools"),
@@ -86,7 +89,8 @@ public class Main {
                 "qdoc", new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc")
         );
         qtBaseTools = Map.of(
-                "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr")
+                "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr"),
+                "qmake", new Pair<>(Paths.get("qmake/doc/"), "qmake")
         );
 
         // Rewrite submodules into submodulesSpecificNames.
@@ -211,11 +215,11 @@ public class Main {
             Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
             if (! qdocconfPath.toFile().isFile()) {
-                System.out.println("Skipped module: qttools / " + entry.getKey());
+                System.out.println("Skipped module: qtbase / " + entry.getKey());
                 continue;
             }
 
-            System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
+            System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
             Path qdocconfRewrittenPath = docDirectoryPath.resolve("qtdoctools-" + entry.getValue().second + ".qdocconf");
             modules.add(new Triple<>("qtbase", qdocconfPath, qdocconfRewrittenPath));
         }
