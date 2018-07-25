@@ -41,7 +41,7 @@ public class Main {
         qdocPath = "";
 
 //        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
-        sourceFolder = Paths.get("C:\\Qt\\5.3\\Src\\");
+        sourceFolder = Paths.get("C:\\Qt\\5.0.2\\Src\\");
         outputFolder = Paths.get("C:\\Qt\\Doc");
 
         ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");
@@ -190,7 +190,8 @@ public class Main {
                         srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt Speech.
                         srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve(directory + ".qdocconf"), // Qt Quick modules.
                         modulePath.resolve("Source").resolve(directory + ".qdocconf"), // Qt WebKit.
-                        modulePath.resolve("doc").resolve(directory.replace("-", "") + ".qdocconf"), // Qt WebKit Examples.
+                        modulePath.resolve("doc").resolve(directory.replace("-", "") + ".qdocconf"), // Qt WebKit Examples (5.3-).
+                        modulePath.resolve("doc").resolve(directory.replaceAll("-a(.*)", "").replace("-", "") + ".qdocconf"), // Qt WebKit Examples and Demos (5.0).
                         docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.: doc\qtdeclarative.qdocconf
                 );
                 if (directory.equals("qtdoc")) {
