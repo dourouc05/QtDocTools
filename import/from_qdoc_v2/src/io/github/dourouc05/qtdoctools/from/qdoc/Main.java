@@ -1,5 +1,8 @@
 package io.github.dourouc05.qtdoctools.from.qdoc;
 
+import net.sf.saxon.s9api.*;
+
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) throws IOException, InterruptedException, SaxonApiException {
         // 1. Index all modules.
         // 2. Create the new qdocconf files.
         // 3. Generate the attributions. TODO!
@@ -42,13 +45,31 @@ public class Main {
         System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
 
         // Run qdoc.
-        System.out.println("++> Running qdoc.");
-        Process qdoc = m.runQdoc(mainQdocconfPath);
-        qdoc.waitFor();
-        System.out.println("++> Qdoc done.");
+//        System.out.println("++> Running qdoc.");
+//        Process qdoc = m.runQdoc(mainQdocconfPath);
+//        qdoc.waitFor();
+//        System.out.println("++> Qdoc done.");
 
         // Gather all WebXML files and transform them into DocBook.
-        List<String> webxml = m.findWebXML();
+        List<Path> webxml = m.findWebXML();
+
+        Processor p = new Processor(false);
+        XsltCompiler c = p.newXsltCompiler();
+        XsltExecutable exe = c.compile(new StreamSource(new File(m.xsltPath)));
+
+        for (Path file : webxml) {
+            Path destination = file.getParent().resolve(file.getFileName().toString() + ".docbook");
+
+            XdmNode source = p.newDocumentBuilder().build(new StreamSource(file.toFile()));
+            Serializer out = p.newSerializer();
+            out.setOutputProperty(Serializer.Property.METHOD, "xml");
+            out.setOutputProperty(Serializer.Property.INDENT, "yes");
+            out.setOutputFile(destination.toFile());
+            XsltTransformer trans = exe.load();
+            trans.setInitialContextNode(source);
+            trans.setDestination(out);
+            trans.transform();
+        }
     }
 
     private Path sourceFolder; // Containing Qt's sources.
@@ -337,7 +358,12 @@ public class Main {
         return pb.start();
     }
 
-    public List<String> findWebXML() {
-        return Arrays.asList(Objects.requireNonNull(outputFolder.toFile().list((current, name) -> name.endsWith(".webxml"))));
+    public List<Path> findWebXML() throws IOException {
+        String[] fileNames = outputFolder.resolve("webxml").toFile().list((current, name) -> name.endsWith(".webxml"));
+        if (fileNames == null || fileNames.length == 0) {
+            throw new IOException("No WebXML file found!");
+        }
+
+        return Arrays.stream(fileNames).map(s -> Paths.get(s)).collect(Collectors.toList());
     }
 }
