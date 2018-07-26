@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         // 1. Index all modules.
         // 2. Create the new qdocconf files.
         // 3. Generate the attributions. TODO!
@@ -17,26 +17,35 @@ public class Main {
         // 4. Run QDoc to get the WebXML files.
         // 5. Run Saxon to retrieve the DocBook files.
 
+        // TODO: Parse inputs!
+
         Main m = new Main();
+
+        // Ensure the output folder exists.
+        if (! m.outputFolder.toFile().isDirectory()) {
+            Files.createDirectories(m.outputFolder);
+        }
+
+        // Explore the source directory for the qdocconf files.
         List<Pair<String, Path>> modules = m.findModules();
+        System.out.println("::> " + modules.size() + " modules found");
 
         // Rewrite the needed qdocconf files (one per module, may be multiple times per folder).
         for (Pair<String, Path> module : modules) {
-            try {
-                m.rewriteQdocconf(module.first, module.second);
-                System.out.println("++> Module qdocconf rewritten: " + module.first);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
+            m.rewriteQdocconf(module.first, module.second);
+            System.out.println("++> Module qdocconf rewritten: " + module.first);
         }
 
         // Generate the main qdocconf file.
         Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
-        try {
-            m.makeMainQdocconf(modules, mainQdocconfPath);
-        } catch (WriteQdocconfException e) {
-            System.out.println(e.getMessage());
-        }
+        m.makeMainQdocconf(modules, mainQdocconfPath);
+        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+
+        // Run qdoc.
+        System.out.println("++> Running qdoc.");
+        Process qdoc = m.runQdoc(mainQdocconfPath);
+        qdoc.waitFor();
+        System.out.println("++> Qdoc done.");
     }
 
     private Path sourceFolder; // Containing Qt's sources.
@@ -257,7 +266,6 @@ public class Main {
             }
         }
 
-        System.out.println("::: " + modules.size() + " modules found");
         return modules;
     }
 
@@ -285,16 +293,42 @@ public class Main {
         }
     }
 
-    public void makeMainQdocconf(List<Pair<String, Path>> modules, Path mainFile) throws WriteQdocconfException {
+    public void makeMainQdocconf(List<Pair<String, Path>> modules, Path mainQdocconfPath) throws WriteQdocconfException {
         StringBuilder b = new StringBuilder();
         for (Pair<String, Path> module : modules) {
             b.append(module.second.toString());
+            b.append('\n');
         }
 
         try {
-            Files.write(mainFile, b.toString().getBytes());
+            Files.write(mainQdocconfPath, b.toString().getBytes());
         } catch (IOException e) {
-            throw new WriteQdocconfException(mainFile, e);
+            throw new WriteQdocconfException(mainQdocconfPath, e);
         }
+    }
+
+    public Process runQdoc(Path mainQdocconfPath) throws IOException {
+        ProcessBuilder pb = new ProcessBuilder(qdocPath,
+                "--outputdir", outputFolder.toString(),
+                "--installdir", outputFolder.toString(),
+                mainQdocconfPath.toString(),
+                "--single-exec",
+                "--log-progress");
+
+        System.out.println("::> Running qdoc with the following arguments: ");
+        for (String command : pb.command()) {
+            System.out.println("        " + command);
+        }
+
+        Map<String, String> env = pb.environment();
+        env.put("QT_INSTALL_DOCS", sourceFolder.resolve("qtbase").resolve("doc").toString());
+        env.put("BUILDDIR", sourceFolder.resolve("qtbase").resolve("doc").toString());
+        env.put("QT_VERSION_TAG", "100");
+        env.put("QT_VER", "1.0");
+        env.put("QT_VERSION", "1.0.0");
+
+        pb.inheritIO();
+
+        return pb.start();
     }
 }
