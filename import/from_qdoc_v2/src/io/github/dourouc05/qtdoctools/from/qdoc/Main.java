@@ -46,6 +46,9 @@ public class Main {
         Process qdoc = m.runQdoc(mainQdocconfPath);
         qdoc.waitFor();
         System.out.println("++> Qdoc done.");
+
+        // Gather all WebXML files and transform them into DocBook.
+        List<String> webxml = m.findWebXML();
     }
 
     private Path sourceFolder; // Containing Qt's sources.
@@ -53,6 +56,7 @@ public class Main {
 
     private String qtattributionsscannerPath; // Path to qtattributionsscanner.
     private String qdocPath; // Path to qdoc.
+    private String xsltPath; // Path to the XSLT sheet WebXML to DocBook.
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
 //    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
@@ -66,7 +70,8 @@ public class Main {
 
     private Main() {
         qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
-        qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO:
+        qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
+        xsltPath = "";
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
@@ -296,7 +301,7 @@ public class Main {
     public void makeMainQdocconf(List<Pair<String, Path>> modules, Path mainQdocconfPath) throws WriteQdocconfException {
         StringBuilder b = new StringBuilder();
         for (Pair<String, Path> module : modules) {
-            b.append(module.second.toString());
+            b.append(module.second.getParent().resolve("qtdoctools-" + module.first + ".qdocconf").toString());
             b.append('\n');
         }
 
@@ -330,5 +335,9 @@ public class Main {
         pb.inheritIO();
 
         return pb.start();
+    }
+
+    public List<String> findWebXML() {
+        return Arrays.asList(Objects.requireNonNull(outputFolder.toFile().list((current, name) -> name.endsWith(".webxml"))));
     }
 }
