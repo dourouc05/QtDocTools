@@ -203,6 +203,11 @@
     <xsl:if test="$macros">
       <db:section>
         <db:title>Macro Documentation</db:title>
+        
+        <xsl:for-each select="$macros">
+          <xsl:sort select="@signature"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
       </db:section>
     </xsl:if>
   </xsl:template>
