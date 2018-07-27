@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+   <db:title>State</db:title>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>State</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">QtGui</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qaccessible.h&gt;</db:namespacesynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>This structure defines bit flags that indicate the state of an accessible object. The values are:</db:para>
+      <db:variablelist>
+         <db:varlistentry>
+            <db:term>active</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is the active window or the active sub-element in a container (that would get focus when focusing the container).</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>adjustable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object represents an adjustable value, e.g. sliders.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>animated</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object's appearance changes frequently.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>busy</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object cannot accept input at the moment.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>checkable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is checkable.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>checked</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object's check box is checked.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>checkStateMixed</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The third state of checkboxes (half checked in tri-state check boxes).</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>collapsed</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is collapsed, e.g. a closed listview item, or an iconified window.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>defaultButton</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object represents the default button in a dialog.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>defunct</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object no longer exists.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>editable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object has a text carret (and often implements the text interface).</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>expandable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is expandable, mostly used for cells in a tree view.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>expanded</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is expanded, currently its children are visible.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>extSelectable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object supports extended selection.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>focusable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object can receive focus. Only objects in the active window can receive focus.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>focused</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object has keyboard focus.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>hasPopup</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object opens a popup.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>hotTracked</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object's appearance is sensitive to the mouse cursor position.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>invalid</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is no longer valid (because it has been deleted).</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>invalidEntry</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>Input validation current input invalid.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>invisible</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is not visible to the user.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>linked</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is linked to another object, e.g. a hyperlink.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>marqueed</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object displays scrolling contents, e.g. a log view.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>modal</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object blocks input from other objects.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>movable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object can be moved.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>multiLine</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object has multiple lines of text (word wrap), as opposed to a single line.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>multiSelectable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object supports multiple selected items.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>offscreen</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is clipped by the visible area. Objects that are off screen are also invisible.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>passwordEdit</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is a password field, e.g. a line edit for entering a Password.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>playsSound</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object produces sound when interacted with.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>pressed</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is pressed.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>readOnly</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object can usually be edited, but is explicitly set to read-only.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>searchEdit</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is a line edit that is the input for search queries.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>selectable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is selectable.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>selectableText</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object has text which can be selected. This is different from selectable which refers to the object's children.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>selected</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is selected, this is independent of text selection.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>selfVoicing</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object describes itself through speech or sound.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>sizeable</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object can be resized, e.g. top-level windows.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>summaryElement</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object summarizes the state of the window and should be treated with priority.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>supportsAutoCompletion</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object has auto-completion, for example in line edits or combo boxes.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>traversed</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is linked and has been visited.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>updatesFrequently</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object changes frequently and needs to be refreshed when accessing it.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>disabled</db:term>
+            <db:listitem>
+               <db:listitem>
+                  <db:para>The object is unavailable to the user, e.g. a disabled widget.</db:para>
+               </db:listitem>
+            </db:listitem>
+         </db:varlistentry>
+      </db:variablelist>
+      <db:para>Implementations of <db:code><db:link xlink:href="qaccessibleinterface.html#state" xrefstyle="function" annotations="QAccessibleInterface::state()">QAccessibleInterface::state()</db:link></db:code> return a combination of these flags.</db:para>
+   </db:section>
+</db:article>

@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QBarSet" href="qbarset.html" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="41" bases="QObject" module="Qt Charts" brief="Represents one set of bars in a bar chart">
+            <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="37" column="4">
+                <brief>The <link raw="QBarSet" href="qbarset.html" type="class">QBarSet</link> class represents one set of bars in a bar chart.</brief>
+                <para>A bar set contains one data value for each category. The first value of a set is assumed to belong to the first category, the second one to the second category, and so on. If the set has fewer values than there are categories, the missing values are assumed to be located at the end of the set. For missing values in the middle of a set, the numerical value of zero is used. Labels for zero value sets are not shown.</para>
+                <see-also>
+                    <link raw="QAbstractBarSeries" href="qabstractbarseries.html" type="class">QAbstractBarSeries</link>
+                    <link raw="QBarSeries" href="qbarseries.html" type="class">QBarSeries</link>
+                    <link raw="QStackedBarSeries" href="qstackedbarseries.html" type="class">QStackedBarSeries</link>
+                    <link raw="QPercentBarSeries" href="qpercentbarseries.html" type="class">QPercentBarSeries</link>
+                    <link raw="QHorizontalBarSeries" href="qhorizontalbarseries.html" type="class">QHorizontalBarSeries</link>
+                    <link raw="QHorizontalStackedBarSeries" href="qhorizontalstackedbarseries.html" type="class">QHorizontalStackedBarSeries</link>
+                    <link raw="QHorizontalPercentBarSeries" href="qhorizontalpercentbarseries.html" type="class">QHorizontalPercentBarSeries</link>
+                </see-also>
+            </description>
+            <variable threadsafety="unspecified" name="staticMetaObject" fullname="QBarSet::staticMetaObject" href="qbarset.html#staticMetaObject-var" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" type="const QMetaObject" static="true">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="metaObject" fullname="QBarSet::metaObject" href="qbarset.html#metaObject" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QMetaObject *" signature="const QMetaObject * metaObject() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacast" fullname="QBarSet::qt_metacast" href="qbarset.html#qt_metacast" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void *" signature="void * qt_metacast(const char *)">
+                <parameter type="const char *" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacall" fullname="QBarSet::qt_metacall" href="qbarset.html#qt_metacall" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int qt_metacall(QMetaObject::Call , int , void **)">
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="tr" fullname="QBarSet::tr" href="qbarset.html#tr" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString tr(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="trUtf8" fullname="QBarSet::trUtf8" href="qbarset.html#trUtf8" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString trUtf8(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_static_metacall" fullname="QBarSet::qt_static_metacall" href="qbarset.html#qt_static_metacall" status="active" access="private" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_static_metacall(QObject *, QMetaObject::Call , int , void **)">
+                <parameter type="QObject *" name="" default=""/>
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <class threadsafety="unspecified" name="QPrivateSignal" fullname="QBarSet::QPrivateSignal" href="qbarset-qprivatesignal.html" status="active" access="private" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="43">
+                <description path="" line="0" column="0"/>
+            </class>
+            <property threadsafety="unspecified" name="label" fullname="QBarSet::label" href="qbarset.html#label-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="44" type="QString" brief="Of the bar set">
+                <getter name="label"/>
+                <setter name="setLabel"/>
+                <notifier name="labelChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="69" column="4">
+                    <brief>This property holds The label of the bar set..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="pen" fullname="QBarSet::pen" href="qbarset.html#pen-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="45" type="QPen" brief="Used to draw the lines of bars in the bar set">
+                <getter name="pen"/>
+                <setter name="setPen"/>
+                <notifier name="penChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="78" column="4">
+                    <brief>This property holds The pen used to draw the lines of bars in the bar set..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="brush" fullname="QBarSet::brush" href="qbarset.html#brush-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="46" type="QBrush" brief="Used to fill the bars in the bar set">
+                <getter name="brush"/>
+                <setter name="setBrush"/>
+                <notifier name="brushChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="83" column="4">
+                    <brief>This property holds The brush used to fill the bars in the bar set..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="labelBrush" fullname="QBarSet::labelBrush" href="qbarset.html#labelBrush-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="47" type="QBrush" brief="Brush used to draw the bar set's label">
+                <getter name="labelBrush"/>
+                <setter name="setLabelBrush"/>
+                <notifier name="labelBrushChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="93" column="4">
+                    <brief>This property holds The brush used to draw the bar set's label..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="labelFont" fullname="QBarSet::labelFont" href="qbarset.html#labelFont-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="48" type="QFont" brief="Font used to draw the bar set's label">
+                <getter name="labelFont"/>
+                <setter name="setLabelFont"/>
+                <notifier name="labelFontChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="98" column="4">
+                    <brief>This property holds The font used to draw the bar set's label..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="color" fullname="QBarSet::color" href="qbarset.html#color-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="49" type="QColor" brief="Fill (brush) color of the bar set">
+                <getter name="color"/>
+                <setter name="setColor"/>
+                <notifier name="colorChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="110" column="4">
+                    <brief>This property holds The fill (brush) color of the bar set..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="borderColor" fullname="QBarSet::borderColor" href="qbarset.html#borderColor-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="50" type="QColor" brief="Line (pen) color of the bar set">
+                <getter name="borderColor"/>
+                <setter name="setBorderColor"/>
+                <notifier name="borderColorChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="119" column="4">
+                    <brief>This property holds The line (pen) color of the bar set..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="labelColor" fullname="QBarSet::labelColor" href="qbarset.html#labelColor-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="51" type="QColor" brief="Text (label) color of the bar set">
+                <getter name="labelColor"/>
+                <setter name="setLabelColor"/>
+                <notifier name="labelColorChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="133" column="4">
+                    <brief>This property holds The text (label) color of the bar set..</brief>
+                </description>
+            </property>
+            <function threadsafety="unspecified" name="QBarSet" fullname="QBarSet::QBarSet" href="qbarset.html#QBarSet" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="54" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QBarSet(const QString label, QObject *parent)">
+                <parameter type="const QString" name="label" default=""/>
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="326" column="4">
+                    <para>Constructs a bar set with the label <argument>label</argument> and the parent <argument>parent</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="~QBarSet" fullname="QBarSet::~QBarSet" href="qbarset.html#dtor.QBarSet" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="55" virtual="virtual" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QBarSet()">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="335" column="4">
+                    <para>Removes the bar set.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setLabel" fullname="QBarSet::setLabel" href="qbarset.html#setLabel" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="57" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="label" type="void" signature="void setLabel(const QString label)">
+                <parameter type="const QString" name="label" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="343" column="4">
+                    <para>Sets <argument>label</argument> as the new label for the bar set.</para>
+                    <see-also>
+                        <link raw="label()" href="qbarset.html#label" type="function">label()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="label" fullname="QBarSet::label" href="qbarset.html#label" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="58" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="label" type="QString" signature="QString label() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="353" column="4">
+                    <para>Returns the label of the bar set.</para>
+                    <see-also>
+                        <link raw="setLabel()" href="qbarset.html#setLabel" type="function">setLabel()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="append" fullname="QBarSet::append" href="qbarset.html#append" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="60" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void append(const qreal value)">
+                <parameter type="const qreal" name="value" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="366" column="4">
+                    <para>Appends the new value specified by <argument>value</argument> to the end of the bar set.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="append" fullname="QBarSet::append" href="qbarset.html#append-1" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="61" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void append(const QList&lt;qreal&gt; &amp;values)">
+                <parameter type="const QList&lt;qreal&gt; &amp;" name="values" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="377" column="4">
+                    <para>Appends the list of real values specified by <argument>values</argument> to the end of the bar set.</para>
+                    <see-also>
+                        <link raw="append()" href="qbarset.html#append" type="function">append()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator&lt;&lt;" fullname="QBarSet::operator&lt;&lt;" href="qbarset.html#operator-lt-lt" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="63" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QBarSet &amp;" signature="QBarSet &amp; operator&lt;&lt;(const qreal &amp;value)">
+                <parameter type="const qreal &amp;" name="value" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="389" column="4">
+                    <para>A convenience operator for appending the real value specified by <argument>value</argument> to the end of the bar set.</para>
+                    <see-also>
+                        <link raw="append()" href="qbarset.html#append" type="function">append()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="insert" fullname="QBarSet::insert" href="qbarset.html#insert" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="65" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void insert(const int index, const qreal value)">
+                <parameter type="const int" name="index" default=""/>
+                <parameter type="const qreal" name="value" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="401" column="4">
+                    <para>Inserts <argument>value</argument> in the position specified by <argument>index</argument>. The values following the inserted value are moved up one position.</para>
+                    <see-also>
+                        <link raw="remove()" href="qbarset.html#remove" type="function">remove()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="remove" fullname="QBarSet::remove" href="qbarset.html#remove" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="66" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void remove(const int index, const int count)">
+                <parameter type="const int" name="index" default=""/>
+                <parameter type="const int" name="count" default="1"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="421" column="4">
+                    <para>Removes the number of values specified by <argument>count</argument> from the bar set starting with the value specified by <argument>index</argument>.</para>
+                    <see-also>
+                        <link raw="insert()" href="qbarset.html#insert" type="function">insert()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="replace" fullname="QBarSet::replace" href="qbarset.html#replace" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="67" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void replace(const int index, const qreal value)">
+                <parameter type="const int" name="index" default=""/>
+                <parameter type="const qreal" name="value" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="440" column="4">
+                    <para>Adds the value specified by <argument>value</argument> to the bar set at the position specified by <argument>index</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="at" fullname="QBarSet::at" href="qbarset.html#at" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="68" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal at(const int index) const">
+                <parameter type="const int" name="index" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="457" column="4">
+                    <para>Returns the value specified by <argument>index</argument> from the bar set. If the index is out of bounds, 0.0 is returned.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator[]" fullname="QBarSet::operator[]" href="qbarset.html#operator-5b-5d" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="69" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal operator[](const int index) const">
+                <parameter type="const int" name="index" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="468" column="4">
+                    <para>Returns the value of the bar set specified by <argument>index</argument>. If the index is out of bounds, 0.0 is returned.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="count" fullname="QBarSet::count" href="qbarset.html#count" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="70" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int count() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="477" column="4">
+                    <para>Returns the number of values in a bar set.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="sum" fullname="QBarSet::sum" href="qbarset.html#sum" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="71" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal sum() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="485" column="4">
+                    <para>Returns the sum of all values in the bar set.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPen" fullname="QBarSet::setPen" href="qbarset.html#setPen" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="73" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="pen" type="void" signature="void setPen(const QPen &amp;pen)">
+                <parameter type="const QPen &amp;" name="pen" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="496" column="4">
+                    <para>Sets the pen used to draw the lines in the bar set to <argument>pen</argument>.</para>
+                    <see-also>
+                        <link raw="pen()" href="qbarset.html#pen" type="function">pen()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="pen" fullname="QBarSet::pen" href="qbarset.html#pen" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="74" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="pen" type="QPen" signature="QPen pen() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="509" column="4">
+                    <para>Returns the pen used to draw the lines in the bar set.</para>
+                    <see-also>
+                        <link raw="setPen()" href="qbarset.html#setPen" type="function">setPen()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setBrush" fullname="QBarSet::setBrush" href="qbarset.html#setBrush" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="76" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="brush" type="void" signature="void setBrush(const QBrush &amp;brush)">
+                <parameter type="const QBrush &amp;" name="brush" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="520" column="4">
+                    <para>Sets the brush used to fill the bars in the bar set to <argument>brush</argument>.</para>
+                    <see-also>
+                        <link raw="brush()" href="qbarset.html#brush" type="function">brush()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="brush" fullname="QBarSet::brush" href="qbarset.html#brush" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="77" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="brush" type="QBrush" signature="QBrush brush() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="533" column="4">
+                    <para>Returns the brush used to fill the bars in the bar set.</para>
+                    <see-also>
+                        <link raw="setBrush()" href="qbarset.html#setBrush" type="function">setBrush()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setLabelBrush" fullname="QBarSet::setLabelBrush" href="qbarset.html#setLabelBrush" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="79" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelBrush" type="void" signature="void setLabelBrush(const QBrush &amp;brush)">
+                <parameter type="const QBrush &amp;" name="brush" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="544" column="4">
+                    <para>Sets the brush used to draw values on top of this bar set to <argument>brush</argument>.</para>
+                    <see-also>
+                        <link raw="labelBrush()" href="qbarset.html#labelBrush" type="function">labelBrush()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="labelBrush" fullname="QBarSet::labelBrush" href="qbarset.html#labelBrush" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="80" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelBrush" type="QBrush" signature="QBrush labelBrush() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="557" column="4">
+                    <para>Returns the brush used to draw values on top of this bar set.</para>
+                    <see-also>
+                        <link raw="setLabelBrush()" href="qbarset.html#setLabelBrush" type="function">setLabelBrush()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setLabelFont" fullname="QBarSet::setLabelFont" href="qbarset.html#setLabelFont" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="82" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelFont" type="void" signature="void setLabelFont(const QFont &amp;font)">
+                <parameter type="const QFont &amp;" name="font" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="568" column="4">
+                    <para>Sets the font used to draw values on top of this bar set to <argument>font</argument>.</para>
+                    <see-also>
+                        <link raw="labelFont()" href="qbarset.html#labelFont" type="function">labelFont()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="labelFont" fullname="QBarSet::labelFont" href="qbarset.html#labelFont" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="83" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelFont" type="QFont" signature="QFont labelFont() const">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="581" column="4">
+                    <para>Returns the pen used to draw values on top of this bar set.</para>
+                    <see-also>
+                        <link raw="setLabelFont()" href="qbarset.html#setLabelFont" type="function">setLabelFont()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="color" fullname="QBarSet::color" href="qbarset.html#color" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="85" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="color" type="QColor" signature="QColor color()">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="589" column="4">
+                    <para>Returns the fill color for the bar set.</para>
+                    <see-also>
+                        <link raw="setColor()" href="qbarset.html#setColor" type="function">setColor()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setColor" fullname="QBarSet::setColor" href="qbarset.html#setColor" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="86" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="color" type="void" signature="void setColor(QColor color)">
+                <parameter type="QColor" name="color" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="597" column="4">
+                    <para>Sets the fill color for the bar set to <argument>color</argument>.</para>
+                    <see-also>
+                        <link raw="color()" href="qbarset.html#color" type="function">color()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="borderColor" fullname="QBarSet::borderColor" href="qbarset.html#borderColor" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="88" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="borderColor" type="QColor" signature="QColor borderColor()">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="617" column="4">
+                    <para>Returns the line color for the bar set.</para>
+                    <see-also>
+                        <link raw="setBorderColor()" href="qbarset.html#setBorderColor" type="function">setBorderColor()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setBorderColor" fullname="QBarSet::setBorderColor" href="qbarset.html#setBorderColor" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="89" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="borderColor" type="void" signature="void setBorderColor(QColor color)">
+                <parameter type="QColor" name="color" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="625" column="4">
+                    <para>Sets the line color for the bar set to <argument>color</argument>.</para>
+                    <see-also>
+                        <link raw="borderColor()" href="qbarset.html#borderColor" type="function">borderColor()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="labelColor" fullname="QBarSet::labelColor" href="qbarset.html#labelColor" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="91" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelColor" type="QColor" signature="QColor labelColor()">
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="638" column="4">
+                    <para>Returns the text color for the bar set.</para>
+                    <see-also>
+                        <link raw="setLabelColor()" href="qbarset.html#setLabelColor" type="function">setLabelColor()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setLabelColor" fullname="QBarSet::setLabelColor" href="qbarset.html#setLabelColor" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="92" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelColor" type="void" signature="void setLabelColor(QColor color)">
+                <parameter type="QColor" name="color" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/barchart/qbarset.cpp" line="646" column="4">
+                    <para>Sets the text color for the bar set to <argument>color</argument>.</para>
+                    <see-also>
+                        <link raw="labelColor()" href="qbarset.html#labelColor" type="function">labelColor()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="clicked" fullname="QBarSet::clicked" href="qbarset.html#clicked" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="95" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void clicked(int index)">
+                <parameter type="int" name="index" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="hovered" fullname="QBarSet::hovered" href="qbarset.html#hovered" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="96" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void hovered(bool status, int index)">
+                <parameter type="bool" name="status" default=""/>
+                <parameter type="int" name="index" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="pressed" fullname="QBarSet::pressed" href="qbarset.html#pressed" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="97" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void pressed(int index)">
+                <parameter type="int" name="index" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="released" fullname="QBarSet::released" href="qbarset.html#released" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="98" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void released(int index)">
+                <parameter type="int" name="index" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="doubleClicked" fullname="QBarSet::doubleClicked" href="qbarset.html#doubleClicked" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="99" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void doubleClicked(int index)">
+                <parameter type="int" name="index" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="penChanged" fullname="QBarSet::penChanged" href="qbarset.html#pen-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="100" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="pen" type="void" signature="void penChanged()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="brushChanged" fullname="QBarSet::brushChanged" href="qbarset.html#brush-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="101" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="brush" type="void" signature="void brushChanged()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="labelChanged" fullname="QBarSet::labelChanged" href="qbarset.html#label-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="102" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="label" type="void" signature="void labelChanged()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="labelBrushChanged" fullname="QBarSet::labelBrushChanged" href="qbarset.html#labelBrush-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="103" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelBrush" type="void" signature="void labelBrushChanged()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="labelFontChanged" fullname="QBarSet::labelFontChanged" href="qbarset.html#labelFont-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="104" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelFont" type="void" signature="void labelFontChanged()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="colorChanged" fullname="QBarSet::colorChanged" href="qbarset.html#color-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="105" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="color" type="void" signature="void colorChanged(QColor color)">
+                <parameter type="QColor" name="color" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="borderColorChanged" fullname="QBarSet::borderColorChanged" href="qbarset.html#borderColor-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="106" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="borderColor" type="void" signature="void borderColorChanged(QColor color)">
+                <parameter type="QColor" name="color" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="labelColorChanged" fullname="QBarSet::labelColorChanged" href="qbarset.html#labelColor-prop" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="107" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelColor" type="void" signature="void labelColorChanged(QColor color)">
+                <parameter type="QColor" name="color" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="valuesAdded" fullname="QBarSet::valuesAdded" href="qbarset.html#valuesAdded" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="109" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void valuesAdded(int index, int count)">
+                <parameter type="int" name="index" default=""/>
+                <parameter type="int" name="count" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="valuesRemoved" fullname="QBarSet::valuesRemoved" href="qbarset.html#valuesRemoved" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="110" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void valuesRemoved(int index, int count)">
+                <parameter type="int" name="index" default=""/>
+                <parameter type="int" name="count" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="valueChanged" fullname="QBarSet::valueChanged" href="qbarset.html#valueChanged" status="active" access="public" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="111" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void valueChanged(int index)">
+                <parameter type="int" name="index" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <variable threadsafety="unspecified" name="d_ptr" fullname="QBarSet::d_ptr" href="qbarset.html#d_ptr-var" status="active" access="private" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="114" type="int" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="QBarSet" fullname="QBarSet::QBarSet" href="qbarset.html#QBarSet-1" status="active" access="private" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="115" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QBarSet(const QBarSet &amp;)">
+                <parameter type="const QBarSet &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QBarSet::operator=" href="qbarset.html#operator-eq" status="active" access="private" location="qbarset.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qbarset.h" lineno="115" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QBarSet &amp;" signature="QBarSet &amp; operator=(const QBarSet &amp;)">
+                <parameter type="const QBarSet &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+        </class>
+    </document>
+</WebXML>

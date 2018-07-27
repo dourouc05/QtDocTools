@@ -15,15 +15,18 @@
   </xsl:template>
   
   <xsl:template match="document">
+    <xsl:variable name="mainTag" select="child::node()[1]" as="node()"/>
+    
     <db:article>
-      <!-- Info tag: either just a title, or a title and an abstract. -->
+      <!-- Info tag only when there is more than just a title: an abstract (brief) or extended links (relations). -->
       <xsl:choose>
-        <xsl:when test="child::node()[1]/@brief">
+        <xsl:when test="child::node()[1]/@brief or child::node()[1]/description/relation">
           <db:info>
             <db:title>
               <xsl:choose>
-                <xsl:when test="child::node()[1]/@title"><xsl:value-of select="child::node()[1]/@title"/></xsl:when>
-                <xsl:when test="child::node()[1]/@name"><xsl:value-of select="child::node()[1]/@name"/></xsl:when>
+                <xsl:when test="$mainTag/@fulltitle"><xsl:value-of select="$mainTag/@fulltitle"/></xsl:when>
+                <xsl:when test="$mainTag/@title"><xsl:value-of select="$mainTag/@title"/></xsl:when>
+                <xsl:when test="$mainTag/@name"><xsl:value-of select="$mainTag/@name"/></xsl:when>
                 <xsl:otherwise><xsl:message>WARNING: No title found.</xsl:message></xsl:otherwise>
               </xsl:choose>
             </db:title>
@@ -32,13 +35,20 @@
                 <xsl:value-of select="child::node()[1]/@brief"/>
               </db:para>
             </db:abstract>
+            
+            <xsl:for-each select="$mainTag/description/relation">
+              <db:extendedlink>
+                <link xlink:type="arc" xlink:from="{$mainTag/@href}" xlink:to="{@href}" xlink:title="{@meta}" xlink:label="{@description}" />
+              </db:extendedlink>
+            </xsl:for-each>
           </db:info>
         </xsl:when>
         <xsl:otherwise>
           <db:title>
             <xsl:choose>
-              <xsl:when test="child::node()[1]/@title"><xsl:value-of select="child::node()[1]/@title"/></xsl:when>
-              <xsl:when test="child::node()[1]/@name"><xsl:value-of select="child::node()[1]/@name"/></xsl:when>
+              <xsl:when test="$mainTag/@fulltitle"><xsl:value-of select="$mainTag/@fulltitle"/></xsl:when>
+              <xsl:when test="$mainTag/@title"><xsl:value-of select="$mainTag/@title"/></xsl:when>
+              <xsl:when test="$mainTag/@name"><xsl:value-of select="$mainTag/@name"/></xsl:when>
               <xsl:otherwise><xsl:message>WARNING: No title found.</xsl:message></xsl:otherwise>
             </xsl:choose>
           </db:title>
@@ -229,7 +239,7 @@
           <!-- @name:      backingStore -->
           <!-- @fullname:  QWidget::backingStore -->
           <!-- @signature: QBackingStore * backingStore() const -->
-          <xsl:variable name="sanitisedName" select="replace(@name, '\+', '\\+')" as="xs:string"/>
+          <xsl:variable name="sanitisedName" select="replace(replace(replace(@name, '\+', '\\+'), '\[', '\\['), '\]', '\\]')" as="xs:string"/>
           <xsl:value-of select="
             if(contains(@fullname, '::')) then concat(@type,' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature "/>
         </db:title>
@@ -488,6 +498,18 @@
     </db:para>
   </xsl:template>
   
+  <xsl:template mode="content_generic" match="target">
+    <!-- IDs are already transformed into xml:id. -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="contents | keyword">
+    <!-- Used for a table of contents, can be skipped. -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="relation">
+    <!-- Handled as extended links in the <info> tag. -->
+  </xsl:template>
+  
   <xsl:template mode="content_generic" match="codeline"/>
   
   <xsl:template mode="content_generic" match="description">
@@ -497,6 +519,10 @@
   
   <xsl:template mode="content_generic" match="section">
     <db:section>
+      <xsl:if test="@id">
+        <xsl:attribute name="xml:id" select="@id"/>
+      </xsl:if>
+      
       <xsl:apply-templates mode="content_generic"/>
     </db:section>
   </xsl:template>
@@ -555,9 +581,32 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="code">
+    <!-- Language is C++, JS, or QML. -->
     <db:programlisting>
       <xsl:apply-templates mode="content_generic"/>
     </db:programlisting>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="badcode">
+    <!-- As opposed to code, language is unknown. -->
+    <db:programlisting language="other">
+      <xsl:apply-templates mode="content_generic"/>
+    </db:programlisting>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="quote">
+    <xsl:choose>
+      <xsl:when test="para/teletype">
+        <db:screen>
+          <xsl:apply-templates mode="content_generic" select="para/teletype/child::node()"/>
+        </db:screen>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:quote>
+          <xsl:apply-templates mode="content_generic"/>
+        </db:quote>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="list[@type='ordered']">
@@ -604,6 +653,19 @@
         </xsl:for-each>
       </db:tbody>
     </db:informaltable>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="list[@type='definition']">
+    <db:variablelist>
+      <xsl:for-each select="definition">
+        <db:varlistentry>
+          <db:term>
+            <xsl:apply-templates mode="content_generic" select="term/child::node()"/>
+          </db:term>
+          <xsl:apply-templates mode="content_generic" select="following-sibling::item[1]"/>
+        </db:varlistentry>
+      </xsl:for-each>
+    </db:variablelist>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="item">

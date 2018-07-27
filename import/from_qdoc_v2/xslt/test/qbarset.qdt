@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+   <db:info>
+      <db:title>QBarSet</db:title>
+      <db:abstract>
+         <db:para>Represents one set of bars in a bar chart</db:para>
+      </db:abstract>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QBarSet</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">Qt Charts</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qbarset.h&gt;</db:namespacesynopsisinfo>
+      <db:classsynopsisinfo role="inherits">QObject</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qbarset.html" xrefstyle="class" annotations="QBarSet">QBarSet</db:link></db:code> class represents one set of bars in a bar chart.</db:para>
+      <db:para>A bar set contains one data value for each category. The first value of a set is assumed to belong to the first category, the second one to the second category, and so on. If the set has fewer values than there are categories, the missing values are assumed to be located at the end of the set. For missing values in the middle of a set, the numerical value of zero is used. Labels for zero value sets are not shown.</db:para>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:code><db:link xlink:href="qabstractbarseries.html" xrefstyle="class" annotations="QAbstractBarSeries">QAbstractBarSeries</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qbarseries.html" xrefstyle="class" annotations="QBarSeries">QBarSeries</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qstackedbarseries.html" xrefstyle="class" annotations="QStackedBarSeries">QStackedBarSeries</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qpercentbarseries.html" xrefstyle="class" annotations="QPercentBarSeries">QPercentBarSeries</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qhorizontalbarseries.html" xrefstyle="class" annotations="QHorizontalBarSeries">QHorizontalBarSeries</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qhorizontalstackedbarseries.html" xrefstyle="class" annotations="QHorizontalStackedBarSeries">QHorizontalStackedBarSeries</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qhorizontalpercentbarseries.html" xrefstyle="class" annotations="QHorizontalPercentBarSeries">QHorizontalPercentBarSeries</db:link></db:code>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Properties</db:title>
+      <db:section>
+         <db:title>label : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>label</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>label</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabel</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>label</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The label of the bar set..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>label() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setLabel(QStringlabel)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>pen : QPen</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QPen</db:type>
+            <db:varname>pen</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QPen</db:type>
+            <db:methodname>pen</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setPen</db:methodname>
+            <db:methodparam>
+               <db:type>QPen</db:type>
+               <db:parameter>pen</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The pen used to draw the lines of bars in the bar set..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QPen</db:td>
+                     <db:td>pen() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setPen(QPenpen)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>brush : QBrush</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QBrush</db:type>
+            <db:varname>brush</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QBrush</db:type>
+            <db:methodname>brush</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setBrush</db:methodname>
+            <db:methodparam>
+               <db:type>QBrush</db:type>
+               <db:parameter>brush</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The brush used to fill the bars in the bar set..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QBrush</db:td>
+                     <db:td>brush() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setBrush(QBrushbrush)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>labelBrush : QBrush</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QBrush</db:type>
+            <db:varname>labelBrush</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QBrush</db:type>
+            <db:methodname>labelBrush</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelBrush</db:methodname>
+            <db:methodparam>
+               <db:type>QBrush</db:type>
+               <db:parameter>labelBrush</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The brush used to draw the bar set's label..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QBrush</db:td>
+                     <db:td>labelBrush() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setLabelBrush(QBrushlabelBrush)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>labelFont : QFont</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QFont</db:type>
+            <db:varname>labelFont</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QFont</db:type>
+            <db:methodname>labelFont</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelFont</db:methodname>
+            <db:methodparam>
+               <db:type>QFont</db:type>
+               <db:parameter>labelFont</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The font used to draw the bar set's label..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QFont</db:td>
+                     <db:td>labelFont() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setLabelFont(QFontlabelFont)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>color : QColor</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QColor</db:type>
+            <db:varname>color</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QColor</db:type>
+            <db:methodname>color</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setColor</db:methodname>
+            <db:methodparam>
+               <db:type>QColor</db:type>
+               <db:parameter>color</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The fill (brush) color of the bar set..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QColor</db:td>
+                     <db:td>color() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setColor(QColorcolor)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>borderColor : QColor</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QColor</db:type>
+            <db:varname>borderColor</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QColor</db:type>
+            <db:methodname>borderColor</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setBorderColor</db:methodname>
+            <db:methodparam>
+               <db:type>QColor</db:type>
+               <db:parameter>borderColor</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The line (pen) color of the bar set..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QColor</db:td>
+                     <db:td>borderColor() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setBorderColor(QColorborderColor)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>labelColor : QColor</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QColor</db:type>
+            <db:varname>labelColor</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QColor</db:type>
+            <db:methodname>labelColor</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelColor</db:methodname>
+            <db:methodparam>
+               <db:type>QColor</db:type>
+               <db:parameter>labelColor</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The text (label) color of the bar set..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QColor</db:td>
+                     <db:td>labelColor() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setLabelColor(QColorlabelColor)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QBarSet::QBarSet(const QString label, QObject *parent)</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QBarSet</db:methodname>
+            <db:methodparam>
+               <db:type>const QString</db:type>
+               <db:parameter>label</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>parent</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para>Constructs a bar set with the label <db:code role="argument">label</db:code> and the parent <db:code role="argument">parent</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QBarSet::~QBarSet()</db:title>
+         <db:destructorsynopsis>
+            <db:methodname>~QBarSet</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:destructorsynopsis>
+         <db:para>Removes the bar set.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QBarSet &amp; QBarSet::operator&lt;&lt;(const qreal &amp;value)</db:title>
+         <db:methodsynopsis>
+            <db:type>QBarSet &amp;</db:type>
+            <db:methodname>operator&lt;&lt;</db:methodname>
+            <db:methodparam>
+               <db:type>const qreal &amp;</db:type>
+               <db:parameter>value</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>A convenience operator for appending the real value specified by <db:code role="argument">value</db:code> to the end of the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#append" xrefstyle="function" annotations="append()">append()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QBrush QBarSet::brush() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QBrush</db:type>
+            <db:methodname>brush</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the brush used to fill the bars in the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setBrush" xrefstyle="function" annotations="setBrush()">setBrush()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QBrush QBarSet::labelBrush() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QBrush</db:type>
+            <db:methodname>labelBrush</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the brush used to draw values on top of this bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setLabelBrush" xrefstyle="function" annotations="setLabelBrush()">setLabelBrush()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QColor QBarSet::borderColor()</db:title>
+         <db:methodsynopsis>
+            <db:type>QColor</db:type>
+            <db:methodname>borderColor</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the line color for the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setBorderColor" xrefstyle="function" annotations="setBorderColor()">setBorderColor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QColor QBarSet::color()</db:title>
+         <db:methodsynopsis>
+            <db:type>QColor</db:type>
+            <db:methodname>color</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the fill color for the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setColor" xrefstyle="function" annotations="setColor()">setColor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QColor QBarSet::labelColor()</db:title>
+         <db:methodsynopsis>
+            <db:type>QColor</db:type>
+            <db:methodname>labelColor</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the text color for the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setLabelColor" xrefstyle="function" annotations="setLabelColor()">setLabelColor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QFont QBarSet::labelFont() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QFont</db:type>
+            <db:methodname>labelFont</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the pen used to draw values on top of this bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setLabelFont" xrefstyle="function" annotations="setLabelFont()">setLabelFont()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QPen QBarSet::pen() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QPen</db:type>
+            <db:methodname>pen</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the pen used to draw the lines in the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setPen" xrefstyle="function" annotations="setPen()">setPen()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QBarSet::label() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>label</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the label of the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#setLabel" xrefstyle="function" annotations="setLabel()">setLabel()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QBarSet::count() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>count</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the number of values in a bar set.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>qreal QBarSet::at(const int index) const</db:title>
+         <db:methodsynopsis>
+            <db:type>qreal</db:type>
+            <db:methodname>at</db:methodname>
+            <db:methodparam>
+               <db:type>const int</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the value specified by <db:code role="argument">index</db:code> from the bar set. If the index is out of bounds, 0.0 is returned.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>qreal QBarSet::operator[](const int index) const</db:title>
+         <db:methodsynopsis>
+            <db:type>qreal</db:type>
+            <db:methodname>operator[]</db:methodname>
+            <db:methodparam>
+               <db:type>const int</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the value of the bar set specified by <db:code role="argument">index</db:code>. If the index is out of bounds, 0.0 is returned.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>qreal QBarSet::sum() const</db:title>
+         <db:methodsynopsis>
+            <db:type>qreal</db:type>
+            <db:methodname>sum</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the sum of all values in the bar set.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::append(const QList&lt;qreal&gt; &amp;values)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>append</db:methodname>
+            <db:methodparam>
+               <db:type>const QList&lt;qreal&gt; &amp;</db:type>
+               <db:parameter>values</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Appends the list of real values specified by <db:code role="argument">values</db:code> to the end of the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#append" xrefstyle="function" annotations="append()">append()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::append(const qreal value)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>append</db:methodname>
+            <db:methodparam>
+               <db:type>const qreal</db:type>
+               <db:parameter>value</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Appends the new value specified by <db:code role="argument">value</db:code> to the end of the bar set.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::insert(const int index, const qreal value)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>insert</db:methodname>
+            <db:methodparam>
+               <db:type>const int</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const qreal</db:type>
+               <db:parameter>value</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Inserts <db:code role="argument">value</db:code> in the position specified by <db:code role="argument">index</db:code>. The values following the inserted value are moved up one position.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#remove" xrefstyle="function" annotations="remove()">remove()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::remove(const int index, const int count)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>remove</db:methodname>
+            <db:methodparam>
+               <db:type>const int</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const int</db:type>
+               <db:parameter>count</db:parameter>
+               <db:initializer>1</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Removes the number of values specified by <db:code role="argument">count</db:code> from the bar set starting with the value specified by <db:code role="argument">index</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#insert" xrefstyle="function" annotations="insert()">insert()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::replace(const int index, const qreal value)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>replace</db:methodname>
+            <db:methodparam>
+               <db:type>const int</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const qreal</db:type>
+               <db:parameter>value</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Adds the value specified by <db:code role="argument">value</db:code> to the bar set at the position specified by <db:code role="argument">index</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setBorderColor(QColor color)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setBorderColor</db:methodname>
+            <db:methodparam>
+               <db:type>QColor</db:type>
+               <db:parameter>color</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the line color for the bar set to <db:code role="argument">color</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#borderColor" xrefstyle="function" annotations="borderColor()">borderColor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setBrush(const QBrush &amp;brush)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setBrush</db:methodname>
+            <db:methodparam>
+               <db:type>const QBrush &amp;</db:type>
+               <db:parameter>brush</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the brush used to fill the bars in the bar set to <db:code role="argument">brush</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#brush" xrefstyle="function" annotations="brush()">brush()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setColor(QColor color)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setColor</db:methodname>
+            <db:methodparam>
+               <db:type>QColor</db:type>
+               <db:parameter>color</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the fill color for the bar set to <db:code role="argument">color</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#color" xrefstyle="function" annotations="color()">color()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setLabel(const QString label)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabel</db:methodname>
+            <db:methodparam>
+               <db:type>const QString</db:type>
+               <db:parameter>label</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets <db:code role="argument">label</db:code> as the new label for the bar set.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#label" xrefstyle="function" annotations="label()">label()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setLabelBrush(const QBrush &amp;brush)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelBrush</db:methodname>
+            <db:methodparam>
+               <db:type>const QBrush &amp;</db:type>
+               <db:parameter>brush</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the brush used to draw values on top of this bar set to <db:code role="argument">brush</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#labelBrush" xrefstyle="function" annotations="labelBrush()">labelBrush()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setLabelColor(QColor color)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelColor</db:methodname>
+            <db:methodparam>
+               <db:type>QColor</db:type>
+               <db:parameter>color</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the text color for the bar set to <db:code role="argument">color</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#labelColor" xrefstyle="function" annotations="labelColor()">labelColor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setLabelFont(const QFont &amp;font)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelFont</db:methodname>
+            <db:methodparam>
+               <db:type>const QFont &amp;</db:type>
+               <db:parameter>font</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the font used to draw values on top of this bar set to <db:code role="argument">font</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#labelFont" xrefstyle="function" annotations="labelFont()">labelFont()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QBarSet::setPen(const QPen &amp;pen)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setPen</db:methodname>
+            <db:methodparam>
+               <db:type>const QPen &amp;</db:type>
+               <db:parameter>pen</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the pen used to draw the lines in the bar set to <db:code role="argument">pen</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qbarset.html#pen" xrefstyle="function" annotations="pen()">pen()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+</db:article>
