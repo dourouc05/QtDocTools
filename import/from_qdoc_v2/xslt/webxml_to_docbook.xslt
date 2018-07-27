@@ -129,12 +129,7 @@
     <xsl:if test="$memberTypes">
       <db:section>
         <db:title>Member Type Documentation</db:title>
-        <!-- The documentation is on the enum, but the typedef must be presented just after. -->
-        
-        <xsl:variable name="memberEnums" select="$memberTypes/self::enum" as="node()*"/>
-        <xsl:variable name="memberTypedefs" select="$memberTypes/self::typedef" as="node()*"/>
-        
-        <xsl:for-each select="$memberEnums">
+        <xsl:for-each select="$memberTypes/self::enum">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
@@ -156,9 +151,10 @@
       <db:section>
         <db:title>Properties</db:title>
         
-        <xsl:if test="@since and not(@since='')">
-          <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
-        </xsl:if>
+        <xsl:for-each select="$properties">
+          <xsl:sort select="@signature"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
       </db:section>
     </xsl:if>
     
@@ -219,11 +215,16 @@
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
         <db:title>
-          <!-- For methods: -->
+          <!-- For constructors: -->
+          <!-- @name:      QWidget -->
           <!-- @fullname:  QWidget::QWidget -->
           <!-- @signature: QWidget(QWidget *parent, Qt::WindowFlags f) -->
+          <!-- For methods: -->
+          <!-- @name:      backingStore -->
+          <!-- @fullname:  QWidget::backingStore -->
+          <!-- @signature: QBackingStore * backingStore() const -->
           <xsl:value-of select="
-            if(contains(@fullname, '::')) then concat(@fullname, replace(@signature, concat('(^.*?)', @name), '$1')) else @signature "/>
+            if(contains(@fullname, '::')) then concat(@type,' ', replace(@signature, concat('(^.*?)', @name), @fullname)) else @signature "/>
         </db:title>
         
         <!-- Choose the tag depending on the type of function: either constructor, destructor, or any kind of function (including signal and slot). -->
@@ -255,7 +256,7 @@
           
           <!-- Parameters. -->
           <xsl:choose>
-            <xsl:when test="methodparam">
+            <xsl:when test="parameter">
               <xsl:for-each select="parameter">
                 <db:methodparam>
                   <db:type>
@@ -313,6 +314,7 @@
   <xsl:template mode="content_class_elements" match="enum">
     <db:section>
       <db:title>enum <xsl:value-of select="@fullname"/>, flags <xsl:value-of select="@typedef"/></db:title>
+      <!-- The documentation is on the enum, but the typedef must be presented just after. -->
       
       <db:enumsynopsis>
         <db:enumname><xsl:value-of select="@fullname"/></db:enumname>
@@ -351,6 +353,86 @@
     </db:typedefsynopsis>
   </xsl:template>
   
+  <xsl:template mode="content_class_elements" match="property">
+    <db:section>
+      <db:title><xsl:value-of select="@name"/> : <xsl:value-of select="@type"/></db:title>
+      
+      <db:fieldsynopsis>
+        <db:modifier>(Qt property)</db:modifier>
+        <db:type><xsl:value-of select="@type"/></db:type>
+        <db:varname><xsl:value-of select="@name"/></db:varname>
+      </db:fieldsynopsis>
+      
+      <xsl:if test="getter">
+        <db:methodsynopsis>
+          <db:type>
+            <xsl:value-of select="@type"/>
+          </db:type>
+          
+          <db:methodname>
+            <xsl:value-of select="getter/@name"/>
+          </db:methodname>
+          
+          <db:void/>
+          
+          <db:modifier>const</db:modifier>
+        </db:methodsynopsis>
+      </xsl:if>
+      
+      <xsl:if test="setter">
+        <db:methodsynopsis>
+          <db:void/>
+          
+          <db:methodname>
+            <xsl:value-of select="setter/@name"/>
+          </db:methodname>
+          
+          <db:methodparam>
+            <db:type><xsl:value-of select="@type"/></db:type>
+            <db:parameter><xsl:value-of select="@name"/></db:parameter>
+          </db:methodparam>
+        </db:methodsynopsis>
+      </xsl:if>
+      
+      <xsl:apply-templates mode="content_generic" select="description"/>
+      
+      <xsl:if test="@since and not(@since='')">
+        <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+      </xsl:if>
+      
+      <xsl:if test="getter or setter">
+        <db:para>
+          <db:emphasis role="bold">Access Functions:</db:emphasis>
+          
+          <db:informaltable>
+            <db:tbody>
+              <xsl:if test="getter">
+                <db:tr>
+                  <db:td>
+                    <xsl:value-of select="@type"/>
+                  </db:td>
+                  <db:td>
+                    <xsl:value-of select="getter/@name"/>() const
+                  </db:td>
+                </db:tr>
+              </xsl:if>
+              <xsl:if test="setter">
+                <db:tr>
+                  <db:td>
+                    void
+                  </db:td>
+                  <db:td>
+                    <xsl:value-of select="setter/@name"/>(<xsl:value-of select="@type"/> <xsl:value-of select="@name"/>)
+                  </db:td>
+                </db:tr>
+              </xsl:if>
+            </db:tbody>
+          </db:informaltable>
+        </db:para>
+      </xsl:if>
+    </db:section>
+  </xsl:template>
+  
   <!-- Generic content handling (paragraphs, sections, etc.) -->
   <xsl:template mode="content_generic" match="brief">
     <!-- Ignore brief, as there is already some abstract before. -->
@@ -368,8 +450,8 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="see-also">
-    <db:section>
-      <db:title>See Also</db:title>
+    <db:para>
+      <db:emphasis role="bold">See Also:</db:emphasis>
       <db:simplelist type="vert">
         <xsl:for-each select="link">
           <db:member>
@@ -377,7 +459,7 @@
           </db:member>
         </xsl:for-each>
       </db:simplelist>
-    </db:section>
+    </db:para>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="heading">
