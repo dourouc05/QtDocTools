@@ -1,0 +1,2013 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+   <db:info>
+      <db:title>QAction</db:title>
+      <db:abstract>
+         <db:para>Abstract user interface action that can be inserted into widgets</db:para>
+      </db:abstract>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QAction</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">QtWidgets</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qaction.h&gt;</db:namespacesynopsisinfo>
+      <db:classsynopsisinfo role="inherits">QObject</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="group">mainwindow-classes</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>In applications many common commands can be invoked via menus, toolbar buttons, and keyboard shortcuts. Since the user expects each command to be performed in the same way, regardless of the user interface used, it is useful to represent each command as an <db:emphasis>action</db:emphasis>.</db:para>
+      <db:para>Actions can be added to menus and toolbars, and will automatically keep them in sync. For example, in a word processor, if the user presses a Bold toolbar button, the Bold menu item will automatically be checked.</db:para>
+      <db:para>Actions can be created as independent objects, but they may also be created during the construction of menus; the <db:code><db:link xlink:href="qmenu.html" xrefstyle="class" annotations="QMenu">QMenu</db:link></db:code> class contains convenience functions for creating actions suitable for use as menu items.</db:para>
+      <db:para>A <db:code><db:link xlink:href="qaction.html" xrefstyle="class" annotations="QAction">QAction</db:link></db:code> may contain an icon, menu text, a shortcut, status text, "What's This?" text, and a tooltip. Most of these can be set in the constructor. They can also be set independently with <db:code><db:link xlink:href="qaction.html#icon-prop" xrefstyle="function" annotations="setIcon()">setIcon()</db:link></db:code>, <db:code><db:link xlink:href="qaction.html#text-prop" xrefstyle="function" annotations="setText()">setText()</db:link></db:code>, <db:code><db:link xlink:href="qaction.html#iconText-prop" xrefstyle="function" annotations="setIconText()">setIconText()</db:link></db:code>, <db:code><db:link xlink:href="qaction.html#shortcut-prop" xrefstyle="function" annotations="setShortcut()">setShortcut()</db:link></db:code>, <db:code><db:link xlink:href="qaction.html#statusTip-prop" xrefstyle="function" annotations="setStatusTip()">setStatusTip()</db:link></db:code>, <db:code><db:link xlink:href="qaction.html#whatsThis-prop" xrefstyle="function" annotations="setWhatsThis()">setWhatsThis()</db:link></db:code>, and <db:code><db:link xlink:href="qaction.html#toolTip-prop" xrefstyle="function" annotations="setToolTip()">setToolTip()</db:link></db:code>. For menu items, it is possible to set an individual font with <db:code><db:link xlink:href="qaction.html#font-prop" xrefstyle="function" annotations="setFont()">setFont()</db:link></db:code>.</db:para>
+      <db:para>Actions are added to widgets using <db:code><db:link xlink:href="qwidget.html#addAction" xrefstyle="function" annotations="QWidget::addAction()">QWidget::addAction()</db:link></db:code> or <db:code><db:link xlink:href="qgraphicswidget.html#addAction" xrefstyle="function" annotations="QGraphicsWidget::addAction()">QGraphicsWidget::addAction()</db:link></db:code>. Note that an action must be added to a widget before it can be used; this is also true when the shortcut should be global (i.e., <db:code><db:link xlink:href="qt.html#ShortcutContext-enum" xrefstyle="enum" annotations="Qt::ApplicationShortcut">Qt::ApplicationShortcut</db:link></db:code> as <db:code><db:link xlink:href="qt.html#ShortcutContext-enum" xrefstyle="enum" annotations="Qt::ShortcutContext">Qt::ShortcutContext</db:link></db:code>).</db:para>
+      <db:para>Once a <db:code><db:link xlink:href="qaction.html" xrefstyle="class" annotations="QAction">QAction</db:link></db:code> has been created it should be added to the relevant menu and toolbar, then connected to the slot which will perform the action. For example:</db:para>
+      <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the examples of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+#include &lt;QtWidgets&gt;&#xD;
+&#xD;
+#include "mainwindow.h"&#xD;
+//! [0]&#xD;
+&#xD;
+//! [1]&#xD;
+MainWindow::MainWindow()&#xD;
+    : textEdit(new QPlainTextEdit)&#xD;
+//! [1] //! [2]&#xD;
+{&#xD;
+    setCentralWidget(textEdit);&#xD;
+&#xD;
+    createActions();&#xD;
+    createStatusBar();&#xD;
+&#xD;
+    readSettings();&#xD;
+&#xD;
+    connect(textEdit-&gt;document(), &amp;QTextDocument::contentsChanged,&#xD;
+            this, &amp;MainWindow::documentWasModified);&#xD;
+&#xD;
+#ifndef QT_NO_SESSIONMANAGER&#xD;
+    QGuiApplication::setFallbackSessionManagementEnabled(false);&#xD;
+    connect(qApp, &amp;QGuiApplication::commitDataRequest,&#xD;
+            this, &amp;MainWindow::commitData);&#xD;
+#endif&#xD;
+&#xD;
+    setCurrentFile(QString());&#xD;
+    setUnifiedTitleAndToolBarOnMac(true);&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+//! [3]&#xD;
+void MainWindow::closeEvent(QCloseEvent *event)&#xD;
+//! [3] //! [4]&#xD;
+{&#xD;
+    if (maybeSave()) {&#xD;
+        writeSettings();&#xD;
+        event-&gt;accept();&#xD;
+    } else {&#xD;
+        event-&gt;ignore();&#xD;
+    }&#xD;
+}&#xD;
+//! [4]&#xD;
+&#xD;
+//! [5]&#xD;
+void MainWindow::newFile()&#xD;
+//! [5] //! [6]&#xD;
+{&#xD;
+    if (maybeSave()) {&#xD;
+        textEdit-&gt;clear();&#xD;
+        setCurrentFile(QString());&#xD;
+    }&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+//! [7]&#xD;
+void MainWindow::open()&#xD;
+//! [7] //! [8]&#xD;
+{&#xD;
+    if (maybeSave()) {&#xD;
+        QString fileName = QFileDialog::getOpenFileName(this);&#xD;
+        if (!fileName.isEmpty())&#xD;
+            loadFile(fileName);&#xD;
+    }&#xD;
+}&#xD;
+//! [8]&#xD;
+&#xD;
+//! [9]&#xD;
+bool MainWindow::save()&#xD;
+//! [9] //! [10]&#xD;
+{&#xD;
+    if (curFile.isEmpty()) {&#xD;
+        return saveAs();&#xD;
+    } else {&#xD;
+        return saveFile(curFile);&#xD;
+    }&#xD;
+}&#xD;
+//! [10]&#xD;
+&#xD;
+//! [11]&#xD;
+bool MainWindow::saveAs()&#xD;
+//! [11] //! [12]&#xD;
+{&#xD;
+    QFileDialog dialog(this);&#xD;
+    dialog.setWindowModality(Qt::WindowModal);&#xD;
+    dialog.setAcceptMode(QFileDialog::AcceptSave);&#xD;
+    if (dialog.exec() != QDialog::Accepted)&#xD;
+        return false;&#xD;
+    return saveFile(dialog.selectedFiles().first());&#xD;
+}&#xD;
+//! [12]&#xD;
+&#xD;
+//! [13]&#xD;
+void MainWindow::about()&#xD;
+//! [13] //! [14]&#xD;
+{&#xD;
+   QMessageBox::about(this, tr("About Application"),&#xD;
+            tr("The &lt;b&gt;Application&lt;/b&gt; example demonstrates how to "&#xD;
+               "write modern GUI applications using Qt, with a menu bar, "&#xD;
+               "toolbars, and a status bar."));&#xD;
+}&#xD;
+//! [14]&#xD;
+&#xD;
+//! [15]&#xD;
+void MainWindow::documentWasModified()&#xD;
+//! [15] //! [16]&#xD;
+{&#xD;
+    setWindowModified(textEdit-&gt;document()-&gt;isModified());&#xD;
+}&#xD;
+//! [16]&#xD;
+&#xD;
+//! [17]&#xD;
+void MainWindow::createActions()&#xD;
+//! [17] //! [18]&#xD;
+{&#xD;
+&#xD;
+    QMenu *fileMenu = menuBar()-&gt;addMenu(tr("&amp;File"));&#xD;
+    QToolBar *fileToolBar = addToolBar(tr("File"));&#xD;
+    const QIcon newIcon = QIcon::fromTheme("document-new", QIcon(":/images/new.png"));&#xD;
+    QAction *newAct = new QAction(newIcon, tr("&amp;New"), this);&#xD;
+    newAct-&gt;setShortcuts(QKeySequence::New);&#xD;
+    newAct-&gt;setStatusTip(tr("Create a new file"));&#xD;
+    connect(newAct, &amp;QAction::triggered, this, &amp;MainWindow::newFile);&#xD;
+    fileMenu-&gt;addAction(newAct);&#xD;
+    fileToolBar-&gt;addAction(newAct);&#xD;
+&#xD;
+//! [19]&#xD;
+    const QIcon openIcon = QIcon::fromTheme("document-open", QIcon(":/images/open.png"));&#xD;
+    QAction *openAct = new QAction(openIcon, tr("&amp;Open..."), this);&#xD;
+    openAct-&gt;setShortcuts(QKeySequence::Open);&#xD;
+    openAct-&gt;setStatusTip(tr("Open an existing file"));&#xD;
+    connect(openAct, &amp;QAction::triggered, this, &amp;MainWindow::open);&#xD;
+    fileMenu-&gt;addAction(openAct);&#xD;
+    fileToolBar-&gt;addAction(openAct);&#xD;
+//! [18] //! [19]&#xD;
+&#xD;
+    const QIcon saveIcon = QIcon::fromTheme("document-save", QIcon(":/images/save.png"));&#xD;
+    QAction *saveAct = new QAction(saveIcon, tr("&amp;Save"), this);&#xD;
+    saveAct-&gt;setShortcuts(QKeySequence::Save);&#xD;
+    saveAct-&gt;setStatusTip(tr("Save the document to disk"));&#xD;
+    connect(saveAct, &amp;QAction::triggered, this, &amp;MainWindow::save);&#xD;
+    fileMenu-&gt;addAction(saveAct);&#xD;
+    fileToolBar-&gt;addAction(saveAct);&#xD;
+&#xD;
+    const QIcon saveAsIcon = QIcon::fromTheme("document-save-as");&#xD;
+    QAction *saveAsAct = fileMenu-&gt;addAction(saveAsIcon, tr("Save &amp;As..."), this, &amp;MainWindow::saveAs);&#xD;
+    saveAsAct-&gt;setShortcuts(QKeySequence::SaveAs);&#xD;
+    saveAsAct-&gt;setStatusTip(tr("Save the document under a new name"));&#xD;
+&#xD;
+//! [20]&#xD;
+&#xD;
+    fileMenu-&gt;addSeparator();&#xD;
+&#xD;
+    const QIcon exitIcon = QIcon::fromTheme("application-exit");&#xD;
+    QAction *exitAct = fileMenu-&gt;addAction(exitIcon, tr("E&amp;xit"), this, &amp;QWidget::close);&#xD;
+    exitAct-&gt;setShortcuts(QKeySequence::Quit);&#xD;
+//! [20]&#xD;
+    exitAct-&gt;setStatusTip(tr("Exit the application"));&#xD;
+&#xD;
+//! [21]&#xD;
+    QMenu *editMenu = menuBar()-&gt;addMenu(tr("&amp;Edit"));&#xD;
+    QToolBar *editToolBar = addToolBar(tr("Edit"));&#xD;
+//!&#xD;
+#ifndef QT_NO_CLIPBOARD&#xD;
+    const QIcon cutIcon = QIcon::fromTheme("edit-cut", QIcon(":/images/cut.png"));&#xD;
+    QAction *cutAct = new QAction(cutIcon, tr("Cu&amp;t"), this);&#xD;
+//! [21]&#xD;
+    cutAct-&gt;setShortcuts(QKeySequence::Cut);&#xD;
+    cutAct-&gt;setStatusTip(tr("Cut the current selection's contents to the "&#xD;
+                            "clipboard"));&#xD;
+    connect(cutAct, &amp;QAction::triggered, textEdit, &amp;QPlainTextEdit::cut);&#xD;
+    editMenu-&gt;addAction(cutAct);&#xD;
+    editToolBar-&gt;addAction(cutAct);&#xD;
+&#xD;
+    const QIcon copyIcon = QIcon::fromTheme("edit-copy", QIcon(":/images/copy.png"));&#xD;
+    QAction *copyAct = new QAction(copyIcon, tr("&amp;Copy"), this);&#xD;
+    copyAct-&gt;setShortcuts(QKeySequence::Copy);&#xD;
+    copyAct-&gt;setStatusTip(tr("Copy the current selection's contents to the "&#xD;
+                             "clipboard"));&#xD;
+    connect(copyAct, &amp;QAction::triggered, textEdit, &amp;QPlainTextEdit::copy);&#xD;
+    editMenu-&gt;addAction(copyAct);&#xD;
+    editToolBar-&gt;addAction(copyAct);&#xD;
+&#xD;
+    const QIcon pasteIcon = QIcon::fromTheme("edit-paste", QIcon(":/images/paste.png"));&#xD;
+    QAction *pasteAct = new QAction(pasteIcon, tr("&amp;Paste"), this);&#xD;
+    pasteAct-&gt;setShortcuts(QKeySequence::Paste);&#xD;
+    pasteAct-&gt;setStatusTip(tr("Paste the clipboard's contents into the current "&#xD;
+                              "selection"));&#xD;
+    connect(pasteAct, &amp;QAction::triggered, textEdit, &amp;QPlainTextEdit::paste);&#xD;
+    editMenu-&gt;addAction(pasteAct);&#xD;
+    editToolBar-&gt;addAction(pasteAct);&#xD;
+&#xD;
+    menuBar()-&gt;addSeparator();&#xD;
+&#xD;
+#endif // !QT_NO_CLIPBOARD&#xD;
+&#xD;
+    QMenu *helpMenu = menuBar()-&gt;addMenu(tr("&amp;Help"));&#xD;
+    QAction *aboutAct = helpMenu-&gt;addAction(tr("&amp;About"), this, &amp;MainWindow::about);&#xD;
+    aboutAct-&gt;setStatusTip(tr("Show the application's About box"));&#xD;
+&#xD;
+//! [22]&#xD;
+&#xD;
+    QAction *aboutQtAct = helpMenu-&gt;addAction(tr("About &amp;Qt"), qApp, &amp;QApplication::aboutQt);&#xD;
+    aboutQtAct-&gt;setStatusTip(tr("Show the Qt library's About box"));&#xD;
+//! [22]&#xD;
+&#xD;
+//! [23]&#xD;
+#ifndef QT_NO_CLIPBOARD&#xD;
+    cutAct-&gt;setEnabled(false);&#xD;
+//! [23] //! [24]&#xD;
+    copyAct-&gt;setEnabled(false);&#xD;
+    connect(textEdit, &amp;QPlainTextEdit::copyAvailable, cutAct, &amp;QAction::setEnabled);&#xD;
+    connect(textEdit, &amp;QPlainTextEdit::copyAvailable, copyAct, &amp;QAction::setEnabled);&#xD;
+#endif // !QT_NO_CLIPBOARD&#xD;
+}&#xD;
+//! [24]&#xD;
+&#xD;
+//! [32]&#xD;
+void MainWindow::createStatusBar()&#xD;
+//! [32] //! [33]&#xD;
+{&#xD;
+    statusBar()-&gt;showMessage(tr("Ready"));&#xD;
+}&#xD;
+//! [33]&#xD;
+&#xD;
+//! [34] //! [35]&#xD;
+void MainWindow::readSettings()&#xD;
+//! [34] //! [36]&#xD;
+{&#xD;
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());&#xD;
+    const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();&#xD;
+    if (geometry.isEmpty()) {&#xD;
+        const QRect availableGeometry = QApplication::desktop()-&gt;availableGeometry(this);&#xD;
+        resize(availableGeometry.width() / 3, availableGeometry.height() / 2);&#xD;
+        move((availableGeometry.width() - width()) / 2,&#xD;
+             (availableGeometry.height() - height()) / 2);&#xD;
+    } else {&#xD;
+        restoreGeometry(geometry);&#xD;
+    }&#xD;
+}&#xD;
+//! [35] //! [36]&#xD;
+&#xD;
+//! [37] //! [38]&#xD;
+void MainWindow::writeSettings()&#xD;
+//! [37] //! [39]&#xD;
+{&#xD;
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());&#xD;
+    settings.setValue("geometry", saveGeometry());&#xD;
+}&#xD;
+//! [38] //! [39]&#xD;
+&#xD;
+//! [40]&#xD;
+bool MainWindow::maybeSave()&#xD;
+//! [40] //! [41]&#xD;
+{&#xD;
+    if (!textEdit-&gt;document()-&gt;isModified())&#xD;
+        return true;&#xD;
+    const QMessageBox::StandardButton ret&#xD;
+        = QMessageBox::warning(this, tr("Application"),&#xD;
+                               tr("The document has been modified.\n"&#xD;
+                                  "Do you want to save your changes?"),&#xD;
+                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);&#xD;
+    switch (ret) {&#xD;
+    case QMessageBox::Save:&#xD;
+        return save();&#xD;
+    case QMessageBox::Cancel:&#xD;
+        return false;&#xD;
+    default:&#xD;
+        break;&#xD;
+    }&#xD;
+    return true;&#xD;
+}&#xD;
+//! [41]&#xD;
+&#xD;
+//! [42]&#xD;
+void MainWindow::loadFile(const QString &amp;fileName)&#xD;
+//! [42] //! [43]&#xD;
+{&#xD;
+    QFile file(fileName);&#xD;
+    if (!file.open(QFile::ReadOnly | QFile::Text)) {&#xD;
+        QMessageBox::warning(this, tr("Application"),&#xD;
+                             tr("Cannot read file %1:\n%2.")&#xD;
+                             .arg(QDir::toNativeSeparators(fileName), file.errorString()));&#xD;
+        return;&#xD;
+    }&#xD;
+&#xD;
+    QTextStream in(&amp;file);&#xD;
+#ifndef QT_NO_CURSOR&#xD;
+    QApplication::setOverrideCursor(Qt::WaitCursor);&#xD;
+#endif&#xD;
+    textEdit-&gt;setPlainText(in.readAll());&#xD;
+#ifndef QT_NO_CURSOR&#xD;
+    QApplication::restoreOverrideCursor();&#xD;
+#endif&#xD;
+&#xD;
+    setCurrentFile(fileName);&#xD;
+    statusBar()-&gt;showMessage(tr("File loaded"), 2000);&#xD;
+}&#xD;
+//! [43]&#xD;
+&#xD;
+//! [44]&#xD;
+bool MainWindow::saveFile(const QString &amp;fileName)&#xD;
+//! [44] //! [45]&#xD;
+{&#xD;
+    QFile file(fileName);&#xD;
+    if (!file.open(QFile::WriteOnly | QFile::Text)) {&#xD;
+        QMessageBox::warning(this, tr("Application"),&#xD;
+                             tr("Cannot write file %1:\n%2.")&#xD;
+                             .arg(QDir::toNativeSeparators(fileName),&#xD;
+                                  file.errorString()));&#xD;
+        return false;&#xD;
+    }&#xD;
+&#xD;
+    QTextStream out(&amp;file);&#xD;
+#ifndef QT_NO_CURSOR&#xD;
+    QApplication::setOverrideCursor(Qt::WaitCursor);&#xD;
+#endif&#xD;
+    out &lt;&lt; textEdit-&gt;toPlainText();&#xD;
+#ifndef QT_NO_CURSOR&#xD;
+    QApplication::restoreOverrideCursor();&#xD;
+#endif&#xD;
+&#xD;
+    setCurrentFile(fileName);&#xD;
+    statusBar()-&gt;showMessage(tr("File saved"), 2000);&#xD;
+    return true;&#xD;
+}&#xD;
+//! [45]&#xD;
+&#xD;
+//! [46]&#xD;
+void MainWindow::setCurrentFile(const QString &amp;fileName)&#xD;
+//! [46] //! [47]&#xD;
+{&#xD;
+    curFile = fileName;&#xD;
+    textEdit-&gt;document()-&gt;setModified(false);&#xD;
+    setWindowModified(false);&#xD;
+&#xD;
+    QString shownName = curFile;&#xD;
+    if (curFile.isEmpty())&#xD;
+        shownName = "untitled.txt";&#xD;
+    setWindowFilePath(shownName);&#xD;
+}&#xD;
+//! [47]&#xD;
+&#xD;
+//! [48]&#xD;
+QString MainWindow::strippedName(const QString &amp;fullFileName)&#xD;
+//! [48] //! [49]&#xD;
+{&#xD;
+    return QFileInfo(fullFileName).fileName();&#xD;
+}&#xD;
+//! [49]&#xD;
+#ifndef QT_NO_SESSIONMANAGER&#xD;
+void MainWindow::commitData(QSessionManager &amp;manager)&#xD;
+{&#xD;
+    if (manager.allowsInteraction()) {&#xD;
+        if (!maybeSave())&#xD;
+            manager.cancel();&#xD;
+    } else {&#xD;
+        // Non-interactive: save without asking&#xD;
+        if (textEdit-&gt;document()-&gt;isModified())&#xD;
+            save();&#xD;
+    }&#xD;
+}&#xD;
+#endif&#xD;
+</db:programlisting>
+      <db:para>We recommend that actions are created as children of the window they are used in. In most cases actions will be children of the application's main window.</db:para>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:code><db:link xlink:href="qmenu.html" xrefstyle="class" annotations="QMenu">QMenu</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qtoolbar.html" xrefstyle="class" annotations="QToolBar">QToolBar</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:link xlink:href="qtwidgets-mainwindows-application-example.html" xrefstyle="page" annotations="Application Example">Application Example</db:link>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Type Documentation</db:title>
+      <db:section>
+         <db:title>enum QAction::ActionEvent, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAction::ActionEvent</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>Trigger</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>Hover</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum type is used when calling <db:code><db:link xlink:href="qaction.html#activate" xrefstyle="function" annotations="QAction::activate()">QAction::activate()</db:link></db:code>
+         </db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAction::Trigger</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>this will cause the <db:code><db:link xlink:href="qaction.html#triggered" xrefstyle="function" annotations="QAction::triggered()">QAction::triggered()</db:link></db:code> signal to be emitted.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::Hover</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>this will cause the <db:code><db:link xlink:href="qaction.html#hovered" xrefstyle="function" annotations="QAction::hovered()">QAction::hovered()</db:link></db:code> signal to be emitted.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>enum QAction::MenuRole, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAction::MenuRole</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>NoRole</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>TextHeuristicRole</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>ApplicationSpecificRole</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AboutQtRole</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AboutRole</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>PreferencesRole</db:enumidentifier>
+               <db:enumvalue>5</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>QuitRole</db:enumidentifier>
+               <db:enumvalue>6</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum describes how an action should be moved into the application menu on .</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAction::NoRole</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>This action should not be put into the application menu</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::TextHeuristicRole</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>This action should be put in the application menu based on the action's text as described in the <db:code><db:link xlink:href="qmenubar.html" xrefstyle="class" annotations="QMenuBar">QMenuBar</db:link></db:code> documentation.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::ApplicationSpecificRole</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>This action should be put in the application menu with an application specific role</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::AboutQtRole</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>This action handles the "About Qt" menu item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::AboutRole</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>This action should be placed where the "About" menu item is in the application menu. The text of the menu item will be set to "About &lt;application name&gt;". The application name is fetched from the <db:code>Info.plist</db:code> file in the application's bundle (See <db:link xlink:href="osx-deployment.html" xrefstyle="page" annotations="Qt for macOS - Deployment">Qt for macOS - Deployment</db:link>).</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::PreferencesRole</db:td>
+                  <db:td>5</db:td>
+                  <db:td>
+                     <db:para>This action should be placed where the "Preferences..." menu item is in the application menu.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::QuitRole</db:td>
+                  <db:td>6</db:td>
+                  <db:td>
+                     <db:para>This action should be placed where the Quit menu item is in the application menu.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>Setting this value only has effect on items that are in the immediate menus of the menubar, not the submenus of those menus. For example, if you have File menu in your menubar and the File menu has a submenu, setting the  for the actions in that submenu have no effect. They will never be moved.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAction::Priority, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAction::Priority</db:enumname>
+            <db:enumsynopsisinfo role="since">4.6</db:enumsynopsisinfo>
+            <db:enumitem>
+               <db:enumidentifier>LowPriority</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>NormalPriority</db:enumidentifier>
+               <db:enumvalue>128</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>HighPriority</db:enumidentifier>
+               <db:enumvalue>256</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum defines priorities for actions in user interface.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAction::LowPriority</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>The action should not be prioritized in the user interface.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::NormalPriority</db:td>
+                  <db:td>128</db:td>
+                  <db:td/>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAction::HighPriority</db:td>
+                  <db:td>256</db:td>
+                  <db:td>
+                     <db:para>The action should be prioritized in the user interface.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#priority-prop" xrefstyle="property" annotations="priority">priority</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This enum was introduced or modified in Qt 4.6.</db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Properties</db:title>
+      <db:section>
+         <db:title>checkable : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>checkable</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isCheckable</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setCheckable</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>checkable</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>A checkable action is one which has an on/off state. For example, in a word processor, a Bold toolbar button may be either on or off. An action which is not a toggle action is a command action; a command action is simply executed, e.g. file save. By default, this property is <db:code>false</db:code>.</db:para>
+         <db:para>In some situations, the state of one toggle action should depend on the state of others. For example, "Left Align", "Center" and "Right Align" toggle actions are mutually exclusive. To achieve exclusive toggling, add the relevant toggle actions to a <db:code><db:link xlink:href="qactiongroup.html" xrefstyle="class" annotations="QActionGroup">QActionGroup</db:link></db:code> with the <db:code><db:link xlink:href="qactiongroup.html#exclusive-prop" xrefstyle="property" annotations="QActionGroup::exclusive">QActionGroup::exclusive</db:link></db:code> property set to true.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#checked-prop" xrefstyle="function" annotations="QAction::setChecked()">QAction::setChecked()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>isCheckable() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setCheckable(boolcheckable)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>checked : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>checked</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isChecked</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setChecked</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>checked</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Only checkable actions can be checked. By default, this is false (the action is unchecked).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#checkable-prop" xrefstyle="property" annotations="checkable">checkable</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>isChecked() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setChecked(boolchecked)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>enabled : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>enabled</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isEnabled</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setEnabled</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enabled</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Disabled actions cannot be chosen by the user. They do not disappear from menus or toolbars, but they are displayed in a way which indicates that they are unavailable. For example, they might be displayed using only shades of gray.</db:para>
+         <db:para>What's This? help on disabled actions is still available, provided that the <db:code><db:link xlink:href="qaction.html#whatsThis-prop" xrefstyle="property" annotations="QAction::whatsThis">QAction::whatsThis</db:link></db:code> property is set.</db:para>
+         <db:para>An action will be disabled when all widgets to which it is added (with <db:code><db:link xlink:href="qwidget.html#addAction" xrefstyle="function" annotations="QWidget::addAction()">QWidget::addAction()</db:link></db:code>) are disabled or not visible. When an action is disabled, it is not possible to trigger it through its shortcut.</db:para>
+         <db:para>By default, this property is <db:code>true</db:code> (actions are enabled).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#text-prop" xrefstyle="property" annotations="text">text</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>isEnabled() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setEnabled(boolenabled)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>icon : QIcon</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QIcon</db:type>
+            <db:varname>icon</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QIcon</db:type>
+            <db:methodname>icon</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setIcon</db:methodname>
+            <db:methodparam>
+               <db:type>QIcon</db:type>
+               <db:parameter>icon</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>In toolbars, the icon is used as the tool button icon; in menus, it is displayed to the left of the menu text. There is no default icon.</db:para>
+         <db:para>If a null icon (<db:code><db:link xlink:href="qicon.html#isNull" xrefstyle="function" annotations="QIcon::isNull()">QIcon::isNull()</db:link></db:code>) is passed into this function, the icon of the action is cleared.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QIcon</db:td>
+                     <db:td>icon() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setIcon(QIconicon)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>text : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>text</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>text</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setText</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>text</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If the action is added to a menu, the menu option will consist of the icon (if there is one), the text, and the shortcut (if there is one). If the text is not explicitly set in the constructor, or by using , the action's description icon text will be used as text. There is no default text.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#iconText-prop" xrefstyle="property" annotations="iconText">iconText</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>text() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setText(QStringtext)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>iconText : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>iconText</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>iconText</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setIconText</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>iconText</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If <db:code><db:link xlink:href="qtoolbar.html#toolButtonStyle-prop" xrefstyle="property" annotations="QToolBar::toolButtonStyle">QToolBar::toolButtonStyle</db:link></db:code> is set to a value that permits text to be displayed, the text defined held in this property appears as a label in the relevant tool button.</db:para>
+         <db:para>It also serves as the default text in menus and tooltips if the action has not been defined with <db:code><db:link xlink:href="qaction.html#text-prop" xrefstyle="function" annotations="setText()">setText()</db:link></db:code> or <db:code><db:link xlink:href="qaction.html#toolTip-prop" xrefstyle="function" annotations="setToolTip()">setToolTip()</db:link></db:code>, and will also be used in toolbar buttons if no icon has been defined using <db:code><db:link xlink:href="qaction.html#icon-prop" xrefstyle="function" annotations="setIcon()">setIcon()</db:link></db:code>.</db:para>
+         <db:para>If the icon text is not explicitly set, the action's normal text will be used for the icon text.</db:para>
+         <db:para>By default, this property contains an empty string.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#toolTip-prop" xrefstyle="function" annotations="setToolTip()">setToolTip()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#statusTip-prop" xrefstyle="function" annotations="setStatusTip()">setStatusTip()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>iconText() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setIconText(QStringiconText)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>toolTip : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>toolTip</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>toolTip</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setToolTip</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>toolTip</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This text is used for the tooltip. If no tooltip is specified, the action's text is used.</db:para>
+         <db:para>By default, this property contains the action's text.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#statusTip-prop" xrefstyle="function" annotations="setStatusTip()">setStatusTip()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#shortcut-prop" xrefstyle="function" annotations="setShortcut()">setShortcut()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>toolTip() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setToolTip(QStringtoolTip)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>statusTip : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>statusTip</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>statusTip</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStatusTip</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>statusTip</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>The status tip is displayed on all status bars provided by the action's top-level parent widget.</db:para>
+         <db:para>By default, this property contains an empty string.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#toolTip-prop" xrefstyle="function" annotations="setToolTip()">setToolTip()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#showStatusText" xrefstyle="function" annotations="showStatusText()">showStatusText()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>statusTip() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setStatusTip(QStringstatusTip)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>whatsThis : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>whatsThis</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>whatsThis</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setWhatsThis</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>whatsThis</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>The "What's This?" text is used to provide a brief description of the action. The text may contain rich text. There is no default "What's This?" text.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwhatsthis.html" xrefstyle="class" annotations="QWhatsThis">QWhatsThis</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>whatsThis() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setWhatsThis(QStringwhatsThis)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>font : QFont</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QFont</db:type>
+            <db:varname>font</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QFont</db:type>
+            <db:methodname>font</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setFont</db:methodname>
+            <db:methodparam>
+               <db:type>QFont</db:type>
+               <db:parameter>font</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>The font property is used to render the text set on the <db:code><db:link xlink:href="qaction.html" xrefstyle="class" annotations="QAction">QAction</db:link></db:code>. The font will can be considered a hint as it will not be consulted in all cases based upon application and style.</db:para>
+         <db:para>By default, this property contains the application's default font.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#text-prop" xrefstyle="function" annotations="QAction::setText()">QAction::setText()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QFont</db:td>
+                     <db:td>font() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setFont(QFontfont)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>shortcut : QKeySequence</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QKeySequence</db:type>
+            <db:varname>shortcut</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QKeySequence</db:type>
+            <db:methodname>shortcut</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setShortcut</db:methodname>
+            <db:methodparam>
+               <db:type>QKeySequence</db:type>
+               <db:parameter>shortcut</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Valid keycodes for this property can be found in <db:code><db:link xlink:href="qt.html#Key-enum" xrefstyle="enum" annotations="Qt::Key">Qt::Key</db:link></db:code> and <db:code><db:link xlink:href="qt.html#Modifier-enum" xrefstyle="enum" annotations="Qt::Modifier">Qt::Modifier</db:link></db:code>. There is no default shortcut key.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QKeySequence</db:td>
+                     <db:td>shortcut() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setShortcut(QKeySequenceshortcut)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>shortcutContext : Qt::ShortcutContext</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>Qt::ShortcutContext</db:type>
+            <db:varname>shortcutContext</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>Qt::ShortcutContext</db:type>
+            <db:methodname>shortcutContext</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setShortcutContext</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::ShortcutContext</db:type>
+               <db:parameter>shortcutContext</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Valid values for this property can be found in <db:code><db:link xlink:href="qt.html#ShortcutContext-enum" xrefstyle="enum" annotations="Qt::ShortcutContext">Qt::ShortcutContext</db:link></db:code>. The default value is <db:code><db:link xlink:href="qt.html#ShortcutContext-enum" xrefstyle="enum" annotations="Qt::WindowShortcut">Qt::WindowShortcut</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>Qt::ShortcutContext</db:td>
+                     <db:td>shortcutContext() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setShortcutContext(Qt::ShortcutContextshortcutContext)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>autoRepeat : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>autoRepeat</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>autoRepeat</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAutoRepeat</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>autoRepeat</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If true, the action will auto repeat when the keyboard shortcut combination is held down, provided that keyboard auto repeat is enabled on the system. The default value is true.</db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>autoRepeat() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setAutoRepeat(boolautoRepeat)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>visible : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>visible</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isVisible</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setVisible</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>visible</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If <db:emphasis>visible</db:emphasis> is true the action can be seen (e.g. in menus and toolbars) and chosen by the user; if <db:emphasis>visible</db:emphasis> is false the action cannot be seen or chosen by the user.</db:para>
+         <db:para>Actions which are not visible are <db:emphasis>not</db:emphasis> grayed out; they do not appear at all.</db:para>
+         <db:para>By default, this property is <db:code>true</db:code> (actions are visible).</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>isVisible() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setVisible(boolvisible)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>menuRole : MenuRole</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>MenuRole</db:type>
+            <db:varname>menuRole</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>MenuRole</db:type>
+            <db:methodname>menuRole</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setMenuRole</db:methodname>
+            <db:methodparam>
+               <db:type>MenuRole</db:type>
+               <db:parameter>menuRole</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This indicates what role the action serves in the application menu on . By default all actions have the <db:code><db:link xlink:href="qaction.html#MenuRole-enum" xrefstyle="enum" annotations="TextHeuristicRole">TextHeuristicRole</db:link></db:code>, which means that the action is added based on its text (see <db:code><db:link xlink:href="qmenubar.html" xrefstyle="class" annotations="QMenuBar">QMenuBar</db:link></db:code> for more information).</db:para>
+         <db:para>The menu role can only be changed before the actions are put into the menu bar in  (usually just before the first application window is shown).</db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>MenuRole</db:td>
+                     <db:td>menuRole() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setMenuRole(MenuRolemenuRole)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>iconVisibleInMenu : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>iconVisibleInMenu</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isIconVisibleInMenu</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setIconVisibleInMenu</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>iconVisibleInMenu</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>In some applications, it may make sense to have actions with icons in the toolbar, but not in menus. If true, the icon (if valid) is shown in the menu, when it is false, it is not shown.</db:para>
+         <db:para>The default is to follow whether the <db:code><db:link xlink:href="qt.html#ApplicationAttribute-enum" xrefstyle="enum" annotations="Qt::AA_DontShowIconsInMenus">Qt::AA_DontShowIconsInMenus</db:link></db:code> attribute is set for the application. Explicitly settings this property overrides the presence (or abscence) of the attribute.</db:para>
+         <db:para>For example:</db:para>
+         <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QApplication app(argc, argv);&#xD;
+app.setAttribute(Qt::AA_DontShowIconsInMenus);  // Icons are *no longer shown* in menus&#xD;
+// ...&#xD;
+QAction *myAction = new QAction();&#xD;
+// ...&#xD;
+myAction-&gt;setIcon(SomeIcon);&#xD;
+myAction-&gt;setIconVisibleInMenu(true);   // Icon *will* be shown in menus for *this* action.&#xD;
+//! [0]&#xD;
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#icon-prop" xrefstyle="property" annotations="QAction::icon">QAction::icon</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcoreapplication.html#setAttribute" xrefstyle="function" annotations="QCoreApplication::setAttribute()">QCoreApplication::setAttribute()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.4.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>isIconVisibleInMenu() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setIconVisibleInMenu(booliconVisibleInMenu)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>shortcutVisibleInContextMenu : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>shortcutVisibleInContextMenu</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isShortcutVisibleInContextMenu</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setShortcutVisibleInContextMenu</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>shortcutVisibleInContextMenu</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>In some applications, it may make sense to have actions with shortcuts in context menus. If true, the shortcut (if valid) is shown when the action is shown via a context menu, when it is false, it is not shown.</db:para>
+         <db:para>The default is to follow whether the <db:code><db:link xlink:href="qt.html#ApplicationAttribute-enum" xrefstyle="enum" annotations="Qt::AA_DontShowShortcutsInContextMenus">Qt::AA_DontShowShortcutsInContextMenus</db:link></db:code> attribute is set for the application, falling back to the widget style hint. Explicitly setting this property overrides the presence (or abscence) of the attribute.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#shortcut-prop" xrefstyle="property" annotations="QAction::shortcut">QAction::shortcut</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qcoreapplication.html#setAttribute" xrefstyle="function" annotations="QCoreApplication::setAttribute()">QCoreApplication::setAttribute()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.10.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>isShortcutVisibleInContextMenu() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setShortcutVisibleInContextMenu(boolshortcutVisibleInContextMenu)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>priority : Priority</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>Priority</db:type>
+            <db:varname>priority</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>Priority</db:type>
+            <db:methodname>priority</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setPriority</db:methodname>
+            <db:methodparam>
+               <db:type>Priority</db:type>
+               <db:parameter>priority</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property can be set to indicate how the action should be prioritized in the user interface.</db:para>
+         <db:para>For instance, when toolbars have the <db:code><db:link xlink:href="qt.html#ToolButtonStyle-enum" xrefstyle="enum" annotations="Qt::ToolButtonTextBesideIcon">Qt::ToolButtonTextBesideIcon</db:link></db:code> mode set, then actions with <db:code><db:link xlink:href="qaction.html#Priority-enum" xrefstyle="enum" annotations="LowPriority">LowPriority</db:link></db:code> will not show the text labels.</db:para>
+         <db:para>This property was introduced in Qt 4.6.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>Priority</db:td>
+                     <db:td>priority() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setPriority(Prioritypriority)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QAction::QAction(QObject *parent)</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QAction</db:methodname>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>parent</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para>Constructs an action with <db:code role="argument">parent</db:code>. If <db:code role="argument">parent</db:code> is an action group the action will be automatically inserted into the group.</db:para>
+         <db:note>
+            <db:para> The <db:code role="argument">parent</db:code> argument is optional since Qt 5.7.</db:para>
+         </db:note>
+      </db:section>
+      <db:section>
+         <db:title> QAction::QAction(const QIcon &amp;icon, const QString &amp;text, QObject *parent)</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QAction</db:methodname>
+            <db:methodparam>
+               <db:type>const QIcon &amp;</db:type>
+               <db:parameter>icon</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>text</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>parent</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para>Constructs an action with an <db:code role="argument">icon</db:code> and some <db:code role="argument">text</db:code> and <db:code role="argument">parent</db:code>. If <db:code role="argument">parent</db:code> is an action group the action will be automatically inserted into the group.</db:para>
+         <db:para>The action uses a stripped version of <db:code role="argument">text</db:code> (e.g. "&amp;Menu Option..." becomes "Menu Option") as descriptive text for tool buttons. You can override this by setting a specific description with <db:code><db:link xlink:href="qaction.html#text-prop" xrefstyle="function" annotations="setText()">setText()</db:link></db:code>. The same text will be used for tooltips unless you specify a different text using <db:code><db:link xlink:href="qaction.html#toolTip-prop" xrefstyle="function" annotations="setToolTip()">setToolTip()</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QAction::QAction(const QString &amp;text, QObject *parent)</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QAction</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>text</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>parent</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para>Constructs an action with some <db:code role="argument">text</db:code> and <db:code role="argument">parent</db:code>. If <db:code role="argument">parent</db:code> is an action group the action will be automatically inserted into the group.</db:para>
+         <db:para>The action uses a stripped version of <db:code role="argument">text</db:code> (e.g. "&amp;Menu Option..." becomes "Menu Option") as descriptive text for tool buttons. You can override this by setting a specific description with <db:code><db:link xlink:href="qaction.html#text-prop" xrefstyle="function" annotations="setText()">setText()</db:link></db:code>. The same text will be used for tooltips unless you specify a different text using <db:code><db:link xlink:href="qaction.html#toolTip-prop" xrefstyle="function" annotations="setToolTip()">setToolTip()</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QAction::~QAction()</db:title>
+         <db:destructorsynopsis>
+            <db:methodname>~QAction</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:destructorsynopsis>
+         <db:para>Destroys the object and frees allocated resources.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QActionGroup * QAction::actionGroup() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QActionGroup *</db:type>
+            <db:methodname>actionGroup</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the action group for this action. If no action group manages this action then 0 will be returned.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qactiongroup.html" xrefstyle="class" annotations="QActionGroup">QActionGroup</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#setActionGroup" xrefstyle="function" annotations="QAction::setActionGroup()">QAction::setActionGroup()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QKeySequence QAction::shortcut() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QKeySequence</db:type>
+            <db:methodname>shortcut</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the primary shortcut.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#setShortcuts" xrefstyle="function" annotations="setShortcuts()">setShortcuts()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QList&lt;QGraphicsWidget *&gt; QAction::associatedGraphicsWidgets() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QList&lt;QGraphicsWidget *&gt;</db:type>
+            <db:methodname>associatedGraphicsWidgets</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns a list of widgets this action has been added to.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#addAction" xrefstyle="function" annotations="QWidget::addAction()">QWidget::addAction()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#associatedWidgets" xrefstyle="function" annotations="associatedWidgets()">associatedWidgets()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.5.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QList&lt;QKeySequence&gt; QAction::shortcuts() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QList&lt;QKeySequence&gt;</db:type>
+            <db:methodname>shortcuts</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the list of shortcuts, with the primary shortcut as the first element of the list.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#setShortcuts" xrefstyle="function" annotations="setShortcuts()">setShortcuts()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QList&lt;QWidget *&gt; QAction::associatedWidgets() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QList&lt;QWidget *&gt;</db:type>
+            <db:methodname>associatedWidgets</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns a list of widgets this action has been added to.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#addAction" xrefstyle="function" annotations="QWidget::addAction()">QWidget::addAction()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#associatedGraphicsWidgets" xrefstyle="function" annotations="associatedGraphicsWidgets()">associatedGraphicsWidgets()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QMenu * QAction::menu() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QMenu *</db:type>
+            <db:methodname>menu</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the menu contained by this action. Actions that contain menus can be used to create menu items with submenus, or inserted into toolbars to create buttons with popup menus.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#setMenu" xrefstyle="function" annotations="setMenu()">setMenu()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qmenu.html#addAction" xrefstyle="function" annotations="QMenu::addAction()">QMenu::addAction()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QVariant QAction::data() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QVariant</db:type>
+            <db:methodname>data</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the user data as set in <db:code><db:link xlink:href="qaction.html#setData" xrefstyle="function" annotations="QAction::setData">QAction::setData</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#setData" xrefstyle="function" annotations="setData()">setData()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QWidget * QAction::parentWidget() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QWidget *</db:type>
+            <db:methodname>parentWidget</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns the parent widget.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAction::isSeparator() const</db:title>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>isSeparator</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this action is a separator action; otherwise it returns <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#setSeparator" xrefstyle="function" annotations="QAction::setSeparator()">QAction::setSeparator()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAction::showStatusText(QWidget *widget)</db:title>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>showStatusText</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>widget</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Updates the relevant status bar for the <db:code role="argument">widget</db:code> specified by sending a <db:code><db:link xlink:href="qstatustipevent.html" xrefstyle="class" annotations="QStatusTipEvent">QStatusTipEvent</db:link></db:code> to its parent widget. Returns <db:code>true</db:code> if an event was sent; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>If a null widget is specified, the event is sent to the action's parent.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#statusTip-prop" xrefstyle="property" annotations="statusTip">statusTip</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAction::activate(QAction::ActionEvent event)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>activate</db:methodname>
+            <db:methodparam>
+               <db:type>QAction::ActionEvent</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sends the relevant signals for <db:code><db:link xlink:href="qaction.html#ActionEvent-enum" xrefstyle="enum" annotations="ActionEvent">ActionEvent</db:link></db:code>
+            <db:code role="argument">event</db:code>.</db:para>
+         <db:para>Action based widgets use this API to cause the <db:code><db:link xlink:href="qaction.html" xrefstyle="class" annotations="QAction">QAction</db:link></db:code> to emit signals as well as emitting their own.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAction::setActionGroup(QActionGroup *group)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setActionGroup</db:methodname>
+            <db:methodparam>
+               <db:type>QActionGroup *</db:type>
+               <db:parameter>group</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets this action group to <db:code role="argument">group</db:code>. The action will be automatically added to the group's list of actions.</db:para>
+         <db:para>Actions within the group will be mutually exclusive.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qactiongroup.html" xrefstyle="class" annotations="QActionGroup">QActionGroup</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#actionGroup" xrefstyle="function" annotations="QAction::actionGroup()">QAction::actionGroup()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAction::setMenu(QMenu *menu)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setMenu</db:methodname>
+            <db:methodparam>
+               <db:type>QMenu *</db:type>
+               <db:parameter>menu</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets the menu contained by this action to the specified <db:code role="argument">menu</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#menu" xrefstyle="function" annotations="menu()">menu()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAction::setSeparator(bool b)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setSeparator</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>b</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>If <db:code role="argument">b</db:code> is true then this action will be considered a separator.</db:para>
+         <db:para>How a separator is represented depends on the widget it is inserted into. Under most circumstances the text, submenu, and icon will be ignored for separator actions.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#isSeparator" xrefstyle="function" annotations="QAction::isSeparator()">QAction::isSeparator()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAction::setShortcuts(QKeySequence::StandardKey key)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setShortcuts</db:methodname>
+            <db:methodparam>
+               <db:type>QKeySequence::StandardKey</db:type>
+               <db:parameter>key</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets a platform dependent list of shortcuts based on the <db:code role="argument">key</db:code>. The result of calling this function will depend on the currently running platform. Note that more than one shortcut can assigned by this action. If only the primary shortcut is required, use <db:code><db:link xlink:href="qaction.html#shortcut-prop" xrefstyle="function" annotations="setShortcut">setShortcut</db:link></db:code> instead.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qkeysequence.html#keyBindings" xrefstyle="function" annotations="QKeySequence::keyBindings()">QKeySequence::keyBindings()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAction::setShortcuts(const QList&lt;QKeySequence&gt; &amp;shortcuts)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setShortcuts</db:methodname>
+            <db:methodparam>
+               <db:type>const QList&lt;QKeySequence&gt; &amp;</db:type>
+               <db:parameter>shortcuts</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para>Sets <db:code role="argument">shortcuts</db:code> as the list of shortcuts that trigger the action. The first element of the list is the primary shortcut.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#shortcuts" xrefstyle="function" annotations="shortcuts()">shortcuts()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qaction.html#shortcut-prop" xrefstyle="property" annotations="shortcut">shortcut</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+   </db:section>
+</db:article>

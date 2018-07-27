@@ -4,10 +4,10 @@
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:saxon="http://saxon.sf.net/"
   exclude-result-prefixes="xsl xs html saxon"
-  version="2.0">
+  version="3.0">
   
   <xsl:output method="xml" indent="yes"
-    saxon:suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
+    suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
   
   <xsl:template match="/">
@@ -229,8 +229,9 @@
           <!-- @name:      backingStore -->
           <!-- @fullname:  QWidget::backingStore -->
           <!-- @signature: QBackingStore * backingStore() const -->
+          <xsl:variable name="sanitisedName" select="replace(@name, '\+', '\\+')" as="xs:string"/>
           <xsl:value-of select="
-            if(contains(@fullname, '::')) then concat(@type,' ', replace(@signature, concat('(^.*?)', @name), @fullname)) else @signature "/>
+            if(contains(@fullname, '::')) then concat(@type,' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature "/>
         </db:title>
         
         <!-- Choose the tag depending on the type of function: either constructor, destructor, or any kind of function (including signal and slot). -->
@@ -475,6 +476,8 @@
     <!-- Ignore brief, as there is already some abstract before. -->
   </xsl:template>
   
+  <xsl:template mode="content_generic" match="codeline"/>
+  
   <xsl:template mode="content_generic" match="description">
     <!-- Let templates flow through description to simplify code to handle classes. -->
     <xsl:apply-templates mode="content_generic"/>
@@ -532,6 +535,12 @@
   <xsl:template mode="content_generic" match="snippet">
     <db:programlisting>
       <xsl:value-of select="unparsed-text(concat('file:///', @path))"/>
+    </db:programlisting>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="code">
+    <db:programlisting>
+      <xsl:apply-templates mode="content_generic"/>
     </db:programlisting>
   </xsl:template>
   

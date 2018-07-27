@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="const_iterator" fullname="QAssociativeIterable::const_iterator" href="qassociativeiterable-const-iterator.html" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="659" since="5.2" module="QtCore" brief="QAssociativeIterable::const_iterator allows iteration over a container in a QVariant">
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4522" column="4">
+                <brief>The <link raw="QAssociativeIterable::const_iterator" href="qassociativeiterable-const-iterator.html" type="class">QAssociativeIterable::const_iterator</link> allows iteration over a container in a <link raw="QVariant" href="qvariant.html" type="class">QVariant</link>.</brief>
+                <para>A <link raw="QAssociativeIterable::const_iterator" href="qassociativeiterable-const-iterator.html" type="class">QAssociativeIterable::const_iterator</link> can only be created by a <link raw="QAssociativeIterable" href="qassociativeiterable.html" type="class">QAssociativeIterable</link> instance, and can be used in a way similar to other stl-style iterators.</para>
+                <snippet location="code/src_corelib_kernel_qvariant.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_kernel_qvariant.cpp" identifier="10"/>
+                <see-also>
+                    <link raw="QAssociativeIterable" href="qassociativeiterable.html" type="class">QAssociativeIterable</link>
+                </see-also>
+            </description>
+            <variable threadsafety="unspecified" name="m_impl" fullname="QAssociativeIterable::const_iterator::m_impl" href="qassociativeiterable-const-iterator.html#m_impl-var" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="662" type="QtMetaTypePrivate::QAssociativeIterableImpl" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <variable threadsafety="unspecified" name="ref" fullname="QAssociativeIterable::const_iterator::ref" href="qassociativeiterable-const-iterator.html#ref-var" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="663" type="QAtomicInt *" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="const_iterator" fullname="QAssociativeIterable::const_iterator::const_iterator" href="qassociativeiterable-const-iterator.html#const_iterator-2" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="665" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="const_iterator(const QAssociativeIterable &amp;iter, QAtomicInt *ref_)">
+                <parameter type="const QAssociativeIterable &amp;" name="iter" default=""/>
+                <parameter type="QAtomicInt *" name="ref_" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="const_iterator" fullname="QAssociativeIterable::const_iterator::const_iterator" href="qassociativeiterable-const-iterator.html#const_iterator-1" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="667" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="const_iterator(const QtMetaTypePrivate::QAssociativeIterableImpl &amp;impl, QAtomicInt *ref_)">
+                <parameter type="const QtMetaTypePrivate::QAssociativeIterableImpl &amp;" name="impl" default=""/>
+                <parameter type="QAtomicInt *" name="ref_" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="begin" fullname="QAssociativeIterable::const_iterator::begin" href="qassociativeiterable-const-iterator.html#begin" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="669" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void begin()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="end" fullname="QAssociativeIterable::const_iterator::end" href="qassociativeiterable-const-iterator.html#end" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="670" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void end()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="find" fullname="QAssociativeIterable::const_iterator::find" href="qassociativeiterable-const-iterator.html#find" status="active" access="private" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="671" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void find(const QVariant &amp;key)">
+                <parameter type="const QVariant &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="~const_iterator" fullname="QAssociativeIterable::const_iterator::~const_iterator" href="qassociativeiterable-const-iterator.html#dtor.const_iterator" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="673" virtual="non" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~const_iterator()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4537" column="4">
+                    <para>Destroys the <link raw="QAssociativeIterable::const_iterator" href="qassociativeiterable-const-iterator.html" type="class">QAssociativeIterable::const_iterator</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="const_iterator" fullname="QAssociativeIterable::const_iterator::const_iterator" href="qassociativeiterable-const-iterator.html#const_iterator" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="674" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="const_iterator(const const_iterator &amp;other)">
+                <parameter type="const const_iterator &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4548" column="4">
+                    <para>Creates a copy of <argument>other</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QAssociativeIterable::const_iterator::operator=" href="qassociativeiterable-const-iterator.html#operator-eq" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="676" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator &amp;" signature="const_iterator &amp; operator=(const const_iterator &amp;other)">
+                <parameter type="const const_iterator &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4557" column="4">
+                    <para>Assigns <argument>other</argument> to this.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="key" fullname="QAssociativeIterable::const_iterator::key" href="qassociativeiterable-const-iterator.html#key" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="678" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QVariant" signature="const QVariant key() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4585" column="4">
+                    <para>Returns the current key, converted to a <link raw="QVariant" href="qvariant.html" type="class">QVariant</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="value" fullname="QAssociativeIterable::const_iterator::value" href="qassociativeiterable-const-iterator.html#value" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="680" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QVariant" signature="const QVariant value() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4597" column="4">
+                    <para>Returns the current value, converted to a <link raw="QVariant" href="qvariant.html" type="class">QVariant</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator*" fullname="QAssociativeIterable::const_iterator::operator*" href="qassociativeiterable-const-iterator.html#operator-2a" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="682" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QVariant" signature="const QVariant operator*() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4573" column="4">
+                    <para>Returns the current value, converted to a <link raw="QVariant" href="qvariant.html" type="class">QVariant</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator==" fullname="QAssociativeIterable::const_iterator::operator==" href="qassociativeiterable-const-iterator.html#operator-eq-eq" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="683" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator==(const const_iterator &amp;other) const">
+                <parameter type="const const_iterator &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4609" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if <argument>other</argument> points to the same item as this iterator; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <see-also>
+                        <link raw="operator!=()" href="qassociativeiterable-const-iterator.html#operator-not-eq" type="function">operator!=()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator!=" fullname="QAssociativeIterable::const_iterator::operator!=" href="qassociativeiterable-const-iterator.html#operator-not-eq" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="684" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator!=(const const_iterator &amp;other) const">
+                <parameter type="const const_iterator &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4620" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if <argument>other</argument> points to a different item than this iterator; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <see-also>
+                        <link raw="operator==()" href="qassociativeiterable-const-iterator.html#operator-eq-eq" type="function">operator==()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator++" fullname="QAssociativeIterable::const_iterator::operator++" href="qassociativeiterable-const-iterator.html#operator-2b-2b" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="685" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator &amp;" signature="const_iterator &amp; operator++()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4631" column="4">
+                    <para>The prefix ++ operator (<teletype type="highlighted">++it</teletype>) advances the iterator to the next item in the container and returns an iterator to the new current item.</para>
+                    <para>Calling this function on <link raw="QAssociativeIterable::end()" href="qassociativeiterable.html#end" type="function">QAssociativeIterable::end()</link> leads to undefined results.</para>
+                    <see-also>
+                        <link raw="operator--()" href="qassociativeiterable-const-iterator.html#operator--" type="function">operator--()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator++" fullname="QAssociativeIterable::const_iterator::operator++" href="qassociativeiterable-const-iterator.html#operator-2b-2b-1" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="686" virtual="non" meta="plain" const="false" static="false" overload="true" delete="false" default="false" final="false" override="false" overload-number="1" type="const_iterator" signature="const_iterator operator++(int )">
+                <parameter type="int" name="" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4646" column="4">
+                    <para>This is an overloaded function.</para>
+                    <para>The postfix ++ operator (<teletype type="highlighted">it++</teletype>) advances the iterator to the next item in the container and returns an iterator to the previously current item.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator--" fullname="QAssociativeIterable::const_iterator::operator--" href="qassociativeiterable-const-iterator.html#operator--" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="687" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator &amp;" signature="const_iterator &amp; operator--()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4661" column="4">
+                    <para>The prefix -- operator (<teletype type="highlighted">--it</teletype>) makes the preceding item current and returns an iterator to the new current item.</para>
+                    <para>Calling this function on <link raw="QAssociativeIterable::begin()" href="qassociativeiterable.html#begin" type="function">QAssociativeIterable::begin()</link> leads to undefined results.</para>
+                    <see-also>
+                        <link raw="operator++()" href="qassociativeiterable-const-iterator.html#operator-2b-2b" type="function">operator++()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator--" fullname="QAssociativeIterable::const_iterator::operator--" href="qassociativeiterable-const-iterator.html#operator---1" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="688" virtual="non" meta="plain" const="false" static="false" overload="true" delete="false" default="false" final="false" override="false" overload-number="1" type="const_iterator" signature="const_iterator operator--(int )">
+                <parameter type="int" name="" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4675" column="4">
+                    <para>This is an overloaded function.</para>
+                    <para>The postfix -- operator (<teletype type="highlighted">it--</teletype>) makes the preceding item current and returns an iterator to the previously current item.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator+=" fullname="QAssociativeIterable::const_iterator::operator+=" href="qassociativeiterable-const-iterator.html#operator-2b-eq" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="689" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator &amp;" signature="const_iterator &amp; operator+=(int j)">
+                <parameter type="int" name="j" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4689" column="4">
+                    <para>Advances the iterator by <argument>j</argument> items.</para>
+                    <see-also>
+                        <link raw="operator-=()" href="qassociativeiterable-const-iterator.html#operator--eq" type="function">operator-=()</link>
+                        <link raw="operator+()" href="qassociativeiterable-const-iterator.html#operator-2b" type="function">operator+()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator-=" fullname="QAssociativeIterable::const_iterator::operator-=" href="qassociativeiterable-const-iterator.html#operator--eq" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="690" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator &amp;" signature="const_iterator &amp; operator-=(int j)">
+                <parameter type="int" name="j" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4700" column="4">
+                    <para>Makes the iterator go back by <argument>j</argument> items.</para>
+                    <see-also>
+                        <link raw="operator+=()" href="qassociativeiterable-const-iterator.html#operator-2b-eq" type="function">operator+=()</link>
+                        <link raw="operator-()" href="qassociativeiterable-const-iterator.html#operator-" type="function">operator-()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator+" fullname="QAssociativeIterable::const_iterator::operator+" href="qassociativeiterable-const-iterator.html#operator-2b" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="691" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator" signature="const_iterator operator+(int j) const">
+                <parameter type="int" name="j" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4711" column="4">
+                    <para>Returns an iterator to the item at <argument>j</argument> positions forward from this iterator.</para>
+                    <see-also>
+                        <link raw="operator-()" href="qassociativeiterable-const-iterator.html#operator-" type="function">operator-()</link>
+                        <link raw="operator+=()" href="qassociativeiterable-const-iterator.html#operator-2b-eq" type="function">operator+=()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator-" fullname="QAssociativeIterable::const_iterator::operator-" href="qassociativeiterable-const-iterator.html#operator-" status="active" access="public" location="qvariant.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qvariant.h" lineno="692" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const_iterator" signature="const_iterator operator-(int j) const">
+                <parameter type="int" name="j" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qvariant.cpp" line="4725" column="4">
+                    <para>Returns an iterator to the item at <argument>j</argument> positions backward from this iterator.</para>
+                    <see-also>
+                        <link raw="operator+()" href="qassociativeiterable-const-iterator.html#operator-2b" type="function">operator+()</link>
+                        <link raw="operator-=()" href="qassociativeiterable-const-iterator.html#operator--eq" type="function">operator-=()</link>
+                    </see-also>
+                </description>
+            </function>
+        </class>
+    </document>
+</WebXML>

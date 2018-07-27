@@ -58,7 +58,9 @@ public class Main {
         XsltExecutable exe = c.compile(new StreamSource(new File(m.xsltPath)));
 
         for (Path file : webxml) {
-            Path destination = file.getParent().resolve(file.getFileName().toString() + ".docbook");
+            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+
+            System.out.println(file.toString());
 
             XdmNode source = p.newDocumentBuilder().build(new StreamSource(file.toFile()));
             Serializer out = p.newSerializer();
@@ -92,7 +94,7 @@ public class Main {
     private Main() {
         qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
         qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
-        xsltPath = "";
+        xsltPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
@@ -364,6 +366,6 @@ public class Main {
             throw new IOException("No WebXML file found!");
         }
 
-        return Arrays.stream(fileNames).map(s -> Paths.get(s)).collect(Collectors.toList());
+        return Arrays.stream(fileNames).map(s -> outputFolder.resolve("webxml").resolve(s)).collect(Collectors.toList());
     }
 }
