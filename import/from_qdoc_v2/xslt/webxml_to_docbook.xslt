@@ -107,62 +107,118 @@
     <xsl:param name="elements" as="node()*"/>
     
     <!-- Order of elements: classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
-    <xsl:if test="$elements/self::class[@access='public' and (./description/brief or ./description/para)]">
+    <xsl:variable name="classes" select="$elements/self::class[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
+    <xsl:variable name="memberTypes" select="$elements/self::enum[@access='public' and (./description/brief or ./description/para)] | $elements/self::typedef[@access='public' and not(./description/brief or ./description/para)]" as="node()*"/>
+    <xsl:variable name="types" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
+    <xsl:variable name="properties" select="$elements/self::property[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
+    <xsl:variable name="memberVariables" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
+    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and (./description/brief or ./description/para) and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    <xsl:variable name="relatedNonMembers" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]"/>
+    <xsl:variable name="macros" select="$elements/self::function[@access='public' and (./description/brief or ./description/para) and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    
+    <xsl:if test="$classes">
       <db:section>
         <db:title>Classes</db:title>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This class was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::enum[@access='public' and (./description/brief or ./description/para)] or $elements/self::typedef[@access='public' and not(./description/brief or ./description/para)]">
+    <xsl:if test="$memberTypes">
       <db:section>
         <db:title>Member Type Documentation</db:title>
         <!-- The documentation is on the enum, but the typedef must be presented just after. -->
+        
+        <xsl:variable name="memberEnums" select="$memberTypes/self::enum" as="node()*"/>
+        <xsl:variable name="memberTypedefs" select="$memberTypes/self::typedef" as="node()*"/>
+        
+        <xsl:for-each select="$memberEnums">
+          <xsl:sort select="@fullname"/>
+          
+          <db:section>
+            <db:title>enum <xsl:value-of select="@fullname"/>, flags <xsl:value-of select="@typedef"/></db:title>
+            
+            <xsl:variable name="enumFullName" select="@fullname"/>
+            <xsl:variable name="correspondingTypedef" select="$memberTypedefs/self::typedef[@enum=$enumFullName]"/>
+            
+            <xsl:apply-templates mode="content_class_elements" select=".">
+              <xsl:with-param name="justSynopsis" select="true()"/>
+            </xsl:apply-templates>
+            <xsl:apply-templates mode="content_class_elements" select="$correspondingTypedef"/>
+            <xsl:apply-templates mode="content_class_elements" select=".">
+              <xsl:with-param name="justContent" select="true()"/>
+            </xsl:apply-templates>
+          </db:section>
+        </xsl:for-each>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]">
+    <xsl:if test="$types">
       <db:section>
         <db:title>Type Documentation</db:title>
         <!-- Only happens in namespaces. -->
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This type was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::property[@access='public' and (./description/brief or ./description/para)]">
+    <xsl:if test="$properties">
       <db:section>
         <db:title>Properties</db:title>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]">
+    <xsl:if test="$memberVariables">
       <db:section>
         <db:title>Member Variable Documentation</db:title>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This variable was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::function[(@access='public' or @access='protected') and (./description/brief or ./description/para) and (not(@static) or not(@static='true'))]">
+    <xsl:if test="$functions">
       <db:section>
         <db:title>Member Function Documentation</db:title>
         <!-- First constructors, then the other functions. -->
+        
+        <xsl:for-each select="$functions/self::function[@meta='constructor']">
+          <xsl:sort select="@signature"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
+        
+        <xsl:for-each select="$functions/self::function[@meta='destructor']">
+          <xsl:sort select="@signature"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
+        
+        <xsl:for-each select="$functions/self::function[not(@meta='constructor') and not(@meta='destructor')]">
+          <xsl:sort select="@signature"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
+        
         <!-- TODO: Why doesn't QWidget::paintEngine have documentation in WebXML (but it has some in .cpp)? Also misses in PySide2's doc: https://doc.qt.io/qtforpython/PySide2/QtWidgets/QWidget.html -->
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::function[@access='public' and (./description/brief or ./description/para) and @static='true']">
-      <db:section>
-        <db:title>Static Member Function Documentation</db:title>
-        <!-- First constructors, then the other functions. -->
-      </db:section>
-    </xsl:if>
-    
     <!-- TODO -->
-    <xsl:if test="$elements/self::variable[@access='public' and ./description/brief]">
+    <xsl:if test="$relatedNonMembers">
       <db:section>
         <db:title>Related Non-Members</db:title>
         <!-- TODO: Not generated in WebXML. Example: http://doc.qt.io/qt-5/qpoint.html#related-non-members -->
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$elements/self::function[@access='public' and ./description/brief and (@meta='macrowithoutparams' or @meta='macrowithparams')]">
+    <xsl:if test="$macros">
       <db:section>
         <db:title>Macro Documentation</db:title>
       </db:section>
@@ -173,9 +229,155 @@
     VAR
   </xsl:template>
   
+  <xsl:template mode="content_class_elements" match="function">
+    <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
+      <db:section>
+        <db:title>
+          <!-- For methods: -->
+          <!-- @fullname:  QWidget::QWidget -->
+          <!-- @signature: QWidget(QWidget *parent, Qt::WindowFlags f) -->
+          <xsl:value-of select="
+            if(contains(@fullname, '::')) then concat(@fullname, replace(@signature, concat('(^.*?)', @name), '$1')) else @signature "/>
+        </db:title>
+        
+        <!-- Choose the tag depending on the type of function: either constructor, destructor, or any kind of function (including signal and slot). -->
+        <xsl:element name="{if (@meta='constructor') then 'db:constructorsynopsis' else if (@meta='destructor') then 'db:destructorsynopsis' else 'db:methodsynopsis'}">
+          <!-- Determine whether this function is a signal or a slot. -->
+          <xsl:if test="@meta='signal'">
+            <db:modifier>signal</db:modifier>
+          </xsl:if>
+          <xsl:if test="@meta='slot'">
+            <db:modifier>slot</db:modifier>
+          </xsl:if>
+          
+          <!-- Return type. Constructors have no type. -->
+          <xsl:choose>
+            <xsl:when test="not(@type='') and not(@type='void')">
+              <db:type>
+                <xsl:value-of select="@type"/>
+              </db:type>
+            </xsl:when>
+            <xsl:when test="@type='void'">
+              <db:void/>
+            </xsl:when>
+          </xsl:choose>
+          
+          <!-- Method name. -->
+          <db:methodname>
+            <xsl:value-of select="@name"/>
+          </db:methodname>
+          
+          <!-- Parameters. -->
+          <xsl:choose>
+            <xsl:when test="methodparam">
+              <xsl:for-each select="parameter">
+                <db:methodparam>
+                  <db:type>
+                    <xsl:value-of select="@type"/>
+                  </db:type>
+                  <db:parameter>
+                    <xsl:value-of select="@name"/>
+                  </db:parameter>
+                  <!-- TODO: Default value for QWidget constructor is ... instead of Qt::WindowFlags() in WebXML -->
+                  <xsl:if test="@default and not(@default='')">
+                    <db:initializer>
+                      <xsl:value-of select="@default"/>
+                    </db:initializer>
+                  </xsl:if>
+                </db:methodparam>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <db:void/>
+            </xsl:otherwise>
+          </xsl:choose>
+          
+          <!-- Modifiers. -->
+          <xsl:if test="not(@threadsafety='unspecified')">
+            <db:modifier>
+              <xsl:value-of select="@threadsafety"/>
+            </db:modifier>
+          </xsl:if>
+          <db:modifier>
+            <xsl:value-of select="@access"/>
+          </db:modifier>
+          <xsl:if test="not(@static='false')">
+            <db:modifier>static</db:modifier>
+          </xsl:if>
+          <xsl:if test="not(@default='false')">
+            <db:modifier>default</db:modifier>
+          </xsl:if>
+          <xsl:if test="not(@final='false')">
+            <db:modifier>final</db:modifier>
+          </xsl:if>
+          <xsl:if test="not(@override='false')">
+            <db:modifier>override</db:modifier>
+          </xsl:if>
+        </xsl:element>
+        
+        <xsl:apply-templates mode="content_generic" select="description"/>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
+      </db:section>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template mode="content_class_elements" match="enum">
+    <xsl:param name="justSynopsis" as="xs:boolean" select="false()"/>
+    <xsl:param name="justContent" as="xs:boolean" select="false()"/>
+    
+    <xsl:variable name="outputSynopsis" as="xs:boolean" select="not($justContent)"/>
+    <xsl:variable name="outputContent" as="xs:boolean" select="not($justSynopsis)"/>
+    
+    <xsl:if test="$outputSynopsis">
+      <db:enumsynopsis>
+        <db:enumname><xsl:value-of select="@fullname"/></db:enumname>
+        <xsl:if test="@since">
+          <db:enumsynopsisinfo role="since">
+            <xsl:value-of select="@since"/>
+          </db:enumsynopsisinfo>
+        </xsl:if>
+        
+        <xsl:for-each select="value">
+          <db:enumitem>
+            <db:enumidentifier>
+              <xsl:value-of select="@name"/>
+            </db:enumidentifier>
+            <db:enumvalue>
+              <xsl:value-of select="@value"/>
+            </db:enumvalue>
+          </db:enumitem>
+        </xsl:for-each>
+      </db:enumsynopsis>
+    </xsl:if>
+    
+    <xsl:if test="$outputContent">
+      <xsl:apply-templates mode="content_generic" select="description"/>
+      
+      <xsl:if test="@since and not(@since='')">
+        <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
+      </xsl:if>
+      
+      <db:para>The <db:code><xsl:value-of select="@name"/>s</db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template mode="content_class_elements" match="typedef">
+    <db:typedefsynopsis>
+      <db:typedefname><xsl:value-of select="@fullname"/></db:typedefname>
+    </db:typedefsynopsis>
+  </xsl:template>
+  
   <!-- Generic content handling (paragraphs, sections, etc.) -->
   <xsl:template mode="content_generic" match="brief">
     <!-- Ignore brief, as there is already some abstract before. -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="description">
+    <!-- Let templates flow through description to simplify code to handle classes. -->
+    <xsl:apply-templates mode="content_generic"/>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="section">
@@ -227,6 +429,12 @@
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template mode="content_generic" match="snippet">
+    <db:programlisting>
+      <xsl:value-of select="unparsed-text(concat('file:///', @path))"/>
+    </db:programlisting>
+  </xsl:template>
+  
   <xsl:template mode="content_generic" match="list[@type='ordered']">
     <db:orderedlist>
       <xsl:apply-templates mode="content_generic"/>
@@ -237,6 +445,40 @@
     <db:itemizedlist>
       <xsl:apply-templates mode="content_generic"/>
     </db:itemizedlist>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="list[@type='enum']">
+    <db:informaltable>
+      <db:thead>
+        <db:tr>
+          <db:th>
+            <db:para>Constant</db:para>
+          </db:th>
+          <db:th>
+            <db:para>Value</db:para>
+          </db:th>
+          <db:th>
+            <db:para>Description</db:para>
+          </db:th>
+        </db:tr>
+      </db:thead>
+      <db:tbody>
+        <xsl:for-each select="definition">
+          <db:tr>
+            <db:td>
+              <xsl:value-of select="term/text()"/>
+            </db:td>
+            <db:td>
+              <xsl:variable name="neededName" select="text()"/>
+              <xsl:value-of select="../../../value[@name=$neededName]/@value"/>
+            </db:td>
+            <db:td>
+              <xsl:apply-templates mode="content_generic" select="./following-sibling::item[1]/child::node()"/>
+            </db:td>
+          </db:tr>
+        </xsl:for-each>
+      </db:tbody>
+    </db:informaltable>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="item">
@@ -298,7 +540,7 @@
   
   <xsl:template mode="content_generic" match="link">
     <xsl:choose>
-      <xsl:when test="@type='class' or @type='enum'">
+      <xsl:when test="@type='class' or @type='enum' or @type='function' or @type='property'">
         <db:code>
           <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
             <xsl:apply-templates mode="content_generic"/>
@@ -326,15 +568,19 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="bold[text()='Note:' or text()='Important:']">
-    <db:emphasis role="bold">
-      <xsl:apply-templates mode="content_generic"/>
-    </db:emphasis>
+    <!-- Do nothing, as this part of the text is converted into an admonition. -->
   </xsl:template>
   
   <xsl:template mode="content_generic" match="bold[not(text()='Note:') and not(text()='Important:')]">
     <db:emphasis role="bold">
       <xsl:apply-templates mode="content_generic"/>
     </db:emphasis>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="argument">
+    <db:code role="argument">
+      <xsl:apply-templates mode="content_generic"/>
+    </db:code>
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->

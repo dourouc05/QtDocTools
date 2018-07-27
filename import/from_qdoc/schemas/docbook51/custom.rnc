@@ -191,6 +191,11 @@ div {
        & db.common.linking.attributes
     qdt.enumitem = element enumitem { qdt.enumvalue.attlist, qdt.enumidentifier, qdt.enumvalue? }
     
+    qdt.enumsynopsisinfo =
+      element enumsynopsisinfo {
+        db.funcsynopsisinfo.attlist, db.verbatim.contentmodel
+      }
+    
     qdt.enumsynopsis.attlist = 
        db.common.attributes
        & db.common.linking.attributes
@@ -199,6 +204,7 @@ div {
       element enumsynopsis {
         qdt.enumsynopsis.attlist, 
         db.programming.inlines+, 
+        qdt.enumsynopsisinfo*,
         qdt.enumitem*
       }
 }
