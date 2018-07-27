@@ -136,21 +136,7 @@
         
         <xsl:for-each select="$memberEnums">
           <xsl:sort select="@fullname"/>
-          
-          <db:section>
-            <db:title>enum <xsl:value-of select="@fullname"/>, flags <xsl:value-of select="@typedef"/></db:title>
-            
-            <xsl:variable name="enumFullName" select="@fullname"/>
-            <xsl:variable name="correspondingTypedef" select="$memberTypedefs/self::typedef[@enum=$enumFullName]"/>
-            
-            <xsl:apply-templates mode="content_class_elements" select=".">
-              <xsl:with-param name="justSynopsis" select="true()"/>
-            </xsl:apply-templates>
-            <xsl:apply-templates mode="content_class_elements" select="$correspondingTypedef"/>
-            <xsl:apply-templates mode="content_class_elements" select=".">
-              <xsl:with-param name="justContent" select="true()"/>
-            </xsl:apply-templates>
-          </db:section>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
       </db:section>
     </xsl:if>
@@ -325,13 +311,9 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="enum">
-    <xsl:param name="justSynopsis" as="xs:boolean" select="false()"/>
-    <xsl:param name="justContent" as="xs:boolean" select="false()"/>
-    
-    <xsl:variable name="outputSynopsis" as="xs:boolean" select="not($justContent)"/>
-    <xsl:variable name="outputContent" as="xs:boolean" select="not($justSynopsis)"/>
-    
-    <xsl:if test="$outputSynopsis">
+    <db:section>
+      <db:title>enum <xsl:value-of select="@fullname"/>, flags <xsl:value-of select="@typedef"/></db:title>
+      
       <db:enumsynopsis>
         <db:enumname><xsl:value-of select="@fullname"/></db:enumname>
         <xsl:if test="@since">
@@ -351,9 +333,8 @@
           </db:enumitem>
         </xsl:for-each>
       </db:enumsynopsis>
-    </xsl:if>
-    
-    <xsl:if test="$outputContent">
+      
+      <xsl:apply-templates mode="content_class_elements" select="./following-sibling::typedef[1]"/>
       <xsl:apply-templates mode="content_generic" select="description"/>
       
       <xsl:if test="@since and not(@since='')">
@@ -361,7 +342,7 @@
       </xsl:if>
       
       <db:para>The <db:code><xsl:value-of select="@name"/>s</db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
-    </xsl:if>
+    </db:section>
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="typedef">
