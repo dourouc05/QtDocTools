@@ -438,6 +438,11 @@
     </db:section>
   </xsl:template>
   
+  <!-- Deal with concepts. -->
+  <xsl:template mode="content" match="page">
+    <xsl:apply-templates mode="content_generic"/>
+  </xsl:template>
+  
   <!-- Generic content handling (paragraphs, sections, etc.) -->
   <xsl:template mode="content_generic" match="brief">
     <!-- Ignore brief, as there is already some abstract before. -->
