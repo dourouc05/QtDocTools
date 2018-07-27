@@ -73,7 +73,8 @@
         </xsl:if>
         <db:classsynopsisinfo role="module">
           <xsl:value-of select="@module"/>
-        </db:classsynopsisinfo>  
+        </db:classsynopsisinfo> 
+        <db:namespacesynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:namespacesynopsisinfo>
         <xsl:if test="@since">
           <db:classsynopsisinfo role="since">
             <xsl:value-of select="@since"/>
@@ -341,14 +342,18 @@
         </xsl:for-each>
       </db:enumsynopsis>
       
-      <xsl:apply-templates mode="content_class_elements" select="./following-sibling::typedef[1]"/>
+      <xsl:if test="./following-sibling::typedef[1]">
+        <xsl:apply-templates mode="content_class_elements" select="./following-sibling::typedef[1]"/>
+      </xsl:if>
       <xsl:apply-templates mode="content_generic" select="description"/>
       
       <xsl:if test="@since and not(@since='')">
         <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
       </xsl:if>
       
-      <db:para>The <db:code><xsl:value-of select="@name"/>s</db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      <xsl:if test="./following-sibling::typedef[1]">
+        <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </xsl:if>
     </db:section>
   </xsl:template>
   
@@ -436,6 +441,28 @@
         </db:para>
       </xsl:if>
     </db:section>
+  </xsl:template>
+  
+  <!-- Deal with name spaces. -->
+  <xsl:template mode="content" match="namespace">
+    <!--<xsl:apply-templates mode="content_generic"/>-->
+    <xsl:call-template name="content_namespace_synopsis"/>
+    <xsl:apply-templates mode="content_class_description" select="description"/>
+    <xsl:call-template name="content_class_elements">
+      <xsl:with-param name="elements" select="./description/following-sibling::node()"/>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template name="content_namespace_synopsis">
+    <xsl:if test="@access='public' and @status='active'">
+      <db:namespacesynopsis>
+        <db:namespace>
+          <db:namespacename><xsl:value-of select="@name"/></db:namespacename>
+        </db:namespace>
+        <db:namespacesynopsisinfo role="module"><xsl:value-of select="@module"/></db:namespacesynopsisinfo>
+        <db:namespacesynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:namespacesynopsisinfo>
+      </db:namespacesynopsis>
+    </xsl:if>
   </xsl:template>
   
   <!-- Deal with concepts. -->
@@ -646,6 +673,12 @@
   
   <xsl:template mode="content_generic" match="bold[not(text()='Note:') and not(text()='Important:')]">
     <db:emphasis role="bold">
+      <xsl:apply-templates mode="content_generic"/>
+    </db:emphasis>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="underline">
+    <db:emphasis role="underline">
       <xsl:apply-templates mode="content_generic"/>
     </db:emphasis>
   </xsl:template>
