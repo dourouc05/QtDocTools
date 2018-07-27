@@ -446,7 +446,6 @@
   
   <!-- Deal with name spaces. -->
   <xsl:template mode="content" match="namespace">
-    <!--<xsl:apply-templates mode="content_generic"/>-->
     <xsl:call-template name="content_namespace_synopsis"/>
     <xsl:apply-templates mode="content_class_description" select="description"/>
     <xsl:call-template name="content_class_elements">
@@ -466,6 +465,17 @@
     </xsl:if>
   </xsl:template>
   
+  <!-- Deal with modules. -->
+  <xsl:template mode="content" match="module">
+    <xsl:apply-templates mode="content_generic" select="description/generatedlist"/>
+    
+    <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      
+      <xsl:apply-templates mode="content_generic" select="description/generatedlist/following-sibling::node()"/>
+    </db:section>
+  </xsl:template>
+  
   <!-- Deal with concepts. -->
   <xsl:template mode="content" match="page">
     <xsl:apply-templates mode="content_generic"/>
@@ -473,7 +483,9 @@
   
   <!-- Generic content handling (paragraphs, sections, etc.) -->
   <xsl:template mode="content_generic" match="brief">
-    <!-- Ignore brief, as there is already some abstract before. -->
+    <db:para>
+      <xsl:apply-templates mode="content_generic"/>
+    </db:para>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="codeline"/>
@@ -506,6 +518,10 @@
     <db:title>
       <xsl:apply-templates mode="content_generic"/>
     </db:title>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="generatedlist">
+    <xsl:apply-templates mode="content_generic"/>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="para">
@@ -632,7 +648,7 @@
     </db:tr>
   </xsl:template>
   
-  <xsl:template mode="content_generic_table" match="item">
+  <xsl:template mode="content_generic_table" match="item | heading">
     <xsl:choose>
       <xsl:when test="parent::header">
         <db:th>
