@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QGLFormat" href="qglformat.html" status="obsolete" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="113" module="QtOpenGL" brief="Specifies the display format of an OpenGL rendering context">
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="226" column="4">
+                <brief>The <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> class specifies the display format of an OpenGL rendering context.</brief>
+                <para>A display format has several characteristics:</para>
+                <list type="bullet">
+                    <item>
+                        <para>
+                            <link raw="setDoubleBuffer()" href="qglformat.html#setDoubleBuffer" type="function">Double or single buffering.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setDepth()" href="qglformat.html#setDepth" type="function">Depth buffer.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setRgba()" href="qglformat.html#setRgba" type="function">RGBA or color index mode.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setAlpha()" href="qglformat.html#setAlpha" type="function">Alpha channel.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setAccum()" href="qglformat.html#setAccum" type="function">Accumulation buffer.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setStencil()" href="qglformat.html#setStencil" type="function">Stencil buffer.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setStereo()" href="qglformat.html#setStereo" type="function">Stereo buffers.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setDirectRendering()" href="qglformat.html#setDirectRendering" type="function">Direct rendering.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setOverlay()" href="qglformat.html#setOverlay" type="function">Presence of an overlay.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setPlane()" href="qglformat.html#setPlane" type="function">Plane of an overlay.</link></para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="setSampleBuffers()" href="qglformat.html#setSampleBuffers" type="function">Multisample buffers.</link></para>
+                    </item>
+                </list>
+                <para>You can also specify preferred bit depths for the color buffer, depth buffer, alpha buffer, accumulation buffer and the stencil buffer with the functions: <link raw="setRedBufferSize()" href="qglformat.html#setRedBufferSize" type="function">setRedBufferSize()</link>, <link raw="setGreenBufferSize()" href="qglformat.html#setGreenBufferSize" type="function">setGreenBufferSize()</link>, <link raw="setBlueBufferSize()" href="qglformat.html#setBlueBufferSize" type="function">setBlueBufferSize()</link>, <link raw="setDepthBufferSize()" href="qglformat.html#setDepthBufferSize" type="function">setDepthBufferSize()</link>, <link raw="setAlphaBufferSize()" href="qglformat.html#setAlphaBufferSize" type="function">setAlphaBufferSize()</link>, <link raw="setAccumBufferSize()" href="qglformat.html#setAccumBufferSize" type="function">setAccumBufferSize()</link> and <link raw="setStencilBufferSize()" href="qglformat.html#setStencilBufferSize" type="function">setStencilBufferSize()</link>.</para>
+                <para>Note that even if you specify that you prefer a 32 bit depth buffer (e.g. with <link raw="setDepthBufferSize" href="qglformat.html#setDepthBufferSize" type="function">setDepthBufferSize</link>(32)), the format that is chosen may not have a 32 bit depth buffer, even if there is a format available with a 32 bit depth buffer. The main reason for this is how the system dependant picking algorithms work on the different platforms, and some format options may have higher precedence than others.</para>
+                <para>You create and tell a <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> object what rendering options you want from an OpenGL rendering context.</para>
+                <para>OpenGL drivers or accelerated hardware may or may not support advanced features such as alpha channel or stereographic viewing. If you request some features that the driver/hardware does not provide when you create a <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link>, you will get a rendering context with the nearest subset of features.</para>
+                <para>There are different ways to define the display characteristics of a rendering context. One is to create a <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> and make it the default for the entire application:</para>
+                <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="0"/>
+                <para>Or you can specify the desired format when creating an object of your <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link> subclass:</para>
+                <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="1"/>
+                <para>After the widget has been created, you can find out which of the requested features the system was able to provide:</para>
+                <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="2"/>
+                <legalese>
+                    <para>OpenGL is a trademark of Silicon Graphics, Inc. in the United States and other countries.</para>
+                </legalese>
+                <see-also>
+                    <link raw="QGLContext" href="qglcontext.html" type="class">QGLContext</link>
+                    <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link>
+                </see-also>
+            </description>
+            <function threadsafety="unspecified" name="QGLFormat" fullname="QGLFormat::QGLFormat" href="qglformat.html#QGLFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="116" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QGLFormat()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="339" column="4">
+                    <para>Constructs a <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> object with the following default settings:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <link raw="setDoubleBuffer()" href="qglformat.html#setDoubleBuffer" type="function">Double buffer:</link> Enabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setDepth()" href="qglformat.html#setDepth" type="function">Depth buffer:</link> Enabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setRgba()" href="qglformat.html#setRgba" type="function">RGBA:</link> Enabled (i.e., color index disabled).</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setAlpha()" href="qglformat.html#setAlpha" type="function">Alpha channel:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setAccum()" href="qglformat.html#setAccum" type="function">Accumulator buffer:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setStencil()" href="qglformat.html#setStencil" type="function">Stencil buffer:</link> Enabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setStereo()" href="qglformat.html#setStereo" type="function">Stereo:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setDirectRendering()" href="qglformat.html#setDirectRendering" type="function">Direct rendering:</link> Enabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setOverlay()" href="qglformat.html#setOverlay" type="function">Overlay:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setPlane()" href="qglformat.html#setPlane" type="function">Plane:</link> 0 (i.e., normal plane).</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setSampleBuffers()" href="qglformat.html#setSampleBuffers" type="function">Multisample buffers:</link> Disabled.</para>
+                        </item>
+                    </list>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QGLFormat" fullname="QGLFormat::QGLFormat" href="qglformat.html#QGLFormat-1" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="117" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QGLFormat(QGL::FormatOptions options, int plane)">
+                <parameter type="QGL::FormatOptions" name="options" default=""/>
+                <parameter type="int" name="plane" default="0"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="362" column="4">
+                    <para>Creates a <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> object that is a copy of the current <link raw="defaultFormat()" href="qglformat.html#defaultFormat" type="function">defaultFormat()</link>.</para>
+                    <para>If <argument>options</argument> is not 0, the default format is modified by the specified format options. The <argument>options</argument> parameter should be <link raw="QGL::FormatOption" href="qgl.html#FormatOption-enum" type="enum" enum="QGL::FormatOption">QGL::FormatOption</link> values OR'ed together.</para>
+                    <para>This constructor makes it easy to specify a certain desired format in classes derived from <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link>, for example:</para>
+                    <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="3"/>
+                    <para>Note that there are <link raw="QGL::FormatOption" href="qgl.html#FormatOption-enum" type="enum" enum="QGL::FormatOption">QGL::FormatOption</link> values to turn format settings both on and off, e.g. <link raw="QGL::DepthBuffer" href="qgl.html#FormatOption-enum" type="enum" enum="QGL::FormatOption">QGL::DepthBuffer</link> and <link raw="QGL::NoDepthBuffer" href="qgl.html#FormatOption-enum" type="enum" enum="QGL::FormatOption">QGL::NoDepthBuffer</link>, <link raw="QGL::DirectRendering" href="qgl.html#FormatOption-enum" type="enum" enum="QGL::FormatOption">QGL::DirectRendering</link> and <link raw="QGL::IndirectRendering" href="qgl.html#FormatOption-enum" type="enum" enum="QGL::FormatOption">QGL::IndirectRendering</link>, etc.</para>
+                    <para>The <argument>plane</argument> parameter defaults to 0 and is the plane which this format should be associated with. Not all OpenGL implementations supports overlay/underlay rendering planes.</para>
+                    <see-also>
+                        <link raw="defaultFormat()" href="qglformat.html#defaultFormat" type="function">defaultFormat()</link>
+                        <link raw="setOption()" href="qglformat.html#setOption" type="function">setOption()</link>
+                        <link raw="setPlane()" href="qglformat.html#setPlane" type="function">setPlane()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QGLFormat" fullname="QGLFormat::QGLFormat" href="qglformat.html#QGLFormat-2" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="118" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QGLFormat(const QGLFormat &amp;other)">
+                <parameter type="const QGLFormat &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="408" column="4">
+                    <para>Constructs a copy of <argument>other</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QGLFormat::operator=" href="qglformat.html#operator-eq" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="119" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QGLFormat &amp;" signature="QGLFormat &amp; operator=(const QGLFormat &amp;other)">
+                <parameter type="const QGLFormat &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="418" column="4">
+                    <para>Assigns <argument>other</argument> to this object.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="~QGLFormat" fullname="QGLFormat::~QGLFormat" href="qglformat.html#dtor.QGLFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="120" virtual="non" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QGLFormat()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="433" column="4">
+                    <para>Destroys the <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setDepthBufferSize" fullname="QGLFormat::setDepthBufferSize" href="qglformat.html#setDepthBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="122" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setDepthBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="955" column="4">
+                    <para>Set the minimum depth buffer size to <argument>size</argument>.</para>
+                    <see-also>
+                        <link raw="depthBufferSize()" href="qglformat.html#depthBufferSize" type="function">depthBufferSize()</link>
+                        <link raw="setDepth()" href="qglformat.html#setDepth" type="function">setDepth()</link>
+                        <link raw="depth()" href="qglformat.html#depth" type="function">depth()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="depthBufferSize" fullname="QGLFormat::depthBufferSize" href="qglformat.html#depthBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="123" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int depthBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="971" column="4">
+                    <para>Returns the depth buffer size.</para>
+                    <see-also>
+                        <link raw="depth()" href="qglformat.html#depth" type="function">depth()</link>
+                        <link raw="setDepth()" href="qglformat.html#setDepth" type="function">setDepth()</link>
+                        <link raw="setDepthBufferSize()" href="qglformat.html#setDepthBufferSize" type="function">setDepthBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAccumBufferSize" fullname="QGLFormat::setAccumBufferSize" href="qglformat.html#setAccumBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="125" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setAccumBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1095" column="4">
+                    <para>Set the preferred accumulation buffer size, where <argument>size</argument> is the bit depth for each RGBA component.</para>
+                    <see-also>
+                        <link raw="accum()" href="qglformat.html#accum" type="function">accum()</link>
+                        <link raw="setAccum()" href="qglformat.html#setAccum" type="function">setAccum()</link>
+                        <link raw="accumBufferSize()" href="qglformat.html#accumBufferSize" type="function">accumBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="accumBufferSize" fullname="QGLFormat::accumBufferSize" href="qglformat.html#accumBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="126" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int accumBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1112" column="4">
+                    <para>Returns the accumulation buffer size.</para>
+                    <see-also>
+                        <link raw="setAccumBufferSize()" href="qglformat.html#setAccumBufferSize" type="function">setAccumBufferSize()</link>
+                        <link raw="accum()" href="qglformat.html#accum" type="function">accum()</link>
+                        <link raw="setAccum()" href="qglformat.html#setAccum" type="function">setAccum()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setRedBufferSize" fullname="QGLFormat::setRedBufferSize" href="qglformat.html#setRedBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="128" since="4.2" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setRedBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="981" column="4">
+                    <para>Set the preferred red buffer size to <argument>size</argument>.</para>
+                    <see-also>
+                        <link raw="redBufferSize()" href="qglformat.html#redBufferSize" type="function">redBufferSize()</link>
+                        <link raw="setGreenBufferSize()" href="qglformat.html#setGreenBufferSize" type="function">setGreenBufferSize()</link>
+                        <link raw="setBlueBufferSize()" href="qglformat.html#setBlueBufferSize" type="function">setBlueBufferSize()</link>
+                        <link raw="setAlphaBufferSize()" href="qglformat.html#setAlphaBufferSize" type="function">setAlphaBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="redBufferSize" fullname="QGLFormat::redBufferSize" href="qglformat.html#redBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="129" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int redBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="998" column="4">
+                    <para>Returns the red buffer size.</para>
+                    <see-also>
+                        <link raw="setRedBufferSize()" href="qglformat.html#setRedBufferSize" type="function">setRedBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setGreenBufferSize" fullname="QGLFormat::setGreenBufferSize" href="qglformat.html#setGreenBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="131" since="4.2" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setGreenBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1010" column="4">
+                    <para>Set the preferred green buffer size to <argument>size</argument>.</para>
+                    <see-also>
+                        <link raw="greenBufferSize()" href="qglformat.html#greenBufferSize" type="function">greenBufferSize()</link>
+                        <link raw="setRedBufferSize()" href="qglformat.html#setRedBufferSize" type="function">setRedBufferSize()</link>
+                        <link raw="setBlueBufferSize()" href="qglformat.html#setBlueBufferSize" type="function">setBlueBufferSize()</link>
+                        <link raw="setAlphaBufferSize()" href="qglformat.html#setAlphaBufferSize" type="function">setAlphaBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="greenBufferSize" fullname="QGLFormat::greenBufferSize" href="qglformat.html#greenBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="132" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int greenBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1027" column="4">
+                    <para>Returns the green buffer size.</para>
+                    <see-also>
+                        <link raw="setGreenBufferSize()" href="qglformat.html#setGreenBufferSize" type="function">setGreenBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setBlueBufferSize" fullname="QGLFormat::setBlueBufferSize" href="qglformat.html#setBlueBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="134" since="4.2" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setBlueBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1039" column="4">
+                    <para>Set the preferred blue buffer size to <argument>size</argument>.</para>
+                    <see-also>
+                        <link raw="blueBufferSize()" href="qglformat.html#blueBufferSize" type="function">blueBufferSize()</link>
+                        <link raw="setRedBufferSize()" href="qglformat.html#setRedBufferSize" type="function">setRedBufferSize()</link>
+                        <link raw="setGreenBufferSize()" href="qglformat.html#setGreenBufferSize" type="function">setGreenBufferSize()</link>
+                        <link raw="setAlphaBufferSize()" href="qglformat.html#setAlphaBufferSize" type="function">setAlphaBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="blueBufferSize" fullname="QGLFormat::blueBufferSize" href="qglformat.html#blueBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="135" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int blueBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1056" column="4">
+                    <para>Returns the blue buffer size.</para>
+                    <see-also>
+                        <link raw="setBlueBufferSize()" href="qglformat.html#setBlueBufferSize" type="function">setBlueBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAlphaBufferSize" fullname="QGLFormat::setAlphaBufferSize" href="qglformat.html#setAlphaBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="137" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setAlphaBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1068" column="4">
+                    <para>Set the preferred alpha buffer size to <argument>size</argument>. This function implicitly enables the alpha channel.</para>
+                    <see-also>
+                        <link raw="setRedBufferSize()" href="qglformat.html#setRedBufferSize" type="function">setRedBufferSize()</link>
+                        <link raw="setGreenBufferSize()" href="qglformat.html#setGreenBufferSize" type="function">setGreenBufferSize()</link>
+                        <link raw="alphaBufferSize()" href="qglformat.html#alphaBufferSize" type="function">alphaBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="alphaBufferSize" fullname="QGLFormat::alphaBufferSize" href="qglformat.html#alphaBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="138" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int alphaBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1085" column="4">
+                    <para>Returns the alpha buffer size.</para>
+                    <see-also>
+                        <link raw="alpha()" href="qglformat.html#alpha" type="function">alpha()</link>
+                        <link raw="setAlpha()" href="qglformat.html#setAlpha" type="function">setAlpha()</link>
+                        <link raw="setAlphaBufferSize()" href="qglformat.html#setAlphaBufferSize" type="function">setAlphaBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setStencilBufferSize" fullname="QGLFormat::setStencilBufferSize" href="qglformat.html#setStencilBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="140" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setStencilBufferSize(int size)">
+                <parameter type="int" name="size" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1122" column="4">
+                    <para>Set the preferred stencil buffer size to <argument>size</argument>.</para>
+                    <see-also>
+                        <link raw="stencilBufferSize()" href="qglformat.html#stencilBufferSize" type="function">stencilBufferSize()</link>
+                        <link raw="setStencil()" href="qglformat.html#setStencil" type="function">setStencil()</link>
+                        <link raw="stencil()" href="qglformat.html#stencil" type="function">stencil()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="stencilBufferSize" fullname="QGLFormat::stencilBufferSize" href="qglformat.html#stencilBufferSize" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="141" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int stencilBufferSize() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1138" column="4">
+                    <para>Returns the stencil buffer size.</para>
+                    <see-also>
+                        <link raw="stencil()" href="qglformat.html#stencil" type="function">stencil()</link>
+                        <link raw="setStencil()" href="qglformat.html#setStencil" type="function">setStencil()</link>
+                        <link raw="setStencilBufferSize()" href="qglformat.html#setStencilBufferSize" type="function">setStencilBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setSampleBuffers" fullname="QGLFormat::setSampleBuffers" href="qglformat.html#setSampleBuffers" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="143" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setSampleBuffers(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="791" column="4">
+                    <para>If <argument>enable</argument> is true, a GL context with multisample buffer support is picked; otherwise ignored.</para>
+                    <see-also>
+                        <link raw="sampleBuffers()" href="qglformat.html#sampleBuffers" type="function">sampleBuffers()</link>
+                        <link raw="setSamples()" href="qglformat.html#setSamples" type="function">setSamples()</link>
+                        <link raw="samples()" href="qglformat.html#samples" type="function">samples()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="sampleBuffers" fullname="QGLFormat::sampleBuffers" href="qglformat.html#sampleBuffers" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="144" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool sampleBuffers() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setSampleBuffers()" href="qglformat.html#setSampleBuffers" type="function">setSampleBuffers()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setSamples" fullname="QGLFormat::setSamples" href="qglformat.html#setSamples" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="146" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setSamples(int numSamples)">
+                <parameter type="int" name="numSamples" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="814" column="4">
+                    <para>Set the preferred number of samples per pixel when multisampling is enabled to <argument>numSamples</argument>. By default, the highest number of samples available is used.</para>
+                    <see-also>
+                        <link raw="setSampleBuffers()" href="qglformat.html#setSampleBuffers" type="function">setSampleBuffers()</link>
+                        <link raw="sampleBuffers()" href="qglformat.html#sampleBuffers" type="function">sampleBuffers()</link>
+                        <link raw="samples()" href="qglformat.html#samples" type="function">samples()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="samples" fullname="QGLFormat::samples" href="qglformat.html#samples" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="147" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int samples() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="802" column="4">
+                    <para>Returns the number of samples per pixel when multisampling is enabled. By default, the highest number of samples that is available is used.</para>
+                    <see-also>
+                        <link raw="setSampleBuffers()" href="qglformat.html#setSampleBuffers" type="function">setSampleBuffers()</link>
+                        <link raw="sampleBuffers()" href="qglformat.html#sampleBuffers" type="function">sampleBuffers()</link>
+                        <link raw="setSamples()" href="qglformat.html#setSamples" type="function">setSamples()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setSwapInterval" fullname="QGLFormat::setSwapInterval" href="qglformat.html#setSwapInterval" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="149" since="4.2" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setSwapInterval(int interval)">
+                <parameter type="int" name="interval" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="832" column="4">
+                    <para>Set the preferred swap interval. This can be used to sync the GL drawing into a system window to the vertical refresh of the screen. Setting an <argument>interval</argument> value of 0 will turn the vertical refresh syncing off, any value higher than 0 will turn the vertical syncing on.</para>
+                    <para>Under Windows and under X11, where the <teletype type="highlighted">WGL_EXT_swap_control</teletype> and <teletype type="highlighted">GLX_SGI_video_sync</teletype> extensions are used, the <argument>interval</argument> parameter can be used to set the minimum number of video frames that are displayed before a buffer swap will occur. In effect, setting the <argument>interval</argument> to 10, means there will be 10 vertical retraces between every buffer swap.</para>
+                    <para>Under Windows the <teletype type="highlighted">WGL_EXT_swap_control</teletype> extension has to be present, and under X11 the <teletype type="highlighted">GLX_SGI_video_sync</teletype> extension has to be present.</para>
+                    <see-also>
+                        <link raw="swapInterval()" href="qglformat.html#swapInterval" type="function">swapInterval()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="swapInterval" fullname="QGLFormat::swapInterval" href="qglformat.html#swapInterval" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="150" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int swapInterval() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="856" column="4">
+                    <para>Returns the currently set swap interval. -1 is returned if setting the swap interval isn't supported in the system GL implementation.</para>
+                    <see-also>
+                        <link raw="setSwapInterval()" href="qglformat.html#setSwapInterval" type="function">setSwapInterval()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="doubleBuffer" fullname="QGLFormat::doubleBuffer" href="qglformat.html#doubleBuffer" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="152" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool doubleBuffer() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setDoubleBuffer()" href="qglformat.html#setDoubleBuffer" type="function">setDoubleBuffer()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setDoubleBuffer" fullname="QGLFormat::setDoubleBuffer" href="qglformat.html#setDoubleBuffer" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="153" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setDoubleBuffer(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="556" column="4">
+                    <para>If <argument>enable</argument> is true sets double buffering; otherwise sets single buffering.</para>
+                    <para>Double buffering is enabled by default.</para>
+                    <para>Double buffering is a technique where graphics are rendered on an off-screen buffer and not directly to the screen. When the drawing has been completed, the program calls a swapBuffers() function to exchange the screen contents with the buffer. The result is flicker-free drawing and often better performance.</para>
+                    <para>Note that single buffered contexts are currently not supported with EGL.</para>
+                    <see-also>
+                        <link raw="doubleBuffer()" href="qglformat.html#doubleBuffer" type="function">doubleBuffer()</link>
+                        <link raw="QGLContext::swapBuffers()" href="qglcontext.html#swapBuffers" type="function">QGLContext::swapBuffers()</link>
+                        <link raw="QGLWidget::swapBuffers()" href="qglwidget.html#swapBuffers" type="function">QGLWidget::swapBuffers()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="depth" fullname="QGLFormat::depth" href="qglformat.html#depth" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="154" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool depth() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setDepth()" href="qglformat.html#setDepth" type="function">setDepth()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setDepth" fullname="QGLFormat::setDepth" href="qglformat.html#setDepth" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="155" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setDepth(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="590" column="4">
+                    <para>If <argument>enable</argument> is true enables the depth buffer; otherwise disables the depth buffer.</para>
+                    <para>The depth buffer is enabled by default.</para>
+                    <para>The purpose of a depth buffer (or Z-buffering) is to remove hidden surfaces. Pixels are assigned Z values based on the distance to the viewer. A pixel with a high Z value is closer to the viewer than a pixel with a low Z value. This information is used to decide whether to draw a pixel or not.</para>
+                    <see-also>
+                        <link raw="depth()" href="qglformat.html#depth" type="function">depth()</link>
+                        <link raw="setDepthBufferSize()" href="qglformat.html#setDepthBufferSize" type="function">setDepthBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="rgba" fullname="QGLFormat::rgba" href="qglformat.html#rgba" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="156" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool rgba() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setRgba()" href="qglformat.html#setRgba" type="function">setRgba()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setRgba" fullname="QGLFormat::setRgba" href="qglformat.html#setRgba" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="157" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setRgba(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="620" column="4">
+                    <para>If <argument>enable</argument> is true sets RGBA mode. If <argument>enable</argument> is false sets color index mode.</para>
+                    <para>The default color mode is RGBA.</para>
+                    <para>RGBA is the preferred mode for most OpenGL applications. In RGBA color mode you specify colors as red + green + blue + alpha quadruplets.</para>
+                    <para>In color index mode you specify an index into a color lookup table.</para>
+                    <see-also>
+                        <link raw="rgba()" href="qglformat.html#rgba" type="function">rgba()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="alpha" fullname="QGLFormat::alpha" href="qglformat.html#alpha" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="158" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool alpha() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setAlpha()" href="qglformat.html#setAlpha" type="function">setAlpha()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAlpha" fullname="QGLFormat::setAlpha" href="qglformat.html#setAlpha" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="159" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setAlpha(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="651" column="4">
+                    <para>If <argument>enable</argument> is true enables the alpha buffer; otherwise disables the alpha buffer.</para>
+                    <para>The alpha buffer is disabled by default.</para>
+                    <para>The alpha buffer is typically used for implementing transparency or translucency. The A in RGBA specifies the transparency of a pixel.</para>
+                    <see-also>
+                        <link raw="alpha()" href="qglformat.html#alpha" type="function">alpha()</link>
+                        <link raw="setAlphaBufferSize()" href="qglformat.html#setAlphaBufferSize" type="function">setAlphaBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="accum" fullname="QGLFormat::accum" href="qglformat.html#accum" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="160" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool accum() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setAccum()" href="qglformat.html#setAccum" type="function">setAccum()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAccum" fullname="QGLFormat::setAccum" href="qglformat.html#setAccum" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="161" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setAccum(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="679" column="4">
+                    <para>If <argument>enable</argument> is true enables the accumulation buffer; otherwise disables the accumulation buffer.</para>
+                    <para>The accumulation buffer is disabled by default.</para>
+                    <para>The accumulation buffer is used to create blur effects and multiple exposures.</para>
+                    <see-also>
+                        <link raw="accum()" href="qglformat.html#accum" type="function">accum()</link>
+                        <link raw="setAccumBufferSize()" href="qglformat.html#setAccumBufferSize" type="function">setAccumBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="stencil" fullname="QGLFormat::stencil" href="qglformat.html#stencil" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="162" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool stencil() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setStencil()" href="qglformat.html#setStencil" type="function">setStencil()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setStencil" fullname="QGLFormat::setStencil" href="qglformat.html#setStencil" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="163" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setStencil(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="706" column="4">
+                    <para>If <argument>enable</argument> is true enables the stencil buffer; otherwise disables the stencil buffer.</para>
+                    <para>The stencil buffer is enabled by default.</para>
+                    <para>The stencil buffer masks certain parts of the drawing area so that masked parts are not drawn on.</para>
+                    <see-also>
+                        <link raw="stencil()" href="qglformat.html#stencil" type="function">stencil()</link>
+                        <link raw="setStencilBufferSize()" href="qglformat.html#setStencilBufferSize" type="function">setStencilBufferSize()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="stereo" fullname="QGLFormat::stereo" href="qglformat.html#stereo" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="164" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool stereo() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setStereo()" href="qglformat.html#setStereo" type="function">setStereo()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setStereo" fullname="QGLFormat::setStereo" href="qglformat.html#setStereo" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="165" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setStereo(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="733" column="4">
+                    <para>If <argument>enable</argument> is true enables stereo buffering; otherwise disables stereo buffering.</para>
+                    <para>Stereo buffering is disabled by default.</para>
+                    <para>Stereo buffering provides extra color buffers to generate left-eye and right-eye images.</para>
+                    <see-also>
+                        <link raw="stereo()" href="qglformat.html#stereo" type="function">stereo()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="directRendering" fullname="QGLFormat::directRendering" href="qglformat.html#directRendering" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="166" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool directRendering() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setDirectRendering()" href="qglformat.html#setDirectRendering" type="function">setDirectRendering()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setDirectRendering" fullname="QGLFormat::setDirectRendering" href="qglformat.html#setDirectRendering" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="167" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setDirectRendering(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="762" column="4">
+                    <para>If <argument>enable</argument> is true enables direct rendering; otherwise disables direct rendering.</para>
+                    <para>Direct rendering is enabled by default.</para>
+                    <para>Enabling this option will make OpenGL bypass the underlying window system and render directly from hardware to the screen, if this is supported by the system.</para>
+                    <see-also>
+                        <link raw="directRendering()" href="qglformat.html#directRendering" type="function">directRendering()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasOverlay" fullname="QGLFormat::hasOverlay" href="qglformat.html#hasOverlay" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="168" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasOverlay() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setOverlay" fullname="QGLFormat::setOverlay" href="qglformat.html#setOverlay" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="169" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setOverlay(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="877" column="4">
+                    <para>If <argument>enable</argument> is true enables an overlay plane; otherwise disables the overlay plane.</para>
+                    <para>Enabling the overlay plane will cause <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link> to create an additional context in an overlay plane. See the <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link> documentation for further information.</para>
+                    <see-also>
+                        <link raw="hasOverlay()" href="qglformat.html#hasOverlay" type="function">hasOverlay()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="plane" fullname="QGLFormat::plane" href="qglformat.html#plane" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="171" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int plane() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="893" column="4">
+                    <para>Returns the plane of this format. The default for normal formats is 0, which means the normal plane. The default for overlay formats is 1, which is the first overlay plane.</para>
+                    <see-also>
+                        <link raw="setPlane()" href="qglformat.html#setPlane" type="function">setPlane()</link>
+                        <link raw="defaultOverlayFormat()" href="qglformat.html#defaultOverlayFormat" type="function">defaultOverlayFormat()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPlane" fullname="QGLFormat::setPlane" href="qglformat.html#setPlane" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="172" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setPlane(int plane)">
+                <parameter type="int" name="plane" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="905" column="4">
+                    <para>Sets the requested plane to <argument>plane</argument>. 0 is the normal plane, 1 is the first overlay plane, 2 is the second overlay plane, etc.; -1, -2, etc. are underlay planes.</para>
+                    <para>Note that in contrast to other format specifications, the plane specifications will be matched exactly. This means that if you specify a plane that the underlying OpenGL system cannot provide, an <link raw="QGLWidget::isValid()" href="qglwidget.html#isValid" type="function">invalid</link> <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link> will be created.</para>
+                    <see-also>
+                        <link raw="plane()" href="qglformat.html#plane" type="function">plane()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setOption" fullname="QGLFormat::setOption" href="qglformat.html#setOption" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="174" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setOption(QGL::FormatOptions opt)">
+                <parameter type="QGL::FormatOptions" name="opt" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="924" column="4">
+                    <para>Sets the format option to <argument>opt</argument>.</para>
+                    <see-also>
+                        <link raw="testOption()" href="qglformat.html#testOption" type="function">testOption()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="testOption" fullname="QGLFormat::testOption" href="qglformat.html#testOption" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="175" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool testOption(QGL::FormatOptions opt) const">
+                <parameter type="QGL::FormatOptions" name="opt" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="941" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if format option <argument>opt</argument> is set; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <see-also>
+                        <link raw="setOption()" href="qglformat.html#setOption" type="function">setOption()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="defaultFormat" fullname="QGLFormat::defaultFormat" href="qglformat.html#defaultFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="177" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QGLFormat" signature="QGLFormat defaultFormat()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1516" column="4">
+                    <para>Returns the default <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> for the application. All <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link> objects that are created use this format unless another format is specified, e.g. when they are constructed.</para>
+                    <para>If no special default format has been set using <link raw="setDefaultFormat()" href="qglformat.html#setDefaultFormat" type="function">setDefaultFormat()</link>, the default format is the same as that created with <link raw="QGLFormat()" href="qglformat.html#QGLFormat" type="function">QGLFormat()</link>.</para>
+                    <see-also>
+                        <link raw="setDefaultFormat()" href="qglformat.html#setDefaultFormat" type="function">setDefaultFormat()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setDefaultFormat" fullname="QGLFormat::setDefaultFormat" href="qglformat.html#setDefaultFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="178" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setDefaultFormat(const QGLFormat &amp;f)">
+                <parameter type="const QGLFormat &amp;" name="f" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1533" column="4">
+                    <para>Sets a new default <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> for the application to <argument>f</argument>. For example, to set single buffering as the default instead of double buffering, your main() might contain code like this:</para>
+                    <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="4"/>
+                    <see-also>
+                        <link raw="defaultFormat()" href="qglformat.html#defaultFormat" type="function">defaultFormat()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="defaultOverlayFormat" fullname="QGLFormat::defaultOverlayFormat" href="qglformat.html#defaultOverlayFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="180" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QGLFormat" signature="QGLFormat defaultOverlayFormat()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1548" column="4">
+                    <para>Returns the default <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> for overlay contexts.</para>
+                    <para>The default overlay format is:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <link raw="setDoubleBuffer()" href="qglformat.html#setDoubleBuffer" type="function">Double buffer:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setDepth()" href="qglformat.html#setDepth" type="function">Depth buffer:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setRgba()" href="qglformat.html#setRgba" type="function">RGBA:</link> Disabled (i.e., color index enabled).</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setAlpha()" href="qglformat.html#setAlpha" type="function">Alpha channel:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setAccum()" href="qglformat.html#setAccum" type="function">Accumulator buffer:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setStencil()" href="qglformat.html#setStencil" type="function">Stencil buffer:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setStereo()" href="qglformat.html#setStereo" type="function">Stereo:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setDirectRendering()" href="qglformat.html#setDirectRendering" type="function">Direct rendering:</link> Enabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setOverlay()" href="qglformat.html#setOverlay" type="function">Overlay:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setSampleBuffers()" href="qglformat.html#setSampleBuffers" type="function">Multisample buffers:</link> Disabled.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="setPlane()" href="qglformat.html#setPlane" type="function">Plane:</link> 1 (i.e., first overlay plane).</para>
+                        </item>
+                    </list>
+                    <see-also>
+                        <link raw="setDefaultOverlayFormat()" href="qglformat.html#setDefaultOverlayFormat" type="function">setDefaultOverlayFormat()</link>
+                        <link raw="setDefaultFormat()" href="qglformat.html#setDefaultFormat" type="function">setDefaultFormat()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setDefaultOverlayFormat" fullname="QGLFormat::setDefaultOverlayFormat" href="qglformat.html#setDefaultOverlayFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="181" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setDefaultOverlayFormat(const QGLFormat &amp;f)">
+                <parameter type="const QGLFormat &amp;" name="f" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1574" column="4">
+                    <para>Sets a new default <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> for overlay contexts to <argument>f</argument>. This format is used whenever a <link raw="QGLWidget" href="qglwidget.html" type="class">QGLWidget</link> is created with a format that <link raw="hasOverlay()" href="qglformat.html#hasOverlay" type="function">hasOverlay()</link> enabled.</para>
+                    <para>For example, to get a double buffered overlay context (if available), use code like this:</para>
+                    <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="5"/>
+                    <para>As usual, you can find out after widget creation whether the underlying OpenGL system was able to provide the requested specification:</para>
+                    <snippet location="code/src_opengl_qgl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/opengl/doc/snippets/code/src_opengl_qgl.cpp" identifier="6"/>
+                    <see-also>
+                        <link raw="defaultOverlayFormat()" href="qglformat.html#defaultOverlayFormat" type="function">defaultOverlayFormat()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasOpenGL" fullname="QGLFormat::hasOpenGL" href="qglformat.html#hasOpenGL" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="183" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasOpenGL()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="hasOpenGLOverlays" fullname="QGLFormat::hasOpenGLOverlays" href="qglformat.html#hasOpenGLOverlays" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="184" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasOpenGLOverlays()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setVersion" fullname="QGLFormat::setVersion" href="qglformat.html#setVersion" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="186" since="4.7" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setVersion(int major, int minor)">
+                <parameter type="int" name="major" default=""/>
+                <parameter type="int" name="minor" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1148" column="4">
+                    <para>Set the OpenGL version to the <argument>major</argument> and <argument>minor</argument> numbers. If a context compatible with the requested OpenGL version cannot be created, a context compatible with version 1.x is created instead.</para>
+                    <see-also>
+                        <link raw="majorVersion()" href="qglformat.html#majorVersion" type="function">majorVersion()</link>
+                        <link raw="minorVersion()" href="qglformat.html#minorVersion" type="function">minorVersion()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="majorVersion" fullname="QGLFormat::majorVersion" href="qglformat.html#majorVersion" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="187" since="4.7" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int majorVersion() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1168" column="4">
+                    <para>Returns the OpenGL major version.</para>
+                    <see-also>
+                        <link raw="setVersion()" href="qglformat.html#setVersion" type="function">setVersion()</link>
+                        <link raw="minorVersion()" href="qglformat.html#minorVersion" type="function">minorVersion()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="minorVersion" fullname="QGLFormat::minorVersion" href="qglformat.html#minorVersion" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="188" since="4.7" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int minorVersion() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1180" column="4">
+                    <para>Returns the OpenGL minor version.</para>
+                    <see-also>
+                        <link raw="setVersion()" href="qglformat.html#setVersion" type="function">setVersion()</link>
+                        <link raw="majorVersion()" href="qglformat.html#majorVersion" type="function">majorVersion()</link>
+                    </see-also>
+                </description>
+            </function>
+            <enum threadsafety="unspecified" name="OpenGLContextProfile" fullname="QGLFormat::OpenGLContextProfile" href="qglformat.html#OpenGLContextProfile-enum" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="190" since="4.7">
+                <value name="NoProfile" value="0"/>
+                <value name="CoreProfile" value="1"/>
+                <value name="CompatibilityProfile" value="2"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1192" column="4">
+                    <para>This enum describes the OpenGL context profiles that can be specified for contexts implementing OpenGL version 3.2 or higher. These profiles are different from OpenGL ES profiles.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QGLFormat::NoProfile</term>NoProfile</definition>
+                        <item>
+                            <para>OpenGL version is lower than 3.2.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::CoreProfile</term>CoreProfile</definition>
+                        <item>
+                            <para>Functionality deprecated in OpenGL version 3.0 is not available.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::CompatibilityProfile</term>CompatibilityProfile</definition>
+                        <item>
+                            <para>Functionality from earlier OpenGL versions is available.</para>
+                        </item>
+                    </list>
+                </description>
+            </enum>
+            <function threadsafety="unspecified" name="setProfile" fullname="QGLFormat::setProfile" href="qglformat.html#setProfile" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="196" since="4.7" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setProfile(QGLFormat::OpenGLContextProfile profile)">
+                <parameter type="QGLFormat::OpenGLContextProfile" name="profile" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1205" column="4">
+                    <para>Set the OpenGL context profile to <argument>profile</argument>. The <argument>profile</argument> is ignored if the requested OpenGL version is less than 3.2.</para>
+                    <see-also>
+                        <link raw="profile()" href="qglformat.html#profile" type="function">profile()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="profile" fullname="QGLFormat::profile" href="qglformat.html#profile" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="197" since="4.7" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QGLFormat::OpenGLContextProfile" signature="QGLFormat::OpenGLContextProfile profile() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1219" column="4">
+                    <para>Returns the OpenGL context profile.</para>
+                    <see-also>
+                        <link raw="setProfile()" href="qglformat.html#setProfile" type="function">setProfile()</link>
+                    </see-also>
+                </description>
+            </function>
+            <enum threadsafety="unspecified" name="OpenGLVersionFlag" fullname="QGLFormat::OpenGLVersionFlag" href="qglformat.html#OpenGLVersionFlag-enum" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="199" since="4.2" typedef="QGLFormat::OpenGLVersionFlags">
+                <value name="OpenGL_Version_None" value="0x00000000"/>
+                <value name="OpenGL_Version_1_1" value="0x00000001"/>
+                <value name="OpenGL_Version_1_2" value="0x00000002"/>
+                <value name="OpenGL_Version_1_3" value="0x00000004"/>
+                <value name="OpenGL_Version_1_4" value="0x00000008"/>
+                <value name="OpenGL_Version_1_5" value="0x00000010"/>
+                <value name="OpenGL_Version_2_0" value="0x00000020"/>
+                <value name="OpenGL_Version_2_1" value="0x00000040"/>
+                <value name="OpenGL_ES_Common_Version_1_0" value="0x00000080"/>
+                <value name="OpenGL_ES_CommonLite_Version_1_0" value="0x00000100"/>
+                <value name="OpenGL_ES_Common_Version_1_1" value="0x00000200"/>
+                <value name="OpenGL_ES_CommonLite_Version_1_1" value="0x00000400"/>
+                <value name="OpenGL_ES_Version_2_0" value="0x00000800"/>
+                <value name="OpenGL_Version_3_0" value="0x00001000"/>
+                <value name="OpenGL_Version_3_1" value="0x00002000"/>
+                <value name="OpenGL_Version_3_2" value="0x00004000"/>
+                <value name="OpenGL_Version_3_3" value="0x00008000"/>
+                <value name="OpenGL_Version_4_0" value="0x00010000"/>
+                <value name="OpenGL_Version_4_1" value="0x00020000"/>
+                <value name="OpenGL_Version_4_2" value="0x00040000"/>
+                <value name="OpenGL_Version_4_3" value="0x00080000"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1399" column="4">
+                    <para>This enum describes the various OpenGL versions that are recognized by Qt. Use the <link raw="QGLFormat::openGLVersionFlags()" href="qglformat.html#openGLVersionFlags" type="function">QGLFormat::openGLVersionFlags()</link> function to identify which versions that are supported at runtime.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_None</term>OpenGL_Version_None</definition>
+                        <item>
+                            <para>If no OpenGL is present or if no OpenGL context is current.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_1_1</term>OpenGL_Version_1_1</definition>
+                        <item>
+                            <para>OpenGL version 1.1 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_1_2</term>OpenGL_Version_1_2</definition>
+                        <item>
+                            <para>OpenGL version 1.2 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_1_3</term>OpenGL_Version_1_3</definition>
+                        <item>
+                            <para>OpenGL version 1.3 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_1_4</term>OpenGL_Version_1_4</definition>
+                        <item>
+                            <para>OpenGL version 1.4 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_1_5</term>OpenGL_Version_1_5</definition>
+                        <item>
+                            <para>OpenGL version 1.5 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_2_0</term>OpenGL_Version_2_0</definition>
+                        <item>
+                            <para>OpenGL version 2.0 or higher is present. Note that version 2.0 supports all the functionality of version 1.5.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_2_1</term>OpenGL_Version_2_1</definition>
+                        <item>
+                            <para>OpenGL version 2.1 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_3_0</term>OpenGL_Version_3_0</definition>
+                        <item>
+                            <para>OpenGL version 3.0 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_3_1</term>OpenGL_Version_3_1</definition>
+                        <item>
+                            <para>OpenGL version 3.1 or higher is present. Note that OpenGL version 3.1 or higher does not necessarily support all the features of version 3.0 and lower.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_3_2</term>OpenGL_Version_3_2</definition>
+                        <item>
+                            <para>OpenGL version 3.2 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_3_3</term>OpenGL_Version_3_3</definition>
+                        <item>
+                            <para>OpenGL version 3.3 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_4_0</term>OpenGL_Version_4_0</definition>
+                        <item>
+                            <para>OpenGL version 4.0 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_4_1</term>OpenGL_Version_4_1</definition>
+                        <item>
+                            <para>OpenGL version 4.1 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_4_2</term>OpenGL_Version_4_2</definition>
+                        <item>
+                            <para>OpenGL version 4.2 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_Version_4_3</term>OpenGL_Version_4_3</definition>
+                        <item>
+                            <para>OpenGL version 4.3 or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_ES_CommonLite_Version_1_0</term>OpenGL_ES_CommonLite_Version_1_0</definition>
+                        <item>
+                            <para>OpenGL ES version 1.0 Common Lite or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_ES_Common_Version_1_0</term>OpenGL_ES_Common_Version_1_0</definition>
+                        <item>
+                            <para>OpenGL ES version 1.0 Common or higher is present. The Common profile supports all the features of Common Lite.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_ES_CommonLite_Version_1_1</term>OpenGL_ES_CommonLite_Version_1_1</definition>
+                        <item>
+                            <para>OpenGL ES version 1.1 Common Lite or higher is present.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_ES_Common_Version_1_1</term>OpenGL_ES_Common_Version_1_1</definition>
+                        <item>
+                            <para>OpenGL ES version 1.1 Common or higher is present. The Common profile supports all the features of Common Lite.</para>
+                        </item>
+                        <definition>
+                            <term>QGLFormat::OpenGL_ES_Version_2_0</term>OpenGL_ES_Version_2_0</definition>
+                        <item>
+                            <para>OpenGL ES version 2.0 or higher is present. Note that OpenGL ES version 2.0 does not support all the features of OpenGL ES 1.x. So if  is returned, none of the ES 1.x flags are returned.</para>
+                        </item>
+                    </list>
+                    <para>See also http://www.opengl.org for more information about the different revisions of OpenGL.</para>
+                    <see-also>
+                        <link raw="openGLVersionFlags()" href="qglformat.html#openGLVersionFlags" type="function">openGLVersionFlags()</link>
+                    </see-also>
+                </description>
+            </enum>
+            <typedef threadsafety="unspecified" name="OpenGLVersionFlags" fullname="QGLFormat::OpenGLVersionFlags" href="qglformat.html#OpenGLVersionFlag-enum" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="222" enum="QGLFormat::OpenGLVersionFlag">
+                <description path="" line="0" column="0"/>
+            </typedef>
+            <function threadsafety="unspecified" name="openGLVersionFlags" fullname="QGLFormat::openGLVersionFlags" href="qglformat.html#openGLVersionFlags" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="224" since="4.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QGLFormat::OpenGLVersionFlags" signature="QGLFormat::OpenGLVersionFlags openGLVersionFlags()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1462" column="4">
+                    <para>Identifies, at runtime, which OpenGL versions that are supported by the current platform.</para>
+                    <para>Note that if OpenGL version 1.5 is supported, its predecessors (i.e., version 1.4 and lower) are also supported. To identify the support of a particular feature, like multi texturing, test for the version in which the feature was first introduced (i.e., version 1.3 in the case of multi texturing) to adapt to the largest possible group of runtime platforms.</para>
+                    <para>This function needs a valid current OpenGL context to work; otherwise it will return <link raw="OpenGL_Version_None" href="qglformat.html#OpenGLVersionFlag-enum" type="enum" enum="QGLFormat::OpenGLVersionFlag">OpenGL_Version_None</link>.</para>
+                    <see-also>
+                        <link raw="hasOpenGL()" href="qglformat.html#hasOpenGL" type="function">hasOpenGL()</link>
+                        <link raw="hasOpenGLOverlays()" href="qglformat.html#hasOpenGLOverlays" type="function">hasOpenGLOverlays()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromSurfaceFormat" fullname="QGLFormat::fromSurfaceFormat" href="qglformat.html#fromSurfaceFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="226" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QGLFormat" signature="QGLFormat fromSurfaceFormat(const QSurfaceFormat &amp;format)">
+                <parameter type="const QSurfaceFormat &amp;" name="format" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="442" column="4">
+                    <para>Returns an OpenGL format for the window format specified by <argument>format</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toSurfaceFormat" fullname="QGLFormat::toSurfaceFormat" href="qglformat.html#toSurfaceFormat" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="227" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QSurfaceFormat" signature="QSurfaceFormat toSurfaceFormat(const QGLFormat &amp;format)">
+                <parameter type="const QGLFormat &amp;" name="format" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="474" column="4">
+                    <para>Returns a window format for the OpenGL format specified by <argument>format</argument>.</para>
+                </description>
+            </function>
+            <variable threadsafety="unspecified" name="d" fullname="QGLFormat::d" href="qglformat.html#d-var" status="active" access="private" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="229" type="QGLFormatPrivate *" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="detach" fullname="QGLFormat::detach" href="qglformat.html#detach" status="internal" access="private" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="231" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void detach()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="395" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="operator==" href="qglformat.html#operator-eq-eq" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="233" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" relates="QGLFormat" type="bool" signature="bool operator==(const QGLFormat &amp;a, const QGLFormat &amp;b)">
+                <parameter type="const QGLFormat &amp;" name="a" default=""/>
+                <parameter type="const QGLFormat &amp;" name="b" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1604" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if all the options of the two <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> objects <argument>a</argument> and <argument>b</argument> are equal; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator!=" href="qglformat.html#operator-not-eq" status="active" access="public" location="qgl.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtOpenGL/qgl.h" lineno="234" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" relates="QGLFormat" type="bool" signature="bool operator!=(const QGLFormat &amp;a, const QGLFormat &amp;b)">
+                <parameter type="const QGLFormat &amp;" name="a" default=""/>
+                <parameter type="const QGLFormat &amp;" name="b" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/opengl/qgl.cpp" line="1657" column="4">
+                    <para>Returns <teletype type="highlighted">false</teletype> if all the options of the two <link raw="QGLFormat" href="qglformat.html" type="class">QGLFormat</link> objects <argument>a</argument> and <argument>b</argument> are equal; otherwise returns <teletype type="highlighted">true</teletype>.</para>
+                </description>
+            </function>
+        </class>
+    </document>
+</WebXML>

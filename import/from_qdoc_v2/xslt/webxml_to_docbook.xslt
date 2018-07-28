@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:saxon="http://saxon.sf.net/"
+  xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://dourouc05.github.io"
   exclude-result-prefixes="xsl xs html saxon"
   version="3.0">
   
@@ -239,7 +239,7 @@
           <!-- @name:      backingStore -->
           <!-- @fullname:  QWidget::backingStore -->
           <!-- @signature: QBackingStore * backingStore() const -->
-          <xsl:variable name="sanitisedName" select="replace(replace(replace(@name, '\+', '\\+'), '\[', '\\['), '\]', '\\]')" as="xs:string"/>
+          <xsl:variable name="sanitisedName" select="replace(replace(replace(replace(@name, '\+', '\\+'), '\[', '\\['), '\]', '\\]'), '\|', '\\|')" as="xs:string"/>
           <xsl:value-of select="
             if(contains(@fullname, '::')) then concat(@type,' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature "/>
         </db:title>
@@ -488,9 +488,14 @@
   
   <!-- Deal with concepts. -->
   <xsl:template mode="content" match="page">
+    <xsl:apply-templates mode="content_generic" select="description"/>
+  </xsl:template>
+
+  <!-- Deal with groups of examples. -->
+  <xsl:template mode="content" match="group">
     <xsl:apply-templates mode="content_generic"/>
   </xsl:template>
-  
+
   <!-- Generic content handling (paragraphs, sections, etc.) -->
   <xsl:template mode="content_generic" match="brief">
     <db:para>
@@ -500,6 +505,10 @@
   
   <xsl:template mode="content_generic" match="target">
     <!-- IDs are already transformed into xml:id. -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="raw">
+    <!-- Must skip, no way to encode raw HTML here. -->
   </xsl:template>
   
   <xsl:template mode="content_generic" match="contents | keyword">
@@ -551,9 +560,15 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="para">
+    <xsl:variable name="targetIdSub" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
+    <xsl:variable name="targetId" select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''" as="xs:string?"/>
+    
     <xsl:choose>
       <xsl:when test="child::node()[1]/text()='Note:'">
         <db:note>
+          <xsl:if test="not($targetId='')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
           <db:para>
             <xsl:apply-templates mode="content_generic"/>
           </db:para>
@@ -561,6 +576,9 @@
       </xsl:when>
       <xsl:when test="child::node()[1]/text()='Important:'">
         <db:note>
+          <xsl:if test="not($targetId='')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
           <db:para>
             <xsl:apply-templates mode="content_generic"/>
           </db:para>
@@ -568,16 +586,61 @@
       </xsl:when>
       <xsl:otherwise>
         <db:para>
+          <xsl:if test="not($targetId='')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
           <xsl:apply-templates mode="content_generic"/>
         </db:para>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="snippet">
+  <xsl:template mode="content_generic" match="legalese">
+    <db:note>
+      <xsl:apply-templates mode="content_generic"/>
+    </db:note>
+  </xsl:template>
+  
+  <xsl:function name="tc:parse-snippet">
+    <xsl:param name="filename" as="xs:string"/>
+    <xsl:param name="identifier" as="xs:string"/>
+    
+    <xsl:variable name="fileContents" select="unparsed-text(concat('file:///', $filename))"/>
+    <xsl:variable name="onlyInterestingSnippet" select="tokenize($fileContents, concat('//! \[', $identifier, '\]'))[2]"/>
+    <xsl:variable name="slicedSnippet" select="tokenize($onlyInterestingSnippet, '\n')"/>
+    <xsl:variable name="filteredSlicedSnippet" select="$slicedSnippet[not(starts-with(., '//! '))]"/>
+    <xsl:variable name="filteredSnippet" select="string-join($filteredSlicedSnippet, codepoints-to-string(10))"/>
+    
+    <xsl:value-of select="replace($filteredSnippet, codepoints-to-string(13), '')"/>
+  </xsl:function>
+  <xsl:function name="tc:gather-snippet">
+    <xsl:param name="snippetNode" as="node()"/>
+    
+    <!-- Gather the whole snippet: parts of text and dots. -->
+    <!-- Do it by recursion: treat the current node, recurse on the next one if it still belongs to the snippet. -->
+    <xsl:variable name="recurse" select="if ($snippetNode/following-sibling::node()[1]/self::snippet or $snippetNode/following-sibling::node()[1]/self::dots) then tc:gather-snippet($snippetNode/following-sibling::node()[1]) else ''" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="$snippetNode/self::snippet">
+        <xsl:value-of select="concat(tc:parse-snippet($snippetNode/@path, $snippetNode/@identifier), $recurse)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="concat(string-join((for $i in 1 to $snippetNode/@indent return ' ')), $recurse)"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
+  <xsl:template mode="content_generic" match="snippet[not(preceding-sibling::node()[1]/self::snippet or preceding-sibling::node()[1]/self::dots)]">
     <db:programlisting>
-      <xsl:value-of select="unparsed-text(concat('file:///', @path))"/>
+      <xsl:value-of select="tc:gather-snippet(.)"/>
     </db:programlisting>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="snippet[preceding-sibling::node()[1]/self::snippet or preceding-sibling::node()[1]/self::dots]">
+    <!-- Should be handled with the rest of the snippet. -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="dots">
+    <!-- Should be handled with snippets. -->
   </xsl:template>
   
   <xsl:template mode="content_generic" match="code">
@@ -711,18 +774,30 @@
   </xsl:template>
   
   <xsl:template mode="content_generic_table" match="item | heading">
+    <xsl:variable name="targetId" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
+    
     <xsl:choose>
       <xsl:when test="parent::header">
         <db:th>
+          <xsl:if test="not($targetId='')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
           <xsl:apply-templates mode="content_generic"/>
         </db:th>
       </xsl:when>
       <xsl:otherwise>
         <db:td>
+          <xsl:if test="not($targetId='')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
           <xsl:apply-templates mode="content_generic"/>
         </db:td>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic_table" match="target">
+    <!-- Ignore: xml:id is inserted in the right cell. -->
   </xsl:template>
   
   <xsl:template mode="content_generic" match="link">
@@ -768,6 +843,18 @@
     <db:emphasis role="underline">
       <xsl:apply-templates mode="content_generic"/>
     </db:emphasis>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="superscript">
+    <db:superscript>
+      <xsl:apply-templates mode="content_generic"/>
+    </db:superscript>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="subscript">
+    <db:subscript>
+      <xsl:apply-templates mode="content_generic"/>
+    </db:subscript>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="argument">

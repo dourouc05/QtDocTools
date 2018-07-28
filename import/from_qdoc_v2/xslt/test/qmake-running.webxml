@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="qmake-running.html" href="qmake-running.html" status="active" location="qmake-manual.qdoc" filepath="C:/Qt/5.11.1/Src/qtbase/qmake/doc/src/qmake-manual.qdoc" lineno="477" subtype="page" title="Running qmake" fulltitle="Running qmake" subtitle="" module="QMake">
+            <target name="makefilemode" title="MakefileMode"/>
+            <target name="projectmode" title="ProjectMode"/>
+            <contents name="command-syntax" title="Command Syntax" level="1"/>
+            <contents name="operating-modes" title="Operating Modes" level="1"/>
+            <contents name="files" title="Files" level="1"/>
+            <contents name="general-options" title="General Options" level="1"/>
+            <contents name="makefile-mode-options" title="Makefile Mode Options" level="1"/>
+            <contents name="project-mode-options" title="Project Mode Options" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qtbase/qmake/doc/src/qmake-manual.qdoc" line="477" column="4">
+                <relation href="qmake-platform-notes.html" type="page" meta="next" description="Platform Notes"/>
+                <relation href="qmake-common-projects.html" type="page" meta="previous" description="Building Common Project Types"/>
+                <relation href="qmake-manual.html" type="page" meta="contents" description="qmake Manual"/>
+                <para>The behavior of qmake can be customized when it is run by specifying various options on the command line. These allow the build process to be fine-tuned, provide useful diagnostic information, and can be used to specify the target platform for your project.</para>
+                <section id="command-syntax">
+                    <heading level="1">Command Syntax</heading>
+                    <para>The syntax used to run qmake takes the following simple form:</para>
+                    <snippet location="code/doc_src_qmake-manual.pro" path="C:/Qt/5.11.1/Src/qtbase/qmake/doc/snippets/code/doc_src_qmake-manual.pro" identifier="8"/>
+                </section>
+                <section id="operating-modes">
+                    <heading level="1">Operating Modes</heading>
+                    <para>qmake supports two different modes of operation. In the default mode, qmake uses the information in a project file to generate a Makefile, but it is also possible to use qmake to generate project files. If you want to explicitly set the mode, you must specify it before all other options. The <teletype type="highlighted">mode</teletype> can be either of the following two values:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-makefile</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake output will be a Makefile.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-project</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake output will be a project file. <raw format="HTML">&lt;br /&gt;</raw></para>
+                            <para>
+                                <bold>Note:</bold> It is likely that the created file will need to be edited. For example, adding the <teletype type="highlighted">QT</teletype> variable to suit what modules are required for the project.</para>
+                        </item>
+                    </list>
+                    <para>You can use the <teletype type="highlighted">options</teletype> to specify both general and mode-specific settings. Options that only apply to the Makefile mode are described in the <link raw="#MakefileMode" href="qmake-running.html#makefilemode" type="page" page="Running qmake">Makefile Mode Options</link> section, whereas options that influence the creation of project files are described in the <link raw="#ProjectMode" href="qmake-running.html#projectmode" type="page" page="Running qmake">Project Mode Options</link> section.</para>
+                </section>
+                <section id="files">
+                    <heading level="1">Files</heading>
+                    <para>The <teletype type="highlighted">files</teletype> argument represents a list of one or more project files, separated by spaces.</para>
+                </section>
+                <section id="general-options">
+                    <heading level="1">General Options</heading>
+                    <para>A wide range of options can be specified on the command line to qmake in order to customize the build process, and to override default settings for your platform. The following basic options provide help on using qmake, specify where qmake writes the output file, and control the level of debugging information that will be written to the console:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-help</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will go over these features and give some useful help.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-o file</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake output will be directed to <teletype type="highlighted">file</teletype>. If this option is not specified, qmake will try to use a suitable file name for its output, depending on the mode it is running in.<raw format="HTML">&lt;br /&gt;</raw> If '-' is specified, output is directed to stdout.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-d</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will output debugging information. Adding <teletype type="highlighted">-d</teletype> more than once increases verbosity.</para>
+                        </item>
+                    </list>
+                    <para>The template used for the project is usually specified by the <link raw="TEMPLATE" href="qmake-variable-reference.html#template" type="page" page="Variables">TEMPLATE</link> variable in the project file. You can override or modify this by using the following options:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-t tmpl</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will override any set <teletype type="highlighted">TEMPLATE</teletype> variables with <teletype type="highlighted">tmpl</teletype>, but only <italic>after</italic> the .pro file has been processed.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-tp prefix</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will add <teletype type="highlighted">prefix</teletype> to the <teletype type="highlighted">TEMPLATE</teletype> variable.</para>
+                        </item>
+                    </list>
+                    <para>The level of warning information can be fine-tuned to help you find problems in your project file:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-Wall</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will report all known warnings.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-Wnone</teletype> <raw format="HTML">&lt;br /&gt;</raw> No warning information will be generated by qmake.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-Wparser</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will only generate parser warnings. This will alert you to common pitfalls and potential problems in the parsing of your project files.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-Wlogic</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will warn of common pitfalls and potential problems in your project file. For example, qmake will report multiple occurrences of files in lists and missing files.</para>
+                        </item>
+                    </list>
+                    <target name="makefilemode"/>
+                </section>
+                <section id="makefile-mode-options">
+                    <heading level="1">Makefile Mode Options</heading>
+                    <snippet location="code/doc_src_qmake-manual.pro" path="C:/Qt/5.11.1/Src/qtbase/qmake/doc/snippets/code/doc_src_qmake-manual.pro" identifier="9"/>
+                    <para>In Makefile mode, qmake will generate a Makefile that is used to build the project. Additionally, the following options may be used in this mode to influence the way the project file is generated:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-after</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will process assignments given on the command line after the specified files.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-nocache</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will ignore the <teletype type="highlighted">.qmake.cache</teletype> file.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-nodepend</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will not generate any dependency information.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-cache file</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will use <teletype type="highlighted">file</teletype> as the cache file, ignoring any other .qmake.cache files found.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-spec spec</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will use <teletype type="highlighted">spec</teletype> as a path to platform and compiler information, and ignore the value of <link raw="QMAKESPEC" href="qmake-environment-reference.html#qmakespec" type="page" page="Configuring qmake">QMAKESPEC</link>.</para>
+                        </item>
+                    </list>
+                    <para>You may also pass qmake assignments on the command line. They are processed before all of the files specified. For example, the following command generates a Makefile from test.pro:</para>
+                    <snippet location="code/doc_src_qmake-manual.pro" path="C:/Qt/5.11.1/Src/qtbase/qmake/doc/snippets/code/doc_src_qmake-manual.pro" identifier="10"/>
+                    <para>However, some of the specified options can be omitted as they are default values:</para>
+                    <snippet location="code/doc_src_qmake-manual.pro" path="C:/Qt/5.11.1/Src/qtbase/qmake/doc/snippets/code/doc_src_qmake-manual.pro" identifier="11"/>
+                    <para>If you are certain you want your variables processed after the files specified, then you may pass the <teletype type="highlighted">-after</teletype> option. When this is specified, all assignments on the command line after the <teletype type="highlighted">-after</teletype> option will be postponed until after the specified files are parsed.</para>
+                    <target name="projectmode"/>
+                </section>
+                <section id="project-mode-options">
+                    <heading level="1">Project Mode Options</heading>
+                    <snippet location="code/doc_src_qmake-manual.pro" path="C:/Qt/5.11.1/Src/qtbase/qmake/doc/snippets/code/doc_src_qmake-manual.pro" identifier="12"/>
+                    <para>In project mode, qmake will generate a project file. Additionally, you may supply the following options in this mode:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-r</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will look through supplied directories recursively.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">-nopwd</teletype> <raw format="HTML">&lt;br /&gt;</raw> qmake will not look in your current working directory for source code. It will only use the specified <teletype type="highlighted">files</teletype>.</para>
+                        </item>
+                    </list>
+                    <para>In this mode, the <teletype type="highlighted">files</teletype> argument can be a list of files or directories. If a directory is specified, it will be included in the <link raw="DEPENDPATH" href="qmake-variable-reference.html#dependpath" type="page" page="Variables">DEPENDPATH</link> variable, and relevant code from there will be included in the generated project file. If a file is given, it will be appended to the correct variable, depending on its extension. For example, UI files are added to <link raw="FORMS" href="qmake-variable-reference.html#forms" type="page" page="Variables">FORMS</link>, and C++ files are added to <link raw="SOURCES" href="qmake-variable-reference.html#sources" type="page" page="Variables">SOURCES</link>.</para>
+                    <para>You may also pass assignments on the command line in this mode. When doing so, these assignments will be placed last in the generated project file.</para>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

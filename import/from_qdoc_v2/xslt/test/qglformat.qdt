@@ -1,0 +1,2960 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+   <db:info>
+      <db:title>QGLFormat</db:title>
+      <db:abstract>
+         <db:para>Specifies the display format of an OpenGL rendering context</db:para>
+      </db:abstract>
+   </db:info>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> class specifies the display format of an OpenGL rendering context.</db:para>
+      <db:para xml:id="">A display format has several characteristics:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setDoubleBuffer" xrefstyle="function" annotations="setDoubleBuffer()">Double or single buffering.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setDepth" xrefstyle="function" annotations="setDepth()">Depth buffer.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setRgba" xrefstyle="function" annotations="setRgba()">RGBA or color index mode.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setAlpha" xrefstyle="function" annotations="setAlpha()">Alpha channel.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setAccum" xrefstyle="function" annotations="setAccum()">Accumulation buffer.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setStencil" xrefstyle="function" annotations="setStencil()">Stencil buffer.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setStereo" xrefstyle="function" annotations="setStereo()">Stereo buffers.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setDirectRendering" xrefstyle="function" annotations="setDirectRendering()">Direct rendering.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setOverlay" xrefstyle="function" annotations="setOverlay()">Presence of an overlay.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setPlane" xrefstyle="function" annotations="setPlane()">Plane of an overlay.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para xml:id="">
+               <db:code><db:link xlink:href="qglformat.html#setSampleBuffers" xrefstyle="function" annotations="setSampleBuffers()">Multisample buffers.</db:link></db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para xml:id="">You can also specify preferred bit depths for the color buffer, depth buffer, alpha buffer, accumulation buffer and the stencil buffer with the functions: <db:code><db:link xlink:href="qglformat.html#setRedBufferSize" xrefstyle="function" annotations="setRedBufferSize()">setRedBufferSize()</db:link></db:code>, <db:code><db:link xlink:href="qglformat.html#setGreenBufferSize" xrefstyle="function" annotations="setGreenBufferSize()">setGreenBufferSize()</db:link></db:code>, <db:code><db:link xlink:href="qglformat.html#setBlueBufferSize" xrefstyle="function" annotations="setBlueBufferSize()">setBlueBufferSize()</db:link></db:code>, <db:code><db:link xlink:href="qglformat.html#setDepthBufferSize" xrefstyle="function" annotations="setDepthBufferSize()">setDepthBufferSize()</db:link></db:code>, <db:code><db:link xlink:href="qglformat.html#setAlphaBufferSize" xrefstyle="function" annotations="setAlphaBufferSize()">setAlphaBufferSize()</db:link></db:code>, <db:code><db:link xlink:href="qglformat.html#setAccumBufferSize" xrefstyle="function" annotations="setAccumBufferSize()">setAccumBufferSize()</db:link></db:code> and <db:code><db:link xlink:href="qglformat.html#setStencilBufferSize" xrefstyle="function" annotations="setStencilBufferSize()">setStencilBufferSize()</db:link></db:code>.</db:para>
+      <db:para xml:id="">Note that even if you specify that you prefer a 32 bit depth buffer (e.g. with <db:code><db:link xlink:href="qglformat.html#setDepthBufferSize" xrefstyle="function" annotations="setDepthBufferSize">setDepthBufferSize</db:link></db:code>(32)), the format that is chosen may not have a 32 bit depth buffer, even if there is a format available with a 32 bit depth buffer. The main reason for this is how the system dependant picking algorithms work on the different platforms, and some format options may have higher precedence than others.</db:para>
+      <db:para xml:id="">You create and tell a <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> object what rendering options you want from an OpenGL rendering context.</db:para>
+      <db:para xml:id="">OpenGL drivers or accelerated hardware may or may not support advanced features such as alpha channel or stereographic viewing. If you request some features that the driver/hardware does not provide when you create a <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code>, you will get a rendering context with the nearest subset of features.</db:para>
+      <db:para xml:id="">There are different ways to define the display characteristics of a rendering context. One is to create a <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> and make it the default for the entire application:</db:para>
+      <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+      <db:para xml:id="">Or you can specify the desired format when creating an object of your <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code> subclass:</db:para>
+      <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+      <db:para xml:id="">After the widget has been created, you can find out which of the requested features the system was able to provide:</db:para>
+      <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+      <db:note>
+         <db:para xml:id="">OpenGL is a trademark of Silicon Graphics, Inc. in the United States and other countries.</db:para>
+      </db:note>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:code><db:link xlink:href="qglcontext.html" xrefstyle="class" annotations="QGLContext">QGLContext</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Type Documentation</db:title>
+      <db:section>
+         <db:title>enum QGLFormat::OpenGLContextProfile, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QGLFormat::OpenGLContextProfile</db:enumname>
+            <db:enumsynopsisinfo role="since">4.7</db:enumsynopsisinfo>
+            <db:enumitem>
+               <db:enumidentifier>NoProfile</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>CoreProfile</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>CompatibilityProfile</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:typedefsynopsis>
+            <db:typedefname>QGLFormat::OpenGLVersionFlags</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para xml:id="">This enum describes the OpenGL context profiles that can be specified for contexts implementing OpenGL version 3.2 or higher. These profiles are different from OpenGL ES profiles.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QGLFormat::NoProfile</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version is lower than 3.2.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::CoreProfile</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para xml:id="">Functionality deprecated in OpenGL version 3.0 is not available.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::CompatibilityProfile</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para xml:id="">Functionality from earlier OpenGL versions is available.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>This enum was introduced or modified in Qt 4.7.</db:para>
+         <db:para>The <db:code>OpenGLVersionFlags</db:code> type is a typedef for <db:code>QFlags&lt;OpenGLContextProfile&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QGLFormat::OpenGLVersionFlag, flags QGLFormat::OpenGLVersionFlags</db:title>
+         <db:enumsynopsis>
+            <db:enumname>QGLFormat::OpenGLVersionFlag</db:enumname>
+            <db:enumsynopsisinfo role="since">4.2</db:enumsynopsisinfo>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_None</db:enumidentifier>
+               <db:enumvalue>0x00000000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_1_1</db:enumidentifier>
+               <db:enumvalue>0x00000001</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_1_2</db:enumidentifier>
+               <db:enumvalue>0x00000002</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_1_3</db:enumidentifier>
+               <db:enumvalue>0x00000004</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_1_4</db:enumidentifier>
+               <db:enumvalue>0x00000008</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_1_5</db:enumidentifier>
+               <db:enumvalue>0x00000010</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_2_0</db:enumidentifier>
+               <db:enumvalue>0x00000020</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_2_1</db:enumidentifier>
+               <db:enumvalue>0x00000040</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_ES_Common_Version_1_0</db:enumidentifier>
+               <db:enumvalue>0x00000080</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_ES_CommonLite_Version_1_0</db:enumidentifier>
+               <db:enumvalue>0x00000100</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_ES_Common_Version_1_1</db:enumidentifier>
+               <db:enumvalue>0x00000200</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_ES_CommonLite_Version_1_1</db:enumidentifier>
+               <db:enumvalue>0x00000400</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_ES_Version_2_0</db:enumidentifier>
+               <db:enumvalue>0x00000800</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_3_0</db:enumidentifier>
+               <db:enumvalue>0x00001000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_3_1</db:enumidentifier>
+               <db:enumvalue>0x00002000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_3_2</db:enumidentifier>
+               <db:enumvalue>0x00004000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_3_3</db:enumidentifier>
+               <db:enumvalue>0x00008000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_4_0</db:enumidentifier>
+               <db:enumvalue>0x00010000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_4_1</db:enumidentifier>
+               <db:enumvalue>0x00020000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_4_2</db:enumidentifier>
+               <db:enumvalue>0x00040000</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OpenGL_Version_4_3</db:enumidentifier>
+               <db:enumvalue>0x00080000</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:typedefsynopsis>
+            <db:typedefname>QGLFormat::OpenGLVersionFlags</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para xml:id="">This enum describes the various OpenGL versions that are recognized by Qt. Use the <db:code><db:link xlink:href="qglformat.html#openGLVersionFlags" xrefstyle="function" annotations="QGLFormat::openGLVersionFlags()">QGLFormat::openGLVersionFlags()</db:link></db:code> function to identify which versions that are supported at runtime.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_None</db:td>
+                  <db:td>0x00000000</db:td>
+                  <db:td>
+                     <db:para xml:id="">If no OpenGL is present or if no OpenGL context is current.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_1_1</db:td>
+                  <db:td>0x00000001</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 1.1 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_1_2</db:td>
+                  <db:td>0x00000002</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 1.2 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_1_3</db:td>
+                  <db:td>0x00000004</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 1.3 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_1_4</db:td>
+                  <db:td>0x00000008</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 1.4 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_1_5</db:td>
+                  <db:td>0x00000010</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 1.5 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_2_0</db:td>
+                  <db:td>0x00000020</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 2.0 or higher is present. Note that version 2.0 supports all the functionality of version 1.5.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_2_1</db:td>
+                  <db:td>0x00000040</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 2.1 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_3_0</db:td>
+                  <db:td>0x00001000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 3.0 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_3_1</db:td>
+                  <db:td>0x00002000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 3.1 or higher is present. Note that OpenGL version 3.1 or higher does not necessarily support all the features of version 3.0 and lower.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_3_2</db:td>
+                  <db:td>0x00004000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 3.2 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_3_3</db:td>
+                  <db:td>0x00008000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 3.3 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_4_0</db:td>
+                  <db:td>0x00010000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 4.0 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_4_1</db:td>
+                  <db:td>0x00020000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 4.1 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_4_2</db:td>
+                  <db:td>0x00040000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 4.2 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_Version_4_3</db:td>
+                  <db:td>0x00080000</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL version 4.3 or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_ES_CommonLite_Version_1_0</db:td>
+                  <db:td>0x00000100</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL ES version 1.0 Common Lite or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_ES_Common_Version_1_0</db:td>
+                  <db:td>0x00000080</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL ES version 1.0 Common or higher is present. The Common profile supports all the features of Common Lite.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_ES_CommonLite_Version_1_1</db:td>
+                  <db:td>0x00000400</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL ES version 1.1 Common Lite or higher is present.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_ES_Common_Version_1_1</db:td>
+                  <db:td>0x00000200</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL ES version 1.1 Common or higher is present. The Common profile supports all the features of Common Lite.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QGLFormat::OpenGL_ES_Version_2_0</db:td>
+                  <db:td>0x00000800</db:td>
+                  <db:td>
+                     <db:para xml:id="">OpenGL ES version 2.0 or higher is present. Note that OpenGL ES version 2.0 does not support all the features of OpenGL ES 1.x. So if  is returned, none of the ES 1.x flags are returned.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para xml:id="">See also http://www.opengl.org for more information about the different revisions of OpenGL.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#openGLVersionFlags" xrefstyle="function" annotations="openGLVersionFlags()">openGLVersionFlags()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This enum was introduced or modified in Qt 4.2.</db:para>
+         <db:para>The <db:code>OpenGLVersionFlags</db:code> type is a typedef for <db:code>QFlags&lt;OpenGLVersionFlag&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QGLFormat::QGLFormat()</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QGLFormat</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para xml:id="">Constructs a <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> object with the following default settings:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setDoubleBuffer" xrefstyle="function" annotations="setDoubleBuffer()">Double buffer:</db:link></db:code> Enabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setDepth" xrefstyle="function" annotations="setDepth()">Depth buffer:</db:link></db:code> Enabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setRgba" xrefstyle="function" annotations="setRgba()">RGBA:</db:link></db:code> Enabled (i.e., color index disabled).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setAlpha" xrefstyle="function" annotations="setAlpha()">Alpha channel:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setAccum" xrefstyle="function" annotations="setAccum()">Accumulator buffer:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setStencil" xrefstyle="function" annotations="setStencil()">Stencil buffer:</db:link></db:code> Enabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setStereo" xrefstyle="function" annotations="setStereo()">Stereo:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setDirectRendering" xrefstyle="function" annotations="setDirectRendering()">Direct rendering:</db:link></db:code> Enabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setOverlay" xrefstyle="function" annotations="setOverlay()">Overlay:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setPlane" xrefstyle="function" annotations="setPlane()">Plane:</db:link></db:code> 0 (i.e., normal plane).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setSampleBuffers" xrefstyle="function" annotations="setSampleBuffers()">Multisample buffers:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+      </db:section>
+      <db:section>
+         <db:title> QGLFormat::QGLFormat(QGL::FormatOptions options, int plane)</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QGLFormat</db:methodname>
+            <db:methodparam>
+               <db:type>QGL::FormatOptions</db:type>
+               <db:parameter>options</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>plane</db:parameter>
+               <db:initializer>0</db:initializer>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para xml:id="">Creates a <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> object that is a copy of the current <db:code><db:link xlink:href="qglformat.html#defaultFormat" xrefstyle="function" annotations="defaultFormat()">defaultFormat()</db:link></db:code>.</db:para>
+         <db:para xml:id="">If <db:code role="argument">options</db:code> is not 0, the default format is modified by the specified format options. The <db:code role="argument">options</db:code> parameter should be <db:code><db:link xlink:href="qgl.html#FormatOption-enum" xrefstyle="enum" annotations="QGL::FormatOption">QGL::FormatOption</db:link></db:code> values OR'ed together.</db:para>
+         <db:para xml:id="">This constructor makes it easy to specify a certain desired format in classes derived from <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code>, for example:</db:para>
+         <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+         <db:para xml:id="">Note that there are <db:code><db:link xlink:href="qgl.html#FormatOption-enum" xrefstyle="enum" annotations="QGL::FormatOption">QGL::FormatOption</db:link></db:code> values to turn format settings both on and off, e.g. <db:code><db:link xlink:href="qgl.html#FormatOption-enum" xrefstyle="enum" annotations="QGL::DepthBuffer">QGL::DepthBuffer</db:link></db:code> and <db:code><db:link xlink:href="qgl.html#FormatOption-enum" xrefstyle="enum" annotations="QGL::NoDepthBuffer">QGL::NoDepthBuffer</db:link></db:code>, <db:code><db:link xlink:href="qgl.html#FormatOption-enum" xrefstyle="enum" annotations="QGL::DirectRendering">QGL::DirectRendering</db:link></db:code> and <db:code><db:link xlink:href="qgl.html#FormatOption-enum" xrefstyle="enum" annotations="QGL::IndirectRendering">QGL::IndirectRendering</db:link></db:code>, etc.</db:para>
+         <db:para xml:id="">The <db:code role="argument">plane</db:code> parameter defaults to 0 and is the plane which this format should be associated with. Not all OpenGL implementations supports overlay/underlay rendering planes.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#defaultFormat" xrefstyle="function" annotations="defaultFormat()">defaultFormat()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setOption" xrefstyle="function" annotations="setOption()">setOption()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setPlane" xrefstyle="function" annotations="setPlane()">setPlane()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title> QGLFormat::QGLFormat(const QGLFormat &amp;other)</db:title>
+         <db:constructorsynopsis>
+            <db:methodname>QGLFormat</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>other</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:constructorsynopsis>
+         <db:para xml:id="">Constructs a copy of <db:code role="argument">other</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QGLFormat::~QGLFormat()</db:title>
+         <db:destructorsynopsis>
+            <db:methodname>~QGLFormat</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:destructorsynopsis>
+         <db:para xml:id="">Destroys the <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QGLFormat &amp; QGLFormat::operator=(const QGLFormat &amp;other)</db:title>
+         <db:methodsynopsis>
+            <db:type>QGLFormat &amp;</db:type>
+            <db:methodname>operator=</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>other</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Assigns <db:code role="argument">other</db:code> to this object.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QGLFormat QGLFormat::defaultFormat()</db:title>
+         <db:methodsynopsis>
+            <db:type>QGLFormat</db:type>
+            <db:methodname>defaultFormat</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the default <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> for the application. All <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code> objects that are created use this format unless another format is specified, e.g. when they are constructed.</db:para>
+         <db:para xml:id="">If no special default format has been set using <db:code><db:link xlink:href="qglformat.html#setDefaultFormat" xrefstyle="function" annotations="setDefaultFormat()">setDefaultFormat()</db:link></db:code>, the default format is the same as that created with <db:code><db:link xlink:href="qglformat.html#QGLFormat" xrefstyle="function" annotations="QGLFormat()">QGLFormat()</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDefaultFormat" xrefstyle="function" annotations="setDefaultFormat()">setDefaultFormat()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QGLFormat QGLFormat::defaultOverlayFormat()</db:title>
+         <db:methodsynopsis>
+            <db:type>QGLFormat</db:type>
+            <db:methodname>defaultOverlayFormat</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the default <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> for overlay contexts.</db:para>
+         <db:para xml:id="">The default overlay format is:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setDoubleBuffer" xrefstyle="function" annotations="setDoubleBuffer()">Double buffer:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setDepth" xrefstyle="function" annotations="setDepth()">Depth buffer:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setRgba" xrefstyle="function" annotations="setRgba()">RGBA:</db:link></db:code> Disabled (i.e., color index enabled).</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setAlpha" xrefstyle="function" annotations="setAlpha()">Alpha channel:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setAccum" xrefstyle="function" annotations="setAccum()">Accumulator buffer:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setStencil" xrefstyle="function" annotations="setStencil()">Stencil buffer:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setStereo" xrefstyle="function" annotations="setStereo()">Stereo:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setDirectRendering" xrefstyle="function" annotations="setDirectRendering()">Direct rendering:</db:link></db:code> Enabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setOverlay" xrefstyle="function" annotations="setOverlay()">Overlay:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setSampleBuffers" xrefstyle="function" annotations="setSampleBuffers()">Multisample buffers:</db:link></db:code> Disabled.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para xml:id="">
+                  <db:code><db:link xlink:href="qglformat.html#setPlane" xrefstyle="function" annotations="setPlane()">Plane:</db:link></db:code> 1 (i.e., first overlay plane).</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDefaultOverlayFormat" xrefstyle="function" annotations="setDefaultOverlayFormat()">setDefaultOverlayFormat()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDefaultFormat" xrefstyle="function" annotations="setDefaultFormat()">setDefaultFormat()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QGLFormat QGLFormat::fromSurfaceFormat(const QSurfaceFormat &amp;format)</db:title>
+         <db:methodsynopsis>
+            <db:type>QGLFormat</db:type>
+            <db:methodname>fromSurfaceFormat</db:methodname>
+            <db:methodparam>
+               <db:type>const QSurfaceFormat &amp;</db:type>
+               <db:parameter>format</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns an OpenGL format for the window format specified by <db:code role="argument">format</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QGLFormat::OpenGLContextProfile QGLFormat::profile() const</db:title>
+         <db:methodsynopsis>
+            <db:type>QGLFormat::OpenGLContextProfile</db:type>
+            <db:methodname>profile</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the OpenGL context profile.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setProfile" xrefstyle="function" annotations="setProfile()">setProfile()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QGLFormat::OpenGLVersionFlags QGLFormat::openGLVersionFlags()</db:title>
+         <db:methodsynopsis>
+            <db:type>QGLFormat::OpenGLVersionFlags</db:type>
+            <db:methodname>openGLVersionFlags</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Identifies, at runtime, which OpenGL versions that are supported by the current platform.</db:para>
+         <db:para xml:id="">Note that if OpenGL version 1.5 is supported, its predecessors (i.e., version 1.4 and lower) are also supported. To identify the support of a particular feature, like multi texturing, test for the version in which the feature was first introduced (i.e., version 1.3 in the case of multi texturing) to adapt to the largest possible group of runtime platforms.</db:para>
+         <db:para xml:id="">This function needs a valid current OpenGL context to work; otherwise it will return <db:code><db:link xlink:href="qglformat.html#OpenGLVersionFlag-enum" xrefstyle="enum" annotations="OpenGL_Version_None">OpenGL_Version_None</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#hasOpenGL" xrefstyle="function" annotations="hasOpenGL()">hasOpenGL()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#hasOpenGLOverlays" xrefstyle="function" annotations="hasOpenGLOverlays()">hasOpenGLOverlays()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QSurfaceFormat QGLFormat::toSurfaceFormat(const QGLFormat &amp;format)</db:title>
+         <db:methodsynopsis>
+            <db:type>QSurfaceFormat</db:type>
+            <db:methodname>toSurfaceFormat</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>format</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns a window format for the OpenGL format specified by <db:code role="argument">format</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool operator!=(const QGLFormat &amp;a, const QGLFormat &amp;b)</db:title>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>operator!=</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>a</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>b</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns <db:code>false</db:code> if all the options of the two <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> objects <db:code role="argument">a</db:code> and <db:code role="argument">b</db:code> are equal; otherwise returns <db:code>true</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool operator==(const QGLFormat &amp;a, const QGLFormat &amp;b)</db:title>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>operator==</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>a</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>b</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns <db:code>true</db:code> if all the options of the two <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> objects <db:code role="argument">a</db:code> and <db:code role="argument">b</db:code> are equal; otherwise returns <db:code>false</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QGLFormat::testOption(QGL::FormatOptions opt) const</db:title>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>testOption</db:methodname>
+            <db:methodparam>
+               <db:type>QGL::FormatOptions</db:type>
+               <db:parameter>opt</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns <db:code>true</db:code> if format option <db:code role="argument">opt</db:code> is set; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setOption" xrefstyle="function" annotations="setOption()">setOption()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::accumBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>accumBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the accumulation buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAccumBufferSize" xrefstyle="function" annotations="setAccumBufferSize()">setAccumBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#accum" xrefstyle="function" annotations="accum()">accum()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAccum" xrefstyle="function" annotations="setAccum()">setAccum()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::alphaBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>alphaBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the alpha buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#alpha" xrefstyle="function" annotations="alpha()">alpha()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAlpha" xrefstyle="function" annotations="setAlpha()">setAlpha()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAlphaBufferSize" xrefstyle="function" annotations="setAlphaBufferSize()">setAlphaBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::blueBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>blueBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the blue buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setBlueBufferSize" xrefstyle="function" annotations="setBlueBufferSize()">setBlueBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::depthBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>depthBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the depth buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#depth" xrefstyle="function" annotations="depth()">depth()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDepth" xrefstyle="function" annotations="setDepth()">setDepth()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDepthBufferSize" xrefstyle="function" annotations="setDepthBufferSize()">setDepthBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::greenBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>greenBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the green buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setGreenBufferSize" xrefstyle="function" annotations="setGreenBufferSize()">setGreenBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::majorVersion() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>majorVersion</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the OpenGL major version.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setVersion" xrefstyle="function" annotations="setVersion()">setVersion()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#minorVersion" xrefstyle="function" annotations="minorVersion()">minorVersion()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::minorVersion() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>minorVersion</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the OpenGL minor version.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setVersion" xrefstyle="function" annotations="setVersion()">setVersion()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#majorVersion" xrefstyle="function" annotations="majorVersion()">majorVersion()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::plane() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>plane</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the plane of this format. The default for normal formats is 0, which means the normal plane. The default for overlay formats is 1, which is the first overlay plane.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setPlane" xrefstyle="function" annotations="setPlane()">setPlane()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#defaultOverlayFormat" xrefstyle="function" annotations="defaultOverlayFormat()">defaultOverlayFormat()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::redBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>redBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the red buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setRedBufferSize" xrefstyle="function" annotations="setRedBufferSize()">setRedBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::samples() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>samples</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the number of samples per pixel when multisampling is enabled. By default, the highest number of samples that is available is used.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setSampleBuffers" xrefstyle="function" annotations="setSampleBuffers()">setSampleBuffers()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#sampleBuffers" xrefstyle="function" annotations="sampleBuffers()">sampleBuffers()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setSamples" xrefstyle="function" annotations="setSamples()">setSamples()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::stencilBufferSize() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>stencilBufferSize</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the stencil buffer size.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#stencil" xrefstyle="function" annotations="stencil()">stencil()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setStencil" xrefstyle="function" annotations="setStencil()">setStencil()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setStencilBufferSize" xrefstyle="function" annotations="setStencilBufferSize()">setStencilBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QGLFormat::swapInterval() const</db:title>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>swapInterval</db:methodname>
+            <db:void/>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Returns the currently set swap interval. -1 is returned if setting the swap interval isn't supported in the system GL implementation.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setSwapInterval" xrefstyle="function" annotations="setSwapInterval()">setSwapInterval()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setAccum(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAccum</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables the accumulation buffer; otherwise disables the accumulation buffer.</db:para>
+         <db:para xml:id="">The accumulation buffer is disabled by default.</db:para>
+         <db:para xml:id="">The accumulation buffer is used to create blur effects and multiple exposures.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#accum" xrefstyle="function" annotations="accum()">accum()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAccumBufferSize" xrefstyle="function" annotations="setAccumBufferSize()">setAccumBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setAccumBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAccumBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred accumulation buffer size, where <db:code role="argument">size</db:code> is the bit depth for each RGBA component.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#accum" xrefstyle="function" annotations="accum()">accum()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAccum" xrefstyle="function" annotations="setAccum()">setAccum()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#accumBufferSize" xrefstyle="function" annotations="accumBufferSize()">accumBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setAlpha(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAlpha</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables the alpha buffer; otherwise disables the alpha buffer.</db:para>
+         <db:para xml:id="">The alpha buffer is disabled by default.</db:para>
+         <db:para xml:id="">The alpha buffer is typically used for implementing transparency or translucency. The A in RGBA specifies the transparency of a pixel.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#alpha" xrefstyle="function" annotations="alpha()">alpha()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAlphaBufferSize" xrefstyle="function" annotations="setAlphaBufferSize()">setAlphaBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setAlphaBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAlphaBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred alpha buffer size to <db:code role="argument">size</db:code>. This function implicitly enables the alpha channel.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setRedBufferSize" xrefstyle="function" annotations="setRedBufferSize()">setRedBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setGreenBufferSize" xrefstyle="function" annotations="setGreenBufferSize()">setGreenBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#alphaBufferSize" xrefstyle="function" annotations="alphaBufferSize()">alphaBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setBlueBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setBlueBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred blue buffer size to <db:code role="argument">size</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#blueBufferSize" xrefstyle="function" annotations="blueBufferSize()">blueBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setRedBufferSize" xrefstyle="function" annotations="setRedBufferSize()">setRedBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setGreenBufferSize" xrefstyle="function" annotations="setGreenBufferSize()">setGreenBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAlphaBufferSize" xrefstyle="function" annotations="setAlphaBufferSize()">setAlphaBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setDefaultFormat(const QGLFormat &amp;f)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDefaultFormat</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>f</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Sets a new default <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> for the application to <db:code role="argument">f</db:code>. For example, to set single buffering as the default instead of double buffering, your main() might contain code like this:</db:para>
+         <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#defaultFormat" xrefstyle="function" annotations="defaultFormat()">defaultFormat()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setDefaultOverlayFormat(const QGLFormat &amp;f)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDefaultOverlayFormat</db:methodname>
+            <db:methodparam>
+               <db:type>const QGLFormat &amp;</db:type>
+               <db:parameter>f</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Sets a new default <db:code><db:link xlink:href="qglformat.html" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link></db:code> for overlay contexts to <db:code role="argument">f</db:code>. This format is used whenever a <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code> is created with a format that <db:code><db:link xlink:href="qglformat.html#hasOverlay" xrefstyle="function" annotations="hasOverlay()">hasOverlay()</db:link></db:code> enabled.</db:para>
+         <db:para xml:id="">For example, to get a double buffered overlay context (if available), use code like this:</db:para>
+         <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+         <db:para xml:id="">As usual, you can find out after widget creation whether the underlying OpenGL system was able to provide the requested specification:</db:para>
+         <db:programlisting>/****************************************************************************&#xD;
+**&#xD;
+** Copyright (C) 2016 The Qt Company Ltd.&#xD;
+** Contact: https://www.qt.io/licensing/&#xD;
+**&#xD;
+** This file is part of the documentation of the Qt Toolkit.&#xD;
+**&#xD;
+** $QT_BEGIN_LICENSE:BSD$&#xD;
+** Commercial License Usage&#xD;
+** Licensees holding valid commercial Qt licenses may use this file in&#xD;
+** accordance with the commercial license agreement provided with the&#xD;
+** Software or, alternatively, in accordance with the terms contained in&#xD;
+** a written agreement between you and The Qt Company. For licensing terms&#xD;
+** and conditions see https://www.qt.io/terms-conditions. For further&#xD;
+** information use the contact form at https://www.qt.io/contact-us.&#xD;
+**&#xD;
+** BSD License Usage&#xD;
+** Alternatively, you may use this file under the terms of the BSD license&#xD;
+** as follows:&#xD;
+**&#xD;
+** "Redistribution and use in source and binary forms, with or without&#xD;
+** modification, are permitted provided that the following conditions are&#xD;
+** met:&#xD;
+**   * Redistributions of source code must retain the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer.&#xD;
+**   * Redistributions in binary form must reproduce the above copyright&#xD;
+**     notice, this list of conditions and the following disclaimer in&#xD;
+**     the documentation and/or other materials provided with the&#xD;
+**     distribution.&#xD;
+**   * Neither the name of The Qt Company Ltd nor the names of its&#xD;
+**     contributors may be used to endorse or promote products derived&#xD;
+**     from this software without specific prior written permission.&#xD;
+**&#xD;
+**&#xD;
+** THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS&#xD;
+** "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT&#xD;
+** LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR&#xD;
+** A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT&#xD;
+** OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,&#xD;
+** SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT&#xD;
+** LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,&#xD;
+** DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY&#xD;
+** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT&#xD;
+** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE&#xD;
+** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."&#xD;
+**&#xD;
+** $QT_END_LICENSE$&#xD;
+**&#xD;
+****************************************************************************/&#xD;
+&#xD;
+//! [0]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setAlpha(true);&#xD;
+fmt.setStereo(true);&#xD;
+QGLFormat::setDefaultFormat(fmt);&#xD;
+//! [0]&#xD;
+&#xD;
+&#xD;
+//! [1]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setDoubleBuffer(false);                 // single buffer&#xD;
+fmt.setDirectRendering(false);              // software rendering&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+//! [1]&#xD;
+&#xD;
+&#xD;
+//! [2]&#xD;
+QGLFormat fmt;&#xD;
+fmt.setOverlay(true);&#xD;
+fmt.setStereo(true);&#xD;
+MyGLWidget* myWidget = new MyGLWidget(fmt, ...);&#xD;
+if (!myWidget-&gt;format().stereo()) {&#xD;
+    // ok, goggles off&#xD;
+    if (!myWidget-&gt;format().hasOverlay()) {&#xD;
+        qFatal("Cool hardware required");&#xD;
+    }&#xD;
+}&#xD;
+//! [2]&#xD;
+&#xD;
+&#xD;
+//! [3]&#xD;
+// The rendering in MyGLWidget depends on using&#xD;
+// stencil buffer and alpha channel&#xD;
+MyGLWidget::MyGLWidget(QWidget* parent)&#xD;
+    : QGLWidget(QGLFormat(QGL::StencilBuffer | QGL::AlphaChannel), parent)&#xD;
+{&#xD;
+    if (!format().stencil())&#xD;
+        qWarning("Could not get stencil buffer; results will be suboptimal");&#xD;
+    if (!format().alpha())&#xD;
+        qWarning("Could not get alpha channel; results will be suboptimal");&#xD;
+    ...&#xD;
+}&#xD;
+//! [3]&#xD;
+&#xD;
+&#xD;
+//! [4]&#xD;
+QApplication a(argc, argv);&#xD;
+QGLFormat f;&#xD;
+f.setDoubleBuffer(false);&#xD;
+QGLFormat::setDefaultFormat(f);&#xD;
+//! [4]&#xD;
+&#xD;
+&#xD;
+//! [5]&#xD;
+QGLFormat f = QGLFormat::defaultOverlayFormat();&#xD;
+f.setDoubleBuffer(true);&#xD;
+QGLFormat::setDefaultOverlayFormat(f);&#xD;
+//! [5]&#xD;
+&#xD;
+&#xD;
+//! [6]&#xD;
+// ...continued from above&#xD;
+MyGLWidget* myWidget = new MyGLWidget(QGLFormat(QGL::HasOverlay), ...);&#xD;
+if (myWidget-&gt;format().hasOverlay()) {&#xD;
+    // Yes, we got an overlay, let's check _its_ format:&#xD;
+    QGLContext* olContext = myWidget-&gt;overlayContext();&#xD;
+    if (olContext-&gt;format().doubleBuffer())&#xD;
+        ; // yes, we got a double buffered overlay&#xD;
+    else&#xD;
+        ; // no, only single buffered overlays are available&#xD;
+}&#xD;
+//! [6]&#xD;
+&#xD;
+&#xD;
+//! [7]&#xD;
+QGLContext *cx;&#xD;
+//  ...&#xD;
+QGLFormat f;&#xD;
+f.setStereo(true);&#xD;
+cx-&gt;setFormat(f);&#xD;
+if (!cx-&gt;create())&#xD;
+    exit(); // no OpenGL support, or cannot render on the specified paintdevice&#xD;
+if (!cx-&gt;format().stereo())&#xD;
+    exit(); // could not create stereo context&#xD;
+//! [7]&#xD;
+&#xD;
+&#xD;
+//! [8]&#xD;
+class MyGLDrawer : public QGLWidget&#xD;
+{&#xD;
+    Q_OBJECT        // must include this if you use Qt signals/slots&#xD;
+&#xD;
+public:&#xD;
+    MyGLDrawer(QWidget *parent)&#xD;
+        : QGLWidget(parent) {}&#xD;
+&#xD;
+protected:&#xD;
+&#xD;
+    void initializeGL()&#xD;
+    {&#xD;
+        // Set up the rendering context, define display lists etc.:&#xD;
+        ...&#xD;
+        glClearColor(0.0, 0.0, 0.0, 0.0);&#xD;
+        glEnable(GL_DEPTH_TEST);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void resizeGL(int w, int h)&#xD;
+    {&#xD;
+        // setup viewport, projection etc.:&#xD;
+        glViewport(0, 0, (GLint)w, (GLint)h);&#xD;
+        ...&#xD;
+        glFrustum(...);&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+    void paintGL()&#xD;
+    {&#xD;
+        // draw the scene:&#xD;
+        ...&#xD;
+        glRotatef(...);&#xD;
+        glMaterialfv(...);&#xD;
+        glBegin(GL_QUADS);&#xD;
+        glVertex3f(...);&#xD;
+        glVertex3f(...);&#xD;
+        ...&#xD;
+        glEnd();&#xD;
+        ...&#xD;
+    }&#xD;
+&#xD;
+};&#xD;
+//! [8]&#xD;
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#defaultOverlayFormat" xrefstyle="function" annotations="defaultOverlayFormat()">defaultOverlayFormat()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setDepth(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDepth</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables the depth buffer; otherwise disables the depth buffer.</db:para>
+         <db:para xml:id="">The depth buffer is enabled by default.</db:para>
+         <db:para xml:id="">The purpose of a depth buffer (or Z-buffering) is to remove hidden surfaces. Pixels are assigned Z values based on the distance to the viewer. A pixel with a high Z value is closer to the viewer than a pixel with a low Z value. This information is used to decide whether to draw a pixel or not.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#depth" xrefstyle="function" annotations="depth()">depth()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDepthBufferSize" xrefstyle="function" annotations="setDepthBufferSize()">setDepthBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setDepthBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDepthBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the minimum depth buffer size to <db:code role="argument">size</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#depthBufferSize" xrefstyle="function" annotations="depthBufferSize()">depthBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setDepth" xrefstyle="function" annotations="setDepth()">setDepth()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#depth" xrefstyle="function" annotations="depth()">depth()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setDirectRendering(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDirectRendering</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables direct rendering; otherwise disables direct rendering.</db:para>
+         <db:para xml:id="">Direct rendering is enabled by default.</db:para>
+         <db:para xml:id="">Enabling this option will make OpenGL bypass the underlying window system and render directly from hardware to the screen, if this is supported by the system.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#directRendering" xrefstyle="function" annotations="directRendering()">directRendering()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setDoubleBuffer(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDoubleBuffer</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true sets double buffering; otherwise sets single buffering.</db:para>
+         <db:para xml:id="">Double buffering is enabled by default.</db:para>
+         <db:para xml:id="">Double buffering is a technique where graphics are rendered on an off-screen buffer and not directly to the screen. When the drawing has been completed, the program calls a swapBuffers() function to exchange the screen contents with the buffer. The result is flicker-free drawing and often better performance.</db:para>
+         <db:para xml:id="">Note that single buffered contexts are currently not supported with EGL.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#doubleBuffer" xrefstyle="function" annotations="doubleBuffer()">doubleBuffer()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglcontext.html#swapBuffers" xrefstyle="function" annotations="QGLContext::swapBuffers()">QGLContext::swapBuffers()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglwidget.html#swapBuffers" xrefstyle="function" annotations="QGLWidget::swapBuffers()">QGLWidget::swapBuffers()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setGreenBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setGreenBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred green buffer size to <db:code role="argument">size</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#greenBufferSize" xrefstyle="function" annotations="greenBufferSize()">greenBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setRedBufferSize" xrefstyle="function" annotations="setRedBufferSize()">setRedBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setBlueBufferSize" xrefstyle="function" annotations="setBlueBufferSize()">setBlueBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAlphaBufferSize" xrefstyle="function" annotations="setAlphaBufferSize()">setAlphaBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setOption(QGL::FormatOptions opt)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setOption</db:methodname>
+            <db:methodparam>
+               <db:type>QGL::FormatOptions</db:type>
+               <db:parameter>opt</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Sets the format option to <db:code role="argument">opt</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#testOption" xrefstyle="function" annotations="testOption()">testOption()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setOverlay(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setOverlay</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables an overlay plane; otherwise disables the overlay plane.</db:para>
+         <db:para xml:id="">Enabling the overlay plane will cause <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code> to create an additional context in an overlay plane. See the <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code> documentation for further information.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#hasOverlay" xrefstyle="function" annotations="hasOverlay()">hasOverlay()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setPlane(int plane)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setPlane</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>plane</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Sets the requested plane to <db:code role="argument">plane</db:code>. 0 is the normal plane, 1 is the first overlay plane, 2 is the second overlay plane, etc.; -1, -2, etc. are underlay planes.</db:para>
+         <db:para xml:id="">Note that in contrast to other format specifications, the plane specifications will be matched exactly. This means that if you specify a plane that the underlying OpenGL system cannot provide, an <db:code><db:link xlink:href="qglwidget.html#isValid" xrefstyle="function" annotations="QGLWidget::isValid()">invalid</db:link></db:code>
+            <db:code><db:link xlink:href="qglwidget.html" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link></db:code> will be created.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#plane" xrefstyle="function" annotations="plane()">plane()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setProfile(QGLFormat::OpenGLContextProfile profile)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setProfile</db:methodname>
+            <db:methodparam>
+               <db:type>QGLFormat::OpenGLContextProfile</db:type>
+               <db:parameter>profile</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the OpenGL context profile to <db:code role="argument">profile</db:code>. The <db:code role="argument">profile</db:code> is ignored if the requested OpenGL version is less than 3.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#profile" xrefstyle="function" annotations="profile()">profile()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.7.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setRedBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setRedBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred red buffer size to <db:code role="argument">size</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#redBufferSize" xrefstyle="function" annotations="redBufferSize()">redBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setGreenBufferSize" xrefstyle="function" annotations="setGreenBufferSize()">setGreenBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setBlueBufferSize" xrefstyle="function" annotations="setBlueBufferSize()">setBlueBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setAlphaBufferSize" xrefstyle="function" annotations="setAlphaBufferSize()">setAlphaBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setRgba(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setRgba</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true sets RGBA mode. If <db:code role="argument">enable</db:code> is false sets color index mode.</db:para>
+         <db:para xml:id="">The default color mode is RGBA.</db:para>
+         <db:para xml:id="">RGBA is the preferred mode for most OpenGL applications. In RGBA color mode you specify colors as red + green + blue + alpha quadruplets.</db:para>
+         <db:para xml:id="">In color index mode you specify an index into a color lookup table.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#rgba" xrefstyle="function" annotations="rgba()">rgba()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setSampleBuffers(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setSampleBuffers</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true, a GL context with multisample buffer support is picked; otherwise ignored.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#sampleBuffers" xrefstyle="function" annotations="sampleBuffers()">sampleBuffers()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setSamples" xrefstyle="function" annotations="setSamples()">setSamples()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#samples" xrefstyle="function" annotations="samples()">samples()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setSamples(int numSamples)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setSamples</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>numSamples</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred number of samples per pixel when multisampling is enabled to <db:code role="argument">numSamples</db:code>. By default, the highest number of samples available is used.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setSampleBuffers" xrefstyle="function" annotations="setSampleBuffers()">setSampleBuffers()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#sampleBuffers" xrefstyle="function" annotations="sampleBuffers()">sampleBuffers()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#samples" xrefstyle="function" annotations="samples()">samples()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setStencil(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStencil</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables the stencil buffer; otherwise disables the stencil buffer.</db:para>
+         <db:para xml:id="">The stencil buffer is enabled by default.</db:para>
+         <db:para xml:id="">The stencil buffer masks certain parts of the drawing area so that masked parts are not drawn on.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#stencil" xrefstyle="function" annotations="stencil()">stencil()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setStencilBufferSize" xrefstyle="function" annotations="setStencilBufferSize()">setStencilBufferSize()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setStencilBufferSize(int size)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStencilBufferSize</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred stencil buffer size to <db:code role="argument">size</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#stencilBufferSize" xrefstyle="function" annotations="stencilBufferSize()">stencilBufferSize()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#setStencil" xrefstyle="function" annotations="setStencil()">setStencil()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#stencil" xrefstyle="function" annotations="stencil()">stencil()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setStereo(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStereo</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">If <db:code role="argument">enable</db:code> is true enables stereo buffering; otherwise disables stereo buffering.</db:para>
+         <db:para xml:id="">Stereo buffering is disabled by default.</db:para>
+         <db:para xml:id="">Stereo buffering provides extra color buffers to generate left-eye and right-eye images.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#stereo" xrefstyle="function" annotations="stereo()">stereo()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setSwapInterval(int interval)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setSwapInterval</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>interval</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the preferred swap interval. This can be used to sync the GL drawing into a system window to the vertical refresh of the screen. Setting an <db:code role="argument">interval</db:code> value of 0 will turn the vertical refresh syncing off, any value higher than 0 will turn the vertical syncing on.</db:para>
+         <db:para xml:id="">Under Windows and under X11, where the <db:code>WGL_EXT_swap_control</db:code> and <db:code>GLX_SGI_video_sync</db:code> extensions are used, the <db:code role="argument">interval</db:code> parameter can be used to set the minimum number of video frames that are displayed before a buffer swap will occur. In effect, setting the <db:code role="argument">interval</db:code> to 10, means there will be 10 vertical retraces between every buffer swap.</db:para>
+         <db:para xml:id="">Under Windows the <db:code>WGL_EXT_swap_control</db:code> extension has to be present, and under X11 the <db:code>GLX_SGI_video_sync</db:code> extension has to be present.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#swapInterval" xrefstyle="function" annotations="swapInterval()">swapInterval()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QGLFormat::setVersion(int major, int minor)</db:title>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setVersion</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>major</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>minor</db:parameter>
+            </db:methodparam>
+            <db:modifier>public</db:modifier>
+         </db:methodsynopsis>
+         <db:para xml:id="">Set the OpenGL version to the <db:code role="argument">major</db:code> and <db:code role="argument">minor</db:code> numbers. If a context compatible with the requested OpenGL version cannot be created, a context compatible with version 1.x is created instead.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#majorVersion" xrefstyle="function" annotations="majorVersion()">majorVersion()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qglformat.html#minorVersion" xrefstyle="function" annotations="minorVersion()">minorVersion()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.7.</db:para>
+      </db:section>
+   </db:section>
+</db:article>
