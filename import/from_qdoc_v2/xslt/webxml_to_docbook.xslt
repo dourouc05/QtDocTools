@@ -508,7 +508,12 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="raw">
-    <!-- Must skip, no way to encode raw HTML here. -->
+    <!-- Must skip, no way to encode raw HTML here (except when it's not for tweaking the output). -->
+    <xsl:if test="parent::node()[1]/self::quote">
+      <db:programlisting>
+        <xsl:value-of select="text()"/>
+      </db:programlisting>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="contents | keyword">
@@ -601,17 +606,22 @@
     </db:note>
   </xsl:template>
   
+  <xsl:function name="tc:load-file">
+    <xsl:param name="filename" as="xs:string"/>
+    <!-- Read the file and get rid of the \r. -->
+    <xsl:value-of select="replace(unparsed-text(concat('file:///', $filename)), codepoints-to-string(13), '')"/>
+  </xsl:function>
   <xsl:function name="tc:parse-snippet">
     <xsl:param name="filename" as="xs:string"/>
     <xsl:param name="identifier" as="xs:string"/>
     
-    <xsl:variable name="fileContents" select="unparsed-text(concat('file:///', $filename))"/>
+    <xsl:variable name="fileContents" select="tc:load-file($filename)"/>
     <xsl:variable name="onlyInterestingSnippet" select="tokenize($fileContents, concat('//! \[', $identifier, '\]'))[2]"/>
     <xsl:variable name="slicedSnippet" select="tokenize($onlyInterestingSnippet, '\n')"/>
     <xsl:variable name="filteredSlicedSnippet" select="$slicedSnippet[not(starts-with(., '//! '))]"/>
     <xsl:variable name="filteredSnippet" select="string-join($filteredSlicedSnippet, codepoints-to-string(10))"/>
     
-    <xsl:value-of select="replace($filteredSnippet, codepoints-to-string(13), '')"/>
+    <xsl:value-of select="$filteredSnippet"/>
   </xsl:function>
   <xsl:function name="tc:gather-snippet">
     <xsl:param name="snippetNode" as="node()"/>
@@ -641,6 +651,17 @@
   
   <xsl:template mode="content_generic" match="dots">
     <!-- Should be handled with snippets. -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="quotefile">
+    <!-- No real path provided for quotefile, so must make up one. -->
+    <xsl:variable name="sourceFilePath" select="ancestor::description/@path" as="xs:string"/>
+    <xsl:variable name="sourceFilePathSplit" select="tokenize($sourceFilePath, '/')" as="xs:string*"/>
+    <xsl:variable name="sourceFolder" select="replace($sourceFilePath, $sourceFilePathSplit[last()], '')" as="xs:string"/>
+    <xsl:variable name="filePath" select="concat($sourceFolder, text())"/>
+    <db:programlisting>
+      <xsl:value-of select="tc:load-file($filePath)"/>
+    </db:programlisting>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="code">

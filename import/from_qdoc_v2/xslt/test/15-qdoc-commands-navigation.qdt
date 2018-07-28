@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:tc="http://dourouc05.github.io">
+   <db:info>
+      <db:title>Document Navigation</db:title>
+      <db:abstract>
+         <db:para/>
+      </db:abstract>
+      <db:extendedlink>
+         <link xlink:type="arc"
+               xlink:from="15-qdoc-commands-navigation.html"
+               xlink:to="16-qdoc-commands-status.html"
+               xlink:title="next"
+               xlink:label="Status"/>
+      </db:extendedlink>
+      <db:extendedlink>
+         <link xlink:type="arc"
+               xlink:from="15-qdoc-commands-navigation.html"
+               xlink:to="14-qdoc-commands-contextcommands.html"
+               xlink:title="previous"
+               xlink:label="Context Commands"/>
+      </db:extendedlink>
+      <db:extendedlink>
+         <link xlink:type="arc"
+               xlink:from="15-qdoc-commands-navigation.html"
+               xlink:to="qdoc-index.html"
+               xlink:title="contents"
+               xlink:label="QDoc Manual"/>
+      </db:extendedlink>
+   </db:info>
+   <db:para>The navigation commands are for linking the pages of a document in a meaningful sequence. Below is a sequence of QDoc comments that shows a typical use of the navigation commands.</db:para>
+   <db:section xml:id="example">
+      <db:title>Example</db:title>
+      <db:programlisting> /*!
+     \page basicqt.html
+     \contentspage {Basic Qt} {Contents}
+     \nextpage Getting Started
+
+     \indexpage Index
+     \startpage Basic Qt
+
+     \title Basic Qt
+
+     The Qt toolkit is a C++ class library and a set of tools for
+     building multiplatform GUI programs using a "write once,
+     compile anywhere approach".
+
+     Table of contents:
+
+     \list
+     \li \l {Getting Started}
+     \li \l {Creating Dialogs}
+     \li \l {Creating Main Windows}
+     \endlist
+ */
+
+ /*!
+    \page gettingstarted.html
+    \previouspage Basic Qt
+    \contentspage {Basic Qt} {Contents}
+    \nextpage Creating Dialogs
+
+    \indexpage Index
+    \startpage Basic Qt
+
+    \title Getting Started
+
+    This chapter shows how to combine basic C++ with the
+    functionality provided by Qt to create a few small graphical
+    interface (GUI) applications.
+*/
+
+/ *!
+    \page creatingdialogs.html
+    \previouspage Getting Started
+    \contentspage {Basic Qt} {Contents}
+
+    \indexpage Index
+    \startpage Basic Qt
+
+    \title Creating Dialogs
+
+    This chapter will teach you how to create dialog boxes using Qt.
+*/
+
+/*!
+    \page index.html
+
+    \indexpage Index
+    \startpage Basic Qt
+
+    \title Index
+
+    \list
+        \li \l {Basic Qt}
+        \li \l {Creating Dialogs}
+        \li \l {Getting Started}
+    \endlist
+*/
+
+</db:programlisting>
+      <db:para>QDoc renders the "Getting Started" page in <db:code>creatingdialogs.html</db:code>:</db:para>
+      <db:quote>
+         <db:programlisting>        &lt;table border="0" cellpadding="0" cellspacing="5" width="100%"&gt;
+
+        &lt;tr&gt;
+        &lt;p&gt;
+        [Previous: &lt;a href="15-qdoc-commands-navigation.html#deadlink"&gt;
+        Basic Qt&lt;/a&gt;]
+        [&lt;a href="15-qdoc-commands-navigation.html#deadlink"&gt;Contents&lt;/a&gt;]
+        [Next: &lt;a href="15-qdoc-commands-navigation.html#deadlink"&gt;
+        Creating Dialogs&lt;/a&gt;]
+        &lt;/p&gt;
+
+        &lt;h1 align="center"&gt;Getting Started&lt;br /&gt;&lt;/h1&gt;
+
+        &lt;p&gt;
+        This chapter shows how to combine basic C++ with the
+        functionality provided by Qt to create a few small graphical
+        interface (GUI) applications.
+        &lt;/p&gt;
+
+        &lt;p&gt;
+        [Previous: &lt;a href="15-qdoc-commands-navigation.html#deadlink"&gt;
+        Basic Qt&lt;/a&gt;]
+        [&lt;a href="15-qdoc-commands-navigation.html#deadlink"&gt;Contents&lt;/a&gt;]
+        [Next: &lt;a href="15-qdoc-commands-navigation.html#deadlink"&gt;
+        Creating Dialogs&lt;/a&gt;]
+        &lt;/p&gt;
+
+        &lt;/table&gt;
+    </db:programlisting>
+      </db:quote>
+      <db:para>The <db:link xlink:href="15-qdoc-commands-navigation.html#indexpage-command" xrefstyle="page" annotations="indexpage-command">\indexpage</db:link> and <db:link xlink:href="15-qdoc-commands-navigation.html#startpage-command" xrefstyle="page" annotations="startpage-command">\startpage</db:link> commands create links to the page's index page and start page. These links can be used by browsers and search engines.</db:para>
+      <db:para>The index page is typically an alphabetical list of the document's titles and topics, while the start page is the page considered by the author to be the starting point of a multipage document.</db:para>
+      <db:para>The links are included in the generated HTML source code, but have no visual effect on the documentation:</db:para>
+      <db:programlisting>&lt;head&gt;
+    ...
+    &lt;link rel="index" href="index.html" /&gt;
+    &lt;link rel="start" href="basicqt.html" /&gt;
+    ...
+&lt;/head&gt;</db:programlisting>
+   </db:section>
+   <db:section xml:id="commands">
+      <db:title>Commands</db:title>
+   </db:section>
+   <db:section xml:id="previouspage">
+      <db:title>\previouspage</db:title>
+      <db:para>The \previouspage command links the current page to the previous page in a sequence.a The command has two arguments, each enclosed by curly braces: the first is the link target (the title of the previous page), the second is the link text. If the page's title is equivalent to the link text, the second argument can be omitted.</db:para>
+      <db:para>The command must stand alone on its own line.</db:para>
+   </db:section>
+   <db:section xml:id="nextpage">
+      <db:title>\nextpage</db:title>
+      <db:para>The \nextpage command links the current page to the next page in a sequence. The command follows the same syntax and argument convention as the <db:link xlink:href="15-qdoc-commands-navigation.html#previouspage-command" xrefstyle="page" annotations="previouspage-command">\previouspage</db:link> command.</db:para>
+   </db:section>
+   <db:section xml:id="startpage">
+      <db:title>\startpage</db:title>
+      <db:para>The \startpage command specifies the first page of a sequence of pages. The command must stand alone on its own line, and its unique argument is the title of the first document.</db:para>
+      <db:para>QDoc will generate a link to the start page and include it in the generated HTML file, but this has no visual effect on the documentation. The generated link type tells browsers and search engines which document is considered by the author to be the starting point of the collection.</db:para>
+   </db:section>
+   <db:section xml:id="contentspage">
+      <db:title>\contentspage</db:title>
+      <db:para>The \contentspage command links the current page to a table of contents page. The command follows the same syntax and argument convention as the <db:link xlink:href="15-qdoc-commands-navigation.html#previouspage-command" xrefstyle="page" annotations="previouspage-command">\previouspage</db:link> command.</db:para>
+   </db:section>
+   <db:section xml:id="indexpage">
+      <db:title>\indexpage</db:title>
+      <db:para>The \indexpage command specifies an index page for the current document. The command must stand alone on its own line, and its unique argument is the title of the index document.</db:para>
+      <db:para>QDoc will generate a link to the index page and include it in the generated HTML file, but this has no visual effect on the documentation. The generated link type tells browsers and search engines which document is considered by the author to be the index page of the collection.</db:para>
+   </db:section>
+</db:article>
