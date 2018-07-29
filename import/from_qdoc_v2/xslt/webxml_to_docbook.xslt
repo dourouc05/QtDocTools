@@ -10,6 +10,28 @@
     suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
   
+  <!-- Needed to handle quotefromfile and family. See comments at the named template quotefromfile. -->
+  <xsl:variable name="descriptionPath" as="xs:string" select="//description/@path"/>
+  <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, //quotefromfile/text()[1])"/>
+  <xsl:variable name="quotefromfileContent" as="xs:string" select="tc:load-file($quotefromfileFile)"/>
+  <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize($quotefromfileContent, codepoints-to-string(10))"/>
+  <xsl:accumulator name="quotefromfileLine" initial-value="1" as="xs:integer"  streamable="no">
+    <xsl:accumulator-rule match="printline | skipline">
+      <xsl:variable name="strippedLine" select="translate($quotefromfileSequenceLines[$value + 1], ' ','')"/>
+      <xsl:value-of select="if ($strippedLine='') then $value + 2 else $value + 1"/>
+    </xsl:accumulator-rule>
+    <xsl:accumulator-rule match="printto | skipto">
+      <xsl:variable name="contentToMatch" select="text()" as="xs:string"/>
+      <xsl:variable name="quotefromfileContentTillEnd" select="$quotefromfileSequenceLines[position() >= $value]"/>
+      <xsl:variable name="quotefromfileMatchedTillEnd">
+        <xsl:for-each select="$quotefromfileContentTillEnd">
+          <xsl:value-of select="contains(., $contentToMatch)"/>
+        </xsl:for-each>
+      </xsl:variable>
+      <xsl:value-of select="if (./self::printto) then $value + index-of($quotefromfileMatchedTillEnd, true())[1] else $value + index-of($quotefromfileMatchedTillEnd, true())[1] + 1"/>
+    </xsl:accumulator-rule>
+  </xsl:accumulator>
+  
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>
   </xsl:template>
@@ -606,10 +628,38 @@
     </db:note>
   </xsl:template>
   
+  <xsl:function name="tc:make-file-url">
+    <xsl:param name="filename" as="xs:string"/>
+    <xsl:value-of select="concat('file:///', $filename)"/>
+  </xsl:function>
+  <xsl:function name="tc:file-exists" as="xs:boolean">
+    <xsl:param name="filename" as="xs:string"/>
+    <xsl:value-of select="unparsed-text-available(tc:make-file-url($filename))" />
+  </xsl:function>
+  <xsl:function name="tc:find-file-path">
+    <xsl:param name="sourceFilePath" as="xs:string"/>
+    <xsl:param name="fileToQuote" as="xs:string"/>
+    
+    <xsl:variable name="sourceFilePathSplit" select="tokenize($sourceFilePath, '/')" as="xs:string*"/>
+    
+    <xsl:if test="$sourceFilePath[last()]=''">      
+      <xsl:message terminate="yes">ERROR: tc:find-file-path received a folder path instead of a file path as $sourceFilePath. </xsl:message>
+    </xsl:if>
+    
+    <xsl:variable name="sourceFolder" select="replace($sourceFilePath, replace($sourceFilePathSplit[last()], '\.', '\\.'), '')" as="xs:string"/>
+    <xsl:variable name="filePathTentative" select="concat($sourceFolder, $fileToQuote)"/>
+    <xsl:variable name="filePath" select="if  (tc:file-exists($filePathTentative)) then $filePathTentative else concat($sourceFolder, '../snippets/', $fileToQuote)"/>
+    
+    <xsl:if test="not(tc:file-exists($filePath))">
+      <xsl:message>WARNING: Unable to find the correct path for <xsl:value-of select="$fileToQuote"/></xsl:message>
+    </xsl:if>
+    
+    <xsl:value-of select="$filePath"/>
+  </xsl:function>
   <xsl:function name="tc:load-file">
     <xsl:param name="filename" as="xs:string"/>
     <!-- Read the file and get rid of the \r. -->
-    <xsl:value-of select="replace(unparsed-text(concat('file:///', $filename)), codepoints-to-string(13), '')"/>
+    <xsl:value-of select="replace(unparsed-text(tc:make-file-url($filename)), codepoints-to-string(13), '')"/>
   </xsl:function>
   <xsl:function name="tc:parse-snippet">
     <xsl:param name="filename" as="xs:string"/>
@@ -655,13 +705,33 @@
   
   <xsl:template mode="content_generic" match="quotefile">
     <!-- No real path provided for quotefile, so must make up one. -->
-    <xsl:variable name="sourceFilePath" select="ancestor::description/@path" as="xs:string"/>
-    <xsl:variable name="sourceFilePathSplit" select="tokenize($sourceFilePath, '/')" as="xs:string*"/>
-    <xsl:variable name="sourceFolder" select="replace($sourceFilePath, $sourceFilePathSplit[last()], '')" as="xs:string"/>
-    <xsl:variable name="filePath" select="concat($sourceFolder, text())"/>
     <db:programlisting>
-      <xsl:value-of select="tc:load-file($filePath)"/>
+      <xsl:value-of select="tc:load-file(tc:find-file-path(ancestor::description/@path, text()))"/>
     </db:programlisting>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="quotefromfile">
+    <!-- Don't do anything in this: this tag will be retrieved when needed (skipto, printuntil, and family). -->
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="printline | printto | printuntil | skipline | skipto | skipuntil">
+    <!-- Work through the intricacies behind quotefromfile. -->
+    <!-- Retrieve the code from the last quotefromfile. -->
+    <!-- Split it according to a series of tags: -->
+    <!-- printline, printto, printuntil, skipline, skipto, skipuntil -->
+    <!-- Design choice: only output something from the first tag (but not quotefromfile). -->
+    <!--   - printline: print one line, advance cursor by one line -->
+    <!--   - printto:    print until (EXcluding) the first line that matches the argument -->
+    <!--   - printuntil: print until (INcluding) the first line that matches the argument -->
+    <!--   - skipline: advance cursor by one line (or more, if there are nonblank lines) -->
+    <!--   - skipto:    skip until (EXcluding) the first line that matches the argument -->
+    <!--   - skipuntil: skip until (INcluding) the first line that matches the argument -->
+    
+    <xsl:variable name="previousNode" select="preceding-sibling::node()[1]"/>
+    <xsl:if test="not($previousNode/self::printline or $previousNode/self::printto or $previousNode/self::printuntil or $previousNode/self::skipline or $previousNode/self::skipline or $previousNode/self::skipuntil)">
+      <xsl:variable name="firstLine" select="accumulator-before('quotefromfileLine')"/>
+      <xsl:value-of select="$quotefromfileSequenceLines[position() = (accumulator-before('quotefromfileLine') to accumulator-after('quotefromfileLine'))]"/>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="code">
