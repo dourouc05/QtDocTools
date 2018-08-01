@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="06-qdoc-commands-includecodeinline.html" href="06-qdoc-commands-includecodeinline.html" status="active" location="qdoc-manual-markupcmds.qdoc" filepath="C:/Qt/5.11.1/Src/qttools/src/qdoc/doc/qdoc-manual-markupcmds.qdoc" lineno="921" subtype="page" title="Including Code Inline" fulltitle="Including Code Inline" subtitle="" module="QDoc">
+            <target name="code-command"/>
+            <target name="badcode-command"/>
+            <target name="newcode-command"/>
+            <target name="oldcode-command"/>
+            <target name="qml-command"/>
+            <contents name="code" title="\code" level="1"/>
+            <contents name="badcode" title="\badcode" level="1"/>
+            <contents name="newcode" title="\newcode" level="1"/>
+            <contents name="oldcode" title="\oldcode" level="1"/>
+            <contents name="qml" title="\qml" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qttools/src/qdoc/doc/qdoc-manual-markupcmds.qdoc" line="921" column="4">
+                <relation href="07-0-qdoc-commands-includingexternalcode.html" type="page" meta="next" description="Including External Code"/>
+                <relation href="05-qdoc-commands-documentstructure.html" type="page" meta="previous" description="Document Structure"/>
+                <relation href="qdoc-index.html" type="page" meta="contents" description="QDoc Manual"/>
+                <para>The following commands are used to render source code without formatting. The source code begins on a new line, rendered in the code.</para>
+                <para>
+                    <bold>Note:</bold> Although most of these commands are for rendering C++ code, the <link raw="07-0-qdoc-commands-includingexternalcode.html#snippet-command" href="07-0-qdoc-commands-includingexternalcode.html#snippet-command" type="page" page="Including External Code">\snippet</link> and <link raw="07-0-qdoc-commands-includingexternalcode.html#codeline-command" href="07-0-qdoc-commands-includingexternalcode.html#codeline-command" type="page" page="Including External Code">\codeline</link> commands are preferred over the others. These commands allow equivalent code snippets for other Qt language bindings to be substituted for the C++ snippets in the documentation.</para>
+                <target name="code-command"/>
+                <section id="code">
+                    <heading level="1">\code</heading>
+                    <para>The \code and \endcode commands enclose a snippet of source code.</para>
+                    <para>
+                        <bold>Note:</bold> The <link raw="c-command" href="04-qdoc-commands-textmarkup.html#c-command" type="page" page="Text Markup">\c</link> command can be used for short code fragments within a sentence. The \code command is for longer code snippets. It renders the code verbatim in a separate paragraph in a html &lt;pre&gt; element, and parses the enclosed snippet, creating links to any known types in the code.</para>
+                    <para>For documenting command-line instructions, shell scripts, or any content that is not in a Qt language recognized by QDoc, use <link raw="badcode-command" href="06-qdoc-commands-includecodeinline.html#badcode-command" type="page" page="Including Code Inline">\badcode</link> instead.</para>
+                    <para>When processing any of the \code, <link raw="newcode-command" href="06-qdoc-commands-includecodeinline.html#newcode-command" type="page" page="Including Code Inline">\newcode</link> or <link raw="oldcode-command" href="06-qdoc-commands-includecodeinline.html#oldcode-command" type="page" page="Including Code Inline">\oldcode</link> commands, QDoc removes all indentation that is common for the verbatim code blocks within a <teletype type="highlighted">/</teletype>
+                        <teletype type="highlighted">*!</teletype> ... <teletype type="highlighted">*</teletype>
+                        <teletype type="highlighted">/</teletype> comment before it adds the standard indentation.</para>
+                    <para>
+                        <bold>Note:</bold> This doesn't apply to externally quoted code using the <link raw="quotefromfile-command" href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" type="page" page="Including External Code">\quotefromfile</link> or <link raw="quotefile-command" href="07-0-qdoc-commands-includingexternalcode.html#quotefile-command" type="page" page="Including External Code">\quotefile</link> command.</para>
+                    <code>/ *!
+    \code
+        #include &lt;QApplication&gt;
+        #include &lt;QPushButton&gt;
+
+        int main(int argc, char *argv[])
+        {
+            ...
+        }
+    \ endcode
+* /</code>
+                    <para>QDoc renders this as:</para>
+                    <code>#include &lt;QApplication&gt;
+#include &lt;QPushButton&gt;
+
+int main(int argc, char *argv[])
+{
+    ...
+}</code>
+                    <para>Other QDoc commands are disabled within \code... \endcode, and the special character '\' is accepted and rendered like the rest of the code.</para>
+                    <para>To include code snippets from an external file, use the <link raw="07-0-qdoc-commands-includingexternalcode.html#snippet-command" href="07-0-qdoc-commands-includingexternalcode.html#snippet-command" type="page" page="Including External Code">\snippet</link> and <link raw="07-0-qdoc-commands-includingexternalcode.html#codeline-command" href="07-0-qdoc-commands-includingexternalcode.html#codeline-command" type="page" page="Including External Code">\codeline</link> commands.</para>
+                    <para>See also <link raw="c-command" href="04-qdoc-commands-textmarkup.html#c-command" type="page" page="Text Markup">\c</link>, <link raw="badcode-command" href="06-qdoc-commands-includecodeinline.html#badcode-command" type="page" page="Including Code Inline">\badcode</link>, <link raw="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" type="page" page="Including External Code">\quotefromfile</link>, <link raw="newcode-command" href="06-qdoc-commands-includecodeinline.html#newcode-command" type="page" page="Including Code Inline">\newcode</link>, and <link raw="oldcode-command" href="06-qdoc-commands-includecodeinline.html#oldcode-command" type="page" page="Including Code Inline">\oldcode</link>.</para>
+                    <target name="badcode-command"/>
+                </section>
+                <section id="badcode">
+                    <heading level="1">\badcode</heading>
+                    <para>Similar to <link raw="code-command" href="06-qdoc-commands-includecodeinline.html#code-command" type="page" page="Including Code Inline">\code</link>, \badcode and \endcode commands enclose content that is rendered verbatim in a separate paragraph, but no parsing or automatic link creation is performed. Instead, the content is treated as plain text.</para>
+                    <para>Substitute \code with this command when documenting command-line instructions, shell scripts or any other content that is not in a Qt language, but should still be styled similarly to a \code paragraph.</para>
+                    <target name="newcode-command"/>
+                </section>
+                <section id="newcode">
+                    <heading level="1">\newcode</heading>
+                    <para>The \newcode, \oldcode, and \endcode commands enable you to show how to port a snippet of code to a new version of an API.</para>
+                    <para>The \newcode command and its companion the \oldcode command are a convenience combination of the <link raw="code-command" href="06-qdoc-commands-includecodeinline.html#code-command" type="page" page="Including Code Inline">\code</link> commands: this combination provides a text relating the two code snippets to each other.</para>
+                    <para>The \newcode command requires a preceding \oldcode statement.</para>
+                    <para>Like the <link raw="code-command" href="06-qdoc-commands-includecodeinline.html#code-command" type="page" page="Including Code Inline">\code</link> command, the \newcode command renders its code on a new line in the documentation using a monospace font and the standard indentation.</para>
+                    <code>/ *!
+    \oldcode
+        if (printer-&gt;setup(parent))
+            ...
+    \newcode
+        QPrintDialog dialog(printer, parent);
+            if (dialog.exec())
+                ...
+    \ endcode
+* /</code>
+                    <para>QDoc renders this as:</para>
+                    <quote>
+                        <para>For example, if you have code like</para>
+                        <oldcode>if (printer-&gt;setup(parent))
+    ...</oldcode>
+                        <para>you can rewrite it as</para>
+                        <newcode>QPrintDialog dialog(printer, parent);
+    if (dialog.exec())
+        ...</newcode>
+                    </quote>
+                    <para>Other QDoc commands are disabled within \oldcode ... \endcode, and the '\' character doesn't need to be escaped.</para>
+                    <target name="oldcode-command"/>
+                </section>
+                <section id="oldcode">
+                    <heading level="1">\oldcode</heading>
+                    <para>The \oldcode command requires a corresponding \newcode statement; otherwise QDoc fails to parse the command and emits a warning.</para>
+                    <para>See also <link raw="newcode-command" href="06-qdoc-commands-includecodeinline.html#newcode-command" type="page" page="Including Code Inline">\newcode</link>.</para>
+                    <target name="qml-command"/>
+                </section>
+                <section id="qml">
+                    <heading level="1">\qml</heading>
+                    <para>The \qml and \endqml commands enclose a snippet of QML source code.</para>
+                    <code>/ *!
+    \qml
+        import QtQuick 2.0
+
+        Row {
+            Rectangle {
+                width: 100; height: 100
+                color: &quot;blue&quot;
+                transform: Translate { y: 20 }
+            }
+            Rectangle {
+                width: 100; height: 100
+                color: &quot;red&quot;
+                transform: Translate { y: -20 }
+            }
+        }
+    \endqml
+* /</code>
+                    <para>QDoc renders this as:</para>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

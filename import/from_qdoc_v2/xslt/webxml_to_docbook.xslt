@@ -277,6 +277,28 @@
             <db:modifier>slot</db:modifier>
           </xsl:if>
           
+          <!-- Modifiers. -->
+          <xsl:if test="not(@threadsafety='unspecified')">
+            <db:modifier>
+              <xsl:value-of select="@threadsafety"/>
+            </db:modifier>
+          </xsl:if>
+          <db:modifier>
+            <xsl:value-of select="@access"/>
+          </db:modifier>
+          <xsl:if test="not(@static='false')">
+            <db:modifier>static</db:modifier>
+          </xsl:if>
+          <xsl:if test="not(@default='false')">
+            <db:modifier>default</db:modifier>
+          </xsl:if>
+          <xsl:if test="not(@final='false')">
+            <db:modifier>final</db:modifier>
+          </xsl:if>
+          <xsl:if test="not(@override='false')">
+            <db:modifier>override</db:modifier>
+          </xsl:if>
+          
           <!-- Return type. Constructors have no type. -->
           <xsl:choose>
             <xsl:when test="not(@type='') and not(@type='void')">
@@ -318,28 +340,6 @@
               <db:void/>
             </xsl:otherwise>
           </xsl:choose>
-          
-          <!-- Modifiers. -->
-          <xsl:if test="not(@threadsafety='unspecified')">
-            <db:modifier>
-              <xsl:value-of select="@threadsafety"/>
-            </db:modifier>
-          </xsl:if>
-          <db:modifier>
-            <xsl:value-of select="@access"/>
-          </db:modifier>
-          <xsl:if test="not(@static='false')">
-            <db:modifier>static</db:modifier>
-          </xsl:if>
-          <xsl:if test="not(@default='false')">
-            <db:modifier>default</db:modifier>
-          </xsl:if>
-          <xsl:if test="not(@final='false')">
-            <db:modifier>final</db:modifier>
-          </xsl:if>
-          <xsl:if test="not(@override='false')">
-            <db:modifier>override</db:modifier>
-          </xsl:if>
         </xsl:element>
         
         <xsl:apply-templates mode="content_generic" select="description"/>
@@ -802,6 +802,38 @@
     <db:programlisting language="other">
       <xsl:apply-templates mode="content_generic"/>
     </db:programlisting>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="oldcode">
+    <xsl:choose>
+      <xsl:when test="parent::node()/self::quote">
+        <db:prorgamlisting>
+          <xsl:apply-templates  mode="content_generic"/>
+        </db:prorgamlisting>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:para>For example, if you have code like</db:para>
+        <db:programlisting>
+          <xsl:apply-templates mode="content_generic"/>
+        </db:programlisting>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="newcode">
+    <xsl:choose>
+      <xsl:when test="parent::node()/self::quote">
+        <db:programlisting>
+          <xsl:apply-templates mode="content_generic"/>
+        </db:programlisting>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:para>you can rewrite it as</db:para>
+        <db:programlisting>
+          <xsl:apply-templates mode="content_generic"/>
+        </db:programlisting>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="quote">

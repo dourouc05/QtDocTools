@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:tc="http://dourouc05.github.io"
+            version="5.2">
+   <db:info>
+      <db:title>QAbstractItemDelegate</db:title>
+      <db:abstract>
+         <db:para>Used to display and edit data items from a model</db:para>
+      </db:abstract>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QAbstractItemDelegate</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">QtWidgets</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qabstractitemdelegate.h&gt;</db:namespacesynopsisinfo>
+      <db:classsynopsisinfo role="inherits">QObject</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="group">model-view</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qabstractitemdelegate.html" xrefstyle="class" annotations="QAbstractItemDelegate">QAbstractItemDelegate</db:link></db:code> class is used to display and edit data items from a model.</db:para>
+      <db:para>A <db:code><db:link xlink:href="qabstractitemdelegate.html" xrefstyle="class" annotations="QAbstractItemDelegate">QAbstractItemDelegate</db:link></db:code> provides the interface and common functionality for delegates in the model/view architecture. Delegates display individual items in views, and handle the editing of model data.</db:para>
+      <db:para>The <db:code><db:link xlink:href="qabstractitemdelegate.html" xrefstyle="class" annotations="QAbstractItemDelegate">QAbstractItemDelegate</db:link></db:code> class is one of the <db:link xlink:href="model-view-programming.html#model-view-classes" xrefstyle="page" annotations="Model/View Classes">Model/View Classes</db:link> and is part of Qt's <db:link xlink:href="model-view-programming.html" xrefstyle="page" annotations="Model/View Programming">model/view framework</db:link>.</db:para>
+      <db:para>To render an item in a custom way, you must implement <db:code><db:link xlink:href="qabstractitemdelegate.html#paint" xrefstyle="function" annotations="paint()">paint()</db:link></db:code> and <db:code><db:link xlink:href="qabstractitemdelegate.html#sizeHint" xrefstyle="function" annotations="sizeHint()">sizeHint()</db:link></db:code>. The <db:code><db:link xlink:href="qitemdelegate.html" xrefstyle="class" annotations="QItemDelegate">QItemDelegate</db:link></db:code> class provides default implementations for these functions; if you do not need custom rendering, subclass that class instead.</db:para>
+      <db:para>We give an example of drawing a progress bar in items; in our case for a package management program.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/widgetdelegate.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>We create the <db:code>WidgetDelegate</db:code> class, which inherits from <db:code><db:link xlink:href="qstyleditemdelegate.html" xrefstyle="class" annotations="QStyledItemDelegate">QStyledItemDelegate</db:link></db:code>. We do the drawing in the <db:code><db:link xlink:href="qabstractitemdelegate.html#paint" xrefstyle="function" annotations="paint()">paint()</db:link></db:code> function:</db:para>
+      <db:programlisting/>
+      <db:para>Notice that we use a <db:code><db:link xlink:href="qstyleoptionprogressbar.html" xrefstyle="class" annotations="QStyleOptionProgressBar">QStyleOptionProgressBar</db:link></db:code> and initialize its members. We can then use the current <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code> to draw it.</db:para>
+      <db:para>To provide custom editing, there are two approaches that can be used. The first approach is to create an editor widget and display it directly on top of the item. To do this you must reimplement <db:code><db:link xlink:href="qabstractitemdelegate.html#createEditor" xrefstyle="function" annotations="createEditor()">createEditor()</db:link></db:code> to provide an editor widget, <db:code><db:link xlink:href="qabstractitemdelegate.html#setEditorData" xrefstyle="function" annotations="setEditorData()">setEditorData()</db:link></db:code> to populate the editor with the data from the model, and <db:code><db:link xlink:href="qabstractitemdelegate.html#setModelData" xrefstyle="function" annotations="setModelData()">setModelData()</db:link></db:code> so that the delegate can update the model with data from the editor.</db:para>
+      <db:para>The second approach is to handle user events directly by reimplementing <db:code><db:link xlink:href="qabstractitemdelegate.html#editorEvent" xrefstyle="function" annotations="editorEvent()">editorEvent()</db:link></db:code>.</db:para>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:link xlink:href="model-view-programming.html" xrefstyle="page" annotations="model-view-programming">Model/View Programming</db:link>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qitemdelegate.html" xrefstyle="class" annotations="QItemDelegate">QItemDelegate</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:link xlink:href="qtwidgets-itemviews-pixelator-example.html" xrefstyle="page" annotations="Pixelator Example">Pixelator Example</db:link>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qstyleditemdelegate.html" xrefstyle="class" annotations="QStyledItemDelegate">QStyledItemDelegate</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Type Documentation</db:title>
+      <db:section>
+         <db:title>enum QAbstractItemDelegate::EndEditHint, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemDelegate::EndEditHint</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>NoHint</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>EditNextItem</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>EditPreviousItem</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>SubmitModelCache</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>RevertModelCache</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum describes the different hints that the delegate can give to the model and view components to make editing data in a model a comfortable experience for the user.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemDelegate::NoHint</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>There is no recommended action to be performed.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>These hints let the delegate influence the behavior of the view:</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemDelegate::EditNextItem</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>The view should use the delegate to open an editor on the next item in the view.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemDelegate::EditPreviousItem</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>The view should use the delegate to open an editor on the previous item in the view.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>Note that custom views may interpret the concepts of next and previous differently.</db:para>
+         <db:para>The following hints are most useful when models are used that cache data, such as those that manipulate data locally in order to increase performance or conserve network bandwidth.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemDelegate::SubmitModelCache</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>If the model caches data, it should write out cached data to the underlying data store.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemDelegate::RevertModelCache</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>If the model caches data, it should discard cached data and replace it with data from the underlying data store.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>Although models and views should respond to these hints in appropriate ways, custom components may ignore any or all of them if they are not relevant.</db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QAbstractItemDelegate::QAbstractItemDelegate(QObject *parent)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QAbstractItemDelegate</db:methodname>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>parent</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Creates a new abstract item delegate with the given <db:code role="argument">parent</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QAbstractItemDelegate::~QAbstractItemDelegate()</db:title>
+         <db:destructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>~QAbstractItemDelegate</db:methodname>
+            <db:void/>
+         </db:destructorsynopsis>
+         <db:para>Destroys the abstract item delegate.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QWidget * QAbstractItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>createEditor</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>parent</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QStyleOptionViewItem &amp;</db:type>
+               <db:parameter>option</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the editor to be used for editing the data item with the given <db:code role="argument">index</db:code>. Note that the index contains information about the model being used. The editor's parent widget is specified by <db:code role="argument">parent</db:code>, and the item options by <db:code role="argument">option</db:code>.</db:para>
+         <db:para>The base implementation returns 0. If you want custom editing you will need to reimplement this function.</db:para>
+         <db:para>The returned editor widget should have <db:code><db:link xlink:href="qt.html#FocusPolicy-enum" xrefstyle="enum" annotations="Qt::StrongFocus">Qt::StrongFocus</db:link></db:code>; otherwise, <db:code><db:link xlink:href="qmouseevent.html" xrefstyle="class" annotations="QMouseEvent">QMouseEvent</db:link></db:code>s received by the widget will propagate to the view. The view's background will shine through unless the editor paints its own background (e.g., with <db:code><db:link xlink:href="qwidget.html#autoFillBackground-prop" xrefstyle="function" annotations="QWidget::setAutoFillBackground()">setAutoFillBackground()</db:link></db:code>).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemdelegate.html#destroyEditor" xrefstyle="function" annotations="destroyEditor()">destroyEditor()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemdelegate.html#setModelData" xrefstyle="function" annotations="setModelData()">setModelData()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemdelegate.html#setEditorData" xrefstyle="function" annotations="setEditorData()">setEditorData()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>editorEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemModel *</db:type>
+               <db:parameter>model</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QStyleOptionViewItem &amp;</db:type>
+               <db:parameter>option</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>When editing of an item starts, this function is called with the <db:code role="argument">event</db:code> that triggered the editing, the <db:code role="argument">model</db:code>, the <db:code role="argument">index</db:code> of the item, and the <db:code role="argument">option</db:code> used for rendering the item.</db:para>
+         <db:para>Mouse events are sent to  even if they don't start editing of the item. This can, for instance, be useful if you wish to open a context menu when the right mouse button is pressed on an item.</db:para>
+         <db:para>The base implementation returns <db:code>false</db:code> (indicating that it has not handled the event).</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>helpEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QHelpEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemView *</db:type>
+               <db:parameter>view</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QStyleOptionViewItem &amp;</db:type>
+               <db:parameter>option</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Whenever a help event occurs, this function is called with the <db:code role="argument">event</db:code>
+            <db:code role="argument">view</db:code>
+            <db:code role="argument">option</db:code> and the <db:code role="argument">index</db:code> that corresponds to the item where the event occurs.</db:para>
+         <db:para>Returns <db:code>true</db:code> if the delegate can handle the event; otherwise returns <db:code>false</db:code>. A return value of true indicates that the data obtained using the index had the required role.</db:para>
+         <db:para>For <db:code><db:link xlink:href="qevent.html#Type-enum" xrefstyle="enum" annotations="QEvent::ToolTip">QEvent::ToolTip</db:link></db:code> and <db:code><db:link xlink:href="qevent.html#Type-enum" xrefstyle="enum" annotations="QEvent::WhatsThis">QEvent::WhatsThis</db:link></db:code> events that were handled successfully, the relevant popup may be shown depending on the user's system configuration.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qhelpevent.html" xrefstyle="class" annotations="QHelpEvent">QHelpEvent</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.3.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemDelegate::destroyEditor(QWidget *editor, const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>destroyEditor</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Called when the <db:code role="argument">editor</db:code> is no longer needed for editing the data item with the given <db:code role="argument">index</db:code> and should be destroyed. The default behavior is a call to <db:code><db:link xlink:href="qobject.html#deleteLater" xrefstyle="function" annotations="deleteLater">deleteLater</db:link></db:code> on the editor. It is possible e.g. to avoid this delete by reimplementing this function.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemdelegate.html#createEditor" xrefstyle="function" annotations="createEditor()">createEditor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.0.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemDelegate::setEditorData(QWidget *editor, const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setEditorData</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the contents of the given <db:code role="argument">editor</db:code> to the data for the item at the given <db:code role="argument">index</db:code>. Note that the index contains information about the model being used.</db:para>
+         <db:para>The base implementation does nothing. If you want custom editing you will need to reimplement this function.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemdelegate.html#setModelData" xrefstyle="function" annotations="setModelData()">setModelData()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setModelData</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemModel *</db:type>
+               <db:parameter>model</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the data for the item at the given <db:code role="argument">index</db:code> in the <db:code role="argument">model</db:code> to the contents of the given <db:code role="argument">editor</db:code>.</db:para>
+         <db:para>The base implementation does nothing. If you want custom editing you will need to reimplement this function.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemdelegate.html#setEditorData" xrefstyle="function" annotations="setEditorData()">setEditorData()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>updateEditorGeometry</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QStyleOptionViewItem &amp;</db:type>
+               <db:parameter>option</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Updates the geometry of the <db:code role="argument">editor</db:code> for the item with the given <db:code role="argument">index</db:code>, according to the rectangle specified in the <db:code role="argument">option</db:code>. If the item has an internal layout, the editor will be laid out accordingly. Note that the index contains information about the model being used.</db:para>
+         <db:para>The base implementation does nothing. If you want custom editing you must reimplement this function.</db:para>
+      </db:section>
+   </db:section>
+</db:article>
