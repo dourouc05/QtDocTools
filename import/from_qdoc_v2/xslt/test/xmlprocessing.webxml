@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="xmlprocessing.html" href="xmlprocessing.html" status="active" location="xml-patterns.qdoc" filepath="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/src/xml-patterns.qdoc" lineno="28" subtype="page" title="XQuery" fulltitle="XQuery" subtitle="" module="QtXmlPatterns" brief="An overview of Qt's support for using XML technologies in Qt programs">
+            <target name="qtxmlpatterns-example-query" title="qtxmlpatterns_example_query"/>
+            <target name="qtxdm" title="QtXDM"/>
+            <target name="qtxmlpatterns-example-query2" title="qtxmlpatterns_example_query2"/>
+            <target name="binding-to-time" title="Binding To Time"/>
+            <target name="binding-to-qvariantlist" title="Binding To QVariantList"/>
+            <target name="handling-qxmlnames" title="Handling QXmlNames"/>
+            <target name="xstime-not-mapped"/>
+            <keyword name="patternist" title="Patternist"/>
+            <contents name="introduction" title="Introduction" level="1"/>
+            <contents name="advantages-of-using-qt-xml-patterns-and-xquery" title="Advantages of Using Qt XML Patterns and XQuery" level="1"/>
+            <contents name="using-the-qt-xml-patterns-module" title="Using the Qt XML Patterns Module" level="1"/>
+            <contents name="running-the-query-engine-from-your-qt-application" title="Running the query engine from your Qt application" level="2"/>
+            <contents name="running-the-query-engine-from-the-command-line-utility" title="Running the query engine from the command line utility" level="2"/>
+            <contents name="the-xquery-data-model" title="The XQuery Data Model" level="1"/>
+            <contents name="binding-program-variables-to-xquery-variables" title="Binding program variables to XQuery variables" level="2"/>
+            <contents name="binding-to-qvariant-time" title="Binding To QVariant::Time" level="3"/>
+            <contents name="binding-to-qvariantlist" title="Binding To QVariantList" level="3"/>
+            <contents name="interpreting-xquery-results" title="Interpreting XQuery results" level="2"/>
+            <contents name="handling-qxmlnames" title="Handling QXmlNames" level="3"/>
+            <contents name="no-mapping-for-xs-time" title="No mapping for xs:time" level="3"/>
+            <contents name="using-xquery-with-non-xml-data" title="Using XQuery with Non-XML Data" level="1"/>
+            <contents name="more-on-using-qt-xml-patterns-with-non-xml-data" title="More on Using Qt XML Patterns with Non-XML Data" level="1"/>
+            <contents name="security-considerations" title="Security Considerations" level="1"/>
+            <contents name="code-injection" title="Code Injection" level="2"/>
+            <contents name="denial-of-service-attacks" title="Denial of Service Attacks" level="2"/>
+            <contents name="features-and-conformance" title="Features and Conformance" level="1"/>
+            <contents name="xquery-1-0" title="XQuery 1.0" level="2"/>
+            <contents name="xslt-2-0" title="XSLT 2.0" level="2"/>
+            <contents name="xpath-2-0" title="XPath 2.0" level="2"/>
+            <contents name="xml-id" title="xml:id" level="2"/>
+            <contents name="xml-schema-1-0" title="XML Schema 1.0" level="2"/>
+            <contents name="resource-loading" title="Resource Loading" level="2"/>
+            <contents name="xml" title="XML" level="2"/>
+            <description path="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/src/xml-patterns.qdoc" line="28" column="4">
+                <relation href="xml-dom-tml.html" type="page" meta="previous" description="Working with the DOM Tree"/>
+                <relation href="xml-processing.html" type="page" meta="contents" description="XML Processing"/>
+                <brief>An overview of Qt's support for using XML technologies in Qt programs.</brief>
+                <section id="introduction">
+                    <heading level="1">Introduction</heading>
+                    <para>
+                        <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> is a language for traversing XML documents to select and aggregate items of interest and to transform them for output as XML or some other format. XPath is the <italic>element selection</italic> part of <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link>.</para>
+                    <para>The Qt XML Patterns module supports using <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> 1.0 and XPath 2.0 in Qt applications, for querying XML data <italic>and</italic> for querying <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">non-XML data that can be modeled to look like XML</link>. Readers who are not familiar with the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link>/XPath language can read <link raw="A Short Path to XQuery" href="xquery-introduction.html" type="page" page="A Short Path to XQuery">A Short Path to XQuery</link> for a brief introduction.</para>
+                </section>
+                <section id="advantages-of-using-qt-xml-patterns-and-xquery">
+                    <heading level="1">Advantages of Using Qt XML Patterns and XQuery</heading>
+                    <para>The <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link>/XPath language simplifies data searching and transformation tasks by eliminating the need for doing a lot of C++ or Java procedural programming for each new query task. Here is an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> that constructs a bibliography of the contents of a library:</para>
+                    <target name="qtxmlpatterns-example-query"/>
+                    <quotefile>patternist/introductionExample.xq</quotefile>
+                    <para>First, the query opens a <teletype type="highlighted">&lt;bibliography&gt;</teletype> element in the output. The <link raw="xquery-introduction.html#using-path-expressions-to-match-and-select-items" href="xquery-introduction.html#using-path-expressions-to-match-and-select-items" type="page" page="A Short Path to XQuery">embedded path expression</link> then loads the XML document describing the contents of the library (<teletype type="highlighted">library.xml</teletype>) and begins the search. For each <teletype type="highlighted">&lt;book&gt;</teletype> element it finds, where the publisher was Addison-Wesley and the publication year was after 1991, it creates a new <teletype type="highlighted">&lt;book&gt;</teletype> element in the output as a child of the open <teletype type="highlighted">&lt;bibliography&gt;</teletype> element. Each new <teletype type="highlighted">&lt;book&gt;</teletype> element gets the book's title as its contents and the book's publication year as an attribute. Finally, the <teletype type="highlighted">&lt;bibliography&gt;</teletype> element is closed.</para>
+                    <para>The advantages of using Qt XML Patterns and <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> in your Qt programs are summarized as follows:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <bold>Ease of development</bold>: All the C++ programming required to perform data query tasks can be replaced by a simple <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> like the example above.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <bold>Comprehensive functionality</bold>: The expression syntax and rich set of functions and operators provided by <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> are sufficient for performing any data searching, selecting, and sorting tasks.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <bold>Conformance to standards</bold>: Conformance to all applicable XML and <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> standards ensures that Qt XML Patterns can always process XML documents generated by other conformant applications, and that XML documents created with Qt XML Patterns can be processed by other conformant applications.</para>
+                        </item>
+                        <item>
+                            <para>
+                                <bold>Maximal flexibility</bold> The Qt XML Patterns module can be used to query XML data <italic>and</italic> non-XML data that can be <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">modeled to look like XML</link>.</para>
+                        </item>
+                    </list>
+                </section>
+                <section id="using-the-qt-xml-patterns-module">
+                    <heading level="1">Using the Qt XML Patterns Module</heading>
+                    <para>There are two ways Qt XML Patterns can be used to evaluate queries. You can run the query engine in your Qt application using the Qt XML Patterns C++ API, or you can run the query engine from the command line using Qt's <teletype type="highlighted">xmlpatterns</teletype> command line utility.</para>
+                </section>
+                <section id="running-the-query-engine-from-your-qt-application">
+                    <heading level="2">Running the query engine from your Qt application</heading>
+                    <para>If we save the example <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> shown above in a text file (e.g. <teletype type="highlighted">myquery.xq</teletype>), we can run it from a Qt application using a standard Qt XML Patterns code sequence:</para>
+                    <snippet location="code/src_xmlpatterns_api_qxmlquery.cpp" path="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/snippets/code/src_xmlpatterns_api_qxmlquery.cpp" identifier="3"/>
+                    <para>First construct a <link raw="QFile" href="qfile.html" type="class">QFile</link> for the text file containing the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> (<teletype type="highlighted">myquery.xq</teletype>). Then create an instance of <link raw="QXmlQuery" href="qxmlquery.html" type="class">QXmlQuery</link> and call its <link raw="QXmlQuery::setQuery()" href="qxmlquery.html#setQuery" type="function">setQuery()</link> function to load and parse the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> file. Then create an <link raw="QXmlSerializer" href="qxmlserializer.html" type="class">XML serializer</link> to output the query's result set as unformatted XML. Finally, call the <link raw="QXmlQuery::evaluateTo()" href="qxmlquery.html#evaluateTo" type="function">evaluateTo()</link> function to evaluate the query and serialize the results as XML.</para>
+                    <para>
+                        <bold>Note:</bold> If you compile Qt yourself, the Qt XML Patterns module will <italic>not</italic> be built if exceptions are disabled, or if you compile Qt with a compiler that doesn't support member templates, e.g., MSVC 6.</para>
+                    <para>See the <link raw="QXmlQuery" href="qxmlquery.html" type="class">QXmlQuery</link> documentation for more information about the Qt XML Patterns C++ API.</para>
+                </section>
+                <section id="running-the-query-engine-from-the-command-line-utility">
+                    <heading level="2">Running the query engine from the command line utility</heading>
+                    <para>
+                        <italic>xmlpatterns</italic> is a command line utility for running XQueries. It expects the name of a file containing the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> text.</para>
+                    <snippet location="code/doc_src_qtxmlpatterns.qdoc" path="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/snippets/code/doc_src_qtxmlpatterns.qdoc" identifier="2"/>
+                    <para>The <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> in <teletype type="highlighted">myQuery.xq</teletype> will be evaluated and its output written to <teletype type="highlighted">stdout</teletype>. Pass the <teletype type="highlighted">-help</teletype> switch to get the list of input flags and their meanings.</para>
+                    <para>xmlpatterns can be used in scripting. However, the descriptions and messages it outputs were not meant to be parsed and may be changed in future releases of Qt.</para>
+                    <target name="qtxdm"/>
+                </section>
+                <section id="the-xquery-data-model">
+                    <heading level="1">The XQuery Data Model</heading>
+                    <para>
+                        <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> represents data items as <italic>atomic values</italic> or <italic>nodes</italic>. An atomic value is a value in the domain of one of the built-in datatypes defined in Part 2 of the W3C XML Schema. A node is normally an XML element or attribute, but when non-XML data is <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">modeled to look like XML</link>, a node can also represent a non-XML data items.</para>
+                    <para>When you run an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> using the C++ API in a Qt application, you will often want to bind program variables to $variables in the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link>. After the query is evaluated, you will want to interpret the sequence of data items in the result set.</para>
+                </section>
+                <section id="binding-program-variables-to-xquery-variables">
+                    <heading level="2">Binding program variables to XQuery variables</heading>
+                    <para>When you want to run a parameterized <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> from your Qt application, you will need to <link raw="QXmlQuery::bindVariable()" href="qxmlquery.html#bindVariable" type="function">bind variables</link> in your program to $name variables in your <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link>.</para>
+                    <para>Suppose you want to parameterize the bibliography <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> in the example above. You could define variables for the catalog that contains the library (<teletype type="highlighted">$file</teletype>), the publisher name (<teletype type="highlighted">$publisher</teletype>), and the year of publication (<teletype type="highlighted">$year</teletype>):</para>
+                    <target name="qtxmlpatterns-example-query2"/>
+                    <quotefile>patternist/introExample2.xq</quotefile>
+                    <para>Modify the Qt XML Patterns code to use one of the <link raw="QXmlQuery::bindVariable()" href="qxmlquery.html#bindVariable" type="function">bindVariable()</link> functions to bind a program variable to each <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> $variable:</para>
+                    <snippet location="code/src_xmlpatterns_api_qxmlquery.cpp" path="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/snippets/code/src_xmlpatterns_api_qxmlquery.cpp" identifier="4"/>
+                    <para>Each program variable is passed to Qt XML Patterns as a <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> of the type of the C++ variable or constant from which it is constructed. Note that Qt XML Patterns assumes that the type of the <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> in the bindVariable() call is the correct type, so the $variable it is bound to must be used in the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> accordingly. The following table shows how <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> types are mapped to <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> $variable types:</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>
+                                    <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> type</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> $variable type</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::LongLong" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::LongLong</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:integer</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Int" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Int</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:integer</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::UInt" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::UInt</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:nonNegativeInteger</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::ULongLong" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::ULongLong</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:unsignedLong</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::String" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::String</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:string</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Double" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Double</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:double</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Bool" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Bool</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:boolean</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Double" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Double</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:decimal</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::ByteArray" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::ByteArray</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:base64Binary</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::StringList" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::StringList</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:string*</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Url" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Url</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:string</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Date" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Date</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:date</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:dateTime</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Time" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Time</link>.</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:time</teletype>. (see <link raw="Binding To Time" href="xmlprocessing.html#binding-to-time" type="page" page="XQuery">Binding To QVariant::Time</link> below)</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QVariantList" href="qvariant.html#QVariantList-typedef" type="typedef">QVariantList</link></para>
+                            </item>
+                            <item>
+                                <para>(see <link raw="Binding To QVariantList" href="xmlprocessing.html#binding-to-qvariantlist" type="page" page="XQuery">Binding To QVariantList</link> below)</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>A type not shown in the table is not supported and will cause undefined <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> behavior or a $variable binding error, depending on the context in the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> where the variable is used.</para>
+                    <target name="binding-to-time"/>
+                </section>
+                <section id="binding-to-qvariant-time">
+                    <heading level="3">Binding To QVariant::Time</heading>
+                    <para>Because the instance of <link raw="QTime" href="qtime.html" type="class">QTime</link> used in <link raw="QVariant::Time" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Time</link> does not include a zone offset, an instance of <link raw="QVariant::Time" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Time</link> should not be bound to an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> variable of type <teletype type="highlighted">xs:time</teletype>, unless the <link raw="QTime" href="qtime.html" type="class">QTime</link> is UTC. When binding a non-UTC <link raw="QTime" href="qtime.html" type="class">QTime</link> to an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> variable, it should first be passed as a string, or converted to a <link raw="QDateTime" href="qdatetime.html" type="class">QDateTime</link> with an arbitrary date, and then bound to an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> variable of type <teletype type="highlighted">xs:dateTime</teletype>.</para>
+                    <target name="binding-to-qvariantlist"/>
+                </section>
+                <section id="binding-to-qvariantlist">
+                    <heading level="3">Binding To QVariantList</heading>
+                    <para>A <link raw="QVariantList" href="qvariant.html#QVariantList-typedef" type="typedef">QVariantList</link> can be bound to an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> $variable. All the <link raw="QVariant" href="qvariant.html" type="class">QVariant</link>s in the list must be of the same atomic type, and the $variable the variant list is bound to must be of that same atomic type. If the QVariants in the list are not all of the same atomic type, the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> behavior is undefined.</para>
+                </section>
+                <section id="interpreting-xquery-results">
+                    <heading level="2">Interpreting XQuery results</heading>
+                    <para>When the results of an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> are returned in a sequence of <link raw="QXmlResultItems" href="qxmlresultitems.html" type="class">result items</link>, atomic values in the sequence are treated as instances of <link raw="QVariant" href="qvariant.html" type="class">QVariant</link>. Suppose that instead of serializing the results of the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> as XML, we process the results programatically. Modify the standard Qt XML Patterns code sequence to call the overload of <link raw="QXmlQuery::evaluateTo()" href="qxmlquery.html#evaluateTo" type="function">QXmlQuery::evaluateTo()</link> that populates a sequence of <link raw="QXmlResultItems" href="qxmlresultitems.html" type="class">result items</link> with the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> results:</para>
+                    <snippet location="code/src_xmlpatterns_api_qxmlquery.cpp" path="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/snippets/code/src_xmlpatterns_api_qxmlquery.cpp" identifier="5"/>
+                    <para>Iterate through the <link raw="QXmlResultItems" href="qxmlresultitems.html" type="class">result items</link> and test each <link raw="QXmlItem" href="qxmlitem.html" type="class">QXmlItem</link> to see if it is an atomic value or a node. If it is an atomic value, convert it to a <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> with <link raw="QXmlItem::toAtomicValue()" href="qxmlitem.html#toAtomicValue" type="function">toAtomicValue()</link> and switch on its <link raw="QVariant::type()" href="qvariant.html#type" type="function">variant type</link> to handle all the atomic values your <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> might return. The following table shows the <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> type to expect for each atomic value type (or <link raw="QXmlName" href="qxmlname.html" type="class">QXmlName</link>):</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>
+                                    <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> result item type</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> type returned</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:QName</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QXmlName" href="qxmlname.html" type="class">QXmlName</link> (see <link raw="Handling QXmlNames" href="xmlprocessing.html#handling-qxmlnames" type="page" page="XQuery">Handling QXmlNames</link> below)</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:integer</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::LongLong" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::LongLong</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:string</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::String" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::String</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:string*</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::StringList" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::StringList</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:double</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Double" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Double</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:float</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Double" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Double</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:boolean</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Bool" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Bool</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:decimal</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Double" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Double</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:hexBinary</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::ByteArray" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::ByteArray</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:base64Binary</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::ByteArray" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::ByteArray</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:gYear</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:gYearMonth</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:gMonthDay</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:gDay</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:gMonth</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:anyURI</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::Url" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Url</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:untypedAtomic</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::String" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::String</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:ENTITY</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::String" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::String</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:date</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:dateTime</teletype></para>
+                            </item>
+                            <item>
+                                <para>
+                                    <link raw="QVariant::DateTime" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::DateTime</link></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xs:time</teletype></para>
+                            </item>
+                            <item>
+                                <para>(see <link raw="xstime-not-mapped" href="xmlprocessing.html#xstime-not-mapped" type="page" page="XQuery">No mapping for xs:time</link> below)</para>
+                            </item>
+                        </row>
+                    </table>
+                    <target name="handling-qxmlnames"/>
+                </section>
+                <section id="handling-qxmlnames">
+                    <heading level="3">Handling QXmlNames</heading>
+                    <para>If your <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> can return atomic value items of type <teletype type="highlighted">xs:QName</teletype>, they will appear in your <link raw="QXmlResultItems" href="qxmlresultitems.html" type="class">QXmlResultItems</link> as instances of <link raw="QXmlName" href="qxmlname.html" type="class">QXmlName</link>. Since the <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> class does not support the <link raw="QXmlName" href="qxmlname.html" type="class">QXmlName</link> class directly, extracting them from <link raw="QXmlResultItems" href="qxmlresultitems.html" type="class">QXmlResultItems</link> requires a bit of slight-of-hand using the <link raw="QMetaType" href="qmetatype.html" type="class">Qt metatype system</link>. We must modify our example to use a couple of template functions, a friend of <link raw="QMetaType" href="qmetatype.html" type="class">QMetaType</link> (<link raw="qMetaTypeId" href="qmetatype.html#qMetaTypeId" type="function">qMetaTypeId</link>&lt;T&gt;()) and a friend of <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> (qvariant_cast&lt;T&gt;()):</para>
+                    <snippet location="code/src_xmlpatterns_api_qxmlquery.cpp" path="C:/Qt/5.11.1/Src/qtxmlpatterns/src/xmlpatterns/doc/snippets/code/src_xmlpatterns_api_qxmlquery.cpp" identifier="6"/>
+                    <para>To access the strings in a <link raw="QXmlName" href="qxmlname.html" type="class">QXmlName</link> returned by an <link raw="QXmlQuery::evaluateTo()" href="qxmlquery.html#evaluateTo" type="function">XQuery evaluation</link>, the <link raw="QXmlName" href="qxmlname.html" type="class">QXmlName</link> must be accessed with the <link raw="QXmlNamePool" href="qxmlnamepool.html" type="class">name pool</link> from the instance of <link raw="QXmlQuery" href="qxmlquery.html" type="class">QXmlQuery</link> that was used for the evaluation.</para>
+                    <target name="xstime-not-mapped"/>
+                </section>
+                <section id="no-mapping-for-xs-time">
+                    <heading level="3">No mapping for xs:time</heading>
+                    <para>An instance of <teletype type="highlighted">xs:time</teletype> can't be represented correctly as an instance of <link raw="QVariant::Time" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Time</link>, unless the <teletype type="highlighted">xs:time</teletype> is a UTC time. This is because xs:time has a zone offset (0 for UTC) in addition to the time value, which the <link raw="QTime" href="qtime.html" type="class">QTime</link> in <link raw="QVariant::Time" href="qvariant-obsolete.html#Type-enum" type="enum" enum="QVariant::Type">QVariant::Time</link> does not have. This means that if an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> tries to return an atomic value of type <teletype type="highlighted">xs:time</teletype>, an invalid <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> will be returned. A query can return an atomic value of type xs:time by either converting it to an <teletype type="highlighted">xs:dateTime</teletype> with an arbitrary date, or to an <teletype type="highlighted">xs:string</teletype>.</para>
+                </section>
+                <section id="using-xquery-with-non-xml-data">
+                    <heading level="1">Using XQuery with Non-XML Data</heading>
+                    <para>Although the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> language was designed for querying XML, with Qt XML Patterns one can use <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> for querying any data that can be modeled to look like XML. Non-XML data is modeled to look like XML by loading it into a custom subclass of <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link>, where it is then presented to the Qt XML Patterns <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> engine via the same API the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> engine uses for querying XML.</para>
+                    <para>When Qt XML Patterns loads and queries XML files and produces XML output, it can always load the XML data into its default XML node model, where it can be traversed efficiently. The <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> below traverses the product orders found in the XML file <italic>myOrders.xml</italic> to find all the skin care product orders and output them ordered by shipping date.</para>
+                    <quotefile>patternist/introAcneRemover.xq</quotefile>
+                    <para>Qt XML Patterns can be used out of the box to perform this query, provided <italic>myOrders.xml</italic> actually contains well-formed XML. It can be loaded directly into the default XML node model and traversed. But suppose we want Qt XML Patterns to perform queries on the hierarchical structure of the local file system. The default XML node model in Qt XML Patterns is not suitable for navigating the file system, because there is no XML file to load that contains a description of it. Such an XML file, if it existed, might look something like this:</para>
+                    <quotefile>patternist/introFileHierarchy.xml</quotefile>
+                    <para>The <link raw="File System Example" href="qtxmlpatterns-filetree-example.html" type="page" page="File System Example">File System Example</link> does exactly this.</para>
+                    <para>There is no such file to load into the default XML node model, but one can write a subclass of <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> to represent the file system. This custom XML node model, once populated with all the directory and file descriptors obtained directly from the system, presents the complete file system hierarchy to the query engine via the same API used by the default XML node model to present the contents of an XML file. In other words, once the custom XML node model is populated, it presents the file system to the query engine as if a description of it had been loaded into the default XML node model from an XML file like the one shown above.</para>
+                    <para>Now we can write an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> to find all the XML files and parse them to find the ones that don't contain well-formed XML.</para>
+                    <quotefromfile>patternist/introNavigateFS.xq</quotefromfile>
+                    <skipto>&lt;html&gt;</skipto>
+                    <printuntil></printuntil>
+                    <para>Without Qt XML Patterns, there is no simple way to solve this kind of problem. You might do it by writing a C++ program to traverse the file system, sniff out all the XML files, and submit each one to an XML parser to test that it contains valid XML. The C++ code required to write that program will probably be more complex than the C++ code required to subclass <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link>, but even if the two are comparable, your custom C++ program can be used only for that one task, while your custom XML node model can be used by any <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> that must navigate the file system.</para>
+                    <para>The general approach to using <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> to perform queries on non-XML data has been a three step process. In the first step, the data is loaded into a non-XML data model. In the second step, the non-XML data model is serialized as XML and output to XML (text) files. In the final step, an XML tool loads the XML files into a second, XML data model, where the XQueries can be performed. The development cost of implementing this process is often high, and the three step system that results is inefficient because the two data models must be built and maintained separately.</para>
+                    <para>With Qt XML Patterns, subclassing <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> eliminates the transformation required to convert the non-XML data model to the XML data model, because there is only ever one data model required. The non-XML data model presents the non-XML data to the query engine via the XML data model API. Also, since the query engine uses the API to access the <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link>, the data model subclass can construct the elements, attributes and other data on demand, responding to the query's specific requests. This can greatly improve efficiency, because it means the entire model might not have to be built. For example, in the file system model above, it is not necessary to build an instance for a whole XML file representing the whole file system. Instead nodes are created on demand, which also likely is a small subset of the file system.</para>
+                    <para>Examples of other places where <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> could be used in Qt XML Patterns to query non-XML data:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>The internal representation for word processor documents</para>
+                        </item>
+                        <item>
+                            <para>The set of dependencies for a software build system</para>
+                        </item>
+                        <item>
+                            <para>The hierarchy (or graph) that links a set of HTML documents from a web crawler</para>
+                        </item>
+                        <item>
+                            <para>The images and meta-data in an image collection</para>
+                        </item>
+                        <item>
+                            <para>The set of D-Bus interfaces available in a system</para>
+                        </item>
+                        <item>
+                            <para>A <link raw="QObject" href="qobject.html" type="class">QObject</link> hierarchy.</para>
+                        </item>
+                    </list>
+                    <para>See the <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> documentation for information about how to implement custom XML node models.</para>
+                </section>
+                <section id="more-on-using-qt-xml-patterns-with-non-xml-data">
+                    <heading level="1">More on Using Qt XML Patterns with Non-XML Data</heading>
+                    <para>Subclassing <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> to let the query engine access non-XML data by the same API it uses for XML is the feature that enables Qt XML Patterns to query non-XML data with <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link>. It allows <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> to be used as a mapping layer between different non-XML node models or between a non-XML node model and the built-in XML node model. Once the subclass(es) of <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> have been written, <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> can be used to select a set of elements from one node model, transform the selected elements, and then write them out, either as XML using <link raw="QXmlQuery::evaluateTo()" href="qxmlquery.html#evaluateTo" type="function">QXmlQuery::evaluateTo()</link> and <link raw="QXmlSerializer" href="qxmlserializer.html" type="class">QXmlSerializer</link>, or as some other format using a subclass of <link raw="QAbstractXmlReceiver" href="qabstractxmlreceiver.html" type="class">QAbstractXmlReceiver</link>.</para>
+                    <para>Consider a word processor application that must import and export data in several different formats. Rather than writing a lot of C++ code to convert each input format to an intermediate form, and more C++ code to convert the intermediate form back to each output format, one can implement a solution based on Qt XML Patterns that uses simple XQueries to transform each XML or non-XML format (e.g. MathFormula.xml below) to the intermediate form (e.g. the DocumentRepresentation node model class below), and more simple XQueries to transform the intermediate form back to each XML or non-XML format.</para>
+                    <image href="images/patternist-wordProcessor.png"/>
+                    <para>Because CSV files are not XML, a subclass of <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> is used to present the CSV data to the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> engine as if it were XML. What are not shown are the subclasses of <link raw="QAbstractXmlReceiver" href="qabstractxmlreceiver.html" type="class">QAbstractXmlReceiver</link> that would then send the selected elements into the DocumentRepresentation node model, and the subclasses of <link raw="QAbstractXmlNodeModel" href="qabstractxmlnodemodel.html" type="class">QAbstractXmlNodeModel</link> that would ultimately write the output files in each format.</para>
+                </section>
+                <section id="security-considerations">
+                    <heading level="1">Security Considerations</heading>
+                </section>
+                <section id="code-injection">
+                    <heading level="2">Code Injection</heading>
+                    <para>
+                        <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> is vulnerable to code injection attacks in the same way as the SQL language. If an <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> is constructed by concatenating strings, and the strings come from user input, the constructed <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> could be malevolent. The best way to prevent code injection attacks is to not construct XQueries from user-written strings, but only accept user data input using <link raw="QVariant" href="qvariant.html" type="class">QVariant</link> and variable bindings. See <link raw="QXmlQuery::bindVariable()" href="qxmlquery.html#bindVariable" type="function">QXmlQuery::bindVariable()</link>.</para>
+                    <para>The articles Avoid the dangers of XPath injection, by Robi Sen and Blind XPath Injection, by Amit Klein, discuss the <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> code injection problem in more detail.</para>
+                </section>
+                <section id="denial-of-service-attacks">
+                    <heading level="2">Denial of Service Attacks</heading>
+                    <para>Applications using Qt XML Patterns are subject to the same limitations of software as other systems. Generally, these can not be checked. This means Qt XML Patterns does not prevent rogue queries from consuming too many resources. For example, a query could take too much time to execute or try to transfer too much data. A query could also do too much recursion, which could crash the system. XQueries can do these things accidentally, but they can also be done as deliberate denial of service attacks.</para>
+                </section>
+                <section id="features-and-conformance">
+                    <heading level="1">Features and Conformance</heading>
+                </section>
+                <section id="xquery-1-0">
+                    <heading level="2">XQuery 1.0</heading>
+                    <para>Qt XML Patterns aims at being a conformant <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> processor. It adheres to Minimal Conformance and supports the Serialization Feature and the Full Axis Feature. Qt XML Patterns currently passes 97% of the tests in the XML Query Test Suite. Areas where conformance may be questionable and where behavior may be changed in future releases include:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>Some corner cases involving namespaces and element constructors are incorrect.</para>
+                        </item>
+                        <item>
+                            <para>XPath is a subset of <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> and the implementation of Qt XML Patterns uses XPath 2.0 with <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> 1.0.</para>
+                        </item>
+                    </list>
+                    <para>The specifications discusses conformance further: <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> 1.0: An XML Query Language. W3C's <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> testing effort can be of interest as well, XML Query Test Suite.</para>
+                    <para>Currently <teletype type="highlighted">fn:collection()</teletype> does not access any data set, and there is no API for providing data through the collection. As a result, evaluating <teletype type="highlighted">fn:collection()</teletype> returns the empty sequence. We intend to provide functionality for this in a future release of Qt.</para>
+                    <para>Only queries encoded in UTF-8 are supported.</para>
+                </section>
+                <section id="xslt-2-0">
+                    <heading level="2">XSLT 2.0</heading>
+                    <para>Partial support for XSLT was introduced in Qt 4.5. Future releases of Qt XML Patterns will aim to support these XSLT features:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>Basic XSLT 2.0 processor</para>
+                        </item>
+                        <item>
+                            <para>Serialization feature</para>
+                        </item>
+                        <item>
+                            <para>Backwards Compatibility feature</para>
+                        </item>
+                    </list>
+                    <para>For details, see XSL Transformations (XSLT) Version 2.0, 21 Conformance.</para>
+                    <para>
+                        <bold>Note:</bold> In this release, XSLT support is considered experimental.</para>
+                    <para>Unsupported or partially supported XSLT features are documented in the following table. The implementation of XSLT in Qt 4.5 can be seen as XSLT 1.0 but with the data model of XPath 2.0 and XSLT 2.0, and using the using the functionality of XPath 2.0 and its accompanying function library. When Qt XML Patterns encounters an unsupported or partially support feature, it will either report a syntax error or silently continue, unless otherwise noted in the table.</para>
+                    <para>The implementation currently passes 42% of W3C's XSLT test suite, which focus on features introduced in XSLT 2.0.</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>XSL Feature</para>
+                            </item>
+                            <item>
+                                <para>Support Status</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:key</teletype> and <teletype type="highlighted">fn:key()</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:include</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:import</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:copy</teletype></para>
+                            </item>
+                            <item>
+                                <para>The <teletype type="highlighted">copy-namespaces</teletype> and <teletype type="highlighted">inherit-namespaces</teletype> attributes have no effect. For copied comments, attributes and processing instructions, the copy has the same node identity as the original.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:copy-of</teletype></para>
+                            </item>
+                            <item>
+                                <para>The <teletype type="highlighted">copy-namespaces</teletype> attribute has no effect.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">fn:format-number()</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:message</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:use-when</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">Tunnel</teletype> Parameters</para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:attribute-set</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:decimal-format</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:fallback</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:apply-imports</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:character-map</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:number</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:namespace-alias</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:output</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:output-character</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:preserve-space</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:result-document</teletype></para>
+                            </item>
+                            <item>
+                                <para>not supported</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>Patterns</para>
+                            </item>
+                            <item>
+                                <para>Complex patterns or patterns with predicates have issues.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">2.0</teletype> Compatibility Mode</para>
+                            </item>
+                            <item>
+                                <para>Stylesheets are interpreted as XSLT 2.0 stylesheets, even if the <teletype type="highlighted">version</teletype> attribute is in the XSLT source is 1.0. In other words, the version attribute is ignored.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>Grouping</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">fn:current-group()</teletype>, <teletype type="highlighted">fn:grouping-key()</teletype> and <teletype type="highlighted">xsl:for-each-group</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>Regexp elements</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">xsl:analyze-string</teletype>, <teletype type="highlighted">xsl:matching-substring</teletype>, <teletype type="highlighted">xsl:non-matching-substring</teletype>, and <teletype type="highlighted">fn:regex-group()</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>Date &amp; Time formatting</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">fn:format-dateTime()</teletype>, <teletype type="highlighted">fn:format-date()</teletype> and fn:format-time().</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>XPath Conformance</para>
+                            </item>
+                            <item>
+                                <para>Since XPath is a subset of XSLT, its issues are in affect too.</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>The Qt XML Patterns implementation of the XPath Data Model does not include entities (due to <link raw="QXmlStreamReader" href="qxmlstreamreader.html" type="class">QXmlStreamReader</link> not reporting them). This means that functions <teletype type="highlighted">unparsed-entity-uri()</teletype> and <teletype type="highlighted">unparsed-entity-public-id()</teletype> always return negatively.</para>
+                </section>
+                <section id="xpath-2-0">
+                    <heading level="2">XPath 2.0</heading>
+                    <para>Since XPath 2.0 is a subset of <link raw="XQuery" href="xmlprocessing.html" type="page" page="XQuery">XQuery</link> 1.0, XPath 2.0 is supported. Areas where conformance may be questionable and, consequently, where behavior may be changed in future releases include:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>Regular expression support is currently not conformant but follows Qt's <link raw="QRegExp" href="qregexp.html" type="class">QRegExp</link> standard syntax.</para>
+                        </item>
+                        <item>
+                            <para>Operators for <teletype type="highlighted">xs:time</teletype>, <teletype type="highlighted">xs:date</teletype>, and <teletype type="highlighted">xs:dateTime</teletype> are incomplete.</para>
+                        </item>
+                        <item>
+                            <para>Formatting of very large or very small <teletype type="highlighted">xs:double</teletype>, <teletype type="highlighted">xs:float</teletype>, and <teletype type="highlighted">xs:decimal</teletype> values may be incorrect.</para>
+                        </item>
+                    </list>
+                </section>
+                <section id="xml-id">
+                    <heading level="2">xml:id</heading>
+                    <para>Processing of XML files supports <teletype type="highlighted">xml:id</teletype>. This allows elements that have an attribute named <teletype type="highlighted">xml:id</teletype> to be looked up efficiently with the <teletype type="highlighted">fn:id()</teletype> function. See xml:id Version 1.0 for details.</para>
+                </section>
+                <section id="xml-schema-1-0">
+                    <heading level="2">XML Schema 1.0</heading>
+                    <para>There are two ways Qt XML Patterns can be used to validate schemas: You can use the C++ API in your Qt application using the classes <link raw="QXmlSchema" href="qxmlschema.html" type="class">QXmlSchema</link> and <link raw="QXmlSchemaValidator" href="qxmlschemavalidator.html" type="class">QXmlSchemaValidator</link>, or you can use the command line utility named xmlpatternsvalidator (located in the &quot;bin&quot; directory of your Qt build).</para>
+                    <para>The Qt XML Patterns implementation of XML Schema validation supports the schema specification version 1.0 in large parts. Known problems of the implementation and areas where conformancy may be questionable are:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>Large <teletype type="highlighted">minOccurs</teletype> or <teletype type="highlighted">maxOccurs</teletype> values or deeply nested ones require huge amount of memory which might cause the system to freeze. Such a schema should be rewritten to use <teletype type="highlighted">unbounded</teletype> as value instead of large numbers. This restriction will hopefully be fixed in a later release.</para>
+                        </item>
+                        <item>
+                            <para>Comparison of really small or large floating point values might lead to wrong results in some cases. However such numbers should not be relevant for day-to-day usage.</para>
+                        </item>
+                        <item>
+                            <para>Regular expression support is currently not conformant but follows Qt's <link raw="QRegExp" href="qregexp.html" type="class">QRegExp</link> standard syntax.</para>
+                        </item>
+                        <item>
+                            <para>Identity constraint checks can not use the values of default or fixed attribute definitions.</para>
+                        </item>
+                    </list>
+                </section>
+                <section id="resource-loading">
+                    <heading level="2">Resource Loading</heading>
+                    <para>When Qt XML Patterns loads an XML resource, e.g., using the <teletype type="highlighted">fn:doc()</teletype> function, the following schemes are supported:</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>Scheme Name</para>
+                            </item>
+                            <item>
+                                <para>Description</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">file</teletype></para>
+                            </item>
+                            <item>
+                                <para>Local files.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">data</teletype></para>
+                            </item>
+                            <item>
+                                <para>The bytes are encoded in the URI itself. e.g., <teletype type="highlighted">data:application/xml,%3Ce%2F%3E</teletype> is <teletype type="highlighted">&lt;e/&gt;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">ftp</teletype></para>
+                            </item>
+                            <item>
+                                <para>Resources retrieved via FTP.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">http</teletype></para>
+                            </item>
+                            <item>
+                                <para>Resources retrieved via HTTP.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">https</teletype></para>
+                            </item>
+                            <item>
+                                <para>Resources retrieved via HTTPS. This will succeed if no SSL errors are encountered.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">qrc</teletype></para>
+                            </item>
+                            <item>
+                                <para>Qt Resource files. Expressing it as an empty scheme, :/..., is not supported.</para>
+                            </item>
+                        </row>
+                    </table>
+                </section>
+                <section id="xml">
+                    <heading level="2">XML</heading>
+                    <para>XML 1.0 and XML Namespaces 1.0 are supported, as opposed to the 1.1 versions. When a strings is passed to a query as a <link raw="QString" href="qstring.html" type="class">QString</link>, the characters must be XML 1.0 characters. Otherwise, the behavior is undefined. This is not checked.</para>
+                    <para>URIs are first passed to <link raw="QAbstractUriResolver" href="qabstracturiresolver.html" type="class">QAbstractUriResolver</link>. Check <link raw="QXmlQuery::setUriResolver()" href="qxmlquery.html#setUriResolver" type="function">QXmlQuery::setUriResolver()</link> for possible rewrites.</para>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

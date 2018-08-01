@@ -10,28 +10,6 @@
     suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
   
-  <!-- Needed to handle quotefromfile and family. See comments at the named template quotefromfile. -->
-  <xsl:variable name="descriptionPath" as="xs:string" select="//description/@path"/>
-  <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, //quotefromfile/text()[1])"/>
-  <xsl:variable name="quotefromfileContent" as="xs:string" select="tc:load-file($quotefromfileFile)"/>
-  <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize($quotefromfileContent, codepoints-to-string(10))"/>
-  <xsl:accumulator name="quotefromfileLine" initial-value="1" as="xs:integer"  streamable="no">
-    <xsl:accumulator-rule match="printline | skipline">
-      <xsl:variable name="strippedLine" select="translate($quotefromfileSequenceLines[$value + 1], ' ','')"/>
-      <xsl:value-of select="if ($strippedLine='') then $value + 2 else $value + 1"/>
-    </xsl:accumulator-rule>
-    <xsl:accumulator-rule match="printto | skipto">
-      <xsl:variable name="contentToMatch" select="text()" as="xs:string"/>
-      <xsl:variable name="quotefromfileContentTillEnd" select="$quotefromfileSequenceLines[position() >= $value]"/>
-      <xsl:variable name="quotefromfileMatchedTillEnd">
-        <xsl:for-each select="$quotefromfileContentTillEnd">
-          <xsl:value-of select="contains(., $contentToMatch)"/>
-        </xsl:for-each>
-      </xsl:variable>
-      <xsl:value-of select="if (./self::printto) then $value + index-of($quotefromfileMatchedTillEnd, true())[1] else $value + index-of($quotefromfileMatchedTillEnd, true())[1] + 1"/>
-    </xsl:accumulator-rule>
-  </xsl:accumulator>
-  
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>
   </xsl:template>
@@ -39,7 +17,7 @@
   <xsl:template match="document">
     <xsl:variable name="mainTag" select="child::node()[1]" as="node()"/>
     
-    <db:article>
+    <db:article version="5.2">
       <!-- Info tag only when there is more than just a title: an abstract (brief) or extended links (relations). -->
       <xsl:choose>
         <xsl:when test="child::node()[1]/@brief or child::node()[1]/description/relation">
@@ -56,13 +34,36 @@
               <db:para>
                 <xsl:value-of select="child::node()[1]/@brief"/>
               </db:para>
+              <xsl:if test="$mainTag/description/relation">
+                <db:para>
+                  <db:simplelist>
+                    <xsl:for-each select="$mainTag/description/relation">
+                      <db:member>
+                        <db:link xlink:href="{@href}" xlink:title="{@meta}">
+                          <xsl:choose>
+                            <xsl:when test="@meta='previous'">
+                              <xsl:text>&lt;</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="@meta='contents'">
+                              <xsl:text>^</xsl:text>
+                            </xsl:when>
+                          </xsl:choose>
+                          <xsl:value-of select="@description"/>
+                          <xsl:choose>
+                            <xsl:when test="@meta='next'">
+                              <xsl:text>&gt;</xsl:text>
+                            </xsl:when>
+                            <xsl:when test="@meta='contents'">
+                              <xsl:text>^</xsl:text>
+                            </xsl:when>
+                          </xsl:choose>
+                        </db:link>
+                      </db:member>
+                    </xsl:for-each>
+                  </db:simplelist>
+                </db:para>
+              </xsl:if>
             </db:abstract>
-            
-            <xsl:for-each select="$mainTag/description/relation">
-              <db:extendedlink>
-                <link xlink:type="arc" xlink:from="{$mainTag/@href}" xlink:to="{@href}" xlink:title="{@meta}" xlink:label="{@description}" />
-              </db:extendedlink>
-            </xsl:for-each>
           </db:info>
         </xsl:when>
         <xsl:otherwise>
@@ -659,7 +660,12 @@
   <xsl:function name="tc:load-file">
     <xsl:param name="filename" as="xs:string"/>
     <!-- Read the file and get rid of the \r. -->
-    <xsl:value-of select="replace(unparsed-text(tc:make-file-url($filename)), codepoints-to-string(13), '')"/>
+    <xsl:try select="replace(unparsed-text(tc:make-file-url($filename)), codepoints-to-string(13), '')">
+      <xsl:catch>
+        <xsl:message>WARNING</xsl:message>
+      </xsl:catch>
+    </xsl:try>
+    <!-- <xsl:value-of select="replace(unparsed-text(tc:make-file-url($filename)), codepoints-to-string(13), '')"/> -->
   </xsl:function>
   <xsl:function name="tc:parse-snippet">
     <xsl:param name="filename" as="xs:string"/>
@@ -714,6 +720,46 @@
     <!-- Don't do anything in this: this tag will be retrieved when needed (skipto, printuntil, and family). -->
   </xsl:template>
   
+  <xsl:function name="tc:printfromfile-get-line-after-node">
+    <xsl:param name="quotefromfileLines" as="xs:string*"/>
+    <xsl:param name="currentNode" as="node()?"/>
+    
+    <xsl:choose>
+      <xsl:when test="$currentNode">
+        <!-- Inductive case. Use the value from the previous nodes. -->
+        <xsl:variable name="value" as="xs:integer" select="tc:printfromfile-get-line-after-node($quotefromfileLines, $currentNode/preceding-sibling::node()[1]/(self::printline | self::printto | self::printuntil | self::skipline | self::skipto | self::skipuntil))"/>
+        
+        <!-- Compute the value for the current node based on the previous nodes. -->        
+        <xsl:variable name="lineNumberIncrement" as="xs:integer">
+          <xsl:choose>
+            <xsl:when test="$currentNode/self::printline | $currentNode/self::skipline">
+              <xsl:value-of select="1"/>
+            </xsl:when>
+            <xsl:when test="not($currentNode/text())">
+              <xsl:value-of select="count($quotefromfileLines[position() > $value])"/>
+            </xsl:when>
+            <xsl:when test="$currentNode/self::printto | $currentNode/self::skipto | $currentNode/self::printuntil | $currentNode/self::skipuntil">
+              <xsl:variable name="quotefromfileMatchedTillEnd" as="xs:boolean*">
+                <xsl:for-each select="$quotefromfileLines[position() > $value]">
+                  <xsl:copy-of select="contains(., $currentNode/text())"/>
+                </xsl:for-each>
+              </xsl:variable>
+              <xsl:variable name="lineUntil" select="if ($currentNode/self::printto) then index-of($quotefromfileMatchedTillEnd, true())[1] - 1 else index-of($quotefromfileMatchedTillEnd, true())[1]" as="xs:integer"/>
+              <xsl:value-of select="if ($currentNode/self::printuntil | $currentNode/self::skipuntil) then $lineUntil else $lineUntil + 1"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="strippedLine" select="translate($quotefromfileLines[$value + 1], ' ','')"/>
+        <xsl:value-of select="if ($strippedLine='') then $value + $lineNumberIncrement + 1 else $value + $lineNumberIncrement + 2"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Base case. Indexing starts at 1. -->
+        <xsl:value-of select="1"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
   <xsl:template mode="content_generic" match="printline | printto | printuntil | skipline | skipto | skipuntil">
     <!-- Work through the intricacies behind quotefromfile. -->
     <!-- Retrieve the code from the last quotefromfile. -->
@@ -728,9 +774,19 @@
     <!--   - skipuntil: skip until (INcluding) the first line that matches the argument -->
     
     <xsl:variable name="previousNode" select="preceding-sibling::node()[1]"/>
-    <xsl:if test="not($previousNode/self::printline or $previousNode/self::printto or $previousNode/self::printuntil or $previousNode/self::skipline or $previousNode/self::skipline or $previousNode/self::skipuntil)">
-      <xsl:variable name="firstLine" select="accumulator-before('quotefromfileLine')"/>
-      <xsl:value-of select="$quotefromfileSequenceLines[position() = (accumulator-before('quotefromfileLine') to accumulator-after('quotefromfileLine'))]"/>
+    <xsl:if test="not($previousNode/self::printline or $previousNode/self::printto or $previousNode/self::printuntil or $previousNode/self::skipline or $previousNode/self::skipline or $previousNode/self::skipto or $previousNode/self::skipuntil)">
+      <xsl:variable name="descriptionPath" as="xs:string" select="//description/@path"/>
+      <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, //quotefromfile/text()[1])"/>
+      <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize(tc:load-file($quotefromfileFile), codepoints-to-string(10))"/>
+      
+      <xsl:variable name="nextNode" select="following-sibling::node()[1]/self::printuntil | following-sibling::node()[1]/self::printto"/>
+      
+      <xsl:variable name="firstLineNumber" select="tc:printfromfile-get-line-after-node($quotefromfileSequenceLines, .)" as="xs:integer"/>
+      <xsl:variable name="endLineNumber" select="tc:printfromfile-get-line-after-node($quotefromfileSequenceLines, $nextNode)" as="xs:integer"/>
+      
+      <db:programlisting>
+        <xsl:value-of select="string-join($quotefromfileSequenceLines[position() = ($firstLineNumber to $endLineNumber)], codepoints-to-string(10))"/>
+      </db:programlisting>
     </xsl:if>
   </xsl:template>
   
@@ -870,7 +926,7 @@
     <xsl:choose>
       <xsl:when test="parent::header">
         <db:th>
-          <xsl:if test="not($targetId='')">
+          <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
           <xsl:apply-templates mode="content_generic"/>
@@ -878,7 +934,7 @@
       </xsl:when>
       <xsl:otherwise>
         <db:td>
-          <xsl:if test="not($targetId='')">
+          <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
           <xsl:apply-templates mode="content_generic"/>

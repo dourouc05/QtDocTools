@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:tc="http://dourouc05.github.io"
+            version="5.2">
+   <db:info>
+      <db:title>XQuery</db:title>
+      <db:abstract>
+         <db:para>An overview of Qt's support for using XML technologies in Qt programs</db:para>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="xml-dom-tml.html" xlink:title="previous">&lt;Working with the DOM Tree</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="xml-processing.html" xlink:title="contents">^XML Processing^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+   </db:info>
+   <db:para>An overview of Qt's support for using XML technologies in Qt programs.</db:para>
+   <db:section xml:id="introduction">
+      <db:title>Introduction</db:title>
+      <db:para>
+         <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> is a language for traversing XML documents to select and aggregate items of interest and to transform them for output as XML or some other format. XPath is the <db:emphasis>element selection</db:emphasis> part of <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>.</db:para>
+      <db:para>The Qt XML Patterns module supports using <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> 1.0 and XPath 2.0 in Qt applications, for querying XML data <db:emphasis>and</db:emphasis> for querying <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">non-XML data that can be modeled to look like XML</db:link></db:code>. Readers who are not familiar with the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>/XPath language can read <db:link xlink:href="xquery-introduction.html" xrefstyle="page" annotations="A Short Path to XQuery">A Short Path to XQuery</db:link> for a brief introduction.</db:para>
+   </db:section>
+   <db:section xml:id="advantages-of-using-qt-xml-patterns-and-xquery">
+      <db:title>Advantages of Using Qt XML Patterns and XQuery</db:title>
+      <db:para>The <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>/XPath language simplifies data searching and transformation tasks by eliminating the need for doing a lot of C++ or Java procedural programming for each new query task. Here is an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> that constructs a bibliography of the contents of a library:</db:para>
+      <db:programlisting>&lt;bibliography&gt;
+{doc("library.xml")/bib/book[publisher="Addison-Wesley" and @year&gt;1991]/&lt;book year="{@year}"&gt;{title}&lt;/book&gt;}
+&lt;/bibliography&gt;
+</db:programlisting>
+      <db:para>First, the query opens a <db:code>&lt;bibliography&gt;</db:code> element in the output. The <db:link xlink:href="xquery-introduction.html#using-path-expressions-to-match-and-select-items" xrefstyle="page" annotations="xquery-introduction.html#using-path-expressions-to-match-and-select-items">embedded path expression</db:link> then loads the XML document describing the contents of the library (<db:code>library.xml</db:code>) and begins the search. For each <db:code>&lt;book&gt;</db:code> element it finds, where the publisher was Addison-Wesley and the publication year was after 1991, it creates a new <db:code>&lt;book&gt;</db:code> element in the output as a child of the open <db:code>&lt;bibliography&gt;</db:code> element. Each new <db:code>&lt;book&gt;</db:code> element gets the book's title as its contents and the book's publication year as an attribute. Finally, the <db:code>&lt;bibliography&gt;</db:code> element is closed.</db:para>
+      <db:para>The advantages of using Qt XML Patterns and <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> in your Qt programs are summarized as follows:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Ease of development</db:emphasis>: All the C++ programming required to perform data query tasks can be replaced by a simple <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> like the example above.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Comprehensive functionality</db:emphasis>: The expression syntax and rich set of functions and operators provided by <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> are sufficient for performing any data searching, selecting, and sorting tasks.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Conformance to standards</db:emphasis>: Conformance to all applicable XML and <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> standards ensures that Qt XML Patterns can always process XML documents generated by other conformant applications, and that XML documents created with Qt XML Patterns can be processed by other conformant applications.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Maximal flexibility</db:emphasis> The Qt XML Patterns module can be used to query XML data <db:emphasis>and</db:emphasis> non-XML data that can be <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">modeled to look like XML</db:link></db:code>.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="using-the-qt-xml-patterns-module">
+      <db:title>Using the Qt XML Patterns Module</db:title>
+      <db:para>There are two ways Qt XML Patterns can be used to evaluate queries. You can run the query engine in your Qt application using the Qt XML Patterns C++ API, or you can run the query engine from the command line using Qt's <db:code>xmlpatterns</db:code> command line utility.</db:para>
+   </db:section>
+   <db:section xml:id="running-the-query-engine-from-your-qt-application">
+      <db:title>Running the query engine from your Qt application</db:title>
+      <db:para>If we save the example <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> shown above in a text file (e.g. <db:code>myquery.xq</db:code>), we can run it from a Qt application using a standard Qt XML Patterns code sequence:</db:para>
+      <db:programlisting>
+    QFile xq("myquery.xq");
+
+    QXmlQuery query;
+    query.setQuery(&amp;xq, QUrl::fromLocalFile(xq.fileName()));
+
+    QXmlSerializer serializer(query, myOutputDevice);
+    query.evaluateTo(&amp;serializer);
+</db:programlisting>
+      <db:para>First construct a <db:code><db:link xlink:href="qfile.html" xrefstyle="class" annotations="QFile">QFile</db:link></db:code> for the text file containing the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> (<db:code>myquery.xq</db:code>). Then create an instance of <db:code><db:link xlink:href="qxmlquery.html" xrefstyle="class" annotations="QXmlQuery">QXmlQuery</db:link></db:code> and call its <db:code><db:link xlink:href="qxmlquery.html#setQuery" xrefstyle="function" annotations="QXmlQuery::setQuery()">setQuery()</db:link></db:code> function to load and parse the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> file. Then create an <db:code><db:link xlink:href="qxmlserializer.html" xrefstyle="class" annotations="QXmlSerializer">XML serializer</db:link></db:code> to output the query's result set as unformatted XML. Finally, call the <db:code><db:link xlink:href="qxmlquery.html#evaluateTo" xrefstyle="function" annotations="QXmlQuery::evaluateTo()">evaluateTo()</db:link></db:code> function to evaluate the query and serialize the results as XML.</db:para>
+      <db:note>
+         <db:para> If you compile Qt yourself, the Qt XML Patterns module will <db:emphasis>not</db:emphasis> be built if exceptions are disabled, or if you compile Qt with a compiler that doesn't support member templates, e.g., MSVC 6.</db:para>
+      </db:note>
+      <db:para>See the <db:code><db:link xlink:href="qxmlquery.html" xrefstyle="class" annotations="QXmlQuery">QXmlQuery</db:link></db:code> documentation for more information about the Qt XML Patterns C++ API.</db:para>
+   </db:section>
+   <db:section xml:id="running-the-query-engine-from-the-command-line-utility">
+      <db:title>Running the query engine from the command line utility</db:title>
+      <db:para>
+         <db:emphasis>xmlpatterns</db:emphasis> is a command line utility for running XQueries. It expects the name of a file containing the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> text.</db:para>
+      <db:programlisting>
+xmlpatterns myQuery.xq
+</db:programlisting>
+      <db:para>The <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> in <db:code>myQuery.xq</db:code> will be evaluated and its output written to <db:code>stdout</db:code>. Pass the <db:code>-help</db:code> switch to get the list of input flags and their meanings.</db:para>
+      <db:para>xmlpatterns can be used in scripting. However, the descriptions and messages it outputs were not meant to be parsed and may be changed in future releases of Qt.</db:para>
+   </db:section>
+   <db:section xml:id="the-xquery-data-model">
+      <db:title>The XQuery Data Model</db:title>
+      <db:para>
+         <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> represents data items as <db:emphasis>atomic values</db:emphasis> or <db:emphasis>nodes</db:emphasis>. An atomic value is a value in the domain of one of the built-in datatypes defined in Part 2 of the W3C XML Schema. A node is normally an XML element or attribute, but when non-XML data is <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">modeled to look like XML</db:link></db:code>, a node can also represent a non-XML data items.</db:para>
+      <db:para>When you run an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> using the C++ API in a Qt application, you will often want to bind program variables to $variables in the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>. After the query is evaluated, you will want to interpret the sequence of data items in the result set.</db:para>
+   </db:section>
+   <db:section xml:id="binding-program-variables-to-xquery-variables">
+      <db:title>Binding program variables to XQuery variables</db:title>
+      <db:para>When you want to run a parameterized <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> from your Qt application, you will need to <db:code><db:link xlink:href="qxmlquery.html#bindVariable" xrefstyle="function" annotations="QXmlQuery::bindVariable()">bind variables</db:link></db:code> in your program to $name variables in your <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>.</db:para>
+      <db:para>Suppose you want to parameterize the bibliography <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> in the example above. You could define variables for the catalog that contains the library (<db:code>$file</db:code>), the publisher name (<db:code>$publisher</db:code>), and the year of publication (<db:code>$year</db:code>):</db:para>
+      <db:programlisting>&lt;bibliography&gt;
+{
+    doc($file)/bib/book[publisher = $publisher and @year &gt; $year]/&lt;book year="{@year}"&gt;{title}&lt;/book&gt;
+}
+&lt;/bibliography&gt;
+</db:programlisting>
+      <db:para>Modify the Qt XML Patterns code to use one of the <db:code><db:link xlink:href="qxmlquery.html#bindVariable" xrefstyle="function" annotations="QXmlQuery::bindVariable()">bindVariable()</db:link></db:code> functions to bind a program variable to each <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> $variable:</db:para>
+      <db:programlisting>
+    QFile xq("myquery.xq");
+    QString fileName("the filename");
+    QString publisherName("the publisher");
+    qlonglong year = 1234;
+
+    QXmlQuery query;
+
+    query.bindVariable("file", QVariant(fileName));
+    query.bindVariable("publisher", QVariant(publisherName));
+    query.bindVariable("year", QVariant(year));
+
+    query.setQuery(&amp;xq, QUrl::fromLocalFile(xq.fileName()));
+
+    QXmlSerializer serializer(query, myOutputDevice);
+    query.evaluateTo(&amp;serializer);
+</db:programlisting>
+      <db:para>Each program variable is passed to Qt XML Patterns as a <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> of the type of the C++ variable or constant from which it is constructed. Note that Qt XML Patterns assumes that the type of the <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> in the bindVariable() call is the correct type, so the $variable it is bound to must be used in the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> accordingly. The following table shows how <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> types are mapped to <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> $variable types:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>
+                     <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> type</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>
+                     <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> $variable type</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::LongLong">QVariant::LongLong</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:integer</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Int">QVariant::Int</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:integer</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::UInt">QVariant::UInt</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:nonNegativeInteger</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::ULongLong">QVariant::ULongLong</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:unsignedLong</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::String">QVariant::String</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:string</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Double">QVariant::Double</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:double</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Bool">QVariant::Bool</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:boolean</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Double">QVariant::Double</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:decimal</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::ByteArray">QVariant::ByteArray</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:base64Binary</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::StringList">QVariant::StringList</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:string*</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Url">QVariant::Url</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:string</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Date">QVariant::Date</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:date</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:dateTime</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Time">QVariant::Time</db:link></db:code>.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xs:time</db:code>. (see <db:link xlink:href="xmlprocessing.html#binding-to-time" xrefstyle="page" annotations="Binding To Time">Binding To QVariant::Time</db:link> below)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:link xlink:href="qvariant.html#QVariantList-typedef" xrefstyle="typedef" annotations="QVariantList">QVariantList</db:link>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>(see <db:link xlink:href="xmlprocessing.html#binding-to-qvariantlist" xrefstyle="page" annotations="Binding To QVariantList">Binding To QVariantList</db:link> below)</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>A type not shown in the table is not supported and will cause undefined <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> behavior or a $variable binding error, depending on the context in the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> where the variable is used.</db:para>
+   </db:section>
+   <db:section xml:id="binding-to-qvariant-time">
+      <db:title>Binding To QVariant::Time</db:title>
+      <db:para>Because the instance of <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code> used in <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Time">QVariant::Time</db:link></db:code> does not include a zone offset, an instance of <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Time">QVariant::Time</db:link></db:code> should not be bound to an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> variable of type <db:code>xs:time</db:code>, unless the <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code> is UTC. When binding a non-UTC <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code> to an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> variable, it should first be passed as a string, or converted to a <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code> with an arbitrary date, and then bound to an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> variable of type <db:code>xs:dateTime</db:code>.</db:para>
+   </db:section>
+   <db:section xml:id="binding-to-qvariantlist">
+      <db:title>Binding To QVariantList</db:title>
+      <db:para>A <db:link xlink:href="qvariant.html#QVariantList-typedef" xrefstyle="typedef" annotations="QVariantList">QVariantList</db:link> can be bound to an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> $variable. All the <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>s in the list must be of the same atomic type, and the $variable the variant list is bound to must be of that same atomic type. If the QVariants in the list are not all of the same atomic type, the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> behavior is undefined.</db:para>
+   </db:section>
+   <db:section xml:id="interpreting-xquery-results">
+      <db:title>Interpreting XQuery results</db:title>
+      <db:para>When the results of an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> are returned in a sequence of <db:code><db:link xlink:href="qxmlresultitems.html" xrefstyle="class" annotations="QXmlResultItems">result items</db:link></db:code>, atomic values in the sequence are treated as instances of <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>. Suppose that instead of serializing the results of the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> as XML, we process the results programatically. Modify the standard Qt XML Patterns code sequence to call the overload of <db:code><db:link xlink:href="qxmlquery.html#evaluateTo" xrefstyle="function" annotations="QXmlQuery::evaluateTo()">QXmlQuery::evaluateTo()</db:link></db:code> that populates a sequence of <db:code><db:link xlink:href="qxmlresultitems.html" xrefstyle="class" annotations="QXmlResultItems">result items</db:link></db:code> with the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> results:</db:para>
+      <db:programlisting>
+    QFile xq("myquery.xq");
+    QString fileName("the filename");
+    QString publisherName("the publisher");
+    qlonglong year = 1234;
+
+    QXmlQuery query;
+
+    query.bindVariable("file", QVariant(fileName));
+    query.bindVariable("publisher", QVariant(publisherName));
+    query.bindVariable("year", QVariant(year));
+
+    query.setQuery(&amp;xq, QUrl::fromLocalFile(xq.fileName()));
+
+    QXmlResultItems result;
+    query.evaluateTo(&amp;result);
+    QXmlItem item(result.next());
+    while (!item.isNull()) {
+        if (item.isAtomicValue()) {
+            QVariant v = item.toAtomicValue();
+            switch (v.type()) {
+                case QVariant::LongLong:
+                    // xs:integer
+                    break;
+                case QVariant::String:
+                    // xs:string
+                    break;
+                default:
+                    // error
+                    break;
+            }
+        }
+        else if (item.isNode()) {
+#ifdef qdoc
+            QXmlNodeModelIndex i = item.toNodeModelIndex();
+            // process node
+#endif // qdoc
+        }
+        item = result.next();
+    }
+</db:programlisting>
+      <db:para>Iterate through the <db:code><db:link xlink:href="qxmlresultitems.html" xrefstyle="class" annotations="QXmlResultItems">result items</db:link></db:code> and test each <db:code><db:link xlink:href="qxmlitem.html" xrefstyle="class" annotations="QXmlItem">QXmlItem</db:link></db:code> to see if it is an atomic value or a node. If it is an atomic value, convert it to a <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> with <db:code><db:link xlink:href="qxmlitem.html#toAtomicValue" xrefstyle="function" annotations="QXmlItem::toAtomicValue()">toAtomicValue()</db:link></db:code> and switch on its <db:code><db:link xlink:href="qvariant.html#type" xrefstyle="function" annotations="QVariant::type()">variant type</db:link></db:code> to handle all the atomic values your <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> might return. The following table shows the <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> type to expect for each atomic value type (or <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="QXmlName">QXmlName</db:link></db:code>):</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>
+                     <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> result item type</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>
+                     <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> type returned</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:QName</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="QXmlName">QXmlName</db:link></db:code> (see <db:link xlink:href="xmlprocessing.html#handling-qxmlnames" xrefstyle="page" annotations="Handling QXmlNames">Handling QXmlNames</db:link> below)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:integer</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::LongLong">QVariant::LongLong</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:string</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::String">QVariant::String</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:string*</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::StringList">QVariant::StringList</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:double</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Double">QVariant::Double</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:float</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Double">QVariant::Double</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:boolean</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Bool">QVariant::Bool</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:decimal</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Double">QVariant::Double</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:hexBinary</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::ByteArray">QVariant::ByteArray</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:base64Binary</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::ByteArray">QVariant::ByteArray</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:gYear</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:gYearMonth</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:gMonthDay</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:gDay</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:gMonth</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:anyURI</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Url">QVariant::Url</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:untypedAtomic</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::String">QVariant::String</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:ENTITY</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::String">QVariant::String</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:date</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:dateTime</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::DateTime">QVariant::DateTime</db:link></db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xs:time</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>(see <db:link xlink:href="xmlprocessing.html#xstime-not-mapped" xrefstyle="page" annotations="xstime-not-mapped">No mapping for xs:time</db:link> below)</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="handling-qxmlnames">
+      <db:title>Handling QXmlNames</db:title>
+      <db:para>If your <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> can return atomic value items of type <db:code>xs:QName</db:code>, they will appear in your <db:code><db:link xlink:href="qxmlresultitems.html" xrefstyle="class" annotations="QXmlResultItems">QXmlResultItems</db:link></db:code> as instances of <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="QXmlName">QXmlName</db:link></db:code>. Since the <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> class does not support the <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="QXmlName">QXmlName</db:link></db:code> class directly, extracting them from <db:code><db:link xlink:href="qxmlresultitems.html" xrefstyle="class" annotations="QXmlResultItems">QXmlResultItems</db:link></db:code> requires a bit of slight-of-hand using the <db:code><db:link xlink:href="qmetatype.html" xrefstyle="class" annotations="QMetaType">Qt metatype system</db:link></db:code>. We must modify our example to use a couple of template functions, a friend of <db:code><db:link xlink:href="qmetatype.html" xrefstyle="class" annotations="QMetaType">QMetaType</db:link></db:code> (<db:code><db:link xlink:href="qmetatype.html#qMetaTypeId" xrefstyle="function" annotations="qMetaTypeId">qMetaTypeId</db:link></db:code>&lt;T&gt;()) and a friend of <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> (qvariant_cast&lt;T&gt;()):</db:para>
+      <db:programlisting>
+    QFile xq("myquery.xq");
+
+    QXmlQuery query;
+    query.setQuery(&amp;xq, QUrl::fromLocalFile(xq.fileName()));
+
+    QXmlResultItems result;
+    query.evaluateTo(&amp;result);
+    QXmlItem item(result.next());
+    while (!item.isNull()) {
+        if (item.isAtomicValue()) {
+            QVariant v = item.toAtomicValue();
+            switch (v.type()) {
+                case QVariant::LongLong:
+                    // xs:integer
+                    break;
+                case QVariant::String:
+                    // xs:string
+                    break;
+                default:
+                    if (v.userType() == qMetaTypeId&lt;QXmlName&gt;()) {
+#ifdef qdoc
+                        QXmlName n = qvariant_cast&lt;QXmlName&gt;(v);
+                        // process QXmlName n...
+#endif // qdoc
+                    }
+                    else {
+                        // error
+                    }
+                    break;
+            }
+        }
+        else if (item.isNode()) {
+#ifdef qdoc
+            QXmlNodeModelIndex i = item.toNodeModelIndex();
+            // process node
+#endif // qdoc
+        }
+        item = result.next();
+    }
+</db:programlisting>
+      <db:para>To access the strings in a <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="QXmlName">QXmlName</db:link></db:code> returned by an <db:code><db:link xlink:href="qxmlquery.html#evaluateTo" xrefstyle="function" annotations="QXmlQuery::evaluateTo()">XQuery evaluation</db:link></db:code>, the <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="QXmlName">QXmlName</db:link></db:code> must be accessed with the <db:code><db:link xlink:href="qxmlnamepool.html" xrefstyle="class" annotations="QXmlNamePool">name pool</db:link></db:code> from the instance of <db:code><db:link xlink:href="qxmlquery.html" xrefstyle="class" annotations="QXmlQuery">QXmlQuery</db:link></db:code> that was used for the evaluation.</db:para>
+   </db:section>
+   <db:section xml:id="no-mapping-for-xs-time">
+      <db:title>No mapping for xs:time</db:title>
+      <db:para>An instance of <db:code>xs:time</db:code> can't be represented correctly as an instance of <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Time">QVariant::Time</db:link></db:code>, unless the <db:code>xs:time</db:code> is a UTC time. This is because xs:time has a zone offset (0 for UTC) in addition to the time value, which the <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code> in <db:code><db:link xlink:href="qvariant-obsolete.html#Type-enum" xrefstyle="enum" annotations="QVariant::Time">QVariant::Time</db:link></db:code> does not have. This means that if an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> tries to return an atomic value of type <db:code>xs:time</db:code>, an invalid <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> will be returned. A query can return an atomic value of type xs:time by either converting it to an <db:code>xs:dateTime</db:code> with an arbitrary date, or to an <db:code>xs:string</db:code>.</db:para>
+   </db:section>
+   <db:section xml:id="using-xquery-with-non-xml-data">
+      <db:title>Using XQuery with Non-XML Data</db:title>
+      <db:para>Although the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> language was designed for querying XML, with Qt XML Patterns one can use <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> for querying any data that can be modeled to look like XML. Non-XML data is modeled to look like XML by loading it into a custom subclass of <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code>, where it is then presented to the Qt XML Patterns <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> engine via the same API the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> engine uses for querying XML.</db:para>
+      <db:para>When Qt XML Patterns loads and queries XML files and produces XML output, it can always load the XML data into its default XML node model, where it can be traversed efficiently. The <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> below traverses the product orders found in the XML file <db:emphasis>myOrders.xml</db:emphasis> to find all the skin care product orders and output them ordered by shipping date.</db:para>
+      <db:programlisting>&lt;result&gt;
+    &lt;para&gt;The following skin care products have shipped, ordered by shipping date(oldest first):&lt;/para&gt;
+    {
+        for $i in doc("myOrders.xml")/orders/order[@product = "Acme Skin Care"]
+        order by xs:date($i/@shippingDate) descending
+        return $i
+    }
+&lt;/result&gt;
+</db:programlisting>
+      <db:para>Qt XML Patterns can be used out of the box to perform this query, provided <db:emphasis>myOrders.xml</db:emphasis> actually contains well-formed XML. It can be loaded directly into the default XML node model and traversed. But suppose we want Qt XML Patterns to perform queries on the hierarchical structure of the local file system. The default XML node model in Qt XML Patterns is not suitable for navigating the file system, because there is no XML file to load that contains a description of it. Such an XML file, if it existed, might look something like this:</db:para>
+      <db:programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;directory name="home"&gt;
+
+    &lt;file name="myNote.txt" mimetype="text/plain" size="8" extension="txt" uri="file:///home/frans/myNote.txt"&gt;
+        &lt;content asBase64Binary="TXkgTm90ZSE=" asStringFromUTF-8="My Note!"/&gt;
+    &lt;/file&gt;
+
+    &lt;directory name="src"&gt;
+        ...
+    &lt;/directory&gt;
+
+    ...
+
+&lt;/directory&gt;
+</db:programlisting>
+      <db:para>The <db:link xlink:href="qtxmlpatterns-filetree-example.html" xrefstyle="page" annotations="File System Example">File System Example</db:link> does exactly this.</db:para>
+      <db:para>There is no such file to load into the default XML node model, but one can write a subclass of <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> to represent the file system. This custom XML node model, once populated with all the directory and file descriptors obtained directly from the system, presents the complete file system hierarchy to the query engine via the same API used by the default XML node model to present the contents of an XML file. In other words, once the custom XML node model is populated, it presents the file system to the query engine as if a description of it had been loaded into the default XML node model from an XML file like the one shown above.</db:para>
+      <db:para>Now we can write an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> to find all the XML files and parse them to find the ones that don't contain well-formed XML.</db:para>
+      <db:programlisting>            $myRoot//file[@mimetype = 'text/xml' or @mimetype = 'application/xml']
+            /
+            (if(doc-available(@uri))
+             then ()
+             else &lt;p&gt;Failed to parse file {@uri}.&lt;/p&gt;)
+        }
+    &lt;/body&gt;
+&lt;/html&gt;</db:programlisting>
+      <db:para>Without Qt XML Patterns, there is no simple way to solve this kind of problem. You might do it by writing a C++ program to traverse the file system, sniff out all the XML files, and submit each one to an XML parser to test that it contains valid XML. The C++ code required to write that program will probably be more complex than the C++ code required to subclass <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code>, but even if the two are comparable, your custom C++ program can be used only for that one task, while your custom XML node model can be used by any <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> that must navigate the file system.</db:para>
+      <db:para>The general approach to using <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> to perform queries on non-XML data has been a three step process. In the first step, the data is loaded into a non-XML data model. In the second step, the non-XML data model is serialized as XML and output to XML (text) files. In the final step, an XML tool loads the XML files into a second, XML data model, where the XQueries can be performed. The development cost of implementing this process is often high, and the three step system that results is inefficient because the two data models must be built and maintained separately.</db:para>
+      <db:para>With Qt XML Patterns, subclassing <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> eliminates the transformation required to convert the non-XML data model to the XML data model, because there is only ever one data model required. The non-XML data model presents the non-XML data to the query engine via the XML data model API. Also, since the query engine uses the API to access the <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code>, the data model subclass can construct the elements, attributes and other data on demand, responding to the query's specific requests. This can greatly improve efficiency, because it means the entire model might not have to be built. For example, in the file system model above, it is not necessary to build an instance for a whole XML file representing the whole file system. Instead nodes are created on demand, which also likely is a small subset of the file system.</db:para>
+      <db:para>Examples of other places where <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> could be used in Qt XML Patterns to query non-XML data:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>The internal representation for word processor documents</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>The set of dependencies for a software build system</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>The hierarchy (or graph) that links a set of HTML documents from a web crawler</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>The images and meta-data in an image collection</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>The set of D-Bus interfaces available in a system</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>A <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> hierarchy.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>See the <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> documentation for information about how to implement custom XML node models.</db:para>
+   </db:section>
+   <db:section xml:id="more-on-using-qt-xml-patterns-with-non-xml-data">
+      <db:title>More on Using Qt XML Patterns with Non-XML Data</db:title>
+      <db:para>Subclassing <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> to let the query engine access non-XML data by the same API it uses for XML is the feature that enables Qt XML Patterns to query non-XML data with <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>. It allows <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> to be used as a mapping layer between different non-XML node models or between a non-XML node model and the built-in XML node model. Once the subclass(es) of <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> have been written, <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> can be used to select a set of elements from one node model, transform the selected elements, and then write them out, either as XML using <db:code><db:link xlink:href="qxmlquery.html#evaluateTo" xrefstyle="function" annotations="QXmlQuery::evaluateTo()">QXmlQuery::evaluateTo()</db:link></db:code> and <db:code><db:link xlink:href="qxmlserializer.html" xrefstyle="class" annotations="QXmlSerializer">QXmlSerializer</db:link></db:code>, or as some other format using a subclass of <db:code><db:link xlink:href="qabstractxmlreceiver.html" xrefstyle="class" annotations="QAbstractXmlReceiver">QAbstractXmlReceiver</db:link></db:code>.</db:para>
+      <db:para>Consider a word processor application that must import and export data in several different formats. Rather than writing a lot of C++ code to convert each input format to an intermediate form, and more C++ code to convert the intermediate form back to each output format, one can implement a solution based on Qt XML Patterns that uses simple XQueries to transform each XML or non-XML format (e.g. MathFormula.xml below) to the intermediate form (e.g. the DocumentRepresentation node model class below), and more simple XQueries to transform the intermediate form back to each XML or non-XML format.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/patternist-wordProcessor.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Because CSV files are not XML, a subclass of <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> is used to present the CSV data to the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> engine as if it were XML. What are not shown are the subclasses of <db:code><db:link xlink:href="qabstractxmlreceiver.html" xrefstyle="class" annotations="QAbstractXmlReceiver">QAbstractXmlReceiver</db:link></db:code> that would then send the selected elements into the DocumentRepresentation node model, and the subclasses of <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="QAbstractXmlNodeModel">QAbstractXmlNodeModel</db:link></db:code> that would ultimately write the output files in each format.</db:para>
+   </db:section>
+   <db:section xml:id="security-considerations">
+      <db:title>Security Considerations</db:title>
+   </db:section>
+   <db:section xml:id="code-injection">
+      <db:title>Code Injection</db:title>
+      <db:para>
+         <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> is vulnerable to code injection attacks in the same way as the SQL language. If an <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> is constructed by concatenating strings, and the strings come from user input, the constructed <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> could be malevolent. The best way to prevent code injection attacks is to not construct XQueries from user-written strings, but only accept user data input using <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> and variable bindings. See <db:code><db:link xlink:href="qxmlquery.html#bindVariable" xrefstyle="function" annotations="QXmlQuery::bindVariable()">QXmlQuery::bindVariable()</db:link></db:code>.</db:para>
+      <db:para>The articles Avoid the dangers of XPath injection, by Robi Sen and Blind XPath Injection, by Amit Klein, discuss the <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> code injection problem in more detail.</db:para>
+   </db:section>
+   <db:section xml:id="denial-of-service-attacks">
+      <db:title>Denial of Service Attacks</db:title>
+      <db:para>Applications using Qt XML Patterns are subject to the same limitations of software as other systems. Generally, these can not be checked. This means Qt XML Patterns does not prevent rogue queries from consuming too many resources. For example, a query could take too much time to execute or try to transfer too much data. A query could also do too much recursion, which could crash the system. XQueries can do these things accidentally, but they can also be done as deliberate denial of service attacks.</db:para>
+   </db:section>
+   <db:section xml:id="features-and-conformance">
+      <db:title>Features and Conformance</db:title>
+   </db:section>
+   <db:section xml:id="xquery-1-0">
+      <db:title>XQuery 1.0</db:title>
+      <db:para>Qt XML Patterns aims at being a conformant <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> processor. It adheres to Minimal Conformance and supports the Serialization Feature and the Full Axis Feature. Qt XML Patterns currently passes 97% of the tests in the XML Query Test Suite. Areas where conformance may be questionable and where behavior may be changed in future releases include:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Some corner cases involving namespaces and element constructors are incorrect.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>XPath is a subset of <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> and the implementation of Qt XML Patterns uses XPath 2.0 with <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> 1.0.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The specifications discusses conformance further: <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> 1.0: An XML Query Language. W3C's <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> testing effort can be of interest as well, XML Query Test Suite.</db:para>
+      <db:para>Currently <db:code>fn:collection()</db:code> does not access any data set, and there is no API for providing data through the collection. As a result, evaluating <db:code>fn:collection()</db:code> returns the empty sequence. We intend to provide functionality for this in a future release of Qt.</db:para>
+      <db:para>Only queries encoded in UTF-8 are supported.</db:para>
+   </db:section>
+   <db:section xml:id="xslt-2-0">
+      <db:title>XSLT 2.0</db:title>
+      <db:para>Partial support for XSLT was introduced in Qt 4.5. Future releases of Qt XML Patterns will aim to support these XSLT features:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Basic XSLT 2.0 processor</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Serialization feature</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Backwards Compatibility feature</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>For details, see XSL Transformations (XSLT) Version 2.0, 21 Conformance.</db:para>
+      <db:note>
+         <db:para> In this release, XSLT support is considered experimental.</db:para>
+      </db:note>
+      <db:para>Unsupported or partially supported XSLT features are documented in the following table. The implementation of XSLT in Qt 4.5 can be seen as XSLT 1.0 but with the data model of XPath 2.0 and XSLT 2.0, and using the using the functionality of XPath 2.0 and its accompanying function library. When Qt XML Patterns encounters an unsupported or partially support feature, it will either report a syntax error or silently continue, unless otherwise noted in the table.</db:para>
+      <db:para>The implementation currently passes 42% of W3C's XSLT test suite, which focus on features introduced in XSLT 2.0.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>XSL Feature</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Support Status</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:key</db:code> and <db:code>fn:key()</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:include</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:import</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:copy</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>The <db:code>copy-namespaces</db:code> and <db:code>inherit-namespaces</db:code> attributes have no effect. For copied comments, attributes and processing instructions, the copy has the same node identity as the original.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:copy-of</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>The <db:code>copy-namespaces</db:code> attribute has no effect.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>fn:format-number()</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:message</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:use-when</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>Tunnel</db:code> Parameters</db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:attribute-set</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:decimal-format</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:fallback</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:apply-imports</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:character-map</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:number</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:namespace-alias</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:output</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:output-character</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:preserve-space</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:result-document</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>not supported</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Patterns</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Complex patterns or patterns with predicates have issues.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>2.0</db:code> Compatibility Mode</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Stylesheets are interpreted as XSLT 2.0 stylesheets, even if the <db:code>version</db:code> attribute is in the XSLT source is 1.0. In other words, the version attribute is ignored.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Grouping</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>fn:current-group()</db:code>, <db:code>fn:grouping-key()</db:code> and <db:code>xsl:for-each-group</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Regexp elements</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>xsl:analyze-string</db:code>, <db:code>xsl:matching-substring</db:code>, <db:code>xsl:non-matching-substring</db:code>, and <db:code>fn:regex-group()</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Date &amp; Time formatting</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code>fn:format-dateTime()</db:code>, <db:code>fn:format-date()</db:code> and fn:format-time().</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>XPath Conformance</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Since XPath is a subset of XSLT, its issues are in affect too.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>The Qt XML Patterns implementation of the XPath Data Model does not include entities (due to <db:code><db:link xlink:href="qxmlstreamreader.html" xrefstyle="class" annotations="QXmlStreamReader">QXmlStreamReader</db:link></db:code> not reporting them). This means that functions <db:code>unparsed-entity-uri()</db:code> and <db:code>unparsed-entity-public-id()</db:code> always return negatively.</db:para>
+   </db:section>
+   <db:section xml:id="xpath-2-0">
+      <db:title>XPath 2.0</db:title>
+      <db:para>Since XPath 2.0 is a subset of <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> 1.0, XPath 2.0 is supported. Areas where conformance may be questionable and, consequently, where behavior may be changed in future releases include:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Regular expression support is currently not conformant but follows Qt's <db:code><db:link xlink:href="qregexp.html" xrefstyle="class" annotations="QRegExp">QRegExp</db:link></db:code> standard syntax.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Operators for <db:code>xs:time</db:code>, <db:code>xs:date</db:code>, and <db:code>xs:dateTime</db:code> are incomplete.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Formatting of very large or very small <db:code>xs:double</db:code>, <db:code>xs:float</db:code>, and <db:code>xs:decimal</db:code> values may be incorrect.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="xml-id">
+      <db:title>xml:id</db:title>
+      <db:para>Processing of XML files supports <db:code>xml:id</db:code>. This allows elements that have an attribute named <db:code>xml:id</db:code> to be looked up efficiently with the <db:code>fn:id()</db:code> function. See xml:id Version 1.0 for details.</db:para>
+   </db:section>
+   <db:section xml:id="xml-schema-1-0">
+      <db:title>XML Schema 1.0</db:title>
+      <db:para>There are two ways Qt XML Patterns can be used to validate schemas: You can use the C++ API in your Qt application using the classes <db:code><db:link xlink:href="qxmlschema.html" xrefstyle="class" annotations="QXmlSchema">QXmlSchema</db:link></db:code> and <db:code><db:link xlink:href="qxmlschemavalidator.html" xrefstyle="class" annotations="QXmlSchemaValidator">QXmlSchemaValidator</db:link></db:code>, or you can use the command line utility named xmlpatternsvalidator (located in the "bin" directory of your Qt build).</db:para>
+      <db:para>The Qt XML Patterns implementation of XML Schema validation supports the schema specification version 1.0 in large parts. Known problems of the implementation and areas where conformancy may be questionable are:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Large <db:code>minOccurs</db:code> or <db:code>maxOccurs</db:code> values or deeply nested ones require huge amount of memory which might cause the system to freeze. Such a schema should be rewritten to use <db:code>unbounded</db:code> as value instead of large numbers. This restriction will hopefully be fixed in a later release.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Comparison of really small or large floating point values might lead to wrong results in some cases. However such numbers should not be relevant for day-to-day usage.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Regular expression support is currently not conformant but follows Qt's <db:code><db:link xlink:href="qregexp.html" xrefstyle="class" annotations="QRegExp">QRegExp</db:link></db:code> standard syntax.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Identity constraint checks can not use the values of default or fixed attribute definitions.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="resource-loading">
+      <db:title>Resource Loading</db:title>
+      <db:para>When Qt XML Patterns loads an XML resource, e.g., using the <db:code>fn:doc()</db:code> function, the following schemes are supported:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Scheme Name</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>file</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Local files.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>data</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>The bytes are encoded in the URI itself. e.g., <db:code>data:application/xml,%3Ce%2F%3E</db:code> is <db:code>&lt;e/&gt;</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>ftp</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Resources retrieved via FTP.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>http</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Resources retrieved via HTTP.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>https</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Resources retrieved via HTTPS. This will succeed if no SSL errors are encountered.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>qrc</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Qt Resource files. Expressing it as an empty scheme, :/..., is not supported.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="xml">
+      <db:title>XML</db:title>
+      <db:para>XML 1.0 and XML Namespaces 1.0 are supported, as opposed to the 1.1 versions. When a strings is passed to a query as a <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, the characters must be XML 1.0 characters. Otherwise, the behavior is undefined. This is not checked.</db:para>
+      <db:para>URIs are first passed to <db:code><db:link xlink:href="qabstracturiresolver.html" xrefstyle="class" annotations="QAbstractUriResolver">QAbstractUriResolver</db:link></db:code>. Check <db:code><db:link xlink:href="qxmlquery.html#setUriResolver" xrefstyle="function" annotations="QXmlQuery::setUriResolver()">QXmlQuery::setUriResolver()</db:link></db:code> for possible rewrites.</db:para>
+   </db:section>
+</db:article>
