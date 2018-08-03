@@ -742,13 +742,22 @@
             </xsl:when>
             <xsl:when test="$currentNode/self::printto | $currentNode/self::skipto | $currentNode/self::printuntil | $currentNode/self::skipuntil">
               <xsl:variable name="quotefromfileMatchedTillEnd" as="xs:boolean*">
+                <xsl:variable name="pattern" select="$currentNode/text()"/>
                 <xsl:for-each select="$quotefromfileLines[position() > $value]">
-                  <xsl:copy-of select="contains(., $currentNode/text())"/>
+                  <xsl:choose>
+                    <xsl:when test="starts-with($pattern, '/') and ends-with($pattern, '/')">
+                      <!-- Regular expression! -->
+                      <xsl:copy-of select="matches(., substring($pattern, 2, string-length($pattern) - 2))"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:copy-of select="contains(., $pattern)"/>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </xsl:for-each>
               </xsl:variable>
               <xsl:try>
                 <xsl:variable name="lineMatch" select="index-of($quotefromfileMatchedTillEnd, true())[1]"/>
-                <xsl:variable name="lineUntil" select="if ($currentNode/self::printto | $currentNode/self::printuntil) then $lineMatch - 1 else $lineMatch" as="xs:integer"/>
+                <xsl:variable name="lineUntil" select="if ($currentNode/self::printto | $currentNode/self::skipto) then $lineMatch - 1 else $lineMatch" as="xs:integer"/>
                 <xsl:value-of select="if ($currentNode/self::printuntil | $currentNode/self::skipuntil) then $lineUntil - 1 else $lineUntil"/>
                 <xsl:catch>
                   <xsl:message>ERROR: When handling a <xsl:value-of select="name($currentNode)"/> element, the string to match (<xsl:value-of select="$currentNode/text()"/>) has not been found.</xsl:message>
@@ -859,9 +868,9 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="quote">
-    <db:quote>
+    <db:blockquote>
       <xsl:apply-templates mode="content_generic"/>
-    </db:quote>
+    </db:blockquote>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="list[@type='ordered']">
