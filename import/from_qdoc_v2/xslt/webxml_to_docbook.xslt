@@ -42,19 +42,19 @@
                         <db:link xlink:href="{@href}" xlink:title="{@meta}">
                           <xsl:choose>
                             <xsl:when test="@meta='previous'">
-                              <xsl:text>&lt;</xsl:text>
+                              <xsl:text>&lt; </xsl:text>
                             </xsl:when>
                             <xsl:when test="@meta='contents'">
-                              <xsl:text>^</xsl:text>
+                              <xsl:text>^ </xsl:text>
                             </xsl:when>
                           </xsl:choose>
                           <xsl:value-of select="@description"/>
                           <xsl:choose>
                             <xsl:when test="@meta='next'">
-                              <xsl:text>&gt;</xsl:text>
+                              <xsl:text> &gt;</xsl:text>
                             </xsl:when>
                             <xsl:when test="@meta='contents'">
-                              <xsl:text>^</xsl:text>
+                              <xsl:text> ^</xsl:text>
                             </xsl:when>
                           </xsl:choose>
                         </db:link>
@@ -727,7 +727,9 @@
     <xsl:choose>
       <xsl:when test="$currentNode">
         <!-- Inductive case. Use the value from the previous nodes. -->
-        <xsl:variable name="value" as="xs:integer" select="tc:printfromfile-get-line-after-node($quotefromfileLines, $currentNode/preceding-sibling::node()[1]/(self::printline | self::printto | self::printuntil | self::skipline | self::skipto | self::skipuntil))"/>
+        <!-- <xsl:variable name="previousQuotefromfileNodes" select="$currentNode/preceding::node()/(self::printline | self::printto | self::printuntil | self::skipline | self::skipto | self::skipuntil)" as="node()*"/> -->
+        <xsl:variable name="previousQuotefromfileNodes" select="$currentNode/preceding::quotefromfile[1]/following::node()/(self::printline | self::printto | self::printuntil | self::skipline | self::skipto | self::skipuntil) except ($currentNode union $currentNode/following::node())" as="node()*"/>
+        <xsl:variable name="value" as="xs:integer" select="tc:printfromfile-get-line-after-node($quotefromfileLines, $previousQuotefromfileNodes[last()])"/>
         
         <!-- Compute the value for the current node based on the previous nodes. -->        
         <xsl:variable name="lineNumberIncrement" as="xs:integer">
@@ -744,14 +746,22 @@
                   <xsl:copy-of select="contains(., $currentNode/text())"/>
                 </xsl:for-each>
               </xsl:variable>
-              <xsl:variable name="lineUntil" select="if ($currentNode/self::printto) then index-of($quotefromfileMatchedTillEnd, true())[1] - 1 else index-of($quotefromfileMatchedTillEnd, true())[1]" as="xs:integer"/>
-              <xsl:value-of select="if ($currentNode/self::printuntil | $currentNode/self::skipuntil) then $lineUntil else $lineUntil + 1"/>
+              <xsl:try>
+                <xsl:variable name="lineMatch" select="index-of($quotefromfileMatchedTillEnd, true())[1]"/>
+                <xsl:variable name="lineUntil" select="if ($currentNode/self::printto | $currentNode/self::printuntil) then $lineMatch - 1 else $lineMatch" as="xs:integer"/>
+                <xsl:value-of select="if ($currentNode/self::printuntil | $currentNode/self::skipuntil) then $lineUntil - 1 else $lineUntil"/>
+                <xsl:catch>
+                  <xsl:message>ERROR: When handling a <xsl:value-of select="name($currentNode)"/> element, the string to match (<xsl:value-of select="$currentNode/text()"/>) has not been found.</xsl:message>
+                  <!-- Return a valid value, even though the result will be garbage. -->
+                  <xsl:value-of select="1"/>
+                </xsl:catch>
+              </xsl:try>
             </xsl:when>
           </xsl:choose>
         </xsl:variable>
         
-        <xsl:variable name="strippedLine" select="translate($quotefromfileLines[$value + 1], ' ','')"/>
-        <xsl:value-of select="if ($strippedLine='') then $value + $lineNumberIncrement + 1 else $value + $lineNumberIncrement + 2"/>
+        <xsl:variable name="strippedLine" select="translate($quotefromfileLines[$value], ' ','')"/>
+        <xsl:value-of select="if ($strippedLine='') then $value + $lineNumberIncrement + 1 else $value + $lineNumberIncrement"/>
       </xsl:when>
       <xsl:otherwise>
         <!-- Base case. Indexing starts at 1. -->
@@ -760,7 +770,7 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template mode="content_generic" match="printline | printto | printuntil | skipline | skipto | skipuntil">
+  <xsl:template mode="content_generic" match="printto | printuntil | skipline | skipto | skipuntil">
     <!-- Work through the intricacies behind quotefromfile. -->
     <!-- Retrieve the code from the last quotefromfile. -->
     <!-- Split it according to a series of tags: -->
@@ -776,7 +786,7 @@
     <xsl:variable name="previousNode" select="preceding-sibling::node()[1]"/>
     <xsl:if test="not($previousNode/self::printline or $previousNode/self::printto or $previousNode/self::printuntil or $previousNode/self::skipline or $previousNode/self::skipline or $previousNode/self::skipto or $previousNode/self::skipuntil)">
       <xsl:variable name="descriptionPath" as="xs:string" select="//description/@path"/>
-      <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, //quotefromfile/text()[1])"/>
+      <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, preceding::quotefromfile[1])"/>
       <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize(tc:load-file($quotefromfileFile), codepoints-to-string(10))"/>
       
       <xsl:variable name="nextNode" select="following-sibling::node()[1]/self::printuntil | following-sibling::node()[1]/self::printto"/>
@@ -788,6 +798,18 @@
         <xsl:value-of select="string-join($quotefromfileSequenceLines[position() = ($firstLineNumber to $endLineNumber)], codepoints-to-string(10))"/>
       </db:programlisting>
     </xsl:if>
+  </xsl:template>
+  
+  <xsl:template mode="content_generic" match="printline">
+    <xsl:variable name="descriptionPath" as="xs:string" select="//description/@path"/>
+    <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, preceding::quotefromfile[last()])"/>
+    <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize(tc:load-file($quotefromfileFile), codepoints-to-string(10))"/>
+    
+    <xsl:variable name="firstLineNumber" select="tc:printfromfile-get-line-after-node($quotefromfileSequenceLines, .)" as="xs:integer"/>
+    
+    <db:programlisting>
+      <xsl:value-of select="$quotefromfileSequenceLines[position() = $firstLineNumber - 1]"/>
+    </db:programlisting>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="code">
@@ -837,18 +859,9 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="quote">
-    <xsl:choose>
-      <xsl:when test="para/teletype">
-        <db:screen>
-          <xsl:apply-templates mode="content_generic" select="para/teletype/child::node()"/>
-        </db:screen>
-      </xsl:when>
-      <xsl:otherwise>
-        <db:quote>
-          <xsl:apply-templates mode="content_generic"/>
-        </db:quote>
-      </xsl:otherwise>
-    </xsl:choose>
+    <db:quote>
+      <xsl:apply-templates mode="content_generic"/>
+    </db:quote>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="list[@type='ordered']">
