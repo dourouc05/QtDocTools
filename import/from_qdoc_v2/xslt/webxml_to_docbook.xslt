@@ -679,6 +679,10 @@
     
     <xsl:value-of select="$filteredSnippet"/>
   </xsl:function>
+  <xsl:function name="tc:generate-indent">
+    <xsl:param name="indent" as="xs:integer"/>
+    <xsl:value-of select="string-join((for $i in 1 to $indent return ' '))"/>
+  </xsl:function>
   <xsl:function name="tc:gather-snippet">
     <xsl:param name="snippetNode" as="node()"/>
     
@@ -690,7 +694,7 @@
         <xsl:value-of select="concat(tc:parse-snippet($snippetNode/@path, $snippetNode/@identifier), $recurse)"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="concat(string-join((for $i in 1 to $snippetNode/@indent return ' ')), $recurse)"/>
+        <xsl:value-of select="concat(tc:generate-indent($snippetNode/@indent), $recurse)"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -706,7 +710,23 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="dots">
-    <!-- Should be handled with snippets. -->
+    <!-- Should be handled with snippets or quotefromfile. Except in rare cases, where there are only dots -->
+    <!-- (several such tags may follow; as for the rest, only output something for the first one). -->
+    <!-- Quite specific case (barely happens, except in qdoc documentation). -->
+    <xsl:if test="not(preceding::*[1]/(self::printline | self::printto | self::printuntil | self::skipline | self::skipto | self::skipuntil | self::dots))">
+      <db:programlisting>
+        <xsl:value-of select="tc:generate-indent(@indent)"/>
+        <xsl:text>...</xsl:text>
+        
+        <xsl:for-each select="following-sibling::dots">
+          <!-- Not very generic select: all dots that follow with the same parent. -->
+          <!-- Sufficient to handle the few cases where this specific bullshit happens. -->
+          <xsl:text>&#xa;</xsl:text>
+          <xsl:value-of select="tc:generate-indent(@indent)"/>
+          <xsl:text>...</xsl:text>
+        </xsl:for-each>
+      </db:programlisting>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="quotefile">
