@@ -117,18 +117,23 @@ int main(int argc, char *argv[])
          <db:para>The whole application is contained within the <db:code>main()</db:code> function:</db:para>
          <db:programlisting language="other">int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);</db:programlisting>
-         <db:para>First we create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object using the <db:code>argc</db:code> and <db:code>argv</db:code> parameters.</db:para>
-         <db:programlisting language="other">
-#include &lt;QApplication&gt;
-#include &lt;QPushButton&gt;
-
-int main(int argc, char *argv[])
-{
     QApplication app(argc, argv);
 
     QPushButton hello("Hello world!");
-    hello.resize(100, 30);</db:programlisting>
+    hello.resize(100, 30);
+
+    hello.show();
+    return app.exec();
+}
+</db:programlisting>
+         <db:para>First we create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object using the <db:code>argc</db:code> and <db:code>argv</db:code> parameters.</db:para>
+         <db:programlisting language="other">    QPushButton hello("Hello world!");
+    hello.resize(100, 30);
+
+    hello.show();
+    return app.exec();
+}
+</db:programlisting>
          <db:para>Then we create a <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code>, and give it a reasonable size using the <db:code><db:link xlink:href="qwidget.html#size-prop" xrefstyle="function" annotations="QWidget::resize()">QWidget::resize()</db:link></db:code> function.</db:para>
          <db:para>...</db:para>
       </db:blockquote>
@@ -166,11 +171,11 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>There has to be exactly one <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object in every GUI application that uses Qt.</db:para>
-         <db:programlisting language="other">/****************************************************************************</db:programlisting>
+         <db:programlisting language="other">#include &lt;QApplication&gt;</db:programlisting>
          <db:para>This line includes the <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> class definition. <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> manages various application-wide resources, such as the default font and cursor.</db:para>
-         <db:programlisting language="other">/****************************************************************************</db:programlisting>
+         <db:programlisting language="other">#include &lt;QPushButton&gt;</db:programlisting>
          <db:para>This line includes the <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> class definition. The <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> widget provides a command button.</db:para>
-         <db:programlisting language="other">**</db:programlisting>
+         <db:programlisting language="other">int main(int argc, char *argv[])</db:programlisting>
          <db:para>The main function...</db:para>
       </db:blockquote>
       <db:para xml:id="file">QDoc reads the file sequentially. To move the current position forward you can use either of the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipline-command" xrefstyle="page" annotations="skipline-command">\skip...</db:link> commands. To move the current position backward, you can use the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> command again.</db:para>
@@ -197,7 +202,55 @@ int main(int argc, char *argv[])
     } else {
         event-&gt;ignore();
     }
-}</db:programlisting>
+}
+//! [2]
+
+//! [3]
+void MainWindow::open()
+//! [3] //! [4]
+{
+    if (maybeSave()) {
+        QString fileName = QFileDialog::getOpenFileName(this,
+                                   tr("Open File"), QDir::currentPath());
+        if (!fileName.isEmpty())
+            scribbleArea-&gt;openImage(fileName);
+    }
+}
+//! [4]
+
+//! [5]
+void MainWindow::save()
+//! [5] //! [6]
+{
+    QAction *action = qobject_cast&lt;QAction *&gt;(sender());
+    QByteArray fileFormat = action-&gt;data().toByteArray();
+    saveFile(fileFormat);
+}
+//! [6]
+
+//! [7]
+void MainWindow::penColor()
+//! [7] //! [8]
+{
+    QColor newColor = QColorDialog::getColor(scribbleArea-&gt;penColor());
+    if (newColor.isValid())
+        scribbleArea-&gt;setPenColor(newColor);
+}
+//! [8]
+
+//! [9]
+void MainWindow::penWidth()
+//! [9] //! [10]
+{
+    bool ok;
+    int newWidth = QInputDialog::getInteger(this, tr("Scribble"),
+                                            tr("Select pen width:"),
+                                            scribbleArea-&gt;penWidth(),
+                                            1, 50, 1, &amp;ok);
+    if (ok)
+        scribbleArea-&gt;setPenWidth(newWidth);
+}
+//! [10]</db:programlisting>
          <db:para>Close events are sent to widgets that the users want to close, usually by clicking <db:code>File|Exit</db:code> or by clicking the <db:code>X</db:code> title bar button. By reimplementing the event handler, we can intercept attempts to close the application.</db:para>
       </db:blockquote>
       <db:para>(<db:link xlink:href="qtwidgets-widgets-scribble-example.html" xrefstyle="page" annotations="widgets/scribble">The complete example file...</db:link>)</db:para>
@@ -228,7 +281,12 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QPushButton hello("Hello world!");
-    hello.resize(100, 30);</db:programlisting>
+    hello.resize(100, 30);
+
+    hello.show();
+    return app.exec();
+}
+</db:programlisting>
          <db:para>First we create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object using the <db:code>argc</db:code> and <db:code>argv</db:code> parameters...</db:para>
       </db:blockquote>
       <db:para>See also <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printuntil-command" xrefstyle="page" annotations="printuntil-command">\printuntil</db:link>.</db:para>
@@ -257,7 +315,13 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    QPushButton hello("Hello world!");</db:programlisting>
+    QPushButton hello("Hello world!");
+    hello.resize(100, 30);
+
+    hello.show();
+    return app.exec();
+}
+</db:programlisting>
          <db:para>First we create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object using the <db:code>argc</db:code> and <db:code>argv</db:code> parameters, then we create a <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code>.</db:para>
       </db:blockquote>
       <db:para>See also <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printto-command" xrefstyle="page" annotations="printto-command">\printto</db:link>.</db:para>
@@ -284,7 +348,7 @@ int main(int argc, char *argv[])
       <db:blockquote>
          <db:para>
             <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> is a GUI push button that the user can press and release.</db:para>
-         <db:programlisting language="other">#include &lt;QApplication&gt;</db:programlisting>
+         <db:programlisting language="other">#include &lt;QPushButton&gt;</db:programlisting>
          <db:para>This line includes the <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> class definition. For each class that is part of the public Qt API, there exists a header file of the same name that contains its definition.</db:para>
       </db:blockquote>
       <db:para>See also <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipto-command" xrefstyle="page" annotations="skipto-command">\skipto</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipuntil-command" xrefstyle="page" annotations="skipuntil-command">\skipuntil</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#dots" xrefstyle="page" annotations="dots">\dots</db:link>.</db:para>
@@ -321,7 +385,8 @@ int main(int argc, char *argv[])
 
     hello.show();
     return app.exec();
-}</db:programlisting>
+}
+</db:programlisting>
          <db:para>First we create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object. There has to be exactly one such object in every GUI application that uses Qt. Then we create a <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code>, resize it to a reasonable size ...</db:para>
       </db:blockquote>
       <db:para>See also <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipline-command" xrefstyle="page" annotations="skipline-command">\skipline</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipuntil-command" xrefstyle="page" annotations="skipuntil-command">\skipuntil</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#dots" xrefstyle="page" annotations="dots">\dots</db:link>.</db:para>
@@ -349,7 +414,8 @@ int main(int argc, char *argv[])
       <db:blockquote>
          <db:para>The first thing we did in the <db:code>main()</db:code> function was to create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object <db:code>app</db:code>.</db:para>
          <db:programlisting language="other">    return app.exec();
-}</db:programlisting>
+}
+</db:programlisting>
          <db:para>In the end we must remember to make <db:code>main()</db:code> pass the control to Qt. <db:code><db:link xlink:href="qcoreapplication.html#exec" xrefstyle="function" annotations="QCoreApplication::exec()">QCoreApplication::exec()</db:link></db:code> will return when the application exits...</db:para>
       </db:blockquote>
       <db:para>See also <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipline-command" xrefstyle="page" annotations="skipline-command">\skipline</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipto-command" xrefstyle="page" annotations="skipto-command">\skipto</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#dots" xrefstyle="page" annotations="dots">\dots</db:link>.</db:para>
@@ -369,8 +435,17 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:programlisting language="other">int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
+
+    QPushButton hello("Hello world!");
+    hello.resize(100, 30);
+
+    hello.show();
+    return app.exec();
+}
+
     ...</db:programlisting>
-      <db:programlisting language="other">**</db:programlisting>
+      <db:programlisting language="other">}</db:programlisting>
       <db:para>The default indentation is 4 spaces, but this can be adjusted using the command's optional argument.</db:para>
       <db:programlisting language="other">/ *!
     \dots 0

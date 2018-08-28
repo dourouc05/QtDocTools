@@ -735,7 +735,7 @@
     <!-- Don't do anything in this: this tag will be retrieved when needed (skipto, printuntil, and family). -->
   </xsl:template>
   
-  <xsl:function name="tc:printfromfile-get-absolute-line-ater-text">
+  <xsl:function name="tc:printfromfile-get-absolute-line-after-text">
     <xsl:param name="quotefromfileLines" as="xs:string*"/>
     <xsl:param name="soughtText" as="xs:string"/>
     <xsl:param name="startAt" as="xs:integer"/>
@@ -753,6 +753,10 @@
         </xsl:choose>
       </xsl:for-each>
     </xsl:variable>
+    
+    <!-- Indexing starts at 1: if there is a match at the first line, index-of returns 1, -->
+    <!-- but the function must return $startAt. -->
+    <!-- <xsl:value-of select="$startAt + index-of($matchedLines, true())[1] - 1"/> -->
     <xsl:value-of select="index-of($matchedLines, true())[1]"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-is-skip" as="xs:boolean">
@@ -805,7 +809,15 @@
         <xsl:choose>
           <!-- Advance $startAt until the end of the part to skip, then recurse. -->
           <xsl:when test="tc:printfromfile-is-skip($currentNode)">
-            <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-ater-text($quotefromfileSequenceLines, $currentNode/text(), $recurse)"/>
+            <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-after-text($quotefromfileSequenceLines, $currentNode/text(), $recurse)"/>
+            
+            <xsl:if test="$lineMatched &lt; $recurse">
+              <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a value less than its starting line.</xsl:message>
+            </xsl:if>
+            <xsl:if test="not(contains($quotefromfileSequenceLines[position() = $lineMatched], $currentNode/text()))">
+              <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a line not containing the requested text.</xsl:message>
+            </xsl:if>
+            
             <xsl:value-of>
               <xsl:choose>
                 <xsl:when test="$currentNode/self::skipline or $currentNode/self::skipuntil">
@@ -819,7 +831,15 @@
           </xsl:when>
           <!-- Print from $startAt (included) until the last line that must be printed, and recurse. -->
           <xsl:when test="tc:printfromfile-is-print($currentNode)">
-            <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-ater-text($quotefromfileSequenceLines, $currentNode/text(), $recurse)"/>
+            <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-after-text($quotefromfileSequenceLines, $currentNode/text(), $recurse)"/>
+            
+            <xsl:if test="$lineMatched &lt; $recurse">
+              <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a value less than its starting line.</xsl:message>
+            </xsl:if>
+            <xsl:if test="not(contains($quotefromfileSequenceLines[position() = $lineMatched], $currentNode/text()))">
+              <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a line not containing the requested text.</xsl:message>
+            </xsl:if>
+            
             <xsl:choose>
               <xsl:when test="$currentNode/self::printline">
                 <xsl:value-of select="$recurse + 1"/>
@@ -859,7 +879,15 @@
     <xsl:choose>
       <!-- Advance $startAt until the end of the part to skip, then recurse. -->
       <xsl:when test="tc:printfromfile-is-skip($currentNode)">
-        <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-ater-text($quotefromfileSequenceLines, $currentNode/text(), $startAt)"/>
+        <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-after-text($quotefromfileSequenceLines, $currentNode/text(), $startAt)"/>
+        
+        <xsl:if test="$lineMatched &lt; $startAt">
+          <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a value less than its starting line.</xsl:message>
+        </xsl:if>
+        <xsl:if test="not(contains($quotefromfileSequenceLines[position() = $lineMatched], $currentNode/text()))">
+          <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a line not containing the requested text.</xsl:message>
+        </xsl:if>
+        
         <xsl:variable name="newStartAt">
           <xsl:choose>
             <xsl:when test="$currentNode/self::skipline or $currentNode/self::skipuntil">
@@ -878,7 +906,12 @@
       </xsl:when>
       <!-- Print from $startAt (included) until the last line that must be printed, and recurse. -->
       <xsl:when test="tc:printfromfile-is-print($currentNode)">
-        <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-ater-text($quotefromfileSequenceLines, $currentNode/text(), $startAt)"/>
+        <xsl:variable name="lineMatched" select="tc:printfromfile-get-absolute-line-after-text($quotefromfileSequenceLines, $currentNode/text(), $startAt)"/>
+        
+        <xsl:if test="$lineMatched &lt; $startAt">
+          <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a value less than its starting line.</xsl:message>
+        </xsl:if>
+        
         <xsl:choose>
           <xsl:when test="$currentNode/self::printline">
             <xsl:variable name="currentLine" select="$quotefromfileSequenceLines[position() = xs:integer($lineMatched)]"/>
