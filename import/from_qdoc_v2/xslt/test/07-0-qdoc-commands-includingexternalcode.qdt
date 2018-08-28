@@ -30,7 +30,7 @@
       <db:para>The \quotefile command expands to the complete contents of the file given as argument.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the file name with a line break.</db:para>
       <db:para>The file's contents is rendered in a separate paragraph, using a monospace font and the standard indentation. The code is shown verbatim.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     This is a simple "Hello world" example:
 
     \quotefile examples/main.cpp
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
       <db:para>The \quotefromfile command opens the file given as argument for quoting.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the file name with a line break.</db:para>
       <db:para>The command is intended for use when quoting parts from file with the walkthrough commands: <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printto-command" xrefstyle="page" annotations="printto-command">\printto</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printuntil-command" xrefstyle="page" annotations="printuntil-command">\printuntil</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipline-command" xrefstyle="page" annotations="skipline-command">\skipline</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipto-command" xrefstyle="page" annotations="skipto-command">\skipto</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipuntil-command" xrefstyle="page" annotations="skipuntil-command">\skipuntil</db:link>. This enables you to quote specific portions of a file.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     The whole application is contained within
     the \c main() function:
 
@@ -115,11 +115,11 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>The whole application is contained within the <db:code>main()</db:code> function:</db:para>
-         <db:programlisting>int main(int argc, char *argv[])
+         <db:programlisting language="other">int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);</db:programlisting>
          <db:para>First we create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object using the <db:code>argc</db:code> and <db:code>argv</db:code> parameters.</db:para>
-         <db:programlisting>
+         <db:programlisting language="other">
 #include &lt;QApplication&gt;
 #include &lt;QPushButton&gt;
 
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
       <db:para>The \printline command expands to the line from the current position to the next non-blank line of the current source file.</db:para>
       <db:para>To ensure that the documentation remains synchronized with the source file, a substring of the line must be specified as an argument to the command. Note that the command considers the rest of the line as part of its argument, make sure to follow the substring with a line break.</db:para>
       <db:para>The line from the source file is rendered as a separate paragraph, using a monospace font and the standard indentation. The code is shown verbatim.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     There has to be exactly one QApplication object
     in every GUI application that uses Qt.
 
@@ -166,16 +166,16 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>There has to be exactly one <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object in every GUI application that uses Qt.</db:para>
-         <db:programlisting>/****************************************************************************</db:programlisting>
+         <db:programlisting language="other">/****************************************************************************</db:programlisting>
          <db:para>This line includes the <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> class definition. <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> manages various application-wide resources, such as the default font and cursor.</db:para>
-         <db:programlisting>/****************************************************************************</db:programlisting>
+         <db:programlisting language="other">/****************************************************************************</db:programlisting>
          <db:para>This line includes the <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> class definition. The <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> widget provides a command button.</db:para>
-         <db:programlisting>**</db:programlisting>
+         <db:programlisting language="other">**</db:programlisting>
          <db:para>The main function...</db:para>
       </db:blockquote>
       <db:para xml:id="file">QDoc reads the file sequentially. To move the current position forward you can use either of the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipline-command" xrefstyle="page" annotations="skipline-command">\skip...</db:link> commands. To move the current position backward, you can use the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> command again.</db:para>
       <db:para xml:id="substring">If the substring argument is surrounded by slashes it is interpreted as a <db:code><db:link xlink:href="qregexp.html" xrefstyle="class" annotations="QRegExp">regular expression</db:link></db:code>.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     \quotefromfile examples/mainwindow.cpp
 
     \skipto closeEvent
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
 * /</db:programlisting>
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
-         <db:programlisting>void MainWindow::closeEvent(QCloseEvent *event)
+         <db:programlisting language="other">void MainWindow::closeEvent(QCloseEvent *event)
 //! [1] //! [2]
 {
     if (maybeSave()) {
@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
       <db:para>The \printto command expands to all the lines from the current position up to and <db:emphasis>excluding</db:emphasis> the next line containing a given substring.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the substring with a line break. The command also follows the same conventions for <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#file" xrefstyle="page" annotations="file">positioning</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#substring" xrefstyle="page" annotations="substring">argument</db:link> as the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> command.</db:para>
       <db:para>The lines from the source file are rendered in a separate paragraph, using a monospace font and the standard indentation. The code is shown verbatim.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     The whole application is contained within the
     \c main() function:
 
@@ -223,7 +223,7 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>The whole application is contained within the <db:code>main()</db:code> function:</db:para>
-         <db:programlisting>int main(int argc, char *argv[])
+         <db:programlisting language="other">int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
       <db:para>The \printuntil command expands to all the lines from the current position up to and <db:emphasis>including</db:emphasis> the next line containing a given substring.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the substring with a line break. The command also follows the same conventions for <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#file" xrefstyle="page" annotations="file">positioning</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#substring" xrefstyle="page" annotations="substring">argument</db:link> as the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> command.</db:para>
       <db:para>The lines from the source file are rendered in a separate paragraph, using a monospace font and the standard indentation. The code is shown verbatim.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     The whole application is contained within the
     \c main() function:
 
@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>The whole application is contained within the <db:code>main()</db:code> function:</db:para>
-         <db:programlisting>int main(int argc, char *argv[])
+         <db:programlisting language="other">int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
       <db:para>The \skipline command ignores the next non-blank line in the current source file.</db:para>
       <db:para>Doc reads the file sequentially, and the \skipline command is used to move the current position (omitting a line of the source file). See the remark about <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#file" xrefstyle="page" annotations="file">file positioning</db:link> above.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the substring with a line break. The command also follows the same conventions for <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#substring" xrefstyle="page" annotations="substring">argument</db:link> as the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> command, and it is used in conjunction with the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> command.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     QPushButton is a GUI push button that the user
     can press and release.
 
@@ -284,7 +284,7 @@ int main(int argc, char *argv[])
       <db:blockquote>
          <db:para>
             <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> is a GUI push button that the user can press and release.</db:para>
-         <db:programlisting>#include &lt;QApplication&gt;</db:programlisting>
+         <db:programlisting language="other">#include &lt;QApplication&gt;</db:programlisting>
          <db:para>This line includes the <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> class definition. For each class that is part of the public Qt API, there exists a header file of the same name that contains its definition.</db:para>
       </db:blockquote>
       <db:para>See also <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipto-command" xrefstyle="page" annotations="skipto-command">\skipto</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipuntil-command" xrefstyle="page" annotations="skipuntil-command">\skipuntil</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#dots" xrefstyle="page" annotations="dots">\dots</db:link>.</db:para>
@@ -295,7 +295,7 @@ int main(int argc, char *argv[])
       <db:para>QDoc reads the file sequentially, and the \skipto command is used to move the current position (omitting one or several lines of the source file). See the remark about <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#file" xrefstyle="page" annotations="file">file positioning</db:link> above.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the substring with a line break.</db:para>
       <db:para>The command also follows the same conventions for <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#substring" xrefstyle="page" annotations="substring">argument</db:link> as the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> command, and it is used in conjunction with the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> command.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     The whole application is contained within
     the \c main() function:
 
@@ -312,7 +312,7 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>The whole application is contained within the <db:code>main()</db:code> function:</db:para>
-         <db:programlisting>int main(int argc, char *argv[])
+         <db:programlisting language="other">int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
@@ -332,7 +332,7 @@ int main(int argc, char *argv[])
       <db:para>QDoc reads the file sequentially, and the \skipuntil command is used to move the current position (omitting one or several lines of the source file). See the remark about <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#file" xrefstyle="page" annotations="file">file positioning</db:link> above.</db:para>
       <db:para>The command considers the rest of the line as part of its argument, make sure to follow the substring with a line break.</db:para>
       <db:para>The command also follows the same conventions for <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#substring" xrefstyle="page" annotations="substring">argument</db:link> as the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link> command, and it is used in conjunction with the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> command.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     The first thing we did in the \c main() function
     was to create a QApplication object \c app.
 
@@ -348,9 +348,7 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>The first thing we did in the <db:code>main()</db:code> function was to create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object <db:code>app</db:code>.</db:para>
-         <db:programlisting>    
-...</db:programlisting>
-         <db:programlisting>    return app.exec();
+         <db:programlisting language="other">    return app.exec();
 }</db:programlisting>
          <db:para>In the end we must remember to make <db:code>main()</db:code> pass the control to Qt. <db:code><db:link xlink:href="qcoreapplication.html#exec" xrefstyle="function" annotations="QCoreApplication::exec()">QCoreApplication::exec()</db:link></db:code> will return when the application exits...</db:para>
       </db:blockquote>
@@ -360,7 +358,7 @@ int main(int argc, char *argv[])
       <db:title>\dots</db:title>
       <db:para>The \dots command indicates that parts of the source file have been omitted when quoting a file.</db:para>
       <db:para>The command is used in conjunction with the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> command, and should be stated on its own line. The dots are rendered on a new line, using a monospace font.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     \quotefromfile examples/main.cpp
     \skipto main
     \printuntil {
@@ -369,12 +367,12 @@ int main(int argc, char *argv[])
     \printline }
 * /</db:programlisting>
       <db:para>QDoc renders this as:</db:para>
-      <db:programlisting>int main(int argc, char *argv[])
-{    
-...</db:programlisting>
-      <db:programlisting>**</db:programlisting>
+      <db:programlisting language="other">int main(int argc, char *argv[])
+{
+    ...</db:programlisting>
+      <db:programlisting language="other">**</db:programlisting>
       <db:para>The default indentation is 4 spaces, but this can be adjusted using the command's optional argument.</db:para>
-      <db:programlisting>/ *!
+      <db:programlisting language="other">/ *!
     \dots 0
     \dots
     \dots 8
@@ -394,9 +392,9 @@ int main(int argc, char *argv[])
       <db:para>The \snippet command causes a code snippet to be included verbatim as preformatted text, which may be syntax highlighted.</db:para>
       <db:para>Each code snippet is referenced by the file that holds it and by a unique identifier for that file. Snippet files are typically stored in a <db:code>snippets</db:code> directory inside the documentation directory (for example, <db:code>$QTDIR/doc/src/snippets</db:code>).</db:para>
       <db:para>For example, the following documentation references a snippet in a file residing in a subdirectory of the documentation directory:</db:para>
-      <db:programlisting>\snippet snippets/textdocument-resources/main.cpp Adding a resource</db:programlisting>
+      <db:programlisting language="other">\snippet snippets/textdocument-resources/main.cpp Adding a resource</db:programlisting>
       <db:para>The text following the file name is the unique identifier for the snippet. This is used to delimit the quoted code in the relevant snippet file, as shown in the following example that corresponds to the above <db:code>\snippet</db:code> command:</db:para>
-      <db:programlisting>    ...
+      <db:programlisting language="other">    ...
     QImage image(64, 64, QImage::Format_RGB32);
     image.fill(qRgb(255, 160, 128));
 

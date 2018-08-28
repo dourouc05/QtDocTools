@@ -874,7 +874,7 @@
       </xsl:when>
       <!-- Generate properly indented dots and recurse. -->
       <xsl:when test="tc:printfromfile-is-dots($currentNode)">
-        <xsl:value-of select="concat(tc:generate-indent($currentNode/@indent), codepoints-to-string(10), '...')"/>
+        <xsl:value-of select="concat(codepoints-to-string(10), tc:generate-indent($currentNode/@indent), '...')"/>
       </xsl:when>
       <!-- Print from $startAt (included) until the last line that must be printed, and recurse. -->
       <xsl:when test="tc:printfromfile-is-print($currentNode)">
@@ -912,8 +912,8 @@
     <!--     printline, printto, printuntil, skipline, skipto, skipuntil -->
     
     <!-- As QDoc, only print something with the print* tags. -->
-    <!-- Contrary to QDoc, dots are handled by the print* tags, not when meeting a dots tag. -->
-    <!-- This has the consequence that several print* tags will output several programlisting tags. -->
+    <!-- Contrary to QDoc, dots are handled by the print* tags, not when meeting a dots tag -->
+    <!-- (within the tc:printfromfile-print-content function). -->
     
     <!-- Detailed explanation of each tag: -->
     <!--   - printline:  print one line, advance cursor by one line -->
@@ -927,7 +927,8 @@
     <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, preceding::quotefromfile[1])"/>
     <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize(tc:load-file($quotefromfileFile), codepoints-to-string(10))"/>
     
-    <xsl:variable name="content" select="tc:printfromfile-print-content(., $quotefromfileSequenceLines)"/>
+    <xsl:variable name="content" select="tc:printfromfile-print-content(., $quotefromfileSequenceLines)" as="xs:string"/>
+    
     <xsl:choose>
       <xsl:when test="string-length($content) > 0">
         <db:programlisting language="other">
