@@ -756,8 +756,7 @@
     
     <!-- Indexing starts at 1: if there is a match at the first line, index-of returns 1, -->
     <!-- but the function must return $startAt. -->
-    <!-- <xsl:value-of select="$startAt + index-of($matchedLines, true())[1] - 1"/> -->
-    <xsl:value-of select="index-of($matchedLines, true())[1]"/>
+    <xsl:value-of select="$startAt + index-of($matchedLines, true())[1] - 1"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-is-skip" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
@@ -911,22 +910,42 @@
         <xsl:if test="$lineMatched &lt; $startAt">
           <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a value less than its starting line.</xsl:message>
         </xsl:if>
+        <xsl:if test="not(contains($quotefromfileSequenceLines[position() = $lineMatched], $currentNode/text()))">
+          <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-get-absolute-line-after-text returned a line not containing the requested text.</xsl:message>
+        </xsl:if>
         
         <xsl:choose>
           <xsl:when test="$currentNode/self::printline">
             <xsl:variable name="currentLine" select="$quotefromfileSequenceLines[position() = xs:integer($lineMatched)]"/>
             <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, xs:integer($lineMatched + 1))"/>
+            
+            <xsl:if test="not(contains($currentLine, $currentNode/text()))">
+              <xsl:message>CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not containing the requested text (maybe a problem in the original documentation).</xsl:message>
+            </xsl:if>
+            
             <xsl:value-of select="concat($currentLine, $recurse)"/>
           </xsl:when>
           <xsl:when test="$currentNode/self::printto">
-            <xsl:variable name="currentBlock" select="string-join($quotefromfileSequenceLines[position() = ($startAt to xs:integer($startAt + $lineMatched))], codepoints-to-string(10))"/>
+            <xsl:variable name="endAt" select="xs:integer($startAt + $lineMatched)"/>
+            <xsl:variable name="currentBlock" select="string-join($quotefromfileSequenceLines[position() = ($startAt to $endAt)], codepoints-to-string(10))"/>
             <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, xs:integer($lineMatched + 1))"/>
+            
+            <xsl:if test="contains($quotefromfileSequenceLines[position() = $endAt], $currentNode/text())">
+              <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-print-content returning a line containing text that should not be there.</xsl:message>
+            </xsl:if>
+            
             <xsl:value-of select="concat($currentBlock, $recurse)"/>
           </xsl:when> 
           <xsl:when test="$currentNode/self::printuntil">
             <!-- Only difference with previous block: - 1. -->
-            <xsl:variable name="currentBlock" select="string-join($quotefromfileSequenceLines[position() = ($startAt to xs:integer($startAt + $lineMatched - 1))], codepoints-to-string(10))"/> 
+            <xsl:variable name="endAt" select="xs:integer($startAt + $lineMatched - 1)"/>
+            <xsl:variable name="currentBlock" select="string-join($quotefromfileSequenceLines[position() = ($startAt to $endAt)], codepoints-to-string(10))"/> 
             <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, $lineMatched)"/>
+            
+            <xsl:if test="not(contains($quotefromfileSequenceLines[position() = $endAt], $currentNode/text()))">
+              <xsl:message>CONSISTENCY CHECK ERROR: printfromfile-print-content returning a line not containing requested text.</xsl:message>
+            </xsl:if>
+            
             <xsl:value-of select="concat($currentBlock, $recurse)"/>
           </xsl:when> 
         </xsl:choose>
