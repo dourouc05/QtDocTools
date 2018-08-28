@@ -731,10 +731,6 @@
     </db:programlisting>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="quotefromfile">
-    <!-- Don't do anything in this: this tag will be retrieved when needed (skipto, printuntil, and family). -->
-  </xsl:template>
-  
   <xsl:function name="tc:printfromfile-get-absolute-line-after-text">
     <xsl:param name="quotefromfileLines" as="xs:string*"/>
     <xsl:param name="soughtText" as="xs:string"/>
@@ -772,6 +768,11 @@
     <xsl:param name="currentNode" as="node()"/>
     
     <xsl:value-of select="boolean($currentNode/self::dots)"/>
+  </xsl:function>
+  <xsl:function name="tc:printfromfile-is-codeline" as="xs:boolean">
+    <xsl:param name="currentNode" as="node()"/>
+    
+    <xsl:value-of select="boolean($currentNode/self::codeline)"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-find-all-previous-nodes-until-printfromfile" as="node()*">
     <xsl:param name="currentNode" as="node()?"/>
@@ -907,7 +908,7 @@
         </xsl:choose>
       </xsl:when>
       <!-- codeline just prints a blank line, and recurse. -->
-      <xsl:when test="$currentNode[self::codeline]">
+      <xsl:when test="tc:printfromfile-is-codeline($currentNode)">
         <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, $startAt)"/>
         <xsl:value-of select="concat(codepoints-to-string(10), $recurse)"/>
       </xsl:when>
@@ -918,6 +919,9 @@
     </xsl:choose>
   </xsl:function>
   
+  <xsl:template mode="content_generic" match="quotefromfile">
+    <!-- Don't do anything in this: this tag will be retrieved when needed (skipto, printuntil, and family). -->
+  </xsl:template>
   <xsl:template mode="content_generic" match="printline | printto | printuntil">
     <!-- Work through the intricacies behind quotefromfile. -->
     <!-- Retrieve the code from the last quotefromfile. -->
