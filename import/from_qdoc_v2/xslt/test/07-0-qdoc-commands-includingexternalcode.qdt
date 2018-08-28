@@ -338,7 +338,8 @@ int main(int argc, char *argv[])
       <db:para>QDoc renders this as:</db:para>
       <db:blockquote>
          <db:para>The first thing we did in the <db:code>main()</db:code> function was to create a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object <db:code>app</db:code>.</db:para>
-         <db:programlisting language="other">    return app.exec();
+         <db:programlisting language="other">    ...
+    return app.exec();
 }</db:programlisting>
          <db:para>In the end we must remember to make <db:code>main()</db:code> pass the control to Qt. <db:code><db:link xlink:href="qcoreapplication.html#exec" xrefstyle="function" annotations="QCoreApplication::exec()">QCoreApplication::exec()</db:link></db:code> will return when the application exits...</db:para>
       </db:blockquote>

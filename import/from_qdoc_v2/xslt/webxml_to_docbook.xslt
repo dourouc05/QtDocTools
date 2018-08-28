@@ -707,7 +707,7 @@
   <xsl:template mode="content_generic" match="dots">
     <!-- Should be handled with snippets or quotefromfile. Except in rare cases, where there are only dots -->
     <!-- (several such tags may follow; as for the rest, only output something for the first one). -->
-    <!-- Quite specific case (barely happens, except in qdoc documentation). -->
+    <!-- Quite specific case (barely happens, except in QDoc documentation). -->
     <xsl:if test="not(preceding::*[1]/(self::printline | self::printto | self::printuntil | self::skipline | self::skipto | self::skipuntil | self::dots))">
       <db:programlisting>
         <xsl:value-of select="tc:generate-indent(@indent)"/>
@@ -921,7 +921,8 @@
     
     <!-- As QDoc, only print something with the print* tags. -->
     <!-- Contrary to QDoc, dots are handled by the print* tags, not when meeting a dots tag -->
-    <!-- (within the tc:printfromfile-print-content function). -->
+    <!-- (within the tc:printfromfile-print-content function); this helps ensure that -->
+    <!-- only one code block is output. -->
     
     <!-- Detailed explanation of each tag: -->
     <!--   - printline:  print one line, advance cursor by one line -->
@@ -935,7 +936,18 @@
     <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, preceding::quotefromfile[1])"/>
     <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize(tc:load-file($quotefromfileFile), codepoints-to-string(10))"/>
     
-    <xsl:variable name="content" select="tc:printfromfile-print-content(., $quotefromfileSequenceLines)" as="xs:string"/>
+    <xsl:variable name="previousNode" select="preceding-sibling::node()[1]" as="node()"/>
+    <xsl:variable name="previousDots" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$previousNode[self::dots]">
+          <xsl:value-of select="concat(tc:generate-indent($previousNode/@indent), '...', codepoints-to-string(10))"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="''"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="content" select="concat($previousDots, tc:printfromfile-print-content(., $quotefromfileSequenceLines))" as="xs:string"/>
     
     <xsl:choose>
       <xsl:when test="string-length($content) > 0">
@@ -974,6 +986,7 @@
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
+        <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>For example, if you have code like</db:para>
         <db:programlisting>
           <xsl:apply-templates mode="content_generic"/>
@@ -990,6 +1003,7 @@
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
+        <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>you can rewrite it as</db:para>
         <db:programlisting language="other" mode="newcode">
           <xsl:apply-templates mode="content_generic"/>
