@@ -926,7 +926,7 @@
             <xsl:value-of select="concat($currentLine, $recurse)"/>
           </xsl:when>
           <xsl:when test="$currentNode/self::printto">
-            <xsl:variable name="endAt" select="xs:integer($startAt + $lineMatched)"/>
+            <xsl:variable name="endAt" select="xs:integer($lineMatched - 1)"/>
             <xsl:variable name="currentBlock" select="string-join($quotefromfileSequenceLines[position() = ($startAt to $endAt)], codepoints-to-string(10))"/>
             <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, xs:integer($lineMatched + 1))"/>
             
@@ -937,8 +937,7 @@
             <xsl:value-of select="concat($currentBlock, $recurse)"/>
           </xsl:when> 
           <xsl:when test="$currentNode/self::printuntil">
-            <!-- Only difference with previous block: - 1. -->
-            <xsl:variable name="endAt" select="xs:integer($startAt + $lineMatched - 1)"/>
+            <xsl:variable name="endAt" select="$lineMatched"/>
             <xsl:variable name="currentBlock" select="string-join($quotefromfileSequenceLines[position() = ($startAt to $endAt)], codepoints-to-string(10))"/> 
             <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, $lineMatched)"/>
             
