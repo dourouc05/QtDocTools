@@ -847,7 +847,7 @@
     <xsl:param name="currentNode" as="node()"/>
     <xsl:param name="quotefromfileSequenceLines" as="xs:string*"/>
     
-    <xsl:variable name="previousInterestingNode" select="($currentNode/preceding::node()/(self::quotefromfile union self::printline union self::printto union self::printuntil union self::skipline union self::skipto union self::skipuntil union self::dots))[last()]"/>
+    <xsl:variable name="previousInterestingNode" select="($currentNode/preceding::node()/(self::quotefromfile union self::printline union self::printto union self::printuntil union self::skipline union self::skipto union self::skipuntil))[last()]"/>
     <xsl:variable name="initialLine" as="xs:integer" select="tc:printfromfile-find-line-of($previousInterestingNode, $quotefromfileSequenceLines)"/> 
     <xsl:value-of select="tc:printfromfile-print-content($currentNode, $quotefromfileSequenceLines, $initialLine)"/>
   </xsl:function>
@@ -874,7 +874,7 @@
         </xsl:variable>
         <xsl:value-of select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, $newStartAt)"/>
       </xsl:when>
-      <!-- Generate properly indented dots and recurse. -->
+      <!-- Generate properly indented dots. -->
       <xsl:when test="tc:printfromfile-is-dots($currentNode)">
         <xsl:value-of select="concat(codepoints-to-string(10), tc:generate-indent($currentNode/@indent), '...')"/>
       </xsl:when>
@@ -905,6 +905,11 @@
             <xsl:value-of select="concat($currentBlock, $recurse)"/>
           </xsl:when> 
         </xsl:choose>
+      </xsl:when>
+      <!-- codeline just prints a blank line, and recurse. -->
+      <xsl:when test="$currentNode[self::codeline]">
+        <xsl:variable name="recurse" select="tc:printfromfile-print-content($nextNode, $quotefromfileSequenceLines, $startAt)"/>
+        <xsl:value-of select="concat(codepoints-to-string(10), $recurse)"/>
       </xsl:when>
       <!-- Base case: nothing to print, the current node is not about printfromfile. -->
       <xsl:otherwise>
@@ -941,6 +946,9 @@
       <xsl:choose>
         <xsl:when test="$previousNode[self::dots]">
           <xsl:value-of select="concat(tc:generate-indent($previousNode/@indent), '...', codepoints-to-string(10))"/>
+        </xsl:when>
+        <xsl:when test="$previousNode[self::codeline]">
+          <xsl:value-of select="codepoints-to-string(10)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="''"/>
