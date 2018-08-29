@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>Writing QML Extensions with C++</db:title>
+      <db:abstract>
+         <db:para>Tutorial about extending QML with Qt C++</db:para>
+      </db:abstract>
+   </db:info>
+   <db:para>Tutorial about extending QML with Qt C++.</db:para>
+   <db:para>The <db:link xlink:href="qtqml-index.html" xrefstyle="page" annotations="Qt QML">Qt QML</db:link> module provides a set of APIs for extending QML through C++ extensions. You can write extensions to add your own QML types, extend existing Qt types, or call C/C++ functions that are not accessible from ordinary QML code.</db:para>
+   <db:para>This tutorial shows how to write a QML extension using C++ that includes core QML features, including properties, signals and bindings. It also shows how extensions can be deployed through plugins.</db:para>
+   <db:para>Many of the topics covered in this tutorial are documented in further detail in <db:link xlink:href="qtqml-cppintegration-topic.html" xrefstyle="page" annotations="qtqml-cppintegration-topic.html">Integrating QML and C++</db:link> and its documentation sub-topics. In particular, you may be interested in the sub-topics <db:link xlink:href="qtqml-cppintegration-exposecppattributes.html" xrefstyle="page" annotations="qtqml-cppintegration-exposecppattributes.html">Exposing Attributes of C++ Classes to QML</db:link> and <db:link xlink:href="qtqml-cppintegration-definetypes.html" xrefstyle="page" annotations="qtqml-cppintegration-definetypes.html">Defining QML Types from C++</db:link>.</db:para>
+   <db:section xml:id="running-the-tutorial-examples">
+      <db:title>Running the Tutorial Examples</db:title>
+      <db:para>The code in this tutorial is available as an example project with subprojects associated with each tutorial chapter. In <db:link xlink:href="http://doc.qt.io/qtcreator/index.html" xrefstyle="page" annotations="Qt Creator Manual">Qt Creator</db:link>, open the Welcome mode and select the tutorial from Examples. In Edit mode, expand the <db:emphasis>extending-qml</db:emphasis> project, right-click on the subproject (chapter) you want to run and select Run.</db:para>
+   </db:section>
+   <db:section xml:id="chapter-1-creating-a-new-type">
+      <db:title>Chapter 1: Creating a New Type</db:title>
+      <db:para>
+         <db:code>extending-qml/chapter1-basics</db:code>
+      </db:para>
+      <db:para>A common task when extending QML is to provide a new QML type that supports some custom functionality beyond what is provided by the built-in <db:link xlink:href="qtquick-qmlmodule.html" xrefstyle="" annotations="Qt Quick QML Types">Qt Quick types</db:link>. For example, this could be done to implement particular data models, or provide types with custom painting and drawing capabilities, or access system features like network programming that are not accessible through built-in QML features.</db:para>
+      <db:para>In this tutorial, we will show how to use the C++ classes in the Qt Quick module to extend QML. The end result will be a simple Pie Chart display implemented by several custom QML types connected together through QML features like bindings and signals, and made available to the QML runtime through a plugin.</db:para>
+      <db:para>To begin with, let's create a new QML type called "PieChart" that has two properties: a name and a color. We will make it available in an importable type namespace called "Charts", with a version of 1.0.</db:para>
+      <db:para>We want this <db:code>PieChart</db:code> type to be usable from QML like this:</db:para>
+      <db:programlisting language="other" role="badcode">import Charts 1.0
+
+PieChart {
+    width: 100; height: 100
+    name: "A simple pie chart"
+    color: "red"
+}</db:programlisting>
+      <db:para>To do this, we need a C++ class that encapsulates this <db:code>PieChart</db:code> type and its two properties. Since QML makes extensive use of Qt's <db:link xlink:href="metaobjects.html" xrefstyle="page" annotations="Meta-Object System">meta object system</db:link>, this new class must:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Inherit from <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Declare its properties using the <db:code><db:link xlink:href="qobject.html#Q_PROPERTY" xrefstyle="function" annotations="Q_PROPERTY">Q_PROPERTY</db:link></db:code> macro</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>Here is our <db:code>PieChart</db:code> class, defined in <db:code>piechart.h</db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>The class inherits from QQuickPaintedItem because we want to override QQuickPaintedItem::paint() in perform drawing operations with the <db:code><db:link xlink:href="qpainter.html" xrefstyle="class" annotations="QPainter">QPainter</db:link></db:code> API. If the class just represented some data type and was not an item that actually needed to be displayed, it could simply inherit from <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code>. Or, if we want to extend the functionality of an existing <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code>-based class, it could inherit from that class instead. Alternatively, if we want to create a visual item that doesn't need to perform drawing operations with the <db:code><db:link xlink:href="qpainter.html" xrefstyle="class" annotations="QPainter">QPainter</db:link></db:code> API, we can just subclass QQuickItem.</db:para>
+      <db:para>The <db:code>PieChart</db:code> class defines the two properties, <db:code>name</db:code> and <db:code>color</db:code>, with the <db:code><db:link xlink:href="qobject.html#Q_PROPERTY" xrefstyle="function" annotations="Q_PROPERTY">Q_PROPERTY</db:link></db:code> macro, and overrides QQuickPaintedItem::paint(). The class implementation in <db:code>piechart.cpp</db:code> simply sets and returns the <db:code>m_name</db:code> and <db:code>m_color</db:code> values as appropriate, and implements <db:code>paint()</db:code> to draw a simple pie chart. It also turns off the <db:code><db:link xlink:href="qgraphicsitem.html#GraphicsItemFlag-enum" xrefstyle="enum" annotations="QGraphicsItem::ItemHasNoContents">QGraphicsItem::ItemHasNoContents</db:link></db:code> flag to enable painting:</db:para>
+      <db:programlisting/>
+      <db:programlisting>...</db:programlisting>
+      <db:para>Now that we have defined the <db:code>PieChart</db:code> type, we will use it from QML. The <db:code>app.qml</db:code> file creates a <db:code>PieChart</db:code> item and display the pie chart's details using a standard QML <db:link xlink:href="qml-qtquick-text.html" xrefstyle="" annotations="Text">Text</db:link> item:</db:para>
+      <db:programlisting/>
+      <db:para>Notice that although the color is specified as a string in QML, it is automatically converted to a <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code> object for the PieChart <db:code>color</db:code> property. Automatic conversions are provided for various other <db:link xlink:href="qtqml-typesystem-basictypes.html" xrefstyle="page" annotations="QML Basic Types">basic types</db:link>; for example, a string like "640x480" can be automatically converted to a <db:code><db:link xlink:href="qsize.html" xrefstyle="class" annotations="QSize">QSize</db:link></db:code> value.</db:para>
+      <db:para>We'll also create a C++ application that uses a QQuickView to run and display <db:code>app.qml</db:code>. The application must register the <db:code>PieChart</db:code> type using the <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType-1" xrefstyle="function" annotations="qmlRegisterType()">qmlRegisterType()</db:link></db:code> function, to allow it to be used from QML. If you don't register the type, <db:code>app.qml</db:code> won't be able to create a <db:code>PieChart</db:code>.</db:para>
+      <db:para>Here is the application <db:code>main.cpp</db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>This call to <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType-1" xrefstyle="function" annotations="qmlRegisterType()">qmlRegisterType()</db:link></db:code> registers the <db:code>PieChart</db:code> type as a type called "PieChart", in a type namespace called "Charts", with a version of 1.0.</db:para>
+      <db:para>Lastly, we write a <db:code>.pro</db:code> project file that includes the files and the <db:code>declarative</db:code> library:</db:para>
+      <db:programlisting>QT += qml quick
+
+HEADERS += piechart.h
+SOURCES += piechart.cpp \
+           main.cpp
+
+RESOURCES += chapter1-basics.qrc
+
+DESTPATH = $$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter1-basics
+target.path = $$DESTPATH
+
+qml.files = *.qml
+qml.path = $$DESTPATH
+
+INSTALLS += target qml
+</db:programlisting>
+      <db:para>Now we can build and run the application:</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/extending-tutorial-chapter1.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:note>
+         <db:para> You may see a warning <db:emphasis>Expression ... depends on non-NOTIFYable properties: PieChart::name</db:emphasis>. This happens because we add a binding to the writable <db:code>name</db:code> property, but haven't yet defined a notify signal for it. The QML engine therefore cannot update the binding if the <db:code>name</db:code> value changes. This is addressed in the following chapters.</db:para>
+      </db:note>
+      <db:para>The source code from the following files are referred to in this chapter: </db:para>
+   </db:section>
+   <db:section xml:id="chapter-2-connecting-to-c-methods-and-signals">
+      <db:title>Chapter 2: Connecting to C++ Methods and Signals</db:title>
+      <db:para>
+         <db:code>extending-qml/chapter2-methods</db:code>
+      </db:para>
+      <db:para>Suppose we want <db:code>PieChart</db:code> to have a "clearChart()" method that erases the chart and then emits a "chartCleared" signal. Our <db:code>app.qml</db:code> would be able to call <db:code>clearChart()</db:code> and receive <db:code>chartCleared()</db:code> signals like this:</db:para>
+      <db:programlisting/>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/extending-tutorial-chapter2.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>To do this, we add a <db:code>clearChart()</db:code> method and a <db:code>chartCleared()</db:code> signal to our C++ class:</db:para>
+      <db:programlisting>            </db:programlisting>
+      <db:programlisting>    ...
+    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...</db:programlisting>
+      <db:para>The use of <db:code><db:link xlink:href="qobject.html#Q_INVOKABLE" xrefstyle="function" annotations="Q_INVOKABLE">Q_INVOKABLE</db:link></db:code> makes the <db:code>clearChart()</db:code> method available to the Qt Meta-Object system, and in turn, to QML. Note that it could have been declared as a Qt slot instead of using <db:code><db:link xlink:href="qobject.html#Q_INVOKABLE" xrefstyle="function" annotations="Q_INVOKABLE">Q_INVOKABLE</db:link></db:code>, as slots are also callable from QML. Both of these approaches are valid.</db:para>
+      <db:para>The <db:code>clearChart()</db:code> method simply changes the color to <db:code><db:link xlink:href="qt.html#GlobalColor-enum" xrefstyle="enum" annotations="Qt::transparent">Qt::transparent</db:link></db:code>, repaints the chart, then emits the <db:code>chartCleared()</db:code> signal:</db:para>
+      <db:programlisting/>
+      <db:para>Now when we run the application and click the window, the pie chart disappears, and the application outputs:</db:para>
+      <db:programlisting language="other" role="badcode">qml: The chart has been cleared</db:programlisting>
+      <db:para>The source code from the following files are referred to in this chapter: </db:para>
+   </db:section>
+   <db:section xml:id="chapter-3-adding-property-bindings">
+      <db:title>Chapter 3: Adding Property Bindings</db:title>
+      <db:para>
+         <db:code>extending-qml/chapter3-bindings</db:code>
+      </db:para>
+      <db:para>Property binding is a powerful feature of QML that allows values of different types to be synchronized automatically. It uses signals to notify and update other types' values when property values are changed.</db:para>
+      <db:para>Let's enable property bindings for the <db:code>color</db:code> property. That means if we have code like this:</db:para>
+      <db:programlisting/>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/extending-tutorial-chapter3.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>The "color: chartA.color" statement binds the <db:code>color</db:code> value of <db:code>chartB</db:code> to the <db:code>color</db:code> of <db:code>chartA</db:code>. Whenever <db:code>chartA</db:code>'s <db:code>color</db:code> value changes, <db:code>chartB</db:code>'s <db:code>color</db:code> value updates to the same value. When the window is clicked, the <db:code>onClicked</db:code> handler in the <db:link xlink:href="qml-qtquick-mousearea.html" xrefstyle="" annotations="MouseArea">MouseArea</db:link> changes the color of <db:code>chartA</db:code>, thereby changing both charts to the color blue.</db:para>
+      <db:para>It's easy to enable property binding for the <db:code>color</db:code> property. We add a <db:link xlink:href="properties.html" xrefstyle="page" annotations="Qt's Property System">NOTIFY</db:link> feature to its <db:code><db:link xlink:href="qobject.html#Q_PROPERTY" xrefstyle="function" annotations="Q_PROPERTY()">Q_PROPERTY()</db:link></db:code> declaration to indicate that a "colorChanged" signal is emitted whenever the value changes.</db:para>
+      <db:programlisting>            </db:programlisting>
+      <db:programlisting>    ...
+    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...</db:programlisting>
+      <db:para>Then, we emit this signal in <db:code>setPieSlice()</db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>It's important for <db:code>setColor()</db:code> to check that the color value has actually changed before emitting <db:code>colorChanged()</db:code>. This ensures the signal is not emitted unnecessarily and also prevents loops when other types respond to the value change.</db:para>
+      <db:para>The use of bindings is essential to QML. You should always add NOTIFY signals for properties if they are able to be implemented, so that your properties can be used in bindings. Properties that cannot be bound cannot be automatically updated and cannot be used as flexibly in QML. Also, since bindings are invoked so often and relied upon in QML usage, users of your custom QML types may see unexpected behavior if bindings are not implemented.</db:para>
+      <db:para>The source code from the following files are referred to in this chapter: </db:para>
+   </db:section>
+   <db:section xml:id="chapter-4-using-custom-property-types">
+      <db:title>Chapter 4: Using Custom Property Types</db:title>
+      <db:para>
+         <db:code>extending-qml/chapter4-customPropertyTypes</db:code>
+      </db:para>
+      <db:para>The <db:code>PieChart</db:code> type currently has a string-type property and a color-type property. It could have many other types of properties. For example, it could have an int-type property to store an identifier for each chart:</db:para>
+      <db:programlisting language="other">// C++
+class PieChart : public QQuickPaintedItem
+{
+    Q_PROPERTY(int chartId READ chartId WRITE setChartId NOTIFY chartIdChanged)
+    ...
+
+public:
+    void setChartId(int chartId);
+    int chartId() const;
+    ...
+
+signals:
+    void chartIdChanged();
+};
+
+// QML
+PieChart {
+    ...
+    chartId: 100
+}</db:programlisting>
+      <db:para>Aside from <db:code>int</db:code>, we could use various other property types. Many of the Qt data types such as <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>, <db:code><db:link xlink:href="qsize.html" xrefstyle="class" annotations="QSize">QSize</db:link></db:code> and <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code> are automatically supported from QML. (See <db:link xlink:href="qtqml-cppintegration-data.html" xrefstyle="page" annotations="Data Type Conversion Between QML and C++">Data Type Conversion Between QML and C++</db:link> documentation for a full list.)</db:para>
+      <db:para>If we want to create a property whose type is not supported by QML by default, we need to register the type with the QML engine.</db:para>
+      <db:para>For example, let's replace the use of the <db:code>property</db:code> with a type called "<db:link xlink:href="qml-qtcharts-pieslice.html" xrefstyle="" annotations="PieSlice">PieSlice</db:link>" that has a <db:code>color</db:code> property. Instead of assigning a color, we assign an <db:code>PieSlice</db:code> value which itself contains a <db:code>color</db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>Like <db:code>PieChart</db:code>, this new <db:code>PieSlice</db:code> type inherits from QQuickPaintedItem and declares its properties with <db:code><db:link xlink:href="qobject.html#Q_PROPERTY" xrefstyle="function" annotations="Q_PROPERTY()">Q_PROPERTY()</db:link></db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>To use it in <db:code>PieChart</db:code>, we modify the <db:code>color</db:code> property declaration and associated method signatures:</db:para>
+      <db:programlisting>            </db:programlisting>
+      <db:programlisting>    ...
+    ...
+    ...
+    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...
+    ...
+    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...
+    ...
+    ...</db:programlisting>
+      <db:para>There is one thing to be aware of when implementing <db:code>setPieSlice()</db:code>. The <db:code>PieSlice</db:code> is a visual item, so it must be set as a child of the <db:code>PieChart</db:code> using QQuickItem::setParentItem() so that the <db:code>PieChart</db:code> knows to paint this child item when its contents are drawn:</db:para>
+      <db:programlisting/>
+      <db:para>Like the <db:code>PieChart</db:code> type, the <db:code>PieSlice</db:code> type has to be registered using <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType-1" xrefstyle="function" annotations="qmlRegisterType()">qmlRegisterType()</db:link></db:code> to be used from QML. As with <db:code>PieChart</db:code>, we'll add the type to the "Charts" type namespace, version 1.0:</db:para>
+      <db:programlisting>        </db:programlisting>
+      <db:programlisting>    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...</db:programlisting>
+      <db:para>The source code from the following files are referred to in this chapter: </db:para>
+   </db:section>
+   <db:section xml:id="chapter-5-using-list-property-types">
+      <db:title>Chapter 5: Using List Property Types</db:title>
+      <db:para>
+         <db:code>extending-qml/chapter5-listproperties</db:code>
+      </db:para>
+      <db:para>Right now, a <db:code>PieChart</db:code> can only have one <db:code>PieSlice</db:code>. Ideally a chart would have multiple slices, with different colors and sizes. To do this, we could have a <db:code>slices</db:code> property that accepts a list of <db:code>PieSlice</db:code> items:</db:para>
+      <db:programlisting/>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/extending-tutorial-chapter5.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>To do this, we replace the <db:code>pieSlice</db:code> property in <db:code>PieChart</db:code> with a <db:code>slices</db:code> property, declared as a <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code> type. The <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code> class enables the creation of list properties in QML extensions. We replace the <db:code>pieSlice()</db:code> function with a <db:code>slices()</db:code> function that returns a list of slices, and add an internal <db:code>append_slice()</db:code> function (discussed below). We also use a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> to store the internal list of slices as <db:code>m_slices</db:code>:</db:para>
+      <db:programlisting>        </db:programlisting>
+      <db:programlisting>    ...
+    ...</db:programlisting>
+      <db:programlisting>    ...</db:programlisting>
+      <db:para>Although the <db:code>slices</db:code> property does not have an associated <db:code>WRITE</db:code> function, it is still modifiable because of the way <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code> works. In the <db:code>PieChart</db:code> implementation, we implement <db:code>PieChart::slices()</db:code> to return a <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code> value and indicate that the internal <db:code>PieChart::append_slice()</db:code> function is to be called whenever a request is made from QML to add items to the list:</db:para>
+      <db:programlisting/>
+      <db:para>The <db:code>append_slice()</db:code> function simply sets the parent item as before, and adds the new item to the <db:code>m_slices</db:code> list. As you can see, the append function for a <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code> is called with two arguments: the list property, and the item that is to be appended.</db:para>
+      <db:para>The <db:code>PieSlice</db:code> class has also been modified to include <db:code>fromAngle</db:code> and <db:code>angleSpan</db:code> properties and to draw the slice according to these values. This is a straightforward modification if you have read the previous pages in this tutorial, so the code is not shown here.</db:para>
+      <db:para>The source code from the following files are referred to in this chapter: </db:para>
+   </db:section>
+   <db:section xml:id="chapter-6-writing-an-extension-plugin">
+      <db:title>Chapter 6: Writing an Extension Plugin</db:title>
+      <db:para>
+         <db:code>extending-qml/chapter6-plugins</db:code>
+      </db:para>
+      <db:para>Currently the <db:code>PieChart</db:code> and <db:code>PieSlice</db:code> types are used by <db:code>app.qml</db:code>, which is displayed using a QQuickView in a C++ application. An alternative way to use our QML extension is to create a plugin library to make it available to the QML engine as a new QML import module. This allows the <db:code>PieChart</db:code> and <db:code>PieSlice</db:code> types to be registered into a type namespace which can be imported by any QML application, instead of restricting these types to be only used by the one application.</db:para>
+      <db:para>The steps for creating a plugin are described in <db:link xlink:href="qtqml-modules-cppplugins.html" xrefstyle="page" annotations="Creating C++ Plugins for QML">Creating C++ Plugins for QML</db:link>. To start with, we create a plugin class named <db:code>ChartsPlugin</db:code>. It subclasses <db:code><db:link xlink:href="qqmlextensionplugin.html" xrefstyle="class" annotations="QQmlExtensionPlugin">QQmlExtensionPlugin</db:link></db:code> and registers our QML types in the inherited <db:code><db:link xlink:href="qqmlextensionplugin.html#registerTypes" xrefstyle="function" annotations="QQmlExtensionPlugin::registerTypes()">registerTypes()</db:link></db:code> method.</db:para>
+      <db:para>Here is the <db:code>ChartsPlugin</db:code> definition in <db:code>chartsplugin.h</db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>And its implementation in <db:code>chartsplugin.cpp</db:code>:</db:para>
+      <db:programlisting/>
+      <db:para>Then, we write a <db:code>.pro</db:code> project file that defines the project as a plugin library and specifies with DESTDIR that library files should be built into a <db:code>../Charts</db:code> directory.</db:para>
+      <db:programlisting>TEMPLATE = lib
+CONFIG += plugin
+QT += qml quick
+
+DESTDIR = ../Charts
+TARGET = $$qtLibraryTarget(chartsplugin)
+
+HEADERS += piechart.h \
+           pieslice.h \
+           chartsplugin.h
+
+SOURCES += piechart.cpp \
+           pieslice.cpp \
+           chartsplugin.cpp
+
+DESTPATH=$$[QT_INSTALL_EXAMPLES]/qml/tutorials/extending-qml/chapter6-plugins/Charts
+
+target.path=$$DESTPATH
+qmldir.files=$$PWD/qmldir
+qmldir.path=$$DESTPATH
+INSTALLS += target qmldir
+
+CONFIG += install_ok  # Do not cargo-cult this!
+
+OTHER_FILES += qmldir
+
+# Copy the qmldir file to the same folder as the plugin binary
+cpqmldir.files = qmldir
+cpqmldir.path = $$DESTDIR
+COPIES += cpqmldir
+</db:programlisting>
+      <db:para>When building this example on Windows or Linux, the <db:code>Charts</db:code> directory will be located at the same level as the application that uses our new import module. This way, the QML engine will find our module as the default search path for QML imports includes the directory of the application executable. On , the plugin binary is copied to <db:code>Contents/PlugIns</db:code> in the the application bundle; this path is set in <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-app-pro.html" xrefstyle="page" annotations="tutorials/extending-qml/chapter6-plugins/app.pro">chapter6-plugins/app.pro</db:link>:</db:para>
+      <db:programlisting language="other">osx {
+    charts.files = $$OUT_PWD/Charts
+    charts.path = Contents/PlugIns
+    QMAKE_BUNDLE_DATA += charts
+}</db:programlisting>
+      <db:para>To account for this, we also need to add this location as a <db:link xlink:href="qtqml-syntax-imports.html#qml-import-path" xrefstyle="page" annotations="QML Import Path">QML import path</db:link> in <db:code>main.cpp</db:code>:</db:para>
+      <db:programlisting>    </db:programlisting>
+      <db:programlisting>    ...</db:programlisting>
+      <db:para>Defining custom import paths is useful also when there are multiple applications using the same QML imports.</db:para>
+      <db:para>The <db:code>.pro</db:code> file also contains additional magic to ensure that the <db:link xlink:href="qtqml-modules-qmldir.html" xrefstyle="page" annotations="Module Definition qmldir Files">module definition qmldir file</db:link> is always copied to the same location as the plugin binary.</db:para>
+      <db:para>The <db:code>qmldir</db:code> file declares the module name and the plugin that is made available by the module:</db:para>
+      <db:programlisting>module Charts
+plugin chartsplugin
+</db:programlisting>
+      <db:para>Now we have a QML module that can be imported to any application, provided that the QML engine knows where to find it. The example contains an executable that loads <db:code>app.qml</db:code>, which uses the <db:code>import Charts 1.0</db:code> statement. Alternatively, you can load the QML file using the <db:link xlink:href="qtquick-qmlscene.html" xrefstyle="page" annotations="Prototyping with qmlscene">qmlscene tool</db:link>, setting the import path to the current directory so that it finds the <db:code>qmldir</db:code> file:</db:para>
+      <db:programlisting language="other">qmlscene -I . app.qml</db:programlisting>
+      <db:para>The module "Charts" will be loaded by the QML engine, and the types provided by that module will be available for use in any QML document which imports it.</db:para>
+      <db:para>The source code from the following files are referred to in this chapter: </db:para>
+   </db:section>
+   <db:section xml:id="chapter-7-summary">
+      <db:title>Chapter 7: Summary</db:title>
+      <db:para>In this tutorial, we've shown the basic steps for creating a QML extension:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Define new QML types by subclassing <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> and registering them with <db:code><db:link xlink:href="qqmlengine.html#qmlRegisterType-1" xrefstyle="function" annotations="qmlRegisterType()">qmlRegisterType()</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Add callable methods using <db:code><db:link xlink:href="qobject.html#Q_INVOKABLE" xrefstyle="function" annotations="Q_INVOKABLE">Q_INVOKABLE</db:link></db:code> or Qt slots, and connect to Qt signals with an <db:code>onSignal</db:code> syntax</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Add property bindings by defining <db:link xlink:href="properties.html" xrefstyle="page" annotations="Qt's Property System">NOTIFY</db:link> signals</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Define custom property types if the built-in types are not sufficient</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Define list property types using <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Create a plugin library by defining a Qt plugin and writing a <db:link xlink:href="qtqml-modules-qmldir.html" xrefstyle="page" annotations="Module Definition qmldir Files">qmldir</db:link> file</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The <db:link xlink:href="qtqml-cppintegration-topic.html" xrefstyle="page" annotations="Integrating QML and C++">Integrating QML and C++</db:link> documentation shows other useful features that can be added to QML extensions. For example, we could use <db:link xlink:href="qtqml-syntax-objectattributes.html#default-properties" xrefstyle="page" annotations="Default Properties">default properties</db:link> to allow slices to be added without using the <db:code>slices</db:code> property:</db:para>
+      <db:programlisting language="other" role="badcode">PieChart {
+    PieSlice { ... }
+    PieSlice { ... }
+    PieSlice { ... }
+}</db:programlisting>
+      <db:para>Or randomly add and remove slices from time to time using <db:link xlink:href="qtqml-cppintegration-definetypes.html#property-value-sources" xrefstyle="page" annotations="Property Value Sources">property value sources</db:link>:</db:para>
+      <db:programlisting language="other" role="badcode">PieChart {
+    PieSliceRandomizer on slices {}
+}</db:programlisting>
+   </db:section>
+   <db:para>
+      <db:emphasis role="bold">See Also:</db:emphasis>
+      <db:simplelist type="vert">
+         <db:member>
+            <db:link xlink:href="qtqml-cppintegration-topic.html" xrefstyle="page" annotations="Integrating QML and C++">Integrating QML and C++</db:link>
+         </db:member>
+      </db:simplelist>
+   </db:para>
+</db:article>

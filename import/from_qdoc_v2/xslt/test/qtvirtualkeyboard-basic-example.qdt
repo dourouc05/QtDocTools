@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Qt Quick Virtual Keyboard - Basic Example</db:title>
+    <db:abstract>
+      <db:para>This is a basic QML example that uses the virtual keyboard</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>This is a basic QML example that uses the virtual keyboard.</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/basic-example.png"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>The example has two implementations: one for desktop platforms and another for embedded platforms. The former version enables text input into several text fields using the virtual keyboard, whereas the latter version uses the same UI but with a custom virtual keyboard <db:link xlink:href="qml-qtquick-virtualkeyboard-inputpanel.html" xrefstyle="" annotations="InputPanel">InputPanel</db:link>. The following snippet from <db:code>basic.pro</db:code> shows how the qmake project is set up to choose the appropriate implementation based on the CONFIG options:</db:para>
+  <db:programlisting language="other">disable-desktop|android-embedded|!isEmpty(CROSS_COMPILE)|qnx {
+    DEFINES += MAIN_QML=\\\"basic-b2qt.qml\\\"
+    } else {
+    DEFINES += MAIN_QML=\\\"Basic.qml\\\"
+    }</db:programlisting>
+  <db:para>The example enables the virtual keyboard by setting the <db:code>QT_IM_MODULE</db:code> environment variable before loading the <db:code>.qml</db:code> file:</db:para>
+  <db:programlisting language="other">#include &lt;QQuickView&gt;
+    #include &lt;QGuiApplication&gt;
+    #include &lt;QQmlEngine&gt;
+    
+    int main(int argc, char *argv[])
+    {
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    
+    QGuiApplication app(argc, argv);
+    QQuickView view(QString("qrc:/%2").arg(MAIN_QML));
+    if (view.status() == QQuickView::Error)
+    return -1;
+    view.setResizeMode(QQuickView::SizeRootObjectToView);
+    
+    view.show();
+    
+    return app.exec();
+    }</db:programlisting>
+  <db:para>Besides this, it uses custom <db:link xlink:href="qml-qtquick-controls-textfield.html" xrefstyle="" annotations="TextField">TextField</db:link> and <db:link xlink:href="qml-qtquick-controls-textarea.html" xrefstyle="" annotations="TextArea">TextArea</db:link> items to configure the <db:emphasis>[ENTER]</db:emphasis> key behavior using the <db:link xlink:href="qml-qtquick-virtualkeyboard-enterkeyaction.html" xrefstyle="" annotations="EnterKeyAction">EnterKeyAction</db:link> attached property.</db:para>
+  <db:programlisting language="other">import QtQuick 2.10
+    import QtQuick.Controls 2.3
+    import QtQuick.VirtualKeyboard 2.1
+    import "content"
+    
+    Rectangle {
+    ...</db:programlisting>
+  <db:programlisting language="other">                TextField {
+    width: parent.width
+    placeholderText: "One line field"
+    enterKeyAction: EnterKeyAction.Next
+    onAccepted: passwordField.focus = true
+    }
+    ...</db:programlisting>
+  <db:programlisting language="other">                TextArea {
+    id: textArea
+    width: parent.width
+    placeholderText: "Multiple line field"
+    height: Math.max(206, implicitHeight)
+    }}</db:programlisting>
+  <db:programlisting language="other">}</db:programlisting>
+  <db:para>The <db:link xlink:href="qml-qtquick-controls-textfield.html" xrefstyle="" annotations="TextField">TextField</db:link> and <db:link xlink:href="qml-qtquick-controls-textarea.html" xrefstyle="" annotations="TextArea">TextArea</db:link> controls extend the respective <db:link xlink:href="qtquickcontrols2-index.html" xrefstyle="page" annotations="Qt Quick Controls 2">Qt Quick Controls 2</db:link> types with <db:code>enterKeyEnabled</db:code> and <db:code>enterKeyAction</db:code> properties. The <db:link xlink:href="qml-qtquick-controls-textfield.html" xrefstyle="" annotations="TextField">TextField</db:link> and <db:link xlink:href="qml-qtquick-controls-textarea.html" xrefstyle="" annotations="TextArea">TextArea</db:link> instances in the snippet can set these properties to change the default behavior.</db:para>
+  <db:section xml:id="running-the-example">
+    <db:title>Running the Example</db:title>
+    <db:para>To run the example from <db:link xlink:href="http://doc.qt.io/qtcreator/index.html" xrefstyle="page" annotations="Qt Creator Manual">Qt Creator</db:link>, open the <db:emphasis role="bold">Welcome</db:emphasis> mode and select the example from <db:emphasis role="bold">Examples</db:emphasis>. For more information, visit <db:link xlink:href="http://doc.qt.io/qtcreator/creator-build-example-application.html" xrefstyle="page" annotations="Qt Creator: Building and Running an Example">Building and Running an Example</db:link>.</db:para>
+  </db:section>
+</db:article>

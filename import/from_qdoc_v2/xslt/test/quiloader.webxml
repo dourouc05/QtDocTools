@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QUiLoader" href="quiloader.html" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="68" bases="QObject" module="QtUiTools" brief="Enables standalone applications to dynamically create user interfaces at run-time using the information stored in UI files or specified in plugin paths">
+            <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="599" column="4">
+                <brief>The <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class enables standalone applications to dynamically create user interfaces at run-time using the information stored in UI files or specified in plugin paths.</brief>
+                <para>In addition, you can customize or create your own user interface by deriving your own loader class.</para>
+                <para>If you have a custom component or an application that embeds <italic>Qt Designer</italic>, you can also use the <link raw="QFormBuilder" href="qformbuilder.html" type="class">QFormBuilder</link> class provided by the <link raw="QtDesigner" href="qtdesigner-module.html" type="module">QtDesigner</link> module to create user interfaces from UI files.</para>
+                <para>The <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class provides a collection of functions allowing you to create widgets based on the information stored in UI files (created with <italic>Qt Designer</italic>) or available in the specified plugin paths. The specified plugin paths can be retrieved using the <link raw="pluginPaths()" href="quiloader.html#pluginPaths" type="function">pluginPaths()</link> function. Similarly, the contents of a UI file can be retrieved using the <link raw="load()" href="quiloader.html#load" type="function">load()</link> function. For example:</para>
+                <snippet location="quiloader/mywidget.cpp" path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/doc/snippets/quiloader/mywidget.cpp" identifier="0"/>
+                <para>By including the user interface in the form's resources (<teletype type="highlighted">myform.qrc</teletype>), we ensure that it will be present at run-time:</para>
+                <quotefile>quiloader/mywidget.qrc</quotefile>
+                <para>The <link raw="availableWidgets()" href="quiloader.html#availableWidgets" type="function">availableWidgets()</link> function returns a <link raw="QStringList" href="qstringlist.html" type="class">QStringList</link> with the class names of the widgets available in the specified plugin paths. To create these widgets, simply use the <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link> function. For example:</para>
+                <snippet location="quiloader/main.cpp" path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/doc/snippets/quiloader/main.cpp" identifier="0"/>
+                <para>To make a custom widget available to the loader, you can use the <link raw="addPluginPath()" href="quiloader.html#addPluginPath" type="function">addPluginPath()</link> function; to remove all available widgets, you can call the <link raw="clearPluginPaths()" href="quiloader.html#clearPluginPaths" type="function">clearPluginPaths()</link> function.</para>
+                <para>The <link raw="createAction()" href="quiloader.html#createAction" type="function">createAction()</link>, <link raw="createActionGroup()" href="quiloader.html#createActionGroup" type="function">createActionGroup()</link>, <link raw="createLayout()" href="quiloader.html#createLayout" type="function">createLayout()</link>, and <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link> functions are used internally by the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class whenever it has to create an action, action group, layout, or widget respectively. For that reason, you can subclass the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class and reimplement these functions to intervene the process of constructing a user interface. For example, you might want to have a list of the actions created when loading a form or creating a custom widget.</para>
+                <para>For a complete example using the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class, see the <link raw="Calculator Builder Example" href="qtdesigner-calculatorbuilder-example.html" type="page" page="Calculator Builder Example">Calculator Builder Example</link>.</para>
+                <see-also>
+                    <link raw="Qt UI Tools" href="qtuitools-index.html" type="page" page="Qt UI Tools">Qt UI Tools</link>
+                    <link raw="QFormBuilder" href="qformbuilder.html" type="class">QFormBuilder</link>
+                </see-also>
+            </description>
+            <variable threadsafety="unspecified" name="staticMetaObject" fullname="QUiLoader::staticMetaObject" href="quiloader.html#staticMetaObject-var" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" type="const QMetaObject" static="true">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="metaObject" fullname="QUiLoader::metaObject" href="quiloader.html#metaObject" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QMetaObject *" signature="const QMetaObject * metaObject() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacast" fullname="QUiLoader::qt_metacast" href="quiloader.html#qt_metacast" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void *" signature="void * qt_metacast(const char *)">
+                <parameter type="const char *" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacall" fullname="QUiLoader::qt_metacall" href="quiloader.html#qt_metacall" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int qt_metacall(QMetaObject::Call , int , void **)">
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="tr" fullname="QUiLoader::tr" href="quiloader.html#tr" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString tr(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="trUtf8" fullname="QUiLoader::trUtf8" href="quiloader.html#trUtf8" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString trUtf8(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_static_metacall" fullname="QUiLoader::qt_static_metacall" href="quiloader.html#qt_static_metacall" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_static_metacall(QObject *, QMetaObject::Call , int , void **)">
+                <parameter type="QObject *" name="" default=""/>
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <class threadsafety="unspecified" name="QPrivateSignal" fullname="QUiLoader::QPrivateSignal" href="quiloader-qprivatesignal.html" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="70">
+                <description path="" line="0" column="0"/>
+            </class>
+            <function threadsafety="unspecified" name="QUiLoader" fullname="QUiLoader::QUiLoader" href="quiloader.html#QUiLoader" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="72" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QUiLoader(QObject *parent)">
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="652" column="4">
+                    <para>Creates a form loader with the given <argument>parent</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="~QUiLoader" fullname="QUiLoader::~QUiLoader" href="quiloader.html#dtor.QUiLoader" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="73" virtual="virtual" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QUiLoader()">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="683" column="4">
+                    <para>Destroys the loader.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="pluginPaths" fullname="QUiLoader::pluginPaths" href="quiloader.html#pluginPaths" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="75" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QStringList" signature="QStringList pluginPaths() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="705" column="4">
+                    <para>Returns a list naming the paths in which the loader will search when locating custom widget plugins.</para>
+                    <see-also>
+                        <link raw="addPluginPath()" href="quiloader.html#addPluginPath" type="function">addPluginPath()</link>
+                        <link raw="clearPluginPaths()" href="quiloader.html#clearPluginPaths" type="function">clearPluginPaths()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="clearPluginPaths" fullname="QUiLoader::clearPluginPaths" href="quiloader.html#clearPluginPaths" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="76" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void clearPluginPaths()">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="717" column="4">
+                    <para>Clears the list of paths in which the loader will search when locating plugins.</para>
+                    <see-also>
+                        <link raw="addPluginPath()" href="quiloader.html#addPluginPath" type="function">addPluginPath()</link>
+                        <link raw="pluginPaths()" href="quiloader.html#pluginPaths" type="function">pluginPaths()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addPluginPath" fullname="QUiLoader::addPluginPath" href="quiloader.html#addPluginPath" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="77" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void addPluginPath(const QString &amp;path)">
+                <parameter type="const QString &amp;" name="path" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="729" column="4">
+                    <para>Adds the given <argument>path</argument> to the list of paths in which the loader will search when locating plugins.</para>
+                    <see-also>
+                        <link raw="pluginPaths()" href="quiloader.html#pluginPaths" type="function">pluginPaths()</link>
+                        <link raw="clearPluginPaths()" href="quiloader.html#clearPluginPaths" type="function">clearPluginPaths()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="load" fullname="QUiLoader::load" href="quiloader.html#load" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="79" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QWidget *" signature="QWidget * load(QIODevice *device, QWidget *parentWidget)">
+                <parameter type="QIODevice *" name="device" default=""/>
+                <parameter type="QWidget *" name="parentWidget" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="690" column="4">
+                    <para>Loads a form from the given <argument>device</argument> and creates a new widget with the given <argument>parentWidget</argument> to hold its contents.</para>
+                    <see-also>
+                        <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link>
+                        <link raw="errorString()" href="quiloader.html#errorString" type="function">errorString()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="availableWidgets" fullname="QUiLoader::availableWidgets" href="quiloader.html#availableWidgets" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="80" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QStringList" signature="QStringList availableWidgets() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="812" column="4">
+                    <para>Returns a list naming all available widgets that can be built using the <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link> function, i.e all the widgets specified within the given plugin paths.</para>
+                    <see-also>
+                        <link raw="pluginPaths()" href="quiloader.html#pluginPaths" type="function">pluginPaths()</link>
+                        <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="availableLayouts" fullname="QUiLoader::availableLayouts" href="quiloader.html#availableLayouts" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="81" since="4.5" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QStringList" signature="QStringList availableLayouts() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="835" column="4">
+                    <para>Returns a list naming all available layouts that can be built using the <link raw="createLayout()" href="quiloader.html#createLayout" type="function">createLayout()</link> function</para>
+                    <see-also>
+                        <link raw="createLayout()" href="quiloader.html#createLayout" type="function">createLayout()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="createWidget" fullname="QUiLoader::createWidget" href="quiloader.html#createWidget" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="83" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QWidget *" signature="QWidget * createWidget(const QString &amp;className, QWidget *parent, const QString &amp;name)">
+                <parameter type="const QString &amp;" name="className" default=""/>
+                <parameter type="QWidget *" name="parent" default="nullptr"/>
+                <parameter type="const QString &amp;" name="name" default="QString()"/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="741" column="4">
+                    <para>Creates a new widget with the given <argument>parent</argument> and <argument>name</argument> using the class specified by <argument>className</argument>. You can use this function to create any of the widgets returned by the <link raw="availableWidgets()" href="quiloader.html#availableWidgets" type="function">availableWidgets()</link> function.</para>
+                    <para>The function is also used internally by the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class whenever it creates a widget. Hence, you can subclass <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> and reimplement this function to intervene process of constructing a user interface or widget. However, in your implementation, ensure that you call <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link>'s version first.</para>
+                    <see-also>
+                        <link raw="availableWidgets()" href="quiloader.html#availableWidgets" type="function">availableWidgets()</link>
+                        <link raw="load()" href="quiloader.html#load" type="function">load()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="createLayout" fullname="QUiLoader::createLayout" href="quiloader.html#createLayout" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="84" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QLayout *" signature="QLayout * createLayout(const QString &amp;className, QObject *parent, const QString &amp;name)">
+                <parameter type="const QString &amp;" name="className" default=""/>
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <parameter type="const QString &amp;" name="name" default="QString()"/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="760" column="4">
+                    <para>Creates a new layout with the given <argument>parent</argument> and <argument>name</argument> using the class specified by <argument>className</argument>.</para>
+                    <para>The function is also used internally by the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class whenever it creates a widget. Hence, you can subclass <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> and reimplement this function to intervene process of constructing a user interface or widget. However, in your implementation, ensure that you call <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link>'s version first.</para>
+                    <see-also>
+                        <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link>
+                        <link raw="load()" href="quiloader.html#load" type="function">load()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="createActionGroup" fullname="QUiLoader::createActionGroup" href="quiloader.html#createActionGroup" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="85" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QActionGroup *" signature="QActionGroup * createActionGroup(QObject *parent, const QString &amp;name)">
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <parameter type="const QString &amp;" name="name" default="QString()"/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="778" column="4">
+                    <para>Creates a new action group with the given <argument>parent</argument> and <argument>name</argument>.</para>
+                    <para>The function is also used internally by the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class whenever it creates a widget. Hence, you can subclass <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> and reimplement this function to intervene process of constructing a user interface or widget. However, in your implementation, ensure that you call <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link>'s version first.</para>
+                    <see-also>
+                        <link raw="createAction()" href="quiloader.html#createAction" type="function">createAction()</link>
+                        <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link>
+                        <link raw="load()" href="quiloader.html#load" type="function">load()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="createAction" fullname="QUiLoader::createAction" href="quiloader.html#createAction" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="86" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QAction *" signature="QAction * createAction(QObject *parent, const QString &amp;name)">
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <parameter type="const QString &amp;" name="name" default="QString()"/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="795" column="4">
+                    <para>Creates a new action with the given <argument>parent</argument> and <argument>name</argument>.</para>
+                    <para>The function is also used internally by the <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> class whenever it creates a widget. Hence, you can subclass <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link> and reimplement this function to intervene process of constructing a user interface or widget. However, in your implementation, ensure that you call <link raw="QUiLoader" href="quiloader.html" type="class">QUiLoader</link>'s version first.</para>
+                    <see-also>
+                        <link raw="createActionGroup()" href="quiloader.html#createActionGroup" type="function">createActionGroup()</link>
+                        <link raw="createWidget()" href="quiloader.html#createWidget" type="function">createWidget()</link>
+                        <link raw="load()" href="quiloader.html#load" type="function">load()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setWorkingDirectory" fullname="QUiLoader::setWorkingDirectory" href="quiloader.html#setWorkingDirectory" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="88" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setWorkingDirectory(const QDir &amp;dir)">
+                <parameter type="const QDir &amp;" name="dir" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="856" column="4">
+                    <para>Sets the working directory of the loader to <argument>dir</argument>. The loader will look for other resources, such as icons and resource files, in paths relative to this directory.</para>
+                    <see-also>
+                        <link raw="workingDirectory()" href="quiloader.html#workingDirectory" type="function">workingDirectory()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="workingDirectory" fullname="QUiLoader::workingDirectory" href="quiloader.html#workingDirectory" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="89" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QDir" signature="QDir workingDirectory() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="870" column="4">
+                    <para>Returns the working directory of the loader.</para>
+                    <see-also>
+                        <link raw="setWorkingDirectory()" href="quiloader.html#setWorkingDirectory" type="function">setWorkingDirectory()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setLanguageChangeEnabled" fullname="QUiLoader::setLanguageChangeEnabled" href="quiloader.html#setLanguageChangeEnabled" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="91" since="4.5" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setLanguageChangeEnabled(bool enabled)">
+                <parameter type="bool" name="enabled" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="881" column="4">
+                    <para>If <argument>enabled</argument> is true, user interfaces loaded by this loader will automatically retranslate themselves upon receiving a language change event. Otherwise, the user interfaces will not be retranslated.</para>
+                    <see-also>
+                        <link raw="isLanguageChangeEnabled()" href="quiloader.html#isLanguageChangeEnabled" type="function">isLanguageChangeEnabled()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isLanguageChangeEnabled" fullname="QUiLoader::isLanguageChangeEnabled" href="quiloader.html#isLanguageChangeEnabled" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="92" since="4.5" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isLanguageChangeEnabled() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="897" column="4">
+                    <para>Returns true if dynamic retranslation on language change is enabled; returns false otherwise.</para>
+                    <see-also>
+                        <link raw="setLanguageChangeEnabled()" href="quiloader.html#setLanguageChangeEnabled" type="function">setLanguageChangeEnabled()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setTranslationEnabled" fullname="QUiLoader::setTranslationEnabled" href="quiloader.html#setTranslationEnabled" status="internal" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="94" since="4.5" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setTranslationEnabled(bool enabled)">
+                <parameter type="bool" name="enabled" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="912" column="4">
+                    <para>If <argument>enabled</argument> is true, user interfaces loaded by this loader will be translated. Otherwise, the user interfaces will not be translated.</para>
+                    <para>
+                        <bold>Note:</bold> This is orthogonal to languageChangeEnabled.</para>
+                    <see-also>
+                        <link raw="isLanguageChangeEnabled()" href="quiloader.html#isLanguageChangeEnabled" type="function">isLanguageChangeEnabled()</link>
+                        <link raw="setLanguageChangeEnabled()" href="quiloader.html#setLanguageChangeEnabled" type="function">setLanguageChangeEnabled()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isTranslationEnabled" fullname="QUiLoader::isTranslationEnabled" href="quiloader.html#isTranslationEnabled" status="internal" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="95" since="4.5" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isTranslationEnabled() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="930" column="4">
+                    <para>Returns true if translation is enabled; returns false otherwise.</para>
+                    <see-also>setTranslationEnabled()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="errorString" fullname="QUiLoader::errorString" href="quiloader.html#errorString" status="active" access="public" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="97" since="5.0" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString errorString() const">
+                <description path="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.cpp" line="945" column="4">
+                    <para>Returns a human-readable description of the last error occurred in <link raw="load()" href="quiloader.html#load" type="function">load()</link>.</para>
+                    <see-also>
+                        <link raw="load()" href="quiloader.html#load" type="function">load()</link>
+                    </see-also>
+                </description>
+            </function>
+            <variable threadsafety="unspecified" name="d_ptr" fullname="QUiLoader::d_ptr" href="quiloader.html#d_ptr-var" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="100" type="QScopedPointer&lt;QUiLoaderPrivate&gt;" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="d_func" fullname="QUiLoader::d_func" href="quiloader.html#d_func" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="101" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUiLoaderPrivate *" signature="QUiLoaderPrivate * d_func()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="d_func" fullname="QUiLoader::d_func" href="quiloader.html#d_func-1" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="101" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QUiLoaderPrivate *" signature="const QUiLoaderPrivate * d_func() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="QUiLoader" fullname="QUiLoader::QUiLoader" href="quiloader.html#QUiLoader-1" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="102" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QUiLoader(const QUiLoader &amp;)">
+                <parameter type="const QUiLoader &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QUiLoader::operator=" href="quiloader.html#operator-eq" status="active" access="private" location="quiloader.h" filepath="C:/Qt/5.11.1/Src/qttools/src/designer/src/uitools/quiloader.h" lineno="102" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUiLoader &amp;" signature="QUiLoader &amp; operator=(const QUiLoader &amp;)">
+                <parameter type="const QUiLoader &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+        </class>
+    </document>
+</WebXML>

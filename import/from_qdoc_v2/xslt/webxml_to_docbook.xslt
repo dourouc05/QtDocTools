@@ -653,6 +653,16 @@
     <xsl:variable name="filePathTentative7" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 3], '/'), '/examples/qml/', $fileToQuote)"/>
     <xsl:variable name="filePathTentative8" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 1], '/'), '/doc/snippets/', $fileToQuote)"/>
     <xsl:variable name="filePathTentative9" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 2], '/'), '/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative10" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 6], '/'), '/examples/qml/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative11" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 5], '/'), '/examples/qml/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative12" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 2], '/'), '/snippets/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative13" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/examples/quickcontrols/controls/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative14" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/examples/quickcontrols/dialogs/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative15" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/examples/quickcontrols/extras/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative16" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/examples/', $sourceFilePathSplit[position() = last() - 3], '/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative17" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/examples/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative18" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 1], '/'), '/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative19" select="concat(string-join($sourceFilePathSplit[position() &lt; last()], '/'), '/doc/snippets/', $fileToQuote)"/>
     
     <xsl:choose>
       <xsl:when test="tc:file-exists($filePathTentative1)">
@@ -681,6 +691,36 @@
       </xsl:when>
       <xsl:when test="tc:file-exists($filePathTentative9)">
         <xsl:value-of select="$filePathTentative9"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative10)">
+        <xsl:value-of select="$filePathTentative10"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative11)">
+        <xsl:value-of select="$filePathTentative11"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative12)">
+        <xsl:value-of select="$filePathTentative12"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative13)">
+        <xsl:value-of select="$filePathTentative13"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative14)">
+        <xsl:value-of select="$filePathTentative14"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative15)">
+        <xsl:value-of select="$filePathTentative15"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative16)">
+        <xsl:value-of select="$filePathTentative16"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative17)">
+        <xsl:value-of select="$filePathTentative17"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative18)">
+        <xsl:value-of select="$filePathTentative18"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative19)">
+        <xsl:value-of select="$filePathTentative19"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>WARNING: Unable to find the correct path for <xsl:value-of select="$fileToQuote"/></xsl:message>
@@ -782,8 +822,8 @@
           <xsl:for-each select="$quotefromfileLines[position() >= $startAt]">
             <xsl:choose>
               <xsl:when test="starts-with($soughtText, '/') and ends-with($soughtText, '/')">
-                <!-- Regular expression! -->
-                <xsl:value-of select="matches(., substring($soughtText, 2, string-length($soughtText) - 2))"/>
+                <!-- Regular expression! Use the Java syntax (hence the ! flag) to avoid translating too many things (like \b for word boundary). -->
+                <xsl:value-of select="matches(., substring($soughtText, 2, string-length($soughtText) - 2), '!')"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:value-of select="contains(., $soughtText)"/>
