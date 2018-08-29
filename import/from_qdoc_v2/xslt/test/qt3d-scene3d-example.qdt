@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Qt 3D: Scene3D QML Example</db:title>
+    <db:abstract>
+      <db:para>A QML application that demonstrates visualizing a 3D scene</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>A QML application that demonstrates visualizing a 3D scene.</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/scene3d.png"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>This example demonstrates visualizing a 3D scene from a Qt Quick application. The 3D scene contains a single active camera and a single active light source. Visualized data is assumed to be at a fixed location.</db:para>
+  <db:section xml:id="running-the-example">
+    <db:title>Running the Example</db:title>
+    <db:para>To run the example from <db:link xlink:href="http://doc.qt.io/qtcreator/index.html" xrefstyle="page" annotations="Qt Creator Manual">Qt Creator</db:link>, open the <db:emphasis role="bold">Welcome</db:emphasis> mode and select the example from <db:emphasis role="bold">Examples</db:emphasis>. For more information, visit <db:link xlink:href="http://doc.qt.io/qtcreator/creator-build-example-application.html" xrefstyle="page" annotations="Qt Creator: Building and Running an Example">Building and Running an Example</db:link>.</db:para>
+  </db:section>
+  <db:section xml:id="visualizing-3d-scenes">
+    <db:title>Visualizing 3D Scenes</db:title>
+    <db:para>We set up the 3D scene and specify the entity to animate in <db:emphasis>main.qml</db:emphasis>:</db:para>
+    <db:programlisting language="other">        Scene3D {
+      id: scene3d
+      anchors.fill: parent
+      anchors.margins: 10
+      focus: true
+      aspects: ["input", "logic"]
+      cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
+      
+      AnimatedEntity {}            AnimatedEntity {}</db:programlisting>
+    <db:programlisting language="other">            AnimatedEntity {}</db:programlisting>
+    <db:para>We specify the active camera in <db:emphasis>scene3d/AnimatedEntity.qml</db:emphasis>:</db:para>
+    <db:programlisting language="other">    Camera {
+      id: camera
+      projectionType: CameraLens.PerspectiveProjection
+      fieldOfView: 45
+      nearPlane : 0.1
+      farPlane : 1000.0
+      position: Qt.vector3d( 0.0, 0.0, 40.0 )
+      upVector: Qt.vector3d( 0.0, 1.0, 0.0 )
+      viewCenter: Qt.vector3d( 0.0, 0.0, 0.0 )
+      }</db:programlisting>
+  </db:section>
+</db:article>

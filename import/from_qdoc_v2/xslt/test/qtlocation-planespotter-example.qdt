@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Plane Spotter (QML)</db:title>
+    <db:abstract>
+      <db:para>Plane Spotter example demonstrates the tight integration of location and positioning data types into QML</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>The <db:code>Plane Spotter</db:code> example demonstrates the tight integration of location and positioning data types into QML</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/planespotter.png"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>The <db:code>Plane Spotter</db:code> example demonstrates how to integrate location and positioning related C++ data types into QML and vice versa. This is useful when it is desirable to run CPU intensive position calculations in native environments but the results are supposed to be displayed using QML.</db:para>
+  <db:para>The example shows a map of Europe and airplanes on two routes across Europe. The first airplane commutes between Oslo and Berlin and the second airplane commutes between London and Berlin. The position tracking of each airplane is implemented in C++. The Oslo-Berlin plane is piloted in QML and the London-Berlin plane is commanded by a C++ pilot.</db:para>
+  <db:section xml:id="running-the-example">
+    <db:title>Running the Example</db:title>
+    <db:para>To run the example from <db:link xlink:href="http://doc.qt.io/qtcreator/index.html" xrefstyle="page" annotations="Qt Creator Manual">Qt Creator</db:link>, open the <db:emphasis role="bold">Welcome</db:emphasis> mode and select the example from <db:emphasis role="bold">Examples</db:emphasis>. For more information, visit <db:link xlink:href="http://doc.qt.io/qtcreator/creator-build-example-application.html" xrefstyle="page" annotations="Qt Creator: Building and Running an Example">Building and Running an Example</db:link>.</db:para>
+  </db:section>
+  <db:section xml:id="overview">
+    <db:title>Overview</db:title>
+    <db:para>This example makes use of the <db:code><db:link xlink:href="qobject.html#Q_GADGET" xrefstyle="function" annotations="Q_GADGET">Q_GADGET</db:link></db:code> feature as part of its position controller implementation. It permits <db:link xlink:href="positioning-cpp-qml.html#cpp-value-integration-positioning" xrefstyle="page" annotations="Cpp_value_integration_positioning">direct integration</db:link> of non-<db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> based C++ value types into QML.</db:para>
+    <db:para>The main purpose of the <db:code>PlaneController</db:code> class is to track the current coordinates of the plane at a given time. It exposes the position via its position property.</db:para>
+    <db:programlisting>
+      class PlaneController: public QObject
+      {
+      Q_OBJECT
+      Q_PROPERTY(QGeoCoordinate position READ position WRITE setPosition NOTIFY positionChanged)
+      
+      // ...
+      };
+    </db:programlisting>
+    <db:para>The example's <db:code>main()</db:code> function is responsible for the binding of the <db:code>PlaneController</db:code> class instances into the QML context:</db:para>
+    <db:programlisting>
+      int main(int argc, char *argv[])
+      {
+      QGuiApplication app(argc, argv);
+      
+      PlaneController oslo2berlin;
+      PlaneController berlin2london;
+      
+      QQmlApplicationEngine engine;
+      engine.rootContext()-&gt;setContextProperty("oslo2Berlin", &amp;oslo2berlin);
+      engine.rootContext()-&gt;setContextProperty("berlin2London", &amp;berlin2london);
+      engine.load(QUrl(QStringLiteral("qrc:/planespotter.qml")));
+      
+      return app.exec();
+      }
+    </db:programlisting>
+    <db:para>Similar to <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> derived classes, QGeoCoordinate can be integrated without an additional QML wrapper.</db:para>
+  </db:section>
+  <db:section xml:id="steering-the-planes">
+    <db:title>Steering the Planes</db:title>
+    <db:para>As mentioned above, the primary purpose of <db:code>PlaneController</db:code> class is to track the current positions of the two planes (Oslo-Berlin and London-Berlin) and advertise them as a property to the QML layer. Its secondary purpose is to set and progress a plane along a given flight path. In a sense it can act as a pilot. This is very much like <db:link xlink:href="qml-qtpositioning-coordinateanimation.html" xrefstyle="" annotations="CoordinateAnimation">CoordinateAnimation</db:link> which can animate the transition from one geo coordinate to another. This example demonstrates how the <db:code>PlaneController</db:code>'s position property is modified by C++ code using the PlaneController's own piloting abilities and by QML code using <db:link xlink:href="qml-qtpositioning-coordinateanimation.html" xrefstyle="" annotations="CoordinateAnimation">CoordinateAnimation</db:link> as pilot. The Oslo-Berlin plane is animated using QML code and the London-Berlin plane is animated using C++ code.</db:para>
+    <db:para>No matter which pilot is used, the results to the pilot's actions are visible in C++ and QML and thus the example demonstrates unhindered and direct exchange of position data through the C++/QML boundary.</db:para>
+    <db:para>The visual representation of each <db:code>Plane</db:code> is done using the <db:link xlink:href="qml-qtlocation-mapquickitem.html" xrefstyle="" annotations="MapQuickItem">MapQuickItem</db:link> type which permits the embedding of arbitrary <db:link xlink:href="qtquick-module.html" xrefstyle="module" annotations="QtQuick">QtQuick</db:link> items into a map:</db:para>
+    <db:programlisting>
+      // Plane.qml
+      MapQuickItem {
+      id: plane
+      property string pilotName;
+      property int bearing: 0;
+      
+      anchorPoint.x: image.width/2
+      anchorPoint.y: image.height/2
+      
+      sourceItem: Grid {
+      //...
+      
+      }
+      }
+    </db:programlisting>
+  </db:section>
+  <db:section xml:id="the-c-pilot">
+    <db:title>The C++ Pilot</db:title>
+    <db:para>The C++ plane is steered by C++. The <db:code>from</db:code> and <db:code>to</db:code> property of the controller class set the origin and destination which the pilot uses to calculate the bearing for the plane:</db:para>
+    <db:programlisting>
+      Q_PROPERTY(QGeoCoordinate from READ from WRITE setFrom NOTIFY fromChanged)
+      Q_PROPERTY(QGeoCoordinate to READ to WRITE setTo NOTIFY toChanged)
+    </db:programlisting>
+    <db:para>The pilot employs a <db:code><db:link xlink:href="qbasictimer.html" xrefstyle="class" annotations="QBasicTimer">QBasicTimer</db:link></db:code> and <db:code><db:link xlink:href="qtimerevent.html" xrefstyle="class" annotations="QTimerEvent">QTimerEvents</db:link></db:code> to constantly update the position. During each timer iteration <db:code>PlaneController::updatePosition()</db:code> is called and a new position calculated.</db:para>
+    <db:programlisting>
+      void updatePosition()
+      {
+      // simple progress animation
+      qreal progress;
+      QTime current = QTime::currentTime();
+      if (current &gt;= finishTime) {
+      progress = 1.0;
+      timer.stop();
+      } else {
+      progress = ((qreal)startTime.msecsTo(current) / ANIMATION_DURATION);
+      }
+      
+      setPosition(QWebMercator::coordinateInterpolation(
+      fromCoordinate, toCoordinate, easingCurve.valueForProgress(progress)));
+      
+      if (!timer.isActive())
+      emit arrived();
+      }
+    </db:programlisting>
+    <db:para>Once the new position is calculated, <db:code>setPosition()</db:code> is called and the subsequent change notification of the property pushes the new position to the QML layer.</db:para>
+    <db:para>The C++ plane is started by clicking on the plane:</db:para>
+    <db:programlisting>
+      Plane {
+      id: cppPlane
+      pilotName: "C++"
+      coordinate: berlin2London.position
+      
+      MouseArea {
+      anchors.fill: parent
+      onClicked: {
+      if (cppPlaneAnimation.running || berlin2London.isFlying()) {
+      console.log("Plane still in the air.");
+      return;
+      }
+      
+      berlin2London.swapDestinations();
+      cppPlaneAnimation.rotationDirection = berlin2London.position.azimuthTo(berlin2London.to)
+      cppPlaneAnimation.start();
+      cppPlane.departed();
+      }
+      }
+      
+      }
+    </db:programlisting>
+    <db:para>
+      <db:link xlink:href="qml-coordinate.html#azimuthto" xrefstyle="" annotations="azimuthTo">azimuthTo</db:link>() calculates the bearing in degrees from one coordinate to another. Note that the above code utilizes a QML animation to tie the rotation and the position change into a single animation flow:</db:para>
+    <db:programlisting>
+      SequentialAnimation {
+      id: cppPlaneAnimation
+      property real rotationDirection : 0;
+      NumberAnimation {
+      target: cppPlane; property: "bearing"; duration: 1000
+      easing.type: Easing.InOutQuad
+      to: cppPlaneAnimation.rotationDirection
+      }
+      ScriptAction { script: berlin2London.startFlight() }
+      }
+    </db:programlisting>
+    <db:para>First, <db:link xlink:href="qml-qtquick-numberanimation.html" xrefstyle="" annotations="NumberAnimation">NumberAnimation</db:link> rotates the plane into the correct direction and once that is done the <db:code>startFlight()</db:code> function takes care of starting the plane's position change.</db:para>
+    <db:programlisting>
+      public slots:
+      void startFlight()
+      {
+      if (timer.isActive())
+      return;
+      
+      startTime = QTime::currentTime();
+      finishTime = startTime.addMSecs(ANIMATION_DURATION);
+      
+      timer.start(15, this);
+      emit departed();
+      }
+    </db:programlisting>
+  </db:section>
+  <db:section xml:id="the-qml-pilot">
+    <db:title>The QML Pilot</db:title>
+    <db:para>The <db:link xlink:href="qml-qtpositioning-coordinateanimation.html" xrefstyle="" annotations="CoordinateAnimation">CoordinateAnimation</db:link> type is used to control the flight from Oslo to Berlin and vice versa. It replaces the above <db:link xlink:href="qml-qtquick-scriptaction.html" xrefstyle="" annotations="ScriptAction">ScriptAction</db:link>.</db:para>
+    <db:programlisting>
+      CoordinateAnimation {
+      id: coordinateAnimation; duration: 5000
+      target: oslo2Berlin; property: "position"
+      easing.type: Easing.InOutQuad
+      }
+    </db:programlisting>
+    <db:para>The <db:link xlink:href="qml-qtquick-mousearea.html" xrefstyle="" annotations="MouseArea">MouseArea</db:link> of the QML plane implements the logic for the course setting and starts the animation when required.</db:para>
+    <db:programlisting>
+      MouseArea {
+      anchors.fill: parent
+      onClicked: {
+      if (qmlPlaneAnimation.running) {
+      console.log("Plane still in the air.");
+      return;
+      }
+      
+      if (oslo2Berlin.position === berlin) {
+      coordinateAnimation.from = berlin;
+      coordinateAnimation.to = oslo;
+      } else if (oslo2Berlin.position === oslo) {
+      coordinateAnimation.from = oslo;
+      coordinateAnimation.to = berlin;
+      }
+      
+      qmlPlaneAnimation.rotationDirection = oslo2Berlin.position.azimuthTo(coordinateAnimation.to)
+      qmlPlaneAnimation.start()
+      }
+      }
+    </db:programlisting>
+  </db:section>
+</db:article>

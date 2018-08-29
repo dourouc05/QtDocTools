@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Qt 3D: Simple Custom Material QML Example</db:title>
+    <db:abstract>
+      <db:para>Demonstrates creating a custom material in Qt 3D</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>Demonstrates creating a custom material in Qt 3D.</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/simple-custom-material.jpg"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>
+    <db:emphasis>This</db:emphasis> example demonstrates creating a simple custom material.</db:para>
+  <db:section xml:id="running-the-example">
+    <db:title>Running the Example</db:title>
+    <db:para>To run the example from <db:link xlink:href="http://doc.qt.io/qtcreator/index.html" xrefstyle="page" annotations="Qt Creator Manual">Qt Creator</db:link>, open the <db:emphasis role="bold">Welcome</db:emphasis> mode and select the example from <db:emphasis role="bold">Examples</db:emphasis>. For more information, visit <db:link xlink:href="http://doc.qt.io/qtcreator/creator-build-example-application.html" xrefstyle="page" annotations="Qt Creator: Building and Running an Example">Building and Running an Example</db:link>.</db:para>
+  </db:section>
+  <db:section xml:id="specifying-the-scene">
+    <db:title>Specifying the Scene</db:title>
+    <db:para>The example uses <db:link xlink:href="qml-qt3d-scene3d-scene3d.html" xrefstyle="" annotations="Scene3D">Scene3D</db:link> to render a scene which will use the custom material. The scene contains a plane model, which uses the custom material.</db:para>
+    <db:programlisting language="other">Entity {
+      id: root
+      
+      components: [transform, mesh, material]
+      
+      SimpleMaterial {
+      id: material
+      maincolor: "red"
+      }
+      
+      Transform {
+      id: transform
+      rotationX: 45
+      }
+      
+      PlaneMesh {
+      id: mesh
+      width: 1.0
+      height: 1.0
+      meshResolution: Qt.size(2, 2)
+      }
+      }</db:programlisting>
+  </db:section>
+  <db:section xml:id="specifying-the-material">
+    <db:title>Specifying the Material</db:title>
+    <db:para>The material is specified in <db:link xlink:href="qt3d-simplecustommaterial-simplematerial-qml.html" xrefstyle="page" annotations="simplecustommaterial/SimpleMaterial.qml">SimpleMaterial.qml</db:link> using <db:link xlink:href="qml-qt3d-render-material.html" xrefstyle="" annotations="Material">Material</db:link> type. First the material specifies parameters, which are mapped to the corresponding uniforms in the shaders so that they can be changed from the qml.</db:para>
+    <db:programlisting>
+      property color maincolor: Qt.rgba(0.0, 0.0, 0.0, 1.0)
+      
+      parameters: [
+      Parameter {
+      name: "maincolor"
+      value: Qt.vector3d(root.maincolor.r, root.maincolor.g, root.maincolor.b)
+      }
+      ]
+      
+    </db:programlisting>
+    <db:para>Next we specify which shaders are loaded. Separate versions of the shaders are provided for OpenGL ES 2 and OpenGL renderers.</db:para>
+    <db:programlisting>
+      property string vertex: "qrc:/shaders/gl3/simpleColor.vert"
+      property string fragment: "qrc:/shaders/gl3/simpleColor.frag"
+      property string vertexES: "qrc:/shaders/es2/simpleColor.vert"
+      property string fragmentES: "qrc:/shaders/es2/simpleColor.frag"
+    </db:programlisting>
+    <db:para>In the vertex shader we simply transform the position by the transformation matrices.</db:para>
+    <db:programlisting language="other">void main()
+      {
+      // Transform position, normal, and tangent to world coords
+      worldPosition = vec3(modelMatrix * vec4(vertexPosition, 1.0));
+      
+      // Calculate vertex position in clip coordinates
+      gl_Position = mvp * vec4(worldPosition, 1.0);
+      }</db:programlisting>
+    <db:para>In the fragment shader we simply set the fragment color to be the maincolor specified in the material.</db:para>
+    <db:programlisting language="other">uniform vec3 maincolor;void main()
+      {
+      //output color from material
+      fragColor = vec4(maincolor,1.0);
+      }
+    </db:programlisting>
+    <db:programlisting language="other">void main()
+      {
+      //output color from material
+      fragColor = vec4(maincolor,1.0);
+      }
+    </db:programlisting>
+    <db:para>Next, we create <db:link xlink:href="qml-qt3d-render-shaderprogram.html" xrefstyle="" annotations="ShaderProgram">ShaderPrograms</db:link> from the shaders.</db:para>
+    <db:programlisting>
+      ShaderProgram {
+      id: gl3Shader
+      vertexShaderCode: loadSource(parent.vertex)
+      fragmentShaderCode: loadSource(parent.fragment)
+      }
+      ShaderProgram {
+      id: es2Shader
+      vertexShaderCode: loadSource(parent.vertexES)
+      fragmentShaderCode: loadSource(parent.fragmentES)
+      }
+    </db:programlisting>
+    <db:para>Finally the shader programs are used in the Techniques corresponding to a specific Api profile.</db:para>
+    <db:programlisting>
+      // OpenGL 3.1
+      Technique {
+      filterKeys: [forward]
+      graphicsApiFilter {
+      api: GraphicsApiFilter.OpenGL
+      profile: GraphicsApiFilter.CoreProfile
+      majorVersion: 3
+      minorVersion: 1
+      }
+      renderPasses: RenderPass {
+      shaderProgram: gl3Shader
+      }
+      },
+    </db:programlisting>
+  </db:section>
+</db:article>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>World Time Clock Builder Example</db:title>
+    <db:abstract>
+      <db:para>Creating forms with Qt Designer that contain custom widgets that can be dynamically generated at run-time</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>Creating forms with Qt Designer that contain custom widgets that can be dynamically generated at run-time.</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/worldtimeclockbuilder-example.png"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>This example uses a form containing the custom widget plugin described in the <db:link xlink:href="qtdesigner-worldtimeclockplugin-example.html" xrefstyle="page" annotations="worldtimeclockplugin">World Time Clock Plugin</db:link> example, and dynamically generates a user interface using the <db:code><db:link xlink:href="quiloader.html" xrefstyle="class" annotations="QUiLoader">QUiLoader</db:link></db:code> class, part of the <db:link xlink:href="qtuitools-module.html" xrefstyle="module" annotations="QtUiTools">QtUiTools</db:link> module.</db:para>
+  <db:section xml:id="preparation">
+    <db:title>Preparation</db:title>
+    <db:para>As with the <db:link xlink:href="qtdesigner-calculatorbuilder-example.html" xrefstyle="page" annotations="calculatorbuilder">Calculator Builder</db:link> example, the project file for this example needs to include the appropriate definitions to ensure that it is built against the required Qt modules.</db:para>
+    <db:programlisting/>
+    <db:para>By appending <db:code>form</db:code> to the <db:code>CONFIG</db:code> declaration, we instruct <db:code>qmake</db:code> to generate a dependency on the <db:code>libQtUiTools</db:code> library containing the <db:link xlink:href="qtuitools-module.html" xrefstyle="module" annotations="QtUiTools">QtUiTools</db:link> classes.</db:para>
+    <db:para>Note that we do not inform <db:code>qmake</db:code> about any UI files, and so none will be processed and built into the application. The resource file contains an entry for the particular form that we wish to use:</db:para>
+    <db:programlisting>&lt;!DOCTYPE RCC&gt;&lt;RCC version="1.0"&gt;
+      &lt;qresource prefix="/forms"&gt;
+      &lt;file&gt;form.ui&lt;/file&gt;
+      &lt;/qresource&gt;
+      &lt;/RCC&gt;
+    </db:programlisting>
+    <db:para>Forms do not need to be included with the application in this way. We only include a form in the application's resources for convenience, and to keep the example short.</db:para>
+  </db:section>
+  <db:section xml:id="loading-and-building-the-form">
+    <db:title>Loading and Building the Form</db:title>
+    <db:para>Since this example only loads and displays a pre-prepared form, all of the work can be done in the main() function. We are using a class from the <db:link xlink:href="qtuitools-module.html" xrefstyle="module" annotations="QtUiTools">QtUiTools</db:link> library so, in addition to any other Qt classes that are normally required to write an application, we must include the appropriate header file:</db:para>
+    <db:programlisting>
+      #include &lt;QtUiTools&gt;
+    </db:programlisting>
+    <db:para>The main function initializes the resource system with the <db:code><db:link xlink:href="qdir.html#Q_INIT_RESOURCE" xrefstyle="function" annotations="Q_INIT_RESOURCE()">Q_INIT_RESOURCE()</db:link></db:code> macro and constructs an <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> instance in the usual way:</db:para>
+    <db:programlisting>
+      int main(int argc, char *argv[])
+      {
+      Q_INIT_RESOURCE(worldtimeclockbuilder);
+      
+      QApplication app(argc, argv);
+      
+      QUiLoader loader;
+    </db:programlisting>
+    <db:para>We construct a <db:code><db:link xlink:href="quiloader.html" xrefstyle="class" annotations="QUiLoader">QUiLoader</db:link></db:code> object to handle the form we want to use.</db:para>
+    <db:para>The form itself is obtained from the resource file system using the path defined in the resource file. We use the form loader to load and construct the form:</db:para>
+    <db:programlisting>
+      QFile file(":/forms/form.ui");
+      file.open(QFile::ReadOnly);
+      
+      QWidget *widget = loader.load(&amp;file);
+      
+      file.close();
+      widget-&gt;show();
+    </db:programlisting>
+    <db:para>Once the form has been loaded, the resource file can be closed and the widget is shown.</db:para>
+    <db:programlisting>
+      return app.exec();
+      }
+    </db:programlisting>
+    <db:para>The form loader ensures that all the signal and slot connections between objects in the form are set up correctly when the form is loaded. As a result, the time is updated by the World Time Clock widget, and the time zone spin box can be used to change the position of the hour hand.</db:para>
+  </db:section>
+</db:article>

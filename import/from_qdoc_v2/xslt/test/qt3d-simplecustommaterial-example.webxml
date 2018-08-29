@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="simplecustommaterial" href="qt3d-simplecustommaterial-example.html" status="active" location="simplecustommaterial.qdoc" filepath="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simplecustommaterial/doc/src/simplecustommaterial.qdoc" lineno="28" subtype="example" title="Qt 3D: Simple Custom Material QML Example" fulltitle="Qt 3D: Simple Custom Material QML Example" subtitle="" module="Qt3D" groups="qt3d-examples-qml" brief="Demonstrates creating a custom material in Qt 3D">
+            <contents name="running-the-example" title="Running the Example" level="1"/>
+            <contents name="specifying-the-scene" title="Specifying the Scene" level="1"/>
+            <contents name="specifying-the-material" title="Specifying the Material" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simplecustommaterial/doc/src/simplecustommaterial.qdoc" line="28" column="4">
+                <brief>Demonstrates creating a custom material in Qt 3D.</brief>
+                <image href="images/simple-custom-material.jpg"/>
+                <para>
+                    <italic>This</italic> example demonstrates creating a simple custom material.</para>
+                <section id="running-the-example">
+                    <heading level="1">Running the Example</heading>
+                    <para>To run the example from <link raw="Qt Creator Manual" href="http://doc.qt.io/qtcreator/index.html" type="page" page="Qt Creator Manual">Qt Creator</link>, open the <bold>Welcome</bold> mode and select the example from <bold>Examples</bold>. For more information, visit <link raw="Qt Creator: Building and Running an Example" href="http://doc.qt.io/qtcreator/creator-build-example-application.html" type="page" page="Qt Creator: Building and Running an Example">Building and Running an Example</link>.</para>
+                </section>
+                <section id="specifying-the-scene">
+                    <heading level="1">Specifying the Scene</heading>
+                    <para>The example uses <link raw="Scene3D" href="qml-qt3d-scene3d-scene3d.html" type="">Scene3D</link> to render a scene which will use the custom material. The scene contains a plane model, which uses the custom material.</para>
+                    <quotefromfile>simplecustommaterial/PlaneModel.qml</quotefromfile>
+                    <skipto>Entity</skipto>
+                    <printto></printto>
+                </section>
+                <section id="specifying-the-material">
+                    <heading level="1">Specifying the Material</heading>
+                    <para>The material is specified in <link raw="simplecustommaterial/SimpleMaterial.qml" href="qt3d-simplecustommaterial-simplematerial-qml.html" type="page" page="simplecustommaterial::simplecustommaterial/SimpleMaterial.qml">SimpleMaterial.qml</link> using <link raw="Material" href="qml-qt3d-render-material.html" type="">Material</link> type. First the material specifies parameters, which are mapped to the corresponding uniforms in the shaders so that they can be changed from the qml.</para>
+                    <snippet location="simplecustommaterial/SimpleMaterial.qml" path="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simplecustommaterial/SimpleMaterial.qml" identifier="0"/>
+                    <para>Next we specify which shaders are loaded. Separate versions of the shaders are provided for OpenGL ES 2 and OpenGL renderers.</para>
+                    <snippet location="simplecustommaterial/SimpleMaterial.qml" path="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simplecustommaterial/SimpleMaterial.qml" identifier="1"/>
+                    <para>In the vertex shader we simply transform the position by the transformation matrices.</para>
+                    <quotefromfile>simplecustommaterial/shaders/gl3/simpleColor.vert</quotefromfile>
+                    <skipto>void main()</skipto>
+                    <printto></printto>
+                    <para>In the fragment shader we simply set the fragment color to be the maincolor specified in the material.</para>
+                    <quotefromfile>simplecustommaterial/shaders/gl3/simpleColor.frag</quotefromfile>
+                    <skipto>uniform vec3 maincolor;</skipto>
+                    <printuntil>;</printuntil>
+                    <skipto>void main()</skipto>
+                    <printto></printto>
+                    <para>Next, we create <link raw="ShaderProgram" href="qml-qt3d-render-shaderprogram.html" type="">ShaderPrograms</link> from the shaders.</para>
+                    <snippet location="simplecustommaterial/SimpleMaterial.qml" path="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simplecustommaterial/SimpleMaterial.qml" identifier="2"/>
+                    <para>Finally the shader programs are used in the Techniques corresponding to a specific Api profile.</para>
+                    <snippet location="simplecustommaterial/SimpleMaterial.qml" path="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simplecustommaterial/SimpleMaterial.qml" identifier="3"/>
+                </section>
+            </description>
+            <page name="simplecustommaterial/PlaneModel.qml" href="qt3d-simplecustommaterial-planemodel-qml.html" status="active" subtype="file" title="" fulltitle="PlaneModel.qml Example File" subtitle="simplecustommaterial/PlaneModel.qml">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/SceneRoot.qml" href="qt3d-simplecustommaterial-sceneroot-qml.html" status="active" subtype="file" title="" fulltitle="SceneRoot.qml Example File" subtitle="simplecustommaterial/SceneRoot.qml">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/SimpleMaterial.qml" href="qt3d-simplecustommaterial-simplematerial-qml.html" status="active" subtype="file" title="" fulltitle="SimpleMaterial.qml Example File" subtitle="simplecustommaterial/SimpleMaterial.qml">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/main.qml" href="qt3d-simplecustommaterial-main-qml.html" status="active" subtype="file" title="" fulltitle="main.qml Example File" subtitle="simplecustommaterial/main.qml">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/shaders/es2/simpleColor.vert" href="qt3d-simplecustommaterial-shaders-es2-simplecolor-vert.html" status="active" subtype="file" title="" fulltitle="simpleColor.vert Example File" subtitle="simplecustommaterial/shaders/es2/simpleColor.vert">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/shaders/gl3/simpleColor.vert" href="qt3d-simplecustommaterial-shaders-gl3-simplecolor-vert.html" status="active" subtype="file" title="" fulltitle="simpleColor.vert Example File" subtitle="simplecustommaterial/shaders/gl3/simpleColor.vert">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/main.cpp" href="qt3d-simplecustommaterial-main-cpp.html" status="active" subtype="file" title="" fulltitle="main.cpp Example File" subtitle="simplecustommaterial/main.cpp">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/models.qrc" href="qt3d-simplecustommaterial-models-qrc.html" status="active" subtype="file" title="" fulltitle="models.qrc Example File" subtitle="simplecustommaterial/models.qrc">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/qml.qrc" href="qt3d-simplecustommaterial-qml-qrc.html" status="active" subtype="file" title="" fulltitle="qml.qrc Example File" subtitle="simplecustommaterial/qml.qrc">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/shaders.qrc" href="qt3d-simplecustommaterial-shaders-qrc.html" status="active" subtype="file" title="" fulltitle="shaders.qrc Example File" subtitle="simplecustommaterial/shaders.qrc">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/simplecustommaterial.pro" href="qt3d-simplecustommaterial-simplecustommaterial-pro.html" status="active" subtype="file" title="" fulltitle="simplecustommaterial.pro Example File" subtitle="simplecustommaterial/simplecustommaterial.pro">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simplecustommaterial/textures.qrc" href="qt3d-simplecustommaterial-textures-qrc.html" status="active" subtype="file" title="" fulltitle="textures.qrc Example File" subtitle="simplecustommaterial/textures.qrc">
+                <description path="" line="0" column="0"/>
+            </page>
+        </page>
+    </document>
+</WebXML>
