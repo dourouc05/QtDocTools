@@ -644,14 +644,32 @@
     </xsl:if>
     
     <xsl:variable name="sourceFolder" select="replace($sourceFilePath, replace($sourceFilePathSplit[last()], '\.', '\\.'), '')" as="xs:string"/>
-    <xsl:variable name="filePathTentative" select="concat($sourceFolder, $fileToQuote)"/>
-    <xsl:variable name="filePath" select="if  (tc:file-exists($filePathTentative)) then $filePathTentative else concat($sourceFolder, '../snippets/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative1" select="concat($sourceFolder, $fileToQuote)"/>
+    <xsl:variable name="filePathTentative2" select="concat($sourceFolder, '../snippets/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative3" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 3], '/'), '/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative4" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative5" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 3], '/'), '/', replace($fileToQuote, 'examples/', 'examples/corelib/'))"/>
     
-    <xsl:if test="not(tc:file-exists($filePath))">
-      <xsl:message>WARNING: Unable to find the correct path for <xsl:value-of select="$fileToQuote"/></xsl:message>
-    </xsl:if>
-    
-    <xsl:value-of select="$filePath"/>
+    <xsl:choose>
+      <xsl:when test="tc:file-exists($filePathTentative1)">
+        <xsl:value-of select="$filePathTentative1"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative2)">
+        <xsl:value-of select="$filePathTentative2"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative3)">
+        <xsl:value-of select="$filePathTentative3"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative4)">
+        <xsl:value-of select="$filePathTentative4"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative5)">
+        <xsl:value-of select="$filePathTentative5"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Unable to find the correct path for <xsl:value-of select="$fileToQuote"/></xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:function>
   <xsl:function name="tc:load-file">
     <xsl:param name="filename" as="xs:string"/>
@@ -685,8 +703,11 @@
     <!-- Do it by recursion: treat the current node, recurse on the next one if it still belongs to the snippet. -->
     <xsl:variable name="recurse" select="if ($snippetNode/following-sibling::node()[1]/self::snippet or $snippetNode/following-sibling::node()[1]/self::dots) then tc:gather-snippet($snippetNode/following-sibling::node()[1]) else ''" as="xs:string"/>
     <xsl:choose>
-      <xsl:when test="$snippetNode/self::snippet">
+      <xsl:when test="$snippetNode/self::snippet and $snippetNode/@path">
         <xsl:value-of select="concat(tc:parse-snippet($snippetNode/@path, $snippetNode/@identifier), $recurse)"/>
+      </xsl:when>
+      <xsl:when test="$snippetNode/self::snippet and $snippetNode/@location">
+        <xsl:value-of select="concat(tc:parse-snippet(tc:find-file-path($snippetNode/ancestor::description/@path, $snippetNode/@location), $snippetNode/@identifier), $recurse)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="concat(tc:generate-indent($snippetNode/@indent), $recurse)"/>
@@ -941,8 +962,7 @@
     <!--   - skipto:    skip until (EXcluding) the first line that matches the argument -->
     <!--   - skipuntil: skip until (INcluding) the first line that matches the argument -->
     
-    <xsl:variable name="descriptionPath" as="xs:string" select="//description/@path"/>
-    <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path($descriptionPath, preceding::quotefromfile[1])"/>
+    <xsl:variable name="quotefromfileFile" as="xs:string" select="tc:find-file-path(ancestor::description/@path, preceding::quotefromfile[1])"/>
     <xsl:variable name="quotefromfileSequenceLines" as="xs:string*" select="tokenize(tc:load-file($quotefromfileFile), codepoints-to-string(10))"/>
     
     <xsl:variable name="previousNode" select="preceding-sibling::node()[1]" as="node()"/>

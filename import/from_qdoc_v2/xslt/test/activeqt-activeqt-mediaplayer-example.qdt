@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Media Player Example (ActiveQt)</db:title>
+    <db:abstract>
+      <db:para>Media Player example uses the Microsoft Media Player ActiveX control to implement a functional media player application</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>The Media Player example uses the Microsoft Media Player ActiveX control to implement a functional media player application.</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/activeqt-mediaplayer-example.jpg"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>
+    <db:emphasis>Media Player</db:emphasis> demonstrates how a Qt application can communicate with embedded ActiveX controls using signals, slots, and the <db:code>dynamicCall()</db:code> function.</db:para>
+  <db:programlisting language="other">class MainWindow : public QMainWindow
+    {
+    Q_OBJECT
+    public:
+    MainWindow();
+    ~MainWindow();
+    void openMedia(const QString &amp;mediaUrl);
+    
+    public slots:
+    void on_mediaPlayer_PlayStateChange(int newState);
+    void on_actionOpen_triggered();
+    void on_actionExit_triggered();
+    void on_actionAbout_triggered();
+    void on_actionAboutQt_triggered();
+    
+    private:
+    void updateWindowTitle(const QString &amp;state);
+    Ui::MainWindow m_ui;
+    };</db:programlisting>
+  <db:para>The <db:code>MainWindow</db:code> class declares a <db:code>QMainWindow</db:code> based user interface, using the <db:code>Ui::MainWindow</db:code> class created by Qt Designer. A number of slots are implemented to handle events from user interface elements, including the <db:code>mediaPlayer</db:code> object, which is a <db:code><db:link xlink:href="qaxwidget.html" xrefstyle="class" annotations="QAxWidget">QAxWidget</db:link></db:code> hosting the Microsoft Media Player ActiveX control.</db:para>
+  <db:programlisting language="other">MainWindow::MainWindow()
+    {
+    m_ui.setupUi(this);
+    
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope,
+    QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    
+    const QByteArray restoredGeometry = settings.value(QLatin1String(geometryKey)).toByteArray();
+    if (restoredGeometry.isEmpty() || !restoreGeometry(restoredGeometry)) {
+    const QRect availableGeometry = QApplication::desktop()-&gt;availableGeometry(this);
+    const QSize size = (availableGeometry.size() * 4) / 5;
+    resize(size);
+    move(availableGeometry.center() - QPoint(size.width(), size.height()) / 2);
+    }
+    
+    m_ui.mediaPlayer-&gt;dynamicCall("enableContextMenu", false);
+    m_ui.mediaPlayer-&gt;dynamicCall("stretchToFit", true);
+    updateWindowTitle("");
+    }</db:programlisting>
+  <db:para>The constructor initializes the user interface, restores a previously saved window geometry, and uses the <db:code>dynamicCall()</db:code> function to invoke the APIs implemented by the Microsoft Media Player ActiveX control, to set initial configuration parameters.</db:para>
+  <db:programlisting language="other">void MainWindow::on_mediaPlayer_PlayStateChange(int newState)
+    {
+    static const QHash&lt;int, const char *&gt; stateMapping {
+    {1,  "Stopped"},
+    {2,  "Paused"},
+    {3,  "Playing"},
+    {4,  "Scanning Forwards"},
+    {5,  "Scanning Backwards"},
+    {6,  "Buffering"},
+    {7,  "Waiting"},
+    {8,  "Media Ended"},
+    {9,  "Transitioning"},
+    {10, "Ready"},
+    {11, "Reconnecting"},
+    };
+    const char *stateStr = stateMapping.value(newState, "");
+    updateWindowTitle(tr(stateStr));
+    }</db:programlisting>
+  <db:para>The <db:code>on_mediaPlayer_PlayStateChange</db:code> slot handles the signal emitted by the <db:code>mediaPlayer</db:code> object when its state changes.</db:para>
+  <db:programlisting language="other">void MainWindow::openMedia(const QString &amp;mediaUrl)
+    {
+    if (!mediaUrl.isEmpty())
+    m_ui.mediaPlayer-&gt;dynamicCall("URL", mediaUrl);
+    }</db:programlisting>
+  <db:para>The <db:code>openMedia()</db:code> function allows a media file to be opened by using the <db:code>dynamicCall()</db:code> function to set the URL property in the ActiveX control, which causes the media file to be loaded and played.</db:para>
+  <db:programlisting language="other">int main(int argc, char *argv[])
+    {
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication app(argc, argv);
+    QCoreApplication::setApplicationVersion(QT_VERSION_STR);
+    QCoreApplication::setApplicationName(QLatin1String("Active Qt Media Player"));
+    QCoreApplication::setOrganizationName(QLatin1String("QtProject"));
+    
+    MainWindow w;
+    QCommandLineParser parser;
+    parser.setApplicationDescription(QCoreApplication::applicationName());
+    parser.addHelpOption();
+    parser.addVersionOption();
+    parser.addPositionalArgument("file", "The media file to open.");
+    parser.process(app);
+    if (!parser.positionalArguments().isEmpty())
+    w.openMedia(parser.positionalArguments().constFirst());
+    w.show();
+    return app.exec();
+    }</db:programlisting>
+  <db:para>The <db:code>main()</db:code> function starts the application using standard Qt APIs and uses an optional command line argument as the name of a media file to be loaded by the player.</db:para>
+  <db:para>To build the example, you must first build the <db:link xlink:href="qaxcontainer-module.html" xrefstyle="module" annotations="QAxContainer">QAxContainer</db:link> library. Then run your make tool in <db:code>examples/activeqt/mediaplayer</db:code> and run the resulting <db:code>mediaplayer.exe</db:code>.</db:para>
+</db:article>

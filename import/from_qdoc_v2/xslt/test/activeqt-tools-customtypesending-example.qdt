@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:title>Custom Type Sending Example</db:title>
+  <db:para>The Custom Type Sending example shows how to use a custom type with signals and slots.</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref=""/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:section xml:id="overview">
+    <db:title>Overview</db:title>
+    <db:para>In the <db:link xlink:href="qtcore-tools-customtype-example.html" xrefstyle="page" annotations="Custom Type Example">Custom Type Example</db:link>, we showed how to integrate custom types with the meta-object system, enabling them to be stored in <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code> objects, written out in debugging information and used in signal-slot communication.</db:para>
+    <db:para>In this example, we demonstrate that the preparations made to the <db:code>Message</db:code> class and its declaration with <db:code><db:link xlink:href="qmetatype.html#Q_DECLARE_METATYPE" xrefstyle="function" annotations="Q_DECLARE_METATYPE()">Q_DECLARE_METATYPE()</db:link></db:code> enable it to be used with direct signal-slot connections. We do this by creating a <db:code>Window</db:code> class containing signals and slots whose signatures include <db:code>Message</db:code> arguments.</db:para>
+  </db:section>
+  <db:section xml:id="the-window-and-message-class-definitions">
+    <db:title>The Window and Message Class Definitions</db:title>
+    <db:para>We define a simple <db:code>Window</db:code> class with a signal and public slot that allow a <db:code>Message</db:code> object to be sent via a signal-slot connection:</db:para>
+    <db:programlisting>
+      class Window : public QWidget
+      {
+      Q_OBJECT
+      
+      public:
+      Window();
+      
+      signals:
+      void messageSent(const Message &amp;message);
+      
+      public slots:
+      void setMessage(const Message &amp;message);
+      
+      private slots:
+      void sendMessage();
+      
+      private:
+      Message thisMessage;
+      QTextEdit *editor;
+      };
+    </db:programlisting>
+    <db:para>The window will contain a text editor to show the contents of a message and a push button that the user can click to send a message. To facilitate this, we also define the <db:code>sendMessage()</db:code> slot. We also keep a <db:code>Message</db:code> instance in the <db:code>thisMessage</db:code> private variable which holds the actual message to be sent.</db:para>
+    <db:para>The <db:code>Message</db:code> class is defined in the following way:</db:para>
+    <db:programlisting>
+      class Message
+      {
+      public:
+      Message();
+      Message(const Message &amp;other);
+      ~Message();
+      
+      Message(const QString &amp;body, const QStringList &amp;headers);
+      
+      QString body() const;
+      QStringList headers() const;
+      
+      private:
+      QString m_body;
+      QStringList m_headers;
+      };
+    </db:programlisting>
+    <db:para>The type is declared to the meta-type system with the <db:code><db:link xlink:href="qmetatype.html#Q_DECLARE_METATYPE" xrefstyle="function" annotations="Q_DECLARE_METATYPE()">Q_DECLARE_METATYPE()</db:link></db:code> macro:</db:para>
+    <db:programlisting>
+      Q_DECLARE_METATYPE(Message);
+    </db:programlisting>
+    <db:para>This will make the type available for use in direct signal-slot connections.</db:para>
+  </db:section>
+  <db:section xml:id="the-window-class-implementation">
+    <db:title>The Window Class Implementation</db:title>
+    <db:para>The <db:code>Window</db:code> constructor sets up a user interface containing a text editor and a push button.</db:para>
+    <db:programlisting>
+      Window::Window()
+      {
+      editor = new QTextEdit();
+      QPushButton *sendButton = new QPushButton(tr("&amp;Send message"));
+      
+      connect(sendButton, SIGNAL(clicked()), this, SLOT(sendMessage()));
+      
+      QHBoxLayout *buttonLayout = new QHBoxLayout();
+      buttonLayout-&gt;addStretch();
+      buttonLayout-&gt;addWidget(sendButton);
+      buttonLayout-&gt;addStretch();
+      
+      QVBoxLayout *layout = new QVBoxLayout(this);
+      layout-&gt;addWidget(editor);
+      layout-&gt;addLayout(buttonLayout);
+      
+      setWindowTitle(tr("Custom Type Sending"));
+      }
+    </db:programlisting>
+    <db:para>The button's <db:code><db:link xlink:href="qabstractbutton.html#clicked" xrefstyle="function" annotations="QPushButton::clicked()">clicked()</db:link></db:code> signal is connected to the window's <db:code>sendMessage()</db:code> slot, which emits the <db:code>messageSent(Message)</db:code> signal with the <db:code>Message</db:code> held by the <db:code>thisMessage</db:code> variable:</db:para>
+    <db:programlisting>
+      void Window::sendMessage()
+      {
+      thisMessage = Message(editor-&gt;toPlainText(), thisMessage.headers());
+      emit messageSent(thisMessage);
+      }
+    </db:programlisting>
+    <db:para>We implement a slot to allow the message to be received, and this also lets us set the message in the window programatically:</db:para>
+    <db:programlisting>
+      void Window::setMessage(const Message &amp;message)
+      {
+      thisMessage = message;
+      editor-&gt;setPlainText(thisMessage.body());
+      }
+    </db:programlisting>
+    <db:para>In this function, we simply assign the new message to <db:code>thisMessage</db:code> and update the text in the editor.</db:para>
+  </db:section>
+  <db:section xml:id="making-the-connection">
+    <db:title>Making the Connection</db:title>
+    <db:para>In the example's <db:code>main()</db:code> function, we perform the connection between two instances of the <db:code>Window</db:code> class:</db:para>
+    <db:programlisting>
+      int main(int argc, char *argv[])
+      {
+      QApplication app(argc, argv);
+      
+      Window window1;
+      QStringList headers;
+      headers &lt;&lt; "Subject: Hello World"
+      &lt;&lt; "From: address@example.com";
+      QString body = "This is a test.\r\n";
+      Message message(body, headers);
+      window1.setMessage(message);
+      
+      Window window2;
+      QObject::connect(&amp;window1, SIGNAL(messageSent(Message)),
+      &amp;window2, SLOT(setMessage(Message)));
+      QObject::connect(&amp;window2, SIGNAL(messageSent(Message)),
+      &amp;window1, SLOT(setMessage(Message)));
+      window1.show();
+      window2.show();
+      return app.exec();
+      }
+    </db:programlisting>
+    <db:para>We set the message for the first window and connect the <db:code>messageSent(Message)</db:code> signal from each window to the other's <db:code>setMessage(Message)</db:code> slot. Since the signals and slots mechanism is only concerned with the type, we can simplify the signatures of both the signal and slot when we make the connection.</db:para>
+    <db:para>When the user clicks on the Send message button in either window, the message shown will be emitted in a signal that the other window will receive and display.</db:para>
+  </db:section>
+  <db:section xml:id="further-reading">
+    <db:title>Further Reading</db:title>
+    <db:para>Although the custom <db:code>Message</db:code> type can be used with direct signals and slots, an additional registration step needs to be performed if you want to use it with queued signal-slot connections. See the <db:link xlink:href="qtcore-threads-queuedcustomtype-example.html" xrefstyle="page" annotations="Queued Custom Type Example">Queued Custom Type Example</db:link> for details.</db:para>
+    <db:para>More information on using custom types with Qt can be found in the <db:link xlink:href="custom-types.html" xrefstyle="page" annotations="Creating Custom Qt Types">Creating Custom Qt Types</db:link> document.</db:para>
+  </db:section>
+</db:article>
