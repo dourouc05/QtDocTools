@@ -649,6 +649,7 @@
     <xsl:variable name="filePathTentative3" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 3], '/'), '/', $fileToQuote)"/>
     <xsl:variable name="filePathTentative4" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/', $fileToQuote)"/>
     <xsl:variable name="filePathTentative5" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 3], '/'), '/', replace($fileToQuote, 'examples/', 'examples/corelib/'))"/>
+    <xsl:variable name="filePathTentative6" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/', concat('examples/widgets/', $fileToQuote))"/>
     
     <xsl:choose>
       <xsl:when test="tc:file-exists($filePathTentative1)">
@@ -665,6 +666,9 @@
       </xsl:when>
       <xsl:when test="tc:file-exists($filePathTentative5)">
         <xsl:value-of select="$filePathTentative5"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative6)">
+        <xsl:value-of select="$filePathTentative6"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>WARNING: Unable to find the correct path for <xsl:value-of select="$fileToQuote"/></xsl:message>
