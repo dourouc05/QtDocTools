@@ -612,6 +612,27 @@
           </db:para>
         </db:note>
       </xsl:when>
+      <xsl:when test="para">
+        <!-- WTF? A paragraph that contains paragraphs? Yes, indeed! -->
+        <xsl:variable name="content" as="node()*">
+          <!-- First, process this tag as usual. -->
+          <xsl:apply-templates mode="content_generic"/>
+        </xsl:variable>
+        
+        <!-- Then, untangle things: output the first paragraph (the real one), then the rest. -->
+        <xsl:variable name="firstIndexOutsidePara" as="xs:integer">
+          <xsl:variable name="isPara" select="for $i in 0 to count($content) return boolean($content[$i]/db:para)"/>
+          <xsl:value-of select="index-of($isPara, true())[1]"/>
+        </xsl:variable>
+        
+        <db:para>
+          <xsl:if test="not($targetId='')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
+          <xsl:copy-of select="$content[position() = 0 to xs:integer($firstIndexOutsidePara - 1)]"/>
+        </db:para>
+        <xsl:copy-of select="$content[position() = $firstIndexOutsidePara to count($content)]"/>
+      </xsl:when>
       <xsl:otherwise>
         <db:para>
           <xsl:if test="not($targetId='')">
@@ -1198,9 +1219,40 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="table">
-    <db:informaltable>
-      <xsl:apply-templates mode="content_generic_table"/>
-    </db:informaltable>
+    <!-- In some cases, a table is used while it should not really (the markup really makes no sense). -->
+    <xsl:choose>
+      <xsl:when test="count(header/list) = 1">
+        <db:informaltable>
+          <db:thead>
+            <db:tr>
+              <xsl:for-each select="header/list/item">
+                  <db:th>
+                    <xsl:apply-templates mode="content_generic"/>
+                  </db:th>
+              </xsl:for-each>
+            </db:tr>
+          </db:thead>
+          <db:tbody>
+            <xsl:for-each select="row/item">
+              <xsl:if test="has-children()">
+                <db:tr>
+                 <xsl:for-each select="list/item">
+                   <db:td>
+                     
+                   </db:td>
+                 </xsl:for-each>
+                </db:tr>
+              </xsl:if>
+            </xsl:for-each>
+          </db:tbody>
+        </db:informaltable>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:informaltable>
+          <xsl:apply-templates mode="content_generic_table"/>
+        </db:informaltable>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content_generic_table" match="header">
@@ -1239,11 +1291,17 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template mode="content_generic_table" match="target">
     <!-- Ignore: xml:id is inserted in the right cell. -->
   </xsl:template>
-  
+
+  <xsl:template mode="content_generic" match="footnote">
+    <db:footnote>
+      <xsl:apply-templates mode="content_generic"/>
+    </db:footnote>
+  </xsl:template>
+
   <xsl:template mode="content_generic" match="link">
     <xsl:choose>
       <xsl:when test="@type='class' or @type='enum' or @type='function' or @type='property'">

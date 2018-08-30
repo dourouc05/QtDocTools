@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Dot Net Example (ActiveQt)</db:title>
+    <db:abstract>
+      <db:para>Dot Net example demonstrates how Qt objects can be used in a .NET environment, and how .NET objects can be used in a Qt environment</db:para>
+    </db:abstract>
+  </db:info>
+  <db:para>The Dot Net example demonstrates how Qt objects can be used in a .NET environment, and how .NET objects can be used in a Qt environment.</db:para>
+  <db:para>Contents:</db:para>
+  <db:section xml:id="qt-vs-net">
+    <db:title>Qt vs. .NET</db:title>
+    <db:para>Qt is a C++ library and is compiled into traditional, native binaries that make full use of the performance provided by the runtime environment.</db:para>
+    <db:para>One of the key concepts of .NET is the idea of "intermediate language code" - the source code is compiled into a bytecode format, and at runtime, that bytecode is executed in a virtual machine - the <db:emphasis>Common Language Runtime</db:emphasis> (CLR).</db:para>
+    <db:para>Another key concept is that of <db:emphasis>managed code</db:emphasis>. This is essentially intermediate language code written in such a way that the CLR can take care of the memory management, i.e. the CLR will do automatic garbage collection, so the application code does not need to explicitly free the memory for unused objects.</db:para>
+    <db:para>The MS compilers for C# and VB.NET will only produce managed code. Such programs cannot directly call normal, native functions or classes. <db:footnote>
+      <db:para>The .NET framework provides Platform Invocation Services - P/Invoke - that enable managed code to call native C (not C++) functions located in DLLs directly. The resulting application then becomes partially unmanaged.</db:para>
+    </db:footnote>
+    </db:para>
+    <db:para>The MS C++ compiler for .NET on the other hand, can produce both normal and managed code. To write a C++ class that can be compiled into managed code, the developer must flag the class as managed using the <db:code>__gc</db:code> keyword, and restrict the code to only use the subset of C++ known as "Managed Extensions for C++", or MC++ for short. The advantage is that MC++ code can freely call and use normal C++ functions and classes. And it also works the other way around: normal C++ code can call managed functions and use managed classes (e.g. the entire .NET framework class library), including managed functions and classes implemented in C# or VB.NET. This feature of mixing managed and normal C++ code immensely eases the interoperability with .NET, and is by Microsoft referred to as the "It Just Works" (IJW) feature.</db:para>
+    <db:para>This document demonstrates two different ways of integrating normal C++ code (that uses Qt) with managed .NET code. First, the manual way is presented, which includes using a thin MC++ wrapper class around the normal Qt/C++ class. Then, the automated way is presented, which utilizes the <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> framework as a generic bridge. The advantage of the first method is that it gives the application developer full control, while the second method requires less coding and relieves the developer of dealing with the conversion between managed and normal data objects.</db:para>
+    <db:para>The impatient reader, who right away wants to see a <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> and a custom Qt widget (<db:link xlink:href="activeqt-activeqt-multiple-example.html" xrefstyle="page" annotations="activeqt/multiple">QAxWidget2</db:link>) run in a .NET GUI application is referred to the example directory of <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link>. It contains the result of this walkthrough using both C# and VB.NET, created with Visual Studio .NET (not 2003). Load <db:code>examples/dotnet/walkthrough/csharp.csproj</db:code>, <db:code>examples/dotnet/walkthrough/vb.vbproj</db:code> or <db:code>examples/dotnet/wrapper/wrapper.sln</db:code> into the IDE and run the solution.</db:para>
+    <db:para>
+      <db:emphasis role="bold">Remark:</db:emphasis> You will notice that in the generated code the following line is commented out:</db:para>
+    <db:programlisting>
+      ' VB is case insensitive, but our C++ controls are not.
+      ' Me.resetButton.enabled = True
+    </db:programlisting>
+    <db:para>This line is regenerated without comment whenever you change the dialog, in which case you have to comment it out again to be able to run the project. This is a bug in the original version of Visual Studio.NET, and is fixed in the 2003 edition.</db:para>
+    <db:section xml:id="walkthrough-net-interop-with-mc-and-ijw">
+      <db:title>Walkthrough: .NET Interop with MC++ and IJW</db:title>
+      <db:para>Normal C++ classes and functions can be used from managed .NET code by providing thin wrapper classes written in MC++. The wrapper class will take care of forwarding the calls to the normal C++ functions or methods, and converting parameter data as necessary. Since the wrapper class is a managed class, it can be used without further ado in any managed .NET application, whether written in C#, VB.NET, MC++ or other managed programming language.</db:para>
+      <db:programlisting>
+        class Worker : public QObject
+        {
+        Q_OBJECT
+        Q_PROPERTY(QString statusString READ statusString WRITE setStatusString)
+        public:
+        Worker();
+        
+        QString statusString() const;
+        
+        public slots:
+        void setStatusString(const QString &amp;string);
+        
+        signals:
+        void statusStringChanged(const QString &amp;string);
+        
+        private:
+        QString status;
+        };
+      </db:programlisting>
+      <db:para>The Qt class has nothing unusual for Qt users, and as even the Qt specialities like <db:code>Q_PROPERTY</db:code>, <db:code>slots</db:code> and <db:code>signals</db:code> are implemented with straight C++ they don't cause any trouble when compiling this class with any C++ compiler.</db:para>
+      <db:programlisting>
+        class Worker;
+        
+        // .NET class
+        public __gc class netWorker
+        {
+        public:
+        netWorker();
+        ~netWorker();
+        
+        __property String *get_StatusString();
+        __property void set_StatusString(String *string);
+        
+        __event void statusStringChanged(String *args);
+        
+        private:
+        Worker *workerObject;
+        };
+      </db:programlisting>
+      <db:para>The .NET wrapper class uses keywords that are part of MC++ to indicate that the class is managed/garbage collected (<db:code>__gc</db:code>), and that <db:code>StatusString</db:code> should be accessible as a property in languages that support this concept (<db:code>__property</db:code>). We also declare an event function <db:code>statusStringChanged(String*)</db:code> (<db:code>__event</db:code>), the equivalent of the respective signal in the Qt class.</db:para>
+      <db:para>Before we can start implementing the wrapper class we need a way to convert Qt's datatypes (and potentionally your own) into .NET datatypes, e.g. <db:code>QString</db:code> objects need to be converted into objects of type <db:code>String*</db:code>.</db:para>
+      <db:para>When operating on managed objects in normal C++ code, a little extra care must be taken because of the CLR's garbage collection. A normal pointer variable should not <db:footnote>
+        <db:para>Indeed, the compiler will in many cases disallow it.</db:para>
+      </db:footnote>
+      </db:para> be used to refer to a managed object. The reason is that the garbage collection can kick in at any time and move the object to another place on the heap, leaving you with an invalid pointer.<db:para>However, two methods are provided that solves this problem easily. The first is to use a <db:emphasis>pinned</db:emphasis> pointer, i.e. declare the pointer variable with the <db:code>__pin</db:code> keyword. This guarantees that the object pointed to will not be moved by the garbage collector. It is recommended that this method not be used to keep a references to managed objects for a long time, since it will decrease the efficiency of the garbage collector. The second way is to use the <db:code>gcroot</db:code> smartpointer template type. This lets you create safe pointers to managed objects. E.g. a variable of type <db:code>gcroot&lt;String&gt;</db:code> will always point to the String object, even if it has been moved by the garbage collector, and it can be used just like a normal pointer.</db:para>
+      <db:programlisting>
+        #include &lt;QString&gt;
+        
+        #using &lt;mscorlib.dll&gt;
+        #include &lt;vcclr.h&gt;
+        
+        using namespace System;
+        
+        String *QStringToString(const QString &amp;qstring)
+        {
+        return new String((const wchar_t *)qstring.utf16());
+        }
+      </db:programlisting>
+      <db:programlisting>
+        
+        QString StringToQString(String *string)
+        {
+        const wchar_t __pin *chars = PtrToStringChars(string);
+        return QString::fromWCharArray(chars);
+        }
+      </db:programlisting>
+      <db:para>The convertor functions can then be used in the wrapper class implementation to call the functions in the native C++ class.</db:para>
+      <db:programlisting>
+        #include "networker.h"
+        #include "worker.h"
+        #include "tools.h"
+        
+        netWorker::netWorker()
+        {
+        workerObject = new Worker();
+        }
+      </db:programlisting>
+      <db:programlisting>
+        
+        netWorker::~netWorker()
+        {
+        delete workerObject;
+        }
+      </db:programlisting>
+      <db:para>The constructor and destructor simply create and destroy the Qt object wrapped using the C++ operators <db:code>new</db:code> and <db:code>delete</db:code>.</db:para>
+      <db:programlisting>
+        
+        String *netWorker::get_StatusString()
+        {
+        return QStringToString(workerObject-&gt;statusString());
+        }
+      </db:programlisting>
+      <db:para>The netWorker class delegates calls from the .NET code to the native code. Although the transition between those two worlds implies a small performance hit for each function call, and for the type conversion, this should be negligible since we are anyway going to run within the CLR.</db:para>
+      <db:programlisting>
+        
+        void netWorker::set_StatusString(String *string)
+        {
+        workerObject-&gt;setStatusString(StringToQString(string));
+        __raise statusStringChanged(string);
+        }
+      </db:programlisting>
+      <db:para>The property setter calls the native Qt class before firing the event using the <db:code>__raise</db:code> keyword.</db:para>
+      <db:para>This wrapper class can now be used in .NET code, e.g. using C++, C#, Visual Basic or any other programming language available for .NET.</db:para>
+      <db:programlisting>
+        using System;
+        
+        namespace WrapperApp
+        {
+        class App
+        {
+        void Run()
+        {
+        netWorker worker = new netWorker();
+        
+        worker.statusStringChanged += new netWorker.__Delegate_statusStringChanged(onStatusStringChanged);
+        
+        System.Console.Out.WriteLine(worker.StatusString);
+        
+        System.Console.Out.WriteLine("Working cycle begins...");
+        worker.StatusString = "Working";
+        worker.StatusString = "Lunch Break";
+        worker.StatusString = "Working";
+        worker.StatusString = "Idle";
+        System.Console.Out.WriteLine("Working cycle ends...");
+        }
+        
+        private void onStatusStringChanged(string str)
+        {
+        System.Console.Out.WriteLine(str);
+        }
+        
+        [STAThread]
+        
+        static void Main(string[] args)
+        {
+        App app = new App();
+        app.Run();
+        }
+        
+        }
+        
+        }
+      </db:programlisting>
+      <db:section xml:id="walkthrough-net-com-interop-with-activeqt">
+        <db:title>Walkthrough: .NET/COM Interop with ActiveQt</db:title>
+        <db:para>Fortunately .NET provides a generic wrapper for COM objects, the <db:emphasis>Runtime Callable Wrapper</db:emphasis> (RCW). This RCW is a proxy for the COM object and is generated by the CLR when a .NET Framework client activates a COM object. This provides a generic way to reuse COM objects in a .NET Framework project.</db:para>
+        <db:para>Making a <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> class into a COM object is easily achieved with <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> and demonstrated in the <db:link xlink:href="qaxserver-module.html" xrefstyle="module" annotations="QAxServer">QAxServer</db:link> examples (e.g., the <db:link xlink:href="activeqt-activeqt-simple-example.html" xrefstyle="page" annotations="activeqt/simple">Simple</db:link> example). The walkthrough will use the Qt classes implemented in those examples, so the first thing to do is to make sure that those examples have been built correctly, e.g. by opening the <db:link xlink:href="qaxserver-demo-multiple.html" xrefstyle="page" annotations="qaxserver-demo-multiple.html">demonstration pages</db:link> in Internet Explorer to verify that the controls are functional.</db:para>
+      </db:section>
+      <db:section xml:id="starting-a-project">
+        <db:title>Starting a Project</db:title>
+        <db:para>Start Visual Studio.NET, and create a new C# project for writing a Windows application. This will present you with an empty form in Visual Studio's dialog editor. You should see the toolbox, which presents you with a number of available controls and objects in different categories. If you right-click on the toolbox it allows you to add new tabs. We will add the tab "Qt".</db:para>
+      </db:section>
+      <db:section xml:id="importing-qt-widgets">
+        <db:title>Importing Qt Widgets</db:title>
+        <db:para>The category only has a pointer tool by default, and we have to add the Qt objects we want to use in our form. Right-click on the empty space, and select "Customize". This opens a dialog that has two tabs, "COM Components" and ".NET Framework Components". We used <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> to wrap <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code>s into COM objects, so we select the "COM Components" page, and look for the classes we want to use, e.g. "<db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code>" and "QAxWidget2".</db:para>
+        <db:para>When we select those widgets and close the dialog the two widgets will now be available from the toolbox as grey squares with their name next to it <db:footnote>
+          <db:para>Icons could be added by modifying the way the controls register themselves.</db:para>
+        </db:footnote>.</db:para>
+        <db:section xml:id="using-qt-widgets">
+          <db:title>Using Qt Widgets</db:title>
+          <db:para>We can now add an instance of QAxWidget2 and a <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> to the form. Visual Studio will automatically generate the RCW for the object servers. The QAxWidget2 instance takes most of the upper part of the form, with the <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> in the lower right corner.</db:para>
+          <db:para>In the property editor of Visual Studio we can modify the properties of our controls - <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> exposes the <db:code>QWidget</db:code> API and has many properties, while QAxWidget2 has only the Visual Studio standard properties in addition to its own property "lineWidth" in the "Miscellaneous" category. The objects are named "axQPushButton1" and "axQAxWidget21", and since especially the last name is a bit confusing we rename the objects to "resetButton" and "circleWidget".</db:para>
+          <db:para>We can also change the Qt properties, e.g. set the "text" property of the <db:code>resetButton</db:code> to "Reset", and the "lineWidth" property of the <db:code>circleWidget</db:code> to 5. We can also put those objects into the layout system that Visual Studio's dialog editor provides, e.g. by setting the anchors of the <db:code>circleWidget</db:code> to "Left, Top, Right, Bottom", and the anchors of the <db:code>resetButton</db:code> to "Bottom, Right".</db:para>
+          <db:para>Now we can compile and start the project, which will open a user interface with our two Qt widgets. If we can resize the dialog, the widgets will resize appropriately.</db:para>
+        </db:section>
+        <db:section xml:id="handling-qt-signals">
+          <db:title>Handling Qt Signals</db:title>
+          <db:para>We will now implement event handlers for the widgets. Select the <db:code>circleWidget</db:code> and select the "Events" page in the property editor. The widget exposes events because the QAxWidget2 class has the "StockEvents" attribute set in its class definition. We implement the event handler <db:code>circleClicked</db:code> for the <db:code>ClickEvent</db:code> to increase the line width by one for every click:</db:para>
+          <db:programlisting>
+            private void circleClicked(object sender, System.EventArgs e)
+            {
+            this.circleWidget.lineWidth++;
+            }
+          </db:programlisting>
+          <db:para>In general we can implement a default event handler by double clicking on the widget in the form, but the default events for our widgets are right now not defined.</db:para>
+          <db:para>We will also implement an event handler for the <db:code>clicked</db:code> signal emitted by <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code>. Add the event handler <db:code>resetLineWidth</db:code> to the <db:code>clicked</db:code> event, and implement the generated function:</db:para>
+          <db:programlisting>
+            private void resetLineWidth(object sender, System.EventArgs e)
+            {
+            this.circleWidget.lineWidth = 1;
+            this.resetButton.setFocus();
+            }	
+          </db:programlisting>
+          <db:para>We reset the property to 1, and also call the <db:code>setFocus()</db:code> slot to simulate the user style on Windows, where a button grabs focus when you click it (so that you can click it again with the spacebar).</db:para>
+          <db:para>If we now compile and run the project we can click on the circle widget to increase its line width, and press the reset button to set the line width back to 1.</db:para>
+        </db:section>
+        <db:section xml:id="summary">
+          <db:title>Summary</db:title>
+          <db:para>Using <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> as a universal interoperability bridge between the .NET world and the native world of Qt is very easy, and makes it often unnecessary to implement a lot of handwritten wrapper classes. Instead, the <db:code><db:link xlink:href="qaxfactory.html" xrefstyle="class" annotations="QAxFactory">QAxFactory</db:link></db:code> implementation in the otherwise completely cross-platform Qt project provides the glue that .NET needs to to generate the RCW.</db:para>
+          <db:para>If this is not sufficient we can implement our own wrapper classes thanks to the C++ extensions provided by Microsoft.</db:para>
+        </db:section>
+        <db:section xml:id="limitations">
+          <db:title>Limitations</db:title>
+          <db:para>All the limitations when using <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> are implied when using this technique to interoperate with .NET, e.g. the datatypes we can use in the APIs can only be those supported by <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> and COM. However, since this includes subclasses of <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> and <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code> we can wrap any of our datatypes into a <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> subclass to make its API available to .NET. This has the positive side effect that the same API is automatically available when using <db:link xlink:href="qtscript-index.html" xrefstyle="page" annotations="Qt Script">Qt Script</db:link> to automate Qt applications and to COM clients in general.</db:para>
+          <db:para>When using the "IJW" method, in principle the only limitation is the time required to write the wrapper classes and data type conversion functions.</db:para>
+        </db:section>
+        <db:section xml:id="performance-considerations">
+          <db:title>Performance Considerations</db:title>
+          <db:para>Every call from CLR bytecode to native code implies a small performance hit, and necessary type conversions introduce an additional delay with every layer that exists between the two frameworks. Consequently every approach to mix .NET and native code should try to minimize the communication necessary between the different worlds.</db:para>
+          <db:para>As <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> introduces three layers at once - the RCW, COM and finally <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> itself - the performance penalty when using the generic Qt/<db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link>/COM/RCW/.NET bridge is larger than when using a hand-crafted IJW-wrapper class. The execution speed however is still sufficient for connecting to and modifying interactive elements in a user interface, and as soon as the benefit of using Qt and C++ to implement and compile performance critical algorithms into native code kicks in, <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> becomes a valid choice for making even non-visual parts of your application accessible to .NET.</db:para>
+        </db:section>
+      </db:section>
+    </db:section>
+  </db:section>
+</db:article>
