@@ -498,7 +498,7 @@
     </xsl:if>
   </xsl:template>
   
-  <!-- Deal with modules. -->
+  <!-- Deal with modules and QML modules. -->
   <xsl:template mode="content" match="module">
     <xsl:apply-templates mode="content_generic" select="description/generatedlist"/>
     
@@ -506,6 +506,16 @@
       <db:title>Detailed Description</db:title>
       
       <xsl:apply-templates mode="content_generic" select="description/generatedlist/following-sibling::node()"/>
+    </db:section>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="qmlmodule">
+    <xsl:apply-templates mode="content_generic" select="description/generatedlist"/>
+    
+    <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      
+      <xsl:apply-templates mode="content_generic" select="description/brief/following-sibling::node()"/>
     </db:section>
   </xsl:template>
   
@@ -621,7 +631,7 @@
         
         <!-- Then, untangle things: output the first paragraph (the real one), then the rest. -->
         <xsl:variable name="firstIndexOutsidePara" as="xs:integer">
-          <xsl:variable name="isPara" select="for $i in 0 to count($content) return boolean($content[$i]/db:para)"/>
+          <xsl:variable name="isPara" select="for $i in 1 to count($content) return boolean($content[$i]/db:para) or name($content[$i]) = 'db:para'"/>
           <xsl:value-of select="index-of($isPara, true())[1]"/>
         </xsl:variable>
         
@@ -684,6 +694,7 @@
     <xsl:variable name="filePathTentative17" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 4], '/'), '/examples/', $fileToQuote)"/>
     <xsl:variable name="filePathTentative18" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 1], '/'), '/', $fileToQuote)"/>
     <xsl:variable name="filePathTentative19" select="concat(string-join($sourceFilePathSplit[position() &lt; last()], '/'), '/doc/snippets/', $fileToQuote)"/>
+    <xsl:variable name="filePathTentative20" select="concat(string-join($sourceFilePathSplit[position() &lt; last() - 3], '/'), '/examples/quick/', $fileToQuote)"/>
     
     <xsl:choose>
       <xsl:when test="tc:file-exists($filePathTentative1)">
@@ -742,6 +753,9 @@
       </xsl:when>
       <xsl:when test="tc:file-exists($filePathTentative19)">
         <xsl:value-of select="$filePathTentative19"/>
+      </xsl:when>
+      <xsl:when test="tc:file-exists($filePathTentative20)">
+        <xsl:value-of select="$filePathTentative20"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>WARNING: Unable to find the correct path for <xsl:value-of select="$fileToQuote"/></xsl:message>
@@ -1247,6 +1261,25 @@
           </db:tbody>
         </db:informaltable>
       </xsl:when>
+      <!-- In other cases, the markup is really inconsistent, and -->
+      <!-- actual content is hidden within a table (not closed properly) -->
+      <xsl:when test="count(child::node()) != xs:integer(count(child::header union child::row union child::item union child::heading))">
+        <xsl:variable name="children" select="child::node()" as="node()*"/>
+        <xsl:variable name="indexFirstOutsideTable" as="xs:integer">
+          <xsl:variable name="isTable" select="for $i in 1 to count($children) return $children[$i]/header or $children[$i]/row or $children[$i]/item or $children[$i]/heading"/>
+          <xsl:value-of select="index-of($isTable, false())[1]"/>
+        </xsl:variable>
+        
+        <db:informaltable>
+          <xsl:for-each select="$children[position() &lt; $indexFirstOutsideTable]">
+            <xsl:apply-templates mode="content_generic_table"/>
+          </xsl:for-each>
+        </db:informaltable>
+        <xsl:for-each select="$children[position() >= $indexFirstOutsideTable]">
+          <xsl:apply-templates mode="content_generic" select="."/>
+        </xsl:for-each>
+      </xsl:when>
+      <!-- Finally, sometimes, things are just OK. -->
       <xsl:otherwise>
         <db:informaltable>
           <xsl:apply-templates mode="content_generic_table"/>

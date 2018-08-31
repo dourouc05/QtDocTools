@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.6\lib\idea_rt.jar=57483:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.6\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.6\lib\idea_rt.jar=53993:C:\Program Files\JetBrains\IntelliJ IDEA 2018.1.6\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -47,12 +47,12 @@
 --> Found module: qtserialport; qdocconf: C:\Qt\5.11.1\Src\qtserialport\src\serialport\doc\qtserialport.qdocconf
 --> Found module: qtspeech; qdocconf: C:\Qt\5.11.1\Src\qtspeech\src\doc\qtspeech.qdocconf
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
---> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
---> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
---> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
---> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
 --> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
+--> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
+--> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
+--> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
+--> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
 --> Found module: qtwebchannel; qdocconf: C:\Qt\5.11.1\Src\qtwebchannel\src\webchannel\doc\qtwebchannel.qdocconf
@@ -63,8 +63,8 @@
 --> Found module: qtx11extras; qdocconf: C:\Qt\5.11.1\Src\qtx11extras\src\x11extras\doc\qtx11extras.qdocconf
 --> Found module: qtxmlpatterns; qdocconf: C:\Qt\5.11.1\Src\qtxmlpatterns\src\xmlpatterns\doc\qtxmlpatterns.qdocconf
 --> Found submodule: qtbase / qlalr; qdocconf: C:\Qt\5.11.1\Src\qtbase\src\tools\qlalr\doc\qlalr.qdocconf
---> Found submodule: qtbase / qmake; qdocconf: C:\Qt\5.11.1\Src\qtbase\qmake\doc\qmake.qdocconf
 Skipped module: qtbase / qdoc
+--> Found submodule: qtbase / qmake; qdocconf: C:\Qt\5.11.1\Src\qtbase\qmake\doc\qmake.qdocconf
 Skipped module: qtdoc / qmake (old Qt 5 only)
 ::> 65 modules found
 ++> Module qdocconf rewritten: qt3d
@@ -216,9 +216,6 @@ C:\Qt\Doc\webxml\activeqt-complexpingpong-example.webxml
 C:\Qt\Doc\webxml\activeqt-container.webxml
 C:\Qt\Doc\webxml\activeqt-dbus-dbus-chat-example.webxml
 C:\Qt\Doc\webxml\activeqt-dotnet.webxml
-WARNING: Unhandled content with tag footnote
-WARNING: Unhandled content with tag footnote
-WARNING: Unhandled content with tag footnote
 C:\Qt\Doc\webxml\activeqt-dumpcpp.webxml
 C:\Qt\Doc\webxml\activeqt-dumpdoc.webxml
 C:\Qt\Doc\webxml\activeqt-embedded-digiflip-example.webxml
@@ -230,12 +227,6 @@ C:\Qt\Doc\webxml\activeqt-embedded-styleexample-example.webxml
 C:\Qt\Doc\webxml\activeqt-idc.webxml
 C:\Qt\Doc\webxml\activeqt-index.webxml
 C:\Qt\Doc\webxml\activeqt-server.webxml
-WARNING: Unhandled content with tag footnote
-WARNING: Unhandled content with tag footnote
-WARNING: Unhandled content with tag para
-WARNING: Unhandled content with tag table
-WARNING: Unhandled content with tag section
-WARNING: Unhandled content with tag section
 C:\Qt\Doc\webxml\activeqt-testcon.webxml
 C:\Qt\Doc\webxml\activeqt-tools-customtypesending-example.webxml
 C:\Qt\Doc\webxml\activeqt-tools.webxml
@@ -1483,18 +1474,12 @@ C:\Qt\Doc\webxml\qt-embedded-fonts.webxml
 C:\Qt\Doc\webxml\qt-embedded-kmap2qmap.webxml
 C:\Qt\Doc\webxml\qt-embedded-makeqpf.webxml
 C:\Qt\Doc\webxml\qt-gui-concepts.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt-labs-calendar-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt-labs-folderlistmodel-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt-labs-handlers-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt-labs-platform-qmlmodule.webxml
 C:\Qt\Doc\webxml\qt-labs-settings-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt-labs-sharedimage-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt.webxml
 C:\Qt\Doc\webxml\qt3d-advancedcustommaterial-advancedcustommaterial-pro.webxml
 C:\Qt\Doc\webxml\qt3d-advancedcustommaterial-example.webxml
@@ -1511,7 +1496,6 @@ C:\Qt\Doc\webxml\qt3d-advancedcustommaterial-water-qml.webxml
 C:\Qt\Doc\webxml\qt3d-advancedcustommaterial-watermaterial-qml.webxml
 C:\Qt\Doc\webxml\qt3d-animation-qmlmodule.webxml
 C:\Qt\Doc\webxml\qt3d-audio-visualizer-qml-audio-visualizer-qml-pro.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-audio-visualizer-qml-audio-visualizer-qml-qrc.webxml
 C:\Qt\Doc\webxml\qt3d-audio-visualizer-qml-barentity-qml.webxml
 C:\Qt\Doc\webxml\qt3d-audio-visualizer-qml-example.webxml
@@ -1528,7 +1512,6 @@ C:\Qt\Doc\webxml\qt3d-basicshapes-cpp-scenemodifier-h.webxml
 C:\Qt\Doc\webxml\qt3d-bearermonitor-example.webxml
 C:\Qt\Doc\webxml\qt3d-complexpingpong-example.webxml
 C:\Qt\Doc\webxml\qt3d-core-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-cpp.webxml
 C:\Qt\Doc\webxml\qt3d-dbus-dbus-chat-example.webxml
 C:\Qt\Doc\webxml\qt3d-embedded-digiflip-example.webxml
@@ -1539,11 +1522,8 @@ C:\Qt\Doc\webxml\qt3d-embedded-raycasting-example.webxml
 C:\Qt\Doc\webxml\qt3d-embedded-styleexample-example.webxml
 C:\Qt\Doc\webxml\qt3d-examples.webxml
 C:\Qt\Doc\webxml\qt3d-extras-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-index.webxml
 C:\Qt\Doc\webxml\qt3d-input-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-logic-qmlmodule.webxml
 C:\Qt\Doc\webxml\qt3d-multiviewport-example.webxml
 C:\Qt\Doc\webxml\qt3d-multiviewport-main-cpp.webxml
@@ -1598,7 +1578,6 @@ C:\Qt\Doc\webxml\qt3d-planets-qml-solarsystem-qml.webxml
 C:\Qt\Doc\webxml\qt3d-planets-qml-styledslider-qml.webxml
 C:\Qt\Doc\webxml\qt3d-planets-qml-suneffect-qml.webxml
 C:\Qt\Doc\webxml\qt3d-qml.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-render-qmlmodule.webxml
 C:\Qt\Doc\webxml\qt3d-scene2d-example.webxml
 WARNING: Quote from file with no content.
@@ -1607,7 +1586,6 @@ C:\Qt\Doc\webxml\qt3d-scene2d-logocontrols-qml.webxml
 C:\Qt\Doc\webxml\qt3d-scene2d-main-cpp.webxml
 C:\Qt\Doc\webxml\qt3d-scene2d-main-qml.webxml
 C:\Qt\Doc\webxml\qt3d-scene2d-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-scene2d-scene2d-pro.webxml
 C:\Qt\Doc\webxml\qt3d-scene2d-scene2d-qrc.webxml
 C:\Qt\Doc\webxml\qt3d-scene3d-animatedentity-qml.webxml
@@ -1615,7 +1593,6 @@ C:\Qt\Doc\webxml\qt3d-scene3d-example.webxml
 C:\Qt\Doc\webxml\qt3d-scene3d-main-cpp.webxml
 C:\Qt\Doc\webxml\qt3d-scene3d-main-qml.webxml
 C:\Qt\Doc\webxml\qt3d-scene3d-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qt3d-scene3d-scene3d-pro.webxml
 C:\Qt\Doc\webxml\qt3d-scene3d-scene3d-qrc.webxml
 C:\Qt\Doc\webxml\qt3d-shadow-map-qml-adseffect-qml.webxml
@@ -2039,7 +2016,6 @@ C:\Qt\Doc\webxml\qtassistant-simpletextviewer-simpletextviewer-pro.webxml
 C:\Qt\Doc\webxml\qtassistant-simpletextviewer-textedit-cpp.webxml
 C:\Qt\Doc\webxml\qtassistant-simpletextviewer-textedit-h.webxml
 C:\Qt\Doc\webxml\qtaudioengine-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtbluetooth-bearermonitor-example.webxml
 C:\Qt\Doc\webxml\qtbluetooth-btchat-btchat-pro.webxml
 C:\Qt\Doc\webxml\qtbluetooth-btchat-chat-cpp.webxml
@@ -2170,7 +2146,6 @@ C:\Qt\Doc\webxml\qtbluetooth-pingpong-pingpong-h.webxml
 C:\Qt\Doc\webxml\qtbluetooth-pingpong-pingpong-pro.webxml
 C:\Qt\Doc\webxml\qtbluetooth-pingpong-resource-qrc.webxml
 C:\Qt\Doc\webxml\qtbluetooth-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtbluetooth-scanner-button-qml.webxml
 C:\Qt\Doc\webxml\qtbluetooth-scanner-example.webxml
 C:\Qt\Doc\webxml\qtbluetooth-scanner-qmlscanner-cpp.webxml
@@ -2217,7 +2192,6 @@ C:\Qt\Doc\webxml\qtcanvas3d-jsonmodels-qml-qrc.webxml
 C:\Qt\Doc\webxml\qtcanvas3d-logging.webxml
 C:\Qt\Doc\webxml\qtcanvas3d-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtcanvas3d-quickitemtexture-example.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtcanvas3d-quickitemtexture-main-cpp.webxml
 C:\Qt\Doc\webxml\qtcanvas3d-quickitemtexture-qml-quickitemtexture-main-qml.webxml
 C:\Qt\Doc\webxml\qtcanvas3d-quickitemtexture-qml-quickitemtexture-quickitemtexture-js.webxml
@@ -2468,7 +2442,6 @@ C:\Qt\Doc\webxml\qtcharts-qmlf1legends-qml-qmlf1legends-speedsxml-qml.webxml
 C:\Qt\Doc\webxml\qtcharts-qmlf1legends-qmlf1legends-pro.webxml
 C:\Qt\Doc\webxml\qtcharts-qmlf1legends-resources-qrc.webxml
 C:\Qt\Doc\webxml\qtcharts-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtcharts-qmloscilloscope-datasource-cpp.webxml
 C:\Qt\Doc\webxml\qtcharts-qmloscilloscope-datasource-h.webxml
 C:\Qt\Doc\webxml\qtcharts-qmloscilloscope-example.webxml
@@ -2757,7 +2730,6 @@ C:\Qt\Doc\webxml\qtdatavisualization-qmllegend-qml-qmllegend-main-qml.webxml
 C:\Qt\Doc\webxml\qtdatavisualization-qmllegend-qml-qmllegend-newbutton-qml.webxml
 C:\Qt\Doc\webxml\qtdatavisualization-qmllegend-qmllegend-pro.webxml
 C:\Qt\Doc\webxml\qtdatavisualization-qmllegend-qmllegend-qrc.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtdatavisualization-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtdatavisualization-qmlmultigraph-example.webxml
 C:\Qt\Doc\webxml\qtdatavisualization-qmlmultigraph-main-cpp.webxml
@@ -3065,7 +3037,6 @@ C:\Qt\Doc\webxml\qtgamepad-mouseitem-main-cpp.webxml
 C:\Qt\Doc\webxml\qtgamepad-mouseitem-mouseitem-pro.webxml
 C:\Qt\Doc\webxml\qtgamepad-mouseitem-qml-main-qml.webxml
 C:\Qt\Doc\webxml\qtgamepad-mouseitem-qml-qrc.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtgamepad-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtgamepad-quickgamepad-example.webxml
 C:\Qt\Doc\webxml\qtgamepad-quickgamepad-main-cpp.webxml
@@ -3100,7 +3071,6 @@ C:\Qt\Doc\webxml\qtgraphicaleffects-embedded-raycasting-example.webxml
 C:\Qt\Doc\webxml\qtgraphicaleffects-embedded-styleexample-example.webxml
 C:\Qt\Doc\webxml\qtgraphicaleffects-index.webxml
 C:\Qt\Doc\webxml\qtgraphicaleffects-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtgraphicaleffects-tools-customtypesending-example.webxml
 C:\Qt\Doc\webxml\qtgraphicaleffects-touch-fingerpaint-example.webxml
 C:\Qt\Doc\webxml\qtgraphicaleffects-touch-pinchzoom-example.webxml
@@ -3383,7 +3353,6 @@ C:\Qt\Doc\webxml\qtlocation-planespotter-planespotter-qml.webxml
 C:\Qt\Doc\webxml\qtlocation-planespotter-qml-qrc.webxml
 C:\Qt\Doc\webxml\qtlocation-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtlocation-tools-customtypesending-example.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtlocation-touch-fingerpaint-example.webxml
 C:\Qt\Doc\webxml\qtlocation-touch-pinchzoom-example.webxml
 C:\Qt\Doc\webxml\qtlocation-xml-htmlinfo-example.webxml
@@ -3681,7 +3650,6 @@ C:\Qt\Doc\webxml\qtmultimedia-multimediawidgets-videowidget-videoplayer-cpp.webx
 C:\Qt\Doc\webxml\qtmultimedia-multimediawidgets-videowidget-videoplayer-h.webxml
 C:\Qt\Doc\webxml\qtmultimedia-multimediawidgets-videowidget-videowidget-pro.webxml
 C:\Qt\Doc\webxml\qtmultimedia-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtmultimedia-tools-customtypesending-example.webxml
 C:\Qt\Doc\webxml\qtmultimedia-touch-fingerpaint-example.webxml
 C:\Qt\Doc\webxml\qtmultimedia-touch-pinchzoom-example.webxml
@@ -3922,7 +3890,6 @@ C:\Qt\Doc\webxml\qtnfc-poster-poster-qml.webxml
 C:\Qt\Doc\webxml\qtnfc-poster-poster-qrc.webxml
 C:\Qt\Doc\webxml\qtnfc-poster-qmlposter-cpp.webxml
 C:\Qt\Doc\webxml\qtnfc-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtnfc-tools-customtypesending-example.webxml
 C:\Qt\Doc\webxml\qtnfc-touch-fingerpaint-example.webxml
 C:\Qt\Doc\webxml\qtnfc-touch-pinchzoom-example.webxml
@@ -4049,7 +4016,6 @@ C:\Qt\Doc\webxml\qtpositioning-logfilepositionsource-logfilepositionsource-pro.w
 C:\Qt\Doc\webxml\qtpositioning-logfilepositionsource-main-cpp.webxml
 C:\Qt\Doc\webxml\qtpositioning-module.webxml
 C:\Qt\Doc\webxml\qtpositioning-plugins.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtpositioning-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtpositioning-satelliteinfo-example.webxml
 C:\Qt\Doc\webxml\qtpositioning-satelliteinfo-main-cpp.webxml
@@ -4106,7 +4072,6 @@ C:\Qt\Doc\webxml\qtpurchasing-googleplay.webxml
 C:\Qt\Doc\webxml\qtpurchasing-index.webxml
 C:\Qt\Doc\webxml\qtpurchasing-module.webxml
 C:\Qt\Doc\webxml\qtpurchasing-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtpurchasing-qthangman-example.webxml
 C:\Qt\Doc\webxml\qtpurchasing-qthangman-hangmangame-cpp.webxml
 C:\Qt\Doc\webxml\qtpurchasing-qthangman-hangmangame-h.webxml
@@ -4180,7 +4145,6 @@ C:\Qt\Doc\webxml\qtqml-javascript-imports.webxml
 C:\Qt\Doc\webxml\qtqml-javascript-qmlglobalobject.webxml
 C:\Qt\Doc\webxml\qtqml-javascript-resources.webxml
 C:\Qt\Doc\webxml\qtqml-javascript-topic.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtqml-models-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtqml-module.webxml
 C:\Qt\Doc\webxml\qtqml-modules-cppplugins.webxml
@@ -4205,7 +4169,6 @@ C:\Qt\Doc\webxml\qtqml-qmlextensionplugins-plugins-qml.webxml
 C:\Qt\Doc\webxml\qtqml-qmlextensionplugins-plugins-qmlproject.webxml
 C:\Qt\Doc\webxml\qtqml-qmlextensionplugins-qmlextensionplugins-pro.webxml
 C:\Qt\Doc\webxml\qtqml-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtqml-referenceexamples-adding-adding-pro.webxml
 C:\Qt\Doc\webxml\qtqml-referenceexamples-adding-adding-qrc.webxml
 C:\Qt\Doc\webxml\qtqml-referenceexamples-adding-example-qml.webxml
@@ -4306,7 +4269,6 @@ C:\Qt\Doc\webxml\qtqml-referenceexamples-valuesource-person-h.webxml
 C:\Qt\Doc\webxml\qtqml-referenceexamples-valuesource-valuesource-pro.webxml
 C:\Qt\Doc\webxml\qtqml-referenceexamples-valuesource-valuesource-qrc.webxml
 C:\Qt\Doc\webxml\qtqml-statemachine-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtqml-syntax-basics.webxml
 C:\Qt\Doc\webxml\qtqml-syntax-directoryimports.webxml
 C:\Qt\Doc\webxml\qtqml-syntax-imports.webxml
@@ -4425,11 +4387,8 @@ C:\Qt\Doc\webxml\qtquick-canvas-tiger-tiger-qml.webxml
 C:\Qt\Doc\webxml\qtquick-codesamples.webxml
 C:\Qt\Doc\webxml\qtquick-complexpingpong-example.webxml
 C:\Qt\Doc\webxml\qtquick-controls-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-controls-styles-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-controls2-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-convenience-topic.webxml
 C:\Qt\Doc\webxml\qtquick-cppextensionpoints.webxml
 C:\Qt\Doc\webxml\qtquick-customitems-dialcontrol-content-dial-qml.webxml
@@ -4600,7 +4559,6 @@ C:\Qt\Doc\webxml\qtquick-demos-tweetsearch-tweetsearch-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-deployment.webxml
 C:\Qt\Doc\webxml\qtquick-dialogs-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-draganddrop-draganddrop-pro.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-draganddrop-draganddrop-qml.webxml
 C:\Qt\Doc\webxml\qtquick-draganddrop-draganddrop-qmlproject.webxml
 C:\Qt\Doc\webxml\qtquick-draganddrop-draganddrop-qrc.webxml
@@ -4628,7 +4586,6 @@ C:\Qt\Doc\webxml\qtquick-externaldraganddrop-externaldraganddrop-qmlproject.webx
 C:\Qt\Doc\webxml\qtquick-externaldraganddrop-externaldraganddrop-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-externaldraganddrop-main-cpp.webxml
 C:\Qt\Doc\webxml\qtquick-extras-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-imageelements-animatedimage-qml.webxml
 C:\Qt\Doc\webxml\qtquick-imageelements-animatedsprite-qml.webxml
 C:\Qt\Doc\webxml\qtquick-imageelements-borderimage-qml.webxml
@@ -4680,7 +4637,6 @@ C:\Qt\Doc\webxml\qtquick-layouts-layouts-pro.webxml
 C:\Qt\Doc\webxml\qtquick-layouts-layouts-qml.webxml
 C:\Qt\Doc\webxml\qtquick-layouts-layouts-qmlproject.webxml
 C:\Qt\Doc\webxml\qtquick-layouts-layouts-qrc.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-layouts-main-cpp.webxml
 C:\Qt\Doc\webxml\qtquick-layouts-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-localstorage-example.webxml
@@ -4695,7 +4651,6 @@ C:\Qt\Doc\webxml\qtquick-localstorage-localstorage-mydelegate-qml.webxml
 C:\Qt\Doc\webxml\qtquick-localstorage-localstorage-mymodel-qml.webxml
 C:\Qt\Doc\webxml\qtquick-localstorage-localstorage-pro.webxml
 C:\Qt\Doc\webxml\qtquick-localstorage-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-models-abstractitemmodel-abstractitemmodel-pro.webxml
 C:\Qt\Doc\webxml\qtquick-models-abstractitemmodel-abstractitemmodel-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-models-abstractitemmodel-example.webxml
@@ -4780,7 +4735,6 @@ C:\Qt\Doc\webxml\qtquick-particles-imageparticle-imageparticle-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-particles-imageparticle-main-cpp.webxml
 C:\Qt\Doc\webxml\qtquick-particles-performance.webxml
 C:\Qt\Doc\webxml\qtquick-particles-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-particles-system-content-dynamiccomparison-qml.webxml
 C:\Qt\Doc\webxml\qtquick-particles-system-content-dynamicemitters-qml.webxml
 C:\Qt\Doc\webxml\qtquick-particles-system-content-multiplepainters-qml.webxml
@@ -4806,7 +4760,6 @@ C:\Qt\Doc\webxml\qtquick-positioning-anchors.webxml
 C:\Qt\Doc\webxml\qtquick-positioning-layouts.webxml
 C:\Qt\Doc\webxml\qtquick-positioning-righttoleft.webxml
 C:\Qt\Doc\webxml\qtquick-positioning-topic.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-qmlscene.webxml
 C:\Qt\Doc\webxml\qtquick-quick-accessibility-accessibility-qml.webxml
@@ -4938,14 +4891,12 @@ C:\Qt\Doc\webxml\qtquick-shapes-content-tiger-qml.webxml
 C:\Qt\Doc\webxml\qtquick-shapes-example.webxml
 C:\Qt\Doc\webxml\qtquick-shapes-main-cpp.webxml
 C:\Qt\Doc\webxml\qtquick-shapes-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-shapes-shapes-pro.webxml
 C:\Qt\Doc\webxml\qtquick-shapes-shapes-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-statesanimations-animations.webxml
 C:\Qt\Doc\webxml\qtquick-statesanimations-behaviors.webxml
 C:\Qt\Doc\webxml\qtquick-statesanimations-states.webxml
 C:\Qt\Doc\webxml\qtquick-statesanimations-topic.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-templates2-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-text-example.webxml
 C:\Qt\Doc\webxml\qtquick-text-fonts-availablefonts-qml.webxml
@@ -5077,11 +5028,8 @@ C:\Qt\Doc\webxml\qtquick-views-views-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-dragselection-qml.webxml
 C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-slideshow-qml.webxml
 C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-visualdatamodel-qmlproject.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-virtualkeyboard-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-virtualkeyboard-settings-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-virtualkeyboard-styles-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-visualcanvas-adaptations-d3d12.webxml
 C:\Qt\Doc\webxml\qtquick-visualcanvas-adaptations-openvg.webxml
@@ -5097,7 +5045,6 @@ C:\Qt\Doc\webxml\qtquick-window-allscreens-qml.webxml
 C:\Qt\Doc\webxml\qtquick-window-currentscreen-qml.webxml
 C:\Qt\Doc\webxml\qtquick-window-example.webxml
 C:\Qt\Doc\webxml\qtquick-window-main-cpp.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-window-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquick-window-resources-icon-svg.webxml
 C:\Qt\Doc\webxml\qtquick-window-splash-qml.webxml
@@ -5106,7 +5053,6 @@ C:\Qt\Doc\webxml\qtquick-window-window-qml.webxml
 C:\Qt\Doc\webxml\qtquick-window-window-qrc.webxml
 C:\Qt\Doc\webxml\qtquick-xml-htmlinfo-example.webxml
 C:\Qt\Doc\webxml\qtquick-xml-rsslisting-example.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtquick-xmllistmodel-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtquickcontrols-bearermonitor-example.webxml
 C:\Qt\Doc\webxml\qtquickcontrols-calendar-calendar-pro.webxml
@@ -5677,7 +5623,6 @@ C:\Qt\Doc\webxml\qtscxml-pinball-mainwindow-ui.webxml
 C:\Qt\Doc\webxml\qtscxml-pinball-pinball-pro.webxml
 C:\Qt\Doc\webxml\qtscxml-pinball-pinball-scxml.webxml
 C:\Qt\Doc\webxml\qtscxml-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtscxml-scxml-compliance.webxml
 C:\Qt\Doc\webxml\qtscxml-sudoku-example.webxml
 C:\Qt\Doc\webxml\qtscxml-sudoku-main-cpp.webxml
@@ -5767,7 +5712,6 @@ C:\Qt\Doc\webxml\qtsensors-maze-mouse-qml.webxml
 C:\Qt\Doc\webxml\qtsensors-module.webxml
 C:\Qt\Doc\webxml\qtsensors-porting.webxml
 C:\Qt\Doc\webxml\qtsensors-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtsensors-qmlqtsensors-components-applicationwindow-qml.webxml
 C:\Qt\Doc\webxml\qtsensors-qmlqtsensors-components-button-qml.webxml
 C:\Qt\Doc\webxml\qtsensors-qmlqtsensors-components-divider-qml.webxml
@@ -6098,7 +6042,6 @@ C:\Qt\Doc\webxml\qtsvg-xml-rsslisting-example.webxml
 C:\Qt\Doc\webxml\qttest-index.webxml
 C:\Qt\Doc\webxml\qttest-module.webxml
 C:\Qt\Doc\webxml\qttest-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qttestlib-bearermonitor-example.webxml
 C:\Qt\Doc\webxml\qttestlib-complexpingpong-example.webxml
 C:\Qt\Doc\webxml\qttestlib-dbus-dbus-chat-example.webxml
@@ -6178,7 +6121,6 @@ C:\Qt\Doc\webxml\qtvirtualkeyboard-user-guide.webxml
 C:\Qt\Doc\webxml\qtvirtualkeyboard-xml-htmlinfo-example.webxml
 C:\Qt\Doc\webxml\qtvirtualkeyboard-xml-rsslisting-example.webxml
 C:\Qt\Doc\webxml\qtwayland-compositor-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtwaylandcompositor-bearermonitor-example.webxml
 C:\Qt\Doc\webxml\qtwaylandcompositor-complexpingpong-example.webxml
 C:\Qt\Doc\webxml\qtwaylandcompositor-dbus-dbus-chat-example.webxml
@@ -6273,7 +6215,6 @@ C:\Qt\Doc\webxml\qtwebchannel-examples.webxml
 C:\Qt\Doc\webxml\qtwebchannel-index.webxml
 C:\Qt\Doc\webxml\qtwebchannel-javascript.webxml
 C:\Qt\Doc\webxml\qtwebchannel-module.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtwebchannel-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtwebchannel-standalone-core-h.webxml
 C:\Qt\Doc\webxml\qtwebchannel-standalone-dialog-cpp.webxml
@@ -6309,7 +6250,6 @@ C:\Qt\Doc\webxml\qtwebengine-overview.webxml
 C:\Qt\Doc\webxml\qtwebengine-platform-notes.webxml
 C:\Qt\Doc\webxml\qtwebengine-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtwebengine-tools-customtypesending-example.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtwebengine-touch-fingerpaint-example.webxml
 C:\Qt\Doc\webxml\qtwebengine-touch-pinchzoom-example.webxml
 C:\Qt\Doc\webxml\qtwebengine-webengine-customdialogs-customdialogs-pro.webxml
@@ -6506,7 +6446,6 @@ C:\Qt\Doc\webxml\qtwebsockets-embedded-styleexample-example.webxml
 C:\Qt\Doc\webxml\qtwebsockets-examples.webxml
 C:\Qt\Doc\webxml\qtwebsockets-index.webxml
 C:\Qt\Doc\webxml\qtwebsockets-module.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtwebsockets-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtwebsockets-qmlwebsocketclient-data-qrc.webxml
 C:\Qt\Doc\webxml\qtwebsockets-qmlwebsocketclient-example.webxml
@@ -6563,7 +6502,6 @@ C:\Qt\Doc\webxml\qtwebview-minibrowser-qml-qrc.webxml
 C:\Qt\Doc\webxml\qtwebview-module.webxml
 C:\Qt\Doc\webxml\qtwebview-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtwebview-tools-customtypesending-example.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtwebview-touch-fingerpaint-example.webxml
 C:\Qt\Doc\webxml\qtwebview-touch-pinchzoom-example.webxml
 C:\Qt\Doc\webxml\qtwebview-xml-htmlinfo-example.webxml
@@ -7579,7 +7517,6 @@ C:\Qt\Doc\webxml\qtwinextras-musicplayer-volumebutton-h.webxml
 C:\Qt\Doc\webxml\qtwinextras-overview.webxml
 C:\Qt\Doc\webxml\qtwinextras-qmlmodule.webxml
 C:\Qt\Doc\webxml\qtwinextras-quickplayer-example.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\qtwinextras-quickplayer-main-cpp.webxml
 C:\Qt\Doc\webxml\qtwinextras-quickplayer-qml-main-qml.webxml
 C:\Qt\Doc\webxml\qtwinextras-quickplayer-quickplayer-pro.webxml
@@ -7870,7 +7807,6 @@ C:\Qt\Doc\webxml\timers.webxml
 C:\Qt\Doc\webxml\topics-app-development.webxml
 C:\Qt\Doc\webxml\topics-core.webxml
 C:\Qt\Doc\webxml\topics-data-storage.webxml
-WARNING: Unhandled content with tag list
 C:\Qt\Doc\webxml\topics-graphics.webxml
 C:\Qt\Doc\webxml\topics-network-connectivity.webxml
 C:\Qt\Doc\webxml\topics-scripting.webxml
@@ -7881,7 +7817,6 @@ C:\Qt\Doc\webxml\trademarks.webxml
 C:\Qt\Doc\webxml\tutorials-addressbook.webxml
 C:\Qt\Doc\webxml\uic.webxml
 C:\Qt\Doc\webxml\uicomponents-qmlmodule.webxml
-WARNING: Unhandled content with tag qmlmodule
 C:\Qt\Doc\webxml\unicode.webxml
 C:\Qt\Doc\webxml\unix-signals.webxml
 C:\Qt\Doc\webxml\usingadaptors.webxml

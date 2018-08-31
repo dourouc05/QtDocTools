@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Qt Audio Engine QML Types</db:title>
+    <db:abstract>
+      <db:para>Provides QML types for 3D positional audio playback and content management</db:para>
+    </db:abstract>
+  </db:info>
+  <db:section xml:id="details">
+    <db:title>Detailed Description</db:title>
+    <db:para>Qt Audio Engine is part of the <db:link xlink:href="qtmultimedia-index.html" xrefstyle="page" annotations="Qt Multimedia">Qt Multimedia</db:link> module. Qt Audio Engine provides types for 3D positional audio playback and content management.</db:para>
+    <db:para>The QML types can be imported into your application using the following import statement in your .qml file:</db:para>
+    <db:programlisting language="other">import QtAudioEngine 1.1</db:programlisting>
+    <db:section xml:id="qt-audio-engine-features">
+      <db:title>Qt Audio Engine Features</db:title>
+      <db:para>Qt Audio Engine enables developers to organize wave files into discrete <db:link xlink:href="qml-qtaudioengine-sound.html" xrefstyle="" annotations="Sound">Sound</db:link> with different <db:link xlink:href="qml-qtaudioengine-playvariation.html" xrefstyle="" annotations="PlayVariation">play variations</db:link>, group sound controls by <db:link xlink:href="qml-qtaudioengine-audiocategory.html" xrefstyle="" annotations="AudioCategory">AudioCategory</db:link> categories and define <db:link xlink:href="qml-qtaudioengine-attenuationmodellinear.html" xrefstyle="" annotations="AttenuationModelLinear">attenuation models</db:link> and various 3D audio settings all in one place. Playback of <db:link xlink:href="qml-qtaudioengine-soundinstance.html" xrefstyle="" annotations="SoundInstance">sound instances</db:link> can be conveniently activated by in-app events and managed by <db:link xlink:href="qtaudioengine-qmlmodule.html" xrefstyle="" annotations="QtAudioEngine">QtAudioEngine</db:link> or controlled by explicitly defining <db:link xlink:href="qml-qtaudioengine-soundinstance.html" xrefstyle="" annotations="SoundInstance">SoundInstance</db:link> for easier QML bindings.</db:para>
+    </db:section>
+    <db:section xml:id="examples">
+      <db:title>Examples</db:title>
+      <db:itemizedlist>
+        <db:listitem>
+          <db:para>
+            <db:link xlink:href="qtmultimedia-multimedia-audioengine-example.html" xrefstyle="page" annotations="AudioEngine Example">Audio Engine</db:link>
+          </db:para>
+        </db:listitem>
+      </db:itemizedlist>
+    </db:section>
+    <db:section xml:id="qml-types">
+      <db:title>QML types</db:title>
+    </db:section>
+  </db:section>
+</db:article>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>Qt Quick Local Storage QML Types</db:title>
+    <db:abstract>
+      <db:para>Provides a JavaScript object singleton type for accessing a local SQLite database</db:para>
+    </db:abstract>
+  </db:info>
+  <db:section xml:id="details">
+    <db:title>Detailed Description</db:title>
+    <db:para>This is a singleton type for reading and writing to SQLite databases.</db:para>
+    <db:section xml:id="methods">
+      <db:title>Methods</db:title>
+      <db:itemizedlist>
+        <db:listitem>
+          <db:para>object <db:emphasis role="bold"><db:link xlink:href="qtquick-localstorage-qmlmodule.html#opendatabasesync" xrefstyle="" annotations="#openDatabaseSync">openDatabaseSync</db:link></db:emphasis>(string name, string version, string description, int estimated_size, jsobject callback(db))</db:para>
+        </db:listitem>
+      </db:itemizedlist>
+    </db:section>
+    <db:section xml:id="detailed-description">
+      <db:title>Detailed Description</db:title>
+      <db:para>To use the types in this module, import the module and call the relevant functions using the <db:code>LocalStorage</db:code> type:</db:para>
+      <db:programlisting language="other">import QtQuick.LocalStorage 2.0
+        import QtQuick 2.0
+        
+        Item {
+        Component.onCompleted: {
+        var db = LocalStorage.openDatabaseSync(...)
+        }
+        }</db:programlisting>
+      <db:para>These databases are user-specific and QML-specific, but accessible to all QML applications. They are stored in the <db:code>Databases</db:code> subdirectory of <db:code><db:link xlink:href="qqmlengine.html#offlineStoragePath-prop" xrefstyle="function" annotations="QQmlEngine::offlineStoragePath()">QQmlEngine::offlineStoragePath()</db:link></db:code>, currently as SQLite databases.</db:para>
+      <db:para>Database connections are automatically closed during Javascript garbage collection.</db:para>
+      <db:para>The API can be used from JavaScript functions in your QML:</db:para>
+      <db:programlisting/>
+      <db:para>The API conforms to the Synchronous API of the HTML5 Web Database API, W3C Working Draft 29 October 2009.</db:para>
+      <db:para>The <db:link xlink:href="qtquick-localstorage-example.html" xrefstyle="page" annotations="Qt Quick Examples - Local Storage">SQL Local Storage example</db:link> demonstrates the basics of using the Offline Storage API.</db:para>
+    </db:section>
+    <db:section xml:id="open-or-create-a-database">
+      <db:title>Open or Create a Database</db:title>
+      <db:programlisting language="other">import QtQuick.LocalStorage 2.0 as Sql
+        
+        db = Sql.openDatabaseSync(identifier, version, description, estimated_size, callback(db))</db:programlisting>
+      <db:para>The above code returns the database identified by <db:emphasis>identifier</db:emphasis>. If the database does not already exist, it is created, and the function <db:emphasis>callback</db:emphasis> is called with the database as a parameter. <db:emphasis>identifier</db:emphasis> is the name of the physical file (with or without full path) containing the database. <db:emphasis>description</db:emphasis> and <db:emphasis>estimated_size</db:emphasis> are written to the INI file (described below), but are currently unused.</db:para>
+      <db:para>May throw exception with code property SQLException.DATABASE_ERR, or SQLException.VERSION_ERR.</db:para>
+      <db:para>When a database is first created, an INI file is also created specifying its characteristics:</db:para>
+      <db:informaltable>
+        <db:thead>
+          <db:tr>
+            <db:th>
+              <db:para>
+                <db:emphasis role="bold">Key</db:emphasis>
+              </db:para>
+            </db:th>
+            <db:th>
+              <db:para>
+                <db:emphasis role="bold">Value</db:emphasis>
+              </db:para>
+            </db:th>
+          </db:tr>
+        </db:thead>
+        <db:tr>
+          <db:td>
+            <db:para>Identifier</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The name of the database passed to <db:code>openDatabase()</db:code>
+            </db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>Version</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The version of the database passed to <db:code>openDatabase()</db:code>
+            </db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>Description</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The description of the database passed to <db:code>openDatabase()</db:code>
+            </db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>EstimatedSize</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The estimated size (in bytes) of the database passed to <db:code>openDatabase()</db:code>
+            </db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>Driver</db:para>
+          </db:td>
+          <db:td>
+            <db:para>Currently "QSQLITE"</db:para>
+          </db:td>
+        </db:tr>
+      </db:informaltable>
+      <db:para>This data can be used by application tools.</db:para>
+    </db:section>
+    <db:section xml:id="db-changeversion-from-to-callback-tx">
+      <db:title>db.changeVersion(from, to, callback(tx))</db:title>
+      <db:para>This method allows you to perform a <db:emphasis>Scheme Upgrade</db:emphasis>.</db:para>
+      <db:para>If the current version of <db:emphasis>db</db:emphasis> is not <db:emphasis>from</db:emphasis>, then an exception is thrown.</db:para>
+      <db:para>Otherwise, a database transaction is created and passed to <db:emphasis>callback</db:emphasis>. In this function, you can call <db:emphasis>executeSql</db:emphasis> on <db:emphasis>tx</db:emphasis> to upgrade the database.</db:para>
+      <db:para>May throw exception with code property SQLException.DATABASE_ERR or SQLException.UNKNOWN_ERR.</db:para>
+      <db:para>See example below.</db:para>
+      <db:programlisting language="other" role="badcode">var db = LocalStorage.openDatabaseSync("ActivityTrackDB", "", "Database tracking sports activities", 1000000);
+        if (db.version == "0.1") {
+        db.changeVersion("0.1", "0.2", function(tx) {
+        tx.executeSql("INSERT INTO trip_log VALUES(?, ?, ?)",
+        [ "01/10/2016","Sylling - Vikersund", "53" ]);
+        }
+        });</db:programlisting>
+    </db:section>
+    <db:section xml:id="db-transaction-callback-tx">
+      <db:title>db.transaction(callback(tx))</db:title>
+      <db:para>This method creates a read/write transaction and passed to <db:emphasis>callback</db:emphasis>. In this function, you can call <db:emphasis>executeSql</db:emphasis> on <db:emphasis>tx</db:emphasis> to read and modify the database.</db:para>
+      <db:para>If the callback throws exceptions, the transaction is rolled back. Below you will find an example of a database transaction which catches exceptions.</db:para>
+      <db:programlisting language="other">{
+        var db = LocalStorage.openDatabaseSync("Activity_Tracker_DB", "", "Track exercise", 1000000)
+        try {
+        db.transaction(function (tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS trip_log (date text,trip_desc text,distance numeric)')
+        })
+        } catch (err) {
+        console.log("Error creating table in database: " + err)
+        };
+        }
+      </db:programlisting>
+      <db:para>In the example you can see an <db:code>insert</db:code> statement where values are assigned to the fields, and the record is written into the table. That is an <db:code>insert</db:code> statement with a syntax that is usual for a relational database. It is however also possible to work with JSON objects and store them in a table.</db:para>
+      <db:para>Let's suppose a simple example where we store trips in JSON format using <db:code>date</db:code> as the unique key. An example of a table that could be used for that purpose:</db:para>
+      <db:programlisting language="other" role="badcode">create table trip_log(date text, data text)</db:programlisting>
+      <db:para>The assignment of values to a JSON object:</db:para>
+      <db:programlisting language="other" role="badcode">var obj = {description = "Vikersund - Noresund", distance = "60"}</db:programlisting>
+      <db:para>In that case, the data could be saved in the following way:</db:para>
+      <db:programlisting language="other" role="badcode">db.transaction(function(tx) {
+        result = tx.executeSQL("insert into trip_log values (?,?)",
+        ["01/11/2016", JSON.stringify(obj)])</db:programlisting>
+    </db:section>
+    <db:section xml:id="db-readtransaction-callback-tx">
+      <db:title>db.readTransaction(callback(tx))</db:title>
+      <db:para>This method creates a read-only transaction and passed to <db:emphasis>callback</db:emphasis>. In this function, you can call <db:emphasis>executeSql</db:emphasis> on <db:emphasis>tx</db:emphasis> to read the database (with <db:code>select</db:code> statements).</db:para>
+    </db:section>
+    <db:section xml:id="results-tx-executesql-statement-values">
+      <db:title>results = tx.executeSql(statement, values)</db:title>
+      <db:para>This method executes an SQL <db:emphasis>statement</db:emphasis>, binding the list of <db:emphasis>values</db:emphasis> to SQL positional parameters ("?").</db:para>
+      <db:para>It returns a results object, with the following properties:</db:para>
+      <db:informaltable>
+        <db:thead>
+          <db:tr>
+            <db:th>
+              <db:para>
+                <db:emphasis role="bold">Type</db:emphasis>
+              </db:para>
+            </db:th>
+            <db:th>
+              <db:para>
+                <db:emphasis role="bold">Property</db:emphasis>
+              </db:para>
+            </db:th>
+            <db:th>
+              <db:para>
+                <db:emphasis role="bold">Value</db:emphasis>
+              </db:para>
+            </db:th>
+            <db:th>
+              <db:para>
+                <db:emphasis role="bold">Applicability</db:emphasis>
+              </db:para>
+            </db:th>
+          </db:tr>
+        </db:thead>
+        <db:tr>
+          <db:td>
+            <db:para>int</db:para>
+          </db:td>
+          <db:td>
+            <db:para>rows.length</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The number of rows in the result</db:para>
+          </db:td>
+          <db:td>
+            <db:para>SELECT</db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>var</db:para>
+          </db:td>
+          <db:td>
+            <db:para>rows.item(i)</db:para>
+          </db:td>
+          <db:td>
+            <db:para>Function that returns row <db:emphasis>i</db:emphasis> of the result</db:para>
+          </db:td>
+          <db:td>
+            <db:para>SELECT</db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>int</db:para>
+          </db:td>
+          <db:td>
+            <db:para>rowsAffected</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The number of rows affected by a modification</db:para>
+          </db:td>
+          <db:td>
+            <db:para>UPDATE, DELETE</db:para>
+          </db:td>
+        </db:tr>
+        <db:tr>
+          <db:td>
+            <db:para>string</db:para>
+          </db:td>
+          <db:td>
+            <db:para>insertId</db:para>
+          </db:td>
+          <db:td>
+            <db:para>The id of the row inserted</db:para>
+          </db:td>
+          <db:td>
+            <db:para>INSERT</db:para>
+          </db:td>
+        </db:tr>
+      </db:informaltable>
+      <db:para>May throw exception with code property SQLException.DATABASE_ERR, SQLException.SYNTAX_ERR, or SQLException.UNKNOWN_ERR.</db:para>
+      <db:para>See below for an example:</db:para>
+      <db:programlisting language="other">function dbReadAll()
+        {
+        var db = dbGetHandle()
+        db.transaction(function (tx) {
+        var results = tx.executeSql(
+        'SELECT rowid,date,trip_desc,distance FROM trip_log order by rowid desc')
+        for (var i = 0; i &lt; results.rows.length; i++) {
+        listModel.append({
+        id: results.rows.item(i).rowid,
+        checked: " ",
+        date: results.rows.item(i).date,
+        trip_desc: results.rows.item(i).trip_desc,
+        distance: results.rows.item(i).distance
+        })
+        }
+        })
+        }
+      </db:programlisting>
+    </db:section>
+    <db:section xml:id="method-documentation">
+      <db:title>Method Documentation</db:title>
+      <db:programlisting language="other">object openDatabaseSync(string name, string version, string description, int estimated_size, jsobject callback(db))</db:programlisting>
+      <db:para>Opens or creates a local storage sql database by the given parameters.</db:para>
+      <db:itemizedlist>
+        <db:listitem>
+          <db:para>
+            <db:code>name</db:code> is the database name</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>
+            <db:code>version</db:code> is the database version</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>
+            <db:code>description</db:code> is the database display name</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>
+            <db:code>estimated_size</db:code> is the database's estimated size, in bytes</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>
+            <db:code>callback</db:code> is an optional parameter, which is invoked if the database has not yet been created.</db:para>
+        </db:listitem>
+      </db:itemizedlist>
+      <db:para>Returns the created database object.</db:para>
+    </db:section>
+  </db:section>
+</db:article>
