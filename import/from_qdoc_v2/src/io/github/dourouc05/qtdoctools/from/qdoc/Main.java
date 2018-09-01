@@ -52,29 +52,15 @@ public class Main {
         // Gather all WebXML files and transform them into DocBook.
         List<Path> webxml = m.findWebXML();
 
-        Processor p = new Processor(false);
-        XsltCompiler c = p.newXsltCompiler();
-        XsltExecutable exe = c.compile(new StreamSource(new File(m.xsltPath)));
-
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
         for (Path file : webxml) {
             Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
 
             // Print the name of the file to process to ease debugging.
-            System.out.println("[" + String.format(iFormat, i) + "/" + webxml.size() + "]" + file.toString());
+            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
 
-            XdmNode source = p.newDocumentBuilder().build(new StreamSource(file.toFile()));
-            Serializer out = p.newSerializer();
-            out.setOutputProperty(Serializer.Property.METHOD, "xml");
-            out.setOutputProperty(Serializer.Property.INDENT, "yes");
-            out.setOutputFile(destination.toFile());
-            XsltTransformer trans = exe.load();
-            trans.setInitialContextNode(source);
-            trans.setDestination(out);
-            trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
-            trans.transform();
-
+            m.runXSLT(file.toFile(), destination);
             ++i;
         }
     }
@@ -95,6 +81,10 @@ public class Main {
 //    private Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like qtdatavis3d: datavisualization).
     private Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other pattern.
     private Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within Qt Base.
+
+    private Processor saxonProcessor;
+    private XsltCompiler saxonCompiler;
+    private XsltExecutable saxonExecutable;
 
     private Main() {
         qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
@@ -374,5 +364,24 @@ public class Main {
         }
 
         return Arrays.stream(fileNames).map(s -> outputFolder.resolve("webxml").resolve(s)).collect(Collectors.toList());
+    }
+
+    public void runXSLT(File file, Path destination) throws SaxonApiException {
+        if (saxonProcessor == null) {
+            saxonProcessor = new Processor(false);
+            saxonCompiler = saxonProcessor.newXsltCompiler();
+            saxonExecutable = saxonCompiler.compile(new StreamSource(new File(xsltPath)));
+        }
+
+        XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
+        Serializer out = saxonProcessor.newSerializer();
+        out.setOutputProperty(Serializer.Property.METHOD, "xml");
+        out.setOutputProperty(Serializer.Property.INDENT, "yes");
+        out.setOutputFile(destination.toFile());
+        XsltTransformer trans = saxonExecutable.load();
+        trans.setInitialContextNode(source);
+        trans.setDestination(out);
+        trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
+        trans.transform();
     }
 }
