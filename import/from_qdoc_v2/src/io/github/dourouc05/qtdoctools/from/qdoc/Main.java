@@ -59,6 +59,7 @@ public class Main {
 
             // Print the name of the file to process to ease debugging.
             System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+            System.out.flush();
 
             m.runXSLT(file.toFile(), destination);
             ++i;
@@ -383,5 +384,7 @@ public class Main {
         trans.setDestination(out);
         trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
         trans.transform();
+
+        System.err.flush();
     }
 }
