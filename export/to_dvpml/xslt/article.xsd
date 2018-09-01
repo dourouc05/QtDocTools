@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="types.xsd"/>
+	<xs:complexType name="article">
+		<xs:annotation>
+			<xs:documentation>Article/tutoriel de DVP</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="document">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="licence" type="texte" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Votre texte de licence si la balise lictype est non définie</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="reference" type="xs:anyURI" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Lister l'ensemble des liens, publications ou articles faisant </xs:documentation>
+							<xs:documentation>référence au même thème que votre article</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="synopsis" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Courte présentation de votre article</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:group ref="zoneRedigee" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="soustitre" type="texte" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Positionner un texte (un sous-titre) et/ou une image sous le titre de votre article</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="sommaire" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Permet d'afficher du contenu avant le sommaire</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:group ref="zoneRedigee" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="multi-page" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Permettre de rendre l'article multipages</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence minOccurs="2" maxOccurs="unbounded">
+								<xs:element name="page" type="page">
+									<xs:annotation>
+										<xs:documentation>Sommaire d'une page de votre article multipages</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+						<xs:key name="href">
+							<xs:selector xpath="page/link"/>
+							<xs:field xpath="@href"/>
+						</xs:key>
+						<xs:key name="page">
+							<xs:selector xpath="page"/>
+							<xs:field xpath="@id"/>
+						</xs:key>
+					</xs:element>
+					<xs:element name="summary">
+						<xs:annotation>
+							<xs:documentation>Balise globalisant le contenu de votre article</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="section" type="section" maxOccurs="unbounded"/>
+								<xs:group ref="zoneRedigee" maxOccurs="unbounded"/>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="footer-personnalise" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Donner la possibilité d'afficher des informations en bas de votre article </xs:documentation>
+							<xs:documentation>qui n’apparaîtront que dans la page Web en local ou en ligne.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:all>
+								<xs:element name="pdf" type="contenu-article" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Contenu n'apparait que dans le PDF</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="online" type="contenu-article" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Contenu n'apparait qu'en ligne</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="offline" type="contenu-article" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>Contenu n'apparait qu'en local</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:all>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="section">
+		<xs:sequence>
+			<xs:element name="title" type="StringTitreSection">
+				<xs:annotation>
+					<xs:documentation>Titre chapitre ou sous-chapitre</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="zoneRedigee" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="section" type="section"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:NMTOKEN" use="required"/>
+		<xs:attribute name="noNumber" type="zeroUn" default="0"/>
+		<xs:attribute name="sautDePagePdf" type="zeroUn" default="0"/>
+	</xs:complexType>
+	<xs:complexType name="page">
+		<xs:sequence>
+			<xs:element name="title" type="StringTitreSection">
+				<xs:annotation>
+					<xs:documentation>Titre de la page d'un article multi-pages</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="link" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Lien du chapitre qui apparaîtra dans la page</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="href" type="xs:NMTOKEN" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:NMTOKEN" use="required"/>
+	</xs:complexType>
+	<xs:element name="document" type="article">
+		<xs:annotation>
+			<xs:documentation>Balise mère du XML</xs:documentation>
+		</xs:annotation>
+		<xs:key name="section">
+			<xs:selector xpath=".//section"/>
+			<xs:field xpath="@id"/>
+		</xs:key>
+		<!--<xs:key name="unicite-id-section">
+			<xs:selector xpath=".//latex"/>
+			<xs:field xpath="@id"/>
+		</xs:key>-->
+		<xs:keyref name="reference-section" refer="section">
+			<xs:selector xpath="multi-page/page/link"/>
+			<xs:field xpath="@href"/>
+		</xs:keyref>
+		<xs:key name="unicite-id-signet">
+			<xs:selector xpath=".//signet"/>
+			<xs:field xpath="@id"/>
+		</xs:key>	</xs:element>
+</xs:schema>

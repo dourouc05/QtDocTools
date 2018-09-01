@@ -46,8 +46,7 @@ public class Main {
 
         // Run qdoc.
 //        System.out.println("++> Running qdoc.");
-//        Process qdoc = m.runQdoc(mainQdocconfPath);
-//        qdoc.waitFor();
+//        m.runQdoc(mainQdocconfPath);
 //        System.out.println("++> Qdoc done.");
 
         // Gather all WebXML files and transform them into DocBook.
@@ -57,10 +56,13 @@ public class Main {
         XsltCompiler c = p.newXsltCompiler();
         XsltExecutable exe = c.compile(new StreamSource(new File(m.xsltPath)));
 
+        int i = 0;
         for (Path file : webxml) {
             Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
 
-            System.out.println(file.toString());
+            // Print the name of the file to process to ease debugging.
+            System.out.println("[" + i + "/" + webxml.size() + "]" + file.toString());
+            System.out.flush();
 
             XdmNode source = p.newDocumentBuilder().build(new StreamSource(file.toFile()));
             Serializer out = p.newSerializer();
@@ -71,6 +73,8 @@ public class Main {
             trans.setInitialContextNode(source);
             trans.setDestination(out);
             trans.transform();
+
+            ++i;
         }
     }
 
@@ -287,7 +291,7 @@ public class Main {
             Path qdocconfPath = docDirectoryPath.resolve("qmake.qdocconf");
 
             if (!qdocconfPath.toFile().isFile()) {
-                System.out.println("Skipped module: qtdoc / qmake (old Qt 5 only)");
+                System.out.println("Skipped submodule: qtdoc / qmake (old Qt 5 only)");
             } else {
                 System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath.toString());
                 modules.add(new Pair<>("qtbase", qdocconfPath));
@@ -335,7 +339,7 @@ public class Main {
         }
     }
 
-    public Process runQdoc(Path mainQdocconfPath) throws IOException {
+    public void runQdoc(Path mainQdocconfPath) throws IOException, InterruptedException {
         ProcessBuilder pb = new ProcessBuilder(qdocPath,
                 "--outputdir", outputFolder.toString(),
                 "--installdir", outputFolder.toString(),
@@ -357,7 +361,7 @@ public class Main {
 
         pb.inheritIO();
 
-        return pb.start();
+        pb.start().waitFor();
     }
 
     public List<Path> findWebXML() throws IOException {

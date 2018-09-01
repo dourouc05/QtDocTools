@@ -1,0 +1,1287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="zoneRedigeeMixte" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Type pouvant contenir des balises inline (b, u, i...) et block (tableau, liste...), utilisé par les balises element et colonne</xs:documentation>
+			<xs:documentation>Les balises inline et block s'excluent mutuellement selon la valeur de l'attribut useText ; cette contrainte ne peut être exprimée par le Schéma</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="i" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en italique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en gras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="u" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte souligné</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="s" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte barré</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sub" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en indice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sup" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en exposant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inline" type="InlineCode">
+				<xs:annotation>
+					<xs:documentation>Code inline</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="br" type="vide">
+				<xs:annotation>
+					<xs:documentation>Saut de ligne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="link" type="link">
+				<xs:annotation>
+					<xs:documentation>Lien hypertexte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lien-forum" type="lien-forum">
+				<xs:annotation>
+					<xs:documentation>Lien forum (id du forum)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="important" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Texte en important (formatage particulier)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renvoi" type="renvoi">
+				<xs:annotation>
+					<xs:documentation>Un renvoi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noteBasPage" type="texte">
+				<xs:annotation>
+					<xs:documentation>Une note de bas de page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="signet" type="signet">
+				<xs:annotation>
+					<xs:documentation>Un signet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="font" type="font">
+				<xs:annotation>
+					<xs:documentation>Une fonte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="image" type="image">
+				<xs:annotation>
+					<xs:documentation>Une image</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="paragraph" type="paragraph">
+				<xs:annotation>
+					<xs:documentation>Un paragraphe</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="code">
+				<xs:annotation>
+					<xs:documentation>Une balise pour y mettre du code à afficher</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="liste" type="liste">
+				<xs:annotation>
+					<xs:documentation>Une liste</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tableau" type="tableau">
+				<xs:annotation>
+					<xs:documentation>Un tableau</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latex" type="latex">
+				<xs:annotation>
+					<xs:documentation>Code LateX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imgtext" type="imgtext">
+				<xs:annotation>
+					<xs:documentation>Pour insérer une image d'agrément</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rich-imgtext" type="rich-imgtext">
+				<xs:annotation>
+					<xs:documentation>Image d'agrément sur une structure (tableau, code, liste...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acronyme" type="acronyme">
+				<xs:annotation>
+					<xs:documentation>Insérer une acronyme</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="html-brut" type="html-brut">
+				<xs:annotation>
+					<xs:documentation>Code qui sera interprété sur la page Web</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citation" type="citation">
+				<xs:annotation>
+					<xs:documentation>Une citation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="author" type="author">
+				<xs:annotation>
+					<xs:documentation>Insérer un auteur défini dans l'entête du XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="index" type="index">
+				<xs:annotation>
+					<xs:documentation>Insérer un index qui servira au tableau d'index</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="animation" type="animation">
+				<xs:annotation>
+					<xs:documentation>Balise pour les vidéos</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:group name="zoneRedigee">
+		<xs:annotation>
+			<xs:documentation>Zone rédigée "globale" contenant toutes les balises disponibles</xs:documentation>
+			<xs:documentation>Chaque type de document redéfini son propre sous-ensemble</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="paragraph" type="paragraph">
+				<xs:annotation>
+					<xs:documentation>Un paragraphe</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citation" type="citation">
+				<xs:annotation>
+					<xs:documentation>Une citation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="code" type="code">
+				<xs:annotation>
+					<xs:documentation>Une balise pour y mettre du code à afficher</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="liste" type="liste">
+				<xs:annotation>
+					<xs:documentation>Une liste</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="image" type="image">
+				<xs:annotation>
+					<xs:documentation>Une image</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="tableau" type="tableau">
+				<xs:annotation>
+					<xs:documentation>Un tableau</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="animation" type="animation">
+				<xs:annotation>
+					<xs:documentation>Balise pour les vidéos</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imgtext" type="imgtext">
+				<xs:annotation>
+					<xs:documentation>Pour insérer une image d'agrément</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rich-imgtext" type="rich-imgtext">
+				<xs:annotation>
+					<xs:documentation>Image d'agrément sur une structure (tableau, code, liste...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="signet" type="signet">
+				<xs:annotation>
+					<xs:documentation>Un signet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latex" type="latex">
+				<xs:annotation>
+					<xs:documentation>Code LateX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="html-brut" type="html-brut">
+				<xs:annotation>
+					<xs:documentation>Code qui sera interprété sur la page Web</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="texte" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Balises "inline" de mises en forme du texte</xs:documentation>
+			<xs:documentation>Le format Livres ne permet qu'un sous-ensemble</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="i" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en italique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en gras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="u" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte souligné</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="s" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte barré</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sub" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en indice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sup" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en exposant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inline" type="InlineCode">
+				<xs:annotation>
+					<xs:documentation>Code inline</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="br" type="vide">
+				<xs:annotation>
+					<xs:documentation>Saut de ligne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="link" type="link">
+				<xs:annotation>
+					<xs:documentation>Lien hypertexte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lien-forum" type="lien-forum">
+				<xs:annotation>
+					<xs:documentation>Lien forum (id du forum)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="important" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Texte en important (formatage particulier)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renvoi" type="renvoi">
+				<xs:annotation>
+					<xs:documentation>Un renvoi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noteBasPage" type="texte">
+				<xs:annotation>
+					<xs:documentation>Une note de bas de page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="signet" type="signet">
+				<xs:annotation>
+					<xs:documentation>Un signet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="font" type="font">
+				<xs:annotation>
+					<xs:documentation>Une fonte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="image" type="image">
+				<xs:annotation>
+					<xs:documentation>Une image</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citation" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Une citation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latex" type="latex">
+				<xs:annotation>
+					<xs:documentation>Code LateX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acronyme" type="acronyme">
+				<xs:annotation>
+					<xs:documentation>Insérer un acronyme</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="author" type="author">
+				<xs:annotation>
+					<xs:documentation>Insérer un auteur défini dans l'entête du XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="index" type="index">
+				<xs:annotation>
+					<xs:documentation>Insérer un index qui servira au tableau d'index</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="font" mixed="true">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="i" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en italique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en gras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="u" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte souligné</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="s" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte barré</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sub" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en indice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sup" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en exposant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inline" type="InlineCode">
+				<xs:annotation>
+					<xs:documentation>Code inline</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="br" type="vide">
+				<xs:annotation>
+					<xs:documentation>Saut de ligne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="link" type="link">
+				<xs:annotation>
+					<xs:documentation>Lien hypertexte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lien-forum" type="lien-forum">
+				<xs:annotation>
+					<xs:documentation>Lien forum (id du forum)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renvoi" type="renvoi">
+				<xs:annotation>
+					<xs:documentation>Un renvoi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noteBasPage" type="texte">
+				<xs:annotation>
+					<xs:documentation>Une note de bas de page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citation" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Une citation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="font" type="font">
+				<xs:annotation>
+					<xs:documentation>font du texte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="image" type="image">
+				<xs:annotation>
+					<xs:documentation>Une image</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acronyme" type="acronyme">
+				<xs:annotation>
+					<xs:documentation>Insérer un acronyme</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latex" type="latex">
+				<xs:annotation>
+					<xs:documentation>Code LateX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="author" type="author">
+				<xs:annotation>
+					<xs:documentation>Insérer un auteur défini dans l'entête du XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="index" type="index">
+				<xs:annotation>
+					<xs:documentation>Insérer un index qui servira au tableau d'index</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="color" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="paragraph" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Type de paragraphe commun à Article/FAQ/Sources</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="texte">
+				<xs:attribute name="type" type="xs:NMTOKEN" fixed="important"/>
+				<xs:attribute name="sautDePagePdf" type="zeroUn" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="citation" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Type de paragraphe en mode citation commun à Article/FAQ/Sources</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="texte">
+				<xs:attribute name="type" type="xs:NMTOKEN" fixed="important"/>
+				<xs:attribute name="sautDePagePdf" type="zeroUn" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="renvoi">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="id" type="xs:NMTOKEN" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="tableau">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="entete">
+				<xs:annotation>
+					<xs:documentation>Ligne entête de tableau</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence maxOccurs="unbounded">
+						<xs:element name="colonne" type="colonne">
+							<xs:annotation>
+								<xs:documentation>Cellule de tableau</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ligne">
+				<xs:annotation>
+					<xs:documentation>Ligne normale de tableau</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence maxOccurs="unbounded">
+						<xs:element name="colonne" type="colonne">
+							<xs:annotation>
+								<xs:documentation>Cellule de tableau</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="width" type="largeurRelative"/>
+		<xs:attribute name="border" type="xs:integer"/>
+		<xs:attribute name="sautDePagePdf" type="zeroUn" default="0"/>
+		<xs:attribute name="legende" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="colonne" mixed="true">
+		<xs:complexContent>
+			<xs:extension base="zoneRedigeeMixte">
+				<xs:attribute name="colspan" type="xs:integer"/>
+				<xs:attribute name="rowspan" type="xs:integer"/>
+				<xs:attribute name="useText" type="zeroUn" default="0"/>
+				<xs:attribute name="align" type="alignement"/>
+				<xs:attribute name="width" type="largeurRelative"/>
+				<xs:attribute name="color" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="largeurRelative">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,3}(%|px)?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="animation">
+		<xs:all>
+			<xs:element name="width" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Largeur de la vidéo</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="height" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Hauteur de la vidéo</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="title" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Titre de la vidéo</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="config" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lien d'un fichier .ini qui contient la configuration que l'on souhaite pour notre lecteur mp3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="image" type="image" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Image qui sera cliquable pour lancer la vidéo</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!-- Balise codebase obselete -->
+			<xs:element name="param-movie" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>URL complète de l'animation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="param-quality" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Qualité de l'animation</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="low"/>
+						<xs:enumeration value="medium"/>
+						<xs:enumeration value="high"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="param-loop" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Déterminer si l'animation doit boucler (true ou false)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="param-wmode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Déterminer le fond de l'animation, couleur correspondant à une couleur HTML (#FFFFFF...)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+		<xs:attribute name="type" >
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="dailymotion"/>
+					<xs:enumeration value="flash"/>
+					<xs:enumeration value="flv"/>
+					<xs:enumeration value="m4v"/>
+					<xs:enumeration value="mp3"/>
+					<xs:enumeration value="mp4"/>
+					<xs:enumeration value="ogg"/>
+					<xs:enumeration value="oggaudio"/>
+					<xs:enumeration value="swf"/>
+					<xs:enumeration value="slideshare"/>
+					<xs:enumeration value="speakerdeck"/>
+					<xs:enumeration value="vimeo"/>
+					<xs:enumeration value="wav"/>
+					<xs:enumeration value="webm"/>
+					<xs:enumeration value="youtube"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="imgtext" mixed="true">
+		<xs:complexContent>
+			<xs:extension base="texte">
+				<xs:attribute name="type" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:enumeration value="error"/>
+							<xs:enumeration value="idea"/>
+							<xs:enumeration value="info"/>
+							<xs:enumeration value="perso"/>
+							<xs:enumeration value="warning"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="src" type="xs:anyURI"/>
+				<xs:attribute name="border" type="xs:integer"/>
+				<xs:attribute name="fond" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="rich-imgtext" mixed="true">
+		<xs:complexContent>
+			<xs:extension base="zoneRedigeeMixte">
+				<xs:attribute name="type">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:enumeration value="error"/>
+							<xs:enumeration value="idea"/>
+							<xs:enumeration value="info"/>
+							<xs:enumeration value="perso"/>
+							<xs:enumeration value="warning"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="src" type="xs:anyURI"/>
+				<xs:attribute name="border" type="xs:integer"/>
+				<xs:attribute name="fond" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="image">
+		<xs:simpleContent>
+			<xs:extension base="vide">
+				<xs:attribute name="align" type="alignement"/>
+				<xs:attribute name="src" type="xs:anyURI" use="required"/>
+				<xs:attribute name="zoom" type="xs:anyURI"/>
+				<xs:attribute name="legende" type="xs:string"/>
+				<xs:attribute name="alt" type="xs:string"/>
+				<xs:attribute name="href" type="xs:anyURI"/>
+				<xs:attribute name="titre" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="lien-forum">
+		<xs:simpleContent>
+			<xs:extension base="vide">
+				<xs:attribute name="id" type="xs:integer" use="required"/>
+				<xs:attribute name="avecnote" type="xs:integer" use="required"/>
+				<xs:attribute name="idpost" type="xs:integer"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="latex" mixed="true">
+		<xs:attribute name="taille" type="xs:positiveInteger"/>
+		<xs:attribute name="id" type="xs:NMTOKEN">
+			<xs:annotation>
+				<xs:documentation>Inutile maintenant</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="alignement">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="left"/>
+			<xs:enumeration value="center"/>
+			<xs:enumeration value="right"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="code" mixed="true">
+		<xs:attribute name="titre" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Titre de votre code</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="langage"  type="ListeCode" use="required">
+			<xs:annotation>
+				<xs:documentation>
+					Langage du code source. Permet d'appliquer la coloration syntaxique lors de la génération.
+				</xs:documentation>
+				<xs:documentation>
+					Si vous ne trouvez pas le langage qui vous intéresse, par défaut mettez de préférence
+					'other', 'text' ou 'perso' (lesquels donneront le même résultat). Il vous est possible de combler 
+					ce manque. Pour cela consultez le forum outils et http://vedaer.developpez.com/projets/coloration/
+				</xs:documentation>
+				<xs:documentation>
+					Remarque : Certains langages ont des alias tels que cpp et c++, csharp et c#...
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="showLines" type="zeroUn">
+			<xs:annotation>
+				<xs:documentation>Afficher les numéros de ligne</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="startLine" type="xs:positiveInteger">
+			<xs:annotation>
+				<xs:documentation>La numérotation commencera par ce numéro</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="fichier" type="xs:anyURI">
+			<xs:annotation>
+				<xs:documentation>Permet de mettre un lien vers un fichier (votre fichier contenant le code affiché par exemple)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="dissimulable" type="zeroUn">
+			<xs:annotation>
+				<xs:documentation>Permet de cacher/montrer son code via un clic sur une image (accordéon)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="html-brut" mixed="true"/>
+	<xs:simpleType name="vide">
+		<xs:annotation>
+			<xs:documentation>Contenu vide. Utilisé par cdrom, image, br...</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="link" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Type de lien hypertexte</xs:documentation>
+			<xs:documentation>Le format Livres n'autorise pas l'attribut langue</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="texte">
+				<xs:attribute name="href" type="xs:string" use="required"/>
+				<xs:attribute name="target">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:enumeration value="_blank"/>
+							<xs:enumeration value="_parent"/>
+							<xs:enumeration value="_top"/>
+							<xs:enumeration value="_self"/>
+							<xs:enumeration value="_search"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="onclick" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="title" type="xs:string"/>
+				<xs:attribute name="langue">
+					<xs:annotation>
+						<xs:documentation>Insère une image à gauche du lien</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:enumeration value="Fr"/>
+							<xs:enumeration value="En"/>
+							<xs:enumeration value="Faq"/>
+							<xs:enumeration value="Src"/>
+							<xs:enumeration value="Srcs"/>
+							<xs:enumeration value="Icozip"/>
+							<xs:enumeration value="Icopdf"/>
+							<xs:enumeration value="Dico"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="acronyme" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Type de lien acronyme</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="texte">
+				<xs:attribute name="title" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="liste">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="element" type="element">
+				<xs:annotation>
+					<xs:documentation>Une ligne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="titre" type="xs:string"/>
+		<xs:attribute name="type" type="typeliste"/>
+		<xs:attribute name="debut-numerotation" type="xs:integer"/>
+		<xs:attribute name="sautDePagePdf" type="zeroUn" default="0"/>
+	</xs:complexType>
+	<xs:complexType name="element" mixed="true">
+		<xs:complexContent>
+			<xs:extension base="zoneRedigeeMixte">
+				<xs:attribute name="useText" type="zeroUn" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="typeliste">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="i"/>
+			<xs:enumeration value="I"/>
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="A"/>
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="none"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="zeroUn">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="langue">
+		<xs:restriction base="xs:NMTOKEN"/>
+	</xs:simpleType>
+	<xs:complexType name="signet" mixed="true">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="i" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en italique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en gras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="u" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte souligné</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="s" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte barré</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sub" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en indice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sup" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en exposant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inline" type="InlineCode">
+				<xs:annotation>
+					<xs:documentation>Code inline</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="br" type="vide">
+				<xs:annotation>
+					<xs:documentation>Saut de ligne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="link" type="link">
+				<xs:annotation>
+					<xs:documentation>Lien hypertexte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lien-forum" type="lien-forum">
+				<xs:annotation>
+					<xs:documentation>Lien forum (id du forum)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="renvoi" type="renvoi">
+				<xs:annotation>
+					<xs:documentation>Un renvoi</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noteBasPage" type="texte">
+				<xs:annotation>
+					<xs:documentation>Une note de bas de page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="citation" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Une citation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="font" type="font">
+				<xs:annotation>
+					<xs:documentation>font du texte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="image" type="image">
+				<xs:annotation>
+					<xs:documentation>Une image</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acronyme" type="acronyme">
+				<xs:annotation>
+					<xs:documentation>Insérer un acronyme</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="latex" type="latex">
+				<xs:annotation>
+					<xs:documentation>Code LateX</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="author" type="author">
+				<xs:annotation>
+					<xs:documentation>Insérer un auteur défini dans l'entête du XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="important" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Texte en important (formatage particulier)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="index" type="index">
+				<xs:annotation>
+					<xs:documentation>Insérer un index qui servira au tableau d'index</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="id" type="xs:NMTOKEN" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="author">
+		<xs:simpleContent>
+			<xs:extension base="vide">
+				<xs:attribute name="name" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="index" mixed="true">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="i" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en italique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="b" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en gras</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="u" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte souligné</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="s" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte barré</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sub" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en indice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sup" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en exposant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="inline" type="InlineCode">
+				<xs:annotation>
+					<xs:documentation>Code inline</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="br" type="vide">
+				<xs:annotation>
+					<xs:documentation>Saut de ligne</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="link" type="link">
+				<xs:annotation>
+					<xs:documentation>Lien hypertexte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="font" type="font">
+				<xs:annotation>
+					<xs:documentation>font du texte</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="acronyme" type="acronyme">
+				<xs:annotation>
+					<xs:documentation>Insérer un acronyme</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="id1" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>L'id1 contenant une clé d'index</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="id2" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>L'id2 contenant une clé d'index</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="InlineCode" mixed="true">
+		<xs:attribute name="langage" type="ListeCode">
+			<xs:annotation>
+				<xs:documentation>
+					Affichage d'un code source en mode inline avec la coloration syntaxique lors de la génération.
+				</xs:documentation>
+				<xs:documentation>
+					Si vous ne trouvez pas le langage qui vous intéresse, par défaut mettez de préférence
+					'other', 'text' ou 'perso' (lesquels donneront le même résultat). Il vous est possible de combler 
+					ce manque. Pour cela consultez le forum outils et http://vedaer.developpez.com/projets/coloration/
+				</xs:documentation>
+				<xs:documentation>
+					Remarque : Certains langages ont des alias tels que cpp et c++, csharp et c#...
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+
+	<xs:simpleType name="ListeCode">
+		<xs:union>
+			<xs:simpleType>
+				<!--
+					Laurent.B (29/12/2012)
+					Tous les langages pris en charge par le Kit sont référencés ici et sont issus à la fois 
+					du fichier 'catalog' et du fichier d'alias 'languages.properties'.
+					Lorsqu'un langage n'est pas pris en compte, l'utilisateur peut mettre comme valeur 
+					'other' ou 'perso', lesquelles seront interprétées comme correspondant au langage 'text'.
+					Tout nouveau langage pris en compte par le Kit doit être inséré dans cette liste.
+					Toutefois, pour des problématiques d'organisation de mise à jour des outils,
+					si le Kit prend en compte un langage non référencé ici, l'utilisateur pourra
+					malgré tout en faire usage, sans que cela ne pose de problème de validation,
+					grâce à la possibilité de mettre une valeur arbitraire. 
+				-->
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="actionscript" />
+					<xs:enumeration value="ada95" />
+					<xs:enumeration value="al" />
+					<xs:enumeration value="antlr" />
+					<xs:enumeration value="apacheconf" />
+					<xs:enumeration value="apdl" />
+					<xs:enumeration value="applescript" />
+					<xs:enumeration value="as" />
+					<xs:enumeration value="asp" />
+					<xs:enumeration value="aspect-j" />
+					<xs:enumeration value="aspnet" />
+					<xs:enumeration value="assembly-m68k" />
+					<xs:enumeration value="assembly-macro32" />
+					<xs:enumeration value="assembly-mcs51" />
+					<xs:enumeration value="assembly-parrot" />
+					<xs:enumeration value="assembly-r2000" />
+					<xs:enumeration value="assembly-x86" />
+					<xs:enumeration value="asymptote" />
+					<xs:enumeration value="awk" />
+					<xs:enumeration value="b" />
+					<xs:enumeration value="batch" />
+					<xs:enumeration value="bbj" />
+					<xs:enumeration value="bcb" />
+					<xs:enumeration value="bcel" />
+					<xs:enumeration value="beanshell" />
+					<xs:enumeration value="bibtex" />
+					<xs:enumeration value="c" />
+					<xs:enumeration value="c++" />
+					<xs:enumeration value="c#" />
+					<xs:enumeration value="ceylon" />
+					<xs:enumeration value="chill" />
+					<xs:enumeration value="cil" />
+					<xs:enumeration value="cobol" />
+					<xs:enumeration value="coldfusion" />
+					<xs:enumeration value="console" />
+					<xs:enumeration value="cmake" />
+					<xs:enumeration value="cpp" />
+					<xs:enumeration value="csharp" />
+					<xs:enumeration value="cshtml" />
+					<xs:enumeration value="css" />
+					<xs:enumeration value="cuda" />
+					<xs:enumeration value="cvs-commit" />
+					<xs:enumeration value="d" />
+					<xs:enumeration value="dart" />
+					<xs:enumeration value="delphi" />
+					<xs:enumeration value="delphinet" />
+					<xs:enumeration value="docker-compose" />
+					<xs:enumeration value="dockerfile" />
+					<xs:enumeration value="doxygen" />
+					<xs:enumeration value="dragonflybsd" />
+					<xs:enumeration value="dsssl" />
+					<xs:enumeration value="eiffel" />
+					<xs:enumeration value="embperl" />
+					<xs:enumeration value="erlang" />
+					<xs:enumeration value="factor" />
+					<xs:enumeration value="forth" />
+					<xs:enumeration value="fortran" />
+					<xs:enumeration value="foxpro" />
+					<xs:enumeration value="freebsd" />
+					<xs:enumeration value="freemarker" />
+					<xs:enumeration value="fsharp" />
+					<xs:enumeration value="gettext" />
+					<xs:enumeration value="glsl" />
+					<xs:enumeration value="gnuplot" />
+					<xs:enumeration value="go" />
+					<xs:enumeration value="gradle-build" />
+					<xs:enumeration value="groovy" />
+					<xs:enumeration value="haskell" />
+					<xs:enumeration value="hex" />
+					<xs:enumeration value="hlsl" />
+					<xs:enumeration value="htaccess" />
+					<xs:enumeration value="html" />
+					<xs:enumeration value="i4gl" />
+					<xs:enumeration value="icon" />
+					<xs:enumeration value="idl" />
+					<xs:enumeration value="inform" />
+					<xs:enumeration value="ini" />
+					<xs:enumeration value="inno-setup" />
+					<xs:enumeration value="interlis" />
+					<xs:enumeration value="io" />
+					<xs:enumeration value="java" />
+					<xs:enumeration value="javacc" />
+					<xs:enumeration value="javascript" />
+					<xs:enumeration value="jcl" />
+					<xs:enumeration value="jhtml" />
+					<xs:enumeration value="jmk" />
+					<xs:enumeration value="js" />
+					<xs:enumeration value="json" />
+					<xs:enumeration value="jsp" />
+					<xs:enumeration value="jsx" />
+					<xs:enumeration value="kotlin" />
+					<xs:enumeration value="latex" />
+					<xs:enumeration value="lilypond" />
+					<xs:enumeration value="linux" />
+					<xs:enumeration value="lisp" />
+					<xs:enumeration value="literate-haskell" />
+					<xs:enumeration value="lotos" />
+					<xs:enumeration value="lua" />
+					<xs:enumeration value="mail" />
+					<xs:enumeration value="makefile" />
+					<xs:enumeration value="maple" />
+					<xs:enumeration value="mathematica" />
+					<xs:enumeration value="matlab" />
+					<xs:enumeration value="ml" />
+					<xs:enumeration value="modula3" />
+					<xs:enumeration value="moin" />
+					<xs:enumeration value="mqsc" />
+					<xs:enumeration value="myghty" />
+					<xs:enumeration value="n3" />
+					<xs:enumeration value="netbsd" />
+					<xs:enumeration value="netrexx" />
+					<xs:enumeration value="nqc" />
+					<xs:enumeration value="nsis2" />
+					<xs:enumeration value="obasic" />
+					<xs:enumeration value="objective-c" />
+					<xs:enumeration value="objectrexx" />
+					<xs:enumeration value="ocaml" />
+					<xs:enumeration value="occam" />
+					<xs:enumeration value="omnimark" />
+					<xs:enumeration value="openbsd" />
+					<xs:enumeration value="oracle" />
+					<xs:enumeration value="other" />
+					<xs:enumeration value="pascal" />
+					<xs:enumeration value="patch" />
+					<xs:enumeration value="perl" />
+					<xs:enumeration value="perl-uniligne" />
+					<xs:enumeration value="perso" />
+					<xs:enumeration value="php" />
+					<xs:enumeration value="php_mixte" />
+					<xs:enumeration value="pike" />
+					<xs:enumeration value="pl-sql" />
+					<xs:enumeration value="pl1" />
+					<xs:enumeration value="pop11" />
+					<xs:enumeration value="postgresql" />
+					<xs:enumeration value="postscript" />
+					<xs:enumeration value="povray" />
+					<xs:enumeration value="powerdynamo" />
+					<xs:enumeration value="powershell" />
+					<xs:enumeration value="progress" />
+					<xs:enumeration value="prolog" />
+					<xs:enumeration value="properties" />
+					<xs:enumeration value="psp" />
+					<xs:enumeration value="ptl" />
+					<xs:enumeration value="purebasic" />
+					<xs:enumeration value="pvwave" />
+					<xs:enumeration value="pyrex" />
+					<xs:enumeration value="python" />
+					<xs:enumeration value="qml" />
+					<xs:enumeration value="qt" />
+					<xs:enumeration value="qt-pro" />
+					<xs:enumeration value="r" />
+					<xs:enumeration value="rd" />
+					<xs:enumeration value="rdf" />
+					<xs:enumeration value="rebol" />
+					<xs:enumeration value="redcode" />
+					<xs:enumeration value="relax-ng-compact" />
+					<xs:enumeration value="renderman-rib" />
+					<xs:enumeration value="rest" />
+					<xs:enumeration value="rhtml" />
+					<xs:enumeration value="rpm-spec" />
+					<xs:enumeration value="rtf" />
+					<xs:enumeration value="ruby" />
+					<xs:enumeration value="rust" />
+					<xs:enumeration value="rview" />
+					<xs:enumeration value="s+" />
+					<xs:enumeration value="s#" />
+					<xs:enumeration value="sas" />
+					<xs:enumeration value="scala" />
+					<xs:enumeration value="scilab" />
+					<xs:enumeration value="scheme" />
+					<xs:enumeration value="scss" />
+					<xs:enumeration value="sgml" />
+					<xs:enumeration value="shell" />
+					<xs:enumeration value="shellscript" />
+					<xs:enumeration value="shtml" />
+					<xs:enumeration value="slate" />
+					<xs:enumeration value="smalltalk" />
+					<xs:enumeration value="sdl/pr" />
+					<xs:enumeration value="smi-mib" />
+					<xs:enumeration value="sql" />
+					<xs:enumeration value="sqr" />
+					<xs:enumeration value="squidconf" />
+					<xs:enumeration value="svn-commit" />
+					<xs:enumeration value="swift" />
+					<xs:enumeration value="swig" />
+					<xs:enumeration value="tcl" />
+					<xs:enumeration value="tex" />
+					<xs:enumeration value="texinfo" />
+					<xs:enumeration value="text" />
+					<xs:enumeration value="tpl" />
+					<xs:enumeration value="transact-sql" />
+					<xs:enumeration value="twig" />
+					<xs:enumeration value="twiki" />
+					<xs:enumeration value="typescript" />
+					<xs:enumeration value="typoscript" />
+					<xs:enumeration value="uscript" />
+					<xs:enumeration value="vala" />
+					<xs:enumeration value="vb" />
+					<xs:enumeration value="vbnet" />
+					<xs:enumeration value="vbscript" />
+					<xs:enumeration value="velocity" />
+					<xs:enumeration value="verilog" />
+					<xs:enumeration value="vhdl" />
+					<xs:enumeration value="windev" />
+					<xs:enumeration value="xml" />
+					<xs:enumeration value="xq" />
+					<xs:enumeration value="xsl" />
+					<xs:enumeration value="zpt" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType>
+				<!--
+					Laurent.B (29/12/2012) 
+					En plus des langages explicitement définis ci-dessus, il est préférable de laisser la porte ouverte à 
+					l'apparition de nouveaux langages. Certes, si un utilisateur fournit un nom de langage non pris en compte
+					par le Kit, cela n'aura pas d'intérêt car la coloration syntaxique souhaitée ne sera pas appliquée.
+					Par contre, en étant permissif à ce niveau-là, si un nouveau langage s'avère finalement être pris en compte 
+					par le Kit, cela n'oblige pas pour autant nos outils d'édition (a minima XmlEd) à être mis à jour également,
+					dès la livraison d'une nouvelle version du Kit. Simplement, dans XmlEd par exemple, le nouveau langage 
+					ou dialect n'apparaîtra pas parmi la liste des propositions de l'aide à la saisie mais l'utilisateur
+					pourra tout de même le saisir manuellement.
+				 -->
+				<xs:restriction base="xs:string">
+					<xs:minLength value="1" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+	<xs:complexType name="StringTitreSection" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Texte et écriture possible dans un titre de section, un chapitre</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="i" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en italique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sub" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en indice</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="sup" type="texte">
+				<xs:annotation>
+					<xs:documentation>Texte en exposant</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+
+</xs:schema>

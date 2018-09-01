@@ -10,6 +10,8 @@
     suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
   
+  <xsl:param name="qt-version" as="xs:string" required="true"/>
+  
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>
   </xsl:template>
@@ -18,65 +20,58 @@
     <xsl:variable name="mainTag" select="child::node()[1]" as="node()"/>
     
     <db:article version="5.2">
-      <!-- Info tag only when there is more than just a title: an abstract (brief) or extended links (relations). -->
-      <xsl:choose>
-        <xsl:when test="child::node()[1]/@brief or child::node()[1]/description/relation">
-          <db:info>
-            <db:title>
-              <xsl:choose>
-                <xsl:when test="$mainTag/@fulltitle"><xsl:value-of select="$mainTag/@fulltitle"/></xsl:when>
-                <xsl:when test="$mainTag/@title"><xsl:value-of select="$mainTag/@title"/></xsl:when>
-                <xsl:when test="$mainTag/@name"><xsl:value-of select="$mainTag/@name"/></xsl:when>
-                <xsl:otherwise><xsl:message>WARNING: No title found.</xsl:message></xsl:otherwise>
-              </xsl:choose>
-            </db:title>
-            <db:abstract>
+      <db:info>
+        <db:title>
+          <xsl:choose>
+            <xsl:when test="$mainTag/@fulltitle"><xsl:value-of select="$mainTag/@fulltitle"/></xsl:when>
+            <xsl:when test="$mainTag/@title"><xsl:value-of select="$mainTag/@title"/></xsl:when>
+            <xsl:when test="$mainTag/@name"><xsl:value-of select="$mainTag/@name"/></xsl:when>
+            <xsl:otherwise><xsl:message>WARNING: No title found.</xsl:message></xsl:otherwise>
+          </xsl:choose>
+        </db:title>
+        
+        <xsl:if test="child::node()[1]/@brief or child::node()[1]/description/relation">
+          <db:abstract>
+            <db:para>
+              <xsl:value-of select="child::node()[1]/@brief"/>
+            </db:para>
+            <xsl:if test="$mainTag/description/relation">
               <db:para>
-                <xsl:value-of select="child::node()[1]/@brief"/>
+                <db:simplelist>
+                  <xsl:for-each select="$mainTag/description/relation">
+                    <db:member>
+                      <db:link xlink:href="{@href}" xlink:title="{@meta}">
+                        <xsl:choose>
+                          <xsl:when test="@meta='previous'">
+                            <xsl:text>&lt; </xsl:text>
+                          </xsl:when>
+                          <xsl:when test="@meta='contents'">
+                            <xsl:text>^ </xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
+                        <xsl:value-of select="@description"/>
+                        <xsl:choose>
+                          <xsl:when test="@meta='next'">
+                            <xsl:text> &gt;</xsl:text>
+                          </xsl:when>
+                          <xsl:when test="@meta='contents'">
+                            <xsl:text> ^</xsl:text>
+                          </xsl:when>
+                        </xsl:choose>
+                      </db:link>
+                    </db:member>
+                  </xsl:for-each>
+                </db:simplelist>
               </db:para>
-              <xsl:if test="$mainTag/description/relation">
-                <db:para>
-                  <db:simplelist>
-                    <xsl:for-each select="$mainTag/description/relation">
-                      <db:member>
-                        <db:link xlink:href="{@href}" xlink:title="{@meta}">
-                          <xsl:choose>
-                            <xsl:when test="@meta='previous'">
-                              <xsl:text>&lt; </xsl:text>
-                            </xsl:when>
-                            <xsl:when test="@meta='contents'">
-                              <xsl:text>^ </xsl:text>
-                            </xsl:when>
-                          </xsl:choose>
-                          <xsl:value-of select="@description"/>
-                          <xsl:choose>
-                            <xsl:when test="@meta='next'">
-                              <xsl:text> &gt;</xsl:text>
-                            </xsl:when>
-                            <xsl:when test="@meta='contents'">
-                              <xsl:text> ^</xsl:text>
-                            </xsl:when>
-                          </xsl:choose>
-                        </db:link>
-                      </db:member>
-                    </xsl:for-each>
-                  </db:simplelist>
-                </db:para>
-              </xsl:if>
-            </db:abstract>
-          </db:info>
-        </xsl:when>
-        <xsl:otherwise>
-          <db:title>
-            <xsl:choose>
-              <xsl:when test="$mainTag/@fulltitle"><xsl:value-of select="$mainTag/@fulltitle"/></xsl:when>
-              <xsl:when test="$mainTag/@title"><xsl:value-of select="$mainTag/@title"/></xsl:when>
-              <xsl:when test="$mainTag/@name"><xsl:value-of select="$mainTag/@name"/></xsl:when>
-              <xsl:otherwise><xsl:message>WARNING: No title found.</xsl:message></xsl:otherwise>
-            </xsl:choose>
-          </db:title>
-        </xsl:otherwise>
-      </xsl:choose>
+            </xsl:if>
+          </db:abstract>
+        </xsl:if>
+        
+        <db:pubdate><xsl:value-of select="current-date()"/></db:pubdate>
+        <db:date><xsl:value-of select="current-date()"/></db:date>
+        <db:productname>Qt</db:productname>
+        <db:productnumber><xsl:value-of select="$qt-version"/></db:productnumber>
+      </db:info>
       
       <!-- Deal with the rest of the content. -->
       <xsl:apply-templates mode="content"/>
@@ -154,6 +149,8 @@
       <db:section>
         <db:title>Classes</db:title>
         
+        <xsl:message>CLASSES NOT IMPLEMENTED</xsl:message>
+        
         <xsl:if test="@since and not(@since='')">
           <db:para>This class was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
         </xsl:if>
@@ -175,6 +172,8 @@
         <db:title>Type Documentation</db:title>
         <!-- Only happens in namespaces. -->
         
+        <xsl:message>TYPES NOT IMPLEMENTED</xsl:message>
+        
         <xsl:if test="@since and not(@since='')">
           <db:para>This type was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
         </xsl:if>
@@ -195,7 +194,9 @@
     <xsl:if test="$memberVariables">
       <db:section>
         <db:title>Member Variable Documentation</db:title>
-        
+
+        <xsl:message>MEMBER VARIABLES NOT IMPLEMENTED</xsl:message>
+
         <xsl:if test="@since and not(@since='')">
           <db:para>This variable was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
         </xsl:if>
@@ -231,6 +232,8 @@
       <db:section>
         <db:title>Related Non-Members</db:title>
         <!-- TODO: Not generated in WebXML. Example: http://doc.qt.io/qt-5/qpoint.html#related-non-members -->
+        
+        <xsl:message>RELATED NON MEMBERS NOT IMPLEMENTED</xsl:message>
       </db:section>
     </xsl:if>
     
@@ -247,7 +250,7 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="variable">
-    VAR
+    <xsl:message>VARIABLES NOT IMPLEMENTED</xsl:message>
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="function">
@@ -392,6 +395,7 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="typedef">
+    <!-- Typedefs only appear with enums, hence most of the work is done there. -->
     <db:typedefsynopsis>
       <db:typedefname><xsl:value-of select="@fullname"/></db:typedefname>
     </db:typedefsynopsis>
