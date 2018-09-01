@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="56" bases="QObject" module="QtCore" groups="events" brief="Interface to manage Qt's event queue">
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="104" column="4">
+                <brief>The <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> class provides an interface to manage Qt's event queue.</brief>
+                <para>An event dispatcher receives events from the window system and other sources. It then sends them to the <link raw="QCoreApplication" href="qcoreapplication.html" type="class">QCoreApplication</link> or <link raw="QApplication" href="qapplication.html" type="class">QApplication</link> instance for processing and delivery. <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> provides fine-grained control over event delivery.</para>
+                <para>For simple control of event processing use <link raw="QCoreApplication::processEvents()" href="qcoreapplication.html#processEvents" type="function">QCoreApplication::processEvents()</link>.</para>
+                <para>For finer control of the application's event loop, call <link raw="instance()" href="qabstracteventdispatcher.html#instance" type="function">instance()</link> and call functions on the <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> object that is returned. If you want to use your own instance of <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> or of a <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> subclass, you must install it with <link raw="QCoreApplication::setEventDispatcher()" href="qcoreapplication.html#setEventDispatcher" type="function">QCoreApplication::setEventDispatcher()</link> or <link raw="QThread::setEventDispatcher()" href="qthread.html#setEventDispatcher" type="function">QThread::setEventDispatcher()</link> <italic>before</italic> a default event dispatcher has been installed.</para>
+                <para>The main event loop is started by calling <link raw="QCoreApplication::exec()" href="qcoreapplication.html#exec" type="function">QCoreApplication::exec()</link>, and stopped by calling <link raw="QCoreApplication::exit()" href="qcoreapplication.html#exit" type="function">QCoreApplication::exit()</link>. Local event loops can be created using <link raw="QEventLoop" href="qeventloop.html" type="class">QEventLoop</link>.</para>
+                <para>Programs that perform long operations can call <link raw="processEvents()" href="qabstracteventdispatcher.html#processEvents" type="function">processEvents()</link> with a bitwise OR combination of various <link raw="QEventLoop::ProcessEventsFlag" href="qeventloop.html#ProcessEventsFlag-enum" type="enum" enum="QEventLoop::ProcessEventsFlag">QEventLoop::ProcessEventsFlag</link> values to control which events should be delivered.</para>
+                <para>
+                    <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> also allows the integration of an external event loop with the Qt event loop.</para>
+                <see-also>
+                    <link raw="QEventLoop" href="qeventloop.html" type="class">QEventLoop</link>
+                    <link raw="QCoreApplication" href="qcoreapplication.html" type="class">QCoreApplication</link>
+                    <link raw="QThread" href="qthread.html" type="class">QThread</link>
+                </see-also>
+            </description>
+            <variable threadsafety="unspecified" name="staticMetaObject" fullname="QAbstractEventDispatcher::staticMetaObject" href="qabstracteventdispatcher.html#staticMetaObject-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" type="const QMetaObject" static="true">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="metaObject" fullname="QAbstractEventDispatcher::metaObject" href="qabstracteventdispatcher.html#metaObject" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QMetaObject *" signature="const QMetaObject * metaObject() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacast" fullname="QAbstractEventDispatcher::qt_metacast" href="qabstracteventdispatcher.html#qt_metacast" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void *" signature="void * qt_metacast(const char *)">
+                <parameter type="const char *" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacall" fullname="QAbstractEventDispatcher::qt_metacall" href="qabstracteventdispatcher.html#qt_metacall" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int qt_metacall(QMetaObject::Call , int , void **)">
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="tr" fullname="QAbstractEventDispatcher::tr" href="qabstracteventdispatcher.html#tr" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString tr(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="trUtf8" fullname="QAbstractEventDispatcher::trUtf8" href="qabstracteventdispatcher.html#trUtf8" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString trUtf8(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_static_metacall" fullname="QAbstractEventDispatcher::qt_static_metacall" href="qabstracteventdispatcher.html#qt_static_metacall" status="active" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_static_metacall(QObject *, QMetaObject::Call , int , void **)">
+                <parameter type="QObject *" name="" default=""/>
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <class threadsafety="unspecified" name="QPrivateSignal" fullname="QAbstractEventDispatcher::QPrivateSignal" href="qabstracteventdispatcher-qprivatesignal.html" status="active" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="58">
+                <description path="" line="0" column="0"/>
+            </class>
+            <function threadsafety="unspecified" name="d_func" fullname="QAbstractEventDispatcher::d_func" href="qabstracteventdispatcher.html#d_func" status="active" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="59" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QAbstractEventDispatcherPrivate *" signature="QAbstractEventDispatcherPrivate * d_func()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="d_func" fullname="QAbstractEventDispatcher::d_func" href="qabstracteventdispatcher.html#d_func-1" status="active" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="59" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QAbstractEventDispatcherPrivate *" signature="const QAbstractEventDispatcherPrivate * d_func() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <class threadsafety="unspecified" name="TimerInfo" fullname="QAbstractEventDispatcher::TimerInfo" href="qabstracteventdispatcher-timerinfo.html" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="62" module="QtCore">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="343" column="4">
+                    <para>This struct represents information about a timer: <link raw="QAbstractEventDispatcher::TimerInfo::timerId" href="qabstracteventdispatcher-timerinfo.html#timerId-var" type="variable">timerId</link>, <link raw="QAbstractEventDispatcher::TimerInfo::interval" href="qabstracteventdispatcher-timerinfo.html#interval-var" type="variable">interval</link>, and <link raw="QAbstractEventDispatcher::TimerInfo::timerType" href="qabstracteventdispatcher-timerinfo.html#timerType-var" type="variable">timerType</link>.</para>
+                    <see-also>
+                        <link raw="registeredTimers()" href="qabstracteventdispatcher.html#registeredTimers" type="function">registeredTimers()</link>
+                    </see-also>
+                </description>
+                <variable threadsafety="unspecified" name="timerId" fullname="QAbstractEventDispatcher::TimerInfo::timerId" href="qabstracteventdispatcher-timerinfo.html#timerId-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="64" type="int" static="false">
+                    <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="359" column="4">
+                        <para>The timer's unique id.</para>
+                    </description>
+                </variable>
+                <variable threadsafety="unspecified" name="interval" fullname="QAbstractEventDispatcher::TimerInfo::interval" href="qabstracteventdispatcher-timerinfo.html#interval-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="65" type="int" static="false">
+                    <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="364" column="4">
+                        <para>The timer's interval.</para>
+                    </description>
+                </variable>
+                <variable threadsafety="unspecified" name="timerType" fullname="QAbstractEventDispatcher::TimerInfo::timerType" href="qabstracteventdispatcher-timerinfo.html#timerType-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="66" type="Qt::TimerType" static="false">
+                    <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="369" column="4">
+                        <para>The timer's type</para>
+                        <see-also>
+                            <link raw="Qt::TimerType" href="qt.html#TimerType-enum" type="enum" enum="Qt::TimerType">Qt::TimerType</link>
+                        </see-also>
+                    </description>
+                </variable>
+                <function threadsafety="unspecified" name="TimerInfo" fullname="QAbstractEventDispatcher::TimerInfo::TimerInfo" href="qabstracteventdispatcher-timerinfo.html#TimerInfo" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="68" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="TimerInfo(int id, int i, Qt::TimerType t)">
+                    <parameter type="int" name="id" default=""/>
+                    <parameter type="int" name="i" default=""/>
+                    <parameter type="Qt::TimerType" name="t" default=""/>
+                    <description path="" line="0" column="0"/>
+                </function>
+            </class>
+            <function threadsafety="unspecified" name="QAbstractEventDispatcher" fullname="QAbstractEventDispatcher::QAbstractEventDispatcher" href="qabstracteventdispatcher.html#QAbstractEventDispatcher" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="73" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QAbstractEventDispatcher(QObject *parent)">
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="142" column="4">
+                    <para>Constructs a new event dispatcher with the given <argument>parent</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="~QAbstractEventDispatcher" fullname="QAbstractEventDispatcher::~QAbstractEventDispatcher" href="qabstracteventdispatcher.html#dtor.QAbstractEventDispatcher" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="74" virtual="virtual" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QAbstractEventDispatcher()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="155" column="4">
+                    <para>Destroys the event dispatcher.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="instance" fullname="QAbstractEventDispatcher::instance" href="qabstracteventdispatcher.html#instance" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="76" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QAbstractEventDispatcher *" signature="QAbstractEventDispatcher * instance(QThread *thread)">
+                <parameter type="QThread *" name="thread" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="161" column="4">
+                    <para>Returns a pointer to the event dispatcher object for the specified <argument>thread</argument>. If <argument>thread</argument> is zero, the current thread is used. If no event dispatcher exists for the specified thread, this function returns 0.</para>
+                    <para>
+                        <bold>Note:</bold> If Qt is built without thread support, the <argument>thread</argument> argument is ignored.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="processEvents" fullname="QAbstractEventDispatcher::processEvents" href="qabstracteventdispatcher.html#processEvents" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="78" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool processEvents(QEventLoop::ProcessEventsFlags flags) = 0">
+                <parameter type="QEventLoop::ProcessEventsFlags" name="flags" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="hasPendingEvents" fullname="QAbstractEventDispatcher::hasPendingEvents" href="qabstracteventdispatcher.html#hasPendingEvents" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="79" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasPendingEvents() = 0">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="registerSocketNotifier" fullname="QAbstractEventDispatcher::registerSocketNotifier" href="qabstracteventdispatcher.html#registerSocketNotifier" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="81" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void registerSocketNotifier(QSocketNotifier *notifier) = 0">
+                <parameter type="QSocketNotifier *" name="notifier" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="unregisterSocketNotifier" fullname="QAbstractEventDispatcher::unregisterSocketNotifier" href="qabstracteventdispatcher.html#unregisterSocketNotifier" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="82" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void unregisterSocketNotifier(QSocketNotifier *notifier) = 0">
+                <parameter type="QSocketNotifier *" name="notifier" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="registerTimer" fullname="QAbstractEventDispatcher::registerTimer" href="qabstracteventdispatcher.html#registerTimer" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="85" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int registerTimer(int interval, QObject *object)">
+                <parameter type="int" name="interval" default=""/>
+                <parameter type="QObject *" name="object" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="registerTimer" fullname="QAbstractEventDispatcher::registerTimer" href="qabstracteventdispatcher.html#registerTimer-1" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="87" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void registerTimer(int timerId, int interval, QObject *object)">
+                <parameter type="int" name="timerId" default=""/>
+                <parameter type="int" name="interval" default=""/>
+                <parameter type="QObject *" name="object" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="registerTimer" fullname="QAbstractEventDispatcher::registerTimer" href="qabstracteventdispatcher.html#registerTimer-2" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="91" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int registerTimer(int interval, Qt::TimerType timerType, QObject *object)">
+                <parameter type="int" name="interval" default=""/>
+                <parameter type="Qt::TimerType" name="timerType" default=""/>
+                <parameter type="QObject *" name="object" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="252" column="4">
+                    <para>Registers a timer with the specified <argument>interval</argument> and <argument>timerType</argument> for the given <argument>object</argument> and returns the timer id.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="registerTimer" fullname="QAbstractEventDispatcher::registerTimer" href="qabstracteventdispatcher.html#registerTimer-3" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="92" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void registerTimer(int timerId, int interval, Qt::TimerType timerType, QObject *object) = 0">
+                <parameter type="int" name="timerId" default=""/>
+                <parameter type="int" name="interval" default=""/>
+                <parameter type="Qt::TimerType" name="timerType" default=""/>
+                <parameter type="QObject *" name="object" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="unregisterTimer" fullname="QAbstractEventDispatcher::unregisterTimer" href="qabstracteventdispatcher.html#unregisterTimer" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="93" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool unregisterTimer(int timerId) = 0">
+                <parameter type="int" name="timerId" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="unregisterTimers" fullname="QAbstractEventDispatcher::unregisterTimers" href="qabstracteventdispatcher.html#unregisterTimers" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="94" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool unregisterTimers(QObject *object) = 0">
+                <parameter type="QObject *" name="object" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="registeredTimers" fullname="QAbstractEventDispatcher::registeredTimers" href="qabstracteventdispatcher.html#registeredTimers" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="95" virtual="pure" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QList&lt;QAbstractEventDispatcher::TimerInfo&gt;" signature="QList&lt;QAbstractEventDispatcher::TimerInfo&gt; registeredTimers(QObject *object) const = 0">
+                <parameter type="QObject *" name="object" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="remainingTime" fullname="QAbstractEventDispatcher::remainingTime" href="qabstracteventdispatcher.html#remainingTime" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="97" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int remainingTime(int timerId) = 0">
+                <parameter type="int" name="timerId" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="registerEventNotifier" fullname="QAbstractEventDispatcher::registerEventNotifier" href="qabstracteventdispatcher.html#registerEventNotifier" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="100" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool registerEventNotifier(QWinEventNotifier *notifier) = 0">
+                <parameter type="QWinEventNotifier *" name="notifier" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="unregisterEventNotifier" fullname="QAbstractEventDispatcher::unregisterEventNotifier" href="qabstracteventdispatcher.html#unregisterEventNotifier" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="101" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void unregisterEventNotifier(QWinEventNotifier *notifier) = 0">
+                <parameter type="QWinEventNotifier *" name="notifier" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="wakeUp" fullname="QAbstractEventDispatcher::wakeUp" href="qabstracteventdispatcher.html#wakeUp" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="104" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void wakeUp() = 0">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="interrupt" fullname="QAbstractEventDispatcher::interrupt" href="qabstracteventdispatcher.html#interrupt" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="105" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void interrupt() = 0">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="flush" fullname="QAbstractEventDispatcher::flush" href="qabstracteventdispatcher.html#flush" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="106" virtual="pure" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void flush() = 0">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="startingUp" fullname="QAbstractEventDispatcher::startingUp" href="qabstracteventdispatcher.html#startingUp" status="internal" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="108" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void startingUp()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="331" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="closingDown" fullname="QAbstractEventDispatcher::closingDown" href="qabstracteventdispatcher.html#closingDown" status="internal" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="109" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void closingDown()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="337" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="installNativeEventFilter" fullname="QAbstractEventDispatcher::installNativeEventFilter" href="qabstracteventdispatcher.html#installNativeEventFilter" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="111" since="5.0" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void installNativeEventFilter(QAbstractNativeEventFilter *filterObj)">
+                <parameter type="QAbstractNativeEventFilter *" name="filterObj" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="377" column="4">
+                    <para>Installs an event filter <argument>filterObj</argument> for all native events received by the application.</para>
+                    <para>The event filter <argument>filterObj</argument> receives events via its <link raw="QAbstractNativeEventFilter::nativeEventFilter()" href="qabstractnativeeventfilter.html#nativeEventFilter" type="function">nativeEventFilter()</link> function, which is called for all events received by all threads.</para>
+                    <para>The <link raw="QAbstractNativeEventFilter::nativeEventFilter()" href="qabstractnativeeventfilter.html#nativeEventFilter" type="function">nativeEventFilter()</link> function should return true if the event should be filtered, (in this case, stopped). It should return false to allow normal Qt processing to continue: the native event can then be translated into a <link raw="QEvent" href="qevent.html" type="class">QEvent</link> and handled by the standard Qt <link raw="QEvent" href="qevent.html" type="class">event</link> filtering, e.g. <link raw="QObject::installEventFilter()" href="qobject.html#installEventFilter" type="function">QObject::installEventFilter()</link>.</para>
+                    <para>If multiple event filters are installed, the filter that was installed last is activated first.</para>
+                    <para>
+                        <bold>Note:</bold> The filter function set here receives native messages, that is, MSG or XEvent structs.</para>
+                    <para>For maximum portability, you should always try to use <link raw="QEvent" href="qevent.html" type="class">QEvent</link> objects and <link raw="QObject::installEventFilter()" href="qobject.html#installEventFilter" type="function">QObject::installEventFilter()</link> whenever possible.</para>
+                    <see-also>
+                        <link raw="QObject::installEventFilter()" href="qobject.html#installEventFilter" type="function">QObject::installEventFilter()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="removeNativeEventFilter" fullname="QAbstractEventDispatcher::removeNativeEventFilter" href="qabstracteventdispatcher.html#removeNativeEventFilter" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="112" since="5.0" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void removeNativeEventFilter(QAbstractNativeEventFilter *filter)">
+                <parameter type="QAbstractNativeEventFilter *" name="filter" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="412" column="4">
+                    <para>Removes the event filter <argument>filter</argument> from this object. The request is ignored if such an event filter has not been installed.</para>
+                    <para>All event filters for this object are automatically removed when this object is destroyed.</para>
+                    <para>It is always safe to remove an event filter, even during event filter filter activation (that is, even from within the <link raw="QAbstractNativeEventFilter::nativeEventFilter()" href="qabstractnativeeventfilter.html#nativeEventFilter" type="function">nativeEventFilter()</link> function).</para>
+                    <see-also>
+                        <link raw="installNativeEventFilter()" href="qabstracteventdispatcher.html#installNativeEventFilter" type="function">installNativeEventFilter()</link>
+                        <link raw="QAbstractNativeEventFilter" href="qabstractnativeeventfilter.html" type="class">QAbstractNativeEventFilter</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="filterNativeEvent" fullname="QAbstractEventDispatcher::filterNativeEvent" href="qabstracteventdispatcher.html#filterNativeEvent" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="113" since="5.0" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool filterNativeEvent(const QByteArray &amp;eventType, void *message, long *result)">
+                <parameter type="const QByteArray &amp;" name="eventType" default=""/>
+                <parameter type="void *" name="message" default=""/>
+                <parameter type="long *" name="result" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="436" column="4">
+                    <para>Sends <argument>message</argument> through the event filters that were set by <link raw="installNativeEventFilter()" href="qabstracteventdispatcher.html#installNativeEventFilter" type="function">installNativeEventFilter()</link>. This function returns <teletype type="highlighted">true</teletype> as soon as an event filter returns <teletype type="highlighted">true</teletype>, and false otherwise to indicate that the processing of the event should continue.</para>
+                    <para>Subclasses of <link raw="QAbstractEventDispatcher" href="qabstracteventdispatcher.html" type="class">QAbstractEventDispatcher</link> <italic>must</italic> call this function for <italic>all</italic> messages received from the system to ensure compatibility with any extensions that may be used in the application. The type of event <argument>eventType</argument> is specific to the platform plugin chosen at run-time, and can be used to cast message to the right type. The <argument>result</argument> pointer is only used on Windows, and corresponds to the LRESULT pointer.</para>
+                    <para>Note that the type of <argument>message</argument> is platform dependent. See <link raw="QAbstractNativeEventFilter" href="qabstractnativeeventfilter.html" type="class">QAbstractNativeEventFilter</link> for details.</para>
+                    <see-also>
+                        <link raw="installNativeEventFilter()" href="qabstracteventdispatcher.html#installNativeEventFilter" type="function">installNativeEventFilter()</link>
+                        <link raw="QAbstractNativeEventFilter::nativeEventFilter()" href="qabstractnativeeventfilter.html#nativeEventFilter" type="function">QAbstractNativeEventFilter::nativeEventFilter()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="filterEvent" fullname="QAbstractEventDispatcher::filterEvent" href="qabstracteventdispatcher.html#filterEvent" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="115" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool filterEvent(void *message)">
+                <parameter type="void *" name="message" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="aboutToBlock" fullname="QAbstractEventDispatcher::aboutToBlock" href="qabstracteventdispatcher.html#aboutToBlock" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="120" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void aboutToBlock()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="awake" fullname="QAbstractEventDispatcher::awake" href="qabstracteventdispatcher.html#awake" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="121" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void awake()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="QAbstractEventDispatcher" fullname="QAbstractEventDispatcher::QAbstractEventDispatcher" href="qabstracteventdispatcher.html#QAbstractEventDispatcher-1" status="internal" access="private" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="124" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QAbstractEventDispatcher(QAbstractEventDispatcherPrivate &amp;dd, QObject *parent)">
+                <parameter type="QAbstractEventDispatcherPrivate &amp;" name="dd" default=""/>
+                <parameter type="QObject *" name="parent" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="148" column="4"/>
+            </function>
+        </class>
+    </document>
+</WebXML>

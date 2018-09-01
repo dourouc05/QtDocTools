@@ -257,6 +257,7 @@
             if(contains(@fullname, '::')) then concat(@type, ' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature "/>
         </db:title>
         
+        <xsl:apply-templates mode="content_class_synopsis" select="."/>
         <xsl:apply-templates mode="content_generic" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
@@ -267,7 +268,36 @@
   </xsl:template> 
   
   <xsl:template mode="content_class_synopsis" match="class">
-    <xsl:message>CLASSES NOT IMPLEMENTED</xsl:message>
+    <db:classsynopsis>
+      <db:ooclass><xsl:value-of select="@fullname"/></db:ooclass>
+      
+      <xsl:if test="variable">
+        <xsl:for-each select="variable">
+          <xsl:apply-templates mode="content_class_synopsis"/>
+        </xsl:for-each>
+      </xsl:if>
+      
+      <xsl:if test="function">
+        <xsl:for-each select="function">
+          <xsl:apply-templates mode="content_class_synopsis"/>
+        </xsl:for-each>
+      </xsl:if>
+      
+      <xsl:if test="enum">
+        <xsl:for-each select="enum">
+          <xsl:apply-templates mode="content_class_synopsis"/>
+          <xsl:if test="following-sibling::*[1][self::typedef]">
+            <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:if>
+      
+      <xsl:if test="property">
+        <xsl:for-each select="property">
+          <xsl:apply-templates mode="content_class_synopsis"/>
+        </xsl:for-each>
+      </xsl:if>
+    </db:classsynopsis>
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="variable">
