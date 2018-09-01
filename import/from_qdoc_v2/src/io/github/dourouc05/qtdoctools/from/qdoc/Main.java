@@ -57,12 +57,12 @@ public class Main {
         XsltExecutable exe = c.compile(new StreamSource(new File(m.xsltPath)));
 
         int i = 0;
+        String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
         for (Path file : webxml) {
             Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
 
             // Print the name of the file to process to ease debugging.
-            System.out.println("[" + i + "/" + webxml.size() + "]" + file.toString());
-            System.out.flush();
+            System.out.println("[" + String.format(iFormat, i) + "/" + webxml.size() + "]" + file.toString());
 
             XdmNode source = p.newDocumentBuilder().build(new StreamSource(file.toFile()));
             Serializer out = p.newSerializer();
@@ -72,6 +72,7 @@ public class Main {
             XsltTransformer trans = exe.load();
             trans.setInitialContextNode(source);
             trans.setDestination(out);
+            trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
             trans.transform();
 
             ++i;
@@ -275,7 +276,9 @@ public class Main {
                 Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
                 if (!qdocconfPath.toFile().isFile()) {
-                    System.out.println("Skipped module: qtbase / " + entry.getKey());
+                    if (modules.stream().noneMatch(stringPathPair -> stringPathPair.second.toFile().getName().contains(entry.getKey() + ".qdocconf"))) {
+                        System.out.println("Skipped module: qtbase / " + entry.getKey());
+                    }
                     continue;
                 }
 
@@ -285,7 +288,7 @@ public class Main {
         }
 
         // Qt 5.0 has qmake in an awkward place.
-        {
+        if (modules.stream().noneMatch(stringPathPair -> stringPathPair.second.toFile().getName().contains("qmake.qdocconf"))) {
             Path qtDocPath = sourceFolder.resolve("qtdoc");
             Path docDirectoryPath = qtDocPath.resolve("doc").resolve("config");
             Path qdocconfPath = docDirectoryPath.resolve("qmake.qdocconf");
