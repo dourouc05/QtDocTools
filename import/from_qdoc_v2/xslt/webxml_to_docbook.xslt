@@ -146,19 +146,14 @@
     <xsl:variable name="relatedNonMembers" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]"/>
     <xsl:variable name="macros" select="$elements/self::function[@access='public' and (./description/brief or ./description/para) and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
-    <xsl:if test="$classes">
+    <xsl:if test="$classes or $memberTypes">
       <db:section>
-        <db:title>Classes</db:title>
+        <db:title>Member Types Documentation</db:title>
         <xsl:for-each select="$classes/self::class">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
-      </db:section>
-    </xsl:if>
-    
-    <xsl:if test="$memberTypes">
-      <db:section>
-        <db:title>Member Type Documentation</db:title>
+        
         <xsl:for-each select="$memberTypes/self::enum">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
@@ -251,11 +246,7 @@
   <xsl:template mode="content_class_elements" match="class">
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
-        <db:title>
-          <xsl:variable name="sanitisedName" select="replace(replace(replace(replace(@name, '\+', '\\+'), '\[', '\\['), '\]', '\\]'), '\|', '\\|')" as="xs:string"/>
-          <xsl:value-of select="
-            if(contains(@fullname, '::')) then concat(@type, ' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature "/>
-        </db:title>
+        <db:title><xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
         <xsl:apply-templates mode="content_generic" select="description"/>
@@ -273,13 +264,13 @@
       
       <xsl:if test="variable">
         <xsl:for-each select="variable">
-          <xsl:apply-templates mode="content_class_synopsis"/>
+          <xsl:apply-templates mode="content_class_synopsis" select="."/>
         </xsl:for-each>
       </xsl:if>
       
       <xsl:if test="function">
         <xsl:for-each select="function">
-          <xsl:apply-templates mode="content_class_synopsis"/>
+          <xsl:apply-templates mode="content_class_synopsis" select="."/>
         </xsl:for-each>
       </xsl:if>
       
@@ -294,7 +285,7 @@
       
       <xsl:if test="property">
         <xsl:for-each select="property">
-          <xsl:apply-templates mode="content_class_synopsis"/>
+          <xsl:apply-templates mode="content_class_synopsis" select="."/>
         </xsl:for-each>
       </xsl:if>
     </db:classsynopsis>
@@ -305,7 +296,10 @@
   </xsl:template>
   
   <xsl:template mode="content_class_synopsis" match="variable">
-    <xsl:message>VARIABLES NOT IMPLEMENTED</xsl:message>
+    <db:fieldsynopsis>
+      <db:type><xsl:value-of select="@type"/></db:type>
+      <db:varname><xsl:value-of select="@name"/></db:varname>
+    </db:fieldsynopsis>
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="function">

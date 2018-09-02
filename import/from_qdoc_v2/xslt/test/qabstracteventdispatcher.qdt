@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>QAbstractEventDispatcher</db:title>
+    <db:abstract>
+      <db:para>Interface to manage Qt's event queue</db:para>
+    </db:abstract>
+    <db:pubdate>2018-09-02+02:00</db:pubdate>
+    <db:date>2018-09-02+02:00</db:date>
+    <db:productname>Qt</db:productname>
+    <db:productnumber>1.2</db:productnumber>
+  </db:info>
+  <db:classsynopsis>
+    <db:ooclass>
+      <db:classname>QAbstractEventDispatcher</db:classname>
+    </db:ooclass>
+    <db:classsynopsisinfo role="module">QtCore</db:classsynopsisinfo>
+    <db:namespacesynopsisinfo role="headers">#include &lt;qabstracteventdispatcher.h&gt;</db:namespacesynopsisinfo>
+    <db:classsynopsisinfo role="inherits">QObject</db:classsynopsisinfo>
+    <db:classsynopsisinfo role="group">events</db:classsynopsisinfo>
+  </db:classsynopsis>
+  <db:section xml:id="details">
+    <db:title>Detailed Description</db:title>
+    <db:para>The <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code> class provides an interface to manage Qt's event queue.</db:para>
+    <db:para>An event dispatcher receives events from the window system and other sources. It then sends them to the <db:code><db:link xlink:href="qcoreapplication.html" xrefstyle="class" annotations="QCoreApplication">QCoreApplication</db:link></db:code> or <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> instance for processing and delivery. <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code> provides fine-grained control over event delivery.</db:para>
+    <db:para>For simple control of event processing use <db:code><db:link xlink:href="qcoreapplication.html#processEvents" xrefstyle="function" annotations="QCoreApplication::processEvents()">QCoreApplication::processEvents()</db:link></db:code>.</db:para>
+    <db:para>For finer control of the application's event loop, call <db:code><db:link xlink:href="qabstracteventdispatcher.html#instance" xrefstyle="function" annotations="instance()">instance()</db:link></db:code> and call functions on the <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code> object that is returned. If you want to use your own instance of <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code> or of a <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code> subclass, you must install it with <db:code><db:link xlink:href="qcoreapplication.html#setEventDispatcher" xrefstyle="function" annotations="QCoreApplication::setEventDispatcher()">QCoreApplication::setEventDispatcher()</db:link></db:code> or <db:code><db:link xlink:href="qthread.html#setEventDispatcher" xrefstyle="function" annotations="QThread::setEventDispatcher()">QThread::setEventDispatcher()</db:link></db:code>
+      <db:emphasis>before</db:emphasis> a default event dispatcher has been installed.</db:para>
+    <db:para>The main event loop is started by calling <db:code><db:link xlink:href="qcoreapplication.html#exec" xrefstyle="function" annotations="QCoreApplication::exec()">QCoreApplication::exec()</db:link></db:code>, and stopped by calling <db:code><db:link xlink:href="qcoreapplication.html#exit" xrefstyle="function" annotations="QCoreApplication::exit()">QCoreApplication::exit()</db:link></db:code>. Local event loops can be created using <db:code><db:link xlink:href="qeventloop.html" xrefstyle="class" annotations="QEventLoop">QEventLoop</db:link></db:code>.</db:para>
+    <db:para>Programs that perform long operations can call <db:code><db:link xlink:href="qabstracteventdispatcher.html#processEvents" xrefstyle="function" annotations="processEvents()">processEvents()</db:link></db:code> with a bitwise OR combination of various <db:code><db:link xlink:href="qeventloop.html#ProcessEventsFlag-enum" xrefstyle="enum" annotations="QEventLoop::ProcessEventsFlag">QEventLoop::ProcessEventsFlag</db:link></db:code> values to control which events should be delivered.</db:para>
+    <db:para>
+      <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code> also allows the integration of an external event loop with the Qt event loop.</db:para>
+    <db:para>
+      <db:emphasis role="bold">See Also:</db:emphasis>
+      <db:simplelist type="vert">
+        <db:member>
+          <db:code><db:link xlink:href="qeventloop.html" xrefstyle="class" annotations="QEventLoop">QEventLoop</db:link></db:code>
+        </db:member>
+        <db:member>
+          <db:code><db:link xlink:href="qcoreapplication.html" xrefstyle="class" annotations="QCoreApplication">QCoreApplication</db:link></db:code>
+        </db:member>
+        <db:member>
+          <db:code><db:link xlink:href="qthread.html" xrefstyle="class" annotations="QThread">QThread</db:link></db:code>
+        </db:member>
+      </db:simplelist>
+    </db:para>
+  </db:section>
+  <db:section>
+    <db:title>Member Types Documentation</db:title>
+    <db:section>
+      <db:title>QAbstractEventDispatcher::TimerInfo</db:title>
+      <db:classsynopsis>
+        <db:ooclass>QAbstractEventDispatcher::TimerInfo</db:ooclass>
+        <db:fieldsynopsis>
+          <db:type>int</db:type>
+          <db:varname>timerId</db:varname>
+        </db:fieldsynopsis>
+        <db:fieldsynopsis>
+          <db:type>int</db:type>
+          <db:varname>interval</db:varname>
+        </db:fieldsynopsis>
+        <db:fieldsynopsis>
+          <db:type>Qt::TimerType</db:type>
+          <db:varname>timerType</db:varname>
+        </db:fieldsynopsis>
+        <db:constructorsynopsis>
+          <db:modifier>public</db:modifier>
+          <db:methodname>TimerInfo</db:methodname>
+          <db:methodparam>
+            <db:type>int</db:type>
+            <db:parameter>id</db:parameter>
+          </db:methodparam>
+          <db:methodparam>
+            <db:type>int</db:type>
+            <db:parameter>i</db:parameter>
+          </db:methodparam>
+          <db:methodparam>
+            <db:type>Qt::TimerType</db:type>
+            <db:parameter>t</db:parameter>
+          </db:methodparam>
+        </db:constructorsynopsis>
+      </db:classsynopsis>
+      <db:para>This struct represents information about a timer: <db:link xlink:href="qabstracteventdispatcher-timerinfo.html#timerId-var" xrefstyle="variable" annotations="QAbstractEventDispatcher::TimerInfo::timerId">timerId</db:link>, <db:link xlink:href="qabstracteventdispatcher-timerinfo.html#interval-var" xrefstyle="variable" annotations="QAbstractEventDispatcher::TimerInfo::interval">interval</db:link>, and <db:link xlink:href="qabstracteventdispatcher-timerinfo.html#timerType-var" xrefstyle="variable" annotations="QAbstractEventDispatcher::TimerInfo::timerType">timerType</db:link>.</db:para>
+      <db:para>
+        <db:emphasis role="bold">See Also:</db:emphasis>
+        <db:simplelist type="vert">
+          <db:member>
+            <db:code><db:link xlink:href="qabstracteventdispatcher.html#registeredTimers" xrefstyle="function" annotations="registeredTimers()">registeredTimers()</db:link></db:code>
+          </db:member>
+        </db:simplelist>
+      </db:para>
+    </db:section>
+  </db:section>
+  <db:section>
+    <db:title>Member Function Documentation</db:title>
+    <db:section>
+      <db:title> QAbstractEventDispatcher::QAbstractEventDispatcher(QObject *parent)</db:title>
+      <db:constructorsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:methodname>QAbstractEventDispatcher</db:methodname>
+        <db:methodparam>
+          <db:type>QObject *</db:type>
+          <db:parameter>parent</db:parameter>
+          <db:initializer>nullptr</db:initializer>
+        </db:methodparam>
+      </db:constructorsynopsis>
+      <db:para>Constructs a new event dispatcher with the given <db:code role="argument">parent</db:code>.</db:para>
+    </db:section>
+    <db:section>
+      <db:title> QAbstractEventDispatcher::~QAbstractEventDispatcher()</db:title>
+      <db:destructorsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:methodname>~QAbstractEventDispatcher</db:methodname>
+        <db:void/>
+      </db:destructorsynopsis>
+      <db:para>Destroys the event dispatcher.</db:para>
+    </db:section>
+    <db:section>
+      <db:title>QAbstractEventDispatcher * QAbstractEventDispatcher::instance(QThread *thread)</db:title>
+      <db:methodsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:modifier>static</db:modifier>
+        <db:type>QAbstractEventDispatcher *</db:type>
+        <db:methodname>instance</db:methodname>
+        <db:methodparam>
+          <db:type>QThread *</db:type>
+          <db:parameter>thread</db:parameter>
+          <db:initializer>nullptr</db:initializer>
+        </db:methodparam>
+      </db:methodsynopsis>
+      <db:para>Returns a pointer to the event dispatcher object for the specified <db:code role="argument">thread</db:code>. If <db:code role="argument">thread</db:code> is zero, the current thread is used. If no event dispatcher exists for the specified thread, this function returns 0.</db:para>
+      <db:note>
+        <db:para> If Qt is built without thread support, the <db:code role="argument">thread</db:code> argument is ignored.</db:para>
+      </db:note>
+    </db:section>
+    <db:section>
+      <db:title>bool QAbstractEventDispatcher::filterNativeEvent(const QByteArray &amp;eventType, void *message, long *result)</db:title>
+      <db:methodsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:type>bool</db:type>
+        <db:methodname>filterNativeEvent</db:methodname>
+        <db:methodparam>
+          <db:type>const QByteArray &amp;</db:type>
+          <db:parameter>eventType</db:parameter>
+        </db:methodparam>
+        <db:methodparam>
+          <db:type>void *</db:type>
+          <db:parameter>message</db:parameter>
+        </db:methodparam>
+        <db:methodparam>
+          <db:type>long *</db:type>
+          <db:parameter>result</db:parameter>
+        </db:methodparam>
+      </db:methodsynopsis>
+      <db:para>Sends <db:code role="argument">message</db:code> through the event filters that were set by <db:code><db:link xlink:href="qabstracteventdispatcher.html#installNativeEventFilter" xrefstyle="function" annotations="installNativeEventFilter()">installNativeEventFilter()</db:link></db:code>. This function returns <db:code>true</db:code> as soon as an event filter returns <db:code>true</db:code>, and false otherwise to indicate that the processing of the event should continue.</db:para>
+      <db:para>Subclasses of <db:code><db:link xlink:href="qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code>
+        <db:emphasis>must</db:emphasis> call this function for <db:emphasis>all</db:emphasis> messages received from the system to ensure compatibility with any extensions that may be used in the application. The type of event <db:code role="argument">eventType</db:code> is specific to the platform plugin chosen at run-time, and can be used to cast message to the right type. The <db:code role="argument">result</db:code> pointer is only used on Windows, and corresponds to the LRESULT pointer.</db:para>
+      <db:para>Note that the type of <db:code role="argument">message</db:code> is platform dependent. See <db:code><db:link xlink:href="qabstractnativeeventfilter.html" xrefstyle="class" annotations="QAbstractNativeEventFilter">QAbstractNativeEventFilter</db:link></db:code> for details.</db:para>
+      <db:para>
+        <db:emphasis role="bold">See Also:</db:emphasis>
+        <db:simplelist type="vert">
+          <db:member>
+            <db:code><db:link xlink:href="qabstracteventdispatcher.html#installNativeEventFilter" xrefstyle="function" annotations="installNativeEventFilter()">installNativeEventFilter()</db:link></db:code>
+          </db:member>
+          <db:member>
+            <db:code><db:link xlink:href="qabstractnativeeventfilter.html#nativeEventFilter" xrefstyle="function" annotations="QAbstractNativeEventFilter::nativeEventFilter()">QAbstractNativeEventFilter::nativeEventFilter()</db:link></db:code>
+          </db:member>
+        </db:simplelist>
+      </db:para>
+      <db:para>This property was introduced in Qt 5.0.</db:para>
+    </db:section>
+    <db:section>
+      <db:title>int QAbstractEventDispatcher::registerTimer(int interval, Qt::TimerType timerType, QObject *object)</db:title>
+      <db:methodsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:type>int</db:type>
+        <db:methodname>registerTimer</db:methodname>
+        <db:methodparam>
+          <db:type>int</db:type>
+          <db:parameter>interval</db:parameter>
+        </db:methodparam>
+        <db:methodparam>
+          <db:type>Qt::TimerType</db:type>
+          <db:parameter>timerType</db:parameter>
+        </db:methodparam>
+        <db:methodparam>
+          <db:type>QObject *</db:type>
+          <db:parameter>object</db:parameter>
+        </db:methodparam>
+      </db:methodsynopsis>
+      <db:para>Registers a timer with the specified <db:code role="argument">interval</db:code> and <db:code role="argument">timerType</db:code> for the given <db:code role="argument">object</db:code> and returns the timer id.</db:para>
+    </db:section>
+    <db:section>
+      <db:title>void QAbstractEventDispatcher::installNativeEventFilter(QAbstractNativeEventFilter *filterObj)</db:title>
+      <db:methodsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:void/>
+        <db:methodname>installNativeEventFilter</db:methodname>
+        <db:methodparam>
+          <db:type>QAbstractNativeEventFilter *</db:type>
+          <db:parameter>filterObj</db:parameter>
+        </db:methodparam>
+      </db:methodsynopsis>
+      <db:para>Installs an event filter <db:code role="argument">filterObj</db:code> for all native events received by the application.</db:para>
+      <db:para>The event filter <db:code role="argument">filterObj</db:code> receives events via its <db:code><db:link xlink:href="qabstractnativeeventfilter.html#nativeEventFilter" xrefstyle="function" annotations="QAbstractNativeEventFilter::nativeEventFilter()">nativeEventFilter()</db:link></db:code> function, which is called for all events received by all threads.</db:para>
+      <db:para>The <db:code><db:link xlink:href="qabstractnativeeventfilter.html#nativeEventFilter" xrefstyle="function" annotations="QAbstractNativeEventFilter::nativeEventFilter()">nativeEventFilter()</db:link></db:code> function should return true if the event should be filtered, (in this case, stopped). It should return false to allow normal Qt processing to continue: the native event can then be translated into a <db:code><db:link xlink:href="qevent.html" xrefstyle="class" annotations="QEvent">QEvent</db:link></db:code> and handled by the standard Qt <db:code><db:link xlink:href="qevent.html" xrefstyle="class" annotations="QEvent">event</db:link></db:code> filtering, e.g. <db:code><db:link xlink:href="qobject.html#installEventFilter" xrefstyle="function" annotations="QObject::installEventFilter()">QObject::installEventFilter()</db:link></db:code>.</db:para>
+      <db:para>If multiple event filters are installed, the filter that was installed last is activated first.</db:para>
+      <db:note>
+        <db:para> The filter function set here receives native messages, that is, MSG or XEvent structs.</db:para>
+      </db:note>
+      <db:para>For maximum portability, you should always try to use <db:code><db:link xlink:href="qevent.html" xrefstyle="class" annotations="QEvent">QEvent</db:link></db:code> objects and <db:code><db:link xlink:href="qobject.html#installEventFilter" xrefstyle="function" annotations="QObject::installEventFilter()">QObject::installEventFilter()</db:link></db:code> whenever possible.</db:para>
+      <db:para>
+        <db:emphasis role="bold">See Also:</db:emphasis>
+        <db:simplelist type="vert">
+          <db:member>
+            <db:code><db:link xlink:href="qobject.html#installEventFilter" xrefstyle="function" annotations="QObject::installEventFilter()">QObject::installEventFilter()</db:link></db:code>
+          </db:member>
+        </db:simplelist>
+      </db:para>
+      <db:para>This property was introduced in Qt 5.0.</db:para>
+    </db:section>
+    <db:section>
+      <db:title>void QAbstractEventDispatcher::removeNativeEventFilter(QAbstractNativeEventFilter *filter)</db:title>
+      <db:methodsynopsis>
+        <db:modifier>public</db:modifier>
+        <db:void/>
+        <db:methodname>removeNativeEventFilter</db:methodname>
+        <db:methodparam>
+          <db:type>QAbstractNativeEventFilter *</db:type>
+          <db:parameter>filter</db:parameter>
+        </db:methodparam>
+      </db:methodsynopsis>
+      <db:para>Removes the event filter <db:code role="argument">filter</db:code> from this object. The request is ignored if such an event filter has not been installed.</db:para>
+      <db:para>All event filters for this object are automatically removed when this object is destroyed.</db:para>
+      <db:para>It is always safe to remove an event filter, even during event filter filter activation (that is, even from within the <db:code><db:link xlink:href="qabstractnativeeventfilter.html#nativeEventFilter" xrefstyle="function" annotations="QAbstractNativeEventFilter::nativeEventFilter()">nativeEventFilter()</db:link></db:code> function).</db:para>
+      <db:para>
+        <db:emphasis role="bold">See Also:</db:emphasis>
+        <db:simplelist type="vert">
+          <db:member>
+            <db:code><db:link xlink:href="qabstracteventdispatcher.html#installNativeEventFilter" xrefstyle="function" annotations="installNativeEventFilter()">installNativeEventFilter()</db:link></db:code>
+          </db:member>
+          <db:member>
+            <db:code><db:link xlink:href="qabstractnativeeventfilter.html" xrefstyle="class" annotations="QAbstractNativeEventFilter">QAbstractNativeEventFilter</db:link></db:code>
+          </db:member>
+        </db:simplelist>
+      </db:para>
+      <db:para>This property was introduced in Qt 5.0.</db:para>
+    </db:section>
+  </db:section>
+</db:article>
