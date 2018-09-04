@@ -1,10 +1,12 @@
 package io.github.dourouc05.qtdoctools.from.qdoc;
 
+import net.sf.saxon.lib.StandardErrorListener;
+import net.sf.saxon.lib.StandardLogger;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -374,17 +376,26 @@ public class Main {
             saxonExecutable = saxonCompiler.compile(new StreamSource(new File(xsltPath)));
         }
 
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(os, true, StandardCharsets.UTF_8);
+        StandardErrorListener sel = new StandardErrorListener();
+        sel.setLogger(new StandardLogger(ps));
+
         XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
         Serializer out = saxonProcessor.newSerializer();
         out.setOutputProperty(Serializer.Property.METHOD, "xml");
         out.setOutputProperty(Serializer.Property.INDENT, "yes");
         out.setOutputFile(destination.toFile());
+        saxonCompiler.setErrorListener(sel);
         XsltTransformer trans = saxonExecutable.load();
         trans.setInitialContextNode(source);
         trans.setDestination(out);
         trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
         trans.transform();
 
-        System.err.flush();
+        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+        if (errors.length() > 0) {
+            System.out.println(errors);
+        }
     }
 }
