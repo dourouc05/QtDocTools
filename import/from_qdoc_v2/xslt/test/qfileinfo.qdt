@@ -1,0 +1,1476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>QFileInfo</db:title>
+      <db:abstract>
+         <db:para>System-independent file information</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-08+02:00</db:pubdate>
+      <db:date>2018-09-08+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QFileInfo</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="threadsafety">reentrant</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="module">QtCore</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qfileinfo.h&gt;</db:namespacesynopsisinfo>
+      <db:classsynopsisinfo role="group">io</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="group">shared</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> class provides system-independent file information.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> provides information about a file's name and position (path) in the file system, its access rights and whether it is a directory or symbolic link, etc. The file's size and last modified/read times are also available. <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> can also be used to obtain information about a Qt <db:link xlink:href="resources.html" xrefstyle="page" annotations="resource system">resource</db:link>.</db:para>
+      <db:para>A <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> can point to a file with either a relative or an absolute file path. Absolute file paths begin with the directory separator "/" (or with a drive specification on Windows). Relative file names begin with a directory name or a file name and specify a path relative to the current working directory. An example of an absolute path is the string "/tmp/quartz". A relative path might look like "src/fatlib". You can use the function <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code> to check whether a <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> is using a relative or an absolute file path. You can call the function <db:code><db:link xlink:href="qfileinfo.html#makeAbsolute" xrefstyle="function" annotations="makeAbsolute()">makeAbsolute()</db:link></db:code> to convert a relative <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>'s path to an absolute path.</db:para>
+      <db:para>The file that the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> works on is set in the constructor or later with <db:code><db:link xlink:href="qfileinfo.html#setFile" xrefstyle="function" annotations="setFile()">setFile()</db:link></db:code>. Use <db:code><db:link xlink:href="qfileinfo.html#exists" xrefstyle="function" annotations="exists()">exists()</db:link></db:code> to see if the file exists and <db:code><db:link xlink:href="qfileinfo.html#size" xrefstyle="function" annotations="size()">size()</db:link></db:code> to get its size.</db:para>
+      <db:para>The file's type is obtained with <db:code><db:link xlink:href="qfileinfo.html#isFile" xrefstyle="function" annotations="isFile()">isFile()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#isDir" xrefstyle="function" annotations="isDir()">isDir()</db:link></db:code> and <db:code><db:link xlink:href="qfileinfo.html#isSymLink" xrefstyle="function" annotations="isSymLink()">isSymLink()</db:link></db:code>. The <db:code><db:link xlink:href="qfileinfo.html#symLinkTarget" xrefstyle="function" annotations="symLinkTarget()">symLinkTarget()</db:link></db:code> function provides the name of the file the symlink points to.</db:para>
+      <db:para>On Unix (including  and iOS), the symlink has the same <db:code><db:link xlink:href="qfileinfo.html#size" xrefstyle="function" annotations="size()">size()</db:link></db:code> has the file it points to, because Unix handles symlinks transparently; similarly, opening a symlink using <db:code><db:link xlink:href="qfile.html" xrefstyle="class" annotations="QFile">QFile</db:link></db:code> effectively opens the link's target. For example:</db:para>
+      <db:programlisting>
+#ifdef Q_OS_UNIX
+
+QFileInfo info1("/home/bob/bin/untabify");
+info1.isSymLink();          // returns true
+info1.absoluteFilePath();   // returns "/home/bob/bin/untabify"
+info1.size();               // returns 56201
+info1.symLinkTarget();      // returns "/opt/pretty++/bin/untabify"
+
+QFileInfo info2(info1.symLinkTarget());
+info2.isSymLink();          // returns false
+info2.absoluteFilePath();   // returns "/opt/pretty++/bin/untabify"
+info2.size();               // returns 56201
+
+#endif
+</db:programlisting>
+      <db:para>On Windows, symlinks (shortcuts) are <db:code>.lnk</db:code> files. The reported <db:code><db:link xlink:href="qfileinfo.html#size" xrefstyle="function" annotations="size()">size()</db:link></db:code> is that of the symlink (not the link's target), and opening a symlink using <db:code><db:link xlink:href="qfile.html" xrefstyle="class" annotations="QFile">QFile</db:link></db:code> opens the <db:code>.lnk</db:code> file. For example:</db:para>
+      <db:programlisting>
+#ifdef Q_OS_WIN
+
+QFileInfo info1("C:\\Documents and Settings\\Bob\\untabify.lnk");
+info1.isSymLink();          // returns true
+info1.absoluteFilePath();   // returns "C:/Documents and Settings/Bob/untabify.lnk"
+info1.size();               // returns 743
+info1.symLinkTarget();      // returns "C:/Pretty++/untabify"
+
+QFileInfo info2(info1.symLinkTarget());
+info2.isSymLink();          // returns false
+info2.absoluteFilePath();   // returns "C:/Pretty++/untabify"
+info2.size();               // returns 63942
+
+#endif
+</db:programlisting>
+      <db:para>Elements of the file's name can be extracted with <db:code><db:link xlink:href="qfileinfo.html#path" xrefstyle="function" annotations="path()">path()</db:link></db:code> and <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>. The <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>'s parts can be extracted with <db:code><db:link xlink:href="qfileinfo.html#baseName" xrefstyle="function" annotations="baseName()">baseName()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#suffix" xrefstyle="function" annotations="suffix()">suffix()</db:link></db:code> or <db:code><db:link xlink:href="qfileinfo.html#completeSuffix" xrefstyle="function" annotations="completeSuffix()">completeSuffix()</db:link></db:code>. <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> objects to directories created by Qt classes will not have a trailing file separator. If you wish to use trailing separators in your own file info objects, just append one to the file name given to the constructors or <db:code><db:link xlink:href="qfileinfo.html#setFile" xrefstyle="function" annotations="setFile()">setFile()</db:link></db:code>.</db:para>
+      <db:para>The file's dates are returned by <db:code><db:link xlink:href="qfileinfo-obsolete.html#created" xrefstyle="function" annotations="created()">created()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#lastModified" xrefstyle="function" annotations="lastModified()">lastModified()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#lastRead" xrefstyle="function" annotations="lastRead()">lastRead()</db:link></db:code> and <db:code><db:link xlink:href="qfileinfo.html#fileTime" xrefstyle="function" annotations="fileTime()">fileTime()</db:link></db:code>. Information about the file's access permissions is obtained with <db:code><db:link xlink:href="qfileinfo.html#isReadable" xrefstyle="function" annotations="isReadable()">isReadable()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#isWritable" xrefstyle="function" annotations="isWritable()">isWritable()</db:link></db:code> and <db:code><db:link xlink:href="qfileinfo.html#isExecutable" xrefstyle="function" annotations="isExecutable()">isExecutable()</db:link></db:code>. The file's ownership is available from <db:code><db:link xlink:href="qfileinfo.html#owner" xrefstyle="function" annotations="owner()">owner()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#ownerId" xrefstyle="function" annotations="ownerId()">ownerId()</db:link></db:code>, <db:code><db:link xlink:href="qfileinfo.html#group" xrefstyle="function" annotations="group()">group()</db:link></db:code> and <db:code><db:link xlink:href="qfileinfo.html#groupId" xrefstyle="function" annotations="groupId()">groupId()</db:link></db:code>. You can examine a file's permissions and ownership in a single statement using the <db:code><db:link xlink:href="qfileinfo.html#permission" xrefstyle="function" annotations="permission()">permission()</db:link></db:code> function.</db:para>
+      <db:note xml:id="ntfs-permissions">
+         <db:para> On NTFS file systems, ownership and permissions checking is disabled by default for performance reasons. To enable it, include the following line:</db:para>
+      </db:note>
+      <db:programlisting>
+extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+</db:programlisting>
+      <db:para>Permission checking is then turned on and off by incrementing and decrementing <db:code>qt_ntfs_permission_lookup</db:code> by 1.</db:para>
+      <db:programlisting>
+qt_ntfs_permission_lookup++; // turn checking on
+qt_ntfs_permission_lookup--; // turn it off again
+</db:programlisting>
+      <db:section xml:id="performance-issues">
+         <db:title>Performance Issues</db:title>
+         <db:para>Some of <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>'s functions query the file system, but for performance reasons, some functions only operate on the file name itself. For example: To return the absolute path of a relative file name, <db:code><db:link xlink:href="qfileinfo.html#absolutePath" xrefstyle="function" annotations="absolutePath()">absolutePath()</db:link></db:code> has to query the file system. The <db:code><db:link xlink:href="qfileinfo.html#path" xrefstyle="function" annotations="path()">path()</db:link></db:code> function, however, can work on the file name directly, and so it is faster.</db:para>
+         <db:note>
+            <db:para> To speed up performance, <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> caches information about the file.</db:para>
+         </db:note>
+         <db:para>Because files can be changed by other users or programs, or even by other parts of the same program, there is a function that refreshes the file information: <db:code><db:link xlink:href="qfileinfo.html#refresh" xrefstyle="function" annotations="refresh()">refresh()</db:link></db:code>. If you want to switch off a <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>'s caching and force it to access the file system every time you request information from it call <db:code><db:link xlink:href="qfileinfo.html#setCaching" xrefstyle="function" annotations="setCaching">setCaching</db:link></db:code>(false).</db:para>
+      </db:section>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qfile.html" xrefstyle="class" annotations="QFile">QFile</db:link></db:code>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Types Documentation</db:title>
+      <db:section>
+         <db:title>typedef QFileInfoList</db:title>
+         <db:typedefsynopsis>
+            <db:typedefname>QFileInfoList</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para>Synonym for <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>&gt;.</db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QFileInfo::QFileInfo()</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QFileInfo</db:methodname>
+            <db:void/>
+         </db:constructorsynopsis>
+         <db:para>Constructs an empty <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> object.</db:para>
+         <db:para>Note that an empty <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> object contain no file reference.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#setFile" xrefstyle="function" annotations="setFile()">setFile()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title> QFileInfo::QFileInfo(const QDir &amp;dir, const QString &amp;file)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QFileInfo</db:methodname>
+            <db:methodparam>
+               <db:type>const QDir &amp;</db:type>
+               <db:parameter>dir</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Constructs a new <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> that gives information about the given <db:code role="argument">file</db:code> in the directory <db:code role="argument">dir</db:code>.</db:para>
+         <db:para>If <db:code role="argument">dir</db:code> has a relative path, the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> will also have a relative path.</db:para>
+         <db:para>If <db:code role="argument">file</db:code> is an absolute path, then the directory specified by <db:code role="argument">dir</db:code> will be disregarded.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title> QFileInfo::QFileInfo(const QFile &amp;file)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QFileInfo</db:methodname>
+            <db:methodparam>
+               <db:type>const QFile &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Constructs a new <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> that gives information about file <db:code role="argument">file</db:code>.</db:para>
+         <db:para>If the <db:code role="argument">file</db:code> has a relative path, the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> will also have a relative path.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title> QFileInfo::QFileInfo(const QFileInfo &amp;fileinfo)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QFileInfo</db:methodname>
+            <db:methodparam>
+               <db:type>const QFileInfo &amp;</db:type>
+               <db:parameter>fileinfo</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Constructs a new <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> that is a copy of the given <db:code role="argument">fileinfo</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QFileInfo::QFileInfo(const QString &amp;file)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QFileInfo</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Constructs a new <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> that gives information about the given file. The <db:code role="argument">file</db:code> can also include an absolute or relative path.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#setFile" xrefstyle="function" annotations="setFile()">setFile()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qdir.html#setCurrent" xrefstyle="function" annotations="QDir::setCurrent()">QDir::setCurrent()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qdir.html#isRelativePath" xrefstyle="function" annotations="QDir::isRelativePath()">QDir::isRelativePath()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title> QFileInfo::~QFileInfo()</db:title>
+         <db:destructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>~QFileInfo</db:methodname>
+            <db:void/>
+         </db:destructorsynopsis>
+         <db:para>Destroys the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> and frees its resources.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDateTime QFileInfo::birthTime() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDateTime</db:type>
+            <db:methodname>birthTime</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the date and time when the file was created / born.</db:para>
+         <db:para>If the file birth time is not available, this function returns an invalid <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#lastModified" xrefstyle="function" annotations="lastModified()">lastModified()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#lastRead" xrefstyle="function" annotations="lastRead()">lastRead()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#metadataChangeTime" xrefstyle="function" annotations="metadataChangeTime()">metadataChangeTime()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.10.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDateTime QFileInfo::fileTime(QFile::FileTime time) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDateTime</db:type>
+            <db:methodname>fileTime</db:methodname>
+            <db:methodparam>
+               <db:type>QFile::FileTime</db:type>
+               <db:parameter>time</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the file time specified by <db:code role="argument">time</db:code>. If the time cannot be determined, an invalid date time is returned.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfiledevice.html#FileTime-enum" xrefstyle="enum" annotations="QFile::FileTime">QFile::FileTime</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qdatetime.html#isValid" xrefstyle="function" annotations="QDateTime::isValid()">QDateTime::isValid()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.10.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDateTime QFileInfo::lastModified() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDateTime</db:type>
+            <db:methodname>lastModified</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the date and local time when the file was last modified.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#birthTime" xrefstyle="function" annotations="birthTime()">birthTime()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#lastRead" xrefstyle="function" annotations="lastRead()">lastRead()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#metadataChangeTime" xrefstyle="function" annotations="metadataChangeTime()">metadataChangeTime()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileTime" xrefstyle="function" annotations="fileTime()">fileTime()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDateTime QFileInfo::lastRead() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDateTime</db:type>
+            <db:methodname>lastRead</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the date and local time when the file was last read (accessed).</db:para>
+         <db:para>On platforms where this information is not available, returns the same as <db:code><db:link xlink:href="qfileinfo.html#lastModified" xrefstyle="function" annotations="lastModified()">lastModified()</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#birthTime" xrefstyle="function" annotations="birthTime()">birthTime()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#lastModified" xrefstyle="function" annotations="lastModified()">lastModified()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#metadataChangeTime" xrefstyle="function" annotations="metadataChangeTime()">metadataChangeTime()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileTime" xrefstyle="function" annotations="fileTime()">fileTime()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDateTime QFileInfo::metadataChangeTime() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDateTime</db:type>
+            <db:methodname>metadataChangeTime</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the date and time when the file metadata was changed. A metadata change occurs when the file is created, but it also occurs whenever the user writes or sets inode information (for example, changing the file permissions).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#lastModified" xrefstyle="function" annotations="lastModified()">lastModified()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#lastRead" xrefstyle="function" annotations="lastRead()">lastRead()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.10.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDir QFileInfo::absoluteDir() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDir</db:type>
+            <db:methodname>absoluteDir</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the file's absolute path as a <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code> object.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#dir" xrefstyle="function" annotations="dir()">dir()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDir QFileInfo::dir() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDir</db:type>
+            <db:methodname>dir</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the path of the object's parent directory as a <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code> object.</db:para>
+         <db:note>
+            <db:para> The <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code> returned always corresponds to the object's parent directory, even if the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> represents a directory.</db:para>
+         </db:note>
+         <db:para>For each of the following,  returns the <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code>
+            <db:code>"~/examples/191697"</db:code>.</db:para>
+         <db:programlisting>
+    QFileInfo fileInfo1("~/examples/191697/.");
+    QFileInfo fileInfo2("~/examples/191697/..");
+    QFileInfo fileInfo3("~/examples/191697/main.cpp");
+</db:programlisting>
+         <db:para>For each of the following,  returns the <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code>
+            <db:code>"."</db:code>.</db:para>
+         <db:programlisting>
+    QFileInfo fileInfo4(".");
+    QFileInfo fileInfo5("..");
+    QFileInfo fileInfo6("main.cpp");
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absolutePath" xrefstyle="function" annotations="absolutePath()">absolutePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absoluteDir" xrefstyle="function" annotations="absoluteDir()">absoluteDir()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QFile::Permissions QFileInfo::permissions() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QFile::Permissions</db:type>
+            <db:methodname>permissions</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the complete OR-ed together combination of <db:link xlink:href="qfiledevice.html#Permission-enum" xrefstyle="typedef" annotations="QFile::Permissions">QFile::Permissions</db:link> for the file.</db:para>
+         <db:note>
+            <db:para> The result might be inaccurate on Windows if the <db:code><db:link xlink:href="qfileinfo.html#ntfs-permissions" xrefstyle="class" annotations="NTFS permissions">NTFS permissions</db:link></db:code> check has not been enabled.</db:para>
+         </db:note>
+      </db:section>
+      <db:section>
+         <db:title>QFileInfo &amp; QFileInfo::operator=(const QFileInfo &amp;fileinfo)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QFileInfo &amp;</db:type>
+            <db:methodname>operator=</db:methodname>
+            <db:methodparam>
+               <db:type>const QFileInfo &amp;</db:type>
+               <db:parameter>fileinfo</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Makes a copy of the given <db:code role="argument">fileinfo</db:code> and assigns it to this <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::absoluteFilePath() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>absoluteFilePath</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns an absolute path including the file name.</db:para>
+         <db:para>The absolute path name consists of the full path and the file name. On Unix this will always begin with the root, '/', directory. On Windows this will always begin 'D:/' where D is a drive letter, except for network shares that are not mapped to a drive letter, in which case the path will begin '//sharename/'. <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> will uppercase drive letters. Note that <db:code><db:link xlink:href="qdir.html" xrefstyle="class" annotations="QDir">QDir</db:link></db:code> does not do this. The code snippet below shows this.</db:para>
+         <db:programlisting/>
+         <db:para>This function returns the same as <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>, unless <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code> is true. In contrast to <db:code><db:link xlink:href="qfileinfo.html#canonicalFilePath" xrefstyle="function" annotations="canonicalFilePath()">canonicalFilePath()</db:link></db:code>, symbolic links or redundant "." or ".." elements are not necessarily removed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> If <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code> is empty the behavior of this function is undefined.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#canonicalFilePath" xrefstyle="function" annotations="canonicalFilePath()">canonicalFilePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::absolutePath() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>absolutePath</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns a file's path absolute path. This doesn't include the file name.</db:para>
+         <db:para>On Unix the absolute path will always begin with the root, '/', directory. On Windows this will always begin 'D:/' where D is a drive letter, except for network shares that are not mapped to a drive letter, in which case the path will begin '//sharename/'.</db:para>
+         <db:para>In contrast to <db:code><db:link xlink:href="qfileinfo.html#canonicalPath" xrefstyle="function" annotations="canonicalPath()">canonicalPath()</db:link></db:code> symbolic links or redundant "." or ".." elements are not necessarily removed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> If <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code> is empty the behavior of this function is undefined.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absoluteFilePath" xrefstyle="function" annotations="absoluteFilePath()">absoluteFilePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#path" xrefstyle="function" annotations="path()">path()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#canonicalPath" xrefstyle="function" annotations="canonicalPath()">canonicalPath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::baseName() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>baseName</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the base name of the file without the path.</db:para>
+         <db:para>The base name consists of all characters in the file up to (but not including) the <db:emphasis>first</db:emphasis> '.' character.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/tmp/archive.tar.gz");
+QString base = fi.baseName();  // base = "archive"
+</db:programlisting>
+         <db:para>The base name of a file is computed equally on all platforms, independent of file naming conventions (e.g., ".bashrc" on Unix has an empty base name, and the suffix is "bashrc").</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#suffix" xrefstyle="function" annotations="suffix()">suffix()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#completeSuffix" xrefstyle="function" annotations="completeSuffix()">completeSuffix()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#completeBaseName" xrefstyle="function" annotations="completeBaseName()">completeBaseName()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::bundleName() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>bundleName</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the name of the bundle.</db:para>
+         <db:para>On  and iOS this returns the proper localized name for a bundle if the path <db:code><db:link xlink:href="qfileinfo.html#isBundle" xrefstyle="function" annotations="isBundle()">isBundle()</db:link></db:code>. On all other platforms an empty <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> is returned.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/Applications/Safari.app");
+QString bundle = fi.bundleName();                // name = "Safari"
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isBundle" xrefstyle="function" annotations="isBundle()">isBundle()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#baseName" xrefstyle="function" annotations="baseName()">baseName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#suffix" xrefstyle="function" annotations="suffix()">suffix()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.3.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::canonicalFilePath() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>canonicalFilePath</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the canonical path including the file name, i.e. an absolute path without symbolic links or redundant "." or ".." elements.</db:para>
+         <db:para>If the file does not exist,  returns an empty string.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absoluteFilePath" xrefstyle="function" annotations="absoluteFilePath()">absoluteFilePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#dir" xrefstyle="function" annotations="dir()">dir()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::canonicalPath() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>canonicalPath</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the file's path canonical path (excluding the file name), i.e. an absolute path without symbolic links or redundant "." or ".." elements.</db:para>
+         <db:para>If the file does not exist,  returns an empty string.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#path" xrefstyle="function" annotations="path()">path()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absolutePath" xrefstyle="function" annotations="absolutePath()">absolutePath()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::completeBaseName() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>completeBaseName</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the complete base name of the file without the path.</db:para>
+         <db:para>The complete base name consists of all characters in the file up to (but not including) the <db:emphasis>last</db:emphasis> '.' character.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/tmp/archive.tar.gz");
+QString base = fi.completeBaseName();  // base = "archive.tar"
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#suffix" xrefstyle="function" annotations="suffix()">suffix()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#completeSuffix" xrefstyle="function" annotations="completeSuffix()">completeSuffix()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#baseName" xrefstyle="function" annotations="baseName()">baseName()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::completeSuffix() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>completeSuffix</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the complete suffix (extension) of the file.</db:para>
+         <db:para>The complete suffix consists of all characters in the file after (but not including) the first '.'.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/tmp/archive.tar.gz");
+QString ext = fi.completeSuffix();  // ext = "tar.gz"
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#suffix" xrefstyle="function" annotations="suffix()">suffix()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#baseName" xrefstyle="function" annotations="baseName()">baseName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#completeBaseName" xrefstyle="function" annotations="completeBaseName()">completeBaseName()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::fileName() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>fileName</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the name of the file, excluding the path.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/tmp/archive.tar.gz");
+QString name = fi.fileName();                // name = "archive.tar.gz"
+</db:programlisting>
+         <db:para>Note that, if this <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> object is given a path ending in a slash, the name of the file is considered empty.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#baseName" xrefstyle="function" annotations="baseName()">baseName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#suffix" xrefstyle="function" annotations="suffix()">suffix()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::filePath() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>filePath</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the file name, including the path (which may be absolute or relative).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absoluteFilePath" xrefstyle="function" annotations="absoluteFilePath()">absoluteFilePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#canonicalFilePath" xrefstyle="function" annotations="canonicalFilePath()">canonicalFilePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::group() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>group</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the group of the file. On Windows, on systems where files do not have groups, or if an error occurs, an empty string is returned.</db:para>
+         <db:para>This function can be time consuming under Unix (in the order of milliseconds).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#groupId" xrefstyle="function" annotations="groupId()">groupId()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#owner" xrefstyle="function" annotations="owner()">owner()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#ownerId" xrefstyle="function" annotations="ownerId()">ownerId()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::owner() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>owner</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the owner of the file. On systems where files do not have owners, or if an error occurs, an empty string is returned.</db:para>
+         <db:para>This function can be time consuming under Unix (in the order of milliseconds). On Windows, it will return an empty string unless the <db:code><db:link xlink:href="qfileinfo.html#ntfs-permissions" xrefstyle="class" annotations="NTFS permissions">NTFS permissions</db:link></db:code> check has been enabled.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#ownerId" xrefstyle="function" annotations="ownerId()">ownerId()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#group" xrefstyle="function" annotations="group()">group()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#groupId" xrefstyle="function" annotations="groupId()">groupId()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::path() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>path</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the file's path. This doesn't include the file name.</db:para>
+         <db:para>Note that, if this <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> object is given a path ending in a slash, the name of the file is considered empty and this function will return the entire path.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absolutePath" xrefstyle="function" annotations="absolutePath()">absolutePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#canonicalPath" xrefstyle="function" annotations="canonicalPath()">canonicalPath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#dir" xrefstyle="function" annotations="dir()">dir()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QString QFileInfo::suffix() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>suffix</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the suffix (extension) of the file.</db:para>
+         <db:para>The suffix consists of all characters in the file after (but not including) the last '.'.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/tmp/archive.tar.gz");
+QString ext = fi.suffix();  // ext = "gz"
+</db:programlisting>
+         <db:para>The suffix of a file is computed equally on all platforms, independent of file naming conventions (e.g., ".bashrc" on Unix has an empty base name, and the suffix is "bashrc").</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#fileName" xrefstyle="function" annotations="fileName()">fileName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#completeSuffix" xrefstyle="function" annotations="completeSuffix()">completeSuffix()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#baseName" xrefstyle="function" annotations="baseName()">baseName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#completeBaseName" xrefstyle="function" annotations="completeBaseName()">completeBaseName()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::caching() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>caching</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if caching is enabled; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#setCaching" xrefstyle="function" annotations="setCaching()">setCaching()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#refresh" xrefstyle="function" annotations="refresh()">refresh()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::exists() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>exists</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the file exists; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:note>
+            <db:para> If the file is a symlink that points to a non-existing file, false is returned.</db:para>
+         </db:note>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::exists(const QString &amp;file)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>exists</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the <db:code role="argument">file</db:code> exists; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:note>
+            <db:para> If <db:code role="argument">file</db:code> is a symlink that points to a non-existing file, false is returned.</db:para>
+         </db:note>
+         <db:note>
+            <db:para> Using this function is faster than using <db:code>QFileInfo(file).exists()</db:code> for file system access.</db:para>
+         </db:note>
+         <db:para>This property was introduced in Qt 5.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isBundle() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isBundle</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this object points to a bundle or to a symbolic link to a bundle on  and iOS; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isDir" xrefstyle="function" annotations="isDir()">isDir()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isSymLink" xrefstyle="function" annotations="isSymLink()">isSymLink()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isFile" xrefstyle="function" annotations="isFile()">isFile()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.3.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isDir() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isDir</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this object points to a directory or to a symbolic link to a directory; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isFile" xrefstyle="function" annotations="isFile()">isFile()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isSymLink" xrefstyle="function" annotations="isSymLink()">isSymLink()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isBundle" xrefstyle="function" annotations="isBundle()">isBundle()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isExecutable() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isExecutable</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the file is executable; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isReadable" xrefstyle="function" annotations="isReadable()">isReadable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isWritable" xrefstyle="function" annotations="isWritable()">isWritable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#permission" xrefstyle="function" annotations="permission()">permission()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isFile() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isFile</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this object points to a file or to a symbolic link to a file. Returns <db:code>false</db:code> if the object points to something which isn't a file, such as a directory.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isDir" xrefstyle="function" annotations="isDir()">isDir()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isSymLink" xrefstyle="function" annotations="isSymLink()">isSymLink()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isBundle" xrefstyle="function" annotations="isBundle()">isBundle()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isHidden() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isHidden</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this is a `hidden' file; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:note>
+            <db:para> This function returns <db:code>true</db:code> for the special entries "." and ".." on Unix, even though <db:code><db:link xlink:href="qdir.html#entryList" xrefstyle="function" annotations="QDir::entryList">QDir::entryList</db:link></db:code> threats them as shown.</db:para>
+         </db:note>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isNativePath() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isNativePath</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the file path can be used directly with native APIs. Returns <db:code>false</db:code> if the file is otherwise supported by a virtual file system inside Qt, such as <db:link xlink:href="resources.html" xrefstyle="page" annotations="the Qt Resource System">the Qt Resource System</db:link>.</db:para>
+         <db:note>
+            <db:para> Native paths may still require conversion of path separators and character encoding, depending on platform and input requirements of the native API.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qdir.html#toNativeSeparators" xrefstyle="function" annotations="QDir::toNativeSeparators()">QDir::toNativeSeparators()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfile.html#encodeName" xrefstyle="function" annotations="QFile::encodeName()">QFile::encodeName()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#absoluteFilePath" xrefstyle="function" annotations="absoluteFilePath()">absoluteFilePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#canonicalFilePath" xrefstyle="function" annotations="canonicalFilePath()">canonicalFilePath()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.0.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isReadable() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isReadable</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the user can read the file; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:note>
+            <db:para> If the <db:code><db:link xlink:href="qfileinfo.html#ntfs-permissions" xrefstyle="class" annotations="NTFS permissions">NTFS permissions</db:link></db:code> check has not been enabled, the result on Windows will merely reflect whether the file exists.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isWritable" xrefstyle="function" annotations="isWritable()">isWritable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isExecutable" xrefstyle="function" annotations="isExecutable()">isExecutable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#permission" xrefstyle="function" annotations="permission()">permission()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isRelative() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isRelative</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the file path name is relative, otherwise returns false if the path is absolute (e.g. under Unix a path is absolute if it begins with a "/").</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isAbsolute" xrefstyle="function" annotations="isAbsolute()">isAbsolute()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isRoot() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isRoot</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the object points to a directory or to a symbolic link to a directory, and that directory is the root directory; otherwise returns <db:code>false</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isSymLink() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isSymLink</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this object points to a symbolic link; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>Symbolic links exist on Unix (including  and iOS) and Windows and are typically created by the <db:code>ln -s</db:code> or <db:code>mklink</db:code> commands, respectively. Opening a symbolic link effectively opens the <db:code><db:link xlink:href="qfileinfo.html#symLinkTarget" xrefstyle="function" annotations="symLinkTarget()">link's target</db:link></db:code>.</db:para>
+         <db:para>In addition, true will be returned for shortcuts (<db:code>*.lnk</db:code> files) on Windows. Opening those will open the <db:code>.lnk</db:code> file itself.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo info(fileName);
+if (info.isSymLink())
+    fileName = info.symLinkTarget();
+</db:programlisting>
+         <db:note>
+            <db:para> If the symlink points to a non existing file, <db:code><db:link xlink:href="qfileinfo.html#exists" xrefstyle="function" annotations="exists()">exists()</db:link></db:code> returns false.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isFile" xrefstyle="function" annotations="isFile()">isFile()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isDir" xrefstyle="function" annotations="isDir()">isDir()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#symLinkTarget" xrefstyle="function" annotations="symLinkTarget()">symLinkTarget()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::isWritable() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isWritable</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if the user can write to the file; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:note>
+            <db:para> If the <db:code><db:link xlink:href="qfileinfo.html#ntfs-permissions" xrefstyle="class" annotations="NTFS permissions">NTFS permissions</db:link></db:code> check has not been enabled, the result on Windows will merely reflect whether the file is marked as Read Only.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isReadable" xrefstyle="function" annotations="isReadable()">isReadable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isExecutable" xrefstyle="function" annotations="isExecutable()">isExecutable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#permission" xrefstyle="function" annotations="permission()">permission()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::makeAbsolute()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>makeAbsolute</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Converts the file's path to an absolute path if it is not already in that form. Returns <db:code>true</db:code> to indicate that the path was converted; otherwise returns <db:code>false</db:code> to indicate that the path was already absolute.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#filePath" xrefstyle="function" annotations="filePath()">filePath()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::operator==(const QFileInfo &amp;fileinfo) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>operator==</db:methodname>
+            <db:methodparam>
+               <db:type>const QFileInfo &amp;</db:type>
+               <db:parameter>fileinfo</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> object refers to a file in the same location as <db:code role="argument">fileinfo</db:code>; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>Note that the result of comparing two empty <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> objects, containing no file references (file paths that do not exist or are empty), is undefined.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> This will not compare two different symbolic links pointing to the same file.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> Long and short file names that refer to the same file on Windows are treated as if they referred to different files.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#operator-not-eq" xrefstyle="function" annotations="operator!=()">operator!=()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QFileInfo::permission(QFile::Permissions permissions) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>permission</db:methodname>
+            <db:methodparam>
+               <db:type>QFile::Permissions</db:type>
+               <db:parameter>permissions</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Tests for file permissions. The <db:code role="argument">permissions</db:code> argument can be several flags of type <db:link xlink:href="qfiledevice.html#Permission-enum" xrefstyle="typedef" annotations="QFile::Permissions">QFile::Permissions</db:link> OR-ed together to check for permission combinations.</db:para>
+         <db:para>On systems where files do not have permissions this function always returns <db:code>true</db:code>.</db:para>
+         <db:note>
+            <db:para> The result might be inaccurate on Windows if the <db:code><db:link xlink:href="qfileinfo.html#ntfs-permissions" xrefstyle="class" annotations="NTFS permissions">NTFS permissions</db:link></db:code> check has not been enabled.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QFileInfo fi("/tmp/archive.tar.gz");
+if (fi.permission(QFile::WriteUser | QFile::ReadGroup))
+    qWarning("I can change the file; my group can read the file");
+if (fi.permission(QFile::WriteGroup | QFile::WriteOther))
+    qWarning("The group or others can change the file");
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isReadable" xrefstyle="function" annotations="isReadable()">isReadable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isWritable" xrefstyle="function" annotations="isWritable()">isWritable()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isExecutable" xrefstyle="function" annotations="isExecutable()">isExecutable()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>qint64 QFileInfo::size() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>qint64</db:type>
+            <db:methodname>size</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the file size in bytes. If the file does not exist or cannot be fetched, 0 is returned.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#exists" xrefstyle="function" annotations="exists()">exists()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>uint QFileInfo::groupId() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>uint</db:type>
+            <db:methodname>groupId</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the id of the group the file belongs to.</db:para>
+         <db:para>On Windows and on systems where files do not have groups this function always returns (uint) -2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#group" xrefstyle="function" annotations="group()">group()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#owner" xrefstyle="function" annotations="owner()">owner()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#ownerId" xrefstyle="function" annotations="ownerId()">ownerId()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>uint QFileInfo::ownerId() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>uint</db:type>
+            <db:methodname>ownerId</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the id of the owner of the file.</db:para>
+         <db:para>On Windows and on systems where files do not have owners this function returns ((uint) -2).</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#owner" xrefstyle="function" annotations="owner()">owner()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#group" xrefstyle="function" annotations="group()">group()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#groupId" xrefstyle="function" annotations="groupId()">groupId()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QFileInfo::refresh()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>refresh</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Refreshes the information about the file, i.e. reads in information from the file system the next time a cached property is fetched.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QFileInfo::setCaching(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setCaching</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If <db:code role="argument">enable</db:code> is true, enables caching of file information. If <db:code role="argument">enable</db:code> is false caching is disabled.</db:para>
+         <db:para>When caching is enabled, <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> reads the file information from the file system the first time it's needed, but generally not later.</db:para>
+         <db:para>Caching is enabled by default.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#refresh" xrefstyle="function" annotations="refresh()">refresh()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#caching" xrefstyle="function" annotations="caching()">caching()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QFileInfo::setFile(const QDir &amp;dir, const QString &amp;file)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setFile</db:methodname>
+            <db:methodparam>
+               <db:type>const QDir &amp;</db:type>
+               <db:parameter>dir</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Sets the file that the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> provides information about to <db:code role="argument">file</db:code> in directory <db:code role="argument">dir</db:code>.</db:para>
+         <db:para>If <db:code role="argument">file</db:code> includes a relative path, the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> will also have a relative path.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QFileInfo::setFile(const QFile &amp;file)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setFile</db:methodname>
+            <db:methodparam>
+               <db:type>const QFile &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Sets the file that the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> provides information about to <db:code role="argument">file</db:code>.</db:para>
+         <db:para>If <db:code role="argument">file</db:code> includes a relative path, the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> will also have a relative path.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QFileInfo::setFile(const QString &amp;file)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setFile</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>file</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the file that the <db:code><db:link xlink:href="qfileinfo.html" xrefstyle="class" annotations="QFileInfo">QFileInfo</db:link></db:code> provides information about to <db:code role="argument">file</db:code>.</db:para>
+         <db:para>The <db:code role="argument">file</db:code> can also include an absolute or relative file path. Absolute paths begin with the directory separator (e.g. "/" under Unix) or a drive specification (under Windows). Relative file names begin with a directory name or a file name and specify a path relative to the current directory.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting>
+QString absolute = "/local/bin";
+QString relative = "local/bin";
+QFileInfo absFile(absolute);
+QFileInfo relFile(relative);
+
+QDir::setCurrent(QDir::rootPath());
+// absFile and relFile now point to the same file
+
+QDir::setCurrent("/tmp");
+// absFile now points to "/local/bin",
+// while relFile points to "/tmp/local/bin"
+</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isFile" xrefstyle="function" annotations="isFile()">isFile()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qfileinfo.html#isRelative" xrefstyle="function" annotations="isRelative()">isRelative()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qdir.html#setCurrent" xrefstyle="function" annotations="QDir::setCurrent()">QDir::setCurrent()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qdir.html#isRelativePath" xrefstyle="function" annotations="QDir::isRelativePath()">QDir::isRelativePath()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+</db:article>

@@ -138,7 +138,7 @@
     
     <!-- Order of elements: classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
     <xsl:variable name="classes" select="$elements/self::class[(@access='public' or @access='protected')and description/node()]" as="node()*"/>
-    <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected') and description/node()] | $elements/self::typedef[(@access='public' or @access='protected') and not(description/node())]" as="node()*"/>
+    <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected') and description/node()] | $elements/self::typedef[(@access='public' or @access='protected')]" as="node()*"/>
     <xsl:variable name="properties" select="$elements/self::property[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
     <xsl:variable name="memberVariables" select="$elements/self::variable[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
     <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
@@ -166,6 +166,12 @@
         </xsl:for-each>
         
         <xsl:for-each select="$memberTypes/self::enum">
+          <xsl:sort select="@fullname"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
+        
+        <!-- Many typedefs are just sets of flags, and thence have no description, but some are real. -->
+        <xsl:for-each select="$memberTypes/self::typedef[description/node()]">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
@@ -428,7 +434,12 @@
   
   <xsl:template mode="content_class_elements" match="enum">
     <db:section>
-      <db:title>enum <xsl:value-of select="@fullname"/>, flags <xsl:value-of select="@typedef"/></db:title>
+      <db:title>
+        <xsl:text>enum </xsl:text><xsl:value-of select="@fullname"/>
+        <xsl:if test="following-sibling::typedef[1]">
+          <xsl:text>, flags </xsl:text><xsl:value-of select="@typedef"/>
+        </xsl:if>
+      </db:title>
       <!-- The documentation is on the enum, but the typedef must be presented just after. -->
       
       <xsl:apply-templates mode="content_class_synopsis" select="."/>
@@ -441,7 +452,7 @@
         <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
       </xsl:if>
       
-      <xsl:if test="./following-sibling::typedef[1]">
+      <xsl:if test="following-sibling::typedef[1]">
         <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
       </xsl:if>
     </db:section>
@@ -470,13 +481,32 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="typedef">
-    <!-- Typedefs only appear with enums, hence most of the work is done there. -->
+    <!-- Typedefs appear mostly with enums, hence most of the work is done there. -->
+    <xsl:if test="description/node()">
+      <db:section>
+        <db:title>typedef <xsl:value-of select="@name"/></db:title>
+        
+        <xsl:apply-templates mode="content_class_synopsis" select="."/>
+        <xsl:if test="following-sibling::*[1][self::typedef]">
+          <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
+        </xsl:if>
+        <xsl:apply-templates mode="content_generic" select="description"/>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
+        
+        <xsl:if test="./following-sibling::typedef[1]">
+          <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
+        </xsl:if>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_class_synopsis" match="typedef">
-    <!-- Typedefs only appear with enums, hence most of the work is done there. -->
+    <!-- Typedefs mostly appear with enums, hence most of the work is done there. -->
     <db:typedefsynopsis>
-      <db:typedefname><xsl:value-of select="@fullname"/></db:typedefname>
+      <db:typedefname><xsl:value-of select="if (@fullname) then @fullname else @name"/></db:typedefname>
     </db:typedefsynopsis>
   </xsl:template>
   
