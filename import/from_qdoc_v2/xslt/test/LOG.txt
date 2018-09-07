@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=52676:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=63592:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -47,12 +47,12 @@
 --> Found module: qtserialport; qdocconf: C:\Qt\5.11.1\Src\qtserialport\src\serialport\doc\qtserialport.qdocconf
 --> Found module: qtspeech; qdocconf: C:\Qt\5.11.1\Src\qtspeech\src\doc\qtspeech.qdocconf
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
---> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
---> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
 --> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
+--> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
+--> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
 --> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
---> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
+--> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
 --> Found module: qtwebchannel; qdocconf: C:\Qt\5.11.1\Src\qtwebchannel\src\webchannel\doc\qtwebchannel.qdocconf
@@ -62,8 +62,8 @@
 --> Found module: qtwinextras; qdocconf: C:\Qt\5.11.1\Src\qtwinextras\src\winextras\doc\qtwinextras.qdocconf
 --> Found module: qtx11extras; qdocconf: C:\Qt\5.11.1\Src\qtx11extras\src\x11extras\doc\qtx11extras.qdocconf
 --> Found module: qtxmlpatterns; qdocconf: C:\Qt\5.11.1\Src\qtxmlpatterns\src\xmlpatterns\doc\qtxmlpatterns.qdocconf
---> Found submodule: qtbase / qlalr; qdocconf: C:\Qt\5.11.1\Src\qtbase\src\tools\qlalr\doc\qlalr.qdocconf
 --> Found submodule: qtbase / qmake; qdocconf: C:\Qt\5.11.1\Src\qtbase\qmake\doc\qmake.qdocconf
+--> Found submodule: qtbase / qlalr; qdocconf: C:\Qt\5.11.1\Src\qtbase\src\tools\qlalr\doc\qlalr.qdocconf
 ::> 65 modules found
 ++> Module qdocconf rewritten: qt3d
 ++> Module qdocconf rewritten: qtactiveqt
@@ -934,10 +934,10 @@ TYPES NOT IMPLEMENTED
 MEMBER VARIABLES NOT IMPLEMENTED
 RELATED NON MEMBERS NOT IMPLEMENTED
 [0788/7715]C:\Qt\Doc\webxml\qiconengine-scaledpixmapargument.webxml
-[0789/7715]C:\Qt\Doc\webxml\qiconengine.webxml
 TYPES NOT IMPLEMENTED
 MEMBER VARIABLES NOT IMPLEMENTED
 RELATED NON MEMBERS NOT IMPLEMENTED
+[0789/7715]C:\Qt\Doc\webxml\qiconengine.webxml
 [0790/7715]C:\Qt\Doc\webxml\qiconengineplugin.webxml
 [0791/7715]C:\Qt\Doc\webxml\qidentityproxymodel.webxml
 [0792/7715]C:\Qt\Doc\webxml\qimage.webxml
@@ -1565,10 +1565,10 @@ TYPES NOT IMPLEMENTED
 MEMBER VARIABLES NOT IMPLEMENTED
 RELATED NON MEMBERS NOT IMPLEMENTED
 [1314/7715]C:\Qt\Doc\webxml\qstyleoptiontoolbutton.webxml
-[1315/7715]C:\Qt\Doc\webxml\qstyleoptionviewitem.webxml
 TYPES NOT IMPLEMENTED
 MEMBER VARIABLES NOT IMPLEMENTED
 RELATED NON MEMBERS NOT IMPLEMENTED
+[1315/7715]C:\Qt\Doc\webxml\qstyleoptionviewitem.webxml
 TYPES NOT IMPLEMENTED
 MEMBER VARIABLES NOT IMPLEMENTED
 RELATED NON MEMBERS NOT IMPLEMENTED
@@ -3657,10 +3657,10 @@ RELATED NON MEMBERS NOT IMPLEMENTED
 [2855/7715]C:\Qt\Doc\webxml\qtextinlineobject.webxml
 [2856/7715]C:\Qt\Doc\webxml\qtextitem.webxml
 [2857/7715]C:\Qt\Doc\webxml\qtextlayout-formatrange.webxml
-[2858/7715]C:\Qt\Doc\webxml\qtextlayout.webxml
 TYPES NOT IMPLEMENTED
 MEMBER VARIABLES NOT IMPLEMENTED
 RELATED NON MEMBERS NOT IMPLEMENTED
+[2858/7715]C:\Qt\Doc\webxml\qtextlayout.webxml
 [2859/7715]C:\Qt\Doc\webxml\qtextlength.webxml
 [2860/7715]C:\Qt\Doc\webxml\qtextline.webxml
 [2861/7715]C:\Qt\Doc\webxml\qtextlist.webxml

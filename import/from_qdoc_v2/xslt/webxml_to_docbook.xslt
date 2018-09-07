@@ -139,12 +139,23 @@
     <!-- Order of elements: classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
     <xsl:variable name="classes" select="$elements/self::class[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
     <xsl:variable name="memberTypes" select="$elements/self::enum[@access='public' and (./description/brief or ./description/para)] | $elements/self::typedef[@access='public' and not(./description/brief or ./description/para)]" as="node()*"/>
-    <xsl:variable name="types" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
     <xsl:variable name="properties" select="$elements/self::property[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
     <xsl:variable name="memberVariables" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
     <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and (./description/brief or ./description/para) and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
-    <xsl:variable name="relatedNonMembers" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]"/>
     <xsl:variable name="macros" select="$elements/self::function[@access='public' and (./description/brief or ./description/para) and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    
+    <xsl:variable name="allTakenIntoAccount" select="$classes union $memberTypes union $properties union $memberVariables union $functions union $macros"/>
+    <xsl:if test="count($allTakenIntoAccount) != count($elements)">
+      <xsl:message>
+        <xsl:text>WARNING: Page not fully parsed. Missing tags: </xsl:text>
+        <xsl:for-each select="$elements except $allTakenIntoAccount">
+          <xsl:value-of select="name()"/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:text>,</xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:message>
+    </xsl:if>
     
     <xsl:if test="$classes or $memberTypes">
       <db:section>
@@ -161,10 +172,10 @@
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$types">
+    <!--<xsl:if test="$types">
       <db:section>
         <db:title>Type Documentation</db:title>
-        <!-- Only happens in namespaces. -->
+        --><!-- Only happens in namespaces. --><!--
         
         <xsl:message>TYPES NOT IMPLEMENTED</xsl:message>
         
@@ -172,7 +183,7 @@
           <db:para>This type was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
         </xsl:if>
       </db:section>
-    </xsl:if>
+    </xsl:if>-->
     
     <xsl:if test="$properties">
       <db:section>
@@ -188,12 +199,10 @@
     <xsl:if test="$memberVariables">
       <db:section>
         <db:title>Member Variable Documentation</db:title>
-
-        <xsl:message>MEMBER VARIABLES NOT IMPLEMENTED</xsl:message>
-
-        <xsl:if test="@since and not(@since='')">
-          <db:para>This variable was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
-        </xsl:if>
+        <xsl:for-each select="$memberVariables/self::variable">
+          <xsl:sort select="@fullname"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
       </db:section>
     </xsl:if>
     
@@ -221,15 +230,15 @@
       </db:section>
     </xsl:if>
     
-    <!-- TODO -->
+    <!-- TODO --><!--
     <xsl:if test="$relatedNonMembers">
       <db:section>
         <db:title>Related Non-Members</db:title>
-        <!-- TODO: Not generated in WebXML. Example: http://doc.qt.io/qt-5/qpoint.html#related-non-members -->
+        --><!-- TODO: Not generated in WebXML. Example: http://doc.qt.io/qt-5/qpoint.html#related-non-members --><!--
         
         <xsl:message>RELATED NON MEMBERS NOT IMPLEMENTED</xsl:message>
       </db:section>
-    </xsl:if>
+    </xsl:if>-->
     
     <xsl:if test="$macros">
       <db:section>
@@ -292,7 +301,18 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="variable">
-    <xsl:message>VARIABLES NOT IMPLEMENTED</xsl:message>
+    <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
+      <db:section>
+        <db:title><xsl:value-of select="@fullname"/></db:title>
+        
+        <xsl:apply-templates mode="content_class_synopsis" select="."/>
+        <xsl:apply-templates mode="content_generic" select="description"/>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This variable was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_class_synopsis" match="variable">

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="TimerInfo" fullname="QAbstractEventDispatcher::TimerInfo" href="qabstracteventdispatcher-timerinfo.html" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="62" module="QtCore">
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="343" column="4">
+                <para>This struct represents information about a timer: <link raw="QAbstractEventDispatcher::TimerInfo::timerId" href="qabstracteventdispatcher-timerinfo.html#timerId-var" type="variable">timerId</link>, <link raw="QAbstractEventDispatcher::TimerInfo::interval" href="qabstracteventdispatcher-timerinfo.html#interval-var" type="variable">interval</link>, and <link raw="QAbstractEventDispatcher::TimerInfo::timerType" href="qabstracteventdispatcher-timerinfo.html#timerType-var" type="variable">timerType</link>.</para>
+                <see-also>
+                    <link raw="registeredTimers()" href="qabstracteventdispatcher.html#registeredTimers" type="function">registeredTimers()</link>
+                </see-also>
+            </description>
+            <variable threadsafety="unspecified" name="timerId" fullname="QAbstractEventDispatcher::TimerInfo::timerId" href="qabstracteventdispatcher-timerinfo.html#timerId-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="64" type="int" static="false">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="359" column="4">
+                    <para>The timer's unique id.</para>
+                </description>
+            </variable>
+            <variable threadsafety="unspecified" name="interval" fullname="QAbstractEventDispatcher::TimerInfo::interval" href="qabstracteventdispatcher-timerinfo.html#interval-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="65" type="int" static="false">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="364" column="4">
+                    <para>The timer's interval.</para>
+                </description>
+            </variable>
+            <variable threadsafety="unspecified" name="timerType" fullname="QAbstractEventDispatcher::TimerInfo::timerType" href="qabstracteventdispatcher-timerinfo.html#timerType-var" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="66" type="Qt::TimerType" static="false">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.cpp" line="369" column="4">
+                    <para>The timer's type</para>
+                    <see-also>
+                        <link raw="Qt::TimerType" href="qt.html#TimerType-enum" type="enum" enum="Qt::TimerType">Qt::TimerType</link>
+                    </see-also>
+                </description>
+            </variable>
+            <function threadsafety="unspecified" name="TimerInfo" fullname="QAbstractEventDispatcher::TimerInfo::TimerInfo" href="qabstracteventdispatcher-timerinfo.html#TimerInfo" status="active" access="public" location="qabstracteventdispatcher.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qabstracteventdispatcher.h" lineno="68" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="TimerInfo(int id, int i, Qt::TimerType t)">
+                <parameter type="int" name="id" default=""/>
+                <parameter type="int" name="i" default=""/>
+                <parameter type="Qt::TimerType" name="t" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+        </class>
+    </document>
+</WebXML>
