@@ -144,11 +144,11 @@
     <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and (./description/brief or ./description/para) and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     <xsl:variable name="macros" select="$elements/self::function[@access='public' and (./description/brief or ./description/para) and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
-    <xsl:variable name="allTakenIntoAccount" select="$classes union $memberTypes union $properties union $memberVariables union $functions union $macros"/>
-    <xsl:if test="count($allTakenIntoAccount) != count($elements)">
+    <xsl:variable name="allTakenIntoAccount" select="($classes union $memberTypes union $properties union $memberVariables union $functions union $macros)"/>
+    <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and (description/brief or description/para)]) != count($elements[(@access='public' or @access='protected') and (description/brief or description/para)])">
       <xsl:message>
         <xsl:text>WARNING: Page not fully parsed. Missing tags: </xsl:text>
-        <xsl:for-each select="$elements except $allTakenIntoAccount">
+        <xsl:for-each select="$elements[(@access='public' or @access='protected') and (description/brief or description/para)] except $allTakenIntoAccount[(@access='public' or @access='protected') and (description/brief or description/para)]">
           <xsl:value-of select="name()"/>
           <xsl:if test="position() &lt; last()">
             <xsl:text>,</xsl:text>
