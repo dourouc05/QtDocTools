@@ -137,15 +137,15 @@
     <xsl:param name="elements" as="node()*"/>
     
     <!-- Order of elements: classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
-    <xsl:variable name="classes" select="$elements/self::class[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
-    <xsl:variable name="memberTypes" select="$elements/self::enum[@access='public' and (./description/brief or ./description/para)] | $elements/self::typedef[@access='public' and not(./description/brief or ./description/para)]" as="node()*"/>
-    <xsl:variable name="properties" select="$elements/self::property[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
-    <xsl:variable name="memberVariables" select="$elements/self::variable[@access='public' and (./description/brief or ./description/para)]" as="node()*"/>
-    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and (./description/brief or ./description/para) and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
-    <xsl:variable name="macros" select="$elements/self::function[@access='public' and (./description/brief or ./description/para) and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    <xsl:variable name="classes" select="$elements/self::class[(@access='public' or @access='protected')and description/node()]" as="node()*"/>
+    <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected') and description/node()] | $elements/self::typedef[(@access='public' or @access='protected') and not(description/node())]" as="node()*"/>
+    <xsl:variable name="properties" select="$elements/self::property[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
+    <xsl:variable name="memberVariables" select="$elements/self::variable[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
+    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    <xsl:variable name="macros" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
     <xsl:variable name="allTakenIntoAccount" select="($classes union $memberTypes union $properties union $memberVariables union $functions union $macros)"/>
-    <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and (description/brief or description/para)]) != count($elements[(@access='public' or @access='protected') and (description/brief or description/para)])">
+    <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and description/node()]) != count($elements[(@access='public' or @access='protected') and description/node()])">
       <xsl:message>
         <xsl:text>WARNING: Page not fully parsed. Missing tags: </xsl:text>
         <xsl:for-each select="$elements[(@access='public' or @access='protected') and (description/brief or description/para)] except $allTakenIntoAccount[(@access='public' or @access='protected') and (description/brief or description/para)]">

@@ -1,0 +1,3615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>QAbstractItemView</db:title>
+      <db:abstract>
+         <db:para>The basic functionality for item view classes</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-07+02:00</db:pubdate>
+      <db:date>2018-09-07+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QAbstractItemView</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">QtWidgets</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qabstractitemview.h&gt;</db:namespacesynopsisinfo>
+      <db:classsynopsisinfo role="inherits">QAbstractScrollArea</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="group">model-view</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> class provides the basic functionality for item view classes.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> class is the base class for every standard view that uses a <db:code><db:link xlink:href="qabstractitemmodel.html" xrefstyle="class" annotations="QAbstractItemModel">QAbstractItemModel</db:link></db:code>. <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> is an abstract class and cannot itself be instantiated. It provides a standard interface for interoperating with models through the signals and slots mechanism, enabling subclasses to be kept up-to-date with changes to their models. This class provides standard support for keyboard and mouse navigation, viewport scrolling, item editing, and selections. The keyboard navigation implements this functionality:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Keys</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Functionality</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>Arrow keys</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Changes the current item and selects it.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Ctrl+Arrow keys</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Changes the current item but does not select it.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Shift+Arrow keys</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Changes the current item and selects it. The previously selected item(s) is not deselected.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Ctr+Space</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Toggles selection of the current item.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Tab/Backtab</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Changes the current item to the next/previous item.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Home/End</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Selects the first/last item in the model.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Page up/Page down</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Scrolls the rows shown up/down by the number of visible rows in the view.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Ctrl+A</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Selects all items in the model.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>Note that the above table assumes that the <db:code><db:link xlink:href="qabstractitemview.html#selectionMode-prop" xrefstyle="property" annotations="selectionMode">selection mode</db:link></db:code> allows the operations. For instance, you cannot select items if the selection mode is <db:code><db:link xlink:href="qabstractitemview.html#SelectionMode-enum" xrefstyle="enum" annotations="QAbstractItemView::NoSelection">QAbstractItemView::NoSelection</db:link></db:code>.</db:para>
+      <db:para>The <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> class is one of the <db:link xlink:href="model-view-programming.html#model-view-classes" xrefstyle="page" annotations="Model/View Classes">Model/View Classes</db:link> and is part of Qt's <db:link xlink:href="model-view-programming.html" xrefstyle="page" annotations="Model/View Programming">model/view framework</db:link>.</db:para>
+      <db:para>The view classes that inherit <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> only need to implement their own view-specific functionality, such as drawing items, returning the geometry of items, finding items, etc.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> provides common slots such as <db:code><db:link xlink:href="qabstractitemview.html#edit" xrefstyle="function" annotations="edit()">edit()</db:link></db:code> and <db:code><db:link xlink:href="qabstractitemview.html#setCurrentIndex" xrefstyle="function" annotations="setCurrentIndex()">setCurrentIndex()</db:link></db:code>. Many protected slots are also provided, including <db:code><db:link xlink:href="qabstractitemview.html#dataChanged" xrefstyle="function" annotations="dataChanged()">dataChanged()</db:link></db:code>, <db:code><db:link xlink:href="qabstractitemview.html#rowsInserted" xrefstyle="function" annotations="rowsInserted()">rowsInserted()</db:link></db:code>, <db:code><db:link xlink:href="qabstractitemview.html#rowsAboutToBeRemoved" xrefstyle="function" annotations="rowsAboutToBeRemoved()">rowsAboutToBeRemoved()</db:link></db:code>, <db:code><db:link xlink:href="qabstractitemview.html#selectionChanged" xrefstyle="function" annotations="selectionChanged()">selectionChanged()</db:link></db:code>, and <db:code><db:link xlink:href="qabstractitemview.html#currentChanged" xrefstyle="function" annotations="currentChanged()">currentChanged()</db:link></db:code>.</db:para>
+      <db:para>The root item is returned by <db:code><db:link xlink:href="qabstractitemview.html#rootIndex" xrefstyle="function" annotations="rootIndex()">rootIndex()</db:link></db:code>, and the current item by <db:code><db:link xlink:href="qabstractitemview.html#currentIndex" xrefstyle="function" annotations="currentIndex()">currentIndex()</db:link></db:code>. To make sure that an item is visible use <db:code><db:link xlink:href="qabstractitemview.html#scrollTo" xrefstyle="function" annotations="scrollTo()">scrollTo()</db:link></db:code>.</db:para>
+      <db:para>Some of <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code>'s functions are concerned with scrolling, for example <db:code><db:link xlink:href="qabstractitemview.html#horizontalScrollMode-prop" xrefstyle="function" annotations="setHorizontalScrollMode()">setHorizontalScrollMode()</db:link></db:code> and <db:code><db:link xlink:href="qabstractitemview.html#verticalScrollMode-prop" xrefstyle="function" annotations="setVerticalScrollMode()">setVerticalScrollMode()</db:link></db:code>. To set the range of the scroll bars, you can, for example, reimplement the view's <db:code><db:link xlink:href="qabstractitemview.html#resizeEvent" xrefstyle="function" annotations="resizeEvent()">resizeEvent()</db:link></db:code> function:</db:para>
+      <db:programlisting>
+void MyView::resizeEvent(QResizeEvent *event) {
+    horizontalScrollBar()-&gt;setRange(0, realWidth - width());
+    ...
+}
+</db:programlisting>
+      <db:para>Note that the range is not updated until the widget is shown.</db:para>
+      <db:para>Several other functions are concerned with selection control; for example <db:code><db:link xlink:href="qabstractitemview.html#selectionMode-prop" xrefstyle="function" annotations="setSelectionMode()">setSelectionMode()</db:link></db:code>, and <db:code><db:link xlink:href="qabstractitemview.html#selectionBehavior-prop" xrefstyle="function" annotations="setSelectionBehavior()">setSelectionBehavior()</db:link></db:code>. This class provides a default selection model to work with (<db:code><db:link xlink:href="qabstractitemview.html#selectionModel" xrefstyle="function" annotations="selectionModel()">selectionModel()</db:link></db:code>), but this can be replaced by using <db:code><db:link xlink:href="qabstractitemview.html#setSelectionModel" xrefstyle="function" annotations="setSelectionModel()">setSelectionModel()</db:link></db:code> with an instance of <db:code><db:link xlink:href="qitemselectionmodel.html" xrefstyle="class" annotations="QItemSelectionModel">QItemSelectionModel</db:link></db:code>.</db:para>
+      <db:para>For complete control over the display and editing of items you can specify a delegate with <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegate" xrefstyle="function" annotations="setItemDelegate()">setItemDelegate()</db:link></db:code>.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> provides a lot of protected functions. Some are concerned with editing, for example, <db:code><db:link xlink:href="qabstractitemview.html#edit" xrefstyle="function" annotations="edit()">edit()</db:link></db:code>, and <db:code><db:link xlink:href="qabstractitemview.html#commitData" xrefstyle="function" annotations="commitData()">commitData()</db:link></db:code>, whilst others are keyboard and mouse event handlers.</db:para>
+      <db:note>
+         <db:para> If you inherit <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> and intend to update the contents of the viewport, you should use viewport-&gt;<db:code><db:link xlink:href="qabstractitemview.html#update" xrefstyle="function" annotations="update()">update()</db:link></db:code> instead of <db:code><db:link xlink:href="qwidget.html#update" xrefstyle="function" annotations="QWidget::update()">update()</db:link></db:code> as all painting operations take place on the viewport.</db:para>
+      </db:note>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:link xlink:href="model-view-programming.html#view-classes" xrefstyle="page" annotations="View Classes">View Classes</db:link>
+            </db:member>
+            <db:member>
+               <db:link xlink:href="model-view-programming.html" xrefstyle="page" annotations="Model/View Programming">Model/View Programming</db:link>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="qabstractitemmodel.html" xrefstyle="class" annotations="QAbstractItemModel">QAbstractItemModel</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:link xlink:href="qtwidgets-itemviews-chart-example.html" xrefstyle="page" annotations="Chart Example">Chart Example</db:link>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Member Types Documentation</db:title>
+      <db:section>
+         <db:title>enum QAbstractItemView::CursorAction, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::CursorAction</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>MoveUp</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MoveDown</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MoveLeft</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MoveRight</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MoveHome</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MoveEnd</db:enumidentifier>
+               <db:enumvalue>5</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MovePageUp</db:enumidentifier>
+               <db:enumvalue>6</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MovePageDown</db:enumidentifier>
+               <db:enumvalue>7</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MoveNext</db:enumidentifier>
+               <db:enumvalue>8</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MovePrevious</db:enumidentifier>
+               <db:enumvalue>9</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum describes the different ways to navigate between items,</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveUp</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>Move to the item above the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveDown</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>Move to the item below the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveLeft</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>Move to the item left of the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveRight</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>Move to the item right of the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveHome</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>Move to the top-left corner item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveEnd</db:td>
+                  <db:td>5</db:td>
+                  <db:td>
+                     <db:para>Move to the bottom-right corner item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MovePageUp</db:td>
+                  <db:td>6</db:td>
+                  <db:td>
+                     <db:para>Move one page up above the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MovePageDown</db:td>
+                  <db:td>7</db:td>
+                  <db:td>
+                     <db:para>Move one page down below the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MoveNext</db:td>
+                  <db:td>8</db:td>
+                  <db:td>
+                     <db:para>Move to the item after the current item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MovePrevious</db:td>
+                  <db:td>9</db:td>
+                  <db:td>
+                     <db:para>Move to the item before the current item.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#moveCursor" xrefstyle="function" annotations="moveCursor()">moveCursor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::DragDropMode, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::DragDropMode</db:enumname>
+            <db:enumsynopsisinfo role="since">4.2</db:enumsynopsisinfo>
+            <db:enumitem>
+               <db:enumidentifier>NoDragDrop</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>DragOnly</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>DropOnly</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>DragDrop</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>InternalMove</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>Describes the various drag and drop events the view can act upon. By default the view does not support dragging or dropping (<db:code>NoDragDrop</db:code>).</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::NoDragDrop</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>Does not support dragging or dropping.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::DragOnly</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>The view supports dragging of its own items</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::DropOnly</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>The view accepts drops</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::DragDrop</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>The view supports both dragging and dropping</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::InternalMove</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>The view accepts move (<db:emphasis role="bold">not copy</db:emphasis>) operations only from itself.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>Note that the model used needs to provide support for drag and drop operations.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragDropMode-prop" xrefstyle="function" annotations="setDragDropMode()">setDragDropMode()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="model-view-programming.html#using-drag-and-drop-with-item-views" xrefstyle="page" annotations="Using drag and drop with item views">Using drag and drop with item views</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This enum was introduced or modified in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::DropIndicatorPosition, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::DropIndicatorPosition</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>OnItem</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AboveItem</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>BelowItem</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>OnViewport</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum indicates the position of the drop indicator in relation to the index at the current mouse position:</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::OnItem</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>The item will be dropped on the index.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::AboveItem</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>The item will be dropped above the index.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::BelowItem</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>The item will be dropped below the index.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::OnViewport</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>The item will be dropped onto a region of the viewport with no items. The way each view handles items dropped onto the viewport depends on the behavior of the underlying model in use.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::EditTrigger, flags QAbstractItemView::EditTriggers</db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::EditTrigger</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>NoEditTriggers</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>CurrentChanged</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>DoubleClicked</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>SelectedClicked</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>EditKeyPressed</db:enumidentifier>
+               <db:enumvalue>8</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AnyKeyPressed</db:enumidentifier>
+               <db:enumvalue>16</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AllEditTriggers</db:enumidentifier>
+               <db:enumvalue>31</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:typedefsynopsis>
+            <db:typedefname>QAbstractItemView::EditTriggers</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para>This enum describes actions which will initiate item editing.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::NoEditTriggers</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>No editing possible.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::CurrentChanged</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>Editing start whenever current item changes.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::DoubleClicked</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>Editing starts when an item is double clicked.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::SelectedClicked</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>Editing starts when clicking on an already selected item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::EditKeyPressed</db:td>
+                  <db:td>8</db:td>
+                  <db:td>
+                     <db:para>Editing starts when the platform edit key has been pressed over an item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::AnyKeyPressed</db:td>
+                  <db:td>16</db:td>
+                  <db:td>
+                     <db:para>Editing starts when any key is pressed over an item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::AllEditTriggers</db:td>
+                  <db:td>31</db:td>
+                  <db:td>
+                     <db:para>Editing starts for all above actions.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The <db:code>EditTriggers</db:code> type is a typedef for <db:code>QFlags&lt;EditTrigger&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::ScrollHint, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::ScrollHint</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>EnsureVisible</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>PositionAtTop</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>PositionAtBottom</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>PositionAtCenter</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::EnsureVisible</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>Scroll to ensure that the item is visible.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::PositionAtTop</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>Scroll to position the item at the top of the viewport.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::PositionAtBottom</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>Scroll to position the item at the bottom of the viewport.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::PositionAtCenter</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>Scroll to position the item at the center of the viewport.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The <db:code>EditTriggers</db:code> type is a typedef for <db:code>QFlags&lt;ScrollHint&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::ScrollMode, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::ScrollMode</db:enumname>
+            <db:enumsynopsisinfo role="since">4.2</db:enumsynopsisinfo>
+            <db:enumitem>
+               <db:enumidentifier>ScrollPerItem</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>ScrollPerPixel</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>Describes how the scrollbar should behave. When setting the scroll mode to  the single step size will adjust automatically unless it was set explicitly using <db:code><db:link xlink:href="qabstractslider.html#singleStep-prop" xrefstyle="function" annotations="QAbstractSlider::setSingleStep()">setSingleStep()</db:link></db:code>. The automatic adjustment can be restored by setting the single step size to -1.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::ScrollPerItem</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>The view will scroll the contents one item at a time.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::ScrollPerPixel</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>The view will scroll the contents one pixel at a time.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>This enum was introduced or modified in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::SelectionBehavior, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::SelectionBehavior</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>SelectItems</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>SelectRows</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>SelectColumns</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::SelectItems</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>Selecting single items.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::SelectRows</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>Selecting only rows.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::SelectColumns</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>Selecting only columns.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The <db:code>EditTriggers</db:code> type is a typedef for <db:code>QFlags&lt;SelectionBehavior&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::SelectionMode, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::SelectionMode</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>NoSelection</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>SingleSelection</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>MultiSelection</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>ExtendedSelection</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>ContiguousSelection</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>This enum indicates how the view responds to user selections:</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::SingleSelection</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>When the user selects an item, any already-selected item becomes unselected. It is possible for the user to deselect the selected item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::ContiguousSelection</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::ExtendedSelection</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Ctrl key when clicking on an item, the clicked item gets toggled and all other items are left untouched. If the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item. Multiple items can be selected by dragging the mouse over them.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::MultiSelection</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>When the user selects an item in the usual way, the selection status of that item is toggled and the other items are left alone. Multiple items can be toggled by dragging the mouse over them.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::NoSelection</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>Items cannot be selected.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The most commonly used modes are  and .</db:para>
+         <db:para>The <db:code>EditTriggers</db:code> type is a typedef for <db:code>QFlags&lt;SelectionMode&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>enum QAbstractItemView::State, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QAbstractItemView::State</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>NoState</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>DraggingState</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>DragSelectingState</db:enumidentifier>
+               <db:enumvalue>2</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>EditingState</db:enumidentifier>
+               <db:enumvalue>3</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>ExpandingState</db:enumidentifier>
+               <db:enumvalue>4</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>CollapsingState</db:enumidentifier>
+               <db:enumvalue>5</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>AnimatingState</db:enumidentifier>
+               <db:enumvalue>6</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>Describes the different states the view can be in. This is usually only interesting when reimplementing your own view.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QAbstractItemView::NoState</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>The is the default state.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::DraggingState</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>The user is dragging items.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::DragSelectingState</db:td>
+                  <db:td>2</db:td>
+                  <db:td>
+                     <db:para>The user is selecting items.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::EditingState</db:td>
+                  <db:td>3</db:td>
+                  <db:td>
+                     <db:para>The user is editing an item in a widget editor.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::ExpandingState</db:td>
+                  <db:td>4</db:td>
+                  <db:td>
+                     <db:para>The user is opening a branch of items.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::CollapsingState</db:td>
+                  <db:td>5</db:td>
+                  <db:td>
+                     <db:para>The user is closing a branch of items.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QAbstractItemView::AnimatingState</db:td>
+                  <db:td>6</db:td>
+                  <db:td>
+                     <db:para>The item view is performing an animation.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Properties</db:title>
+      <db:section>
+         <db:title>autoScroll : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>autoScroll</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>hasAutoScroll</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAutoScroll</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>autoScroll</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds whether autoscrolling in drag move events is enabled.</db:para>
+         <db:para>If this property is set to true (the default), the <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> automatically scrolls the contents of the view if the user drags within 16 pixels of the viewport edge. If the current item changes, then the view will scroll automatically to ensure that the current item is fully visible.</db:para>
+         <db:para>This property only works if the viewport accepts drops. Autoscroll is switched off by setting this property to false.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>hasAutoScroll() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setAutoScroll(boolautoScroll)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>autoScrollMargin : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>autoScrollMargin</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>autoScrollMargin</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAutoScrollMargin</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>autoScrollMargin</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the size of the area when auto scrolling is triggered.</db:para>
+         <db:para>This property controls the size of the area at the edge of the viewport that triggers autoscrolling. The default value is 16 pixels.</db:para>
+         <db:para>This property was introduced in Qt 4.4.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>autoScrollMargin() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setAutoScrollMargin(intautoScrollMargin)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>editTriggers : EditTriggers</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>EditTriggers</db:type>
+            <db:varname>editTriggers</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>EditTriggers</db:type>
+            <db:methodname>editTriggers</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setEditTriggers</db:methodname>
+            <db:methodparam>
+               <db:type>EditTriggers</db:type>
+               <db:parameter>editTriggers</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds which actions will initiate item editing.</db:para>
+         <db:para>This property is a selection of flags defined by <db:code><db:link xlink:href="qabstractitemview.html#EditTrigger-enum" xrefstyle="enum" annotations="EditTrigger">EditTrigger</db:link></db:code>, combined using the OR operator. The view will only initiate the editing of an item if the action performed is set in this property.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>EditTriggers</db:td>
+                     <db:td>editTriggers() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setEditTriggers(EditTriggerseditTriggers)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>tabKeyNavigation : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>tabKeyNavigation</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>tabKeyNavigation</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setTabKeyNavigation</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>tabKeyNavigation</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds whether item navigation with tab and backtab is enabled..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>tabKeyNavigation() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setTabKeyNavigation(booltabKeyNavigation)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>showDropIndicator : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>showDropIndicator</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>showDropIndicator</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDropIndicatorShown</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>showDropIndicator</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds whether the drop indicator is shown when dragging items and dropping..</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragEnabled-prop" xrefstyle="property" annotations="dragEnabled">dragEnabled</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#DragDropMode-enum" xrefstyle="enum" annotations="DragDropMode">DragDropMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragDropOverwriteMode-prop" xrefstyle="property" annotations="dragDropOverwriteMode">dragDropOverwriteMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#acceptDrops-prop" xrefstyle="property" annotations="acceptDrops">acceptDrops</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>showDropIndicator() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setDropIndicatorShown(boolshowDropIndicator)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>dragEnabled : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>dragEnabled</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>dragEnabled</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDragEnabled</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>dragEnabled</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds whether the view supports dragging of its own items.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#showDropIndicator-prop" xrefstyle="property" annotations="showDropIndicator">showDropIndicator</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#DragDropMode-enum" xrefstyle="enum" annotations="DragDropMode">DragDropMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragDropOverwriteMode-prop" xrefstyle="property" annotations="dragDropOverwriteMode">dragDropOverwriteMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#acceptDrops-prop" xrefstyle="property" annotations="acceptDrops">acceptDrops</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>dragEnabled() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setDragEnabled(booldragEnabled)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>dragDropOverwriteMode : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>dragDropOverwriteMode</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>dragDropOverwriteMode</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDragDropOverwriteMode</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>dragDropOverwriteMode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the view's drag and drop behavior.</db:para>
+         <db:para>If its value is <db:code>true</db:code>, the selected data will overwrite the existing item data when dropped, while moving the data will clear the item. If its value is <db:code>false</db:code>, the selected data will be inserted as a new item when the data is dropped. When the data is moved, the item is removed as well.</db:para>
+         <db:para>The default value is <db:code>false</db:code>, as in the <db:code><db:link xlink:href="qlistview.html" xrefstyle="class" annotations="QListView">QListView</db:link></db:code> and <db:code><db:link xlink:href="qtreeview.html" xrefstyle="class" annotations="QTreeView">QTreeView</db:link></db:code> subclasses. In the <db:code><db:link xlink:href="qtableview.html" xrefstyle="class" annotations="QTableView">QTableView</db:link></db:code> subclass, on the other hand, the property has been set to <db:code>true</db:code>.</db:para>
+         <db:para>Note: This is not intended to prevent overwriting of items. The model's implementation of flags() should do that by not returning <db:code><db:link xlink:href="qt.html#ItemFlag-enum" xrefstyle="enum" annotations="Qt::ItemIsDropEnabled">Qt::ItemIsDropEnabled</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragDropMode-prop" xrefstyle="property" annotations="dragDropMode">dragDropMode</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>dragDropOverwriteMode() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setDragDropOverwriteMode(booldragDropOverwriteMode)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>dragDropMode : DragDropMode</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>DragDropMode</db:type>
+            <db:varname>dragDropMode</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>DragDropMode</db:type>
+            <db:methodname>dragDropMode</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDragDropMode</db:methodname>
+            <db:methodparam>
+               <db:type>DragDropMode</db:type>
+               <db:parameter>dragDropMode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the drag and drop event the view will act upon.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#showDropIndicator-prop" xrefstyle="property" annotations="showDropIndicator">showDropIndicator</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragDropOverwriteMode-prop" xrefstyle="property" annotations="dragDropOverwriteMode">dragDropOverwriteMode</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>DragDropMode</db:td>
+                     <db:td>dragDropMode() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setDragDropMode(DragDropModedragDropMode)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>defaultDropAction : Qt::DropAction</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>Qt::DropAction</db:type>
+            <db:varname>defaultDropAction</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>Qt::DropAction</db:type>
+            <db:methodname>defaultDropAction</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDefaultDropAction</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::DropAction</db:type>
+               <db:parameter>defaultDropAction</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the drop action that will be used by default in QAbstractItemView::drag().</db:para>
+         <db:para>If the property is not set, the drop action is CopyAction when the supported actions support CopyAction.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#showDropIndicator-prop" xrefstyle="property" annotations="showDropIndicator">showDropIndicator</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dragDropOverwriteMode-prop" xrefstyle="property" annotations="dragDropOverwriteMode">dragDropOverwriteMode</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.6.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>Qt::DropAction</db:td>
+                     <db:td>defaultDropAction() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setDefaultDropAction(Qt::DropActiondefaultDropAction)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>alternatingRowColors : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>alternatingRowColors</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>alternatingRowColors</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAlternatingRowColors</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>alternatingRowColors</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds whether to draw the background using alternating colors.</db:para>
+         <db:para>If this property is <db:code>true</db:code>, the item background will be drawn using <db:code><db:link xlink:href="qpalette.html#ColorRole-enum" xrefstyle="enum" annotations="QPalette::Base">QPalette::Base</db:link></db:code> and <db:code><db:link xlink:href="qpalette.html#ColorRole-enum" xrefstyle="enum" annotations="QPalette::AlternateBase">QPalette::AlternateBase</db:link></db:code>; otherwise the background will be drawn using the <db:code><db:link xlink:href="qpalette.html#ColorRole-enum" xrefstyle="enum" annotations="QPalette::Base">QPalette::Base</db:link></db:code> color.</db:para>
+         <db:para>By default, this property is <db:code>false</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>alternatingRowColors() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setAlternatingRowColors(boolalternatingRowColors)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>selectionMode : SelectionMode</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>SelectionMode</db:type>
+            <db:varname>selectionMode</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>SelectionMode</db:type>
+            <db:methodname>selectionMode</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setSelectionMode</db:methodname>
+            <db:methodparam>
+               <db:type>SelectionMode</db:type>
+               <db:parameter>selectionMode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds which selection mode the view operates in.</db:para>
+         <db:para>This property controls whether the user can select one or many items and, in many-item selections, whether the selection must be a continuous range of items.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#SelectionMode-enum" xrefstyle="enum" annotations="SelectionMode">SelectionMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#SelectionBehavior-enum" xrefstyle="enum" annotations="SelectionBehavior">SelectionBehavior</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>SelectionMode</db:td>
+                     <db:td>selectionMode() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setSelectionMode(SelectionModeselectionMode)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>selectionBehavior : SelectionBehavior</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>SelectionBehavior</db:type>
+            <db:varname>selectionBehavior</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>SelectionBehavior</db:type>
+            <db:methodname>selectionBehavior</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setSelectionBehavior</db:methodname>
+            <db:methodparam>
+               <db:type>SelectionBehavior</db:type>
+               <db:parameter>selectionBehavior</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds which selection behavior the view uses.</db:para>
+         <db:para>This property holds whether selections are done in terms of single items, rows or columns.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#SelectionMode-enum" xrefstyle="enum" annotations="SelectionMode">SelectionMode</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#SelectionBehavior-enum" xrefstyle="enum" annotations="SelectionBehavior">SelectionBehavior</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>SelectionBehavior</db:td>
+                     <db:td>selectionBehavior() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setSelectionBehavior(SelectionBehaviorselectionBehavior)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>iconSize : QSize</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QSize</db:type>
+            <db:varname>iconSize</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QSize</db:type>
+            <db:methodname>iconSize</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setIconSize</db:methodname>
+            <db:methodparam>
+               <db:type>QSize</db:type>
+               <db:parameter>iconSize</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the size of items' icons.</db:para>
+         <db:para>Setting this property when the view is visible will cause the items to be laid out again.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QSize</db:td>
+                     <db:td>iconSize() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setIconSize(QSizeiconSize)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>textElideMode : Qt::TextElideMode</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>Qt::TextElideMode</db:type>
+            <db:varname>textElideMode</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>Qt::TextElideMode</db:type>
+            <db:methodname>textElideMode</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setTextElideMode</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::TextElideMode</db:type>
+               <db:parameter>textElideMode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the position of the "..." in elided text..</db:para>
+         <db:para>The default value for all item views is <db:code><db:link xlink:href="qt.html#TextElideMode-enum" xrefstyle="enum" annotations="Qt::ElideRight">Qt::ElideRight</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>Qt::TextElideMode</db:td>
+                     <db:td>textElideMode() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setTextElideMode(Qt::TextElideModetextElideMode)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>verticalScrollMode : ScrollMode</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>ScrollMode</db:type>
+            <db:varname>verticalScrollMode</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>ScrollMode</db:type>
+            <db:methodname>verticalScrollMode</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setVerticalScrollMode</db:methodname>
+            <db:methodparam>
+               <db:type>ScrollMode</db:type>
+               <db:parameter>verticalScrollMode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds how the view scrolls its contents in the vertical direction.</db:para>
+         <db:para>This property controls how the view scroll its contents vertically. Scrolling can be done either per pixel or per item. Its default value comes from the style via the <db:code><db:link xlink:href="qstyle.html#StyleHint-enum" xrefstyle="enum" annotations="QStyle::SH_ItemView_ScrollMode">QStyle::SH_ItemView_ScrollMode</db:link></db:code> style hint.</db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>ScrollMode</db:td>
+                     <db:td>verticalScrollMode() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setVerticalScrollMode(ScrollModeverticalScrollMode)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>horizontalScrollMode : ScrollMode</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>ScrollMode</db:type>
+            <db:varname>horizontalScrollMode</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>ScrollMode</db:type>
+            <db:methodname>horizontalScrollMode</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setHorizontalScrollMode</db:methodname>
+            <db:methodparam>
+               <db:type>ScrollMode</db:type>
+               <db:parameter>horizontalScrollMode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds how the view scrolls its contents in the horizontal direction.</db:para>
+         <db:para>This property controls how the view scroll its contents horizontally. Scrolling can be done either per pixel or per item. Its default value comes from the style via the <db:code><db:link xlink:href="qstyle.html#StyleHint-enum" xrefstyle="enum" annotations="QStyle::SH_ItemView_ScrollMode">QStyle::SH_ItemView_ScrollMode</db:link></db:code> style hint.</db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>ScrollMode</db:td>
+                     <db:td>horizontalScrollMode() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setHorizontalScrollMode(ScrollModehorizontalScrollMode)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QAbstractItemView::QAbstractItemView(QWidget *parent)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QAbstractItemView</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>parent</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Constructs an abstract item view with the given <db:code role="argument">parent</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title> QAbstractItemView::~QAbstractItemView()</db:title>
+         <db:destructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>~QAbstractItemView</db:methodname>
+            <db:void/>
+         </db:destructorsynopsis>
+         <db:para>Destroys the view.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemDelegate * QAbstractItemView::itemDelegate() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemDelegate *</db:type>
+            <db:methodname>itemDelegate</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the item delegate used by this view and model. This is either one set with <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegate" xrefstyle="function" annotations="setItemDelegate()">setItemDelegate()</db:link></db:code>, or the default one.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegate" xrefstyle="function" annotations="setItemDelegate()">setItemDelegate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemDelegate * QAbstractItemView::itemDelegate(const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemDelegate *</db:type>
+            <db:methodname>itemDelegate</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the item delegate used by this view and model for the given <db:code role="argument">index</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemDelegate * QAbstractItemView::itemDelegateForColumn(int column) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemDelegate *</db:type>
+            <db:methodname>itemDelegateForColumn</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>column</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the item delegate used by this view and model for the given <db:code role="argument">column</db:code>. You can call <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code> to get a pointer to the current delegate for a given index.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegateForColumn" xrefstyle="function" annotations="setItemDelegateForColumn()">setItemDelegateForColumn()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegateForRow" xrefstyle="function" annotations="itemDelegateForRow()">itemDelegateForRow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemDelegate * QAbstractItemView::itemDelegateForRow(int row) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemDelegate *</db:type>
+            <db:methodname>itemDelegateForRow</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>row</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the item delegate used by this view and model for the given <db:code role="argument">row</db:code>, or 0 if no delegate has been assigned. You can call <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code> to get a pointer to the current delegate for a given index.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegateForRow" xrefstyle="function" annotations="setItemDelegateForRow()">setItemDelegateForRow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegateForColumn" xrefstyle="function" annotations="itemDelegateForColumn()">itemDelegateForColumn()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegate" xrefstyle="function" annotations="setItemDelegate()">setItemDelegate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemModel * QAbstractItemView::model() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemModel *</db:type>
+            <db:methodname>model</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the model that this view is presenting.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setModel" xrefstyle="function" annotations="setModel()">setModel()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::DragDropMode QAbstractItemView::dragDropMode() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemView::DragDropMode</db:type>
+            <db:methodname>dragDropMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::DropIndicatorPosition QAbstractItemView::dropIndicatorPosition() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>QAbstractItemView::DropIndicatorPosition</db:type>
+            <db:methodname>dropIndicatorPosition</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the position of the drop indicator in relation to the closest item.</db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::EditTriggers QAbstractItemView::editTriggers() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemView::EditTriggers</db:type>
+            <db:methodname>editTriggers</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::ScrollMode QAbstractItemView::horizontalScrollMode() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemView::ScrollMode</db:type>
+            <db:methodname>horizontalScrollMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::ScrollMode QAbstractItemView::verticalScrollMode() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemView::ScrollMode</db:type>
+            <db:methodname>verticalScrollMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::SelectionBehavior QAbstractItemView::selectionBehavior() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemView::SelectionBehavior</db:type>
+            <db:methodname>selectionBehavior</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::SelectionMode QAbstractItemView::selectionMode() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QAbstractItemView::SelectionMode</db:type>
+            <db:methodname>selectionMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QAbstractItemView::State QAbstractItemView::state() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>QAbstractItemView::State</db:type>
+            <db:methodname>state</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the item view's state.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setState" xrefstyle="function" annotations="setState()">setState()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QItemSelectionModel * QAbstractItemView::selectionModel() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QItemSelectionModel *</db:type>
+            <db:methodname>selectionModel</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the current selection model.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setSelectionModel" xrefstyle="function" annotations="setSelectionModel()">setSelectionModel()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#selectedIndexes" xrefstyle="function" annotations="selectedIndexes()">selectedIndexes()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QItemSelectionModel::SelectionFlags QAbstractItemView::selectionCommand(const QModelIndex &amp;index, const QEvent *event) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>QItemSelectionModel::SelectionFlags</db:type>
+            <db:methodname>selectionCommand</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QEvent *</db:type>
+               <db:parameter>event</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the SelectionFlags to be used when updating a selection with to include the <db:code role="argument">index</db:code> specified. The <db:code role="argument">event</db:code> is a user input event, such as a mouse or keyboard event.</db:para>
+         <db:para>Reimplement this function to define your own selection behavior.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setSelection" xrefstyle="function" annotations="setSelection()">setSelection()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QModelIndex QAbstractItemView::currentIndex() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QModelIndex</db:type>
+            <db:methodname>currentIndex</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the model index of the current item.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setCurrentIndex" xrefstyle="function" annotations="setCurrentIndex()">setCurrentIndex()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QModelIndex QAbstractItemView::rootIndex() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QModelIndex</db:type>
+            <db:methodname>rootIndex</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the model index of the model's root item. The root item is the parent item to the view's toplevel items. The root can be invalid.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setRootIndex" xrefstyle="function" annotations="setRootIndex()">setRootIndex()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QModelIndexList QAbstractItemView::selectedIndexes() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>QModelIndexList</db:type>
+            <db:methodname>selectedIndexes</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>This convenience function returns a list of all selected and non-hidden item indexes in the view. The list contains no duplicates, and is not sorted.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qitemselectionmodel.html#selectedIndexes" xrefstyle="function" annotations="QItemSelectionModel::selectedIndexes()">QItemSelectionModel::selectedIndexes()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QPoint QAbstractItemView::dirtyRegionOffset() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>QPoint</db:type>
+            <db:methodname>dirtyRegionOffset</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the offset of the dirty regions in the view.</db:para>
+         <db:para>If you use <db:code><db:link xlink:href="qabstractitemview.html#scrollDirtyRegion" xrefstyle="function" annotations="scrollDirtyRegion()">scrollDirtyRegion()</db:link></db:code> and implement a <db:code><db:link xlink:href="qabstractscrollarea.html#paintEvent" xrefstyle="function" annotations="paintEvent()">paintEvent()</db:link></db:code> in a subclass of <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code>, you should translate the area given by the paint event with the offset returned from this function.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scrollDirtyRegion" xrefstyle="function" annotations="scrollDirtyRegion()">scrollDirtyRegion()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setDirtyRegion" xrefstyle="function" annotations="setDirtyRegion()">setDirtyRegion()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QSize QAbstractItemView::iconSize() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QSize</db:type>
+            <db:methodname>iconSize</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QSize QAbstractItemView::sizeHintForIndex(const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QSize</db:type>
+            <db:methodname>sizeHintForIndex</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the size hint for the item with the specified <db:code role="argument">index</db:code> or an invalid size for invalid indexes.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#sizeHintForRow" xrefstyle="function" annotations="sizeHintForRow()">sizeHintForRow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#sizeHintForColumn" xrefstyle="function" annotations="sizeHintForColumn()">sizeHintForColumn()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QStyleOptionViewItem QAbstractItemView::viewOptions() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>QStyleOptionViewItem</db:type>
+            <db:methodname>viewOptions</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns a <db:code><db:link xlink:href="qstyleoptionviewitem.html" xrefstyle="class" annotations="QStyleOptionViewItem">QStyleOptionViewItem</db:link></db:code> structure populated with the view's palette, font, state, alignments etc.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QWidget * QAbstractItemView::indexWidget(const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>indexWidget</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the widget for the item at the given <db:code role="argument">index</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setIndexWidget" xrefstyle="function" annotations="setIndexWidget()">setIndexWidget()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>Qt::DropAction QAbstractItemView::defaultDropAction() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>Qt::DropAction</db:type>
+            <db:methodname>defaultDropAction</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>Qt::TextElideMode QAbstractItemView::textElideMode() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>Qt::TextElideMode</db:type>
+            <db:methodname>textElideMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemView::alternatingRowColors() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>alternatingRowColors</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemView::dragDropOverwriteMode() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>dragDropOverwriteMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemView::dragEnabled() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>dragEnabled</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemView::edit(const QModelIndex &amp;index, QAbstractItemView::EditTrigger trigger, QEvent *event)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>edit</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemView::EditTrigger</db:type>
+               <db:parameter>trigger</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Starts editing the item at <db:code role="argument">index</db:code>, creating an editor if necessary, and returns <db:code>true</db:code> if the view's <db:code><db:link xlink:href="qabstractitemview.html#State-enum" xrefstyle="enum" annotations="State">State</db:link></db:code> is now <db:code><db:link xlink:href="qabstractitemview.html#State-enum" xrefstyle="enum" annotations="EditingState">EditingState</db:link></db:code>; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>The action that caused the editing process is described by <db:code role="argument">trigger</db:code>, and the associated event is specified by <db:code role="argument">event</db:code>.</db:para>
+         <db:para>Editing can be forced by specifying the <db:code role="argument">trigger</db:code> to be <db:code><db:link xlink:href="qabstractitemview.html#EditTrigger-enum" xrefstyle="enum" annotations="QAbstractItemView::AllEditTriggers">QAbstractItemView::AllEditTriggers</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#closeEditor" xrefstyle="function" annotations="closeEditor()">closeEditor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemView::isPersistentEditorOpen(const QModelIndex &amp;index) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isPersistentEditorOpen</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns whether a persistent editor is open for the item at index <db:code role="argument">index</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#openPersistentEditor" xrefstyle="function" annotations="openPersistentEditor()">openPersistentEditor()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#closePersistentEditor" xrefstyle="function" annotations="closePersistentEditor()">closePersistentEditor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 5.10.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QAbstractItemView::tabKeyNavigation() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>tabKeyNavigation</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QAbstractItemView::autoScrollMargin() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>int</db:type>
+            <db:methodname>autoScrollMargin</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QAbstractItemView::sizeHintForColumn(int column) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>int</db:type>
+            <db:methodname>sizeHintForColumn</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>column</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the width size hint for the specified <db:code role="argument">column</db:code> or -1 if there is no model.</db:para>
+         <db:para>This function is used in views with a horizontal header to find the size hint for a header section based on the contents of the given <db:code role="argument">column</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#sizeHintForRow" xrefstyle="function" annotations="sizeHintForRow()">sizeHintForRow()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QAbstractItemView::sizeHintForRow(int row) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>int</db:type>
+            <db:methodname>sizeHintForRow</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>row</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the height size hint for the specified <db:code role="argument">row</db:code> or -1 if there is no model.</db:para>
+         <db:para>The returned height is calculated using the size hints of the given <db:code role="argument">row</db:code>'s items, i.e. the returned value is the maximum height among the items. Note that to control the height of a row, you must reimplement the <db:code><db:link xlink:href="qabstractitemdelegate.html#sizeHint" xrefstyle="function" annotations="QAbstractItemDelegate::sizeHint()">QAbstractItemDelegate::sizeHint()</db:link></db:code> function.</db:para>
+         <db:para>This function is used in views with a vertical header to find the size hint for a header section based on the contents of the given <db:code role="argument">row</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#sizeHintForColumn" xrefstyle="function" annotations="sizeHintForColumn()">sizeHintForColumn()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::clearSelection()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>clearSelection</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Deselects all selected items. The current index will not be changed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setSelection" xrefstyle="function" annotations="setSelection()">setSelection()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#selectAll" xrefstyle="function" annotations="selectAll()">selectAll()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::closeEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>closeEditor</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemDelegate::EndEditHint</db:type>
+               <db:parameter>hint</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Closes the given <db:code role="argument">editor</db:code>, and releases it. The <db:code role="argument">hint</db:code> is used to specify how the view should respond to the end of the editing operation. For example, the hint may indicate that the next item in the view should be opened for editing.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#edit" xrefstyle="function" annotations="edit()">edit()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#commitData" xrefstyle="function" annotations="commitData()">commitData()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::closePersistentEditor(const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>closePersistentEditor</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Closes the persistent editor for the item at the given <db:code role="argument">index</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#openPersistentEditor" xrefstyle="function" annotations="openPersistentEditor()">openPersistentEditor()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#isPersistentEditorOpen" xrefstyle="function" annotations="isPersistentEditorOpen()">isPersistentEditorOpen()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::commitData(QWidget *editor)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>commitData</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Commit the data in the <db:code role="argument">editor</db:code> to the model.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#closeEditor" xrefstyle="function" annotations="closeEditor()">closeEditor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::currentChanged(const QModelIndex &amp;current, const QModelIndex &amp;previous)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>currentChanged</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>current</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>previous</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This slot is called when a new item becomes the current item. The previous current item is specified by the <db:code role="argument">previous</db:code> index, and the new item by the <db:code role="argument">current</db:code> index.</db:para>
+         <db:para>If you want to know about changes to items see the <db:code><db:link xlink:href="qabstractitemview.html#dataChanged" xrefstyle="function" annotations="dataChanged()">dataChanged()</db:link></db:code> signal.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::dataChanged(const QModelIndex &amp;topLeft, const QModelIndex &amp;bottomRight, const QVector&lt;int&gt; &amp;roles)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>dataChanged</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>topLeft</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>bottomRight</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QVector&lt;int&gt; &amp;</db:type>
+               <db:parameter>roles</db:parameter>
+               <db:initializer>QVector&lt;int&gt;()</db:initializer>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This slot is called when items with the given <db:code role="argument">roles</db:code> are changed in the model. The changed items are those from <db:code role="argument">topLeft</db:code> to <db:code role="argument">bottomRight</db:code> inclusive. If just one item is changed <db:code role="argument">topLeft</db:code> == <db:code role="argument">bottomRight</db:code>.</db:para>
+         <db:para>The <db:code role="argument">roles</db:code> which have been changed can either be an empty container (meaning everything has changed), or a non-empty container with the subset of roles which have changed.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::dragEnterEvent(QDragEnterEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>dragEnterEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QDragEnterEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a drag and drop operation enters the widget. If the drag is over a valid dropping place (e.g. over an item that accepts drops), the event is accepted; otherwise it is ignored.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dropEvent" xrefstyle="function" annotations="dropEvent()">dropEvent()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#startDrag" xrefstyle="function" annotations="startDrag()">startDrag()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::dragMoveEvent(QDragMoveEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>dragMoveEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QDragMoveEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called continuously with the given <db:code role="argument">event</db:code> during a drag and drop operation over the widget. It can cause the view to scroll if, for example, the user drags a selection to view's right or bottom edge. In this case, the event will be accepted; otherwise it will be ignored.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dropEvent" xrefstyle="function" annotations="dropEvent()">dropEvent()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#startDrag" xrefstyle="function" annotations="startDrag()">startDrag()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::dropEvent(QDropEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>dropEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QDropEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a drop event occurs over the widget. If the model accepts the even position the drop event is accepted; otherwise it is ignored.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#startDrag" xrefstyle="function" annotations="startDrag()">startDrag()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::edit(const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>edit</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Starts editing the item corresponding to the given <db:code role="argument">index</db:code> if it is editable.</db:para>
+         <db:para>Note that this function does not change the current index. Since the current index defines the next and previous items to edit, users may find that keyboard navigation does not work as expected. To provide consistent navigation behavior, call <db:code><db:link xlink:href="qabstractitemview.html#setCurrentIndex" xrefstyle="function" annotations="setCurrentIndex()">setCurrentIndex()</db:link></db:code> before this function with the same model index.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qmodelindex.html#flags" xrefstyle="function" annotations="QModelIndex::flags()">QModelIndex::flags()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::editorDestroyed(QObject *editor)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>editorDestroyed</db:methodname>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>editor</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called when the given <db:code role="argument">editor</db:code> has been destroyed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#closeEditor" xrefstyle="function" annotations="closeEditor()">closeEditor()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::executeDelayedItemsLayout()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>executeDelayedItemsLayout</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Executes the scheduled layouts without waiting for the event processing to begin.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scheduleDelayedItemsLayout" xrefstyle="function" annotations="scheduleDelayedItemsLayout()">scheduleDelayedItemsLayout()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::focusInEvent(QFocusEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>focusInEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QFocusEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when the widget obtains the focus. By default, the event is ignored.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#setFocus" xrefstyle="function" annotations="setFocus()">setFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#focusOutEvent" xrefstyle="function" annotations="focusOutEvent()">focusOutEvent()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::focusOutEvent(QFocusEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>focusOutEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QFocusEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when the widget loses the focus. By default, the event is ignored.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#clearFocus" xrefstyle="function" annotations="clearFocus()">clearFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#focusInEvent" xrefstyle="function" annotations="focusInEvent()">focusInEvent()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::keyPressEvent(QKeyEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>keyPressEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QKeyEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a key event is sent to the widget. The default implementation handles basic cursor movement, e.g. Up, Down, Left, Right, Home, PageUp, and PageDown; the <db:code><db:link xlink:href="qabstractitemview.html#activated" xrefstyle="function" annotations="activated()">activated()</db:link></db:code> signal is emitted if the current index is valid and the activation key is pressed (e.g. Enter or Return, depending on the platform). This function is where editing is initiated by key press, e.g. if F2 is pressed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#edit" xrefstyle="function" annotations="edit()">edit()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#moveCursor" xrefstyle="function" annotations="moveCursor()">moveCursor()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#keyboardSearch" xrefstyle="function" annotations="keyboardSearch()">keyboardSearch()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#tabKeyNavigation-prop" xrefstyle="property" annotations="tabKeyNavigation">tabKeyNavigation</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::keyboardSearch(const QString &amp;search)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>keyboardSearch</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>search</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Moves to and selects the item best matching the string <db:code role="argument">search</db:code>. If no item is found nothing happens.</db:para>
+         <db:para>In the default implementation, the search is reset if <db:code role="argument">search</db:code> is empty, or the time interval since the last search has exceeded <db:code><db:link xlink:href="qapplication.html#keyboardInputInterval-prop" xrefstyle="function" annotations="QApplication::keyboardInputInterval()">QApplication::keyboardInputInterval()</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::mouseDoubleClickEvent(QMouseEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>mouseDoubleClickEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QMouseEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a mouse button is double clicked inside the widget. If the double-click is on a valid item it emits the <db:code><db:link xlink:href="qabstractitemview.html#doubleClicked" xrefstyle="function" annotations="doubleClicked()">doubleClicked()</db:link></db:code> signal and calls <db:code><db:link xlink:href="qabstractitemview.html#edit" xrefstyle="function" annotations="edit()">edit()</db:link></db:code> on the item.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::mouseMoveEvent(QMouseEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>mouseMoveEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QMouseEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a mouse move event is sent to the widget. If a selection is in progress and new items are moved over the selection is extended; if a drag is in progress it is continued.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::mousePressEvent(QMouseEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>mousePressEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QMouseEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a mouse button is pressed while the cursor is inside the widget. If a valid item is pressed on it is made into the current item. This function emits the <db:code><db:link xlink:href="qabstractitemview.html#pressed" xrefstyle="function" annotations="pressed()">pressed()</db:link></db:code> signal.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::mouseReleaseEvent(QMouseEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>mouseReleaseEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QMouseEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a mouse button is released, after a mouse press event on the widget. If a user presses the mouse inside your widget and then drags the mouse to another location before releasing the mouse button, your widget receives the release event. The function will emit the <db:code><db:link xlink:href="qabstractitemview.html#clicked" xrefstyle="function" annotations="clicked()">clicked()</db:link></db:code> signal if an item was being pressed.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::openPersistentEditor(const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>openPersistentEditor</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Opens a persistent editor on the item at the given <db:code role="argument">index</db:code>. If no editor exists, the delegate will create a new editor.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#closePersistentEditor" xrefstyle="function" annotations="closePersistentEditor()">closePersistentEditor()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#isPersistentEditorOpen" xrefstyle="function" annotations="isPersistentEditorOpen()">isPersistentEditorOpen()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::reset()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>reset</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Reset the internal state of the view.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> This function will reset open editors, scroll bar positions, selections, etc. Existing changes will not be committed. If you would like to save your changes when resetting the view, you can reimplement this function, commit your changes, and then call the superclass' implementation.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::resizeEvent(QResizeEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>resizeEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QResizeEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a resize event is sent to the widget.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#resizeEvent" xrefstyle="function" annotations="QWidget::resizeEvent()">QWidget::resizeEvent()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::rowsAboutToBeRemoved(const QModelIndex &amp;parent, int start, int end)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>rowsAboutToBeRemoved</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>parent</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>start</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>end</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This slot is called when rows are about to be removed. The deleted rows are those under the given <db:code role="argument">parent</db:code> from <db:code role="argument">start</db:code> to <db:code role="argument">end</db:code> inclusive.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#rowsInserted" xrefstyle="function" annotations="rowsInserted()">rowsInserted()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::rowsInserted(const QModelIndex &amp;parent, int start, int end)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>rowsInserted</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>parent</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>start</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>end</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This slot is called when rows are inserted. The new rows are those under the given <db:code role="argument">parent</db:code> from <db:code role="argument">start</db:code> to <db:code role="argument">end</db:code> inclusive. The base class implementation calls fetchMore() on the model to check for more data.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#rowsAboutToBeRemoved" xrefstyle="function" annotations="rowsAboutToBeRemoved()">rowsAboutToBeRemoved()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::scheduleDelayedItemsLayout()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>scheduleDelayedItemsLayout</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Schedules a layout of the items in the view to be executed when the event processing starts.</db:para>
+         <db:para>Even if  is called multiple times before events are processed, the view will only do the layout once.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#executeDelayedItemsLayout" xrefstyle="function" annotations="executeDelayedItemsLayout()">executeDelayedItemsLayout()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::scrollDirtyRegion(int dx, int dy)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>scrollDirtyRegion</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>dx</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>dy</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Prepares the view for scrolling by (<db:code role="argument">dx</db:code>,<db:code role="argument">dy</db:code>) pixels by moving the dirty regions in the opposite direction. You only need to call this function if you are implementing a scrolling viewport in your view subclass.</db:para>
+         <db:para>If you implement <db:code><db:link xlink:href="qabstractscrollarea.html#scrollContentsBy" xrefstyle="function" annotations="scrollContentsBy()">scrollContentsBy()</db:link></db:code> in a subclass of <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code>, call this function before you call <db:code><db:link xlink:href="qwidget.html#scroll" xrefstyle="function" annotations="QWidget::scroll()">QWidget::scroll()</db:link></db:code> on the viewport. Alternatively, just call <db:code><db:link xlink:href="qabstractitemview.html#update" xrefstyle="function" annotations="update()">update()</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractscrollarea.html#scrollContentsBy" xrefstyle="function" annotations="scrollContentsBy()">scrollContentsBy()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dirtyRegionOffset" xrefstyle="function" annotations="dirtyRegionOffset()">dirtyRegionOffset()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setDirtyRegion" xrefstyle="function" annotations="setDirtyRegion()">setDirtyRegion()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::scrollToBottom()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>scrollToBottom</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Scrolls the view to the bottom.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scrollTo" xrefstyle="function" annotations="scrollTo()">scrollTo()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scrollToTop" xrefstyle="function" annotations="scrollToTop()">scrollToTop()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::scrollToTop()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>scrollToTop</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Scrolls the view to the top.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scrollTo" xrefstyle="function" annotations="scrollTo()">scrollTo()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scrollToBottom" xrefstyle="function" annotations="scrollToBottom()">scrollToBottom()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::selectAll()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>selectAll</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Selects all items in the view. This function will use the selection behavior set on the view when selecting.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setSelection" xrefstyle="function" annotations="setSelection()">setSelection()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#selectedIndexes" xrefstyle="function" annotations="selectedIndexes()">selectedIndexes()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#clearSelection" xrefstyle="function" annotations="clearSelection()">clearSelection()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::selectionChanged(const QItemSelection &amp;selected, const QItemSelection &amp;deselected)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>selectionChanged</db:methodname>
+            <db:methodparam>
+               <db:type>const QItemSelection &amp;</db:type>
+               <db:parameter>selected</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QItemSelection &amp;</db:type>
+               <db:parameter>deselected</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This slot is called when the selection is changed. The previous selection (which may be empty), is specified by <db:code role="argument">deselected</db:code>, and the new selection by <db:code role="argument">selected</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setSelection" xrefstyle="function" annotations="setSelection()">setSelection()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setAlternatingRowColors(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setAlternatingRowColors</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setAutoScroll(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setAutoScroll</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setAutoScrollMargin(int margin)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setAutoScrollMargin</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>margin</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setCurrentIndex(const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setCurrentIndex</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the current item to be the item at <db:code role="argument">index</db:code>.</db:para>
+         <db:para>Unless the current selection mode is <db:code><db:link xlink:href="qabstractitemview.html#SelectionMode-enum" xrefstyle="enum" annotations="QAbstractItemView::NoSelection">NoSelection</db:link></db:code>, the item is also selected. Note that this function also updates the starting position for any new selections the user performs.</db:para>
+         <db:para>To set an item as the current item without selecting it, call</db:para>
+         <db:para>
+            <db:code>selectionModel()-&gt;setCurrentIndex(index, QItemSelectionModel::NoUpdate);</db:code>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#currentIndex" xrefstyle="function" annotations="currentIndex()">currentIndex()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#currentChanged" xrefstyle="function" annotations="currentChanged()">currentChanged()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#selectionMode-prop" xrefstyle="property" annotations="selectionMode">selectionMode</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setDefaultDropAction(Qt::DropAction dropAction)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setDefaultDropAction</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::DropAction</db:type>
+               <db:parameter>dropAction</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setDirtyRegion(const QRegion &amp;region)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>setDirtyRegion</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>region</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Marks the given <db:code role="argument">region</db:code> as dirty and schedules it to be updated. You only need to call this function if you are implementing your own view subclass.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#scrollDirtyRegion" xrefstyle="function" annotations="scrollDirtyRegion()">scrollDirtyRegion()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#dirtyRegionOffset" xrefstyle="function" annotations="dirtyRegionOffset()">dirtyRegionOffset()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setDragDropMode(QAbstractItemView::DragDropMode behavior)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setDragDropMode</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::DragDropMode</db:type>
+               <db:parameter>behavior</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setDragDropOverwriteMode(bool overwrite)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setDragDropOverwriteMode</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>overwrite</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setDragEnabled(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setDragEnabled</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setEditTriggers(QAbstractItemView::EditTriggers triggers)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setEditTriggers</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::EditTriggers</db:type>
+               <db:parameter>triggers</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setHorizontalScrollMode(QAbstractItemView::ScrollMode mode)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setHorizontalScrollMode</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::ScrollMode</db:type>
+               <db:parameter>mode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setIconSize(const QSize &amp;size)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setIconSize</db:methodname>
+            <db:methodparam>
+               <db:type>const QSize &amp;</db:type>
+               <db:parameter>size</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setIndexWidget(const QModelIndex &amp;index, QWidget *widget)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setIndexWidget</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the given <db:code role="argument">widget</db:code> on the item at the given <db:code role="argument">index</db:code>, passing the ownership of the widget to the viewport.</db:para>
+         <db:para>If <db:code role="argument">index</db:code> is invalid (e.g., if you pass the root index), this function will do nothing.</db:para>
+         <db:para>The given <db:code role="argument">widget</db:code>'s <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">autoFillBackground</db:link></db:code> property must be set to true, otherwise the widget's background will be transparent, showing both the model data and the item at the given <db:code role="argument">index</db:code>.</db:para>
+         <db:para>If index widget A is replaced with index widget B, index widget A will be deleted. For example, in the code snippet below, the <db:code><db:link xlink:href="qlineedit.html" xrefstyle="class" annotations="QLineEdit">QLineEdit</db:link></db:code> object will be deleted.</db:para>
+         <db:programlisting>
+setIndexWidget(index, new QLineEdit);
+...
+setIndexWidget(index, new QTextEdit);
+</db:programlisting>
+         <db:para>This function should only be used to display static content within the visible area corresponding to an item of data. If you want to display custom dynamic content or implement a custom editor widget, subclass <db:code><db:link xlink:href="qitemdelegate.html" xrefstyle="class" annotations="QItemDelegate">QItemDelegate</db:link></db:code> instead.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#indexWidget" xrefstyle="function" annotations="indexWidget()">indexWidget()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="model-view-programming.html#delegate-classes" xrefstyle="page" annotations="Delegate Classes">Delegate Classes</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setItemDelegate(QAbstractItemDelegate *delegate)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setItemDelegate</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemDelegate *</db:type>
+               <db:parameter>delegate</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the item delegate for this view and its model to <db:code role="argument">delegate</db:code>. This is useful if you want complete control over the editing and display of items.</db:para>
+         <db:para>Any existing delegate will be removed, but not deleted. <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> does not take ownership of <db:code role="argument">delegate</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> You should not share the same instance of a delegate between views. Doing so can cause incorrect or unintuitive editing behavior since each view connected to a given delegate may receive the <db:code><db:link xlink:href="qabstractitemdelegate.html#closeEditor" xrefstyle="function" annotations="QAbstractItemDelegate::closeEditor()">closeEditor()</db:link></db:code> signal, and attempt to access, modify or close an editor that has already been closed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setItemDelegateForColumn(int column, QAbstractItemDelegate *delegate)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setItemDelegateForColumn</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>column</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemDelegate *</db:type>
+               <db:parameter>delegate</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the given item <db:code role="argument">delegate</db:code> used by this view and model for the given <db:code role="argument">column</db:code>. All items on <db:code role="argument">column</db:code> will be drawn and managed by <db:code role="argument">delegate</db:code> instead of using the default delegate (i.e., <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code>).</db:para>
+         <db:para>Any existing column delegate for <db:code role="argument">column</db:code> will be removed, but not deleted. <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> does not take ownership of <db:code role="argument">delegate</db:code>.</db:para>
+         <db:note>
+            <db:para> If a delegate has been assigned to both a row and a column, the row delegate will take precedence and manage the intersecting cell index.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> You should not share the same instance of a delegate between views. Doing so can cause incorrect or unintuitive editing behavior since each view connected to a given delegate may receive the <db:code><db:link xlink:href="qabstractitemdelegate.html#closeEditor" xrefstyle="function" annotations="QAbstractItemDelegate::closeEditor()">closeEditor()</db:link></db:code> signal, and attempt to access, modify or close an editor that has already been closed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegateForColumn" xrefstyle="function" annotations="itemDelegateForColumn()">itemDelegateForColumn()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegateForRow" xrefstyle="function" annotations="setItemDelegateForRow()">setItemDelegateForRow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setItemDelegateForRow(int row, QAbstractItemDelegate *delegate)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setItemDelegateForRow</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>row</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QAbstractItemDelegate *</db:type>
+               <db:parameter>delegate</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the given item <db:code role="argument">delegate</db:code> used by this view and model for the given <db:code role="argument">row</db:code>. All items on <db:code role="argument">row</db:code> will be drawn and managed by <db:code role="argument">delegate</db:code> instead of using the default delegate (i.e., <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code>).</db:para>
+         <db:para>Any existing row delegate for <db:code role="argument">row</db:code> will be removed, but not deleted. <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">QAbstractItemView</db:link></db:code> does not take ownership of <db:code role="argument">delegate</db:code>.</db:para>
+         <db:note>
+            <db:para> If a delegate has been assigned to both a row and a column, the row delegate (i.e., this delegate) will take precedence and manage the intersecting cell index.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> You should not share the same instance of a delegate between views. Doing so can cause incorrect or unintuitive editing behavior since each view connected to a given delegate may receive the <db:code><db:link xlink:href="qabstractitemdelegate.html#closeEditor" xrefstyle="function" annotations="QAbstractItemDelegate::closeEditor()">closeEditor()</db:link></db:code> signal, and attempt to access, modify or close an editor that has already been closed.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegateForRow" xrefstyle="function" annotations="itemDelegateForRow()">itemDelegateForRow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setItemDelegateForColumn" xrefstyle="function" annotations="setItemDelegateForColumn()">setItemDelegateForColumn()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#itemDelegate" xrefstyle="function" annotations="itemDelegate()">itemDelegate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setModel(QAbstractItemModel *model)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setModel</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemModel *</db:type>
+               <db:parameter>model</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the <db:code role="argument">model</db:code> for the view to present.</db:para>
+         <db:para>This function will create and set a new selection model, replacing any model that was previously set with <db:code><db:link xlink:href="qabstractitemview.html#setSelectionModel" xrefstyle="function" annotations="setSelectionModel()">setSelectionModel()</db:link></db:code>. However, the old selection model will not be deleted as it may be shared between several views. We recommend that you delete the old selection model if it is no longer required. This is done with the following code:</db:para>
+         <db:programlisting>
+QItemSelectionModel *m = view-&gt;selectionModel();
+view-&gt;setModel(new model);
+delete m;
+</db:programlisting>
+         <db:para>If both the old model and the old selection model do not have parents, or if their parents are long-lived objects, it may be preferable to call their <db:code><db:link xlink:href="qobject.html#deleteLater" xrefstyle="function" annotations="deleteLater()">deleteLater()</db:link></db:code> functions to explicitly delete them.</db:para>
+         <db:para>The view <db:emphasis>does not</db:emphasis> take ownership of the model unless it is the model's parent object because the model may be shared between many different views.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#model" xrefstyle="function" annotations="model()">model()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#selectionModel" xrefstyle="function" annotations="selectionModel()">selectionModel()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setSelectionModel" xrefstyle="function" annotations="setSelectionModel()">setSelectionModel()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setRootIndex(const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setRootIndex</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the root item to the item at the given <db:code role="argument">index</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#rootIndex" xrefstyle="function" annotations="rootIndex()">rootIndex()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setSelectionBehavior(QAbstractItemView::SelectionBehavior behavior)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setSelectionBehavior</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::SelectionBehavior</db:type>
+               <db:parameter>behavior</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setSelectionMode(QAbstractItemView::SelectionMode mode)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setSelectionMode</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::SelectionMode</db:type>
+               <db:parameter>mode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setSelectionModel(QItemSelectionModel *selectionModel)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setSelectionModel</db:methodname>
+            <db:methodparam>
+               <db:type>QItemSelectionModel *</db:type>
+               <db:parameter>selectionModel</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the current selection model to the given <db:code role="argument">selectionModel</db:code>.</db:para>
+         <db:para>Note that, if you call <db:code><db:link xlink:href="qabstractitemview.html#setModel" xrefstyle="function" annotations="setModel()">setModel()</db:link></db:code> after this function, the given <db:code role="argument">selectionModel</db:code> will be replaced by one created by the view.</db:para>
+         <db:note>
+            <db:para> It is up to the application to delete the old selection model if it is no longer needed; i.e., if it is not being used by other views. This will happen automatically when its parent object is deleted. However, if it does not have a parent, or if the parent is a long-lived object, it may be preferable to call its <db:code><db:link xlink:href="qobject.html#deleteLater" xrefstyle="function" annotations="deleteLater()">deleteLater()</db:link></db:code> function to explicitly delete it.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#selectionModel" xrefstyle="function" annotations="selectionModel()">selectionModel()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#setModel" xrefstyle="function" annotations="setModel()">setModel()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#clearSelection" xrefstyle="function" annotations="clearSelection()">clearSelection()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setState(QAbstractItemView::State state)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>setState</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::State</db:type>
+               <db:parameter>state</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the item view's state to the given <db:code role="argument">state</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qabstractitemview.html#state" xrefstyle="function" annotations="state()">state()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setTabKeyNavigation(bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setTabKeyNavigation</db:methodname>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setTextElideMode(Qt::TextElideMode mode)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setTextElideMode</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::TextElideMode</db:type>
+               <db:parameter>mode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::setVerticalScrollMode(QAbstractItemView::ScrollMode mode)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setVerticalScrollMode</db:methodname>
+            <db:methodparam>
+               <db:type>QAbstractItemView::ScrollMode</db:type>
+               <db:parameter>mode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::startDrag(Qt::DropActions supportedActions)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>startDrag</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::DropActions</db:type>
+               <db:parameter>supportedActions</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Starts a drag by calling drag-&gt;exec() using the given <db:code role="argument">supportedActions</db:code>.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::timerEvent(QTimerEvent *event) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:void/>
+            <db:methodname>timerEvent</db:methodname>
+            <db:methodparam>
+               <db:type>QTimerEvent *</db:type>
+               <db:parameter>event</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This function is called with the given <db:code role="argument">event</db:code> when a timer event is sent to the widget.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qobject.html#timerEvent" xrefstyle="function" annotations="QObject::timerEvent()">QObject::timerEvent()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::update(const QModelIndex &amp;index)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>update</db:methodname>
+            <db:methodparam>
+               <db:type>const QModelIndex &amp;</db:type>
+               <db:parameter>index</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Updates the area occupied by the given <db:code role="argument">index</db:code>.</db:para>
+         <db:para>This property was introduced in Qt 4.3.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QAbstractItemView::updateGeometries()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier>protected</db:modifier>
+            <db:void/>
+            <db:methodname>updateGeometries</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Updates the geometry of the child widgets of the view.</db:para>
+         <db:para>This property was introduced in Qt 4.4.</db:para>
+      </db:section>
+   </db:section>
+</db:article>
