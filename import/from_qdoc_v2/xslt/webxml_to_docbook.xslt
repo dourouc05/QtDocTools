@@ -136,7 +136,8 @@
   <xsl:template name="content_class_elements">
     <xsl:param name="elements" as="node()*"/>
     
-    <!-- Order of elements: classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
+    <!-- Order of elements: namespaces, classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
+    <xsl:variable name="namespaces" select="$elements/self::namespace[(@access='public' or @access='protected')and description/node()]" as="node()*"/>
     <xsl:variable name="classes" select="$elements/self::class[(@access='public' or @access='protected')and description/node()]" as="node()*"/>
     <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected') and description/node()] | $elements/self::typedef[(@access='public' or @access='protected')]" as="node()*"/>
     <xsl:variable name="properties" select="$elements/self::property[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
@@ -144,7 +145,7 @@
     <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     <xsl:variable name="macros" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
-    <xsl:variable name="allTakenIntoAccount" select="($classes union $memberTypes union $properties union $memberVariables union $functions union $macros)"/>
+    <xsl:variable name="allTakenIntoAccount" select="($namespaces union $classes union $memberTypes union $properties union $memberVariables union $functions union $macros)"/>
     <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and description/node()]) != count($elements[(@access='public' or @access='protected') and description/node()])">
       <xsl:message>
         <xsl:text>WARNING: Page not fully parsed. Missing tags: </xsl:text>
@@ -155,6 +156,16 @@
           </xsl:if>
         </xsl:for-each>
       </xsl:message>
+    </xsl:if>
+    
+    <xsl:if test="$namespaces">
+      <db:section>
+        <db:title>Namespaces</db:title>
+        <xsl:for-each select="$namespaces/self::namespace">
+          <xsl:sort select="@fullname"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
+      </db:section>
     </xsl:if>
     
     <xsl:if test="$classes or $memberTypes">
@@ -258,6 +269,33 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:template mode="content_class_elements" match="namespace">
+    <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
+      <db:section>
+        <db:title>namespace <xsl:value-of select="@fullname"/></db:title>
+        
+        <xsl:apply-templates mode="content_class_synopsis" select="."/>
+        <xsl:apply-templates mode="content_generic" select="description"/>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This namespace was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
+      </db:section>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template mode="content_class_synopsis" match="namespace">
+    <xsl:if test="@access='public' and @status='active'">
+      <db:namespacesynopsis>
+        <db:namespace>
+          <db:namespacename><xsl:value-of select="@name"/></db:namespacename>
+        </db:namespace>
+        <db:namespacesynopsisinfo role="module"><xsl:value-of select="@module"/></db:namespacesynopsisinfo>
+        <db:namespacesynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:namespacesynopsisinfo>
+      </db:namespacesynopsis>
+    </xsl:if>
+  </xsl:template>
+  
   <xsl:template mode="content_class_elements" match="class">
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
@@ -291,7 +329,7 @@
       
       <xsl:if test="enum">
         <xsl:for-each select="enum">
-          <xsl:apply-templates mode="content_class_synopsis"/>
+          <xsl:apply-templates mode="content_class_synopsis" select="."/>
           <xsl:if test="following-sibling::*[1][self::typedef]">
             <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
           </xsl:if>
@@ -600,18 +638,6 @@
     <xsl:call-template name="content_class_elements">
       <xsl:with-param name="elements" select="description/following-sibling::node()"/>
     </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template mode="content_class_synopsis" match="namespace">
-    <xsl:if test="@access='public' and @status='active'">
-      <db:namespacesynopsis>
-        <db:namespace>
-          <db:namespacename><xsl:value-of select="@name"/></db:namespacename>
-        </db:namespace>
-        <db:namespacesynopsisinfo role="module"><xsl:value-of select="@module"/></db:namespacesynopsisinfo>
-        <db:namespacesynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:namespacesynopsisinfo>
-      </db:namespacesynopsis>
-    </xsl:if>
   </xsl:template>
   
   <!-- Deal with modules and QML modules. -->
@@ -1508,8 +1534,8 @@
     </db:subscript>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="argument">
-    <db:code role="argument">
+  <xsl:template mode="content_generic" match="argument | index">
+    <db:code role="{name()}">
       <xsl:apply-templates mode="content_generic"/>
     </db:code>
   </xsl:template>
