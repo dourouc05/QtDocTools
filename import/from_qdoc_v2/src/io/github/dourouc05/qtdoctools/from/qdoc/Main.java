@@ -21,15 +21,16 @@ public class Main {
         //    C:\Qt\Qt-5.11.1\bin\qtattributionsscanner.exe C:/Qt/5.11.1/Src/qtbase --filter QDocModule=qtcore -o C:/Qt/5.11.1_build/qtbase/src/corelib/codeattributions.qdoc
         // 4. Run QDoc to get the WebXML files.
         // 5. Run Saxon to retrieve the DocBook files.
+        // 6. Run Saxon to retrieve the DvpML files.
 
         // TODO: Parse inputs!
 
         Main m = new Main();
 
         // Ensure the output folder exists.
-        if (! m.outputFolder.toFile().isDirectory()) {
-            Files.createDirectories(m.outputFolder);
-        }
+//        if (! m.outputFolder.toFile().isDirectory()) {
+//            Files.createDirectories(m.outputFolder);
+//        }
 
         // Explore the source directory for the qdocconf files.
         List<Pair<String, Path>> modules = m.findModules();
@@ -42,9 +43,9 @@ public class Main {
         }
 
         // Generate the main qdocconf file.
-        Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
-        m.makeMainQdocconf(modules, mainQdocconfPath);
-        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+//        Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
+//        m.makeMainQdocconf(modules, mainQdocconfPath);
+//        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
 
         // Run qdoc.
 //        System.out.println("++> Running qdoc.");
@@ -56,14 +57,34 @@ public class Main {
 
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
-        for (Path file : webxml) {
-            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+//        for (Path file : webxml) {
+//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+//
+//            // Print the name of the file to process to ease debugging.
+//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+//            System.out.flush();
+//
+//            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
+//            ++i;
+//        }
+
+        // Gather all DocBook files and transform them into DvpML.
+        List<Path> qdt = m.findDocBook();
+
+        if (webxml.size() != qdt.size()) {
+            System.out.println("Warning: not the same number of WebXML and DocBook files (" + webxml.size() + " vs. " + qdt.size() + ". ");
+        }
+
+        i = 0;
+        iFormat = "%0" + Integer.toString(qdt.size()).length() + "d";
+        for (Path file : qdt) {
+            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
 
             // Print the name of the file to process to ease debugging.
-            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
             System.out.flush();
 
-            m.runXSLT(file.toFile(), destination);
+            m.runXSLTDocBookToDvpML(file.toFile(), destination);
             ++i;
         }
     }
@@ -71,10 +92,10 @@ public class Main {
     private Path sourceFolder; // Containing Qt's sources.
     private Path outputFolder; // Where all the generated files should be put.
 
-    private String qtattributionsscannerPath; // Path to qtattributionsscanner.
-    private String qdocPath; // Path to qdoc.
-    private String xsltWebXMLToDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
-    private String xsltDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
+    private final String qtattributionsscannerPath; // Path to qtattributionsscanner.
+    private final String qdocPath; // Path to qdoc.
+    private final String xsltWebXMLToDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
+    private final String xsltDocBookToDvpMLPath; // Path to the XSLT sheet DocBook to DvpML.
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
 //    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
@@ -88,13 +109,14 @@ public class Main {
 
     private Processor saxonProcessor;
     private XsltCompiler saxonCompiler;
-    private XsltExecutable saxonExecutable;
+    private XsltExecutable saxonExecutableWebXMLToDocBook;
+    private XsltExecutable saxonExecutableDocBookToDvpML;
 
     private Main() {
         qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
         qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
-//        xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt"; // TODO: Restore this, write a dedicated tool.
-        xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\docbook_to_dvpml.xslt";
+        xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
+        xsltDocBookToDvpMLPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\docbook_to_dvpml.xslt";
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
@@ -362,37 +384,76 @@ public class Main {
         pb.start().waitFor();
     }
 
-    public List<Path> findWebXML() throws IOException {
-        String[] fileNames = outputFolder.resolve("webxml").toFile().list((current, name) -> name.endsWith(".webxml"));
+    private List<Path> findWithExtension(String extension, String typeName) throws IOException {
+        String[] fileNames = outputFolder.resolve("webxml").toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {
-            throw new IOException("No WebXML file found!");
+            throw new IOException("No " + typeName + " files found!");
         }
 
         return Arrays.stream(fileNames).map(s -> outputFolder.resolve("webxml").resolve(s)).collect(Collectors.toList());
     }
 
-    public void runXSLT(File file, Path destination) throws SaxonApiException {
-        if (saxonProcessor == null) {
-            saxonProcessor = new Processor(false);
-            saxonCompiler = saxonProcessor.newXsltCompiler();
-            saxonExecutable = saxonCompiler.compile(new StreamSource(new File(xsltWebXMLToDocBookPath)));
-        }
+    public List<Path> findWebXML() throws IOException {
+        return findWithExtension(".webxml", "WebXML");
+    }
 
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
+    private void initialiseSaxon() throws SaxonApiException {
+        saxonProcessor = new Processor(false);
+        saxonCompiler = saxonProcessor.newXsltCompiler();
+    }
+
+    private StandardErrorListener createLogger(ByteArrayOutputStream os) {
         PrintStream ps = new PrintStream(os, true, StandardCharsets.UTF_8);
         StandardErrorListener sel = new StandardErrorListener();
         sel.setLogger(new StandardLogger(ps));
+        return sel;
+    }
 
+    private XsltTransformer createTransformer(File file, Path destination, ByteArrayOutputStream os, String format) throws SaxonApiException {
         XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
         Serializer out = saxonProcessor.newSerializer();
-        out.setOutputProperty(Serializer.Property.METHOD, "xml");
-        out.setOutputProperty(Serializer.Property.INDENT, "yes");
         out.setOutputFile(destination.toFile());
-        saxonCompiler.setErrorListener(sel);
-        XsltTransformer trans = saxonExecutable.load();
+        saxonCompiler.setErrorListener(createLogger(os));
+
+        XsltTransformer trans = (format.equals("WebXML") ? saxonExecutableWebXMLToDocBook : saxonExecutableDocBookToDvpML).load();
         trans.setInitialContextNode(source);
         trans.setDestination(out);
+        return trans;
+    }
+
+    public void runXSLTWebXMLToDocBook(File file, Path destination) throws SaxonApiException {
+        if (saxonProcessor == null) {
+            initialiseSaxon();
+        }
+        if (saxonExecutableWebXMLToDocBook == null) {
+            saxonExecutableWebXMLToDocBook = saxonCompiler.compile(new StreamSource(new File(xsltWebXMLToDocBookPath)));
+        }
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        XsltTransformer trans = createTransformer(file, destination, os, "WebXML");
         trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
+        trans.transform();
+
+        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+        if (errors.length() > 0) {
+            System.out.println(errors);
+        }
+    }
+
+    public List<Path> findDocBook() throws IOException {
+        return findWithExtension(".qdt", "DocBook");
+    }
+
+    public void runXSLTDocBookToDvpML(File file, Path destination) throws SaxonApiException {
+        if (saxonProcessor == null) {
+            initialiseSaxon();
+        }
+        if (saxonExecutableDocBookToDvpML == null) {
+            saxonExecutableDocBookToDvpML = saxonCompiler.compile(new StreamSource(new File(xsltDocBookToDvpMLPath)));
+        }
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        XsltTransformer trans = createTransformer(file, destination, os, "DvpML");
         trans.transform();
 
         String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);

@@ -9,7 +9,7 @@
   <xsl:output method="xml" indent="yes"
     suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
-  <xsl:import-schema schema-location="article.xsd"/>   
+  <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>   
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
