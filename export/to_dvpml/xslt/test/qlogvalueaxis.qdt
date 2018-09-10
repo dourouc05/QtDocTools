@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>QLogValueAxis</db:title>
+      <db:abstract>
+         <db:para>Adds a logarithmic scale to a chart's axis</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-09+02:00</db:pubdate>
+      <db:date>2018-09-09+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QLogValueAxis</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">Qt Charts</db:classsynopsisinfo>
+      <db:namespacesynopsisinfo role="headers">#include &lt;qlogvalueaxis.h&gt;</db:namespacesynopsisinfo>
+      <db:classsynopsisinfo role="inherits">QAbstractAxis</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qlogvalueaxis.html" xrefstyle="class" annotations="QLogValueAxis">QLogValueAxis</db:link></db:code> class adds a logarithmic scale to a chart's axis.</db:para>
+      <db:para>A logarithmic scale is a nonlinear scale that is based on orders of magnitude, so that each tick mark on the axis is the previous tick mark multiplied by a value.</db:para>
+      <db:note>
+         <db:para> If <db:code><db:link xlink:href="qlogvalueaxis.html" xrefstyle="class" annotations="QLogValueAxis">QLogValueAxis</db:link></db:code> is attached to a series with one or more points with negative or zero values on the associated dimension, the series will not be plotted at all. This is particularly relevant when XYModelMappers are used, since empty cells in models typically contain zero values.</db:para>
+      </db:note>
+   </db:section>
+   <db:section>
+      <db:title>Properties</db:title>
+      <db:section>
+         <db:title>min : qreal</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>qreal</db:type>
+            <db:varname>min</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>qreal</db:type>
+            <db:methodname>min</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setMin</db:methodname>
+            <db:methodparam>
+               <db:type>qreal</db:type>
+               <db:parameter>min</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The minimum value on the axis..</db:para>
+         <db:para>When setting this property, the maximum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>qreal</db:td>
+                     <db:td>min() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setMin(qrealmin)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>max : qreal</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>qreal</db:type>
+            <db:varname>max</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>qreal</db:type>
+            <db:methodname>max</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setMax</db:methodname>
+            <db:methodparam>
+               <db:type>qreal</db:type>
+               <db:parameter>max</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The maximum value on the axis..</db:para>
+         <db:para>When setting this property, the minimum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>qreal</db:td>
+                     <db:td>max() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setMax(qrealmax)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>labelFormat : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>labelFormat</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>labelFormat</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setLabelFormat</db:methodname>
+            <db:methodparam>
+               <db:type>QString</db:type>
+               <db:parameter>labelFormat</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The label format of the axis..</db:para>
+         <db:para>The format string supports the following conversion specifiers, length modifiers, and flags provided by <db:code>printf()</db:code> in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.</db:para>
+         <db:para>If <db:code><db:link xlink:href="qchart.html#localizeNumbers-prop" xrefstyle="property" annotations="QChart::localizeNumbers">QChart::localizeNumbers</db:link></db:code> is <db:code>true</db:code>, the supported specifiers are limited to: d, e, E, f, g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from the default <db:code><db:link xlink:href="qlocale.html" xrefstyle="class" annotations="QLocale">QLocale</db:link></db:code> of the application.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qstring.html#asprintf" xrefstyle="function" annotations="QString::asprintf()">QString::asprintf()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>labelFormat() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setLabelFormat(QStringlabelFormat)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>base : qreal</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>qreal</db:type>
+            <db:varname>base</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>qreal</db:type>
+            <db:methodname>base</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setBase</db:methodname>
+            <db:methodparam>
+               <db:type>qreal</db:type>
+               <db:parameter>base</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The base of the logarithm..</db:para>
+         <db:para>The value has to be greater than 0 and cannot equal 1.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>qreal</db:td>
+                     <db:td>base() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setBase(qrealbase)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>tickCount : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>tickCount</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>tickCount</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:para>This property holds The number of tick marks on the axis. This indicates how many grid lines are drawn on the chart. This value is read-only..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>tickCount() const
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>minorTickCount : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>minorTickCount</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>minorTickCount</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setMinorTickCount</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>minorTickCount</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds The number of minor tick marks on the axis. This indicates how many grid lines are drawn between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0. Set the value to -1 and the number of grid lines between major ticks will be calculated automatically..</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>minorTickCount() const
+                  </db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>
+                    void
+                  </db:td>
+                     <db:td>setMinorTickCount(intminorTickCount)
+                  </db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title>QString QLogValueAxis::labelFormat() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QString</db:type>
+            <db:methodname>labelFormat</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>int QLogValueAxis::minorTickCount() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>int</db:type>
+            <db:methodname>minorTickCount</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>qreal QLogValueAxis::base() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>qreal</db:type>
+            <db:methodname>base</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>qreal QLogValueAxis::max() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>qreal</db:type>
+            <db:methodname>max</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>qreal QLogValueAxis::min() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>qreal</db:type>
+            <db:methodname>min</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QLogValueAxis::setBase(qreal base)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setBase</db:methodname>
+            <db:methodparam>
+               <db:type>qreal</db:type>
+               <db:parameter>base</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QLogValueAxis::setLabelFormat(const QString &amp;format)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setLabelFormat</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>format</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QLogValueAxis::setMax(qreal max)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setMax</db:methodname>
+            <db:methodparam>
+               <db:type>qreal</db:type>
+               <db:parameter>max</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QLogValueAxis::setMin(qreal min)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setMin</db:methodname>
+            <db:methodparam>
+               <db:type>qreal</db:type>
+               <db:parameter>min</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>void QLogValueAxis::setMinorTickCount(int minorTickCount)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:void/>
+            <db:methodname>setMinorTickCount</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>minorTickCount</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert"/>
+         </db:para>
+      </db:section>
+   </db:section>
+</db:article>

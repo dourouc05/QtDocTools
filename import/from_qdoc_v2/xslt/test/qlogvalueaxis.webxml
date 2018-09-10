@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QLogValueAxis" href="qlogvalueaxis.html" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="43" bases="QAbstractAxis" module="Qt Charts" brief="Adds a logarithmic scale to a chart's axis">
+            <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="40" column="4">
+                <brief>The <link raw="QLogValueAxis" href="qlogvalueaxis.html" type="class">QLogValueAxis</link> class adds a logarithmic scale to a chart's axis.</brief>
+                <para>A logarithmic scale is a nonlinear scale that is based on orders of magnitude, so that each tick mark on the axis is the previous tick mark multiplied by a value.</para>
+                <para>
+                    <bold>Note:</bold> If <link raw="QLogValueAxis" href="qlogvalueaxis.html" type="class">QLogValueAxis</link> is attached to a series with one or more points with negative or zero values on the associated dimension, the series will not be plotted at all. This is particularly relevant when XYModelMappers are used, since empty cells in models typically contain zero values.</para>
+            </description>
+            <variable threadsafety="unspecified" name="staticMetaObject" fullname="QLogValueAxis::staticMetaObject" href="qlogvalueaxis.html#staticMetaObject-var" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" type="const QMetaObject" static="true">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="metaObject" fullname="QLogValueAxis::metaObject" href="qlogvalueaxis.html#metaObject" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QMetaObject *" signature="const QMetaObject * metaObject() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacast" fullname="QLogValueAxis::qt_metacast" href="qlogvalueaxis.html#qt_metacast" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void *" signature="void * qt_metacast(const char *)">
+                <parameter type="const char *" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacall" fullname="QLogValueAxis::qt_metacall" href="qlogvalueaxis.html#qt_metacall" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int qt_metacall(QMetaObject::Call , int , void **)">
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="tr" fullname="QLogValueAxis::tr" href="qlogvalueaxis.html#tr" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString tr(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="trUtf8" fullname="QLogValueAxis::trUtf8" href="qlogvalueaxis.html#trUtf8" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString trUtf8(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_static_metacall" fullname="QLogValueAxis::qt_static_metacall" href="qlogvalueaxis.html#qt_static_metacall" status="active" access="private" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_static_metacall(QObject *, QMetaObject::Call , int , void **)">
+                <parameter type="QObject *" name="" default=""/>
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <class threadsafety="unspecified" name="QPrivateSignal" fullname="QLogValueAxis::QPrivateSignal" href="qlogvalueaxis-qprivatesignal.html" status="active" access="private" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="45">
+                <description path="" line="0" column="0"/>
+            </class>
+            <property threadsafety="unspecified" name="min" fullname="QLogValueAxis::min" href="qlogvalueaxis.html#min-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="46" type="qreal" brief="Minimum value on the axis">
+                <getter name="min"/>
+                <setter name="setMin"/>
+                <notifier name="minChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="71" column="4">
+                    <brief>This property holds The minimum value on the axis..</brief>
+                    <para>When setting this property, the maximum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="max" fullname="QLogValueAxis::max" href="qlogvalueaxis.html#max-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="47" type="qreal" brief="Maximum value on the axis">
+                <getter name="max"/>
+                <setter name="setMax"/>
+                <notifier name="maxChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="88" column="4">
+                    <brief>This property holds The maximum value on the axis..</brief>
+                    <para>When setting this property, the minimum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="labelFormat" fullname="QLogValueAxis::labelFormat" href="qlogvalueaxis.html#labelFormat-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="48" type="QString" brief="Label format of the axis">
+                <getter name="labelFormat"/>
+                <setter name="setLabelFormat"/>
+                <notifier name="labelFormatChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="143" column="4">
+                    <brief>This property holds The label format of the axis..</brief>
+                    <para>The format string supports the following conversion specifiers, length modifiers, and flags provided by <teletype type="highlighted">printf()</teletype> in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.</para>
+                    <para>If <link raw="QChart::localizeNumbers" href="qchart.html#localizeNumbers-prop" type="property" getter="QChart::localizeNumbers()">QChart::localizeNumbers</link> is <teletype type="highlighted">true</teletype>, the supported specifiers are limited to: d, e, E, f, g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from the default <link raw="QLocale" href="qlocale.html" type="class">QLocale</link> of the application.</para>
+                    <see-also>
+                        <link raw="QString::asprintf()" href="qstring.html#asprintf" type="function">QString::asprintf()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="base" fullname="QLogValueAxis::base" href="qlogvalueaxis.html#base-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="49" type="qreal" brief="Of the logarithm">
+                <getter name="base"/>
+                <setter name="setBase"/>
+                <notifier name="baseChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="105" column="4">
+                    <brief>This property holds The base of the logarithm..</brief>
+                    <para>The value has to be greater than 0 and cannot equal 1.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="tickCount" fullname="QLogValueAxis::tickCount" href="qlogvalueaxis.html#tickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="50" type="int" brief="Number of tick marks on the axis. This indicates how many grid lines are drawn on the chart. This value is read-only">
+                <getter name="tickCount"/>
+                <notifier name="tickCountChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="118" column="4">
+                    <brief>This property holds The number of tick marks on the axis. This indicates how many grid lines are drawn on the chart. This value is read-only..</brief>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="minorTickCount" fullname="QLogValueAxis::minorTickCount" href="qlogvalueaxis.html#minorTickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="51" type="int" brief="Number of minor tick marks on the axis. This indicates how many grid lines are drawn between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0. Set the value to -1 and the number of grid lines between major ticks will be calculated automatically">
+                <getter name="minorTickCount"/>
+                <setter name="setMinorTickCount"/>
+                <notifier name="minorTickCountChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtcharts/src/charts/axis/logvalueaxis/qlogvalueaxis.cpp" line="129" column="4">
+                    <brief>This property holds The number of minor tick marks on the axis. This indicates how many grid lines are drawn between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0. Set the value to -1 and the number of grid lines between major ticks will be calculated automatically..</brief>
+                </description>
+            </property>
+            <function threadsafety="unspecified" name="QLogValueAxis" fullname="QLogValueAxis::QLogValueAxis" href="qlogvalueaxis.html#QLogValueAxis" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="54" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QLogValueAxis(QObject *parent)">
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="~QLogValueAxis" fullname="QLogValueAxis::~QLogValueAxis" href="qlogvalueaxis.html#dtor.QLogValueAxis" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="55" virtual="virtual" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QLogValueAxis()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="QLogValueAxis" fullname="QLogValueAxis::QLogValueAxis" href="qlogvalueaxis.html#QLogValueAxis-1" status="active" access="protected" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="58" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QLogValueAxis(QLogValueAxisPrivate &amp;d, QObject *parent)">
+                <parameter type="QLogValueAxisPrivate &amp;" name="d" default=""/>
+                <parameter type="QObject *" name="parent" default="nullptr"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="type" fullname="QLogValueAxis::type" href="qlogvalueaxis.html#type" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="61" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QAbstractAxis::AxisType" signature="QAbstractAxis::AxisType type() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setMin" fullname="QLogValueAxis::setMin" href="qlogvalueaxis.html#min-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="64" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="min" type="void" signature="void setMin(qreal min)">
+                <parameter type="qreal" name="min" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>min()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="min" fullname="QLogValueAxis::min" href="qlogvalueaxis.html#min-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="65" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="min" type="qreal" signature="qreal min() const">
+                <description path="" line="0" column="0">
+                    <see-also>setMin()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setMax" fullname="QLogValueAxis::setMax" href="qlogvalueaxis.html#max-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="66" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="max" type="void" signature="void setMax(qreal max)">
+                <parameter type="qreal" name="max" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>max()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="max" fullname="QLogValueAxis::max" href="qlogvalueaxis.html#max-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="67" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="max" type="qreal" signature="qreal max() const">
+                <description path="" line="0" column="0">
+                    <see-also>setMax()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setRange" fullname="QLogValueAxis::setRange" href="qlogvalueaxis.html#setRange" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="68" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setRange(qreal min, qreal max)">
+                <parameter type="qreal" name="min" default=""/>
+                <parameter type="qreal" name="max" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setLabelFormat" fullname="QLogValueAxis::setLabelFormat" href="qlogvalueaxis.html#labelFormat-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="70" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelFormat" type="void" signature="void setLabelFormat(const QString &amp;format)">
+                <parameter type="const QString &amp;" name="format" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>labelFormat()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="labelFormat" fullname="QLogValueAxis::labelFormat" href="qlogvalueaxis.html#labelFormat-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="71" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelFormat" type="QString" signature="QString labelFormat() const">
+                <description path="" line="0" column="0">
+                    <see-also>setLabelFormat()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setBase" fullname="QLogValueAxis::setBase" href="qlogvalueaxis.html#base-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="73" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="base" type="void" signature="void setBase(qreal base)">
+                <parameter type="qreal" name="base" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>base()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="base" fullname="QLogValueAxis::base" href="qlogvalueaxis.html#base-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="74" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="base" type="qreal" signature="qreal base() const">
+                <description path="" line="0" column="0">
+                    <see-also>setBase()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="tickCount" fullname="QLogValueAxis::tickCount" href="qlogvalueaxis.html#tickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="76" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="tickCount" type="int" signature="int tickCount() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setMinorTickCount" fullname="QLogValueAxis::setMinorTickCount" href="qlogvalueaxis.html#minorTickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="78" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="minorTickCount" type="void" signature="void setMinorTickCount(int minorTickCount)">
+                <parameter type="int" name="minorTickCount" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>minorTickCount()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="minorTickCount" fullname="QLogValueAxis::minorTickCount" href="qlogvalueaxis.html#minorTickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="79" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="minorTickCount" type="int" signature="int minorTickCount() const">
+                <description path="" line="0" column="0">
+                    <see-also>setMinorTickCount()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="minChanged" fullname="QLogValueAxis::minChanged" href="qlogvalueaxis.html#min-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="82" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="min" type="void" signature="void minChanged(qreal min)">
+                <parameter type="qreal" name="min" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="maxChanged" fullname="QLogValueAxis::maxChanged" href="qlogvalueaxis.html#max-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="83" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="max" type="void" signature="void maxChanged(qreal max)">
+                <parameter type="qreal" name="max" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="rangeChanged" fullname="QLogValueAxis::rangeChanged" href="qlogvalueaxis.html#rangeChanged" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="84" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void rangeChanged(qreal min, qreal max)">
+                <parameter type="qreal" name="min" default=""/>
+                <parameter type="qreal" name="max" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="labelFormatChanged" fullname="QLogValueAxis::labelFormatChanged" href="qlogvalueaxis.html#labelFormat-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="85" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="labelFormat" type="void" signature="void labelFormatChanged(const QString &amp;format)">
+                <parameter type="const QString &amp;" name="format" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="baseChanged" fullname="QLogValueAxis::baseChanged" href="qlogvalueaxis.html#base-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="86" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="base" type="void" signature="void baseChanged(qreal base)">
+                <parameter type="qreal" name="base" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="tickCountChanged" fullname="QLogValueAxis::tickCountChanged" href="qlogvalueaxis.html#tickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="87" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="tickCount" type="void" signature="void tickCountChanged(int tickCount)">
+                <parameter type="int" name="tickCount" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="minorTickCountChanged" fullname="QLogValueAxis::minorTickCountChanged" href="qlogvalueaxis.html#minorTickCount-prop" status="active" access="public" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="88" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="minorTickCount" type="void" signature="void minorTickCountChanged(int minorTickCount)">
+                <parameter type="int" name="minorTickCount" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="d_func" fullname="QLogValueAxis::d_func" href="qlogvalueaxis.html#d_func" status="active" access="private" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="91" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QLogValueAxisPrivate *" signature="QLogValueAxisPrivate * d_func()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="d_func" fullname="QLogValueAxis::d_func" href="qlogvalueaxis.html#d_func-1" status="active" access="private" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="91" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QLogValueAxisPrivate *" signature="const QLogValueAxisPrivate * d_func() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="QLogValueAxis" fullname="QLogValueAxis::QLogValueAxis" href="qlogvalueaxis.html#QLogValueAxis-2" status="active" access="private" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="92" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QLogValueAxis(const QLogValueAxis &amp;)">
+                <parameter type="const QLogValueAxis &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QLogValueAxis::operator=" href="qlogvalueaxis.html#operator-eq" status="active" access="private" location="qlogvalueaxis.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCharts/qlogvalueaxis.h" lineno="92" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QLogValueAxis &amp;" signature="QLogValueAxis &amp; operator=(const QLogValueAxis &amp;)">
+                <parameter type="const QLogValueAxis &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+        </class>
+    </document>
+</WebXML>

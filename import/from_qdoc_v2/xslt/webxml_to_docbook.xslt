@@ -133,6 +133,12 @@
     </db:section>
   </xsl:template>
   
+  <xsl:function name="tc:is-element-included" as="xs:boolean">
+    <xsl:param name="currentNode" as="node()"/>
+    
+    <xsl:value-of select="not($currentNode/@access='private') and (not($currentNode/@delete) or $currentNode/@delete='false') and $currentNode/@status='active' and count($currentNode/description/*[not(self::see-also)]) > 0"/>
+  </xsl:function>
+  
   <xsl:template name="content_class_elements">
     <xsl:param name="elements" as="node()*"/>
     
@@ -158,31 +164,31 @@
       </xsl:message>
     </xsl:if>
     
-    <xsl:if test="$namespaces">
+    <xsl:if test="$namespaces[tc:is-element-included(.)]">
       <db:section>
         <db:title>Namespaces</db:title>
-        <xsl:for-each select="$namespaces/self::namespace">
+        <xsl:for-each select="$namespaces[tc:is-element-included(.)]/self::namespace">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$classes or $memberTypes">
+    <xsl:if test="$classes[tc:is-element-included(.)] or $memberTypes[tc:is-element-included(.)]">
       <db:section>
         <db:title>Member Types Documentation</db:title>
-        <xsl:for-each select="$classes/self::class">
+        <xsl:for-each select="$classes[tc:is-element-included(.)]/self::class">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
         
-        <xsl:for-each select="$memberTypes/self::enum">
+        <xsl:for-each select="$memberTypes[tc:is-element-included(.)]/self::enum">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
         
         <!-- Many typedefs are just sets of flags, and thence have no description, but some are real. -->
-        <xsl:for-each select="$memberTypes/self::typedef[description/node()]">
+        <xsl:for-each select="$memberTypes[tc:is-element-included(.)]/self::typedef[description/node()]">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
@@ -202,43 +208,43 @@
       </db:section>
     </xsl:if>-->
     
-    <xsl:if test="$properties">
+    <xsl:if test="$properties[tc:is-element-included(.)]">
       <db:section>
         <db:title>Properties</db:title>
         
-        <xsl:for-each select="$properties">
+        <xsl:for-each select="$properties[tc:is-element-included(.)]">
           <xsl:sort select="@signature"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$memberVariables">
+    <xsl:if test="$memberVariables[tc:is-element-included(.)]">
       <db:section>
         <db:title>Member Variable Documentation</db:title>
-        <xsl:for-each select="$memberVariables/self::variable">
+        <xsl:for-each select="$memberVariables[tc:is-element-included(.)]/self::variable">
           <xsl:sort select="@fullname"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
       </db:section>
     </xsl:if>
     
-    <xsl:if test="$functions">
+    <xsl:if test="$functions[tc:is-element-included(.)]">
       <db:section>
         <db:title>Member Function Documentation</db:title>
         <!-- First constructors, then the other functions. -->
         
-        <xsl:for-each select="$functions/self::function[@meta='constructor']">
+        <xsl:for-each select="$functions[tc:is-element-included(.)]/self::function[@meta='constructor']">
           <xsl:sort select="@signature"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
         
-        <xsl:for-each select="$functions/self::function[@meta='destructor']">
+        <xsl:for-each select="$functions[tc:is-element-included(.)]/self::function[@meta='destructor']">
           <xsl:sort select="@signature"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
         
-        <xsl:for-each select="$functions/self::function[not(@meta='constructor') and not(@meta='destructor')]">
+        <xsl:for-each select="$functions[tc:is-element-included(.)]/self::function[not(@meta='constructor') and not(@meta='destructor')]">
           <xsl:sort select="@signature"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
@@ -257,11 +263,11 @@
       </db:section>
     </xsl:if>-->
     
-    <xsl:if test="$macros">
+    <xsl:if test="$macros[tc:is-element-included(.)]">
       <db:section>
         <db:title>Macro Documentation</db:title>
         
-        <xsl:for-each select="$macros">
+        <xsl:for-each select="$macros[tc:is-element-included(.)]">
           <xsl:sort select="@signature"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
@@ -285,7 +291,7 @@
   </xsl:template>
   
   <xsl:template mode="content_class_synopsis" match="namespace">
-    <xsl:if test="@access='public' and @status='active'">
+    <xsl:if test="tc:is-element-included(.)">
       <db:namespacesynopsis>
         <db:namespace>
           <db:namespacename><xsl:value-of select="@name"/></db:namespacename>
@@ -367,7 +373,7 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="function">
-    <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
+    <xsl:if test="tc:is-element-included(.)">
       <db:section>
         <db:title>
           <!-- For constructors: -->
@@ -471,29 +477,31 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="enum">
-    <db:section>
-      <db:title>
-        <xsl:text>enum </xsl:text><xsl:value-of select="@fullname"/>
-        <xsl:if test="following-sibling::typedef[1]">
-          <xsl:text>, flags </xsl:text><xsl:value-of select="@typedef"/>
+    <xsl:if test="tc:is-element-included(.)">
+      <db:section>
+        <db:title>
+          <xsl:text>enum </xsl:text><xsl:value-of select="@fullname"/>
+          <xsl:if test="following-sibling::typedef[1]">
+            <xsl:text>, flags </xsl:text><xsl:value-of select="@typedef"/>
+          </xsl:if>
+        </db:title>
+        <!-- The documentation is on the enum, but the typedef must be presented just after. -->
+        
+        <xsl:apply-templates mode="content_class_synopsis" select="."/>
+        <xsl:if test="following-sibling::*[1][self::typedef]">
+          <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
         </xsl:if>
-      </db:title>
-      <!-- The documentation is on the enum, but the typedef must be presented just after. -->
-      
-      <xsl:apply-templates mode="content_class_synopsis" select="."/>
-      <xsl:if test="following-sibling::*[1][self::typedef]">
-        <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
-      </xsl:if>
-      <xsl:apply-templates mode="content_generic" select="description"/>
-      
-      <xsl:if test="@since and not(@since='')">
-        <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
-      </xsl:if>
-      
-      <xsl:if test="following-sibling::typedef[1]">
-        <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
-      </xsl:if>
-    </db:section>
+        <xsl:apply-templates mode="content_generic" select="description"/>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
+        
+        <xsl:if test="following-sibling::typedef[1]">
+          <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
+        </xsl:if>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_class_synopsis" match="enum">
@@ -520,7 +528,7 @@
   
   <xsl:template mode="content_class_elements" match="typedef">
     <!-- Typedefs appear mostly with enums, hence most of the work is done there. -->
-    <xsl:if test="description/node()">
+    <xsl:if test="tc:is-element-included(.)">
       <db:section>
         <db:title>typedef <xsl:value-of select="@name"/></db:title>
         
@@ -549,47 +557,49 @@
   </xsl:template>
   
   <xsl:template mode="content_class_elements" match="property">
-    <db:section>
-      <db:title><xsl:value-of select="@name"/> : <xsl:value-of select="@type"/></db:title>
-      
-      <xsl:apply-templates mode="content_class_synopsis" select="."/>
-      <xsl:apply-templates mode="content_generic" select="description"/>
-      
-      <xsl:if test="@since and not(@since='')">
-        <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
-      </xsl:if>
-      
-      <xsl:if test="getter or setter">
-        <db:para>
-          <db:emphasis role="bold">Access Functions:</db:emphasis>
-          
-          <db:informaltable>
-            <db:tbody>
-              <xsl:if test="getter">
-                <db:tr>
-                  <db:td>
-                    <xsl:value-of select="@type"/>
-                  </db:td>
-                  <db:td>
-                    <xsl:value-of select="getter/@name"/>() const
-                  </db:td>
-                </db:tr>
-              </xsl:if>
-              <xsl:if test="setter">
-                <db:tr>
-                  <db:td>
-                    void
-                  </db:td>
-                  <db:td>
-                    <xsl:value-of select="setter/@name"/>(<xsl:value-of select="@type"/> <xsl:value-of select="@name"/>)
-                  </db:td>
-                </db:tr>
-              </xsl:if>
-            </db:tbody>
-          </db:informaltable>
-        </db:para>
-      </xsl:if>
-    </db:section>
+    <xsl:if test="tc:is-element-included(.)">
+      <db:section>
+        <db:title><xsl:value-of select="@name"/> : <xsl:value-of select="@type"/></db:title>
+        
+        <xsl:apply-templates mode="content_class_synopsis" select="."/>
+        <xsl:apply-templates mode="content_generic" select="description"/>
+        
+        <xsl:if test="@since and not(@since='')">
+          <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
+        </xsl:if>
+        
+        <xsl:if test="getter or setter">
+          <db:para>
+            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            
+            <db:informaltable>
+              <db:tbody>
+                <xsl:if test="getter">
+                  <db:tr>
+                    <db:td>
+                      <xsl:value-of select="@type"/>
+                    </db:td>
+                    <db:td>
+                      <xsl:value-of select="getter/@name"/>() const
+                    </db:td>
+                  </db:tr>
+                </xsl:if>
+                <xsl:if test="setter">
+                  <db:tr>
+                    <db:td>
+                      void
+                    </db:td>
+                    <db:td>
+                      <xsl:value-of select="setter/@name"/>(<xsl:value-of select="@type"/> <xsl:value-of select="@name"/>)
+                    </db:td>
+                  </db:tr>
+                </xsl:if>
+              </db:tbody>
+            </db:informaltable>
+          </db:para>
+        </xsl:if>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_class_synopsis" match="property">
@@ -717,16 +727,18 @@
   </xsl:template>
   
   <xsl:template mode="content_generic" match="see-also">
-    <db:para>
-      <db:emphasis role="bold">See Also:</db:emphasis>
-      <db:simplelist type="vert">
-        <xsl:for-each select="link">
-          <db:member>
-            <xsl:apply-templates mode="content_generic" select="."/>
-          </db:member>
-        </xsl:for-each>
-      </db:simplelist>
-    </db:para>
+    <xsl:if test="count(link) > 0">
+      <db:para>
+        <db:emphasis role="bold">See Also:</db:emphasis>
+        <db:simplelist type="vert">
+          <xsl:for-each select="link">
+            <db:member>
+              <xsl:apply-templates mode="content_generic" select="."/>
+            </db:member>
+          </xsl:for-each>
+        </db:simplelist>
+      </db:para>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content_generic" match="heading">

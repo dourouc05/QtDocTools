@@ -31,7 +31,7 @@
           </meta>
           <titre>
             <page>
-              <xsl:value-of select="info/title"/>
+              <xsl:value-of select="db:info/db:title"/>
             </page>
             <article>
               <xsl:value-of select="db:info/db:title"/>
@@ -139,11 +139,17 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:informaltable">
-    <tableau>
+    <tableau width="80%" border="1" sautDePagePdf="0">
       <xsl:apply-templates mode="content"/>
     </tableau>
-  </xsl:template> 
+  </xsl:template>
   
+  <xsl:template mode="content" match="db:formaltable">
+    <tableau width="80%" border="1" sautDePagePdf="0" legende="{if (title) then title else info/title}">
+      <xsl:apply-templates mode="content"/>
+    </tableau>
+  </xsl:template>
+    
   <xsl:template mode="content" match="db:thead | db:tbody">
     <xsl:apply-templates mode="content"/>
   </xsl:template>
@@ -160,12 +166,30 @@
     </colonne>
   </xsl:template>
  
-  <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis"/>
+  <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis"/>
  
   <xsl:template mode="content" match="db:para">
-    <paragraph>
-      <xsl:apply-templates mode="content_para"/>
-    </paragraph>
+    <xsl:choose>
+      <xsl:when test="db:informaltable | db:note">
+        <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
+        <xsl:variable name="children" select="child::node()" as="node()*"/>
+        <xsl:variable name="firstTagOutsideParagraph" as="xs:integer">
+          <xsl:variable name="isPara" select="for $i in 1 to count($children) return boolean($children[$i]/db:para or $children[$i]/db:informaltable or $children[$i]/db:note) or (name($children[$i]) = 'db:para' or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note')"/>
+          <xsl:value-of select="index-of($isPara, true())"/>
+        </xsl:variable>
+        
+        <paragraph>
+          <xsl:apply-templates mode="content_para" select="node()[position() &lt; $firstTagOutsideParagraph]"/>
+        </paragraph>
+        <xsl:apply-templates mode="content" select="node()[position() >= $firstTagOutsideParagraph]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- A normal paragraph. -->
+        <paragraph>
+          <xsl:apply-templates mode="content_para"/>
+        </paragraph>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content" match="db:programlisting">
@@ -186,10 +210,29 @@
     </liste>
   </xsl:template>
   
+  <xsl:template mode="content content_para" match="db:simplelist">
+    <xsl:for-each select="db:member">
+      <xsl:apply-templates mode="content_para"/>
+      <xsl:if test="position() != last()">
+        <xsl:text>, </xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
   <xsl:template mode="content" match="db:listitem">
     <element useText="0">
       <xsl:apply-templates mode="content"/>
     </element>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:note">
+    <rich-imgtext type="info">
+      <xsl:apply-templates mode="content"/>
+    </rich-imgtext>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:mediaobject">
+    <image src="{imageobject[1]/imagedata/@fileref}"/>
   </xsl:template>
   
   <!-- Within a paragraph. -->
