@@ -73,7 +73,8 @@ public class Main {
 
     private String qtattributionsscannerPath; // Path to qtattributionsscanner.
     private String qdocPath; // Path to qdoc.
-    private String xsltPath; // Path to the XSLT sheet WebXML to DocBook.
+    private String xsltWebXMLToDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
+    private String xsltDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
 //    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
@@ -92,7 +93,8 @@ public class Main {
     private Main() {
         qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
         qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
-        xsltPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
+//        xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt"; // TODO: Restore this, write a dedicated tool.
+        xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\docbook_to_dvpml.xslt";
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
@@ -373,7 +375,7 @@ public class Main {
         if (saxonProcessor == null) {
             saxonProcessor = new Processor(false);
             saxonCompiler = saxonProcessor.newXsltCompiler();
-            saxonExecutable = saxonCompiler.compile(new StreamSource(new File(xsltPath)));
+            saxonExecutable = saxonCompiler.compile(new StreamSource(new File(xsltWebXMLToDocBookPath)));
         }
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
