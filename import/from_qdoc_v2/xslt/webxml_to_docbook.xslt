@@ -736,7 +736,7 @@
         <db:simplelist type="vert">
           <xsl:for-each select="link">
             <db:member>
-              <xsl:apply-templates mode="content" select="."/>
+              <xsl:apply-templates mode="content_para" select="."/>
             </db:member>
           </xsl:for-each>
         </db:simplelist>
@@ -758,12 +758,6 @@
     <xsl:variable name="targetIdSub" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
     <xsl:variable name="targetId" select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''" as="xs:string?"/>
     
-    <xsl:variable name="nextNode" select="following-sibling::*[1]" as="node()?"/>
-    <xsl:variable name="isNextNodeFootnote" select="$nextNode[self::footnote]"/>
-    <xsl:if test="$isNextNodeFootnote">
-      <xsl:message>YAY!</xsl:message>
-    </xsl:if>
-    
     <xsl:choose>
       <xsl:when test="child::node()[1]/text()='Note:'">
         <db:note>
@@ -771,7 +765,7 @@
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
           <db:para>
-            <xsl:apply-templates mode="content"/>
+            <xsl:apply-templates mode="content_para"/>
           </db:para>
         </db:note>
       </xsl:when>
@@ -781,37 +775,31 @@
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
           <db:para>
-            <xsl:apply-templates mode="content"/>
+            <xsl:apply-templates mode="content_para"/>
           </db:para>
         </db:note>
       </xsl:when>
       <xsl:when test="para">
         <!-- WTF? A paragraph that contains paragraphs? Yes, indeed! -->
-        <xsl:variable name="content" as="node()*">
-          <!-- First, process this tag as usual. -->
-          <xsl:apply-templates mode="content"/>
-        </xsl:variable>
-        
-        <!-- Then, untangle things: output the first paragraph (the real one), then the rest. -->
-        <xsl:variable name="firstIndexOutsidePara" as="xs:integer">
-          <xsl:variable name="isPara" select="for $i in 1 to count($content) return boolean($content[$i][self::db:para]) or name($content[$i]) = 'db:para'"/>
-          <xsl:value-of select="index-of($isPara, true())[1]"/>
-        </xsl:variable>
-        
         <db:para>
           <xsl:if test="not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:copy-of select="$content[position() = 0 to xs:integer($firstIndexOutsidePara - 1)]"/>
+          <xsl:apply-templates mode="content">
+            <xsl:with-param name="silent" select="true()"/>
+          </xsl:apply-templates>
         </db:para>
-        <xsl:copy-of select="$content[position() = $firstIndexOutsidePara to count($content)]"/>
+        
+        <xsl:apply-templates mode="content_para">
+          <xsl:with-param name="silent" select="true()"/>
+        </xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
         <db:para>
           <xsl:if test="not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:apply-templates mode="content"/>
+          <xsl:apply-templates mode="content_para"/>
         </db:para>
       </xsl:otherwise>
     </xsl:choose>
@@ -1398,14 +1386,6 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template mode="content" match="inlineimage">
-    <db:inlinemediaobject>
-      <db:imageobject>
-        <db:imagedata fileref="{@href}"/>
-      </db:imageobject>
-    </db:inlinemediaobject>
-  </xsl:template>
-  
   <xsl:template mode="content" match="table">
     <!-- In some cases, a table is used while it should not really (the markup really makes no sense). -->
     <xsl:choose>
@@ -1498,7 +1478,7 @@
               <!-- An image and its caption. -->
               <xsl:apply-templates mode="content" select="child::node()[1]"/>
               <db:para>
-                <xsl:apply-templates mode="content" select="child::node()[position() > 1]"/>
+                <xsl:apply-templates mode="content_para" select="child::node()[position() > 1]"/>
               </db:para>
             </xsl:when>
             <xsl:otherwise>
@@ -1514,87 +1494,100 @@
     <!-- Ignore: xml:id is inserted in the right cell. -->
   </xsl:template>
 
-  <xsl:template mode="content" match="footnote">
+  <!-- Inline. -->
+  <xsl:template mode="content_para" match="footnote">
     <db:footnote>
       <xsl:apply-templates mode="content"/>
     </db:footnote>
   </xsl:template>
-
-  <xsl:template mode="content" match="link">
+  
+  <xsl:template mode="content_para" match="link">
     <xsl:choose>
       <xsl:when test="@type='class' or @type='enum' or @type='function' or @type='property'">
         <db:code>
           <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
-            <xsl:apply-templates mode="content"/>
+            <xsl:apply-templates mode="content_para"/>
           </db:link>
         </db:code>
       </xsl:when>
       <xsl:otherwise><!-- @type='page' -->
         <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
-          <xsl:apply-templates mode="content"/>
+          <xsl:apply-templates mode="content_para"/>
         </db:link>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content" match="teletype">
+  <xsl:template mode="content_para" match="teletype">
     <db:code>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:code>
   </xsl:template>
   
-  <xsl:template mode="content" match="italic[not(preceding-sibling::*[position() &lt; 5][self::image])]">
+  <xsl:template mode="content_para" match="italic[not(preceding-sibling::*[position() &lt; 5][self::image])]">
     <db:emphasis>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:emphasis>
   </xsl:template>
   
-  <xsl:template mode="content" match="italic[preceding-sibling::*[position() &lt; 5][self::image]]">
+  <xsl:template mode="content_para" match="italic[preceding-sibling::*[position() &lt; 5][self::image]]">
     <!-- Considered as a part of a figure caption. -->
   </xsl:template>
   
-  <xsl:template mode="content" match="bold[text()='Note:' or text()='Important:' or preceding-sibling::*[position() &lt; 5][self::image]]">
+  <xsl:template mode="content_para" match="bold[text()='Note:' or text()='Important:' or preceding-sibling::*[position() &lt; 5][self::image]]">
     <!-- Do nothing, as this part of the text is converted into an admonition. -->
     <!-- Or is considered as a part of a figure caption. -->
   </xsl:template>
   
-  <xsl:template mode="content" match="bold[not(text()='Note:') and not(text()='Important:') and not(preceding-sibling::*[position() &lt; 5][self::image])]">
+  <xsl:template mode="content_para" match="bold[not(text()='Note:') and not(text()='Important:') and not(preceding-sibling::*[position() &lt; 5][self::image])]">
     <db:emphasis role="bold">
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:emphasis>
   </xsl:template>
   
-  <xsl:template mode="content" match="underline">
+  <xsl:template mode="content_para" match="underline">
     <db:emphasis role="underline">
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:emphasis>
   </xsl:template>
   
-  <xsl:template mode="content" match="superscript">
+  <xsl:template mode="content_para" match="superscript">
     <db:superscript>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:superscript>
   </xsl:template>
   
-  <xsl:template mode="content" match="subscript">
+  <xsl:template mode="content_para" match="subscript">
     <db:subscript>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:subscript>
   </xsl:template>
   
-  <xsl:template mode="content" match="argument | index">
+  <xsl:template mode="content_para" match="argument | index">
     <db:code role="{name()}">
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:code>
   </xsl:template>
   
-  <xsl:template mode="content" match="node()[preceding-sibling::image]" priority="-1">
+  <xsl:template mode="content_para" match="inlineimage">
+    <db:inlinemediaobject>
+      <db:imageobject>
+        <db:imagedata fileref="{@href}"/>
+      </db:imageobject>
+    </db:inlinemediaobject>
+  </xsl:template>
+  
+  <xsl:template mode="content_para" match="node()[preceding-sibling::image]" priority="-1">
     <!-- Ignore this thing: if it was not caught anywhere else, it is either -->
     <!-- the caption of the image or a bug in the stylesheet. -->
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
-    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
+    <xsl:param name="silent" select="false()" as="xs:boolean"/>
+    
+    <xsl:if test="not($silent)">
+      <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
+    </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
