@@ -297,7 +297,7 @@
   
   <xsl:template mode="content_para" match="db:footnote">
     <noteBasPage>
-      <xsl:apply-templates mode="content_para"/>
+      <xsl:apply-templates mode="content"/>
     </noteBasPage>
   </xsl:template>
   

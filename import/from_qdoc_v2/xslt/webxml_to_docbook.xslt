@@ -755,6 +755,12 @@
     <xsl:variable name="targetIdSub" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
     <xsl:variable name="targetId" select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''" as="xs:string?"/>
     
+    <xsl:variable name="nextNode" select="following-sibling::*[1]" as="node()?"/>
+    <xsl:variable name="isNextNodeFootnote" select="$nextNode[self::footnote]"/>
+    <xsl:if test="$isNextNodeFootnote">
+      <xsl:message>YAY!</xsl:message>
+    </xsl:if>
+    
     <xsl:choose>
       <xsl:when test="child::node()[1]/text()='Note:'">
         <db:note>
@@ -785,7 +791,7 @@
         
         <!-- Then, untangle things: output the first paragraph (the real one), then the rest. -->
         <xsl:variable name="firstIndexOutsidePara" as="xs:integer">
-          <xsl:variable name="isPara" select="for $i in 1 to count($content) return boolean($content[$i]/db:para) or name($content[$i]) = 'db:para'"/>
+          <xsl:variable name="isPara" select="for $i in 1 to count($content) return boolean($content[$i][self::db:para]) or name($content[$i]) = 'db:para'"/>
           <xsl:value-of select="index-of($isPara, true())[1]"/>
         </xsl:variable>
         
