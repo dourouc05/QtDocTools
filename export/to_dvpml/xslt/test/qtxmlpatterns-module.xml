@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns:xlink="http://www.w3.org/1999/xlink">
+  <entete>
+    <rubrique>65</rubrique>
+    <meta>
+      <description>Qt XML Patterns module provides support for XPath, XQuery, XSLT and XML Schema validation</description>
+      <keywords>documentation, qt, français</keywords>
+    </meta>
+    <titre>
+      <page>Qt XML Patterns C++ Classes</page>
+      <article>Qt XML Patterns C++ Classes</article>
+    </titre>
+    <date>2018-09-11</date>
+    <miseajour>2018-09-11</miseajour>
+    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+    <serveur>Qt</serveur>
+    <chemin>/doc/qt/5.11/qtxmlpatterns-module</chemin>
+    <urlhttp>http://qt.developpez.com//doc/qt/5.11/qtxmlpatterns-module</urlhttp>
+  </entete>
+  <authorDescriptions>
+    <authorDescription name="Dummy" role="auteur">
+      <fullname>Dummy</fullname>
+      <url>https://www.developpez.net/forums/u1/dummy/</url>
+    </authorDescription>
+  </authorDescriptions>
+  <synopsis>
+      <paragraph type="important" sautDePagePdf="0">Qt XML Patterns module provides support for XPath, XQuery, XSLT and XML Schema validation</paragraph>
+   </synopsis>
+  <summary>
+    <section id="1" noNumber="0" sautDePagePdf="0">
+      <title>Classes</title>
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qabstractmessagehandler.html">QAbstractMessageHandler</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QAbstractMessageHandler class provides a callback interface for handling messages.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qabstracturiresolver.html">QAbstractUriResolver</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QAbstractUriResolver class is a callback interface for resolving Uniform Resource Identifiers. A Uniform Resource Identifier (URI) is a string that uniquely identifies a resource. URIs are versatile global identifiers. It is often useful to transform a URI that identifies something logical into a URI that locates something physical (a URL), or to simply map a URI to a different URI. QAbstractUriResolver::resolve() provides this functionality.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qabstractxmlnodemodel.html">QAbstractXmlNodeModel</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QAbstractXmlNodeModel class is an abstract base class for modeling non-XML data to look like XML for QXmlQuery.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qabstractxmlreceiver.html">QAbstractXmlReceiver</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QAbstractXmlReceiver class provides a callback interface for transforming the output of a QXmlQuery.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qsimplexmlnodemodel.html">QSimpleXmlNodeModel</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QSimpleXmlNodeModel class is an implementation of QAbstractXmlNodeModel sufficient for many common cases.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qsourcelocation.html">QSourceLocation</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QSourceLocation class identifies a location in a resource by URI, line, and column.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlformatter.html">QXmlFormatter</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlFormatter class is an implementation of QXmlSerializer for transforming XQuery output into formatted XML.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlitem.html">QXmlItem</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlItem class contains either an XML node or an atomic value.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlname.html">QXmlName</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlName class represents the name of an XML node, in an efficient, namespace-aware way. QXmlName represents the name of an XML node in a way that is both efficient and safe for comparing names. Normally, an XML node represents an XML element or attribute, but QXmlName can also represent the names of other kinds of nodes, e.g., QAbstractXmlReceiver::processingInstruction() and QAbstractXmlReceiver::namespaceBinding().</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlnamepool.html">QXmlNamePool</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlNamePool class is a table of shared strings referenced by instances of QXmlName.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlnodemodelindex.html">QXmlNodeModelIndex</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlNodeModelIndex class identifies a node in an XML node model subclassed from QAbstractXmlNodeModel.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlquery.html">QXmlQuery</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlQuery class performs XQueries on XML data, or on non-XML data modeled to look like XML.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlresultitems.html">QXmlResultItems</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlResultItems class iterates through the results of evaluating an XQuery in QXmlQuery.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlschema.html">QXmlSchema</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlSchema class provides loading and validation of a W3C XML Schema.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlschemavalidator.html">QXmlSchemaValidator</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlSchemaValidator class validates XML instance documents against a W3C XML Schema.</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">
+              <inline>
+                <link href="qxmlserializer.html">QXmlSerializer</link>
+              </inline>
+            </paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph type="important" sautDePagePdf="0">The QXmlSerializer class is an implementation of QAbstractXmlReceiver for transforming XQuery output into unformatted XML.</paragraph>
+          </colonne>
+        </ligne>
+      </tableau>
+    </section>
+    <section id="2" noNumber="0" sautDePagePdf="0">
+      <title>Detailed Description</title>
+      <paragraph type="important" sautDePagePdf="0">The Qt XML Patterns module provides support for XPath, <link href="xmlprocessing.html">XQuery</link>, XSLT and XML Schema validation.</paragraph>
+      <paragraph type="important" sautDePagePdf="0">The <link href="qtxmlpatterns-index.html">Qt XML Patterns</link> module provides support for XPath, <link href="xmlprocessing.html">XQuery</link>, XSLT and XML Schema validation.</paragraph>
+      <paragraph type="important" sautDePagePdf="0">To include the definitions of the module's classes, use the following directive:</paragraph>
+      <code langage="other">
+        #include &lt;QtXmlPatterns&gt;
+      </code>
+      <paragraph type="important" sautDePagePdf="0">To link against the module, add this line to your <link href="qmake-manual.html">qmake</link>
+        <inline>.pro</inline> file:</paragraph>
+      <code langage="other"/>
+    </section>
+  </summary>
+</document>

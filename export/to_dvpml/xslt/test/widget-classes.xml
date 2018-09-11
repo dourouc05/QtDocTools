@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+  <entete>
+    <rubrique>65</rubrique>
+    <meta>
+      <description>Primary elements for designing user interfaces in Qt</description>
+      <keywords>documentation, qt, français</keywords>
+    </meta>
+    <titre>
+      <page>Widgets Classes</page>
+      <article>Widgets Classes</article>
+    </titre>
+    <date>2018-09-11</date>
+    <miseajour>2018-09-11</miseajour>
+    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+    <serveur>Qt</serveur>
+    <chemin>/doc/qt/5.11/widget-classes</chemin>
+    <urlhttp>http://qt.developpez.com//doc/qt/5.11/widget-classes</urlhttp>
+  </entete>
+  <authorDescriptions>
+    <authorDescription name="Dummy" role="auteur">
+      <fullname>Dummy</fullname>
+      <url>https://www.developpez.net/forums/u1/dummy/</url>
+    </authorDescription>
+  </authorDescriptions>
+  <synopsis>
+      <paragraph type="important" sautDePagePdf="0">Primary elements for designing user interfaces in Qt</paragraph>
+   </synopsis>
+  <summary>
+    <section id="1" noNumber="0" sautDePagePdf="0">
+      <title>The Widget Classes</title>
+      <paragraph type="important" sautDePagePdf="0">The following sections list the widget classes. See the <link href="gallery.html">Qt Widget Gallery</link> for some examples.</paragraph>
+    </section>
+    <section id="2" noNumber="0" sautDePagePdf="0">
+      <title>Basic Widget Classes</title>
+      <paragraph type="important" sautDePagePdf="0">These basic widgets (controls), e.g. buttons, comboboxes and scroll bars, are designed for direct use.</paragraph>
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <ligne>
+          <colonne useText="0">
+            <image src="images/fusion-label.png"/>
+          </colonne>
+          <colonne useText="0">
+            <image src="images/windowsvista-pushbutton.png"/>
+          </colonne>
+          <colonne useText="0">
+            <image src="images/macos-progressbar.png"/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <image src="images/fusion-combobox.png"/>
+          </colonne>
+          <colonne useText="0">
+            <image src="images/windowsvista-radiobutton.png"/>
+          </colonne>
+          <colonne useText="0">
+            <image src="images/macos-lineedit.png"/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </section>
+    <section id="3" noNumber="0" sautDePagePdf="0">
+      <title>Advanced Widget Classes</title>
+      <paragraph type="important" sautDePagePdf="0">Advanced GUI widgets, e.g. tab widgets and progress bars, provide more complex user interface controls.</paragraph>
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <ligne>
+          <colonne useText="0">
+            <image src="images/windows-treeview.png"/>
+          </colonne>
+          <colonne useText="0">
+            <image src="images/fusion-calendarwidget.png"/>
+          </colonne>
+          <colonne useText="0">
+            <image src="images/qundoview.png"/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </section>
+    <section id="4" noNumber="0" sautDePagePdf="0">
+      <title>Abstract Widget Classes</title>
+      <paragraph type="important" sautDePagePdf="0">The abstract widget classes are base classes. They are not usable as standalone classes but provide functionality when they are subclassed.</paragraph>
+    </section>
+    <section id="5" noNumber="0" sautDePagePdf="0">
+      <title>Organizer Widget Classes</title>
+      <paragraph type="important" sautDePagePdf="0">Classes like splitters, tab bars, button groups, etc are used for organizing and grouping GUI primitives into more complex applications and dialogs.</paragraph>
+    </section>
+    <section id="6" noNumber="0" sautDePagePdf="0">
+      <title>Graphics View Classes</title>
+    </section>
+    <section id="7" noNumber="0" sautDePagePdf="0">
+      <title>Model/View Classes</title>
+    </section>
+    <section id="8" noNumber="0" sautDePagePdf="0">
+      <title>Main Window and Related Classes</title>
+    </section>
+    <section id="9" noNumber="0" sautDePagePdf="0">
+      <title>Widget Appearance and Style-Related Classes</title>
+      <paragraph type="important" sautDePagePdf="0">Classes used for customizing UI appearance and style.</paragraph>
+    </section>
+    <section id="10" noNumber="0" sautDePagePdf="0">
+      <title>Layout Classes</title>
+    </section>
+  </summary>
+</document>

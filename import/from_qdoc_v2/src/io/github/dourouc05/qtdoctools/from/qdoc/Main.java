@@ -57,16 +57,16 @@ public class Main {
 
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
-//        for (Path file : webxml) {
-//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
-//
-//            // Print the name of the file to process to ease debugging.
-//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
-//            System.out.flush();
-//
-//            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
-//            ++i;
-//        }
+        for (Path file : webxml) {
+            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+
+            // Print the name of the file to process to ease debugging.
+            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+            System.out.flush();
+
+            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
+            ++i;
+        }
 
         // Gather all DocBook files and transform them into DvpML.
         List<Path> qdt = m.findDocBook();

@@ -3,7 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://dourouc05.github.io"
-  exclude-result-prefixes="xsl xs html saxon tc db"
+  exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   
   <xsl:output method="xml" indent="yes"
@@ -162,13 +162,23 @@
   
   <xsl:template mode="content" match="db:th | db:td">
     <colonne useText="0">
-      <xsl:apply-templates mode="content"/>
+      <xsl:choose>
+        <xsl:when test="db:para | db:itemizedlist | db:orderedlist | db:mediaobject">
+          <xsl:apply-templates mode="content"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <paragraph>
+            <xsl:apply-templates mode="content_para"/>
+          </paragraph>
+        </xsl:otherwise>
+      </xsl:choose>
     </colonne>
   </xsl:template>
  
-  <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis"/>
+  <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
  
   <xsl:template mode="content" match="db:para">
+    <xsl:if test="..[self::db:section]">
     <xsl:choose>
       <xsl:when test="db:informaltable | db:note">
         <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
@@ -190,6 +200,13 @@
         </paragraph>
       </xsl:otherwise>
     </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:blockquote">
+    <citation>
+      <xsl:apply-templates mode="content_para"/>
+    </citation>
   </xsl:template>
   
   <xsl:template mode="content" match="db:programlisting">
@@ -232,7 +249,7 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:mediaobject">
-    <image src="{imageobject[1]/imagedata/@fileref}"/>
+    <image src="{db:imageobject[1]/db:imagedata/@fileref}"/>
   </xsl:template>
   
   <!-- Within a paragraph. -->
@@ -272,6 +289,16 @@
     <link href="{@xlink:href}">
       <xsl:apply-templates mode="content_para"/>
     </link> 
+  </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:inlinemediaobject">
+    <image src="{imageobject[1]/imagedata/@fileref}"/>
+  </xsl:template>
+    
+  <xsl:template mode="content_para" match="db:footnote">
+    <noteBasPage>
+      <xsl:apply-templates mode="content_para"/>
+    </noteBasPage>
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->

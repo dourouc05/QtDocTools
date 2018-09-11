@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>Widgets Classes</db:title>
+      <db:abstract>
+         <db:para>Primary elements for designing user interfaces in Qt</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-11+02:00</db:pubdate>
+      <db:date>2018-09-11+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:para>The primary elements for designing user interfaces in Qt.</db:para>
+   <db:section xml:id="the-widget-classes">
+      <db:title>The Widget Classes</db:title>
+      <db:para>The following sections list the widget classes. See the <db:link xlink:href="gallery.html" xrefstyle="page" annotations="Qt Widget Gallery">Qt Widget Gallery</db:link> for some examples.</db:para>
+   </db:section>
+   <db:section xml:id="basic-widget-classes">
+      <db:title>Basic Widget Classes</db:title>
+      <db:para>These basic widgets (controls), e.g. buttons, comboboxes and scroll bars, are designed for direct use.</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/fusion-label.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/windowsvista-pushbutton.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/macos-progressbar.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/fusion-combobox.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/windowsvista-radiobutton.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/macos-lineedit.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="advanced-widget-classes">
+      <db:title>Advanced Widget Classes</db:title>
+      <db:para>Advanced GUI widgets, e.g. tab widgets and progress bars, provide more complex user interface controls.</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/windows-treeview.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/fusion-calendarwidget.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qundoview.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="abstract-widget-classes">
+      <db:title>Abstract Widget Classes</db:title>
+      <db:para>The abstract widget classes are base classes. They are not usable as standalone classes but provide functionality when they are subclassed.</db:para>
+   </db:section>
+   <db:section xml:id="organizer-widget-classes">
+      <db:title>Organizer Widget Classes</db:title>
+      <db:para>Classes like splitters, tab bars, button groups, etc are used for organizing and grouping GUI primitives into more complex applications and dialogs.</db:para>
+   </db:section>
+   <db:section xml:id="graphics-view-classes">
+      <db:title>Graphics View Classes</db:title>
+   </db:section>
+   <db:section xml:id="model-view-classes">
+      <db:title>Model/View Classes</db:title>
+   </db:section>
+   <db:section xml:id="main-window-and-related-classes">
+      <db:title>Main Window and Related Classes</db:title>
+   </db:section>
+   <db:section xml:id="widget-appearance-and-style-related-classes">
+      <db:title>Widget Appearance and Style-Related Classes</db:title>
+      <db:para>Classes used for customizing UI appearance and style.</db:para>
+   </db:section>
+   <db:section xml:id="layout-classes">
+      <db:title>Layout Classes</db:title>
+   </db:section>
+</db:article>
