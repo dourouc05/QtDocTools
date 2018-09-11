@@ -126,10 +126,11 @@
   </xsl:template>
   
   <xsl:template mode="content_class_description" match="description">
-    <db:section xml:id="details">
+    <db:section>
+      <xsl:attribute name="xml:id" select="'details'"/>
       <db:title>Detailed Description</db:title>
       
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:section>
   </xsl:template>
   
@@ -281,7 +282,7 @@
         <db:title>namespace <xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This namespace was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -308,7 +309,7 @@
         <db:title><xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This class was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -356,7 +357,7 @@
         <db:title><xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This variable was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -390,7 +391,7 @@
         </db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -491,7 +492,7 @@
         <xsl:if test="following-sibling::*[1][self::typedef]">
           <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
         </xsl:if>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -536,7 +537,7 @@
         <xsl:if test="following-sibling::*[1][self::typedef]">
           <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
         </xsl:if>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -562,7 +563,7 @@
         <db:title><xsl:value-of select="@name"/> : <xsl:value-of select="@type"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
-        <xsl:apply-templates mode="content_generic" select="description"/>
+        <xsl:apply-templates mode="content" select="description"/>
         
         <xsl:if test="@since and not(@since='')">
           <db:para>This property was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
@@ -652,47 +653,49 @@
   
   <!-- Deal with modules and QML modules. -->
   <xsl:template mode="content" match="module">
-    <xsl:apply-templates mode="content_generic" select="description/generatedlist"/>
+    <xsl:apply-templates mode="content" select="description/generatedlist"/>
     
-    <db:section xml:id="details">
+    <db:section>
+      <xsl:attribute name="xml:id" select="'details'"/>
       <db:title>Detailed Description</db:title>
       
-      <xsl:apply-templates mode="content_generic" select="description/generatedlist/following-sibling::node()"/>
+      <xsl:apply-templates mode="content" select="description/generatedlist/following-sibling::node()"/>
     </db:section>
   </xsl:template>
   
   <xsl:template mode="content" match="qmlmodule">
-    <xsl:apply-templates mode="content_generic" select="description/generatedlist"/>
+    <xsl:apply-templates mode="content" select="description/generatedlist"/>
     
-    <db:section xml:id="details">
+    <db:section>
+      <xsl:attribute name="xml:id" select="'details'"/>
       <db:title>Detailed Description</db:title>
       
-      <xsl:apply-templates mode="content_generic" select="description/brief/following-sibling::node()"/>
+      <xsl:apply-templates mode="content" select="description/brief/following-sibling::node()"/>
     </db:section>
   </xsl:template>
   
   <!-- Deal with concepts. -->
   <xsl:template mode="content" match="page">
-    <xsl:apply-templates mode="content_generic" select="description"/>
+    <xsl:apply-templates mode="content" select="description"/>
   </xsl:template>
 
   <!-- Deal with groups of examples. -->
   <xsl:template mode="content" match="group">
-    <xsl:apply-templates mode="content_generic"/>
+    <xsl:apply-templates mode="content"/>
   </xsl:template>
 
   <!-- Generic content handling (paragraphs, sections, etc.) -->
-  <xsl:template mode="content_generic" match="brief">
+  <xsl:template mode="content" match="brief">
     <db:para>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:para>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="target">
+  <xsl:template mode="content" match="target">
     <!-- IDs are already transformed into xml:id. -->
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="raw">
+  <xsl:template mode="content" match="raw">
     <!-- Must skip, no way to encode raw HTML here (except when it's not for tweaking the output). -->
     <xsl:if test="parent::node()[1]/self::quote">
       <db:programlisting>
@@ -701,39 +704,39 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="contents | keyword">
+  <xsl:template mode="content" match="contents | keyword">
     <!-- Used for a table of contents, can be skipped. -->
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="relation">
+  <xsl:template mode="content" match="relation">
     <!-- Handled as extended links in the <info> tag. -->
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="codeline"/>
+  <xsl:template mode="content" match="codeline"/>
   
-  <xsl:template mode="content_generic" match="description">
+  <xsl:template mode="content" match="description">
     <!-- Let templates flow through description to simplify code to handle classes. -->
-    <xsl:apply-templates mode="content_generic"/>
+    <xsl:apply-templates mode="content"/>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="section">
+  <xsl:template mode="content" match="section">
     <db:section>
       <xsl:if test="@id">
         <xsl:attribute name="xml:id" select="@id"/>
       </xsl:if>
       
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:section>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="see-also">
+  <xsl:template mode="content" match="see-also">
     <xsl:if test="count(link) > 0">
       <db:para>
         <db:emphasis role="bold">See Also:</db:emphasis>
         <db:simplelist type="vert">
           <xsl:for-each select="link">
             <db:member>
-              <xsl:apply-templates mode="content_generic" select="."/>
+              <xsl:apply-templates mode="content" select="."/>
             </db:member>
           </xsl:for-each>
         </db:simplelist>
@@ -741,17 +744,17 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="heading">
+  <xsl:template mode="content" match="heading">
     <db:title>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:title>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="generatedlist">
-    <xsl:apply-templates mode="content_generic"/>
+  <xsl:template mode="content" match="generatedlist">
+    <xsl:apply-templates mode="content"/>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="para">
+  <xsl:template mode="content" match="para">
     <xsl:variable name="targetIdSub" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
     <xsl:variable name="targetId" select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''" as="xs:string?"/>
     
@@ -768,7 +771,7 @@
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
           <db:para>
-            <xsl:apply-templates mode="content_generic"/>
+            <xsl:apply-templates mode="content"/>
           </db:para>
         </db:note>
       </xsl:when>
@@ -778,7 +781,7 @@
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
           <db:para>
-            <xsl:apply-templates mode="content_generic"/>
+            <xsl:apply-templates mode="content"/>
           </db:para>
         </db:note>
       </xsl:when>
@@ -786,7 +789,7 @@
         <!-- WTF? A paragraph that contains paragraphs? Yes, indeed! -->
         <xsl:variable name="content" as="node()*">
           <!-- First, process this tag as usual. -->
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </xsl:variable>
         
         <!-- Then, untangle things: output the first paragraph (the real one), then the rest. -->
@@ -808,15 +811,15 @@
           <xsl:if test="not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </db:para>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="legalese">
+  <xsl:template mode="content" match="legalese">
     <db:note>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:note>
   </xsl:template>
   
@@ -968,17 +971,17 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template mode="content_generic" match="snippet[not(preceding-sibling::node()[1]/self::snippet or preceding-sibling::node()[1]/self::dots)]">
+  <xsl:template mode="content" match="snippet[not(preceding-sibling::node()[1]/self::snippet or preceding-sibling::node()[1]/self::dots)]">
     <db:programlisting>
       <xsl:value-of select="tc:gather-snippet(.)"/>
     </db:programlisting>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="snippet[preceding-sibling::node()[1]/self::snippet or preceding-sibling::node()[1]/self::dots]">
+  <xsl:template mode="content" match="snippet[preceding-sibling::node()[1]/self::snippet or preceding-sibling::node()[1]/self::dots]">
     <!-- Should be handled with the rest of the snippet. -->
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="dots">
+  <xsl:template mode="content" match="dots">
     <!-- Should be handled with snippets or quotefromfile. Except in rare cases, where there are only dots -->
     <!-- (several such tags may follow; as for the rest, only output something for the first one). -->
     <!-- Quite specific case (barely happens, except in QDoc documentation). -->
@@ -998,7 +1001,7 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="quotefile">
+  <xsl:template mode="content" match="quotefile">
     <!-- No real path provided for quotefile, so must make up one. -->
     <db:programlisting>
       <xsl:value-of select="tc:load-file(tc:find-file-path(ancestor::description/@path, text()))"/>
@@ -1201,10 +1204,10 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template mode="content_generic" match="quotefromfile">
+  <xsl:template mode="content" match="quotefromfile">
     <!-- Don't do anything in this: this tag will be retrieved when needed (skipto, printuntil, and family). -->
   </xsl:template>
-  <xsl:template mode="content_generic" match="printline | printto | printuntil">
+  <xsl:template mode="content" match="printline | printto | printuntil">
     <!-- Work through the intricacies behind quotefromfile. -->
     <!-- Retrieve the code from the last quotefromfile. -->
     <!-- Split it according to a series of tags: -->
@@ -1253,77 +1256,77 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template mode="content_generic" match="skipline | skipto | skipuntil">
+  <xsl:template mode="content" match="skipline | skipto | skipuntil">
     <!-- Nothing to print. -->
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="code">
+  <xsl:template mode="content" match="code">
     <!-- Language is C++, JS, or QML. -->
     <db:programlisting language="other">
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:programlisting>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="badcode">
+  <xsl:template mode="content" match="badcode">
     <!-- As opposed to code, language is unknown. -->
     <db:programlisting language="other" role="badcode">
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:programlisting>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="oldcode">
+  <xsl:template mode="content" match="oldcode">
     <xsl:choose>
       <xsl:when test="parent::node()/self::quote">
         <db:programlisting language="other" role="badcode">
-          <xsl:apply-templates  mode="content_generic"/>
+          <xsl:apply-templates  mode="content"/>
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
         <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>For example, if you have code like</db:para>
         <db:programlisting>
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </db:programlisting>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="newcode">
+  <xsl:template mode="content" match="newcode">
     <xsl:choose>
       <xsl:when test="parent::node()/self::quote">
         <db:programlisting language="other" mode="newcode">
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
         <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>you can rewrite it as</db:para>
         <db:programlisting language="other" mode="newcode">
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </db:programlisting>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="quote">
+  <xsl:template mode="content" match="quote">
     <db:blockquote>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:blockquote>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="list[@type='ordered']">
+  <xsl:template mode="content" match="list[@type='ordered']">
     <db:orderedlist>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:orderedlist>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="list[@type='bullet']">
+  <xsl:template mode="content" match="list[@type='bullet']">
     <db:itemizedlist>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:itemizedlist>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="list[@type='enum']">
+  <xsl:template mode="content" match="list[@type='enum']">
     <db:informaltable>
       <db:thead>
         <db:tr>
@@ -1349,7 +1352,7 @@
               <xsl:value-of select="../../../value[@name=$neededName]/@value"/>
             </db:td>
             <db:td>
-              <xsl:apply-templates mode="content_generic" select="./following-sibling::item[1]/child::node()"/>
+              <xsl:apply-templates mode="content" select="./following-sibling::item[1]/child::node()"/>
             </db:td>
           </db:tr>
         </xsl:for-each>
@@ -1357,34 +1360,45 @@
     </db:informaltable>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="list[@type='definition']">
+  <xsl:template mode="content" match="list[@type='definition']">
     <db:variablelist>
       <xsl:for-each select="definition">
         <db:varlistentry>
           <db:term>
-            <xsl:apply-templates mode="content_generic" select="term/child::node()"/>
+            <xsl:apply-templates mode="content" select="term/child::node()"/>
           </db:term>
-          <xsl:apply-templates mode="content_generic" select="following-sibling::item[1]"/>
+          <xsl:apply-templates mode="content" select="following-sibling::item[1]"/>
         </db:varlistentry>
       </xsl:for-each>
     </db:variablelist>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="item">
+  <xsl:template mode="content" match="item">
     <db:listitem>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:listitem>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="image">
+  <xsl:template mode="content" match="image">
     <db:mediaobject>
       <db:imageobject>
         <db:imagedata fileref="{@href}"/>
       </db:imageobject>
     </db:mediaobject>
+    
+    <xsl:if test="following-sibling::node()[1][self::text() or self::italic or self::bold]">
+      <db:para>
+        <xsl:variable name="caption" as="node()*">
+          <xsl:variable name="sibling" select="following-sibling::node()"/>
+          <xsl:variable name="isText" as="xs:boolean*" select="for $i in 1 to count($sibling) return $sibling[$i]/[self::text() or self::italic or self::bold]"/>
+          <xsl:copy-of select="$sibling[position() &lt; index-of($isText, false())[1]]"/>
+        </xsl:variable>
+        <xsl:apply-templates mode="content" select="$caption"/>
+      </db:para>
+    </xsl:if>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="inlineimage">
+  <xsl:template mode="content" match="inlineimage">
     <db:inlinemediaobject>
       <db:imageobject>
         <db:imagedata fileref="{@href}"/>
@@ -1392,7 +1406,7 @@
     </db:inlinemediaobject>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="table">
+  <xsl:template mode="content" match="table">
     <!-- In some cases, a table is used while it should not really (the markup really makes no sense). -->
     <xsl:choose>
       <xsl:when test="count(header/list) = 1">
@@ -1401,7 +1415,7 @@
             <db:tr>
               <xsl:for-each select="header/list/item">
                   <db:th>
-                    <xsl:apply-templates mode="content_generic"/>
+                    <xsl:apply-templates mode="content"/>
                   </db:th>
               </xsl:for-each>
             </db:tr>
@@ -1432,37 +1446,37 @@
         
         <db:informaltable>
           <xsl:for-each select="$children[position() &lt; $indexFirstOutsideTable]">
-            <xsl:apply-templates mode="content_generic_table"/>
+            <xsl:apply-templates mode="content_table"/>
           </xsl:for-each>
         </db:informaltable>
         <xsl:for-each select="$children[position() >= $indexFirstOutsideTable]">
-          <xsl:apply-templates mode="content_generic" select="."/>
+          <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
       </xsl:when>
       <!-- Finally, sometimes, things are just OK. -->
       <xsl:otherwise>
         <db:informaltable>
-          <xsl:apply-templates mode="content_generic_table"/>
+          <xsl:apply-templates mode="content_table"/>
         </db:informaltable>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_generic_table" match="header">
+  <xsl:template mode="content_table" match="header">
     <db:thead>
       <db:tr>
-        <xsl:apply-templates mode="content_generic_table"/>
+        <xsl:apply-templates mode="content_table"/>
       </db:tr>
     </db:thead>
   </xsl:template>
   
-  <xsl:template mode="content_generic_table" match="row">
+  <xsl:template mode="content_table" match="row">
     <db:tr>
-      <xsl:apply-templates mode="content_generic_table"/>
+      <xsl:apply-templates mode="content_table"/>
     </db:tr>
   </xsl:template>
   
-  <xsl:template mode="content_generic_table" match="item | heading">
+  <xsl:template mode="content_table" match="item | heading">
     <xsl:variable name="targetId" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
     
     <xsl:choose>
@@ -1471,7 +1485,7 @@
           <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </db:th>
       </xsl:when>
       <xsl:otherwise>
@@ -1479,83 +1493,104 @@
           <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:choose>
+            <xsl:when test="child::node()[1][self::image]">
+              <!-- An image and its caption. -->
+              <xsl:apply-templates mode="content" select="child::node()[1]"/>
+              <db:para>
+                <xsl:apply-templates mode="content" select="child::node()[position() > 1]"/>
+              </db:para>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="content"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </db:td>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template mode="content_generic_table" match="target">
+  <xsl:template mode="content_table" match="target">
     <!-- Ignore: xml:id is inserted in the right cell. -->
   </xsl:template>
 
-  <xsl:template mode="content_generic" match="footnote">
+  <xsl:template mode="content" match="footnote">
     <db:footnote>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:footnote>
   </xsl:template>
 
-  <xsl:template mode="content_generic" match="link">
+  <xsl:template mode="content" match="link">
     <xsl:choose>
       <xsl:when test="@type='class' or @type='enum' or @type='function' or @type='property'">
         <db:code>
           <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
-            <xsl:apply-templates mode="content_generic"/>
+            <xsl:apply-templates mode="content"/>
           </db:link>
         </db:code>
       </xsl:when>
       <xsl:otherwise><!-- @type='page' -->
         <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
-          <xsl:apply-templates mode="content_generic"/>
+          <xsl:apply-templates mode="content"/>
         </db:link>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="teletype">
+  <xsl:template mode="content" match="teletype">
     <db:code>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:code>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="italic">
+  <xsl:template mode="content" match="italic[not(preceding-sibling::*[position() &lt; 5][self::image])]">
     <db:emphasis>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:emphasis>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="bold[text()='Note:' or text()='Important:']">
+  <xsl:template mode="content" match="italic[preceding-sibling::*[position() &lt; 5][self::image]]">
+    <!-- Considered as a part of a figure caption. -->
+  </xsl:template>
+  
+  <xsl:template mode="content" match="bold[text()='Note:' or text()='Important:' or preceding-sibling::*[position() &lt; 5][self::image]]">
     <!-- Do nothing, as this part of the text is converted into an admonition. -->
+    <!-- Or is considered as a part of a figure caption. -->
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="bold[not(text()='Note:') and not(text()='Important:')]">
+  <xsl:template mode="content" match="bold[not(text()='Note:') and not(text()='Important:') and not(preceding-sibling::*[position() &lt; 5][self::image])]">
     <db:emphasis role="bold">
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:emphasis>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="underline">
+  <xsl:template mode="content" match="underline">
     <db:emphasis role="underline">
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:emphasis>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="superscript">
+  <xsl:template mode="content" match="superscript">
     <db:superscript>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:superscript>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="subscript">
+  <xsl:template mode="content" match="subscript">
     <db:subscript>
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:subscript>
   </xsl:template>
   
-  <xsl:template mode="content_generic" match="argument | index">
+  <xsl:template mode="content" match="argument | index">
     <db:code role="{name()}">
-      <xsl:apply-templates mode="content_generic"/>
+      <xsl:apply-templates mode="content"/>
     </db:code>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="node()[preceding-sibling::image]" priority="-1">
+    <!-- Ignore this thing: if it was not caught anywhere else, it is either -->
+    <!-- the caption of the image or a bug in the stylesheet. -->
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->

@@ -180,12 +180,12 @@
   <xsl:template mode="content" match="db:para">
     <xsl:if test="..[self::db:section]">
       <xsl:choose>
-        <xsl:when test="db:informaltable | db:note">
+        <xsl:when test="db:informaltable | db:note | db:programlisting">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
           <xsl:variable name="children" select="child::node()" as="node()*"/>
           <xsl:variable name="firstTagOutsideParagraph" as="xs:integer">
-            <xsl:variable name="isPara" select="for $i in 1 to count($children) return boolean($children[$i]/db:para or $children[$i]/db:informaltable or $children[$i]/db:note) or (name($children[$i]) = 'db:para' or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note')"/>
-            <xsl:value-of select="index-of($isPara, true())"/>
+            <xsl:variable name="isNotPara" select="for $i in 1 to count($children) return boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting'"/>
+            <xsl:value-of select="index-of($isNotPara, true())"/>
           </xsl:variable>
           
           <paragraph>
@@ -242,6 +242,22 @@
     </element>
   </xsl:template>
   
+  <xsl:template mode="content" match="db:variablelist">
+    <liste>
+      <xsl:apply-templates mode="content"/>
+    </liste>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:varlistentry">
+    <element useText="0">
+      <b>
+        <xsl:apply-templates mode="content_para" select="term"/>
+      </b>
+      <xsl:text>&#0160;: </xsl:text>
+      <xsl:apply-templates mode="content_para" select="listitem/para"/>
+    </element>
+  </xsl:template>
+  
   <xsl:template mode="content" match="db:note">
     <rich-imgtext type="info">
       <xsl:apply-templates mode="content"/>
@@ -250,6 +266,9 @@
   
   <xsl:template mode="content" match="db:mediaobject">
     <image src="{db:imageobject[1]/db:imagedata/@fileref}"/>
+  </xsl:template>
+  
+  <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content" priority="-1">
   </xsl:template>
   
   <!-- Within a paragraph. -->

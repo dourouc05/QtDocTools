@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QEasingCurve" href="qeasingcurve.html" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="56" since="4.6" module="QtCore" groups="animation" brief="Easing curves for controlling animation">
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="52" column="4">
+                <brief>The <link raw="QEasingCurve" href="qeasingcurve.html" type="class">QEasingCurve</link> class provides easing curves for controlling animation.</brief>
+                <para>Easing curves describe a function that controls how the speed of the interpolation between 0 and 1 should be. Easing curves allow transitions from one value to another to appear more natural than a simple constant speed would allow. The <link raw="QEasingCurve" href="qeasingcurve.html" type="class">QEasingCurve</link> class is usually used in conjunction with the <link raw="QVariantAnimation" href="qvariantanimation.html" type="class">QVariantAnimation</link> and <link raw="QPropertyAnimation" href="qpropertyanimation.html" type="class">QPropertyAnimation</link> classes but can be used on its own. It is usually used to accelerate the interpolation from zero velocity (ease in) or decelerate to zero velocity (ease out). Ease in and ease out can also be combined in the same easing curve.</para>
+                <para>To calculate the speed of the interpolation, the easing curve provides the function <link raw="valueForProgress()" href="qeasingcurve.html#valueForProgress" type="function">valueForProgress()</link>, where the <argument>progress</argument> argument specifies the progress of the interpolation: 0 is the start value of the interpolation, 1 is the end value of the interpolation. The returned value is the effective progress of the interpolation. If the returned value is the same as the input value for all input values the easing curve is a linear curve. This is the default behaviour.</para>
+                <para>For example,</para>
+                <code>QEasingCurve easing(QEasingCurve::InOutQuad);
+
+for(qreal t = 0.0; t &lt; 1.0; t+=0.1)
+    qWarning() &lt;&lt; &quot;Effective progress&quot; &lt;&lt; t &lt;&lt; &quot; is
+               &lt;&lt; easing.valueForProgress(t);</code>
+                <para>will print the effective progress of the interpolation between 0 and 1.</para>
+                <para>When using a <link raw="QPropertyAnimation" href="qpropertyanimation.html" type="class">QPropertyAnimation</link>, the associated easing curve will be used to control the progress of the interpolation between startValue and endValue:</para>
+                <code>QPropertyAnimation animation;
+animation.setStartValue(0);
+animation.setEndValue(1000);
+animation.setDuration(1000);
+animation.setEasingCurve(QEasingCurve::InOutQuad);</code>
+                <para>The ability to set an amplitude, overshoot, or period depends on the <link raw="QEasingCurve" href="qeasingcurve.html" type="class">QEasingCurve</link> type. Amplitude access is available to curves that behave as springs such as elastic and bounce curves. Changing the amplitude changes the height of the curve. Period access is only available to elastic curves and setting a higher period slows the rate of bounce. Only curves that have &quot;boomerang&quot; behaviors such as the <link raw="InBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">InBack</link>, <link raw="OutBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">OutBack</link>, <link raw="InOutBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">InOutBack</link>, and <link raw="OutInBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">OutInBack</link> have overshoot settings. These curves will interpolate beyond the end points and return to the end point, acting similar to a boomerang.</para>
+                <para>The <link raw="Easing Curves Example" href="qtwidgets-animation-easing-example.html" type="page" page="Easing Curves Example">Easing Curves Example</link> contains samples of <link raw="QEasingCurve" href="qeasingcurve.html" type="class">QEasingCurve</link> types and lets you change the curve settings.</para>
+            </description>
+            <variable threadsafety="unspecified" name="staticMetaObject" fullname="QEasingCurve::staticMetaObject" href="qeasingcurve.html#staticMetaObject-var" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="58" type="const QMetaObject" static="true">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="qt_check_for_QGADGET_macro" fullname="QEasingCurve::qt_check_for_QGADGET_macro" href="qeasingcurve.html#qt_check_for_QGADGET_macro" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="58" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_check_for_QGADGET_macro()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <typedef threadsafety="unspecified" name="QtGadgetHelper" fullname="QEasingCurve::QtGadgetHelper" href="qeasingcurve.html#QtGadgetHelper-typedef" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="58">
+                <description path="" line="0" column="0"/>
+            </typedef>
+            <function threadsafety="unspecified" name="qt_static_metacall" fullname="QEasingCurve::qt_static_metacall" href="qeasingcurve.html#qt_static_metacall" status="active" access="private" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="58" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_static_metacall(QObject *, QMetaObject::Call , int , void **)">
+                <parameter type="QObject *" name="" default=""/>
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <enum threadsafety="unspecified" name="Type" fullname="QEasingCurve::Type" href="qeasingcurve.html#Type-enum" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="60">
+                <value name="Linear" value="0"/>
+                <value name="InQuad" value="1"/>
+                <value name="OutQuad" value="2"/>
+                <value name="InOutQuad" value="3"/>
+                <value name="OutInQuad" value="4"/>
+                <value name="InCubic" value="5"/>
+                <value name="OutCubic" value="6"/>
+                <value name="InOutCubic" value="7"/>
+                <value name="OutInCubic" value="8"/>
+                <value name="InQuart" value="9"/>
+                <value name="OutQuart" value="10"/>
+                <value name="InOutQuart" value="11"/>
+                <value name="OutInQuart" value="12"/>
+                <value name="InQuint" value="13"/>
+                <value name="OutQuint" value="14"/>
+                <value name="InOutQuint" value="15"/>
+                <value name="OutInQuint" value="16"/>
+                <value name="InSine" value="17"/>
+                <value name="OutSine" value="18"/>
+                <value name="InOutSine" value="19"/>
+                <value name="OutInSine" value="20"/>
+                <value name="InExpo" value="21"/>
+                <value name="OutExpo" value="22"/>
+                <value name="InOutExpo" value="23"/>
+                <value name="OutInExpo" value="24"/>
+                <value name="InCirc" value="25"/>
+                <value name="OutCirc" value="26"/>
+                <value name="InOutCirc" value="27"/>
+                <value name="OutInCirc" value="28"/>
+                <value name="InElastic" value="29"/>
+                <value name="OutElastic" value="30"/>
+                <value name="InOutElastic" value="31"/>
+                <value name="OutInElastic" value="32"/>
+                <value name="InBack" value="33"/>
+                <value name="OutBack" value="34"/>
+                <value name="InOutBack" value="35"/>
+                <value name="OutInBack" value="36"/>
+                <value name="InBounce" value="37"/>
+                <value name="OutBounce" value="38"/>
+                <value name="InOutBounce" value="39"/>
+                <value name="OutInBounce" value="40"/>
+                <value name="InCurve" value="41"/>
+                <value name="OutCurve" value="42"/>
+                <value name="SineCurve" value="43"/>
+                <value name="CosineCurve" value="44"/>
+                <value name="BezierSpline" value="45"/>
+                <value name="TCBSpline" value="46"/>
+                <value name="Custom" value="47"/>
+                <value name="NCurveTypes" value="48"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="109" column="4">
+                    <para>The type of easing curve.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QEasingCurve::Linear</term>Linear</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-linear.png"/>Easing curve for a linear (t) function: velocity is constant.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InQuad</term>InQuad</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inquad.png"/>Easing curve for a quadratic (t^2) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutQuad</term>OutQuad</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outquad.png"/>Easing curve for a quadratic (t^2) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutQuad</term>InOutQuad</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutquad.png"/>Easing curve for a quadratic (t^2) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInQuad</term>OutInQuad</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinquad.png"/>Easing curve for a quadratic (t^2) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InCubic</term>InCubic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-incubic.png"/>Easing curve for a cubic (t^3) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutCubic</term>OutCubic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outcubic.png"/>Easing curve for a cubic (t^3) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutCubic</term>InOutCubic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutcubic.png"/>Easing curve for a cubic (t^3) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInCubic</term>OutInCubic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outincubic.png"/>Easing curve for a cubic (t^3) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InQuart</term>InQuart</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inquart.png"/>Easing curve for a quartic (t^4) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutQuart</term>OutQuart</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outquart.png"/>Easing curve for a quartic (t^4) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutQuart</term>InOutQuart</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutquart.png"/>Easing curve for a quartic (t^4) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInQuart</term>OutInQuart</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinquart.png"/>Easing curve for a quartic (t^4) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InQuint</term>InQuint</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inquint.png"/>Easing curve for a quintic (t^5) easing in: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutQuint</term>OutQuint</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outquint.png"/>Easing curve for a quintic (t^5) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutQuint</term>InOutQuint</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutquint.png"/>Easing curve for a quintic (t^5) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInQuint</term>OutInQuint</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinquint.png"/>Easing curve for a quintic (t^5) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InSine</term>InSine</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-insine.png"/>Easing curve for a sinusoidal (sin(t)) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutSine</term>OutSine</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outsine.png"/>Easing curve for a sinusoidal (sin(t)) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutSine</term>InOutSine</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutsine.png"/>Easing curve for a sinusoidal (sin(t)) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInSine</term>OutInSine</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinsine.png"/>Easing curve for a sinusoidal (sin(t)) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InExpo</term>InExpo</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inexpo.png"/>Easing curve for an exponential (2^t) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutExpo</term>OutExpo</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outexpo.png"/>Easing curve for an exponential (2^t) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutExpo</term>InOutExpo</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutexpo.png"/>Easing curve for an exponential (2^t) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInExpo</term>OutInExpo</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinexpo.png"/>Easing curve for an exponential (2^t) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InCirc</term>InCirc</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-incirc.png"/>Easing curve for a circular (sqrt(1-t^2)) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutCirc</term>OutCirc</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outcirc.png"/>Easing curve for a circular (sqrt(1-t^2)) function: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutCirc</term>InOutCirc</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutcirc.png"/>Easing curve for a circular (sqrt(1-t^2)) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInCirc</term>OutInCirc</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outincirc.png"/>Easing curve for a circular (sqrt(1-t^2)) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InElastic</term>InElastic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inelastic.png"/>Easing curve for an elastic (exponentially decaying sine wave) function: accelerating from zero velocity. The peak amplitude can be set with the <italic>amplitude</italic> parameter, and the period of decay by the <italic>period</italic> parameter.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutElastic</term>OutElastic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outelastic.png"/>Easing curve for an elastic (exponentially decaying sine wave) function: decelerating to zero velocity. The peak amplitude can be set with the <italic>amplitude</italic> parameter, and the period of decay by the <italic>period</italic> parameter.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutElastic</term>InOutElastic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutelastic.png"/>Easing curve for an elastic (exponentially decaying sine wave) function: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInElastic</term>OutInElastic</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinelastic.png"/>Easing curve for an elastic (exponentially decaying sine wave) function: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InBack</term>InBack</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inback.png"/>Easing curve for a back (overshooting cubic function: (s+1)*t^3 - s*t^2) easing in: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutBack</term>OutBack</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outback.png"/>Easing curve for a back (overshooting cubic function: (s+1)*t^3 - s*t^2) easing out: decelerating to zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutBack</term>InOutBack</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutback.png"/>Easing curve for a back (overshooting cubic function: (s+1)*t^3 - s*t^2) easing in/out: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInBack</term>OutInBack</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinback.png"/>Easing curve for a back (overshooting cubic easing: (s+1)*t^3 - s*t^2) easing out/in: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InBounce</term>InBounce</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inbounce.png"/>Easing curve for a bounce (exponentially decaying parabolic bounce) function: accelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutBounce</term>OutBounce</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outbounce.png"/>Easing curve for a bounce (exponentially decaying parabolic bounce) function: decelerating from zero velocity.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::InOutBounce</term>InOutBounce</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-inoutbounce.png"/>Easing curve for a bounce (exponentially decaying parabolic bounce) function easing in/out: acceleration until halfway, then deceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::OutInBounce</term>OutInBounce</definition>
+                        <item/>
+                    </list>
+                    <image href="images/qeasingcurve-outinbounce.png"/>Easing curve for a bounce (exponentially decaying parabolic bounce) function easing out/in: deceleration until halfway, then acceleration.<list type="enum">
+                        <definition>
+                            <term>QEasingCurve::BezierSpline</term>BezierSpline</definition>
+                        <item>
+                            <para>Allows defining a custom easing curve using a cubic bezier spline</para>
+                        </item>
+                        <definition>
+                            <term>QEasingCurve::TCBSpline</term>TCBSpline</definition>
+                        <item>
+                            <para>Allows defining a custom easing curve using a TCB spline</para>
+                        </item>
+                        <definition>
+                            <term>QEasingCurve::Custom</term>Custom</definition>
+                        <item>
+                            <para>This is returned if the user specified a custom curve type with <link raw="setCustomType()" href="qeasingcurve.html#setCustomType" type="function">setCustomType()</link>. Note that you cannot call <link raw="setType()" href="qeasingcurve.html#setType" type="function">setType()</link> with this value, but <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> can return it.</para>
+                        </item>
+                    </list>
+                    <see-also>
+                        <link raw="addCubicBezierSegment()" href="qeasingcurve.html#addCubicBezierSegment" type="function">addCubicBezierSegment()</link>
+                        <link raw="addTCBSegment()" href="qeasingcurve.html#addTCBSegment" type="function">addTCBSegment()</link>
+                    </see-also>
+                </description>
+            </enum>
+            <function threadsafety="unspecified" name="QEasingCurve" fullname="QEasingCurve::QEasingCurve" href="qeasingcurve.html#QEasingCurve" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="77" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QEasingCurve(QEasingCurve::Type type)">
+                <parameter type="QEasingCurve::Type" name="type" default="Linear"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1090" column="4">
+                    <para>Constructs an easing curve of the given <argument>type</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QEasingCurve" fullname="QEasingCurve::QEasingCurve" href="qeasingcurve.html#QEasingCurve-1" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="78" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QEasingCurve(const QEasingCurve &amp;other)">
+                <parameter type="const QEasingCurve &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1099" column="4">
+                    <para>Construct a copy of <argument>other</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="~QEasingCurve" fullname="QEasingCurve::~QEasingCurve" href="qeasingcurve.html#dtor.QEasingCurve" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="79" virtual="non" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QEasingCurve()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1108" column="4">
+                    <para>Destructor.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QEasingCurve::operator=" href="qeasingcurve.html#operator-eq" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="81" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QEasingCurve &amp;" signature="QEasingCurve &amp; operator=(const QEasingCurve &amp;other)">
+                <parameter type="const QEasingCurve &amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="QEasingCurve" fullname="QEasingCurve::QEasingCurve" href="qeasingcurve.html#QEasingCurve-2" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="84" virtual="non" meta="move-constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QEasingCurve(QEasingCurve &amp;&amp;other)">
+                <parameter type="QEasingCurve &amp;&amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QEasingCurve::operator=" href="qeasingcurve.html#operator-eq-1" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="85" virtual="non" meta="move-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QEasingCurve &amp;" signature="QEasingCurve &amp; operator=(QEasingCurve &amp;&amp;other)">
+                <parameter type="QEasingCurve &amp;&amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="swap" fullname="QEasingCurve::swap" href="qeasingcurve.html#swap" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="89" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void swap(QEasingCurve &amp;other)">
+                <parameter type="QEasingCurve &amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator==" fullname="QEasingCurve::operator==" href="qeasingcurve.html#operator-eq-eq" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="91" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator==(const QEasingCurve &amp;other) const">
+                <parameter type="const QEasingCurve &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1138" column="4">
+                    <para>Compare this easing curve with <argument>other</argument> and returns <teletype type="highlighted">true</teletype> if they are equal. It will also compare the properties of a curve.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator!=" fullname="QEasingCurve::operator!=" href="qeasingcurve.html#operator-not-eq" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="92" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator!=(const QEasingCurve &amp;other) const">
+                <parameter type="const QEasingCurve &amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="amplitude" fullname="QEasingCurve::amplitude" href="qeasingcurve.html#amplitude" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="95" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal amplitude() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1169" column="4">
+                    <para>Returns the amplitude. This is not applicable for all curve types. It is only applicable for bounce and elastic curves (curves of <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> <link raw="QEasingCurve::InBounce" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InBounce</link>, <link raw="QEasingCurve::OutBounce" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutBounce</link>, <link raw="QEasingCurve::InOutBounce" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InOutBounce</link>, <link raw="QEasingCurve::OutInBounce" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutInBounce</link>, <link raw="QEasingCurve::InElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InElastic</link>, <link raw="QEasingCurve::OutElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutElastic</link>, <link raw="QEasingCurve::InOutElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InOutElastic</link> or <link raw="QEasingCurve::OutInElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutInElastic</link>).</para>
+                    <see-also>
+                        <link raw="setAmplitude()" href="qeasingcurve.html#setAmplitude" type="function">setAmplitude()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAmplitude" fullname="QEasingCurve::setAmplitude" href="qeasingcurve.html#setAmplitude" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="96" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setAmplitude(qreal amplitude)">
+                <parameter type="qreal" name="amplitude" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1181" column="4">
+                    <para>Sets the amplitude to <argument>amplitude</argument>.</para>
+                    <para>This will set the amplitude of the bounce or the amplitude of the elastic &quot;spring&quot; effect. The higher the number, the higher the amplitude.</para>
+                    <see-also>
+                        <link raw="amplitude()" href="qeasingcurve.html#amplitude" type="function">amplitude()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="period" fullname="QEasingCurve::period" href="qeasingcurve.html#period" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="98" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal period() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1195" column="4">
+                    <para>Returns the period. This is not applicable for all curve types. It is only applicable if <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> is <link raw="QEasingCurve::InElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InElastic</link>, <link raw="QEasingCurve::OutElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutElastic</link>, <link raw="QEasingCurve::InOutElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InOutElastic</link> or <link raw="QEasingCurve::OutInElastic" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutInElastic</link>.</para>
+                    <see-also>
+                        <link raw="setPeriod()" href="qeasingcurve.html#setPeriod" type="function">setPeriod()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPeriod" fullname="QEasingCurve::setPeriod" href="qeasingcurve.html#setPeriod" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="99" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setPeriod(qreal period)">
+                <parameter type="qreal" name="period" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1205" column="4">
+                    <para>Sets the period to <argument>period</argument>. Setting a small period value will give a high frequency of the curve. A large period will give it a small frequency.</para>
+                    <see-also>
+                        <link raw="period()" href="qeasingcurve.html#period" type="function">period()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="overshoot" fullname="QEasingCurve::overshoot" href="qeasingcurve.html#overshoot" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="101" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal overshoot() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1219" column="4">
+                    <para>Returns the overshoot. This is not applicable for all curve types. It is only applicable if <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> is <link raw="QEasingCurve::InBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InBack</link>, <link raw="QEasingCurve::OutBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutBack</link>, <link raw="QEasingCurve::InOutBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InOutBack</link> or <link raw="QEasingCurve::OutInBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::OutInBack</link>.</para>
+                    <see-also>
+                        <link raw="setOvershoot()" href="qeasingcurve.html#setOvershoot" type="function">setOvershoot()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setOvershoot" fullname="QEasingCurve::setOvershoot" href="qeasingcurve.html#setOvershoot" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="102" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setOvershoot(qreal overshoot)">
+                <parameter type="qreal" name="overshoot" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1229" column="4">
+                    <para>Sets the overshoot to <argument>overshoot</argument>.</para>
+                    <para>0 produces no overshoot, and the default value of 1.70158 produces an overshoot of 10 percent.</para>
+                    <see-also>
+                        <link raw="overshoot()" href="qeasingcurve.html#overshoot" type="function">overshoot()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addCubicBezierSegment" fullname="QEasingCurve::addCubicBezierSegment" href="qeasingcurve.html#addCubicBezierSegment" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="104" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void addCubicBezierSegment(const QPointF &amp;c1, const QPointF &amp;c2, const QPointF &amp;endPoint)">
+                <parameter type="const QPointF &amp;" name="c1" default=""/>
+                <parameter type="const QPointF &amp;" name="c2" default=""/>
+                <parameter type="const QPointF &amp;" name="endPoint" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1243" column="4">
+                    <para>Adds a segment of a cubic bezier spline to define a custom easing curve. It is only applicable if <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> is <link raw="QEasingCurve::BezierSpline" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::BezierSpline</link>. Note that the spline implicitly starts at (0.0, 0.0) and has to end at (1.0, 1.0) to be a valid easing curve. <argument>c1</argument> and <argument>c2</argument> are the control points used for drawing the curve. <argument>endPoint</argument> is the endpoint of the curve.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addTCBSegment" fullname="QEasingCurve::addTCBSegment" href="qeasingcurve.html#addTCBSegment" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="105" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void addTCBSegment(const QPointF &amp;nextPoint, qreal t, qreal c, qreal b)">
+                <parameter type="const QPointF &amp;" name="nextPoint" default=""/>
+                <parameter type="qreal" name="t" default=""/>
+                <parameter type="qreal" name="c" default=""/>
+                <parameter type="qreal" name="b" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1304" column="4">
+                    <para>Adds a segment of a TCB bezier spline to define a custom easing curve. It is only applicable if <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> is <link raw="QEasingCurve::TCBSpline" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::TCBSpline</link>. The spline has to start explitly at (0.0, 0.0) and has to end at (1.0, 1.0) to be a valid easing curve. The tension <argument>t</argument> changes the length of the tangent vector. The continuity <argument>c</argument> changes the sharpness in change between the tangents. The bias <argument>b</argument> changes the direction of the tangent vector. <argument>nextPoint</argument> is the sample position. All three parameters are valid between -1 and 1 and define the tangent of the control point. If all three parameters are 0 the resulting spline is a Catmull-Rom spline. The begin and endpoint always have a bias of -1 and 1, since the outer tangent is not defined.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toCubicSpline" fullname="QEasingCurve::toCubicSpline" href="qeasingcurve.html#toCubicSpline" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="106" since="5.0" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QVector&lt;QPointF&gt;" signature="QVector&lt;QPointF&gt; toCubicSpline() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1337" column="4">
+                    <para>Returns the <link raw="cubicBezierSpline" href="qeasingcurve.html#cubicBezierSpline" type="function">cubicBezierSpline</link> that defines a custom easing curve. If the easing curve does not have a custom bezier easing curve the list is empty.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cubicBezierSpline" fullname="QEasingCurve::cubicBezierSpline" href="qeasingcurve.html#cubicBezierSpline" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="108" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QList&lt;QPointF&gt;" signature="QList&lt;QPointF&gt; cubicBezierSpline() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="type" fullname="QEasingCurve::type" href="qeasingcurve.html#type" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="111" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QEasingCurve::Type" signature="QEasingCurve::Type type() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1349" column="4">
+                    <para>Returns the type of the easing curve.</para>
+                    <see-also>
+                        <link raw="setType()" href="qeasingcurve.html#setType" type="function">setType()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setType" fullname="QEasingCurve::setType" href="qeasingcurve.html#setType" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="112" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setType(QEasingCurve::Type type)">
+                <parameter type="QEasingCurve::Type" name="type" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1395" column="4">
+                    <para>Sets the type of the easing curve to <argument>type</argument>.</para>
+                    <see-also>
+                        <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link>
+                    </see-also>
+                </description>
+            </function>
+            <typedef threadsafety="unspecified" name="EasingFunction" fullname="QEasingCurve::EasingFunction" href="qeasingcurve.html#EasingFunction-typedef" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="113">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="298" column="4">
+                    <para>This is a typedef for a pointer to a function with the following signature:</para>
+                    <snippet location="code/src_corelib_tools_qeasingcurve.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_tools_qeasingcurve.cpp" identifier="0"/>
+                </description>
+            </typedef>
+            <function threadsafety="unspecified" name="setCustomType" fullname="QEasingCurve::setCustomType" href="qeasingcurve.html#setCustomType" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="114" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setCustomType(QEasingCurve::EasingFunction func)">
+                <parameter type="QEasingCurve::EasingFunction" name="func" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1410" column="4">
+                    <para>Sets a custom easing curve that is defined by the user in the function <argument>func</argument>. The signature of the function is qreal myEasingFunction(qreal progress), where <italic>progress</italic> and the return value are considered to be normalized between 0 and 1. (In some cases the return value can be outside that range) After calling this function <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> will return <link raw="QEasingCurve::Custom" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::Custom</link>. <argument>func</argument> cannot be zero.</para>
+                    <see-also>
+                        <link raw="customType()" href="qeasingcurve.html#customType" type="function">customType()</link>
+                        <link raw="valueForProgress()" href="qeasingcurve.html#valueForProgress" type="function">valueForProgress()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="customType" fullname="QEasingCurve::customType" href="qeasingcurve.html#customType" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="115" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QEasingCurve::EasingFunction" signature="QEasingCurve::EasingFunction customType() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1431" column="4">
+                    <para>Returns the function pointer to the custom easing curve. If <link raw="type()" href="qeasingcurve.html#type" type="function">type()</link> does not return <link raw="QEasingCurve::Custom" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::Custom</link>, this function will return 0.</para>
+                    <see-also>
+                        <link raw="setCustomType()" href="qeasingcurve.html#setCustomType" type="function">setCustomType()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="valueForProgress" fullname="QEasingCurve::valueForProgress" href="qeasingcurve.html#valueForProgress" status="active" access="public" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="117" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="qreal" signature="qreal valueForProgress(qreal progress) const">
+                <parameter type="qreal" name="progress" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/tools/qeasingcurve.cpp" line="1441" column="4">
+                    <para>Return the effective progress for the easing curve at <argument>progress</argument>. Whereas <argument>progress</argument> must be between 0 and 1, the returned effective progress can be outside those bounds. For example, <link raw="QEasingCurve::InBack" href="qeasingcurve.html#Type-enum" type="enum" enum="QEasingCurve::Type">QEasingCurve::InBack</link> will return negative values in the beginning of the function.</para>
+                </description>
+            </function>
+            <variable threadsafety="unspecified" name="d_ptr" fullname="QEasingCurve::d_ptr" href="qeasingcurve.html#d_ptr-var" status="active" access="private" location="qeasingcurve.h" filepath="C:/Qt/5.11.1/msvc2017_64/include\QtCore/qeasingcurve.h" lineno="119" type="QEasingCurvePrivate *" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+        </class>
+    </document>
+</WebXML>
