@@ -687,12 +687,8 @@
   <!-- Generic content handling (paragraphs, sections, etc.) -->
   <xsl:template mode="content" match="brief">
     <db:para>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:para>
-  </xsl:template>
-  
-  <xsl:template mode="content" match="target">
-    <!-- IDs are already transformed into xml:id. -->
   </xsl:template>
   
   <xsl:template mode="content" match="raw">
@@ -731,32 +727,129 @@
   
   <xsl:template mode="content" match="see-also">
     <xsl:if test="count(link) > 0">
-      <db:para>
-        <db:emphasis role="bold">See Also:</db:emphasis>
-        <db:simplelist type="vert">
-          <xsl:for-each select="link">
-            <db:member>
-              <xsl:apply-templates mode="content_para" select="."/>
-            </db:member>
-          </xsl:for-each>
-        </db:simplelist>
-      </db:para>
+      <xsl:variable name="content">
+        <db:para>
+          <db:emphasis role="bold">See Also:</db:emphasis>
+          <db:simplelist type="vert">
+            <xsl:for-each select="link">
+              <db:member>
+                <xsl:apply-templates mode="content_para" select="."/>
+              </db:member>
+            </xsl:for-each>
+          </db:simplelist>
+        </db:para>
+      </xsl:variable>
+      
+      <xsl:choose>
+        <xsl:when test="preceding-sibling::node()[1][self::section]">
+          <db:section>
+            <db:title>See Also</db:title>
+            <xsl:copy-of select="$content"></xsl:copy-of>
+          </db:section>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$content"></xsl:copy-of>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content" match="heading">
     <db:title>
-      <xsl:apply-templates mode="content"/>
+      <xsl:apply-templates mode="content_para"/>
     </db:title>
   </xsl:template>
   
   <xsl:template mode="content" match="generatedlist">
-    <xsl:apply-templates mode="content"/>
+    <xsl:variable name="currentDocument" select="string(base-uri())" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="not(@contents)">
+        <!-- Qdoc already generated the whole list, yay! -->
+        <xsl:apply-templates mode="content"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Do the whole list by ourselves... -->
+        <xsl:variable name="split" select="tokenize(@contents, ' ')" as="xs:string+"/>
+        <xsl:variable name="type" select="$split[1]" as="xs:string"/>
+        <xsl:variable name="argument" as="xs:string?">
+          <xsl:if test="count($split) > 1">
+            <xsl:value-of select="$split[2]"/>
+          </xsl:if>
+        </xsl:variable>
+        
+        <!-- Depending on the type of list to generate, do different things. -->
+        <!-- Never check for correctness, qdoc has already done this. -->
+        <!-- (Things would just crash if an argument is needed but not provided.) -->
+        <xsl:choose>
+          <xsl:when test="$type = 'examplefiles'">
+            <!-- List the example files that match the regular expression. -->
+            
+            <!-- First, find back the folder containing the example files. -->
+            <xsl:variable name="oneFileAtRandomTag" select="(preceding::quotefromfile[1] union preceding::quotefile[1] union preceding::snippet[1])[1]"/>
+            <xsl:variable name="oneFileAtRandom" as="xs:string" select="if ($oneFileAtRandomTag/@location) then $oneFileAtRandomTag/@location else $oneFileAtRandomTag/text()"/>
+            <xsl:variable name="oneFileAtRandomSplitPath" select="tokenize($oneFileAtRandom, '/')" as="xs:string*"/>
+            <xsl:variable name="oneFileAtRandomFullPath" select="tc:find-file-path(ancestor::description/@path, $oneFileAtRandom)" as="xs:string"/>
+            <xsl:variable name="oneFileAtRandomSplitFullPath" select="tokenize($oneFileAtRandomFullPath, '/')" as="xs:string*"/>
+            
+            <!-- Go back one level to ensure the needed files are always found. -->
+            <xsl:variable name="folder" select="string-join($oneFileAtRandomSplitFullPath[position() &lt; last() - 1], '/')" as="xs:string"/>
+            <xsl:variable name="printedFolder" select="string-join($oneFileAtRandomSplitPath[position() &lt; last()], '/')" as="xs:string"/>
+            <xsl:variable name="hiddenFolder">
+              <xsl:variable name="splitFolder" select="tokenize($folder, '/')"/>
+              <xsl:variable name="splitPrintedFolder" select="tokenize($printedFolder, '/')"/>
+              <xsl:value-of select="string-join($splitFolder[position() &lt; count($splitFolder) - count($splitPrintedFolder)], '/')"/>
+            </xsl:variable>
+            
+            <!-- Iterate through the examples folder, retrieve the paths (if they match the condition from $argument). -->
+            <xsl:variable name="files" as="xs:string*">
+              <xsl:variable name="filesInDir" select="for $f in collection(concat('file:///', $folder, '?metadata=yes&amp;recurse=yes')) return translate($f?path, '\\', '/')" as="xs:string*"/>
+              <xsl:for-each select="$filesInDir">
+                <xsl:if test="matches(., $argument)">
+                  <xsl:value-of select="replace(., concat($hiddenFolder, '/'), '')"/>
+                </xsl:if>
+              </xsl:for-each>
+            </xsl:variable>
+            
+            <!-- Print what is needed. -->
+            <db:para>
+              Files: 
+            </db:para>
+            <db:itemizedlist>
+              <xsl:for-each select="$files">
+                <xsl:sort/>
+                <db:listitem>
+                  <db:para>
+                    <xsl:variable name="correspondingWebXML" as="xs:string">
+                      <xsl:variable name="name" select="tokenize($currentDocument, '/')[last()]"/>
+                      <xsl:variable name="splitExtension" select="tokenize($name, '\.')"/>
+                      <xsl:variable name="splitName" select="tokenize($splitExtension[1], '-')"/>
+                      
+                      <xsl:variable name="sourceFile" select="concat('chapter', substring-after(., 'chapter'))"/>
+                      
+                      <xsl:value-of select="concat(string-join($splitName[position() &lt; last()], '-'), '-', translate($sourceFile, '/.', '--'), '.webxml')"/>
+                    </xsl:variable>
+                    <db:link xlink:href="{$correspondingWebXML}">
+                      <xsl:value-of select="."/>
+                    </db:link>
+                  </db:para>
+                </db:listitem>
+              </xsl:for-each>
+            </db:itemizedlist>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>WARNING: generatedlist type not implemented: <xsl:value-of select="$type"/></xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content" match="para">
-    <xsl:variable name="targetIdSub" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
-    <xsl:variable name="targetId" select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''" as="xs:string?"/>
+    <xsl:variable name="targetId" as="xs:string?">
+      <xsl:variable name="potentialTargets" select="(preceding-sibling::node()[1]/self::target union following-sibling::node()[1]/self::target)"/>
+      <xsl:variable name="targetIdSub" select="if ($potentialTargets) then $potentialTargets[1]/@name else ''" as="xs:string?"/>
+      <xsl:value-of select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''"/>
+    </xsl:variable>
     
     <xsl:choose>
       <xsl:when test="child::node()[1]/text()='Note:'">
@@ -779,18 +872,18 @@
           </db:para>
         </db:note>
       </xsl:when>
-      <xsl:when test="para">
+      <xsl:when test="para or generatedlist">
         <!-- WTF? A paragraph that contains paragraphs? Yes, indeed! -->
         <db:para>
           <xsl:if test="not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:apply-templates mode="content">
+          <xsl:apply-templates mode="content_para">
             <xsl:with-param name="silent" select="true()"/>
           </xsl:apply-templates>
         </db:para>
         
-        <xsl:apply-templates mode="content_para">
+        <xsl:apply-templates mode="content">
           <xsl:with-param name="silent" select="true()"/>
         </xsl:apply-templates>
       </xsl:when>
@@ -1251,14 +1344,14 @@
   <xsl:template mode="content" match="code">
     <!-- Language is C++, JS, or QML. -->
     <db:programlisting language="other">
-      <xsl:apply-templates mode="content"/>
+      <xsl:value-of select="."/>
     </db:programlisting>
   </xsl:template>
   
   <xsl:template mode="content" match="badcode">
     <!-- As opposed to code, language is unknown. -->
     <db:programlisting language="other" role="badcode">
-      <xsl:apply-templates mode="content"/>
+      <xsl:value-of select="."/>
     </db:programlisting>
   </xsl:template>
   
@@ -1266,14 +1359,14 @@
     <xsl:choose>
       <xsl:when test="parent::node()/self::quote">
         <db:programlisting language="other" role="badcode">
-          <xsl:apply-templates  mode="content"/>
+          <xsl:value-of select="."/>
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
         <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>For example, if you have code like</db:para>
         <db:programlisting>
-          <xsl:apply-templates mode="content"/>
+          <xsl:value-of select="."/>
         </db:programlisting>
       </xsl:otherwise>
     </xsl:choose>
@@ -1283,14 +1376,14 @@
     <xsl:choose>
       <xsl:when test="parent::node()/self::quote">
         <db:programlisting language="other" mode="newcode">
-          <xsl:apply-templates mode="content"/>
+          <xsl:value-of select="."/>
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
         <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>you can rewrite it as</db:para>
         <db:programlisting language="other" mode="newcode">
-          <xsl:apply-templates mode="content"/>
+          <xsl:value-of select="."/>
         </db:programlisting>
       </xsl:otherwise>
     </xsl:choose>
@@ -1374,23 +1467,33 @@
       </db:imageobject>
     </db:mediaobject>
     
-    <xsl:if test="following-sibling::node()[1][self::text() or self::italic or self::bold]">
+    <xsl:if test="following-sibling::node()[1][self::text() or self::italic or self::bold or self::link]">
       <db:para>
         <xsl:variable name="caption" as="node()*">
           <xsl:variable name="sibling" select="following-sibling::node()"/>
-          <xsl:variable name="isText" as="xs:boolean*" select="for $i in 1 to count($sibling) return $sibling[$i]/[self::text() or self::italic or self::bold]"/>
+          <xsl:variable name="isText" as="xs:boolean*" select="for $i in 1 to count($sibling) return $sibling[$i]/[self::text() or self::italic or self::bold or self::link]"/>
           <xsl:copy-of select="$sibling[position() &lt; index-of($isText, false())[1]]"/>
         </xsl:variable>
-        <xsl:apply-templates mode="content" select="$caption"/>
+        <xsl:apply-templates mode="content_para" select="$caption"/>
       </db:para>
     </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content" match="table">
+    <xsl:variable name="targetId" as="xs:string?">
+      <xsl:variable name="potentialTargets" select="following-sibling::node()[1]/self::target"/>
+      <xsl:variable name="targetIdSub" select="if ($potentialTargets) then $potentialTargets[1]/@name else ''" as="xs:string?"/>
+      <xsl:value-of select="if ($targetIdSub and not($targetIdSub='')) then $targetIdSub else ''"/>
+    </xsl:variable>
+    
     <!-- In some cases, a table is used while it should not really (the markup really makes no sense). -->
     <xsl:choose>
       <xsl:when test="count(header/list) = 1">
         <db:informaltable>
+          <xsl:if test="not($targetId = '')">
+            <xsl:attribute name="xml:id" select="$targetId"/>
+          </xsl:if>
+          
           <db:thead>
             <db:tr>
               <xsl:for-each select="header/list/item">
@@ -1465,7 +1568,14 @@
           <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="$targetId"/>
           </xsl:if>
-          <xsl:apply-templates mode="content"/>
+          <xsl:choose>
+            <xsl:when test="child::para">
+              <xsl:apply-templates mode="content"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="content_para"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </db:th>
       </xsl:when>
       <xsl:otherwise>
@@ -1475,14 +1585,17 @@
           </xsl:if>
           <xsl:choose>
             <xsl:when test="child::node()[1][self::image]">
-              <!-- An image and its caption. -->
+              <!-- An image (not inline, hence block) and its caption. -->
               <xsl:apply-templates mode="content" select="child::node()[1]"/>
               <db:para>
                 <xsl:apply-templates mode="content_para" select="child::node()[position() > 1]"/>
               </db:para>
             </xsl:when>
-            <xsl:otherwise>
+            <xsl:when test="child::para | child::list | child::code | child::snippet">
               <xsl:apply-templates mode="content"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="content_para"/>
             </xsl:otherwise>
           </xsl:choose>
         </db:td>
@@ -1524,22 +1637,17 @@
     </db:code>
   </xsl:template>
   
-  <xsl:template mode="content_para" match="italic[not(preceding-sibling::*[position() &lt; 5][self::image])]">
+  <xsl:template mode="content_para" match="italic">
     <db:emphasis>
       <xsl:apply-templates mode="content_para"/>
     </db:emphasis>
   </xsl:template>
-  
-  <xsl:template mode="content_para" match="italic[preceding-sibling::*[position() &lt; 5][self::image]]">
-    <!-- Considered as a part of a figure caption. -->
-  </xsl:template>
-  
-  <xsl:template mode="content_para" match="bold[text()='Note:' or text()='Important:' or preceding-sibling::*[position() &lt; 5][self::image]]">
+    
+  <xsl:template mode="content_para" match="bold[text()='Note:' or text()='Important:']">
     <!-- Do nothing, as this part of the text is converted into an admonition. -->
-    <!-- Or is considered as a part of a figure caption. -->
   </xsl:template>
   
-  <xsl:template mode="content_para" match="bold[not(text()='Note:') and not(text()='Important:') and not(preceding-sibling::*[position() &lt; 5][self::image])]">
+  <xsl:template mode="content_para" match="bold[not(text()='Note:') and not(text()='Important:')]">
     <db:emphasis role="bold">
       <xsl:apply-templates mode="content_para"/>
     </db:emphasis>
@@ -1582,8 +1690,30 @@
     <!-- the caption of the image or a bug in the stylesheet. -->
   </xsl:template>
   
+  <xsl:template mode="content_para" match="raw">
+    <!-- Must skip, no way to encode raw HTML here. -->
+  </xsl:template>
+  
+  <xsl:template mode="content content_para" match="target">
+    <!-- IDs are already transformed into xml:id. -->
+  </xsl:template>
+  
+  <!-- Blocks, but things that are not really errors. (Mostly heuristic, though.) -->
+  <!-- Considered as a part of a figure caption. -->
+  <xsl:template mode="content" match="italic[preceding-sibling::*[position() &lt; 5][self::image]]"/>
+  <xsl:template mode="content" match="bold[preceding-sibling::*[position() &lt; 5][self::image]]"/>
+  <xsl:template mode="content" match="link[preceding-sibling::*[position() &lt; 5][self::image]]"/>
+ 
   <!-- Catch-all block for the remaining content that has not been handled with. -->
-  <xsl:template match="*" mode="#all">
+  <xsl:template mode="content" match="text()">
+    <xsl:param name="silent" select="false()" as="xs:boolean"/>
+    
+    <xsl:if test="not($silent)">
+      <xsl:message>WARNING: Text outside a paragraph</xsl:message>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="#all" priority="-2">
     <xsl:param name="silent" select="false()" as="xs:boolean"/>
     
     <xsl:if test="not($silent)">

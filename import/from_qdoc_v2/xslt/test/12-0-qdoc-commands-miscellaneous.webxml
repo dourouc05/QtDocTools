@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="12-0-qdoc-commands-miscellaneous.html" href="12-0-qdoc-commands-miscellaneous.html" status="active" location="qdoc-manual-markupcmds.qdoc" filepath="C:/Qt/5.11.1/Src/qttools/src/qdoc/doc/qdoc-manual-markupcmds.qdoc" lineno="3324" subtype="page" title="Miscellaneous" fulltitle="Miscellaneous" subtitle="" module="QDoc">
+            <target name="annotatedlist-command"/>
+            <target name="generatelist-command"/>
+            <target name="table-example" title="table example"/>
+            <target name="list-example" title="list example"/>
+            <target name="if-command"/>
+            <target name="endif-command"/>
+            <target name="else-command"/>
+            <target name="include-command"/>
+            <target name="2-argument-form"/>
+            <target name="meta-command"/>
+            <target name="noautolist-command"/>
+            <target name="omit-command"/>
+            <target name="raw-command"/>
+            <target name="unicode-command"/>
+            <contents name="annotatedlist" title="\annotatedlist" level="1"/>
+            <contents name="generatelist" title="\generatelist" level="1"/>
+            <contents name="annotatedclasses" title="annotatedclasses" level="2"/>
+            <contents name="annotatedexamples" title="annotatedexamples" level="2"/>
+            <contents name="annotatedattributions" title="annotatedattributions" level="2"/>
+            <contents name="classes-op-lt-op-prefix-op-gt-op" title="classes &lt;@op&gt;&amp;lt;&lt;/@op&gt;prefix&lt;@op&gt;&amp;gt;&lt;/@op&gt;" level="2"/>
+            <contents name="classesbymodule" title="classesbymodule" level="2"/>
+            <contents name="qmltypesbymodule" title="qmltypesbymodule" level="2"/>
+            <contents name="jstypesbymodule" title="jstypesbymodule" level="2"/>
+            <contents name="compatclasses" title="compatclasses" level="2"/>
+            <contents name="examplefiles-op-op-regular-expression-op-op" title="examplefiles &lt;@op&gt;[&lt;/@op&gt;regular_expression&lt;@op&gt;]&lt;/@op&gt;" level="2"/>
+            <contents name="exampleimages-op-op-regular-expression-op-op" title="exampleimages &lt;@op&gt;[&lt;/@op&gt;regular_expression&lt;@op&gt;]&lt;/@op&gt;" level="2"/>
+            <contents name="functionindex" title="functionindex" level="2"/>
+            <contents name="legalese" title="legalese" level="2"/>
+            <contents name="overviews" title="overviews" level="2"/>
+            <contents name="attributions" title="attributions" level="2"/>
+            <contents name="related" title="related" level="2"/>
+            <contents name="if" title="\if" level="1"/>
+            <contents name="endif" title="\endif" level="1"/>
+            <contents name="else" title="\else" level="1"/>
+            <contents name="include" title="\include" level="1"/>
+            <contents name="include-filename-snippet-identifier" title="\include filename snippet-identifier" level="2"/>
+            <contents name="meta" title="\meta" level="1"/>
+            <contents name="noautolist" title="\noautolist" level="1"/>
+            <contents name="omit" title="\omit" level="1"/>
+            <contents name="raw-avoid" title="\raw (avoid)" level="1"/>
+            <contents name="unicode" title="\unicode" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qttools/src/qdoc/doc/qdoc-manual-markupcmds.qdoc" line="3324" column="4">
+                <relation href="21-0-qdoc-creating-dita-maps.html" type="page" meta="next" description="Creating DITA Maps"/>
+                <relation href="11-qdoc-commands-specialcontent.html" type="page" meta="previous" description="Special Content"/>
+                <relation href="qdoc-index.html" type="page" meta="contents" description="QDoc Manual"/>
+                <para>These commands provide miscellaneous functions connected to the visual appearance of the documentation, and to the process of generating the documentation.</para>
+                <target name="annotatedlist-command"/>
+                <section id="annotatedlist">
+                    <heading level="1">\annotatedlist</heading>
+                    <para>The \annotatedlist command expands to a list of the members of a group, each member listed with its <italic>brief</italic> text. Below is an example from the Qt Reference Documentation:</para>
+                    <code>/ *!
+    ...
+    \section1 Drag and Drop Classes
+
+    These classes deal with drag and drop and the necessary mime type
+    encoding and decoding.
+
+    \annotatedlist draganddrop
+
+* /</code>
+                    <para>This generates a list of all the C++ classes and/or QML types in the <italic>draganddrop</italic> group. A C++ class or QML type in the <italic>draganddrop</italic> group will have <italic>\ingroup draganddrop</italic> in its <italic>\class</italic> or <italic>\qmltype</italic> comment.</para>
+                    <target name="generatelist-command"/>
+                </section>
+                <section id="generatelist">
+                    <heading level="1">\generatelist</heading>
+                    <para>The \generatelist command expands to a list of links to the documentation entities in a group. Below is an example from the Qt Reference Documentation:</para>
+                    <code>/ *!
+    \page classes.html
+    \title All Classes
+
+    For a shorter list that only includes the most
+    frequently used classes, see \l{Qt's Main Classes}.
+
+    \generatelist classes Q
+* /</code>
+                    <para>This generates the <italic>All Classes</italic> page. The command accepts the following arguments:</para>
+                    <target name="table-example"/>
+                </section>
+                <section id="annotatedclasses">
+                    <heading level="2">
+                        <teletype type="highlighted">annotatedclasses</teletype></heading>
+                    <para>The <teletype type="highlighted">annotatedclasses</teletype> argument provides a table containing the names of all the classes, and a description of each class. Each class name is a link to the class's reference documentation. For example:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QDial" href="qdial.html" type="class">QDial</link></para>
+                            </item>
+                            <item>
+                                <para>Rounded range control (like a speedometer or potentiometer)</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QDialog" href="qdialog.html" type="class">QDialog</link></para>
+                            </item>
+                            <item>
+                                <para>The base class of dialog windows</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <link raw="QDir" href="qdir.html" type="class">QDir</link></para>
+                            </item>
+                            <item>
+                                <para>Access to directory structures and their contents</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>A C++ class is documented with the <link raw="class-command" href="13-qdoc-commands-topics.html#class-command" type="page" page="Topic Commands">\class</link> command. The annotation for the class is taken from the argument of the class comment's <link raw="brief-command" href="11-qdoc-commands-specialcontent.html#brief-command" type="page" page="Special Content">\brief</link> command.</para>
+                </section>
+                <section id="annotatedexamples">
+                    <heading level="2">
+                        <teletype type="highlighted">annotatedexamples</teletype></heading>
+                    <para>The <teletype type="highlighted">annotatedexamples</teletype> argument provides a complete list of all examples as a set of tables containing the titles of all the examples, and a description of each example. Each title is a link to the example's documentation.</para>
+                    <para>A separate table for each module (that has documented examples) is generated, provided that the module has defined a navigation.landingpage configuration variable. The <italic>landingpage</italic> variable is used as a title for a header that precedes each table.</para>
+                </section>
+                <section id="annotatedattributions">
+                    <heading level="2">
+                        <teletype type="highlighted">annotatedattributions</teletype></heading>
+                    <para>The <teletype type="highlighted">annotatedattributions</teletype> argument provides a complete list of all attributions as a set of tables containing the titles of all the attributions, and a description of each attribution. Each title is a link to the attribution's page.</para>
+                    <para>A separate table for each module (that has attributions) is generated, provided that the module has defined a navigation.landingpage configuration variable. The <italic>landingpage</italic> variable is used as a title for a header that precedes each table.</para>
+                    <target name="list-example"/>
+                </section>
+                <section id="classes-op-lt-op-prefix-op-gt-op">
+                    <heading level="2">
+                        <teletype type="highlighted">classes &lt;prefix&gt;</teletype></heading>
+                    <para>The <teletype type="highlighted">classes</teletype> argument provides a complete alphabetical list of the classes. The second argument, <teletype type="highlighted">&lt;prefix&gt;</teletype>, is the common prefix for the class names. The class names will be sorted on the character that follows the common prefix. e.g. The common prefix for the Qt classes is <teletype type="highlighted">Q</teletype>. The common prefix argument is optional. If no common prefix is provided, the class names will be sorted on their first character.</para>
+                    <para>Each class name becomes a link to the class's reference documentation. This command is used to generate the <italic>All Classes</italic> page this way:</para>
+                    <code>/ *!
+    \page classes.html
+    \title All Classes
+    \ingroup classlists
+
+    \brief Alphabetical list of classes.
+
+    This is a list of all Qt classes. For a list of the classes
+    provided for compatibility with Qt3, see \l{Qt3 Support
+    Classes}. For classes that have been deprecated, see the
+    \l{Obsolete Classes} list.
+
+    \generatelist classes Q
+* /</code>
+                    <para>A C++ class is documented with the <link raw="class-command" href="13-qdoc-commands-topics.html#class-command" type="page" page="Topic Commands">\class</link> command.</para>
+                </section>
+                <section id="classesbymodule">
+                    <heading level="2">
+                        <teletype type="highlighted">classesbymodule</teletype></heading>
+                    <para>When this argument is used, a second argument is required, which specifies the module whose classes are to be listed. QDoc generates a table containing those classes. Each class is listed with the text of its <link raw="brief-command" href="11-qdoc-commands-specialcontent.html#brief-command" type="page" page="Special Content">\brief</link> command.</para>
+                    <para>For example, this command can be used on a module page as follows:</para>
+                    <code>/ *!
+    \page phonon-module.html
+    \module Phonon
+    \title Phonon Module
+    \ingroup modules
+
+    \brief Contains namespaces and classes for multimedia functionality.
+
+    \generatelist{classesbymodule Phonon}
+
+...
+
+* /</code>
+                    <para>Each class that is a member of the specified module must be marked with the <link raw="inmodule-command" href="19-qdoc-commands-grouping.html#inmodule-command" type="page" page="Grouping Things">\inmodule</link> command in its \class comment.</para>
+                </section>
+                <section id="qmltypesbymodule">
+                    <heading level="2">
+                        <teletype type="highlighted">qmltypesbymodule</teletype></heading>
+                    <para>Similar to <teletype type="highlighted">classesbymodule</teletype> argument, but used for listing the QML types from the QML module specified with the second argument.</para>
+                    <para>
+                        <bold>Note:</bold> Support for this argument was introduced in QDoc 5.6.</para>
+                </section>
+                <section id="jstypesbymodule">
+                    <heading level="2">
+                        <teletype type="highlighted">jstypesbymodule</teletype></heading>
+                    <para>Similar to <teletype type="highlighted">classesbymodule</teletype> argument, but used for listing the JavaScript types from the module specified with the second argument.</para>
+                    <para>
+                        <bold>Note:</bold> Support for this argument was introduced in QDoc 5.6.</para>
+                </section>
+                <section id="compatclasses">
+                    <heading level="2">
+                        <teletype type="highlighted">compatclasses</teletype></heading>
+                    <para>The <teletype type="highlighted">compatclasses</teletype> argument generates a list in alphabetical order of the support classes. It is normally used only to generate the Qt3 Support Classes page this way:</para>
+                    <code>/ *!
+    \page compatclasses.html
+    \title Qt3 Support Classes
+    \ingroup classlists
+
+    \brief Enable porting of code from Qt 3 to Qt 4.
+
+    These are the classes that Qt provides for compatibility with Qt
+    3. Most of these are provided by the Qt3Support module.
+
+    \generatelist compatclasses
+* /</code>
+                    <para>A support class is identified in the \class comment with the <link raw="compat-command" href="16-qdoc-commands-status.html#compat-command" type="page" page="Status">\compat</link> command.</para>
+                </section>
+                <section id="examplefiles-op-op-regular-expression-op-op">
+                    <heading level="2">
+                        <teletype type="highlighted">examplefiles [regular_expression]</teletype></heading>
+                    <para>The <teletype type="highlighted">examplefiles</teletype> argument lists the files that are part of an example project. The optional second argument is a regular expression; if provided, only the files whose path matches with the regular expression are listed.</para>
+                    <para>The <teletype type="highlighted">examplefiles</teletype> argument can be only used within example documentation (see <link raw="example-command" href="13-qdoc-commands-topics.html#example-command" type="page" page="Topic Commands">\example</link>), and is typically used together with the <link raw="noautolist-command" href="12-0-qdoc-commands-miscellaneous.html#noautolist-command" type="page" page="Miscellaneous">\noautolist</link> command.</para>
+                </section>
+                <section id="exampleimages-op-op-regular-expression-op-op">
+                    <heading level="2">
+                        <teletype type="highlighted">exampleimages [regular_expression]</teletype></heading>
+                    <para>The <teletype type="highlighted">exampleimages</teletype> argument lists the images that are part of an example project. The optional second argument is a regular expression; if provided, only the image files whose path matches with the regular expression are listed.</para>
+                    <para>The <teletype type="highlighted">exampleimages</teletype> argument can be only used within example documentation (see <link raw="example-command" href="13-qdoc-commands-topics.html#example-command" type="page" page="Topic Commands">\example</link>), and is typically used together with the <link raw="noautolist-command" href="12-0-qdoc-commands-miscellaneous.html#noautolist-command" type="page" page="Miscellaneous">\noautolist</link> command.</para>
+                </section>
+                <section id="functionindex">
+                    <heading level="2">
+                        <teletype type="highlighted">functionindex</teletype></heading>
+                    <para>The <teletype type="highlighted">functionindex</teletype> argument provides a complete alphabetical list of all the documented member functions. It is normally used only to generate the <italic>Qt function index</italic> page this way:</para>
+                    <code>/ *!
+    \page functions.html
+    \title All Functions
+    \ingroup funclists
+
+    \brief All documented Qt functions listed alphabetically with a
+    link to where each one is declared.
+
+    This is the list of all documented member functions and global
+    functions in the Qt API. Each function has a link to the
+    class or header file where it is declared and documented.
+
+    \generatelist functionindex
+* /</code>
+                </section>
+                <section id="legalese">
+                    <heading level="2">
+                        <teletype type="highlighted">legalese</teletype></heading>
+                    <para>The <teletype type="highlighted">legalese</teletype> argument tells QDoc to generate a list of licenses in the current documentation project. Each license is identified using the <link raw="legalese-command" href="11-qdoc-commands-specialcontent.html#legalese-command" type="page" page="Special Content">\legalese</link> command.</para>
+                </section>
+                <section id="overviews">
+                    <heading level="2">
+                        <teletype type="highlighted">overviews</teletype></heading>
+                    <para>The <teletype type="highlighted">overviews</teletype> argument is used to tell QDoc to generate a list by concatenating the contents of all the <link raw="group-command" href="13-qdoc-commands-topics.html#group-command" type="page" page="Topic Commands">\group</link> pages. Qt uses it to generate the <italic>overviews</italic> page this way:</para>
+                    <code>/ *!
+    \page overviews.html
+
+    \title All Overviews and HOWTOs
+
+    \generatelist overviews
+* /</code>
+                </section>
+                <section id="attributions">
+                    <heading level="2">
+                        <teletype type="highlighted">attributions</teletype></heading>
+                    <para>The <teletype type="highlighted">attributions</teletype> argument is used to tell QDoc to generate a list of attributions in the documentation.</para>
+                </section>
+                <section id="related">
+                    <heading level="2">
+                        <teletype type="highlighted">related</teletype></heading>
+                    <para>The <teletype type="highlighted">related</teletype> argument is used in combination with the <link raw="group-command" href="13-qdoc-commands-topics.html#group-command" type="page" page="Topic Commands">\group</link> and <link raw="ingroup-command" href="19-qdoc-commands-grouping.html#ingroup-command" type="page" page="Grouping Things">\ingroup</link> commands to list all the overviews related to a specified group. For example, the page for the <italic>Programming with Qt</italic> page is generated this way:</para>
+                    <code>/ *!
+    \group qt-basic-concepts
+    \title Programming with Qt
+
+    \brief The basic architecture of the Qt cross-platform application and UI framework.
+
+    Qt is a cross-platform application and UI framework for
+    writing web-enabled applications for desktop, mobile, and
+    embedded operating systems. This page contains links to
+    articles and overviews explaining key components and
+    techniuqes used in Qt development.
+
+    \generatelist {related}
+* /</code>
+                    <para>Each page listed on this group page contains the command:</para>
+                    <code>\ingroup qt-basic-concepts</code>
+                    <target name="if-command"/>
+                </section>
+                <section id="if">
+                    <heading level="1">\if</heading>
+                    <para>The \if command and the corresponding \endif command enclose parts of a QDoc comment that only will be included if the condition specified by the command's argument is true.</para>
+                    <para>The command reads the rest of the line and parses it as an C++ #if statement.</para>
+                    <code>/ *!
+    \if defined(opensourceedition)
+
+    \note This edition is for the development of
+    \l{Qt Open Source Edition} {Free and Open Source}
+    software only; see \l{Qt Commercial Editions}.
+
+    \endif
+* /</code>
+                    <para>This QDoc comment will only be rendered if the <teletype type="highlighted">opensourceedition</teletype> preprocessor symbol is defined, and specified in the <link raw="defines-variable" href="22-qdoc-configuration-generalvariables.html#defines-variable" type="page" page="Generic Configuration Variables">defines</link> variable in the configuration file to make QDoc process the code within #ifdef and #endif:</para>
+                    <code>defines = opensourceedition</code>
+                    <para>You can also define the preprocessor symbol manually on the command line. For more information see the documentation of the <link raw="defines-variable" href="22-qdoc-configuration-generalvariables.html#defines-variable" type="page" page="Generic Configuration Variables">defines</link> variable.</para>
+                    <para>See also <link raw="endif-command" href="12-0-qdoc-commands-miscellaneous.html#endif-command" type="page" page="Miscellaneous">\endif</link>, <link raw="else-command" href="12-0-qdoc-commands-miscellaneous.html#else-command" type="page" page="Miscellaneous">\else</link>, <link raw="defines-variable" href="22-qdoc-configuration-generalvariables.html#defines-variable" type="page" page="Generic Configuration Variables">defines</link> and <link raw="falsehoods-variable" href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" type="page" page="Generic Configuration Variables">falsehoods</link>.</para>
+                    <target name="endif-command"/>
+                </section>
+                <section id="endif">
+                    <heading level="1">\endif</heading>
+                    <para>The \endif command and the corresponding \if command enclose parts of a QDoc comment that will be included if the condition specified by the <link raw="if-command" href="12-0-qdoc-commands-miscellaneous.html#if-command" type="page" page="Miscellaneous">\if</link> command's argument is true.</para>
+                    <para>For more information, see the documentation of the <link raw="if-command" href="12-0-qdoc-commands-miscellaneous.html#if-command" type="page" page="Miscellaneous">\if</link> command.</para>
+                    <para>See also <link raw="if-command" href="12-0-qdoc-commands-miscellaneous.html#if-command" type="page" page="Miscellaneous">\if</link>, <link raw="else-command" href="12-0-qdoc-commands-miscellaneous.html#else-command" type="page" page="Miscellaneous">\else</link>, <link raw="defines-variable" href="22-qdoc-configuration-generalvariables.html#defines-variable" type="page" page="Generic Configuration Variables">defines</link> and <link raw="falsehoods-variable" href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" type="page" page="Generic Configuration Variables">falsehoods</link>.</para>
+                    <target name="else-command"/>
+                </section>
+                <section id="else">
+                    <heading level="1">\else</heading>
+                    <para>The \else command specifies an alternative if the condition in the <link raw="if-command" href="12-0-qdoc-commands-miscellaneous.html#if-command" type="page" page="Miscellaneous">\if</link> command is false.</para>
+                    <para>The \else command can only be used within <link raw="if-command" href="12-0-qdoc-commands-miscellaneous.html#if-command" type="page" page="Miscellaneous">\if...\endif</link> commands, but is useful when there is only two alternatives.</para>
+                    <code>/ *!
+    The Qt 3 support library is provided to keep old
+    source code working.
+
+    In addition to the \c Qt3Support classes, Qt 4 provides
+    compatibility functions when it's possible for an old
+    API to cohabit with the new one.
+
+    \if !defined(QT3_SUPPORT)
+        \if defined(QT3_SUPPORTWARNINGS)
+            The compiler emits a warning when a
+            compatibility function is called. (This works
+            only with GCC 3.2+ and MSVC 7.)
+        \else
+            To use the Qt 3 support library, you need to
+            have the line QT += qt3support in your .pro
+            file (qmake automatically define the
+            QT3_SUPPORT symbol, turning on compatibility
+            function support).
+
+            You can also define the symbol manually (for example,
+            if you don't want to link against the \c
+            Qt3Support library), or you can define \c
+            QT3_SUPPORT_WARNINGS instead, telling the
+            compiler to emit a warning when a compatibility
+            function is called. (This works only with GCC
+            3.2+ and MSVC 7.)
+        \endif
+    \endif
+* /</code>
+                    <para>If the <teletype type="highlighted">QT3_SUPPORT</teletype> is defined, the comment will be rendered like this:</para>
+                    <quote>
+                        <para>The Qt 3 support library is provided to keep old source code working.</para>
+                        <para>In addition to the Qt3Support classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</para>
+                    </quote>
+                    <para>If <teletype type="highlighted">QT3_SUPPORT</teletype> is not defined but <teletype type="highlighted">QT3_SUPPORT_WARNINGS</teletype> is defined, the comment will be rendered like this:</para>
+                    <quote>
+                        <para>The Qt 3 support library is provided to keep old source code working.</para>
+                        <para>In addition to the Qt3Support classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</para>
+                        <para>The compiler emits a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</para>
+                    </quote>
+                    <para>If none of the symbols are defined, the comment will be rendered as</para>
+                    <quote>
+                        <para>The Qt 3 support library is provided to keep old source code working.</para>
+                        <para>In addition to the <teletype type="highlighted">Qt3Support</teletype> classes, Qt 4 provides compatibility functions when it's possible for an old API to cohabit with the new one.</para>
+                        <para>To use the Qt 3 support library, you need to have the line QT += qt3support in your .pro file (qmake automatically define the QT3_SUPPORT symbol, turning on compatibility function support).</para>
+                        <para>You can also define the symbol manually (e.g., if you don't want to link against the <teletype type="highlighted">Qt3Support</teletype> library), or you can define <teletype type="highlighted">QT3_SUPPORT_WARNINGS</teletype> instead, telling the compiler to emit a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</para>
+                    </quote>
+                    <para>See also <link raw="if-command" href="12-0-qdoc-commands-miscellaneous.html#if-command" type="page" page="Miscellaneous">\if</link>, <link raw="endif-command" href="12-0-qdoc-commands-miscellaneous.html#endif-command" type="page" page="Miscellaneous">\endif</link>, <link raw="defines-variable" href="22-qdoc-configuration-generalvariables.html#defines-variable" type="page" page="Generic Configuration Variables">defines</link> and <link raw="falsehoods-variable" href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" type="page" page="Generic Configuration Variables">falsehoods</link>.</para>
+                    <target name="include-command"/>
+                </section>
+                <section id="include">
+                    <heading level="1">\include</heading>
+                    <para>The \include command sends all or part of the file specified by its first argument to the QDoc input stream to be processed as a QDoc comment snippet.</para>
+                    <para>The command is useful when some snippet of commands or text is to be used in multiple places in the documentation. Use the \include command wherever you want to insert a snippet into the documentation. The file containing the snippet to include must be located under the path(s) listed in the <link raw="sourcedirs-variable" href="22-qdoc-configuration-generalvariables.html#sourcedirs-variable" type="page" page="Generic Configuration Variables">sourcedirs</link> QDoc configuration variable. It can be either any source file parsed by QDoc (or even the same one where \include command is used), or any other text file. To store snippets in a separate file that is not meant to be parsed by QDoc, use a file extension that is not listed in <link raw="sources.fileextensions-variable" href="22-qdoc-configuration-generalvariables.html#sources-fileextensions-variable" type="page" page="Generic Configuration Variables">sources.fileextensions</link>; for example, <teletype type="highlighted">.qdocinc</teletype>.</para>
+                    <para>The command can have either one or two arguments. The first argument is always a file name. The contents of the file must be QDoc input, in other words, a sequence of QDoc commands and text, but without the enclosing QDoc comment <teletype type="highlighted">/</teletype>
+                        <teletype type="highlighted">*!</teletype> ... <teletype type="highlighted">*</teletype>
+                        <teletype type="highlighted">/</teletype> delimiters. If you want to include the entire named file, don't use the second argument. If you want to include only part of the file, see the <link raw="2-argument-form" href="12-0-qdoc-commands-miscellaneous.html#2-argument-form" type="page" page="Miscellaneous">two argument form</link> below. Here is an example of the one argument form:</para>
+                    <code>/ *!
+    \page corefeatures.html
+    \title Core Features
+
+    \include examples/signalandslots.qdocinc
+    \include examples/objectmodel.qdocinc
+    \include examples/layoutmanagement.qdocinc
+* /</code>
+                    <para>QDoc renders this page <link raw="corefeatures.html" href="corefeatures.html" type="page" page="Core Features">as shown here</link>.</para>
+                    <target name="2-argument-form"/>
+                </section>
+                <section id="include-filename-snippet-identifier">
+                    <heading level="2">\include filename snippet-identifier</heading>
+                    <para>It is a waste of time to make a separate <teletype type="highlighted">.qdocinc</teletype> file for every QDoc include snippet you want to use in multiple places in the documentation, especially given that you probably have to put the copyright/license notice in every one of these files. So if you have a large number of snippets to be included, you can put them all in a single file if you want, and surround each one with:</para>
+                    <code>    //! [snippet-id1]
+
+       QDoc commands and text...
+
+//! [snippet-id1]
+
+    //! [snippet-id2]
+
+       More QDoc commands and text...
+
+//! [snippet-id2]</code>
+                    <para>Then you can use the two-argument form of the command:</para>
+                    <code>\input examples/signalandslots.qdocinc snippet-id2
+\input examples/objectmodel.qdocinc another-snippet-id</code>
+                    <para>It works as expected. The sequence of QDoc commands and text found between the two tags with the same name as the second argument is sent to the QDoc input stream. You can even have nested snippets.</para>
+                    <para>
+                        <bold>Note:</bold> Snippet identifiers work also within documentation comment (<raw format="HTML">/*!</raw> .. <raw format="HTML">*/</raw>) blocks, so it's not necessary to use a separate <teletype type="highlighted">.qdocinc</teletype> file. When processing a comment block, QDoc removes any <teletype type="highlighted">//!</teletype> comment lines from the generated output.</para>
+                    <target name="meta-command"/>
+                </section>
+                <section id="meta">
+                    <heading level="1">\meta</heading>
+                    <para>The \meta command is mainly used for including metadata in DITA XML files. It is also used for adding metadata to example documentation, and when generating HTML output for specifying the <italic>maintainer(s)</italic> of a C++ class.</para>
+                    <para>The command has two arguments: the first argument is the name of the metadata attribute, and the second argument is the value for the attribute. Each argument should be enclosed in curly brackets, as shown in this example:</para>
+                    <code>/ *!
+    \class QWidget
+    \brief The QWidget class is the base class of all user interface objects.
+
+    \ingroup basicwidgets
+
+    \meta {technology} {User Interface}
+    \meta {platform} {macOS 10.6}
+    \meta {platform} {MeeGo}
+    \meta {audience} {user}
+    \meta {audience} {programmer}
+    \meta {audience} {designer}
+* /</code>
+                    <para>When running QDoc to generate HTML, the example above will have no effect on the generated output, but if you run QDoc to generate DITA XML, the example will generate the following:</para>
+                    <code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE cxxClass PUBLIC &quot;-//NOKIA//DTD DITA C++ API Class Reference Type v0.6.0//EN&quot; &quot;dtd/cxxClass.dtd&quot;&gt;
+&lt;!--qwidget.cpp--&gt;
+&lt;cxxClass id=&quot;id-9a14268e-6b09-4eee-b940-21a00a0961df&quot;&gt;
+   &lt;apiName&gt;QWidget&lt;/apiName&gt;
+   &lt;shortdesc&gt;the QWidget class is the base class of all user interface objects.&lt;/shortdesc&gt;
+   &lt;prolog&gt;
+       &lt;author&gt;Qt Development Frameworks&lt;/author&gt;
+       &lt;publisher&gt;Qt Project&lt;/publisher&gt;
+       &lt;copyright&gt;
+           &lt;copyryear year=&quot;2018&quot;/&gt;
+           &lt;copyrholder&gt;Qt Project&lt;/copyrholder&gt;
+       &lt;/copyright&gt;
+       &lt;permissions view=&quot;all&quot;/&gt;
+       &lt;metadata&gt;
+           &lt;audience type=&quot;designer&quot;/&gt;
+           &lt;audience type=&quot;programmer&quot;/&gt;
+           &lt;audience type=&quot;user&quot;/&gt;
+           &lt;category&gt;Class reference&lt;/category&gt;
+           &lt;prodinfo&gt;
+               &lt;prodname&gt;Qt Reference Documentation&lt;/prodname&gt;
+               &lt;vrmlist&gt;
+                   &lt;vrm version=&quot;4&quot; release=&quot;7&quot; modification=&quot;3&quot;/&gt;
+               &lt;/vrmlist&gt;
+               &lt;component&gt;QtGui&lt;/component&gt;
+           &lt;/prodinfo&gt;
+           &lt;othermeta name=&quot;platform&quot; content=&quot;MeeGo&quot;/&gt;
+           &lt;othermeta name=&quot;platform&quot; content=&quot;macOS 10.6&quot;/&gt;
+           &lt;othermeta name=&quot;technology&quot; content=&quot;User Interface&quot;/&gt;
+       &lt;/metadata&gt;
+   &lt;/prolog&gt;</code>
+                    <para>In the example output, several values have been set using default values obtained from the QDoc configuration file. See <link raw="Generating DITA XML Output" href="21-3-qt-dita-xml-output.html" type="page" page="Generating DITA XML Output">Generating DITA XML Output</link> for details.</para>
+                    <para>
+                        <bold>Example Metadata</bold></para>
+                    <para>Another use for \meta command is to include metadata (tags) in <link raw="example-command" href="13-qdoc-commands-topics.html#example-command" type="page" page="Topic Commands">\example</link> documentation. By default, QDoc generates example tags based on the example's <link raw="title-command" href="20-qdoc-commands-namingthings.html#title-command" type="page" page="Naming Things">\title</link> and module name. These tags are displayed in Qt Creator's Welcome mode, helping users navigate the list of examples.</para>
+                    <para>Additional tags can be created with <teletype type="highlighted">\\meta {tag} {tag1,[tag2,...]}</teletype>. For example:</para>
+                    <badcode>/ *!
+    \example helloworld
+    \title Hello World Example
+    \meta {tag} {tutorial,basic}
+* /</badcode>
+                    <para>This would result in the following tags: <italic>tutorial,basic,hello,world</italic>. Common words such as <italic>example</italic> are ignored.</para>
+                    <target name="noautolist-command"/>
+                </section>
+                <section id="noautolist">
+                    <heading level="1">\noautolist</heading>
+                    <para>The \noautolist command indicates that the annotated list of C++ classes or QML types, which is automatically generated at the bottom of the C++ or QML module page should be omitted, because the classes or types have been listed manually. This command can also be used with the <link raw="group-command" href="13-qdoc-commands-topics.html#group-command" type="page" page="Topic Commands">\group</link> command to omit the list of group members, when they are listed manually.</para>
+                    <para>The command must stand on its own line. See <link raw="Qt Sensors QML Types" href="qtsensors-qmlmodule.html" type="">Qt Sensors QML Types</link> for an example. The page is generated from <teletype type="highlighted">qtsensors5.qdoc</teletype>. There you will find a qdoc comment containing the <teletype type="highlighted">\qmlmodule</teletype> command for the <link raw="QtSensors" href="qtsensors-module.html" type="module">QtSensors</link> module. The same qdoc comment contains two <teletype type="highlighted">\annotated-list</teletype> commands to list the QML types in two separate groups. The QML types have been divided into these two groups because it makes more sense to list them this way than it does to list them in a single alphabetical list. At the bottom of the comment, <teletype type="highlighted">\noautolist</teletype> has been used to tell qdoc not to generate the automatic annotated list.</para>
+                    <para>This command was introduced in QDoc 5.6.</para>
+                    <para>Since Qt 5.10, this command can be applied also to <link raw="example-command" href="13-qdoc-commands-topics.html#example-command" type="page" page="Topic Commands">\example</link> documentation, where it causes the automatically generated list of files and images belonging to an example project to be omitted.</para>
+                    <target name="omit-command"/>
+                </section>
+                <section id="omit">
+                    <heading level="1">\omit</heading>
+                    <para>The \omit command and the corresponding \endomit command delimit parts of the documentation that you want QDoc to skip. For example:</para>
+                    <code>/ *!
+    \table
+    \row
+        \li Basic Widgets
+        \li Basic GUI widgets such as buttons, comboboxes
+           and scrollbars.
+
+    \omit
+    \row
+        \li Component Model
+        \li Interfaces and helper classes for the Qt
+           Component Model.
+    \endomit
+
+    \row
+        \li Database Classes
+        \li Database related classes, e.g. for SQL databases.
+    \endtable
+* /</code>
+                    <para>QDoc renders this as:</para>
+                    <raw format="HTML">                &lt;table align=&quot;center&quot; cellpadding=&quot;2&quot;
+                    cellspacing=&quot;1&quot; border=&quot;0&quot;&gt;
+
+                &lt;tr valign=&quot;top&quot; bgcolor=&quot;#d0d0d0&quot;&gt;
+                    &lt;td&gt;Basic Widgets&lt;/td&gt;
+                    &lt;td&gt;Basic GUI widgets such as buttons, comboboxes
+                       and scrollbars.&lt;/td&gt;
+                &lt;/tr&gt;
+
+                &lt;tr valign=&quot;top&quot; bgcolor=&quot;#c0c0c0&quot;&gt;
+                    &lt;td&gt;Database Classes&lt;/td&gt;
+                    &lt;td&gt;Database related classes, e.g. for SQL databases.&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;/table&gt;
+            </raw>
+                    <target name="raw-command"/>
+                </section>
+                <section id="raw-avoid">
+                    <heading level="1">\raw (avoid)</heading>
+                    <para>The \raw command and the corresponding \endraw command delimit a block of raw mark-up language code.</para>
+                    <para>
+                        <bold>Note:</bold> Avoid using this command if possible, because it generates DITA XML code that causes problems. If you are trying to generate special table or list behavior, try to get the behavior you want using the <link raw="span-command" href="04-qdoc-commands-textmarkup.html#span-command" type="page" page="Text Markup">\span</link> and <link raw="div-command" href="04-qdoc-commands-textmarkup.html#div-command" type="page" page="Text Markup">\div</link> commands in your <link raw="table-command" href="10-qdoc-commands-tablesandlists.html#table-command" type="page" page="Tables and Lists">\table</link> or <link raw="list-command" href="10-qdoc-commands-tablesandlists.html#list-command" type="page" page="Tables and Lists">\list</link>.</para>
+                    <para>The command takes an argument specifying the code's format. Currently, the only supported format is HTML.</para>
+                    <para>The \raw command is useful if you want some special HTML effects in your documentation.</para>
+                    <code>/ *!
+    Qt has some predefined QColor objects.
+
+    \raw HTML
+    &lt;style type=&quot;text/css&quot; id=&quot;colorstyles&quot;&gt;
+    #color-blue { background-color: #0000ff; color: #ffffff }
+    #color-darkBlue { background-color: #000080; color: #ffffff }
+    #color-cyan { background-color: #00ffff; color: #000000 }
+    &lt;/style&gt;
+
+    &lt;p&gt;
+    &lt;tt id=&quot;color-blue&quot;&gt;Blue(#0000ff)&lt;/tt&gt;,
+    &lt;tt id=&quot;color-darkBlue&quot;&gt;dark blue(#000080)&lt;/tt&gt; and
+    &lt;tt id=&quot;color-cyan&quot;&gt;cyan(#00ffff)&lt;/tt&gt;.
+&lt;/p&gt;
+    \endraw
+* /</code>
+                    <para>QDoc renders this as:</para>
+                    <quote>
+                        <para>Qt has some predefined <link raw="QColor" href="qcolor.html" type="class">QColor</link> objects.</para>
+                        <raw format="HTML">               &lt;style type=&quot;text/css&quot; id=&quot;colorstyles&quot;&gt;
+               #color-blue { background-color: #0000ff; color: #ffffff }
+               #color-darkBlue { background-color: #000080; color: #ffffff }
+               #color-cyan { background-color: #00ffff; color: #000000 }
+               &lt;/style&gt;
+
+               &lt;p&gt;
+               &lt;tt id=&quot;color-blue&quot;&gt;Blue(#0000ff)&lt;/tt&gt;,
+               &lt;tt id=&quot;color-darkBlue&quot;&gt;dark blue(#000080)&lt;/tt&gt; and
+               &lt;tt id=&quot;color-cyan&quot;&gt;cyan(#00ffff)&lt;/tt&gt;.
+           &lt;/p&gt;
+               </raw>
+                    </quote>
+                    <para>
+                        <bold>Note:</bold> But you can achieve the exact same thing using qdoc commands. In this case, all you have to do is include the color styles in your style.css file. Then you can write:</para>
+                    <code>\tt {\span {id=&quot;color-blue&quot;} {Blue(#0000ff)}},
+\tt {\span {id=&quot;color-darkBlue&quot;} {dark blue(#000080)}} and
+\tt {\span {id=&quot;color-cyan&quot;} {cyan(#00ffff)}}.</code>
+                    <para>...which is rendered as:</para>
+                    <para>
+                        <teletype>Blue(#0000ff)</teletype>, <teletype>dark blue(#000080)</teletype> and <teletype>cyan(#00ffff)</teletype>.</para>
+                    <target name="unicode-command"/>
+                </section>
+                <section id="unicode">
+                    <heading level="1">\unicode</heading>
+                    <para>The \unicode command allows you to insert an arbitrary Unicode character in the document.</para>
+                    <para>The command takes an argument specifying the character as an integer. By default, base 10 is assumed, unless a '0x' or '0' prefix is specified (for base 16 and 8, respectively). For example:</para>
+                    <code>O G\unicode{0xEA}nio e as Rosas
+
+\unicode 0xC0 table en famille avec 15 \unicode 0x20AC par jour
+
+\unicode 0x3A3 \e{a}\sub{\e{i}}</code>
+                    <para>QDoc renders this as:</para>
+                    <quote>
+                        <para>O Gênio e as Rosas</para>
+                        <para>À table en famille avec 15 € par jour</para>
+                        <para>Σ <italic>a</italic>
+                            <subscript>
+                                <italic>i</italic>
+                            </subscript></para>
+                    </quote>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

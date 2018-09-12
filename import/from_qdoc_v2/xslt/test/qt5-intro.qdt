@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>What's New in Qt 5</db:title>
+      <db:abstract>
+         <db:para>Qt 5 features and its benefits</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-12+02:00</db:pubdate>
+      <db:date>2018-09-12+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:para>Qt 5 features and its benefits</db:para>
+   <db:para>Qt 5 is the latest version of Qt. It enables developers to develop applications with intuitive user interfaces for multiple targets, faster than ever before. Qt 5 makes it easier to address the latest UI paradigm shifts that touch screens and tablets require.</db:para>
+   <db:para>Developers can be more productive and flexible with the improved support for JavaScript and QML in Qt 5, while still having the C++ foundation and Qt Widget support. HTML5 developers will feel at home with the Web offering that includes Chromium-based Qt  and Qt .</db:para>
+   <db:para>Qt 5 is highly compatible with Qt 4. It is possible for developers of Qt 4 applications to seamlessly move on to Qt 5 with their current functionality and gradually develop new things leveraging all the great items Qt 5 makes possible.</db:para>
+   <db:para>Cross-platform portability is made simpler in Qt 5, thanks to the new modularized codebase consisting of the <db:link xlink:href="qtmodules.html" xrefstyle="page" annotations="All Modules">essential and add-on</db:link> modules, and the consolidation of the <db:link xlink:href="qpa.html" xrefstyle="page" annotations="Qt Platform Abstraction">Qt Platform Abstraction</db:link>.</db:para>
+   <db:para>The following sections summarize some of the key features that Qt 5 brings to the table.</db:para>
+   <db:section xml:id="qt-everywhere-on-mobile">
+      <db:title>Qt Everywhere on Mobile</db:title>
+      <db:para>Qt now comes with production-ready ports for Android, iOS, and <db:link xlink:href="build-sources.html#winrt" xrefstyle="page" annotations="WinRT">WinRT</db:link>. Extensive work has gone into these platform ports, which now extend Qt’s multi-platform promise to cover desktop, embedded, and mobile platforms.</db:para>
+      <db:para>With full support for Android, iOS, and <db:link xlink:href="build-sources.html#winrt" xrefstyle="page" annotations="WinRT">WinRT</db:link>, Qt is a great solution for targeting the mobile markets with a single codebase. It is fast and easy to bring existing desktop or embedded application to mobile, by simply recompiling it.</db:para>
+      <db:para>You can install several demo applications that showcase the power of Qt on these mobile platforms. Here is a small list of such applications:</db:para>
+      <db:para>Demo applications:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="https://play.google.com/store/apps/details?id=com.digia.Qt5Intro" xrefstyle="page" annotations="Google Play: Introduction to Qt 5">Introduction to Qt 5</db:link> (Google Play)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="https://play.google.com/store/apps/details?id=com.digia.Qt5Everywhere" xrefstyle="page" annotations="Google Play: Qt 5 Everywhere">Qt 5 Everywhere</db:link> (Google Play)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="https://itunes.apple.com/us/app/subattack/id659283830" xrefstyle="page" annotations="iTunes: SubAttack">SubAttack</db:link> (App Store)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="https://itunes.apple.com/us/app/qtquicksand/id666273528" xrefstyle="page" annotations="iTunes: QtQuicksand">QtQuicksand</db:link> (App Store)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Quick Forecast on <db:link xlink:href="https://itunes.apple.com/us/app/quick-forecast/id736658981" xrefstyle="page" annotations="iTunes: Quick Forecast">App Store</db:link>, <db:link xlink:href="https://play.google.com/store/apps/details?id=org.qtproject.quickforecast" xrefstyle="page" annotations="Google Play: Quick Forecast">Google Play</db:link>, and <db:link xlink:href="http://www.windowsphone.com/en-us/store/app/quickforecast/35572287-c6d6-4d5c-9799-46555f7fc459" xrefstyle="page" annotations="Windows Store: QuickForeCast">Windows Store</db:link>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Qt Hangman on <db:link xlink:href="https://itunes.apple.com/us/app/qt-hangman/id762381104" xrefstyle="page" annotations="iTunes: Qt Hangman">App Store</db:link> and <db:link xlink:href="https://play.google.com/store/apps/details?id=com.digia.QtHangman" xrefstyle="page" annotations="Google Play: Qt Hangman">Google Play</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Flyingbus on <db:link xlink:href="https://itunes.apple.com/us/app/flyingbus/id762515926?mt=8" xrefstyle="page" annotations="iTunes: Flyingbus">App Store</db:link> and <db:link xlink:href="https://play.google.com/store/apps/details?id=com.digia.Flyingbus" xrefstyle="page" annotations="Google Play: Flyingbus">Google Play</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>Platform pages:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="android-support.html" xrefstyle="page" annotations="Qt for Android">Qt for Android</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="ios-support.html" xrefstyle="page" annotations="Qt for iOS">Qt for iOS</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="winrt-support.html" xrefstyle="page" annotations="Qt for WinRT">Qt for WinRT</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qt5_everywhere_demo.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Qt Everywhere demo on Nexus 7</db:para>Qt Everywhere demo on Nexus 7</db:section>
+   <db:section xml:id="amazing-graphics-capability-and-performance">
+      <db:title>Amazing Graphics Capability and Performance</db:title>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qt5_shadereffect.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>
+         <db:link xlink:href="qml-qtquick-shadereffect.html" xrefstyle="" annotations="ShaderEffect">ShaderEffect</db:link> on an <db:link xlink:href="09-qdoc-commands-includingimages.html#image" xrefstyle="page" annotations="Image">Image</db:link>
+      </db:para> on an <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>
+      <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="https://www.youtube.com/watch?v=P4kv-AoAJ-Q" xrefstyle="page" annotations="Livecoding video effects with Qt5">Livecoding video effects with Qt5</db:link> - The Big Buck Bunny you never saw before. Video effects created using Qt Quick.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="http://blog.qt.io/2012/02/29/pimp-my-video-shader-effects-and-multimedia/" xrefstyle="page" annotations="Pimp my video">Pimp my video</db:link> - Video effects implemented using the shader language with QML.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="http://wiki.qt.io/QtMediaHub" xrefstyle="page" annotations="QtMediaHub">QtMediaHub</db:link> - The power and convenience of Qt Quick.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="http://wiki.qt.io/Qt_RaspberryPi" xrefstyle="page" annotations="QtonPi">QtonPi</db:link> - Good example of Qt 5 running on the low cost hardware, Raspberry PI.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="qt-quick-in-qt-5">
+      <db:title>Qt Quick in Qt 5</db:title>
+      <db:para>
+         <db:link xlink:href="qtquick-index.html" xrefstyle="page" annotations="Qt Quick">Qt Quick</db:link> provides the necessary infrastructure to develop QML applications. The latest version (v2.0) of this technology also introduces a set of new C++ classes as a replacement for the QDeclarative* equivalents in Qt Quick 1. New features in Qt Quick include:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qml-qtquick-canvas.html" xrefstyle="" annotations="Canvas">Canvas</db:link> for drawing. Canvas provides an API that is similar to the HTML5 Canvas API, along with some additional features.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qml-qtquick-shadereffect.html" xrefstyle="" annotations="ShaderEffect">Shader Effects</db:link> which enable GLSL shader programs to be integrated directly into QML code and applied to items and images.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-effects-particles.html" xrefstyle="page" annotations="Using the Qt Quick Particle System">Particle Effects</db:link> for creating a variety of 2D particle systems.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-effects-sprites.html" xrefstyle="page" annotations="Sprite Animations">Sprites</db:link> can be used in animating 2D graphical objects and as a source for particle systems.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-localstorage-qmlmodule.html" xrefstyle="" annotations="Qt Quick Local Storage QML Types">Offline storage</db:link> is a JavaScript API that conforms with the HTML5 Web Database API for storing data in Qt Quick applications.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquick-window-qmlmodule.html" xrefstyle="" annotations="Qt Quick Window QML Types">Window</db:link> provides a top-level window and the Screen type for accessing a screen's resolution and other details. This is useful for desktop applications developed using Qt Quick.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="topics-graphics.html#qt-quick-scene-graph" xrefstyle="page" annotations="Qt Quick Scene Graph">OpenGL-based rendering architecture</db:link> for optimal performance.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qt5_particles.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Qt Quick's <db:link xlink:href="qtquick-particles-qmlmodule.html" xrefstyle="" annotations="Qt Quick Particles QML Types">Particle System</db:link>
+      </db:para>Qt Quick's <db:para>The <db:link xlink:href="qtgraphicaleffects-index.html" xrefstyle="page" annotations="qtgraphicaleffects-index.html">Qt Graphical Effects</db:link> module provides a number of ready-made effects for use in Qt Quick applications, including soft drop shadow, blur, glow and colorize.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qt5_graphicaleffects.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Excerpts from the Qt Graphical Effects module</db:para>Excerpts from the Qt Graphical Effects module</db:section>
+   <db:section xml:id="designing-ui-made-simpler">
+      <db:title>Designing UI Made Simpler</db:title>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qtquickcontrols2-material.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Qt Quick Controls 2 Material style</db:para>Qt Quick Controls 2 Material style<db:para>UI designing can be time consuming if there are not enough tools to help. Qt Quick reduces the effort considerably compared to the traditional native (C or C++) approach, especially if the <db:link xlink:href="qtquickcontrols-index.html" xrefstyle="page" annotations="Qt Quick Controls">Qt Quick Controls</db:link> or <db:link xlink:href="qtquickcontrols2-index.html" xrefstyle="page" annotations="Qt Quick Controls 2">Qt Quick Controls 2</db:link> and <db:link xlink:href="qtquicklayouts-index.html" xrefstyle="page" annotations="Qt Quick Layouts">Qt Quick Layouts</db:link> modules are used. These modules provide ready-to-use UI controls and layouts to enable faster application development with less code. For a comparison of the two sets of controls, see <db:link xlink:href="qtquickcontrols2-differences.html" xrefstyle="page" annotations="Differences between Qt Quick Controls">Differences between Qt Quick Controls</db:link>.</db:para>
+      <db:para>Qt Quick Controls and Qt Quick Layouts provide a vast set of UI controls ranging from the most basic text field and button to the more complex stack view and tumbler. The controls are also made available in <db:link xlink:href="http://doc.qt.io/qtcreator/creator-using-qt-quick-designer.html" xrefstyle="page" annotations="Qt Creator: Using Qt Quick Designer">Qt Quick Designer</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="sensor-and-location">
+      <db:title>Sensor and Location</db:title>
+      <db:para>Reacting to sensor value changes and locating a place on the world map are the common use cases supported on most portable devices. Now you can support such use cases in your Qt application using the <db:link xlink:href="qtsensors-index.html" xrefstyle="page" annotations="Qt Sensors">Qt Sensors</db:link> and <db:link xlink:href="qtpositioning-index.html" xrefstyle="page" annotations="Qt Positioning">Qt Positioning</db:link> modules.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qtsensors_accelbubble_ex.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Accelerating SVG image</db:para>Accelerating SVG image<db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qtpositioning_weatherinfo_ex.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Location-based weather information</db:para>Location-based weather information</db:section>
+   <db:section xml:id="web-engine-and-html5">
+      <db:title>Web Engine and HTML5</db:title>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qtwebengine_quicknanobrowser.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Qt Quick nano browser</db:para>Qt Quick nano browser<db:para>
+         <db:link xlink:href="qtwebengine-index.html" xrefstyle="page" annotations="Qt WebEngine">Qt WebEngine</db:link> is a web content rendering engine based on Chromium featuring broad support for standard web technologies. It provides integration with both Qt Quick and traditional widgets. The module brings the latest in HTML5 advancements to Qt 5, including CSS filters, animations and video, and Canvas.</db:para>
+      <db:para>This Chromium-based Web Engine support in Qt is complemented with <db:link xlink:href="qtwebchannel-index.html" xrefstyle="page" annotations="Qt WebChannel">Qt WebChannel</db:link>, which bridges the gap between QML/C++ and HTML/JavaScript. It enables sharing QObjects from QML/C++ with HTML/JavaScript-based clients.</db:para>
+   </db:section>
+   <db:section xml:id="multimedia">
+      <db:title>Multimedia</db:title>
+      <db:para>
+         <db:link xlink:href="qtmultimedia-index.html" xrefstyle="page" annotations="Qt Multimedia">Qt Multimedia</db:link> provides a rich set of QML types and C++ classes to handle multimedia content. It also provides necessary APIs to access the camera and radio functionality. Qt 5 brings the Qt Multimedia module into the set of essential modules with support on all major platforms.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qt5_video.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Video embedded into a Qt Quick application with a displacement effect</db:para>Video embedded into a Qt Quick application with a displacement effect</db:section>
+   <db:section xml:id="platform-specific-extras">
+      <db:title>Platform-specific Extras</db:title>
+      <db:para>Qt is a cross-platform development framework enabling you to target multiple platforms with a single codebase. It provides common APIs across all supported platforms to access a feature without having to worry about how that feature is implemented on a platform. In some applications there will be a need to use a platform-specific feature, and that's when the following modules can be useful:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtandroidextras-index.html" xrefstyle="page" annotations="Qt Android Extras">Qt Android Extras</db:link> enables you to integrate Java code into your Qt application.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtmacextras-index.html" xrefstyle="page" annotations="Qt Mac Extras">Qt Mac Extras</db:link> enables you to access specific features on  and iOS.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtwinextras-index.html" xrefstyle="page" annotations="Qt Windows Extras">Qt Windows Extras</db:link> enables you to use Windows-specific features such as jump lists, progress indicator on a taskbar button, and so on.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtx11extras-index.html" xrefstyle="page" annotations="Qt X11 Extras">Qt X11 Extras</db:link> enables you to access the display configuration on Linux (X11).</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="modularized-qt-libraries">
+      <db:title>Modularized Qt Libraries</db:title>
+      <db:para>Qt 5 splits the Qt libraries into domain specific libraries and modules. This means that an application can choose which libraries it requires and only compile, use and deploy those.</db:para>
+      <db:para>For a complete list of modules and libraries, see <db:link xlink:href="qtmodules.html" xrefstyle="page" annotations="All Modules">all Qt modules</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="widgets-in-qt-5">
+      <db:title>Widgets in Qt 5</db:title>
+      <db:para>The <db:link xlink:href="qtwidgets-index.html" xrefstyle="page" annotations="Qt Widgets">Qt Widgets</db:link> have been separated into their own module in Qt 5, the Qt Widgets module. It is part of the essential modules.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qt5_widgets.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Screen capture of a widget application.</db:para>Screen capture of a widget application.<db:para>Designing the UI for widget-based applications can be quick with <db:link xlink:href="qtdesigner-manual.html" xrefstyle="page" annotations="Qt Designer Manual">Qt Designer</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="provide-map-based-solutions-with-qt">
+      <db:title>Provide Map-based Solutions with Qt</db:title>
+      <db:para>In today's world, location and maps information is more widely used, be it to look up nearby restaurants or plan commute to the office. With Qt, it is now possible to cater to these use cases by consuming map data provided by the third-party vendors. The <db:link xlink:href="qtlocation-module.html" xrefstyle="module" annotations="QtLocation">Qt Location</db:link> module provides the APIs and the necessary backend to fetch map data from some of the popular third-party mapping solutions. Here is a snapshot of the demo application running on Android, presenting OpenStreetMap data from www.mapquest.com.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qtlocation-mapviewer-demo.jpg"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Mapviewer example screenshot</db:para>Mapviewer example screenshot</db:section>
+   <db:section xml:id="qt-platform-abstraction">
+      <db:title>Qt Platform Abstraction</db:title>
+      <db:para>The windowing system dependent parts of Qt have been completely rewritten for Qt 5, based on the Qt Platform Abstraction, a plugin architecture which allows Qt to dynamically load a windowing system integration based on what system it is running on. This gives several benefits:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>Centralize the windowing system integration codebase into classes shared for all platforms.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Simplify the work required when porting Qt to new platforms.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Remove the windowing system dependency from Qt, making it possible to have the same Qt binaries run against multiple windowing systems. For instance, the Qt Linux binaries can run against both X11 and Wayland.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="new-connection-syntax">
+      <db:title>New Connection Syntax</db:title>
+      <db:para>In addition to the still available well known way to connect signals and slots, new overloads of <db:code><db:link xlink:href="qobject.html#connect" xrefstyle="function" annotations="QObject::connect">QObject::connect</db:link></db:code> have been added allowing you to connect signals and slot using pointer to member functions:</db:para>
+      <db:programlisting language="other">QObject::connect(sender, &amp;Sender::valueChanged, receiver, &amp;Receiver::updateValue);</db:programlisting>
+      <db:para>The new syntax provides compile time checking of the compatibility between signals and slots, automatic conversion of the arguments if there is an implicit cast between the types, and solve many problems occurring because of typedef or namespaces.</db:para>
+      <db:para>Additionally, if your compiler supports C++11 lambdas, you can even connect directly to a lambda function.</db:para>
+      <db:programlisting language="other">connect(sender, &amp;QObject::destroyed, [=](){ this-&gt;m_objects.remove(sender); });</db:programlisting>
+      <db:para>For a detailed comparison with the original string-based syntax, see <db:link xlink:href="signalsandslots-syntaxes.html" xrefstyle="page" annotations="Differences between String-Based and Functor-Based Connections">Differences between String-Based and Functor-Based Connections</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="connectivity-and-networking">
+      <db:title>Connectivity and Networking</db:title>
+      <db:para>Qt 5 provides better support for IPv6 and dual mode networks. Most applications using host names and network layer transparent protocols can now gain IPv6 support transparently. Such applications can also choose to receive both IPv4 and IPv6 connections or bind to only one of the two connection types. In the case of outgoing HTTP connections using <db:code>QNetworkAccessManager</db:code>, both IPv4 and IPv6 connections are attempted in parallel, and the one that succeeds first is used. This is useful in environments where one of the two types has limited connectivity.</db:para>
+      <db:para>Qt 5 also provides better ways to handle TCP socket-based connections and SSL certificates. This means developers can now:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>bind a TCP socket to an IP address before connecting,</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>verify an SSL certificate chain,</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>and access legacy systems.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>Stricter client authentication is one of the primary concerns for many applications handling confidential or critical data. The opaque Private Keys support in Qt 5 enables applications to read private keys from devices such as PKCS#11 dongles for stricter client authentication. The <db:link xlink:href="https://github.com/iksaif/qsslkey-p11" xrefstyle="page" annotations="qsslkey example">qsslkey example</db:link> illustrates reading private keys from a device.</db:para>
+   </db:section>
+   <db:section xml:id="extended-connectivity">
+      <db:title>Extended Connectivity</db:title>
+      <db:para>The connectivity options are endless with Qt 5. The two new modules, <db:link xlink:href="qtbluetooth-index.html" xrefstyle="page" annotations="Qt Bluetooth">Qt Bluetooth</db:link> and <db:link xlink:href="qtnfc-index.html" xrefstyle="page" annotations="Qt NFC">Qt NFC</db:link>, enable developers to add support for sophisticated ways to connect and share information in their application.</db:para>
+   </db:section>
+   <db:section xml:id="json-support">
+      <db:title>JSON Support</db:title>
+      <db:para>Qt applications that use simple data structures to store small amount of data, can now choose to use JSON documents over the complex database backends that need necessary drivers or plugins to access data. The fact that JSON is a text-based open standard derived from JavaScript, makes it the obvious choice for QML applications as well.</db:para>
+      <db:para>The Qt Core provides a set of classes to enable parsing and generating JSON documents. These classes also allow you to convert between an in-memory binary representation of JSON to a standard textual JSON format. The goal is to make common operations on JSON faster.</db:para>
+   </db:section>
+   <db:section xml:id="user-input">
+      <db:title>User Input</db:title>
+      <db:para>Qt 4 already had support for handling multi-point touch input in C++. Qt 5 extends this support to include Qt Quick, covering all the information about the touch points, including the touch position, pressure, and velocity.</db:para>
+      <db:para>The mouse event handling in Qt 5 has been improved from its predecessor. Applications have more control to handle mouse events in Qt Quick. The mouse area in a QML document can propagate the mouse wheel and click events and also ignore propagated events.</db:para>
+      <db:para>Besides this, Qt 5 adds support for more mouse buttons on platforms where this is supported. This comes in handy for gaming applications developed using Qt.</db:para>
+   </db:section>
+   <db:section xml:id="related-topics">
+      <db:title>Related Topics</db:title>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew511.html" xrefstyle="page" annotations="What's New in Qt 5.11">What's New in Qt 5.11</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew510.html" xrefstyle="page" annotations="What's New in Qt 5.10">What's New in Qt 5.10</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew59.html" xrefstyle="page" annotations="What's New in Qt 5.9">What's New in Qt 5.9</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew58.html" xrefstyle="page" annotations="What's New in Qt 5.8">What's New in Qt 5.8</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew57.html" xrefstyle="page" annotations="What's New in Qt 5.7">What's New in Qt 5.7</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew56.html" xrefstyle="page" annotations="What's New in Qt 5.6">What's New in Qt 5.6</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew55.html" xrefstyle="page" annotations="What's New in Qt 5.5">What's New in Qt 5.5</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew54.html" xrefstyle="page" annotations="What's New in Qt 5.4">What's New in Qt 5.4</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew53.html" xrefstyle="page" annotations="What's New in Qt 5.3">What's New in Qt 5.3</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew52.html" xrefstyle="page" annotations="What's New in Qt 5.2">What's New in Qt 5.2</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew51.html" xrefstyle="page" annotations="What's New in Qt 5.1">What's New in Qt 5.1</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="whatsnew50.html" xrefstyle="page" annotations="What's New in Qt 5.0">What's New in Qt 5.0</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="portingguide.html" xrefstyle="page" annotations="Porting Guide">Porting Guide</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+</db:article>

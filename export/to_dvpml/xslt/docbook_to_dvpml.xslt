@@ -50,10 +50,10 @@
           <xsl:variable name="url">
             <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
             <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
-            <xsl:value-of select="concat('/doc/', lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
+            <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
           </xsl:variable>
-          <chemin><xsl:value-of select="$url"/></chemin>
-          <urlhttp>http://qt.developpez.com/<xsl:value-of select="$url"/></urlhttp>
+          <chemin>/doc/<xsl:value-of select="$url"/></chemin>
+          <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
         </entete>
         
         <xsl:if test="db:info/db:abstract/db:para[2]">
@@ -305,7 +305,19 @@
   </xsl:template>
   
   <xsl:template mode="content_para" match="db:link">
-    <link href="{@xlink:href}">
+    <xsl:variable name="translatedLink" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="ends-with(string(@xlink:href), '.webxml')">
+          <xsl:variable name="filename" select="substring-before(string(@xlink:href), '.webxml')"/>
+          <xsl:value-of select="concat('http://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="@xlink:href"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <link href="{$translatedLink}">
       <xsl:apply-templates mode="content_para"/>
     </link> 
   </xsl:template>

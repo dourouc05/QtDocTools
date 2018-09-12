@@ -78,14 +78,14 @@ public class Main {
         i = 0;
         iFormat = "%0" + Integer.toString(qdt.size()).length() + "d";
         for (Path file : qdt) {
-            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
-
-            // Print the name of the file to process to ease debugging.
-            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
-            System.out.flush();
-
-            m.runXSLTDocBookToDvpML(file.toFile(), destination);
-            ++i;
+//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
+//
+//            // Print the name of the file to process to ease debugging.
+//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
+//            System.out.flush();
+//
+//            m.runXSLTDocBookToDvpML(file.toFile(), destination);
+//            ++i;
         }
     }
 

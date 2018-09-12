@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="unspecified" name="QLineEdit" href="qlineedit.html" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="63" bases="QWidget" module="QtWidgets" groups="basicwidgets" brief="One-line text editor">
+            <target name="desc"/>
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="128" column="4">
+                <brief>The <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link> widget is a one-line text editor.</brief>
+                <image href="images/windows-lineedit.png"/>
+                <para>A line edit allows the user to enter and edit a single line of plain text with a useful collection of editing functions, including undo and redo, cut and paste, and drag and drop (see <link raw="setDragEnabled()" href="qlineedit.html#dragEnabled-prop" type="function">setDragEnabled()</link>).</para>
+                <para>By changing the <link raw="echoMode()" href="qlineedit.html#echoMode-prop" type="function">echoMode()</link> of a line edit, it can also be used as a &quot;write-only&quot; field, for inputs such as passwords.</para>
+                <para>The length of the text can be constrained to <link raw="maxLength()" href="qlineedit.html#maxLength-prop" type="function">maxLength()</link>. The text can be arbitrarily constrained using a <link raw="validator()" href="qlineedit.html#validator" type="function">validator()</link> or an <link raw="inputMask()" href="qlineedit.html#inputMask-prop" type="function">inputMask()</link>, or both. When switching between a validator and an input mask on the same line edit, it is best to clear the validator or input mask to prevent undefined behavior.</para>
+                <para>A related class is <link raw="QTextEdit" href="qtextedit.html" type="class">QTextEdit</link> which allows multi-line, rich text editing.</para>
+                <para>You can change the text with <link raw="setText()" href="qlineedit.html#text-prop" type="function">setText()</link> or <link raw="insert()" href="qlineedit.html#insert" type="function">insert()</link>. The text is retrieved with <link raw="text()" href="qlineedit.html#text-prop" type="function">text()</link>; the displayed text (which may be different, see <link raw="EchoMode" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">EchoMode</link>) is retrieved with <link raw="displayText()" href="qlineedit.html#displayText-prop" type="function">displayText()</link>. Text can be selected with <link raw="setSelection()" href="qlineedit.html#setSelection" type="function">setSelection()</link> or <link raw="selectAll()" href="qlineedit.html#selectAll" type="function">selectAll()</link>, and the selection can be <link raw="cut()" href="qlineedit.html#cut" type="function">cut()</link>, <link raw="copy()" href="qlineedit.html#copy" type="function">copy()</link>ied and <link raw="paste()" href="qlineedit.html#paste" type="function">paste()</link>d. The text can be aligned with <link raw="setAlignment()" href="qlineedit.html#alignment-prop" type="function">setAlignment()</link>.</para>
+                <para>When the text changes the <link raw="textChanged()" href="qlineedit.html#text-prop" type="function">textChanged()</link> signal is emitted; when the text changes other than by calling <link raw="setText()" href="qlineedit.html#text-prop" type="function">setText()</link> the <link raw="textEdited()" href="qlineedit.html#textEdited" type="function">textEdited()</link> signal is emitted; when the cursor is moved the <link raw="cursorPositionChanged()" href="qlineedit.html#cursorPositionChanged" type="function">cursorPositionChanged()</link> signal is emitted; and when the Return or Enter key is pressed the <link raw="returnPressed()" href="qlineedit.html#returnPressed" type="function">returnPressed()</link> signal is emitted.</para>
+                <para>When editing is finished, either because the line edit lost focus or Return/Enter is pressed the <link raw="editingFinished()" href="qlineedit.html#editingFinished" type="function">editingFinished()</link> signal is emitted.</para>
+                <para>Note that if there is a validator set on the line edit, the <link raw="returnPressed()" href="qlineedit.html#returnPressed" type="function">returnPressed()</link>/<link raw="editingFinished()" href="qlineedit.html#editingFinished" type="function">editingFinished()</link> signals will only be emitted if the validator returns <link raw="QValidator::Acceptable" href="qvalidator.html#State-enum" type="enum" enum="QValidator::State">QValidator::Acceptable</link>.</para>
+                <para>By default, QLineEdits have a frame as specified by platform style guides; you can turn it off by calling <link raw="setFrame" href="qlineedit.html#frame-prop" type="function">setFrame</link>(false).</para>
+                <para>The default key bindings are described below. The line edit also provides a context menu (usually invoked by a right mouse click) that presents some of these editing options. <target name="desc"/></para>
+                <table>
+                    <header>
+                        <item>
+                            <para>Keypress</para>
+                        </item>
+                        <item>
+                            <para>Action</para>
+                        </item>
+                    </header>
+                    <row>
+                        <item>
+                            <para>Left Arrow</para>
+                        </item>
+                        <item>
+                            <para>Moves the cursor one character to the left.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Shift+Left Arrow</para>
+                        </item>
+                        <item>
+                            <para>Moves and selects text one character to the left.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Right Arrow</para>
+                        </item>
+                        <item>
+                            <para>Moves the cursor one character to the right.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Shift+Right Arrow</para>
+                        </item>
+                        <item>
+                            <para>Moves and selects text one character to the right.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Home</para>
+                        </item>
+                        <item>
+                            <para>Moves the cursor to the beginning of the line.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>End</para>
+                        </item>
+                        <item>
+                            <para>Moves the cursor to the end of the line.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Backspace</para>
+                        </item>
+                        <item>
+                            <para>Deletes the character to the left of the cursor.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+Backspace</para>
+                        </item>
+                        <item>
+                            <para>Deletes the word to the left of the cursor.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Delete</para>
+                        </item>
+                        <item>
+                            <para>Deletes the character to the right of the cursor.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+Delete</para>
+                        </item>
+                        <item>
+                            <para>Deletes the word to the right of the cursor.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+A</para>
+                        </item>
+                        <item>
+                            <para>Select all.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+C</para>
+                        </item>
+                        <item>
+                            <para>Copies the selected text to the clipboard.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+Insert</para>
+                        </item>
+                        <item>
+                            <para>Copies the selected text to the clipboard.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+K</para>
+                        </item>
+                        <item>
+                            <para>Deletes to the end of the line.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+V</para>
+                        </item>
+                        <item>
+                            <para>Pastes the clipboard text into line edit.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Shift+Insert</para>
+                        </item>
+                        <item>
+                            <para>Pastes the clipboard text into line edit.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+X</para>
+                        </item>
+                        <item>
+                            <para>Deletes the selected text and copies it to the clipboard.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Shift+Delete</para>
+                        </item>
+                        <item>
+                            <para>Deletes the selected text and copies it to the clipboard.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+Z</para>
+                        </item>
+                        <item>
+                            <para>Undoes the last operation.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>Ctrl+Y</para>
+                        </item>
+                        <item>
+                            <para>Redoes the last undone operation.</para>
+                        </item>
+                    </row>
+                </table>
+                <para>Any other key sequence that represents a valid character, will cause the character to be inserted into the line edit.</para>
+                <see-also>
+                    <link raw="QTextEdit" href="qtextedit.html" type="class">QTextEdit</link>
+                    <link raw="QLabel" href="qlabel.html" type="class">QLabel</link>
+                    <link raw="QComboBox" href="qcombobox.html" type="class">QComboBox</link>
+                    <link raw="fowler" href="guibooks.html#fowler" type="page" page="Books about GUI Design">GUI Design Handbook: Field, Entry</link>
+                    <link raw="Line Edits Example" href="qtwidgets-widgets-lineedits-example.html" type="page" page="Line Edits Example">Line Edits Example</link>
+                </see-also>
+            </description>
+            <variable threadsafety="unspecified" name="staticMetaObject" fullname="QLineEdit::staticMetaObject" href="qlineedit.html#staticMetaObject-var" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" type="const QMetaObject" static="true">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <function threadsafety="unspecified" name="metaObject" fullname="QLineEdit::metaObject" href="qlineedit.html#metaObject" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QMetaObject *" signature="const QMetaObject * metaObject() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacast" fullname="QLineEdit::qt_metacast" href="qlineedit.html#qt_metacast" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void *" signature="void * qt_metacast(const char *)">
+                <parameter type="const char *" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_metacall" fullname="QLineEdit::qt_metacall" href="qlineedit.html#qt_metacall" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int qt_metacall(QMetaObject::Call , int , void **)">
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="tr" fullname="QLineEdit::tr" href="qlineedit.html#tr" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString tr(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="trUtf8" fullname="QLineEdit::trUtf8" href="qlineedit.html#trUtf8" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString trUtf8(const char *s, const char *c, int n)">
+                <parameter type="const char *" name="s" default=""/>
+                <parameter type="const char *" name="c" default="Q_OBJECT"/>
+                <parameter type="int" name="n" default="Q_OBJECT"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="qt_static_metacall" fullname="QLineEdit::qt_static_metacall" href="qlineedit.html#qt_static_metacall" status="active" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void qt_static_metacall(QObject *, QMetaObject::Call , int , void **)">
+                <parameter type="QObject *" name="" default=""/>
+                <parameter type="QMetaObject::Call" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <parameter type="void **" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <class threadsafety="unspecified" name="QPrivateSignal" fullname="QLineEdit::QPrivateSignal" href="qlineedit-qprivatesignal.html" status="active" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="65">
+                <description path="" line="0" column="0"/>
+            </class>
+            <property threadsafety="unspecified" name="inputMask" fullname="QLineEdit::inputMask" href="qlineedit.html#inputMask-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="67" type="QString" brief="Validation input mask">
+                <getter name="inputMask"/>
+                <setter name="setInputMask"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1181" column="4">
+                    <brief>This property holds The validation input mask.</brief>
+                    <para>If no mask is set,  returns an empty string.</para>
+                    <para>Sets the <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link>'s validation mask. Validators can be used instead of, or in conjunction with masks; see <link raw="setValidator()" href="qlineedit.html#setValidator" type="function">setValidator()</link>.</para>
+                    <para>Unset the mask and return to normal <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link> operation by passing an empty string (&quot;&quot;).</para>
+                    <para>The table below shows the characters that can be used in an input mask. A space character, the default character for a blank, is needed for cases where a character is <italic>permitted but not required</italic>.</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>Character</para>
+                            </item>
+                            <item>
+                                <para>Meaning</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">A</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII alphabetic character required. A-Z, a-z.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">a</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII alphabetic character permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">N</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII alphanumeric character required. A-Z, a-z, 0-9.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">n</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII alphanumeric character permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">X</teletype></para>
+                            </item>
+                            <item>
+                                <para>Any character required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">x</teletype></para>
+                            </item>
+                            <item>
+                                <para>Any character permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">9</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII digit required. 0-9.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">0</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII digit permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">D</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII digit required. 1-9.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">d</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII digit permitted but not required (1-9).</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">#</teletype></para>
+                            </item>
+                            <item>
+                                <para>ASCII digit or plus/minus sign permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">H</teletype></para>
+                            </item>
+                            <item>
+                                <para>Hexadecimal character required. A-F, a-f, 0-9.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">h</teletype></para>
+                            </item>
+                            <item>
+                                <para>Hexadecimal character permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">B</teletype></para>
+                            </item>
+                            <item>
+                                <para>Binary character required. 0-1.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">b</teletype></para>
+                            </item>
+                            <item>
+                                <para>Binary character permitted but not required.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">&gt;</teletype></para>
+                            </item>
+                            <item>
+                                <para>All following alphabetic characters are uppercased.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">&lt;</teletype></para>
+                            </item>
+                            <item>
+                                <para>All following alphabetic characters are lowercased.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">!</teletype></para>
+                            </item>
+                            <item>
+                                <para>Switch off case conversion.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">[ ] { }</teletype></para>
+                            </item>
+                            <item>
+                                <para>Reserved.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype>\</teletype></para>
+                            </item>
+                            <item>
+                                <para>Use <teletype>\</teletype> to escape the special characters listed above to use them as separators.</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>The mask consists of a string of mask characters and separators, optionally followed by a semicolon and the character used for blanks. The blank characters are always removed from the text after editing.</para>
+                    <para>Examples:</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>Mask</para>
+                            </item>
+                            <item>
+                                <para>Notes</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">000.000.000.000;_</teletype></para>
+                            </item>
+                            <item>
+                                <para>IP address; blanks are <teletype type="highlighted">_</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">HH:HH:HH:HH:HH:HH;_</teletype></para>
+                            </item>
+                            <item>
+                                <para>MAC address</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">0000-00-00</teletype></para>
+                            </item>
+                            <item>
+                                <para>ISO Date; blanks are <teletype type="highlighted">space</teletype></para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">&gt;AAAAA-AAAAA-AAAAA-AAAAA-AAAAA;#</teletype></para>
+                            </item>
+                            <item>
+                                <para>License number; blanks are <teletype type="highlighted">-</teletype> and all (alphabetic) characters are converted to uppercase.</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>To get range control (e.g., for an IP address) use masks together with <link raw="setValidator()" href="qlineedit.html#setValidator" type="function">validators</link>.</para>
+                    <see-also>
+                        <link raw="maxLength" href="qlineedit.html#maxLength-prop" type="property" getter="QLineEdit::maxLength()">maxLength</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="text" fullname="QLineEdit::text" href="qlineedit.html#text-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="68" type="QString" brief="The line edit's text">
+                <getter name="text"/>
+                <setter name="setText"/>
+                <notifier name="textChanged"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="294" column="4">
+                    <brief>This property holds the line edit's text.</brief>
+                    <para>Setting this property clears the selection, clears the undo/redo history, moves the cursor to the end of the line and resets the <link raw="modified" href="qlineedit.html#modified-prop" type="property" getter="QLineEdit::isModified()">modified</link> property to false. The text is not validated when inserted with .</para>
+                    <para>The text is truncated to <link raw="maxLength()" href="qlineedit.html#maxLength-prop" type="function">maxLength()</link> length.</para>
+                    <para>By default, this property contains an empty string.</para>
+                    <see-also>
+                        <link raw="insert()" href="qlineedit.html#insert" type="function">insert()</link>
+                        <link raw="clear()" href="qlineedit.html#clear" type="function">clear()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="maxLength" fullname="QLineEdit::maxLength" href="qlineedit.html#maxLength-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="69" type="int" brief="The maximum permitted length of the text">
+                <getter name="maxLength"/>
+                <setter name="setMaxLength"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="376" column="4">
+                    <brief>This property holds the maximum permitted length of the text.</brief>
+                    <para>If the text is too long, it is truncated at the limit.</para>
+                    <para>If truncation occurs any selected text will be unselected, the cursor position is set to 0 and the first part of the string is shown.</para>
+                    <para>If the line edit has an input mask, the mask defines the maximum string length.</para>
+                    <para>By default, this property contains a value of 32767.</para>
+                    <see-also>
+                        <link raw="inputMask" href="qlineedit.html#inputMask-prop" type="property" getter="QLineEdit::inputMask()">inputMask</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="frame" fullname="QLineEdit::frame" href="qlineedit.html#frame-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="70" type="bool" brief="Whether the line edit draws itself with a frame">
+                <getter name="hasFrame"/>
+                <setter name="setFrame"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="406" column="4">
+                    <brief>This property holds whether the line edit draws itself with a frame.</brief>
+                    <para>If enabled (the default) the line edit draws itself inside a frame, otherwise the line edit draws itself without any frame.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="echoMode" fullname="QLineEdit::echoMode" href="qlineedit.html#echoMode-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="71" type="EchoMode" brief="The line edit's echo mode">
+                <getter name="echoMode"/>
+                <setter name="setEchoMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="542" column="4">
+                    <brief>This property holds the line edit's echo mode.</brief>
+                    <para>The echo mode determines how the text entered in the line edit is displayed (or echoed) to the user.</para>
+                    <para>The most common setting is <link raw="Normal" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Normal</link>, in which the text entered by the user is displayed verbatim, but <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link> also supports modes that allow the entered text to be suppressed or obscured: these include <link raw="NoEcho" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">NoEcho</link>, <link raw="Password" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Password</link> and <link raw="PasswordEchoOnEdit" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">PasswordEchoOnEdit</link>.</para>
+                    <para>The widget's display and the ability to copy or drag the text is affected by this setting.</para>
+                    <para>By default, this property is set to <link raw="Normal" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Normal</link>.</para>
+                    <see-also>
+                        <link raw="EchoMode" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">EchoMode</link>
+                        <link raw="displayText()" href="qlineedit.html#displayText-prop" type="function">displayText()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="displayText" fullname="QLineEdit::displayText" href="qlineedit.html#displayText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="72" type="QString" brief="The displayed text">
+                <getter name="displayText"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="355" column="4">
+                    <brief>This property holds the displayed text.</brief>
+                    <para>If <link raw="echoMode" href="qlineedit.html#echoMode-prop" type="property" getter="QLineEdit::echoMode()">echoMode</link> is <link raw="Normal" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Normal</link> this returns the same as <link raw="text()" href="qlineedit.html#text-prop" type="function">text()</link>; if <link raw="EchoMode" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">EchoMode</link> is <link raw="Password" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Password</link> or <link raw="PasswordEchoOnEdit" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">PasswordEchoOnEdit</link> it returns a string of platform-dependent password mask characters <link raw="text()" href="qlineedit.html#text-prop" type="function">text()</link>.<link raw="length()" href="stylesheet-reference.html#length" type="page" page="Qt Style Sheets Reference">length()</link> in size, e.g. &quot;******&quot;; if <link raw="EchoMode" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">EchoMode</link> is <link raw="NoEcho" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">NoEcho</link> returns an empty string, &quot;&quot;.</para>
+                    <para>By default, this property contains an empty string.</para>
+                    <see-also>
+                        <link raw="setEchoMode()" href="qlineedit.html#echoMode-prop" type="function">setEchoMode()</link>
+                        <link raw="text()" href="qlineedit.html#text-prop" type="function">text()</link>
+                        <link raw="EchoMode" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">EchoMode</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="cursorPosition" fullname="QLineEdit::cursorPosition" href="qlineedit.html#cursorPosition-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="73" type="int" brief="The current cursor position for this line edit">
+                <getter name="cursorPosition"/>
+                <setter name="setCursorPosition"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="720" column="4">
+                    <brief>This property holds the current cursor position for this line edit.</brief>
+                    <para>Setting the cursor position causes a repaint when appropriate.</para>
+                    <para>By default, this property contains a value of 0.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="alignment" fullname="QLineEdit::alignment" href="qlineedit.html#alignment-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="74" type="Qt::Alignment" brief="The alignment of the line edit">
+                <getter name="alignment"/>
+                <setter name="setAlignment"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="753" column="4">
+                    <brief>This property holds the alignment of the line edit.</brief>
+                    <para>Both horizontal and vertical alignment is allowed here, <link raw="Qt::AlignJustify" href="qt.html#AlignmentFlag-enum" type="enum" enum="Qt::AlignmentFlag">Qt::AlignJustify</link> will map to <link raw="Qt::AlignLeft" href="qt.html#AlignmentFlag-enum" type="enum" enum="Qt::AlignmentFlag">Qt::AlignLeft</link>.</para>
+                    <para>By default, this property contains a combination of <link raw="Qt::AlignLeft" href="qt.html#AlignmentFlag-enum" type="enum" enum="Qt::AlignmentFlag">Qt::AlignLeft</link> and <link raw="Qt::AlignVCenter" href="qt.html#AlignmentFlag-enum" type="enum" enum="Qt::AlignmentFlag">Qt::AlignVCenter</link>.</para>
+                    <see-also>
+                        <link raw="Qt::Alignment" href="qt.html#AlignmentFlag-enum" type="typedef">Qt::Alignment</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="modified" fullname="QLineEdit::modified" href="qlineedit.html#modified-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="75" type="bool" brief="Whether the line edit's contents has been modified by the user">
+                <getter name="isModified"/>
+                <setter name="setModified"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="891" column="4">
+                    <brief>This property holds whether the line edit's contents has been modified by the user.</brief>
+                    <para>The modified flag is never read by <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link>; it has a default value of false and is changed to true whenever the user changes the line edit's contents.</para>
+                    <para>This is useful for things that need to provide a default value but do not start out knowing what the default should be (perhaps it depends on other fields on the form). Start the line edit without the best default, and when the default is known, if modified() returns <teletype type="highlighted">false</teletype> (the user hasn't entered any text), insert the default value.</para>
+                    <para>Calling <link raw="setText()" href="qlineedit.html#text-prop" type="function">setText()</link> resets the modified flag to false.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="hasSelectedText" fullname="QLineEdit::hasSelectedText" href="qlineedit.html#hasSelectedText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="76" type="bool" brief="Whether there is any text selected">
+                <getter name="hasSelectedText"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="921" column="4">
+                    <brief>This property holds whether there is any text selected.</brief>
+                    <para> returns <teletype type="highlighted">true</teletype> if some or all of the text has been selected by the user; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <para>By default, this property is <teletype type="highlighted">false</teletype>.</para>
+                    <see-also>
+                        <link raw="selectedText()" href="qlineedit.html#selectedText-prop" type="function">selectedText()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="selectedText" fullname="QLineEdit::selectedText" href="qlineedit.html#selectedText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="77" type="QString" brief="The selected text">
+                <getter name="selectedText"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="940" column="4">
+                    <brief>This property holds the selected text.</brief>
+                    <para>If there is no selected text this property's value is an empty string.</para>
+                    <para>By default, this property contains an empty string.</para>
+                    <see-also>
+                        <link raw="hasSelectedText()" href="qlineedit.html#hasSelectedText-prop" type="function">hasSelectedText()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="dragEnabled" fullname="QLineEdit::dragEnabled" href="qlineedit.html#dragEnabled-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="78" type="bool" brief="Whether the lineedit starts a drag if the user presses and moves the mouse on some selected text">
+                <getter name="dragEnabled"/>
+                <setter name="setDragEnabled"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1058" column="4">
+                    <brief>This property holds whether the lineedit starts a drag if the user presses and moves the mouse on some selected text.</brief>
+                    <para>Dragging is disabled by default.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="readOnly" fullname="QLineEdit::readOnly" href="qlineedit.html#readOnly-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="79" type="bool" brief="Whether the line edit is read only">
+                <getter name="isReadOnly"/>
+                <setter name="setReadOnly"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1333" column="4">
+                    <brief>This property holds whether the line edit is read only..</brief>
+                    <para>In read-only mode, the user can still copy the text to the clipboard, or drag and drop the text (if <link raw="echoMode()" href="qlineedit.html#echoMode-prop" type="function">echoMode()</link> is <link raw="Normal" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Normal</link>), but cannot edit it.</para>
+                    <para>
+                        <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link> does not show a cursor in read-only mode.</para>
+                    <para>By default, this property is <teletype type="highlighted">false</teletype>.</para>
+                    <see-also>
+                        <link raw="setEnabled()" href="qwidget.html#enabled-prop" type="function">setEnabled()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="undoAvailable" fullname="QLineEdit::undoAvailable" href="qlineedit.html#undoAvailable-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="80" type="bool" brief="Whether undo is available">
+                <getter name="isUndoAvailable"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1027" column="4">
+                    <brief>This property holds whether undo is available.</brief>
+                    <para>Undo becomes available once the user has modified the text in the line edit.</para>
+                    <para>By default, this property is <teletype type="highlighted">false</teletype>.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="redoAvailable" fullname="QLineEdit::redoAvailable" href="qlineedit.html#redoAvailable-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="81" type="bool" brief="Whether redo is available">
+                <getter name="isRedoAvailable"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1042" column="4">
+                    <brief>This property holds whether redo is available.</brief>
+                    <para>Redo becomes available once the user has performed one or more undo operations on text in the line edit.</para>
+                    <para>By default, this property is <teletype type="highlighted">false</teletype>.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="acceptableInput" fullname="QLineEdit::acceptableInput" href="qlineedit.html#acceptableInput-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="82" type="bool" brief="Whether the input satisfies the inputMask and the validator">
+                <getter name="hasAcceptableInput"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1106" column="4">
+                    <brief>This property holds whether the input satisfies the <link raw="inputMask" href="qlineedit.html#inputMask-prop" type="property" getter="QLineEdit::inputMask()">inputMask</link> and the validator..</brief>
+                    <para>By default, this property is <teletype type="highlighted">true</teletype>.</para>
+                    <see-also>
+                        <link raw="setInputMask()" href="qlineedit.html#inputMask-prop" type="function">setInputMask()</link>
+                        <link raw="setValidator()" href="qlineedit.html#setValidator" type="function">setValidator()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="placeholderText" fullname="QLineEdit::placeholderText" href="qlineedit.html#placeholderText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="83" since="4.7" type="QString" brief="The line edit's placeholder text">
+                <getter name="placeholderText"/>
+                <setter name="setPlaceholderText"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="321" column="4">
+                    <brief>This property holds the line edit's placeholder text.</brief>
+                    <para>Setting this property makes the line edit display a grayed-out placeholder text as long as the line edit is empty.</para>
+                    <para>Normally, an empty line edit shows the placeholder text even when it has focus. However, if the content is horizontally centered, the placeholder text is not displayed under the cursor when the line edit has focus.</para>
+                    <para>By default, this property contains an empty string.</para>
+                    <see-also>
+                        <link raw="text()" href="qlineedit.html#text-prop" type="function">text()</link>
+                    </see-also>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="cursorMoveStyle" fullname="QLineEdit::cursorMoveStyle" href="qlineedit.html#cursorMoveStyle-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="84" since="4.8" type="Qt::CursorMoveStyle" brief="The movement style of cursor in this line edit">
+                <getter name="cursorMoveStyle"/>
+                <setter name="setCursorMoveStyle"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1078" column="4">
+                    <brief>This property holds the movement style of cursor in this line edit.</brief>
+                    <para>When this property is set to <link raw="Qt::VisualMoveStyle" href="qt.html#CursorMoveStyle-enum" type="enum" enum="Qt::CursorMoveStyle">Qt::VisualMoveStyle</link>, the line edit will use visual movement style. Pressing the left arrow key will always cause the cursor to move left, regardless of the text's writing direction. The same behavior applies to right arrow key.</para>
+                    <para>When the property is <link raw="Qt::LogicalMoveStyle" href="qt.html#CursorMoveStyle-enum" type="enum" enum="Qt::CursorMoveStyle">Qt::LogicalMoveStyle</link> (the default), within a LTR text block, increase cursor position when pressing left arrow key, decrease cursor position when pressing the right arrow key. If the text block is right to left, the opposite behavior applies.</para>
+                </description>
+            </property>
+            <property threadsafety="unspecified" name="clearButtonEnabled" fullname="QLineEdit::clearButtonEnabled" href="qlineedit.html#clearButtonEnabled-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="85" since="5.2" type="bool" brief="Whether the line edit displays a clear button when it is not empty">
+                <getter name="isClearButtonEnabled"/>
+                <setter name="setClearButtonEnabled"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="469" column="4">
+                    <brief>This property holds Whether the line edit displays a clear button when it is not empty..</brief>
+                    <para>If enabled, the line edit displays a trailing <italic>clear</italic> button when it contains some text, otherwise the line edit does not show a clear button (the default).</para>
+                    <see-also>
+                        <link raw="addAction()" href="qlineedit.html#addAction" type="function">addAction()</link>
+                        <link raw="removeAction()" href="qwidget.html#removeAction" type="function">removeAction()</link>
+                    </see-also>
+                </description>
+            </property>
+            <enum threadsafety="unspecified" name="ActionPosition" fullname="QLineEdit::ActionPosition" href="qlineedit.html#ActionPosition-enum" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="87" since="5.2">
+                <value name="LeadingPosition" value="0"/>
+                <value name="TrailingPosition" value="1"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="419" column="4">
+                    <para>This enum type describes how a line edit should display the action widgets to be added.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QLineEdit::LeadingPosition</term>LeadingPosition</definition>
+                        <item>
+                            <para>The widget is displayed to the left of the text when using layout direction <teletype type="highlighted">Qt::LeftToRight</teletype> or to the right when using <teletype type="highlighted">Qt::RightToLeft</teletype>, respectively.</para>
+                        </item>
+                        <definition>
+                            <term>QLineEdit::TrailingPosition</term>TrailingPosition</definition>
+                        <item>
+                            <para>The widget is displayed to the right of the text when using layout direction <teletype type="highlighted">Qt::LeftToRight</teletype> or to the left when using <teletype type="highlighted">Qt::RightToLeft</teletype>, respectively.</para>
+                        </item>
+                    </list>
+                    <see-also>
+                        <link raw="addAction()" href="qlineedit.html#addAction" type="function">addAction()</link>
+                        <link raw="removeAction()" href="qwidget.html#removeAction" type="function">removeAction()</link>
+                        <link raw="QWidget::layoutDirection" href="qwidget.html#layoutDirection-prop" type="property" getter="QWidget::layoutDirection()">QWidget::layoutDirection</link>
+                    </see-also>
+                </description>
+            </enum>
+            <function threadsafety="unspecified" name="QLineEdit" fullname="QLineEdit::QLineEdit" href="qlineedit.html#QLineEdit" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="93" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QLineEdit(QWidget *parent)">
+                <parameter type="QWidget *" name="parent" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="251" column="4">
+                    <para>Constructs a line edit with no text.</para>
+                    <para>The maximum text length is set to 32767 characters.</para>
+                    <para>The <argument>parent</argument> argument is sent to the <link raw="QWidget" href="qwidget.html" type="class">QWidget</link> constructor.</para>
+                    <see-also>
+                        <link raw="setText()" href="qlineedit.html#text-prop" type="function">setText()</link>
+                        <link raw="setMaxLength()" href="qlineedit.html#maxLength-prop" type="function">setMaxLength()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QLineEdit" fullname="QLineEdit::QLineEdit" href="qlineedit.html#QLineEdit-1" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="94" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QLineEdit(const QString &amp;contents, QWidget *parent)">
+                <parameter type="const QString &amp;" name="contents" default=""/>
+                <parameter type="QWidget *" name="parent" default="nullptr"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="265" column="4">
+                    <para>Constructs a line edit containing the text <argument>contents</argument>.</para>
+                    <para>The cursor position is set to the end of the line and the maximum text length to 32767 characters.</para>
+                    <para>The <argument>parent</argument> and argument is sent to the <link raw="QWidget" href="qwidget.html" type="class">QWidget</link> constructor.</para>
+                    <see-also>
+                        <link raw="text()" href="qlineedit.html#text-prop" type="function">text()</link>
+                        <link raw="setMaxLength()" href="qlineedit.html#maxLength-prop" type="function">setMaxLength()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="~QLineEdit" fullname="QLineEdit::~QLineEdit" href="qlineedit.html#dtor.QLineEdit" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="95" virtual="virtual" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QLineEdit()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="285" column="4">
+                    <para>Destroys the line edit.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="text" fullname="QLineEdit::text" href="qlineedit.html#text-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="97" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="text" type="QString" signature="QString text() const">
+                <description path="" line="0" column="0">
+                    <see-also>setText()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="displayText" fullname="QLineEdit::displayText" href="qlineedit.html#displayText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="99" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="displayText" type="QString" signature="QString displayText() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="placeholderText" fullname="QLineEdit::placeholderText" href="qlineedit.html#placeholderText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="101" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="placeholderText" type="QString" signature="QString placeholderText() const">
+                <description path="" line="0" column="0">
+                    <see-also>setPlaceholderText()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPlaceholderText" fullname="QLineEdit::setPlaceholderText" href="qlineedit.html#placeholderText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="102" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="placeholderText" type="void" signature="void setPlaceholderText(const QString &amp;)">
+                <parameter type="const QString &amp;" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>placeholderText()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="maxLength" fullname="QLineEdit::maxLength" href="qlineedit.html#maxLength-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="104" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="maxLength" type="int" signature="int maxLength() const">
+                <description path="" line="0" column="0">
+                    <see-also>setMaxLength()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setMaxLength" fullname="QLineEdit::setMaxLength" href="qlineedit.html#maxLength-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="105" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="maxLength" type="void" signature="void setMaxLength(int )">
+                <parameter type="int" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>maxLength()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setFrame" fullname="QLineEdit::setFrame" href="qlineedit.html#frame-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="107" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="frame" type="void" signature="void setFrame(bool )">
+                <parameter type="bool" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>hasFrame()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasFrame" fullname="QLineEdit::hasFrame" href="qlineedit.html#frame-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="108" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="frame" type="bool" signature="bool hasFrame() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setClearButtonEnabled" fullname="QLineEdit::setClearButtonEnabled" href="qlineedit.html#clearButtonEnabled-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="110" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="clearButtonEnabled" type="void" signature="void setClearButtonEnabled(bool enable)">
+                <parameter type="bool" name="enable" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>isClearButtonEnabled()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isClearButtonEnabled" fullname="QLineEdit::isClearButtonEnabled" href="qlineedit.html#clearButtonEnabled-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="111" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="clearButtonEnabled" type="bool" signature="bool isClearButtonEnabled() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <enum threadsafety="unspecified" name="EchoMode" fullname="QLineEdit::EchoMode" href="qlineedit.html#EchoMode-enum" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="113">
+                <value name="Normal" value="0"/>
+                <value name="NoEcho" value="1"/>
+                <value name="Password" value="2"/>
+                <value name="PasswordEchoOnEdit" value="3"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="521" column="4">
+                    <para>This enum type describes how a line edit should display its contents.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QLineEdit::Normal</term>Normal</definition>
+                        <item>
+                            <para>Display characters as they are entered. This is the default.</para>
+                        </item>
+                        <definition>
+                            <term>QLineEdit::NoEcho</term>NoEcho</definition>
+                        <item>
+                            <para>Do not display anything. This may be appropriate for passwords where even the length of the password should be kept secret.</para>
+                        </item>
+                        <definition>
+                            <term>QLineEdit::Password</term>Password</definition>
+                        <item>
+                            <para>Display platform-dependent password mask characters instead of the characters actually entered.</para>
+                        </item>
+                        <definition>
+                            <term>QLineEdit::PasswordEchoOnEdit</term>PasswordEchoOnEdit</definition>
+                        <item>
+                            <para>Display characters as they are entered while editing otherwise display characters as with <teletype type="highlighted">Password</teletype>.</para>
+                        </item>
+                    </list>
+                    <see-also>
+                        <link raw="setEchoMode()" href="qlineedit.html#echoMode-prop" type="function">setEchoMode()</link>
+                        <link raw="echoMode()" href="qlineedit.html#echoMode-prop" type="function">echoMode()</link>
+                    </see-also>
+                </description>
+            </enum>
+            <function threadsafety="unspecified" name="echoMode" fullname="QLineEdit::echoMode" href="qlineedit.html#echoMode-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="115" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="echoMode" type="QLineEdit::EchoMode" signature="QLineEdit::EchoMode echoMode() const">
+                <description path="" line="0" column="0">
+                    <see-also>setEchoMode()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEchoMode" fullname="QLineEdit::setEchoMode" href="qlineedit.html#echoMode-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="116" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="echoMode" type="void" signature="void setEchoMode(QLineEdit::EchoMode )">
+                <parameter type="QLineEdit::EchoMode" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>echoMode()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isReadOnly" fullname="QLineEdit::isReadOnly" href="qlineedit.html#readOnly-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="118" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="readOnly" type="bool" signature="bool isReadOnly() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setReadOnly" fullname="QLineEdit::setReadOnly" href="qlineedit.html#readOnly-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="119" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="readOnly" type="void" signature="void setReadOnly(bool )">
+                <parameter type="bool" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>isReadOnly()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setValidator" fullname="QLineEdit::setValidator" href="qlineedit.html#setValidator" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="122" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setValidator(const QValidator *v)">
+                <parameter type="const QValidator *" name="v" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="598" column="4">
+                    <para>Sets this line edit to only accept input that the validator, <argument>v</argument>, will accept. This allows you to place any arbitrary constraints on the text which may be entered.</para>
+                    <para>If <argument>v</argument> == 0,  removes the current input validator. The initial setting is to have no input validator (i.e. any input is accepted up to <link raw="maxLength()" href="qlineedit.html#maxLength-prop" type="function">maxLength()</link>).</para>
+                    <see-also>
+                        <link raw="validator()" href="qlineedit.html#validator" type="function">validator()</link>
+                        <link raw="hasAcceptableInput()" href="qlineedit.html#acceptableInput-prop" type="function">hasAcceptableInput()</link>
+                        <link raw="QIntValidator" href="qintvalidator.html" type="class">QIntValidator</link>
+                        <link raw="QDoubleValidator" href="qdoublevalidator.html" type="class">QDoubleValidator</link>
+                        <link raw="QRegExpValidator" href="qregexpvalidator.html" type="class">QRegExpValidator</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="validator" fullname="QLineEdit::validator" href="qlineedit.html#validator" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="123" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QValidator *" signature="const QValidator * validator() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="585" column="4">
+                    <para>Returns a pointer to the current input validator, or 0 if no validator has been set.</para>
+                    <see-also>
+                        <link raw="setValidator()" href="qlineedit.html#setValidator" type="function">setValidator()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setCompleter" fullname="QLineEdit::setCompleter" href="qlineedit.html#setCompleter" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="127" since="4.2" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setCompleter(QCompleter *c)">
+                <parameter type="QCompleter *" name="c" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="618" column="4">
+                    <para>Sets this line edit to provide auto completions from the completer, <argument>c</argument>. The completion mode is set using <link raw="QCompleter::setCompletionMode()" href="qcompleter.html#completionMode-prop" type="function">QCompleter::setCompletionMode()</link>.</para>
+                    <para>To use a <link raw="QCompleter" href="qcompleter.html" type="class">QCompleter</link> with a <link raw="QValidator" href="qvalidator.html" type="class">QValidator</link> or <link raw="QLineEdit::inputMask" href="qlineedit.html#inputMask-prop" type="property" getter="QLineEdit::inputMask()">QLineEdit::inputMask</link>, you need to ensure that the model provided to <link raw="QCompleter" href="qcompleter.html" type="class">QCompleter</link> contains valid entries. You can use the <link raw="QSortFilterProxyModel" href="qsortfilterproxymodel.html" type="class">QSortFilterProxyModel</link> to ensure that the <link raw="QCompleter" href="qcompleter.html" type="class">QCompleter</link>'s model contains only valid entries.</para>
+                    <para>If <argument>c</argument> == 0,  removes the current completer, effectively disabling auto completion.</para>
+                    <see-also>
+                        <link raw="completer()" href="qlineedit.html#completer" type="function">completer()</link>
+                        <link raw="QCompleter" href="qcompleter.html" type="class">QCompleter</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="completer" fullname="QLineEdit::completer" href="qlineedit.html#completer" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="128" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QCompleter *" signature="QCompleter * completer() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="658" column="4">
+                    <para>Returns the current <link raw="QCompleter" href="qcompleter.html" type="class">QCompleter</link> that provides completions.</para>
+                    <see-also>
+                        <link raw="setCompleter()" href="qlineedit.html#setCompleter" type="function">setCompleter()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="sizeHint" fullname="QLineEdit::sizeHint" href="qlineedit.html#sizeHint" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="131" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="true" type="QSize" signature="QSize sizeHint() const override">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="671" column="4">
+                    <para>Returns a recommended size for the widget.</para>
+                    <para>The width returned, in pixels, is usually enough for about 15 to 20 characters.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="minimumSizeHint" fullname="QLineEdit::minimumSizeHint" href="qlineedit.html#minimumSizeHint" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="132" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="true" type="QSize" signature="QSize minimumSizeHint() const override">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="696" column="4">
+                    <para>Returns a minimum size for the line edit.</para>
+                    <para>The width returned is enough for at least one character.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorPosition" fullname="QLineEdit::cursorPosition" href="qlineedit.html#cursorPosition-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="134" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="cursorPosition" type="int" signature="int cursorPosition() const">
+                <description path="" line="0" column="0">
+                    <see-also>setCursorPosition()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setCursorPosition" fullname="QLineEdit::setCursorPosition" href="qlineedit.html#cursorPosition-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="135" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="cursorPosition" type="void" signature="void setCursorPosition(int )">
+                <parameter type="int" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>cursorPosition()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorPositionAt" fullname="QLineEdit::cursorPositionAt" href="qlineedit.html#cursorPositionAt" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="136" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int cursorPositionAt(const QPoint &amp;pos)">
+                <parameter type="const QPoint &amp;" name="pos" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="742" column="4">
+                    <para>Returns the cursor position under the point <argument>pos</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAlignment" fullname="QLineEdit::setAlignment" href="qlineedit.html#alignment-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="138" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="alignment" type="void" signature="void setAlignment(Qt::Alignment flag)">
+                <parameter type="Qt::Alignment" name="flag" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>alignment()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="alignment" fullname="QLineEdit::alignment" href="qlineedit.html#alignment-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="139" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="alignment" type="Qt::Alignment" signature="Qt::Alignment alignment() const">
+                <description path="" line="0" column="0">
+                    <see-also>setAlignment()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorForward" fullname="QLineEdit::cursorForward" href="qlineedit.html#cursorForward" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="141" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void cursorForward(bool mark, int steps)">
+                <parameter type="bool" name="mark" default=""/>
+                <parameter type="int" name="steps" default="1"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="779" column="4">
+                    <para>Moves the cursor forward <argument>steps</argument> characters. If <argument>mark</argument> is true each character moved over is added to the selection; if <argument>mark</argument> is false the selection is cleared.</para>
+                    <see-also>
+                        <link raw="cursorBackward()" href="qlineedit.html#cursorBackward" type="function">cursorBackward()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorBackward" fullname="QLineEdit::cursorBackward" href="qlineedit.html#cursorBackward" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="142" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void cursorBackward(bool mark, int steps)">
+                <parameter type="bool" name="mark" default=""/>
+                <parameter type="int" name="steps" default="1"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="794" column="4">
+                    <para>Moves the cursor back <argument>steps</argument> characters. If <argument>mark</argument> is true each character moved over is added to the selection; if <argument>mark</argument> is false the selection is cleared.</para>
+                    <see-also>
+                        <link raw="cursorForward()" href="qlineedit.html#cursorForward" type="function">cursorForward()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorWordForward" fullname="QLineEdit::cursorWordForward" href="qlineedit.html#cursorWordForward" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="143" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void cursorWordForward(bool mark)">
+                <parameter type="bool" name="mark" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="806" column="4">
+                    <para>Moves the cursor one word forward. If <argument>mark</argument> is true, the word is also selected.</para>
+                    <see-also>
+                        <link raw="cursorWordBackward()" href="qlineedit.html#cursorWordBackward" type="function">cursorWordBackward()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorWordBackward" fullname="QLineEdit::cursorWordBackward" href="qlineedit.html#cursorWordBackward" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="144" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void cursorWordBackward(bool mark)">
+                <parameter type="bool" name="mark" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="818" column="4">
+                    <para>Moves the cursor one word backward. If <argument>mark</argument> is true, the word is also selected.</para>
+                    <see-also>
+                        <link raw="cursorWordForward()" href="qlineedit.html#cursorWordForward" type="function">cursorWordForward()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="backspace" fullname="QLineEdit::backspace" href="qlineedit.html#backspace" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="145" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void backspace()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="832" column="4">
+                    <para>If no text is selected, deletes the character to the left of the text cursor and moves the cursor one position to the left. If any text is selected, the cursor is moved to the beginning of the selected text and the selected text is deleted.</para>
+                    <see-also>
+                        <link raw="del()" href="qlineedit.html#del" type="function">del()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="del" fullname="QLineEdit::del" href="qlineedit.html#del" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="146" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void del()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="846" column="4">
+                    <para>If no text is selected, deletes the character to the right of the text cursor. If any text is selected, the cursor is moved to the beginning of the selected text and the selected text is deleted.</para>
+                    <see-also>
+                        <link raw="backspace()" href="qlineedit.html#backspace" type="function">backspace()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="home" fullname="QLineEdit::home" href="qlineedit.html#home" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="147" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void home(bool mark)">
+                <parameter type="bool" name="mark" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="860" column="4">
+                    <para>Moves the text cursor to the beginning of the line unless it is already there. If <argument>mark</argument> is true, text is selected towards the first position; otherwise, any selected text is unselected if the cursor is moved.</para>
+                    <see-also>
+                        <link raw="end()" href="qlineedit.html#end" type="function">end()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="end" fullname="QLineEdit::end" href="qlineedit.html#end" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="148" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void end(bool mark)">
+                <parameter type="bool" name="mark" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="875" column="4">
+                    <para>Moves the text cursor to the end of the line unless it is already there. If <argument>mark</argument> is true, text is selected towards the last position; otherwise, any selected text is unselected if the cursor is moved.</para>
+                    <see-also>
+                        <link raw="home()" href="qlineedit.html#home" type="function">home()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isModified" fullname="QLineEdit::isModified" href="qlineedit.html#modified-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="150" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="modified" type="bool" signature="bool isModified() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setModified" fullname="QLineEdit::setModified" href="qlineedit.html#modified-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="151" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="modified" type="void" signature="void setModified(bool )">
+                <parameter type="bool" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>isModified()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setSelection" fullname="QLineEdit::setSelection" href="qlineedit.html#setSelection" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="153" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setSelection(int start, int length)">
+                <parameter type="int" name="start" default=""/>
+                <parameter type="int" name="length" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1001" column="4">
+                    <para>Selects text from position <argument>start</argument> and for <argument>length</argument> characters. Negative lengths are allowed.</para>
+                    <see-also>
+                        <link raw="deselect()" href="qlineedit.html#deselect" type="function">deselect()</link>
+                        <link raw="selectAll()" href="qlineedit.html#selectAll" type="function">selectAll()</link>
+                        <link raw="selectedText()" href="qlineedit.html#selectedText-prop" type="function">selectedText()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasSelectedText" fullname="QLineEdit::hasSelectedText" href="qlineedit.html#hasSelectedText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="154" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="hasSelectedText" type="bool" signature="bool hasSelectedText() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="selectedText" fullname="QLineEdit::selectedText" href="qlineedit.html#selectedText-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="155" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="selectedText" type="QString" signature="QString selectedText() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="selectionStart" fullname="QLineEdit::selectionStart" href="qlineedit.html#selectionStart" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="156" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int selectionStart() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="958" column="4">
+                    <para>Returns the index of the first selected character in the line edit or -1 if no text is selected.</para>
+                    <see-also>
+                        <link raw="selectedText()" href="qlineedit.html#selectedText-prop" type="function">selectedText()</link>
+                        <link raw="selectionEnd()" href="qlineedit.html#selectionEnd" type="function">selectionEnd()</link>
+                        <link raw="selectionLength()" href="qlineedit.html#selectionLength" type="function">selectionLength()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="selectionEnd" fullname="QLineEdit::selectionEnd" href="qlineedit.html#selectionEnd" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="157" since="5.10" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int selectionEnd() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="973" column="4">
+                    <para>Returns the index of the character directly after the selection in the line edit or -1 if no text is selected.</para>
+                    <see-also>
+                        <link raw="selectedText()" href="qlineedit.html#selectedText-prop" type="function">selectedText()</link>
+                        <link raw="selectionStart()" href="qlineedit.html#selectionStart" type="function">selectionStart()</link>
+                        <link raw="selectionLength()" href="qlineedit.html#selectionLength" type="function">selectionLength()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="selectionLength" fullname="QLineEdit::selectionLength" href="qlineedit.html#selectionLength" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="158" since="5.10" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int selectionLength() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="988" column="4">
+                    <para>Returns the length of the selection.</para>
+                    <see-also>
+                        <link raw="selectedText()" href="qlineedit.html#selectedText-prop" type="function">selectedText()</link>
+                        <link raw="selectionStart()" href="qlineedit.html#selectionStart" type="function">selectionStart()</link>
+                        <link raw="selectionEnd()" href="qlineedit.html#selectionEnd" type="function">selectionEnd()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isUndoAvailable" fullname="QLineEdit::isUndoAvailable" href="qlineedit.html#undoAvailable-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="160" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="undoAvailable" type="bool" signature="bool isUndoAvailable() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="isRedoAvailable" fullname="QLineEdit::isRedoAvailable" href="qlineedit.html#redoAvailable-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="161" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="redoAvailable" type="bool" signature="bool isRedoAvailable() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setDragEnabled" fullname="QLineEdit::setDragEnabled" href="qlineedit.html#dragEnabled-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="163" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="dragEnabled" type="void" signature="void setDragEnabled(bool b)">
+                <parameter type="bool" name="b" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>dragEnabled()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="dragEnabled" fullname="QLineEdit::dragEnabled" href="qlineedit.html#dragEnabled-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="164" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="dragEnabled" type="bool" signature="bool dragEnabled() const">
+                <description path="" line="0" column="0">
+                    <see-also>setDragEnabled()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setCursorMoveStyle" fullname="QLineEdit::setCursorMoveStyle" href="qlineedit.html#cursorMoveStyle-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="166" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="cursorMoveStyle" type="void" signature="void setCursorMoveStyle(Qt::CursorMoveStyle style)">
+                <parameter type="Qt::CursorMoveStyle" name="style" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>cursorMoveStyle()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cursorMoveStyle" fullname="QLineEdit::cursorMoveStyle" href="qlineedit.html#cursorMoveStyle-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="167" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="cursorMoveStyle" type="Qt::CursorMoveStyle" signature="Qt::CursorMoveStyle cursorMoveStyle() const">
+                <description path="" line="0" column="0">
+                    <see-also>setCursorMoveStyle()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="inputMask" fullname="QLineEdit::inputMask" href="qlineedit.html#inputMask-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="169" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="inputMask" type="QString" signature="QString inputMask() const">
+                <description path="" line="0" column="0">
+                    <see-also>setInputMask()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setInputMask" fullname="QLineEdit::setInputMask" href="qlineedit.html#inputMask-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="170" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="inputMask" type="void" signature="void setInputMask(const QString &amp;inputMask)">
+                <parameter type="const QString &amp;" name="inputMask" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>inputMask()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasAcceptableInput" fullname="QLineEdit::hasAcceptableInput" href="qlineedit.html#acceptableInput-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="171" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="acceptableInput" type="bool" signature="bool hasAcceptableInput() const">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setTextMargins" fullname="QLineEdit::setTextMargins" href="qlineedit.html#setTextMargins" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="173" since="4.5" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setTextMargins(int left, int top, int right, int bottom)">
+                <parameter type="int" name="left" default=""/>
+                <parameter type="int" name="top" default=""/>
+                <parameter type="int" name="right" default=""/>
+                <parameter type="int" name="bottom" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1121" column="4">
+                    <para>Sets the margins around the text inside the frame to have the sizes <argument>left</argument>, <argument>top</argument>, <argument>right</argument>, and <argument>bottom</argument>.</para>
+                    <para>See also <link raw="getTextMargins()" href="qlineedit.html#getTextMargins" type="function">getTextMargins()</link>.</para>
+                    <see-also>
+                        <link raw="textMargins()" href="qlineedit.html#textMargins" type="function">textMargins()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setTextMargins" fullname="QLineEdit::setTextMargins" href="qlineedit.html#setTextMargins-1" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="174" since="4.6" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setTextMargins(const QMargins &amp;margins)">
+                <parameter type="const QMargins &amp;" name="margins" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1139" column="4">
+                    <para>Sets the <argument>margins</argument> around the text inside the frame.</para>
+                    <para>See also <link raw="textMargins()" href="qlineedit.html#textMargins" type="function">textMargins()</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="getTextMargins" fullname="QLineEdit::getTextMargins" href="qlineedit.html#getTextMargins" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="175" since="4.5" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void getTextMargins(int *left, int *top, int *right, int *bottom) const">
+                <parameter type="int *" name="left" default=""/>
+                <parameter type="int *" name="top" default=""/>
+                <parameter type="int *" name="right" default=""/>
+                <parameter type="int *" name="bottom" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1150" column="4">
+                    <para>Returns the widget's text margins for <argument>left</argument>, <argument>top</argument>, <argument>right</argument>, and <argument>bottom</argument>.</para>
+                    <see-also>
+                        <link raw="setTextMargins()" href="qlineedit.html#setTextMargins" type="function">setTextMargins()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="textMargins" fullname="QLineEdit::textMargins" href="qlineedit.html#textMargins" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="176" since="4.6" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QMargins" signature="QMargins textMargins() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1169" column="4">
+                    <para>Returns the widget's text margins.</para>
+                    <see-also>
+                        <link raw="setTextMargins()" href="qlineedit.html#setTextMargins" type="function">setTextMargins()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addAction" fullname="QLineEdit::addAction" href="qlineedit.html#addAction" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="180" since="5.2" virtual="non" meta="plain" const="false" static="false" overload="true" delete="false" default="false" final="false" override="false" overload-number="0" type="void" signature="void addAction(QAction *action, QLineEdit::ActionPosition position)">
+                <parameter type="QAction *" name="action" default=""/>
+                <parameter type="QLineEdit::ActionPosition" name="position" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="439" column="4">
+                    <para>This is an overloaded function.</para>
+                    <para>Adds the <argument>action</argument> to the list of actions at the <argument>position</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addAction" fullname="QLineEdit::addAction" href="qlineedit.html#addAction-1" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="181" since="5.2" virtual="non" meta="plain" const="false" static="false" overload="true" delete="false" default="false" final="false" override="false" overload-number="1" type="QAction *" signature="QAction * addAction(const QIcon &amp;icon, QLineEdit::ActionPosition position)">
+                <parameter type="const QIcon &amp;" name="icon" default=""/>
+                <parameter type="QLineEdit::ActionPosition" name="position" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="454" column="4">
+                    <para>This is an overloaded function.</para>
+                    <para>Creates a new action with the given <argument>icon</argument> at the <argument>position</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setText" fullname="QLineEdit::setText" href="qlineedit.html#text-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="185" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="text" type="void" signature="void setText(const QString &amp;)">
+                <parameter type="const QString &amp;" name="" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>text()</see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="clear" fullname="QLineEdit::clear" href="qlineedit.html#clear" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="186" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void clear()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1298" column="4">
+                    <para>Clears the contents of the line edit.</para>
+                    <see-also>
+                        <link raw="setText()" href="qlineedit.html#text-prop" type="function">setText()</link>
+                        <link raw="insert()" href="qlineedit.html#insert" type="function">insert()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="selectAll" fullname="QLineEdit::selectAll" href="qlineedit.html#selectAll" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="187" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void selectAll()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1256" column="4">
+                    <para>Selects all the text (i.e. highlights it) and moves the cursor to the end. This is useful when a default value has been inserted because if the user types before clicking on the widget, the selected text will be deleted.</para>
+                    <see-also>
+                        <link raw="setSelection()" href="qlineedit.html#setSelection" type="function">setSelection()</link>
+                        <link raw="deselect()" href="qlineedit.html#deselect" type="function">deselect()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="undo" fullname="QLineEdit::undo" href="qlineedit.html#undo" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="188" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void undo()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1310" column="4">
+                    <para>Undoes the last operation if undo is <link raw="QLineEdit::undoAvailable" href="qlineedit.html#undoAvailable-prop" type="property" getter="QLineEdit::isUndoAvailable()">available</link>. Deselects any current selection, and updates the selection start to the current cursor position.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="redo" fullname="QLineEdit::redo" href="qlineedit.html#redo" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="189" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void redo()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1322" column="4">
+                    <para>Redoes the last operation if redo is <link raw="QLineEdit::redoAvailable" href="qlineedit.html#redoAvailable-prop" type="property" getter="QLineEdit::isRedoAvailable()">available</link>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="cut" fullname="QLineEdit::cut" href="qlineedit.html#cut" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="191" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void cut()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1373" column="4">
+                    <para>Copies the selected text to the clipboard and deletes it, if there is any, and if <link raw="echoMode()" href="qlineedit.html#echoMode-prop" type="function">echoMode()</link> is <link raw="Normal" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Normal</link>.</para>
+                    <para>If the current validator disallows deleting the selected text,  will copy without deleting.</para>
+                    <see-also>
+                        <link raw="copy()" href="qlineedit.html#copy" type="function">copy()</link>
+                        <link raw="paste()" href="qlineedit.html#paste" type="function">paste()</link>
+                        <link raw="setValidator()" href="qlineedit.html#setValidator" type="function">setValidator()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="copy" fullname="QLineEdit::copy" href="qlineedit.html#copy" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="192" virtual="non" meta="slot" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void copy() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1392" column="4">
+                    <para>Copies the selected text to the clipboard, if there is any, and if <link raw="echoMode()" href="qlineedit.html#echoMode-prop" type="function">echoMode()</link> is <link raw="Normal" href="qlineedit.html#EchoMode-enum" type="enum" enum="QLineEdit::EchoMode">Normal</link>.</para>
+                    <see-also>
+                        <link raw="cut()" href="qlineedit.html#cut" type="function">cut()</link>
+                        <link raw="paste()" href="qlineedit.html#paste" type="function">paste()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="paste" fullname="QLineEdit::paste" href="qlineedit.html#paste" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="193" virtual="non" meta="slot" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void paste()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1405" column="4">
+                    <para>Inserts the clipboard's text at the cursor position, deleting any selected text, providing the line edit is not <link raw="QLineEdit::readOnly" href="qlineedit.html#readOnly-prop" type="property" getter="QLineEdit::isReadOnly()">read-only</link>.</para>
+                    <para>If the end result would not be acceptable to the current <link raw="setValidator()" href="qlineedit.html#setValidator" type="function">validator</link>, nothing happens.</para>
+                    <see-also>
+                        <link raw="copy()" href="qlineedit.html#copy" type="function">copy()</link>
+                        <link raw="cut()" href="qlineedit.html#cut" type="function">cut()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="deselect" fullname="QLineEdit::deselect" href="qlineedit.html#deselect" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="197" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void deselect()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1271" column="4">
+                    <para>Deselects any selected text.</para>
+                    <see-also>
+                        <link raw="setSelection()" href="qlineedit.html#setSelection" type="function">setSelection()</link>
+                        <link raw="selectAll()" href="qlineedit.html#selectAll" type="function">selectAll()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="insert" fullname="QLineEdit::insert" href="qlineedit.html#insert" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="198" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void insert(const QString &amp;newText)">
+                <parameter type="const QString &amp;" name="newText" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1284" column="4">
+                    <para>Deletes any selected text, inserts <argument>newText</argument>, and validates the result. If it is valid, it sets it as the new contents of the line edit.</para>
+                    <see-also>
+                        <link raw="setText()" href="qlineedit.html#text-prop" type="function">setText()</link>
+                        <link raw="clear()" href="qlineedit.html#clear" type="function">clear()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="createStandardContextMenu" fullname="QLineEdit::createStandardContextMenu" href="qlineedit.html#createStandardContextMenu" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="200" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QMenu *" signature="QMenu * createStandardContextMenu()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2136" column="4">
+                    <para>This function creates the standard context menu which is shown when the user clicks on the line edit with the right mouse button. It is called from the default <link raw="contextMenuEvent()" href="qlineedit.html#contextMenuEvent" type="function">contextMenuEvent()</link> handler. The popup menu's ownership is transferred to the caller.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="textChanged" fullname="QLineEdit::textChanged" href="qlineedit.html#text-prop" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="204" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" associated-property="text" type="void" signature="void textChanged(const QString &amp;)">
+                <parameter type="const QString &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="textEdited" fullname="QLineEdit::textEdited" href="qlineedit.html#textEdited" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="205" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void textEdited(const QString &amp;)">
+                <parameter type="const QString &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="cursorPositionChanged" fullname="QLineEdit::cursorPositionChanged" href="qlineedit.html#cursorPositionChanged" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="206" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void cursorPositionChanged(int , int )">
+                <parameter type="int" name="" default=""/>
+                <parameter type="int" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="returnPressed" fullname="QLineEdit::returnPressed" href="qlineedit.html#returnPressed" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="207" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void returnPressed()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="editingFinished" fullname="QLineEdit::editingFinished" href="qlineedit.html#editingFinished" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="208" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void editingFinished()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="selectionChanged" fullname="QLineEdit::selectionChanged" href="qlineedit.html#selectionChanged" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="209" virtual="non" meta="signal" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void selectionChanged()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="mousePressEvent" fullname="QLineEdit::mousePressEvent" href="qlineedit.html#mousePressEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="212" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void mousePressEvent(QMouseEvent *e) override">
+                <parameter type="QMouseEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1490" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="mouseMoveEvent" fullname="QLineEdit::mouseMoveEvent" href="qlineedit.html#mouseMoveEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="213" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void mouseMoveEvent(QMouseEvent *e) override">
+                <parameter type="QMouseEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1532" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="mouseReleaseEvent" fullname="QLineEdit::mouseReleaseEvent" href="qlineedit.html#mouseReleaseEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="214" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void mouseReleaseEvent(QMouseEvent *e) override">
+                <parameter type="QMouseEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1579" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="mouseDoubleClickEvent" fullname="QLineEdit::mouseDoubleClickEvent" href="qlineedit.html#mouseDoubleClickEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="215" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void mouseDoubleClickEvent(QMouseEvent *e) override">
+                <parameter type="QMouseEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1611" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="keyPressEvent" fullname="QLineEdit::keyPressEvent" href="qlineedit.html#keyPressEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="216" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void keyPressEvent(QKeyEvent *event) override">
+                <parameter type="QKeyEvent *" name="event" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1678" column="4">
+                    <para>Converts the given key press <argument>event</argument> into a line edit action.</para>
+                    <para>If Return or Enter is pressed and the current text is valid (or can be <link raw="QValidator::fixup()" href="qvalidator.html#fixup" type="function">made valid</link> by the validator), the signal <link raw="returnPressed()" href="qlineedit.html#returnPressed" type="function">returnPressed()</link> is emitted.</para>
+                    <para>The default key bindings are listed in the class's detailed description.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="focusInEvent" fullname="QLineEdit::focusInEvent" href="qlineedit.html#focusInEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="217" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void focusInEvent(QFocusEvent *e) override">
+                <parameter type="QFocusEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1831" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="focusOutEvent" fullname="QLineEdit::focusOutEvent" href="qlineedit.html#focusOutEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="218" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void focusOutEvent(QFocusEvent *e) override">
+                <parameter type="QFocusEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1872" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="paintEvent" fullname="QLineEdit::paintEvent" href="qlineedit.html#paintEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="219" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void paintEvent(QPaintEvent *) override">
+                <parameter type="QPaintEvent *" name="" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1911" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="dragEnterEvent" fullname="QLineEdit::dragEnterEvent" href="qlineedit.html#dragEnterEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="221" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void dragEnterEvent(QDragEnterEvent *e) override">
+                <parameter type="QDragEnterEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2050" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="dragMoveEvent" fullname="QLineEdit::dragMoveEvent" href="qlineedit.html#dragMoveEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="222" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void dragMoveEvent(QDragMoveEvent *e) override">
+                <parameter type="QDragMoveEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2037" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="dragLeaveEvent" fullname="QLineEdit::dragLeaveEvent" href="qlineedit.html#dragLeaveEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="223" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void dragLeaveEvent(QDragLeaveEvent *e) override">
+                <parameter type="QDragLeaveEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2056" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="dropEvent" fullname="QLineEdit::dropEvent" href="qlineedit.html#dropEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="224" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void dropEvent(QDropEvent *e) override">
+                <parameter type="QDropEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2066" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="changeEvent" fullname="QLineEdit::changeEvent" href="qlineedit.html#changeEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="226" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void changeEvent(QEvent *ev) override">
+                <parameter type="QEvent *" name="ev" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2210" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="contextMenuEvent" fullname="QLineEdit::contextMenuEvent" href="qlineedit.html#contextMenuEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="228" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void contextMenuEvent(QContextMenuEvent *event) override">
+                <parameter type="QContextMenuEvent *" name="event" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="2104" column="4">
+                    <para>Shows the standard context menu created with <link raw="createStandardContextMenu()" href="qlineedit.html#createStandardContextMenu" type="function">createStandardContextMenu()</link>.</para>
+                    <para>If you do not want the line edit to have a context menu, you can set its <link raw="contextMenuPolicy" href="qwidget.html#contextMenuPolicy-prop" type="property" getter="QWidget::contextMenuPolicy()">contextMenuPolicy</link> to <link raw="Qt::NoContextMenu" href="qt.html#ContextMenuPolicy-enum" type="enum" enum="Qt::ContextMenuPolicy">Qt::NoContextMenu</link>. If you want to customize the context menu, reimplement this function. If you want to extend the standard context menu, reimplement this function, call <link raw="createStandardContextMenu()" href="qlineedit.html#createStandardContextMenu" type="function">createStandardContextMenu()</link> and extend the menu returned.</para>
+                    <snippet location="code/src_gui_widgets_qlineedit.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/widgets/doc/snippets/code/src_gui_widgets_qlineedit.cpp" identifier="0"/>
+                    <para>The <argument>event</argument> parameter is used to obtain the position where the mouse cursor was when the event was generated.</para>
+                    <see-also>
+                        <link raw="setContextMenuPolicy()" href="qwidget.html#contextMenuPolicy-prop" type="function">setContextMenuPolicy()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="inputMethodEvent" fullname="QLineEdit::inputMethodEvent" href="qlineedit.html#inputMethodEvent" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="231" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="void" signature="void inputMethodEvent(QInputMethodEvent *e) override">
+                <parameter type="QInputMethodEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1753" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="initStyleOption" fullname="QLineEdit::initStyleOption" href="qlineedit.html#initStyleOption" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="232" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void initStyleOption(QStyleOptionFrame *option) const">
+                <parameter type="QStyleOptionFrame *" name="option" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="100" column="4">
+                    <para>Initialize <argument>option</argument> with the values from this <link raw="QLineEdit" href="qlineedit.html" type="class">QLineEdit</link>. This method is useful for subclasses when they need a <link raw="QStyleOptionFrame" href="qstyleoptionframe.html" type="class">QStyleOptionFrame</link>, but don't want to fill in all the information themselves.</para>
+                    <see-also>
+                        <link raw="QStyleOption::initFrom()" href="qstyleoption.html#initFrom" type="function">QStyleOption::initFrom()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="inputMethodQuery" fullname="QLineEdit::inputMethodQuery" href="qlineedit.html#inputMethodQuery" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="234" virtual="virtual" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="true" type="QVariant" signature="QVariant inputMethodQuery(Qt::InputMethodQuery property) const override">
+                <parameter type="Qt::InputMethodQuery" name="property" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1789" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="inputMethodQuery" fullname="QLineEdit::inputMethodQuery" href="qlineedit.html#inputMethodQuery-1" status="internal" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="235" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QVariant" signature="QVariant inputMethodQuery(Qt::InputMethodQuery property, QVariant argument) const">
+                <parameter type="Qt::InputMethodQuery" name="property" default=""/>
+                <parameter type="QVariant" name="argument" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1796" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="event" fullname="QLineEdit::event" href="qlineedit.html#event" status="active" access="public" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="236" virtual="virtual" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="true" type="bool" signature="bool event(QEvent *e) override">
+                <parameter type="QEvent *" name="e" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1423" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="cursorRect" fullname="QLineEdit::cursorRect" href="qlineedit.html#cursorRect" status="active" access="protected" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="238" since="4.4" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QRect" signature="QRect cursorRect() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets/qlineedit.cpp" line="1742" column="4">
+                    <para>Returns a rectangle that includes the lineedit cursor.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QLineEdit" fullname="QLineEdit::QLineEdit" href="qlineedit.html#QLineEdit-2" status="active" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="249" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QLineEdit(const QLineEdit &amp;)">
+                <parameter type="const QLineEdit &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QLineEdit::operator=" href="qlineedit.html#operator-eq" status="active" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="249" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QLineEdit &amp;" signature="QLineEdit &amp; operator=(const QLineEdit &amp;)">
+                <parameter type="const QLineEdit &amp;" name="" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="d_func" fullname="QLineEdit::d_func" href="qlineedit.html#d_func" status="active" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="250" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QLineEditPrivate *" signature="QLineEditPrivate * d_func()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="d_func" fullname="QLineEdit::d_func" href="qlineedit.html#d_func-1" status="active" access="private" location="widgets\qlineedit.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/widgets\qlineedit.h" lineno="250" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="const QLineEditPrivate *" signature="const QLineEditPrivate * d_func() const">
+                <description path="" line="0" column="0"/>
+            </function>
+        </class>
+    </document>
+</WebXML>

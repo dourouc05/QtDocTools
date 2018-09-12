@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="linguist-id-based-i18n.html" href="linguist-id-based-i18n.html" status="active" location="linguist-manual.qdoc" filepath="C:/Qt/5.11.1/Src/qttools/src/linguist/linguist/doc/src/linguist-manual.qdoc" lineno="1001" subtype="page" title="Qt Linguist Manual: Text ID Based Translations" fulltitle="Qt Linguist Manual: Text ID Based Translations" subtitle="" module="QtLinguist" groups="internationalization" brief="Text ID based internationalization provides support for large scale projects with many target locales and many texts to translate">
+            <contents name="internationalizing-with-text-ids" title="Internationalizing With Text IDs" level="1"/>
+            <contents name="localizing-with-text-ids" title="Localizing With Text IDs" level="1"/>
+            <contents name="advanced-usage" title="Advanced Usage" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qttools/src/linguist/linguist/doc/src/linguist-manual.qdoc" line="1001" column="4">
+                <relation href="linguist-ts-file-format.html" type="page" meta="previous" description="Qt Linguist Manual: TS File Format"/>
+                <relation href="qtlinguist-index.html" type="page" meta="contents" description="Qt Linguist Manual"/>
+                <brief>Text ID based internationalization provides support for large scale projects with many target locales and many texts to translate.</brief>
+                <para>The text ID translation mechanism is an &quot;industrial strength&quot; system for internationalization and localization. Each text in the application is assigned a unique identifier (text ID) and these identifiers are used directly in the source code in place of the plain texts. This requires a little more work for the user interface developers but makes it much easier to manage large numbers of translated texts.</para>
+                <para>
+                    <bold>Note:</bold> You must use only plain-text-based or only text-ID-based functions in one application. If you mix them, you will end up with an incomplete set of texts to be translated.</para>
+                <section id="internationalizing-with-text-ids">
+                    <heading level="1">Internationalizing With Text IDs</heading>
+                    <para>When using text IDs instead of plain text, the general method of internationalizing an application is the same but the details are a bit different:</para>
+                    <list type="ordered" start="1">
+                        <item>
+                            <para>The functions and macros for the text-ID-based translation system are different to the plain-text system. You use the <teletype type="highlighted">qsTrId()</teletype> function instead of qsTr(), and the <teletype type="highlighted">QT_TRID_NOOP()</teletype> macro instead of <link raw="QT_TR_NOOP()" href="qtglobal.html#QT_TR_NOOP" type="function">QT_TR_NOOP()</link>.</para>
+                        </item>
+                        <item>
+                            <para>Use text IDs as user interface strings rather than plain text strings. For example, <teletype type="highlighted">qsTrId(&quot;id-back-not-front&quot;)</teletype></para>
+                        </item>
+                        <item>
+                            <para>You cannot specify a context parameter with a text ID. If there are identically spelled words with different meanings, these need separate text IDs. For example, <teletype type="highlighted">qsTrId(&quot;id-back-backstep&quot;)</teletype> will differentiate the back-step &quot;Back&quot; from the back-of-the-object &quot;Back&quot;.</para>
+                        </item>
+                        <item>
+                            <para>The &quot;Engineering English&quot; text that you see in the user interface for development builds is indicated with a <teletype type="highlighted">//%</teletype> comment. If you do not include this, the text ID will be shown in the user interface. This is especially important when you have texts with parameters. The <teletype type="highlighted">//%</teletype> comment needs to include the parameters indicators in the string. For example, <teletype type="highlighted">//% &quot;Number of files: %1&quot;</teletype></para>
+                        </item>
+                        <item>
+                            <para>The <teletype type="highlighted">//:</teletype> comments that provide extra information to the translator are optional in the plain-text system. However, with the text-ID-based system, this extra information becomes essential because without it you only have the text ID and the translator might not be able to make a sensible translation from without any other context. You can use long descriptive text ID and no comments but comments are often easier to understand.</para>
+                        </item>
+                    </list>
+                    <para>The side-by-side code snippets below show a comparison of text-ID -based and plain-text-based translations:</para>
+                    <table>
+                        <header>
+                            <item>
+                                <para>text-ID-based</para>
+                            </item>
+                            <item>
+                                <para>plain-text-based</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <code>Text {
+    id: backTxt;
+    //: The back of the object, not the front
+    //% &quot;Back&quot;
+    //~ Context Not related to back-stepping
+    text: qsTrId(&quot;id-back-not-front&quot;);
+}</code>
+                            </item>
+                            <item>
+                                <code>Text {
+    id: backTxt;
+    //: The back of the object, not the front
+    //~ Context Not related to back-stepping
+    text: qsTr(&quot;Back&quot;,&quot;Not front&quot;)
+}</code>
+                            </item>
+                        </row>
+                    </table>
+                </section>
+                <section id="localizing-with-text-ids">
+                    <heading level="1">Localizing With Text IDs</heading>
+                    <para>Localizing with text IDs follows much the same process as for plain text.</para>
+                    <para>The <teletype type="highlighted">lupdate</teletype> tool is used the same way and translations are made into the .ts files:</para>
+                    <code>lupdate &lt;myapp&gt;.pro</code>
+                    <para>Note that the source values in the translation files will be text IDs rather than plain text. This means you need very descriptive text IDs, or good additional comments, or both to ensure that the translator makes a correct translation.</para>
+                    <para>The example text-ID-based user interface text from above results in the following content in the .ts file:</para>
+                    <code>&lt;message id=&quot;id-back-not-front&quot;&gt;
+    &lt;source&gt;Back&lt;/source&gt;
+    &lt;extracomment&gt;The back of the object, not the front&lt;/extracomment&gt;
+    &lt;translation type=&quot;unfinished&quot;&gt;&lt;/translation&gt;
+    &lt;extra-Context&gt;Not related to back-stepping&lt;/extra-Context&gt;
+&lt;/message&gt;</code>
+                    <para>When using <teletype type="highlighted">lrelease</teletype>, you need to specify that the keys for translated texts are based on text IDs, rather than plain texts. If strings in the code are specified with <teletype type="highlighted">qsTr()</teletype> there is no &quot;id&quot; attribute set so they are ignored by <teletype type="highlighted">lrelease</teletype>.</para>
+                    <para>This command produces all the compiled translation .qm files for your application:</para>
+                    <code>lrelease -idbased &lt;myapp&gt;.pro</code>
+                    <para>However, if there is no translation available for a given text (which is generally the case until late in development), the text ID will be shown in the user interface rather than a proper text. In order to make the application more usable for testing, you can make <teletype type="highlighted">lrelease</teletype> use the &quot;Engineering English&quot; source text (from the <teletype type="highlighted">//%</teletype> comments) as the translated text and mark it with some indicator so you can see texts that are not yet translated.</para>
+                    <para>For example, this command builds the .qm files and puts a &quot;!&quot; in front of the untranslated texts:</para>
+                    <code>lrelease -idbased -markuntranslated ! &lt;myapp&gt;.pro</code>
+                </section>
+                <section id="advanced-usage">
+                    <heading level="1">Advanced Usage</heading>
+                    <para>For projects that target a large number of locales, you can remove the TRANSLATIONS info from the .pro file and, instead, manage the translations with a separate script. The script can call lrelease and lupdate for each of the desired targets.</para>
+                    <para>The updates could be scripted something like this:</para>
+                    <code>lupdate -recursive &lt;project-dir&gt; -ts &lt;project-dir&gt;/i18n/myapp-text_en_GB.ts
+lupdate -recursive &lt;project-dir&gt; -ts &lt;project-dir&gt;/i18n/myapp-text_en_US.ts
+...</code>
+                    <para>The generation of the final .qm files could be scripted something like this:</para>
+                    <code>lrelease -idbased &lt;project-dir&gt;/i18n/myapp-text_en_GB.ts
+lrelease -idbased &lt;project-dir&gt;/i18n/myapp-text_en_US.ts
+...</code>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

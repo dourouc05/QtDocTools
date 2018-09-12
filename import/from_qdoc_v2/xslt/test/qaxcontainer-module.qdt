@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2">
+  <db:info>
+    <db:title>QAxContainer C++ Classes</db:title>
+    <db:abstract>
+      <db:para>Module is a Windows-only extension for accessing ActiveX controls and COM objects</db:para>
+    </db:abstract>
+    <db:pubdate>2018-09-12+02:00</db:pubdate>
+    <db:date>2018-09-12+02:00</db:date>
+    <db:productname>Qt</db:productname>
+    <db:productnumber>1.2</db:productnumber>
+  </db:info>
+  <db:section>
+    <db:title>Classes</db:title>
+    <db:informaltable>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxbase.html" xrefstyle="class" annotations="">QAxBase</db:link></db:code>
+        </db:td>
+        <db:td>The QAxBase class is an abstract class that provides an API to initialize and access a COM object.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxobject.html" xrefstyle="class" annotations="">QAxObject</db:link></db:code>
+        </db:td>
+        <db:td>The QAxObject class provides a QObject that wraps a COM object.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxscript.html" xrefstyle="class" annotations="">QAxScript</db:link></db:code>
+        </db:td>
+        <db:td>The QAxScript class provides a wrapper around script code.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxscriptengine.html" xrefstyle="class" annotations="">QAxScriptEngine</db:link></db:code>
+        </db:td>
+        <db:td>The QAxScriptEngine class provides a wrapper around a script engine.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxscriptmanager.html" xrefstyle="class" annotations="">QAxScriptManager</db:link></db:code>
+        </db:td>
+        <db:td>The QAxScriptManager class provides a bridge between application objects and script code.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxselect.html" xrefstyle="class" annotations="">QAxSelect</db:link></db:code>
+        </db:td>
+        <db:td>The QAxSelect class provides a selection dialog for registered COM components.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qaxwidget.html" xrefstyle="class" annotations="">QAxWidget</db:link></db:code>
+        </db:td>
+        <db:td>The QAxWidget class is a QWidget that wraps an ActiveX control.</db:td>
+      </db:tr>
+    </db:informaltable>
+  </db:section>
+  <db:section xml:id="details">
+    <db:title>Detailed Description</db:title>
+    <db:para>The <db:link xlink:href="qaxcontainer-module.html" xrefstyle="module" annotations="QAxContainer">QAxContainer</db:link> module is a Windows-only extension for accessing ActiveX controls and COM objects.</db:para>
+    <db:para>
+      <db:link xlink:href="qaxcontainer-module.html" xrefstyle="module" annotations="QAxContainer">QAxContainer</db:link> is part of the <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="Active Qt">Active Qt</db:link> module. The <db:link xlink:href="activeqt-container.html" xrefstyle="page" annotations="Using ActiveX controls and COM in Qt">Using ActiveX controls and COM in Qt</db:link> page contains information about containers for ActiveX controls.</db:para>
+  </db:section>
+</db:article>

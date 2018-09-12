@@ -7,6 +7,10 @@
       <db:abstract>
          <db:para>Tutorial about extending QML with Qt C++</db:para>
       </db:abstract>
+      <db:pubdate>2018-09-12+02:00</db:pubdate>
+      <db:date>2018-09-12+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
    </db:info>
    <db:para>Tutorial about extending QML with Qt C++.</db:para>
    <db:para>The <db:link xlink:href="qtqml-index.html" xrefstyle="page" annotations="Qt QML">Qt QML</db:link> module provides a set of APIs for extending QML through C++ extensions. You can write extensions to add your own QML types, extend existing Qt types, or call C/C++ functions that are not accessible from ordinary QML code.</db:para>
@@ -82,6 +86,41 @@ INSTALLS += target qml
          <db:para> You may see a warning <db:emphasis>Expression ... depends on non-NOTIFYable properties: PieChart::name</db:emphasis>. This happens because we add a binding to the writable <db:code>name</db:code> property, but haven't yet defined a notify signal for it. The QML engine therefore cannot update the binding if the <db:code>name</db:code> value changes. This is addressed in the following chapters.</db:para>
       </db:note>
       <db:para>The source code from the following files are referred to in this chapter: </db:para>
+      <db:para>
+              Files: 
+            </db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter1-basics-app-qml.webxml">examples/qml/tutorials/extending-qml/chapter1-basics/app.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter1-basics-chapter1-basics-pro.webxml">examples/qml/tutorials/extending-qml/chapter1-basics/chapter1-basics.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter1-basics-chapter1-basics-qrc.webxml">examples/qml/tutorials/extending-qml/chapter1-basics/chapter1-basics.qrc</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter1-basics-main-cpp.webxml">examples/qml/tutorials/extending-qml/chapter1-basics/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter1-basics-piechart-cpp.webxml">examples/qml/tutorials/extending-qml/chapter1-basics/piechart.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter1-basics-piechart-h.webxml">examples/qml/tutorials/extending-qml/chapter1-basics/piechart.h</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
    </db:section>
    <db:section xml:id="chapter-2-connecting-to-c-methods-and-signals">
       <db:title>Chapter 2: Connecting to C++ Methods and Signals</db:title>
@@ -109,6 +148,41 @@ INSTALLS += target qml
       <db:para>Now when we run the application and click the window, the pie chart disappears, and the application outputs:</db:para>
       <db:programlisting language="other" role="badcode">qml: The chart has been cleared</db:programlisting>
       <db:para>The source code from the following files are referred to in this chapter: </db:para>
+      <db:para>
+              Files: 
+            </db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter2-methods-app-qml.webxml">examples/qml/tutorials/extending-qml/chapter2-methods/app.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter2-methods-chapter2-methods-pro.webxml">examples/qml/tutorials/extending-qml/chapter2-methods/chapter2-methods.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter2-methods-chapter2-methods-qrc.webxml">examples/qml/tutorials/extending-qml/chapter2-methods/chapter2-methods.qrc</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter2-methods-main-cpp.webxml">examples/qml/tutorials/extending-qml/chapter2-methods/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter2-methods-piechart-cpp.webxml">examples/qml/tutorials/extending-qml/chapter2-methods/piechart.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter2-methods-piechart-h.webxml">examples/qml/tutorials/extending-qml/chapter2-methods/piechart.h</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
    </db:section>
    <db:section xml:id="chapter-3-adding-property-bindings">
       <db:title>Chapter 3: Adding Property Bindings</db:title>
@@ -137,6 +211,41 @@ INSTALLS += target qml
       <db:para>It's important for <db:code>setColor()</db:code> to check that the color value has actually changed before emitting <db:code>colorChanged()</db:code>. This ensures the signal is not emitted unnecessarily and also prevents loops when other types respond to the value change.</db:para>
       <db:para>The use of bindings is essential to QML. You should always add NOTIFY signals for properties if they are able to be implemented, so that your properties can be used in bindings. Properties that cannot be bound cannot be automatically updated and cannot be used as flexibly in QML. Also, since bindings are invoked so often and relied upon in QML usage, users of your custom QML types may see unexpected behavior if bindings are not implemented.</db:para>
       <db:para>The source code from the following files are referred to in this chapter: </db:para>
+      <db:para>
+              Files: 
+            </db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter3-bindings-app-qml.webxml">examples/qml/tutorials/extending-qml/chapter3-bindings/app.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter3-bindings-chapter3-bindings-pro.webxml">examples/qml/tutorials/extending-qml/chapter3-bindings/chapter3-bindings.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter3-bindings-chapter3-bindings-qrc.webxml">examples/qml/tutorials/extending-qml/chapter3-bindings/chapter3-bindings.qrc</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter3-bindings-main-cpp.webxml">examples/qml/tutorials/extending-qml/chapter3-bindings/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter3-bindings-piechart-cpp.webxml">examples/qml/tutorials/extending-qml/chapter3-bindings/piechart.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter3-bindings-piechart-h.webxml">examples/qml/tutorials/extending-qml/chapter3-bindings/piechart.h</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
    </db:section>
    <db:section xml:id="chapter-4-using-custom-property-types">
       <db:title>Chapter 4: Using Custom Property Types</db:title>
@@ -192,6 +301,51 @@ PieChart {
     ...</db:programlisting>
       <db:programlisting>    ...</db:programlisting>
       <db:para>The source code from the following files are referred to in this chapter: </db:para>
+      <db:para>
+              Files: 
+            </db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-app-qml.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/app.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-chapter4-customPropertyTypes-pro.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/chapter4-customPropertyTypes.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-chapter4-customPropertyTypes-qrc.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/chapter4-customPropertyTypes.qrc</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-main-cpp.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-piechart-cpp.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/piechart.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-piechart-h.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/piechart.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-pieslice-cpp.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/pieslice.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter4-customPropertyTypes-pieslice-h.webxml">examples/qml/tutorials/extending-qml/chapter4-customPropertyTypes/pieslice.h</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
    </db:section>
    <db:section xml:id="chapter-5-using-list-property-types">
       <db:title>Chapter 5: Using List Property Types</db:title>
@@ -215,6 +369,51 @@ PieChart {
       <db:para>The <db:code>append_slice()</db:code> function simply sets the parent item as before, and adds the new item to the <db:code>m_slices</db:code> list. As you can see, the append function for a <db:code><db:link xlink:href="qqmllistproperty.html" xrefstyle="class" annotations="QQmlListProperty">QQmlListProperty</db:link></db:code> is called with two arguments: the list property, and the item that is to be appended.</db:para>
       <db:para>The <db:code>PieSlice</db:code> class has also been modified to include <db:code>fromAngle</db:code> and <db:code>angleSpan</db:code> properties and to draw the slice according to these values. This is a straightforward modification if you have read the previous pages in this tutorial, so the code is not shown here.</db:para>
       <db:para>The source code from the following files are referred to in this chapter: </db:para>
+      <db:para>
+              Files: 
+            </db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-app-qml.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/app.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-chapter5-listproperties-pro.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/chapter5-listproperties.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-chapter5-listproperties-qrc.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/chapter5-listproperties.qrc</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-main-cpp.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-piechart-cpp.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/piechart.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-piechart-h.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/piechart.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-pieslice-cpp.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/pieslice.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter5-listproperties-pieslice-h.webxml">examples/qml/tutorials/extending-qml/chapter5-listproperties/pieslice.h</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
    </db:section>
    <db:section xml:id="chapter-6-writing-an-extension-plugin">
       <db:title>Chapter 6: Writing an Extension Plugin</db:title>
@@ -278,6 +477,76 @@ plugin chartsplugin
       <db:programlisting language="other">qmlscene -I . app.qml</db:programlisting>
       <db:para>The module "Charts" will be loaded by the QML engine, and the types provided by that module will be available for use in any QML document which imports it.</db:para>
       <db:para>The source code from the following files are referred to in this chapter: </db:para>
+      <db:para>
+              Files: 
+            </db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-app-pro.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/app.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-app-qml.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/app.qml</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-app-qrc.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/app.qrc</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-chapter6-plugins-pro.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/chapter6-plugins.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-chartsplugin-cpp.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/chartsplugin.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-chartsplugin-h.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/chartsplugin.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-import-pro.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/import.pro</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-piechart-cpp.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/piechart.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-piechart-h.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/piechart.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-pieslice-cpp.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/pieslice.cpp</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-pieslice-h.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/pieslice.h</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-import-qmldir.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/import/qmldir</db:link>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtqml-tutorials-extending-qml-chapter6-plugins-main-cpp.webxml">examples/qml/tutorials/extending-qml/chapter6-plugins/main.cpp</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
    </db:section>
    <db:section xml:id="chapter-7-summary">
       <db:title>Chapter 7: Summary</db:title>
@@ -315,12 +584,15 @@ plugin chartsplugin
     PieSliceRandomizer on slices {}
 }</db:programlisting>
    </db:section>
-   <db:para>
-      <db:emphasis role="bold">See Also:</db:emphasis>
-      <db:simplelist type="vert">
-         <db:member>
-            <db:link xlink:href="qtqml-cppintegration-topic.html" xrefstyle="page" annotations="Integrating QML and C++">Integrating QML and C++</db:link>
-         </db:member>
-      </db:simplelist>
-   </db:para>
+   <db:section>
+      <db:title>See Also</db:title>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert">
+            <db:member>
+               <db:link xlink:href="qtqml-cppintegration-topic.html" xrefstyle="page" annotations="Integrating QML and C++">Integrating QML and C++</db:link>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
 </db:article>
