@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2">
+   <db:info>
+      <db:title>Building Qt Virtual Keyboard</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="{Building Qt Virtual Keyboard} {Contents}" xlink:title="contents">^ {Building Qt Virtual Keyboard} {Contents} ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-12+02:00</db:pubdate>
+      <db:date>2018-09-12+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:section xml:id="overview">
+      <db:title>Overview</db:title>
+      <db:para>This document describes how to build the Qt Virtual Keyboard plugin.</db:para>
+      <db:para>The project is split into the following subprojects:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>examples/virtualkeyboard/basic/basic.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Qt Virtual Keyboard Demo application</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/virtualkeyboard.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Qt Virtual Keyboard plugin</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/styles/styles.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Qt Virtual Keyboard Style plugin that enables style decorations for the keyboard</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/3rdparty/hunspell/hunspell.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>A project file for compiling the Hunspell library.</db:para>
+               <db:note>
+                  <db:para> This project is used if the Hunspell library is built from sources rather than depending on the system library. The project will be activated when the source code is extracted to this directory.</db:para>
+               </db:note>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/3rdparty/lipi-toolkit/lipi-toolkit.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>A project file for compiling the lipi-toolkit library.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/3rdparty/openwnn/openwnn.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>A project file for compiling the OpenWNN library.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/3rdparty/pinyin/pinyin.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>A project file for compiling the PinyinIME library.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/3rdparty/t9write/t9write.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>A project file for including T9 Write dictionaries as resources.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>src/virtualkeyboard/3rdparty/tcime/tcime.pro</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>A project file for compiling the TCIME library.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>The input methods are implemented either in C++ or QML. Qt Virtual Keyboard provides implementations of <db:emphasis>PlainInputMethod</db:emphasis>, <db:emphasis>MultitapInputMethod</db:emphasis> and <db:emphasis>HunspellInputMethod</db:emphasis>. The <db:emphasis>MultitapInputMethod</db:emphasis> is implemented in QML while the others are implemented in C++.</db:para>
+   </db:section>
+   <db:section xml:id="build-instructions">
+      <db:title>Build Instructions</db:title>
+      <db:para>The Qt Virtual Keyboard can be built for Linux Desktop/X11, Windows Desktop or <db:link xlink:href="http://doc.qt.io/QtForDeviceCreation/qtee-about-b2qt.html" xrefstyle="page" annotations="Boot2Qt">Boot2Qt</db:link> targets. The target is automatically detected by QMAKE and requires no special configuration parameters.</db:para>
+      <db:para>Qt Creator is the preferred build environment for Qt Virtual Keyboard as you can then leverage the shadow build functionality and rapidly switch between build targets.</db:para>
+   </db:section>
+   <db:section xml:id="configuration-options">
+      <db:title>Configuration Options</db:title>
+      <db:para>The table below contains the top-level options for configuring the virtual keyboard features.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>CONFIG</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Remarks</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-&lt;code&gt;</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the specified language</db:para>
+            </db:td>
+            <db:td>
+               <db:para>The specified language can be activated using <db:emphasis>lang-&lt;code&gt;</db:emphasis> option, which has the format "language[_country]", where:</db:para>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>language is a lowercase, two-letter, ISO 639 language code</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>country is an uppercase, two-letter, ISO 3166 country code</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+               <db:para>This option can be used to define the language support as required. The virtual keyboard can support one or more languages at a time.</db:para>
+               <db:para>For example, <db:code>CONFIG+=lang-fi_FI</db:code> activates the Finnish language.</db:para>
+               <db:para>The virtual keyboard automatically includes all languages if no other languages are specified.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-all</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables all the languages</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables all the languages supported by the virtual keyboard. This flag is essentially an alias for <db:code>CONFIG+="lang-ar_AR lang-da_DK ..."</db:code>
+               </db:para>
+               <db:para>This option is enabled by default. To build only a specific language, use the <db:code>lang-&lt;code&gt;</db:code> option above.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>handwriting</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables handwriting input</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This flag enables handwriting input using the first engine available at build time in the following order: <db:code>t9write</db:code>, <db:code>lipi-toolkit</db:code>. To enable handwriting input using a specific engine, use the feature-specific configuration instead. For example, <db:code>CONFIG+=lipi-toolkit</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>arrow-key-navigation</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables arrow key navigation for the keyboard</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Allows controlling the keyboard using the arrow and return keys.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="advanced-configuration-options">
+      <db:title>Advanced Configuration Options</db:title>
+      <db:para>The table below shows the advanced configuration options that will be applied automatically when activating a certain top-level feature. The options can also be used for enabling or disabling a specific feature.</db:para>
+      <db:para>In most cases, these options are not needed, but there are also cases where their use is justified. For example, the Traditional Chinese language (CONFIG=lang-zh_TW) will include both Zhuyin and Cangjie input methods by default. This behavior can be changed by adding the preferred input method to the configuration, e.g., <db:code>CONFIG+="lang-zh_TW</db:code> zhuyin".</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Advanced CONFIG</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Top-level CONFIG</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Remarks</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>disable-desktop</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>n/a</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Disables Desktop integration</db:para>
+            </db:td>
+            <db:td>
+               <db:para>By default, the desktop integration is enabled when the target environment is X11 or Windows desktop. With this option, the desktop integration can be disabled.</db:para>
+               <db:note>
+                  <db:para> For embedded integration, where the <db:link xlink:href="qml-qtquick-virtualkeyboard-inputpanel.html" xrefstyle="" annotations="InputPanel">InputPanel</db:link> is instantitated by the application, there is no need to use this option explicitly. The virtual keyboard will not create the desktop input panel if the application creates <db:link xlink:href="qml-qtquick-virtualkeyboard-inputpanel.html" xrefstyle="" annotations="InputPanel">InputPanel</db:link> before the focus is set to an input field.</db:para>
+               </db:note>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>disable-layouts</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>n/a</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Disables built-in layouts</db:para>
+            </db:td>
+            <db:td>
+               <db:para>By default, the virtual keyboard plugin contains the English keyboard layout. By specifiying the <db:emphasis>disable-layouts</db:emphasis> configuration flag, the built-in layout(s) are excluded from the virtual keyboard plugin.</db:para>
+               <db:note>
+                  <db:para> In this scenario, the <db:code>QT_VIRTUALKEYBOARD_LAYOUT_PATH</db:code> environment variable should be set to the file system directory containing the custom keyboard layouts before running the application.</db:para>
+               </db:note>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>disable-xcb</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>n/a</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Disables X11 integration</db:para>
+            </db:td>
+            <db:td>
+               <db:note>
+                  <db:para> Deprecated since 1.3. Use <db:emphasis>disable-desktop</db:emphasis> instead.</db:para>
+               </db:note>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>disable-hunspell</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>n/a</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Disables Hunspell integration</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Hunspell integration is enabled if the Hunspell library is available on the system, or if it is built using the local project file. Integration can be disabled using this option.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>static</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables static builds of the virtual keyboard</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option enables <db:link xlink:href="qtvirtualkeyboard-build.html#static-builds" xrefstyle="page" annotations="Static builds">static builds</db:link>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>retro-style</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>n/a</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables Retro style</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Changes the default keyboard style to the Retro style. Both styles are still included in the package, but this option allows you to change the built-in default style.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>pinyin</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-zh_CN</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the Pinyin input method for Simplified Chinese.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option activates the Pinyin input method for the Simplified Chinese language.</db:para>
+               <db:para>As this option activates a particular language, the <db:code>lang-all</db:code> option will not be enabled if this option is specified. To build all languages, use <db:code>CONFIG+=lang-all</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>tcime</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-zh_TW</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the both Cangjie and Zhuyin input methods for Traditional Chinese.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option activates the both Cangjie and Zhuyin input methods for the Traditional Chinese language.</db:para>
+               <db:para>As this option activates a particular language, the <db:code>lang-all</db:code> option will not be enabled if this option is specified. To build all languages, use <db:code>CONFIG+=lang-all</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>cangjie</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-zh_TW</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the Cangjie input method for Traditional Chinese.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option activates the Cangjie input method for the Traditional Chinese language.</db:para>
+               <db:para>As this option activates a particular language, the <db:code>lang-all</db:code> option will not be enabled if this option is specified. To build all languages, use <db:code>CONFIG+=lang-all</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>zhuyin</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-zh_TW</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the Zhuyin input method for Traditional Chinese.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option activates the Zhuyin input method for the Traditional Chinese language.</db:para>
+               <db:para>As this option activates a particular language, the <db:code>lang-all</db:code> option will not be enabled if this option is specified. To build all languages, use <db:code>CONFIG+=lang-all</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>hangul</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-ko_KR</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the Hangul input method for Korean.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option activates the Hangul input method for the Korean language.</db:para>
+               <db:para>As this option activates a particular language, the <db:code>lang-all</db:code> option will not be enabled if this option is specified. To build all languages, use <db:code>CONFIG+=lang-all</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>openwnn</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lang-ja_JP</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the OpenWnn input method for Japanese.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This option activates the OpenWnn input method for the Japanese language.</db:para>
+               <db:para>As this option activates a particular language, the <db:code>lang-all</db:code> option will not be enabled if this option is specified. To build all languages, use <db:code>CONFIG+=lang-all</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lipi-toolkit</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>handwriting</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the handwriting input method using Lipi Toolkit.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Handwriting recognition is based on the open source Lipi Toolkit.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>t9write</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:emphasis>handwriting</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables the handwriting input method using T9 Write.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Handwriting recognition is based on the commercial T9 Write product from Nuance Communications.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="building-documentation">
+      <db:title>Building Documentation</db:title>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>make docs</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Generates documentation</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="hunspell-integration">
+      <db:title>Hunspell Integration</db:title>
+      <db:para>By default, <db:emphasis>HunspellInputMethod</db:emphasis> will not be available unless the Hunspell library and development headers are found. For Linux/X11 targets, the Hunspell library can be provided by installing the libhunspell-dev package. Alternatively, the Hunspell sources can be extracted into the <db:emphasis>src/virtualkeyboard/3rdparty/hunspell</db:emphasis> directory. If Hunspell sources are used, then the dictionary files must also be copied into the <db:emphasis>src/virtualkeyboard/3rdparty/hunspell/data</db:emphasis> directory. Furthermore, if Hunspell sources are used, <db:emphasis>hunspell.pro</db:emphasis> will be used for all targets.</db:para>
+      <db:para>An example of how the directory structure should look after copying in the Hunspell sources and dictionary files is listed below:</db:para>
+      <db:programlisting language="other" role="badcode">3rdparty
+└── hunspell
+    ├── data
+    │   ├── en_GB.aff
+    │   └── en_GB.dic
+    ├── hunspell.pro
+    └── src
+        └── hunspell
+            ├── affentry.cxx
+            ├── affentry.hxx
+            (etc.)</db:programlisting>
+   </db:section>
+   <db:section xml:id="t9-write-integration">
+      <db:title>T9 Write Integration</db:title>
+      <db:para>T9 Write integration supports the T9 Write Alphabetic and T9 Write CJK engines. Both engines are integrated via T9WriteInputMethod. The input method can be initialized with either of the engines at runtime. The engine selection happens automatically based on input locale and input mode from the keyboard.</db:para>
+   </db:section>
+   <db:section xml:id="t9-write-compatibility">
+      <db:title>T9 Write Compatibility</db:title>
+      <db:para>Qt Virtual Keyboard is compatible with T9 Write v7.5.0 onward.</db:para>
+      <db:para>The latest tested version is v7.8.1.</db:para>
+   </db:section>
+   <db:section xml:id="t9-write-build-preparations">
+      <db:title>T9 Write Build Preparations</db:title>
+      <db:para>The contents of the SDK must be either manually copied to the directory structure described below, or by using the <db:emphasis>unpack.py</db:emphasis> script found in the t9write directory.</db:para>
+      <db:para>To unpack the SDK using the script:</db:para>
+      <db:programlisting language="other" role="badcode">$ cd src/virtualkeyboard/3rdparty/t9write/
+$ python unpack.py T9Write_Alpha_v7-8-0_SDK.zip .</db:programlisting>
+      <db:programlisting language="other" role="badcode">3rdparty
+└── t9write
+    ├─── api
+    │   ├─── decuma*.h
+    │   ├─── t9write*.h
+    │   └─── xxt9w*.h
+    ├─── data
+    │   ├─── arabic
+    │   │   └─── *.bin [T9 Write Arabic]
+    │   ├─── hebrew
+    │   │   └─── *.bin [T9 Write Hebrew]
+    │   ├─── *.bin [T9 Write Alphabetic]
+    │   ├─── *.hdb
+    │   ├─── *.phd
+    │   └─── *.ldb [T9 Write v7.5]
+    └─── lib
+        ├─── arm
+        │   ├─── shared
+        │   │   ├─── alphabetic
+        │   │   │   └─── *.so
+        │   │   └─── cjk
+        │   │       └─── *.so
+        │   └─── static
+        │       ├─── alphabetic
+        │       │   └─── *.a / *.o
+        │       └─── cjk
+        │           └─── *.a / *.o
+        ├─── linux-x86
+        │   ├─── shared
+        │   │   ├─── alphabetic
+        │   │   │   └─── *.so
+        │   │   └─── cjk
+        │   │       └─── *.so
+        │   └─── static
+        │       ├─── alphabetic
+        │       │   └─── *.a / *.o
+        │       └─── cjk
+        │           └─── *.a / *.o
+        └─── win32
+            ├─── shared
+            │   ├─── alphabetic
+            │   │   ├─── *.dll
+            │   │   └─── *.lib
+            │   └─── cjk
+            │       ├─── *.dll
+            │       └─── *.lib
+            └─── static
+                ├─── alphabetic
+                │   └─── *.lib / *.obj
+                └─── cjk
+                    └─── *.lib / *.obj</db:programlisting>
+      <db:note>
+         <db:para> The above files are from the T9 Write demo SDK for Windows; the contents may vary for other platforms.</db:para>
+      </db:note>
+      <db:para>Where the contents of each directory are:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Directory</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Remarks</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>api</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>This directory should contain all of the API files</db:para>
+            </db:td>
+            <db:td>
+               <db:para>The API files usually located in the "api" and "public" directories of the SDK, but sometimes in the "demo" directory.</db:para>
+               <db:para>When using both Alphabetic and CJK engines at the same time, any overlapping files can be copied from either SDK.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>data</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>This directory should contain all HWR databases and optionally XT9 databases.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>HWR database for the T9 Write Alphabetic:</db:para>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>
+                        <db:emphasis>_databas_le.bin</db:emphasis>
+                     </db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+               <db:para>HWR database for the T9 Write CJK:</db:para>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>
+                        <db:emphasis>cjk_HK_std_le.hdb</db:emphasis> HongKong Chinese</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>
+                        <db:emphasis>cjk_J_std_le.hdb</db:emphasis> Japanese</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>
+                        <db:emphasis>cjk_K_mkt_le.hdb</db:emphasis> Korean</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>
+                        <db:emphasis>cjk_S_gb18030_le.hdb</db:emphasis> Simplified Chinese</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>
+                        <db:emphasis>cjk_T_std_le.hdb</db:emphasis> Traditional Chinese</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+               <db:para>Language database:</db:para>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>File extension is either <db:emphasis>.ldb</db:emphasis> or <db:emphasis>.phd</db:emphasis>
+                     </db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:emphasis>lib/&lt;target&gt;/&lt;linkage&gt;/&lt;engine-variant&gt;</db:emphasis>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Directory structure holding supported target builds.</db:para>
+            </db:td>
+            <db:td>
+               <db:para>These directories should hold the desired target libraries. If both shared and static libraries are found, shared libraries are preferred.</db:para>
+               <db:para>For example, to enable a static win32 build, copy <db:emphasis>t9write_alphabetic_rel.obj</db:emphasis> to <db:emphasis>lib/win32/static/alphabetic</db:emphasis> directory.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>Finally, the SDK is included in the build by adding CONFIG+=t9write to the qmake command line.</db:para>
+   </db:section>
+   <db:section xml:id="static-builds">
+      <db:title>Static builds</db:title>
+      <db:para>The virtual keyboard can be built and linked statically against the application. This implies that Qt is also built statically (using the -static option in the configure command line).</db:para>
+      <db:para>Static builds of the virtual keyboard are enabled by adding <db:code>CONFIG+=static</db:code> to the qmake command line and then rebuilding.</db:para>
+      <db:para>Some third party modules used by the virtual keyboard are always built as shared libraries. These modules are Hunspell and Lipi Toolkit.</db:para>
+   </db:section>
+   <db:section xml:id="using-the-static-plugin">
+      <db:title>Using the static plugin</db:title>
+      <db:para>The following section should be added to the application project file that uses the statically built virtual keyboard.</db:para>
+      <db:programlisting language="other">static {
+    QTPLUGIN += qtvirtualkeyboardplugin
+    QT += svg
+}</db:programlisting>
+      <db:para>
+         <db:code>QTPLUGIN</db:code> causes qmake to pull linker dependencies for the virtual keyboard plugin. The SVG module is required as an extra dependency for Qt, since the SVG format is required by the default styles.</db:para>
+      <db:para>From here on, using a statically built virtual keyboard is no different from the normal case.</db:para>
+   </db:section>
+   <db:section xml:id="deployment">
+      <db:title>Deployment</db:title>
+   </db:section>
+   <db:section xml:id="desktop-targets">
+      <db:title>Desktop Targets</db:title>
+      <db:para>Add a Deploy Step that executes the <db:emphasis>make install</db:emphasis> command, then deploy using the <db:emphasis>Deploy All</db:emphasis> command.</db:para>
+   </db:section>
+   <db:section xml:id="boot2qt-targets">
+      <db:title>Boot2Qt Targets</db:title>
+      <db:para>The installation is done by copying the necessary files to the memory card, or by using the adb push command.</db:para>
+   </db:section>
+</db:article>
