@@ -58,14 +58,14 @@ public class Main {
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
         for (Path file : webxml) {
-            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
-
-            // Print the name of the file to process to ease debugging.
-            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
-            System.out.flush();
-
-            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
-            ++i;
+//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+//
+//            // Print the name of the file to process to ease debugging.
+//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+//            System.out.flush();
+//
+//            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
+//            ++i;
         }
 
         // Gather all DocBook files and transform them into DvpML.
@@ -78,14 +78,14 @@ public class Main {
         i = 0;
         iFormat = "%0" + Integer.toString(qdt.size()).length() + "d";
         for (Path file : qdt) {
-//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
-//
-//            // Print the name of the file to process to ease debugging.
-//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
-//            System.out.flush();
-//
-//            m.runXSLTDocBookToDvpML(file.toFile(), destination);
-//            ++i;
+            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
+
+            // Print the name of the file to process to ease debugging.
+            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
+            System.out.flush();
+
+            m.runXSLTDocBookToDvpML(file.toFile(), destination);
+            ++i;
         }
     }
 
