@@ -2,8 +2,9 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://dourouc05.github.io"
-  exclude-result-prefixes="xsl xs html saxon tc"
+  xmlns:saxon="http://saxon.sf.net/" xmlns:map="http://www.w3.org/2005/xpath-functions/map" 
+  xmlns:tc="http://dourouc05.github.io"
+  exclude-result-prefixes="xsl xs html saxon map tc"
   version="3.0">
   
   <xsl:output method="xml" indent="yes"
@@ -885,6 +886,38 @@
               </db:tbody>
             </db:informaltable>
           </xsl:when>
+          <xsl:when test="$type = 'annotatedclasses'">
+            <db:informaltable>
+              <db:tbody>
+                <xsl:variable name="classes" as="map(xs:string, xs:string)">
+                  <xsl:map>
+                    <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                      <xsl:if test="./WebXML/document/class">
+                        <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                        <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                        <xsl:map-entry key="$className" select="string($root/@brief)"/>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </xsl:map>
+                </xsl:variable>
+                <xsl:for-each select="map:keys($classes)">
+                  <xsl:sort/>
+                  
+                  <db:tr>
+                    <db:td>
+                      <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                        <xsl:value-of select="."/>
+                      </db:link>
+                    </db:td>
+                    <db:td>
+                      <xsl:value-of select="map:get($classes, .)"/>
+                    </db:td>
+                  </db:tr>
+                </xsl:for-each>
+              </db:tbody>
+            </db:informaltable>
+          </xsl:when>
+          <xsl:when test="$type = 'classes'"></xsl:when>
           <xsl:otherwise>
             <xsl:message>WARNING: generatedlist type not implemented: <xsl:value-of select="$type"/></xsl:message>
           </xsl:otherwise>
