@@ -12,6 +12,8 @@
   
   <xsl:param name="qt-version" as="xs:string" select="'1.2'"/>
   <!--<xsl:param name="qt-version" as="xs:string" required="true"/>-->
+  <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc/webxml/'"/>
+  <!--<xsl:param name="local-foldern" as="xs:string" required="true"/>-->
   
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>
@@ -681,7 +683,20 @@
 
   <!-- Deal with groups of examples. -->
   <xsl:template mode="content" match="group">
-    <xsl:apply-templates mode="content"/>
+    <xsl:choose>
+      <xsl:when test="not(boolean(section))">
+        <db:section>
+          <db:title>
+            <xsl:value-of select="@title"/>
+          </db:title>
+          
+          <xsl:apply-templates mode="content"/>
+        </db:section>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="content"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- Generic content handling (paragraphs, sections, etc.) -->
@@ -835,6 +850,40 @@
                 </db:listitem>
               </xsl:for-each>
             </db:itemizedlist>
+          </xsl:when>
+          <xsl:when test="$type = 'related'">
+            <xsl:if test="not(/WebXML/document/child::node()[1]/@members) or /WebXML/document/child::node()[1]/@members=''">
+              <xsl:message>WARNING: generatedlist not implemented with type related and no members attribute.</xsl:message>
+              <!-- Would need to go through all the documents and check whether the groups match. -->
+            </xsl:if>
+            
+            <db:informaltable>
+              <db:tbody>
+                <xsl:for-each select="tokenize(/WebXML/document/child::node()[1]/@members, ',')">
+                  <xsl:sort/>
+                  
+                  <xsl:try>
+                    <xsl:variable name="soughtFile" as="xs:string" select="concat($local-folder, lower-case(.), '.webxml')"/>
+                    <xsl:variable name="soughtDocument" select="document($soughtFile)" as="node()"/>
+                    <db:tr>
+                      <db:td>
+                        <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                          <xsl:value-of select="."/>
+                        </db:link>
+                      </db:td>
+                      <db:td>
+                        <xsl:value-of select="$soughtDocument/WebXML/document/child::node()[1]/@brief"/>
+                      </db:td>
+                    </db:tr>
+                    
+                    <xsl:catch>
+                      <!-- Sometimes, there is something strange in @members: just skip -->
+                      <!-- (does not appear in the official documentation). -->
+                    </xsl:catch>
+                  </xsl:try>
+                </xsl:for-each>
+              </db:tbody>
+            </db:informaltable>
           </xsl:when>
           <xsl:otherwise>
             <xsl:message>WARNING: generatedlist type not implemented: <xsl:value-of select="$type"/></xsl:message>

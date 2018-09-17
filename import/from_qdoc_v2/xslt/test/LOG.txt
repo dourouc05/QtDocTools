@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=65252:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=61047:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -47,11 +47,11 @@
 --> Found module: qtserialport; qdocconf: C:\Qt\5.11.1\Src\qtserialport\src\serialport\doc\qtserialport.qdocconf
 --> Found module: qtspeech; qdocconf: C:\Qt\5.11.1\Src\qtspeech\src\doc\qtspeech.qdocconf
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
---> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
 --> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
---> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
---> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
+--> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
+--> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
+--> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
 --> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
@@ -62,8 +62,8 @@
 --> Found module: qtwinextras; qdocconf: C:\Qt\5.11.1\Src\qtwinextras\src\winextras\doc\qtwinextras.qdocconf
 --> Found module: qtx11extras; qdocconf: C:\Qt\5.11.1\Src\qtx11extras\src\x11extras\doc\qtx11extras.qdocconf
 --> Found module: qtxmlpatterns; qdocconf: C:\Qt\5.11.1\Src\qtxmlpatterns\src\xmlpatterns\doc\qtxmlpatterns.qdocconf
---> Found submodule: qtbase / qmake; qdocconf: C:\Qt\5.11.1\Src\qtbase\qmake\doc\qmake.qdocconf
 --> Found submodule: qtbase / qlalr; qdocconf: C:\Qt\5.11.1\Src\qtbase\src\tools\qlalr\doc\qlalr.qdocconf
+--> Found submodule: qtbase / qmake; qdocconf: C:\Qt\5.11.1\Src\qtbase\qmake\doc\qmake.qdocconf
 ::> 65 modules found
 ++> Module qdocconf rewritten: qt3d
 ++> Module qdocconf rewritten: qtactiveqt
@@ -680,8 +680,8 @@ WARNING: Text outside a paragraph
 [0446/7715]C:\Qt\Doc\webxml\qaxbase.webxml
 [0447/7715]C:\Qt\Doc\webxml\qaxbindable.webxml
 [0448/7715]C:\Qt\Doc\webxml\qaxcontainer-module.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [0449/7715]C:\Qt\Doc\webxml\qaxfactory.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [0450/7715]C:\Qt\Doc\webxml\qaxobject.webxml
 [0451/7715]C:\Qt\Doc\webxml\qaxscript.webxml
 [0452/7715]C:\Qt\Doc\webxml\qaxscriptengine.webxml
@@ -2318,8 +2318,8 @@ WARNING: generatedlist type not implemented: groupsbymodule
 [1985/7715]C:\Qt\Doc\webxml\qtbluetooth-lowenergyscanner-resources-qrc.webxml
 [1986/7715]C:\Qt\Doc\webxml\qtbluetooth-lowenergyscanner-serviceinfo-cpp.webxml
 [1987/7715]C:\Qt\Doc\webxml\qtbluetooth-lowenergyscanner-serviceinfo-h.webxml
-[1988/7715]C:\Qt\Doc\webxml\qtbluetooth-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[1988/7715]C:\Qt\Doc\webxml\qtbluetooth-module.webxml
 [1989/7715]C:\Qt\Doc\webxml\qtbluetooth-overview.webxml
 [1990/7715]C:\Qt\Doc\webxml\qtbluetooth-picturetransfer-bttransfer-qml.webxml
 [1991/7715]C:\Qt\Doc\webxml\qtbluetooth-picturetransfer-button-qml.webxml
@@ -3891,8 +3891,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [3521/7715]C:\Qt\Doc\webxml\qtmultimedia-xml-rsslisting-example.webxml
 [3522/7715]C:\Qt\Doc\webxml\qtmultimediawidgets-index.webxml
 [3523/7715]C:\Qt\Doc\webxml\qtmultimediawidgets-module.webxml
-[3524/7715]C:\Qt\Doc\webxml\qtnetwork-bearermonitor-bearermonitor-240-320-ui.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[3524/7715]C:\Qt\Doc\webxml\qtnetwork-bearermonitor-bearermonitor-240-320-ui.webxml
 [3525/7715]C:\Qt\Doc\webxml\qtnetwork-bearermonitor-bearermonitor-640-480-ui.webxml
 [3526/7715]C:\Qt\Doc\webxml\qtnetwork-bearermonitor-bearermonitor-cpp.webxml
 [3527/7715]C:\Qt\Doc\webxml\qtnetwork-bearermonitor-bearermonitor-h.webxml
@@ -5890,8 +5890,8 @@ WARNING: generatedlist type not implemented: groupsbymodule
 [5402/7715]C:\Qt\Doc\webxml\qtscripttools-embedded-raycasting-example.webxml
 [5403/7715]C:\Qt\Doc\webxml\qtscripttools-embedded-styleexample-example.webxml
 [5404/7715]C:\Qt\Doc\webxml\qtscripttools-index.webxml
-[5405/7715]C:\Qt\Doc\webxml\qtscripttools-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5405/7715]C:\Qt\Doc\webxml\qtscripttools-module.webxml
 [5406/7715]C:\Qt\Doc\webxml\qtscripttools-tools-customtypesending-example.webxml
 [5407/7715]C:\Qt\Doc\webxml\qtscripttools-touch-fingerpaint-example.webxml
 [5408/7715]C:\Qt\Doc\webxml\qtscripttools-touch-pinchzoom-example.webxml
@@ -6613,10 +6613,10 @@ WARNING: generatedlist type not implemented: classesbymodule
 [6108/7715]C:\Qt\Doc\webxml\qtwebengine-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
 [6109/7715]C:\Qt\Doc\webxml\qtwebengine-modules.webxml
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
 [6110/7715]C:\Qt\Doc\webxml\qtwebengine-overview.webxml
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
 [6111/7715]C:\Qt\Doc\webxml\qtwebengine-platform-notes.webxml
 [6112/7715]C:\Qt\Doc\webxml\qtwebengine-qmlmodule.webxml
 [6113/7715]C:\Qt\Doc\webxml\qtwebengine-tools-customtypesending-example.webxml
@@ -6873,8 +6873,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [6355/7715]C:\Qt\Doc\webxml\qtwebview-minibrowser-minibrowser-pro.webxml
 [6356/7715]C:\Qt\Doc\webxml\qtwebview-minibrowser-qml-qrc.webxml
 [6357/7715]C:\Qt\Doc\webxml\qtwebview-module.webxml
-[6358/7715]C:\Qt\Doc\webxml\qtwebview-qmlmodule.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[6358/7715]C:\Qt\Doc\webxml\qtwebview-qmlmodule.webxml
 [6359/7715]C:\Qt\Doc\webxml\qtwebview-tools-customtypesending-example.webxml
 [6360/7715]C:\Qt\Doc\webxml\qtwebview-touch-fingerpaint-example.webxml
 [6361/7715]C:\Qt\Doc\webxml\qtwebview-touch-pinchzoom-example.webxml
@@ -8247,7 +8247,10 @@ WARNING: generatedlist type not implemented: classesbymodule
 [7710/7715]C:\Qt\Doc\webxml\xml-sax.webxml
 [7711/7715]C:\Qt\Doc\webxml\xml-streaming.webxml
 [7712/7715]C:\Qt\Doc\webxml\xml-tools.webxml
-WARNING: generatedlist type not implemented: related
+Warning at char 7 in xsl:variable/@select on line 866 column 126 of webxml_to_docbook.xslt:
+  FODC0002: I/O error reported by XML parser processing
+  file:///C:/Qt/Doc/webxml/pullbridge.webxml: C:\Qt\Doc\webxml\pullbridge.webxml (The system
+  cannot find the file specified)
 [7713/7715]C:\Qt\Doc\webxml\xmlpattern-examples.webxml
 [7714/7715]C:\Qt\Doc\webxml\xmlprocessing.webxml
 [7715/7715]C:\Qt\Doc\webxml\xquery-introduction.webxml

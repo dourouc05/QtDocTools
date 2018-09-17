@@ -432,6 +432,7 @@ public class Main {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         XsltTransformer trans = createTransformer(file, destination, os, "WebXML");
         trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
+        trans.setParameter(new QName("local-folder"), new XdmAtomicValue(file.getParentFile().toPath().toUri()));
         trans.transform();
 
         String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
