@@ -23,7 +23,7 @@
   <xsl:template match="document">
     <xsl:variable name="mainTag" select="child::node()[1]" as="node()"/>
     
-    <db:article version="5.2">
+    <db:article version="5.2" xml:lang="en">
       <db:info>
         <db:title>
           <xsl:choose>
@@ -917,7 +917,48 @@
               </db:tbody>
             </db:informaltable>
           </xsl:when>
-          <xsl:when test="$type = 'classes'"></xsl:when>
+          <xsl:when test="$type = 'classes'">
+            <xsl:variable name="classes" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <!--<xsl:for-each select="collection($local-folder">-->
+                  <xsl:if test="./WebXML/document/class">
+                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="$className" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($classes)" group-by="substring(string(.), 2, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                  
+                  <db:informaltable>
+                    <db:tbody>
+                      <xsl:for-each select="current-group()">
+                        <xsl:sort/>
+                        
+                        <db:tr>
+                          <db:td>
+                            <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                              <xsl:value-of select="."/>
+                            </db:link>
+                          </db:td>
+                          <db:td>
+                            <xsl:value-of select="map:get($classes, .)"/>
+                          </db:td>
+                        </db:tr>
+                      </xsl:for-each>
+                    </db:tbody>
+                  </db:informaltable>
+                </db:title>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:message>WARNING: generatedlist type not implemented: <xsl:value-of select="$type"/></xsl:message>
           </xsl:otherwise>
@@ -1785,6 +1826,7 @@
   <xsl:template mode="content" match="italic[preceding-sibling::*[position() &lt; 5][self::image]]"/>
   <xsl:template mode="content" match="bold[preceding-sibling::*[position() &lt; 5][self::image]]"/>
   <xsl:template mode="content" match="link[preceding-sibling::*[position() &lt; 5][self::image]]"/>
+  <xsl:template mode="content" match="text()[preceding-sibling::*[position() &lt; 5][self::image]]"/>
  
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template mode="content" match="text()">

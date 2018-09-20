@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2"
+  xml:lang="en">
+  <db:info>
+    <db:title>Qt Widget Gallery</db:title>
+    <db:abstract>
+      <db:para>Qt widgets shown in different styles on various platforms</db:para>
+    </db:abstract>
+    <db:pubdate>2018-09-20+02:00</db:pubdate>
+    <db:date>2018-09-20+02:00</db:date>
+    <db:productname>Qt</db:productname>
+    <db:productnumber>1.2</db:productnumber>
+  </db:info>
+  <db:para>Qt widgets shown in different styles on various platforms.</db:para>
+  <db:para>Qt's support for widget styles and themes enables your application to fit in with the native desktop environment.</db:para>
+  <db:para>The widgets examples show how some of the widgets available in Qt might appear when configured to use the a particular style. Each style is only available on the respective platfom, and provides native look and feel by integrating to the platform theme. Thus, the final appearance varies depending on the active theme.</db:para>
+  <db:informaltable>
+    <db:tr>
+      <db:td>
+        <db:para>The Windows style ("windows") is provided by QWindowsStyle.</db:para>
+      </db:td>
+      <db:td>
+        <db:mediaobject>
+          <db:imageobject>
+            <db:imagedata fileref="images/windows-style.png"/>
+          </db:imageobject>
+        </db:mediaobject>
+        <db:para/>
+      </db:td>
+    </db:tr>
+    <db:tr>
+      <db:td>
+        <db:mediaobject>
+          <db:imageobject>
+            <db:imagedata fileref="images/windows-vista-style.png"/>
+          </db:imageobject>
+        </db:mediaobject>
+        <db:para/>
+      </db:td>
+      <db:td>
+        <db:para>The Windows Vista style ("windowsvista") is provided by QWindowsVistaStyle.</db:para>
+      </db:td>
+    </db:tr>
+    <db:tr>
+      <db:td>
+        <db:para>The  style ("macintosh") is provided by QMacStyle.</db:para>
+      </db:td>
+      <db:td>
+        <db:mediaobject>
+          <db:imageobject>
+            <db:imagedata fileref="images/macos-style.png"/>
+          </db:imageobject>
+        </db:mediaobject>
+        <db:para/>
+      </db:td>
+    </db:tr>
+    <db:tr>
+      <db:td>
+        <db:mediaobject>
+          <db:imageobject>
+            <db:imagedata fileref="images/fusion-style.png"/>
+          </db:imageobject>
+        </db:mediaobject>
+        <db:para/>
+      </db:td>
+      <db:td>
+        <db:para>The Fusion style ("fusion") is provided by QFusionStyle.</db:para>
+      </db:td>
+    </db:tr>
+  </db:informaltable>
+  <db:para>The Styles example displays the following widgets:</db:para>
+  <db:itemizedlist>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qcheckbox.html" xrefstyle="class" annotations="QCheckBox">QCheckBox</db:link></db:code> (1) provides a checkbox with a text label.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qradiobutton.html" xrefstyle="class" annotations="QRadioButton">QRadioButton</db:link></db:code> (2) provides a radio button with a text or pixmap label.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> (3) provides a command button.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qtabwidget.html" xrefstyle="class" annotations="QTabWidget">QTabWidget</db:link></db:code> (4) provides a stack of tabbed widgets.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qtablewidget.html" xrefstyle="class" annotations="QTableWidget">QTableWidget</db:link></db:code> (5) provides a classic item-based table view.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qscrollbar.html" xrefstyle="class" annotations="QScrollBar">QScrollBar</db:link></db:code> (6) provides a vertical or horizontal scroll bar.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qprogressbar.html" xrefstyle="class" annotations="QProgressBar">QProgressBar</db:link></db:code> (7) provides a horizontal progress bar.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qdatetimeedit.html" xrefstyle="class" annotations="QDateTimeEdit">QDateTimeEdit</db:link></db:code> (8) provides a widget for editing dates and times.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qslider.html" xrefstyle="class" annotations="QSlider">QSlider</db:link></db:code> (9) provides a vertical or horizontal slider.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qdial.html" xrefstyle="class" annotations="QDial">QDial</db:link></db:code> (10) provides a rounded range control (like a speedometer or potentiometer).</db:para>
+    </db:listitem>
+  </db:itemizedlist>
+  <db:para>The Calendar Widget example displays some additional widgets, here run on Windows 10 and :</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/windows-style2.png"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>Calendar Widget example on Windows 10</db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata fileref="images/macos-style2.png"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>Calendar Widget example on </db:para>
+  <db:itemizedlist>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qgroupbox.html" xrefstyle="class" annotations="QGroupBox">QGroupBox</db:link></db:code> (1) provides a group box frame with a title.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qcalendarwidget.html" xrefstyle="class" annotations="QCalendarWidget">QCalendarWidget</db:link></db:code> (2) provides a monthly calendar widget that can be used to select dates.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qlabel.html" xrefstyle="class" annotations="QLabel">QLabel</db:link></db:code> (3) provides a text or image display.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qdateedit.html" xrefstyle="class" annotations="QDateEdit">QDateEdit</db:link></db:code> (4) provides a widget for editing dates.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>
+        <db:code><db:link xlink:href="qcombobox.html" xrefstyle="class" annotations="QComboBox">QComboBox</db:link></db:code> (5) provides a combined button and pop-up list.</db:para>
+    </db:listitem>
+  </db:itemizedlist>
+</db:article>

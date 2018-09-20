@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="gallery.html" href="gallery.html" status="active" location="gallery.qdoc" filepath="C:/Qt/5.11.1/Src/qtbase/src/widgets/doc/src/widgets-and-layouts/gallery.qdoc" lineno="28" subtype="page" title="Qt Widget Gallery" fulltitle="Qt Widget Gallery" subtitle="" module="QtWidgets" brief="Qt widgets shown in different styles on various platforms">
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/widgets/doc/src/widgets-and-layouts/gallery.qdoc" line="28" column="4">
+                <brief>Qt widgets shown in different styles on various platforms.</brief>
+                <para>Qt's support for widget styles and themes enables your application to fit in with the native desktop environment.</para>
+                <para>The widgets examples show how some of the widgets available in Qt might appear when configured to use the a particular style. Each style is only available on the respective platfom, and provides native look and feel by integrating to the platform theme. Thus, the final appearance varies depending on the active theme.</para>
+                <table>
+                    <row>
+                        <item>
+                            <para>The Windows style (&quot;windows&quot;) is provided by QWindowsStyle.</para>
+                        </item>
+                        <item>
+                            <image href="images/windows-style.png"/>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <image href="images/windows-vista-style.png"/>
+                        </item>
+                        <item>
+                            <para>The Windows Vista style (&quot;windowsvista&quot;) is provided by QWindowsVistaStyle.</para>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <para>The  style (&quot;macintosh&quot;) is provided by QMacStyle.</para>
+                        </item>
+                        <item>
+                            <image href="images/macos-style.png"/>
+                        </item>
+                    </row>
+                    <row>
+                        <item>
+                            <image href="images/fusion-style.png"/>
+                        </item>
+                        <item>
+                            <para>The Fusion style (&quot;fusion&quot;) is provided by QFusionStyle.</para>
+                        </item>
+                    </row>
+                </table>
+                <para>The Styles example displays the following widgets:</para>
+                <list type="bullet">
+                    <item>
+                        <para>
+                            <link raw="QCheckBox" href="qcheckbox.html" type="class">QCheckBox</link> (1) provides a checkbox with a text label.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QRadioButton" href="qradiobutton.html" type="class">QRadioButton</link> (2) provides a radio button with a text or pixmap label.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QPushButton" href="qpushbutton.html" type="class">QPushButton</link> (3) provides a command button.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QTabWidget" href="qtabwidget.html" type="class">QTabWidget</link> (4) provides a stack of tabbed widgets.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QTableWidget" href="qtablewidget.html" type="class">QTableWidget</link> (5) provides a classic item-based table view.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QScrollBar" href="qscrollbar.html" type="class">QScrollBar</link> (6) provides a vertical or horizontal scroll bar.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QProgressBar" href="qprogressbar.html" type="class">QProgressBar</link> (7) provides a horizontal progress bar.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QDateTimeEdit" href="qdatetimeedit.html" type="class">QDateTimeEdit</link> (8) provides a widget for editing dates and times.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QSlider" href="qslider.html" type="class">QSlider</link> (9) provides a vertical or horizontal slider.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QDial" href="qdial.html" type="class">QDial</link> (10) provides a rounded range control (like a speedometer or potentiometer).</para>
+                    </item>
+                </list>
+                <para>The Calendar Widget example displays some additional widgets, here run on Windows 10 and :</para>
+                <image href="images/windows-style2.png"/>Calendar Widget example on Windows 10<image href="images/macos-style2.png"/>Calendar Widget example on <list type="bullet">
+                    <item>
+                        <para>
+                            <link raw="QGroupBox" href="qgroupbox.html" type="class">QGroupBox</link> (1) provides a group box frame with a title.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QCalendarWidget" href="qcalendarwidget.html" type="class">QCalendarWidget</link> (2) provides a monthly calendar widget that can be used to select dates.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QLabel" href="qlabel.html" type="class">QLabel</link> (3) provides a text or image display.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QDateEdit" href="qdateedit.html" type="class">QDateEdit</link> (4) provides a widget for editing dates.</para>
+                    </item>
+                    <item>
+                        <para>
+                            <link raw="QComboBox" href="qcombobox.html" type="class">QComboBox</link> (5) provides a combined button and pop-up list.</para>
+                    </item>
+                </list>
+            </description>
+        </page>
+    </document>
+</WebXML>
