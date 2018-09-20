@@ -935,26 +935,26 @@
               <db:section>
                 <db:title>
                   <xsl:value-of select="current-grouping-key()"/>
-                  
-                  <db:informaltable>
-                    <db:tbody>
-                      <xsl:for-each select="current-group()">
-                        <xsl:sort/>
-                        
-                        <db:tr>
-                          <db:td>
-                            <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
-                              <xsl:value-of select="."/>
-                            </db:link>
-                          </db:td>
-                          <db:td>
-                            <xsl:value-of select="map:get($classes, .)"/>
-                          </db:td>
-                        </db:tr>
-                      </xsl:for-each>
-                    </db:tbody>
-                  </db:informaltable>
                 </db:title>
+                  
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                            <xsl:value-of select="."/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($classes, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
@@ -1002,6 +1002,88 @@
                     </db:listitem>
                   </xsl:for-each-group>
                 </db:itemizedlist>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
+          <xsl:when test="$type = 'qml-modules'">
+            <xsl:variable name="modules" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/qmlmodule">
+                    <xsl:variable name="root" select="./WebXML/document/qmlmodule" as="element(qmlmodule)"/>
+                    <xsl:variable name="moduleName" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="concat($moduleName, '___', $root/@qml-module-version)" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($modules)" group-by="substring(string(.), 2, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                  
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(substring-before(., '___')), '-qmlmodule.webxml')}" xlink:title="{substring-before(., '___')}" xrefstyle="class" annotations="{substring-before(., '___')}">
+                            <xsl:value-of select="substring-before(., '___')"/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($modules, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
+          <xsl:when test="$type = 'namespaces'">
+            <xsl:variable name="namespaces" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/namespace">
+                    <xsl:variable name="root" select="./WebXML/document/namespace" as="element(namespace)"/>
+                    <xsl:variable name="nsName" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="$nsName" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($namespaces)" group-by="substring(string(.), 2, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                            <xsl:value-of select="substring-before(., '___')"/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($namespaces, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
