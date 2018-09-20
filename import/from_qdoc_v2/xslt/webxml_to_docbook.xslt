@@ -921,7 +921,6 @@
             <xsl:variable name="classes" as="map(xs:string, xs:string)">
               <xsl:map>
                 <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
-                  <!--<xsl:for-each select="collection($local-folder">-->
                   <xsl:if test="./WebXML/document/class">
                     <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
                     <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
@@ -956,6 +955,53 @@
                     </db:tbody>
                   </db:informaltable>
                 </db:title>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
+          <xsl:when test="$type = 'functionindex'">
+            <xsl:variable name="functions" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/class">
+                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:for-each select="$root/function">
+                      <xsl:variable name="functionName" select="if (@fullname) then @fullname else @name"/>
+                      <xsl:map-entry key="concat($functionName, '___', $className, '___', count(preceding-sibling::*))" select="$className"/>
+                    </xsl:for-each>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($functions)" group-by="substring(string(.), 1, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                  
+                <db:itemizedlist>
+                  <xsl:for-each-group select="current-group()" group-by="substring-before(., '___')">
+                    <xsl:sort/>
+                    
+                    <db:listitem>
+                      <db:para>
+                        <xsl:value-of select="substring-before(., '___')"/>
+                        <xsl:text>: </xsl:text>
+                        <xsl:for-each select="current-group()">
+                          <xsl:variable name="containingClass" select="map:get($functions, .)"/>
+                          <db:link xlink:href="{concat(lower-case($containingClass), '.webxml')}" xlink:title="{$containingClass}" xrefstyle="class" annotations="{$containingClass}">
+                            <xsl:value-of select="$containingClass"/>
+                          </db:link>
+                          <xsl:if test="position() &lt; last()">
+                            <xsl:text>&#0160;</xsl:text>
+                          </xsl:if>
+                        </xsl:for-each>
+                      </db:para>
+                    </db:listitem>
+                  </xsl:for-each-group>
+                </db:itemizedlist>
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
