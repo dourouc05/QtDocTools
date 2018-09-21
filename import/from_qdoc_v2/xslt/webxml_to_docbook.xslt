@@ -779,7 +779,7 @@
   <xsl:template mode="content" match="generatedlist">
     <xsl:variable name="currentDocument" select="string(base-uri())" as="xs:string"/>
     <xsl:choose>
-      <xsl:when test="not(@contents)">
+      <xsl:when test="count(child::node()) > 0">
         <!-- Qdoc already generated the whole list, yay! -->
         <xsl:apply-templates mode="content"/>
       </xsl:when>
@@ -1086,6 +1086,9 @@
                 </db:informaltable>
               </db:section>
             </xsl:for-each-group>
+          </xsl:when>
+          <xsl:when test="$type = 'groupsbymodule'">
+            <!-- TODO: Currently not implemented, requires attributions -->
           </xsl:when>
           <xsl:otherwise>
             <xsl:message>WARNING: generatedlist type not implemented: <xsl:value-of select="$type"/></xsl:message>

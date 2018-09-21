@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  version="5.2"
+  xml:lang="en">
+  <db:info>
+    <db:title>Qt XML Patterns C++ Classes</db:title>
+    <db:abstract>
+      <db:para>Qt XML Patterns module provides support for XPath, XQuery, XSLT and XML Schema validation</db:para>
+    </db:abstract>
+    <db:pubdate>2018-09-21+02:00</db:pubdate>
+    <db:date>2018-09-21+02:00</db:date>
+    <db:productname>Qt</db:productname>
+    <db:productnumber>1.2</db:productnumber>
+  </db:info>
+  <db:section>
+    <db:title>Classes</db:title>
+    <db:informaltable>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qabstractmessagehandler.html" xrefstyle="class" annotations="">QAbstractMessageHandler</db:link></db:code>
+        </db:td>
+        <db:td>The QAbstractMessageHandler class provides a callback interface for handling messages.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qabstracturiresolver.html" xrefstyle="class" annotations="">QAbstractUriResolver</db:link></db:code>
+        </db:td>
+        <db:td>The QAbstractUriResolver class is a callback interface for resolving Uniform Resource Identifiers. A Uniform Resource Identifier (URI) is a string that uniquely identifies a resource. URIs are versatile global identifiers. It is often useful to transform a URI that identifies something logical into a URI that locates something physical (a URL), or to simply map a URI to a different URI. QAbstractUriResolver::resolve() provides this functionality.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qabstractxmlnodemodel.html" xrefstyle="class" annotations="">QAbstractXmlNodeModel</db:link></db:code>
+        </db:td>
+        <db:td>The QAbstractXmlNodeModel class is an abstract base class for modeling non-XML data to look like XML for QXmlQuery.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qabstractxmlreceiver.html" xrefstyle="class" annotations="">QAbstractXmlReceiver</db:link></db:code>
+        </db:td>
+        <db:td>The QAbstractXmlReceiver class provides a callback interface for transforming the output of a QXmlQuery.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qsimplexmlnodemodel.html" xrefstyle="class" annotations="">QSimpleXmlNodeModel</db:link></db:code>
+        </db:td>
+        <db:td>The QSimpleXmlNodeModel class is an implementation of QAbstractXmlNodeModel sufficient for many common cases.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qsourcelocation.html" xrefstyle="class" annotations="">QSourceLocation</db:link></db:code>
+        </db:td>
+        <db:td>The QSourceLocation class identifies a location in a resource by URI, line, and column.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlformatter.html" xrefstyle="class" annotations="">QXmlFormatter</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlFormatter class is an implementation of QXmlSerializer for transforming XQuery output into formatted XML.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlitem.html" xrefstyle="class" annotations="">QXmlItem</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlItem class contains either an XML node or an atomic value.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlname.html" xrefstyle="class" annotations="">QXmlName</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlName class represents the name of an XML node, in an efficient, namespace-aware way. QXmlName represents the name of an XML node in a way that is both efficient and safe for comparing names. Normally, an XML node represents an XML element or attribute, but QXmlName can also represent the names of other kinds of nodes, e.g., QAbstractXmlReceiver::processingInstruction() and QAbstractXmlReceiver::namespaceBinding().</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlnamepool.html" xrefstyle="class" annotations="">QXmlNamePool</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlNamePool class is a table of shared strings referenced by instances of QXmlName.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlnodemodelindex.html" xrefstyle="class" annotations="">QXmlNodeModelIndex</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlNodeModelIndex class identifies a node in an XML node model subclassed from QAbstractXmlNodeModel.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlquery.html" xrefstyle="class" annotations="">QXmlQuery</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlQuery class performs XQueries on XML data, or on non-XML data modeled to look like XML.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlresultitems.html" xrefstyle="class" annotations="">QXmlResultItems</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlResultItems class iterates through the results of evaluating an XQuery in QXmlQuery.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlschema.html" xrefstyle="class" annotations="">QXmlSchema</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlSchema class provides loading and validation of a W3C XML Schema.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlschemavalidator.html" xrefstyle="class" annotations="">QXmlSchemaValidator</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlSchemaValidator class validates XML instance documents against a W3C XML Schema.</db:td>
+      </db:tr>
+      <db:tr>
+        <db:td>
+          <db:code><db:link xlink:href="qxmlserializer.html" xrefstyle="class" annotations="">QXmlSerializer</db:link></db:code>
+        </db:td>
+        <db:td>The QXmlSerializer class is an implementation of QAbstractXmlReceiver for transforming XQuery output into unformatted XML.</db:td>
+      </db:tr>
+    </db:informaltable>
+  </db:section>
+  <db:section xml:id="details">
+    <db:title>Detailed Description</db:title>
+    <db:para>The Qt XML Patterns module provides support for XPath, <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>, XSLT and XML Schema validation.</db:para>
+    <db:para>The <db:link xlink:href="qtxmlpatterns-index.html" xrefstyle="page" annotations="Qt XML Patterns">Qt XML Patterns</db:link> module provides support for XPath, <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link>, XSLT and XML Schema validation.</db:para>
+    <db:para>To include the definitions of the module's classes, use the following directive:</db:para>
+    <db:programlisting>
+      #include &lt;QtXmlPatterns&gt;
+    </db:programlisting>
+    <db:para>To link against the module, add this line to your <db:link xlink:href="qmake-manual.html" xrefstyle="page" annotations="qmake">qmake</db:link>
+      <db:code>.pro</db:code> file:</db:para>
+    <db:programlisting/>
+  </db:section>
+</db:article>
