@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=64125:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=65227:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -47,11 +47,11 @@
 --> Found module: qtserialport; qdocconf: C:\Qt\5.11.1\Src\qtserialport\src\serialport\doc\qtserialport.qdocconf
 --> Found module: qtspeech; qdocconf: C:\Qt\5.11.1\Src\qtspeech\src\doc\qtspeech.qdocconf
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
+--> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
+--> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
 --> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
---> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
 --> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
---> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
@@ -449,9 +449,9 @@ WARNING: generatedlist type not implemented: annotatedattributions
 [0315/7715]C:\Qt\Doc\webxml\nfc-examples.webxml
 [0316/7715]C:\Qt\Doc\webxml\object.webxml
 [0317/7715]C:\Qt\Doc\webxml\objecttrees.webxml
+[0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 WARNING: generatedlist type not implemented: obsoleteclasses
 WARNING: generatedlist type not implemented: obsoletecppmembers
-[0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 [0319/7715]C:\Qt\Doc\webxml\obsoleteqmltypes.webxml
 WARNING: generatedlist type not implemented: obsoleteqmltypes
 WARNING: generatedlist type not implemented: obsoleteqmlmembers
@@ -464,8 +464,6 @@ WARNING: generatedlist type not implemented: obsoleteqmlmembers
 [0326/7715]C:\Qt\Doc\webxml\osx.webxml
 [0327/7715]C:\Qt\Doc\webxml\overviews-main.webxml
 [0328/7715]C:\Qt\Doc\webxml\overviews.webxml
-WARNING: generatedlist type not implemented: overviews
-WARNING: generatedlist type not implemented: cpp-modules
 [0329/7715]C:\Qt\Doc\webxml\painting-3d.webxml
 [0330/7715]C:\Qt\Doc\webxml\painting.webxml
 [0331/7715]C:\Qt\Doc\webxml\paintsystem-devices.webxml
@@ -537,20 +535,20 @@ WARNING: generatedlist type not implemented: cpp-modules
 [0397/7715]C:\Qt\Doc\webxml\qabstracturiresolver.webxml
 [0398/7715]C:\Qt\Doc\webxml\qabstractxmlnodemodel.webxml
 [0399/7715]C:\Qt\Doc\webxml\qabstractxmlreceiver.webxml
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
 [0400/7715]C:\Qt\Doc\webxml\qaccessible-state.webxml
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -1576,8 +1574,8 @@ WARNING: generatedlist type not implemented: qmltypes
 [1339/7715]C:\Qt\Doc\webxml\qt-embedded-kmap2qmap.webxml
 [1340/7715]C:\Qt\Doc\webxml\qt-embedded-makeqpf.webxml
 [1341/7715]C:\Qt\Doc\webxml\qt-gui-concepts.webxml
-[1342/7715]C:\Qt\Doc\webxml\qt-labs-calendar-qmlmodule.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[1342/7715]C:\Qt\Doc\webxml\qt-labs-calendar-qmlmodule.webxml
 [1343/7715]C:\Qt\Doc\webxml\qt-labs-folderlistmodel-qmlmodule.webxml
 [1344/7715]C:\Qt\Doc\webxml\qt-labs-handlers-qmlmodule.webxml
 [1345/7715]C:\Qt\Doc\webxml\qt-labs-platform-qmlmodule.webxml
@@ -1616,14 +1614,14 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [1377/7715]C:\Qt\Doc\webxml\qt3d-bearermonitor-example.webxml
 [1378/7715]C:\Qt\Doc\webxml\qt3d-complexpingpong-example.webxml
 [1379/7715]C:\Qt\Doc\webxml\qt3d-core-qmlmodule.webxml
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
 [1380/7715]C:\Qt\Doc\webxml\qt3d-cpp.webxml
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
 [1381/7715]C:\Qt\Doc\webxml\qt3d-dbus-dbus-chat-example.webxml
 [1382/7715]C:\Qt\Doc\webxml\qt3d-embedded-digiflip-example.webxml
 [1383/7715]C:\Qt\Doc\webxml\qt3d-embedded-flickable-example.webxml
@@ -1688,15 +1686,15 @@ WARNING: generatedlist type not implemented: classesbymodule
 [1442/7715]C:\Qt\Doc\webxml\qt3d-planets-qml-solarsystem-qml.webxml
 [1443/7715]C:\Qt\Doc\webxml\qt3d-planets-qml-styledslider-qml.webxml
 [1444/7715]C:\Qt\Doc\webxml\qt3d-planets-qml-suneffect-qml.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [1445/7715]C:\Qt\Doc\webxml\qt3d-qml.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [1446/7715]C:\Qt\Doc\webxml\qt3d-render-qmlmodule.webxml
 [1447/7715]C:\Qt\Doc\webxml\qt3d-scene2d-example.webxml
 WARNING: Quote from file with no content.
@@ -4111,8 +4109,8 @@ WARNING: Quote from file with no content.
 [3832/7715]C:\Qt\Doc\webxml\qtplatformheaders-embedded-raycasting-example.webxml
 [3833/7715]C:\Qt\Doc\webxml\qtplatformheaders-embedded-styleexample-example.webxml
 [3834/7715]C:\Qt\Doc\webxml\qtplatformheaders-index.webxml
-[3835/7715]C:\Qt\Doc\webxml\qtplatformheaders-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[3835/7715]C:\Qt\Doc\webxml\qtplatformheaders-module.webxml
 [3836/7715]C:\Qt\Doc\webxml\qtplatformheaders-tools-customtypesending-example.webxml
 [3837/7715]C:\Qt\Doc\webxml\qtplatformheaders-touch-fingerpaint-example.webxml
 [3838/7715]C:\Qt\Doc\webxml\qtplatformheaders-touch-pinchzoom-example.webxml
@@ -4532,8 +4530,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [4250/7715]C:\Qt\Doc\webxml\qtquick-complexpingpong-example.webxml
 [4251/7715]C:\Qt\Doc\webxml\qtquick-controls-qmlmodule.webxml
 [4252/7715]C:\Qt\Doc\webxml\qtquick-controls-styles-qmlmodule.webxml
-[4253/7715]C:\Qt\Doc\webxml\qtquick-controls2-qmlmodule.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[4253/7715]C:\Qt\Doc\webxml\qtquick-controls2-qmlmodule.webxml
 [4254/7715]C:\Qt\Doc\webxml\qtquick-convenience-topic.webxml
 [4255/7715]C:\Qt\Doc\webxml\qtquick-cppextensionpoints.webxml
 [4256/7715]C:\Qt\Doc\webxml\qtquick-customitems-dialcontrol-content-dial-qml.webxml
@@ -5175,10 +5173,10 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [4891/7715]C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-slideshow-qml.webxml
 [4892/7715]C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-visualdatamodel-qmlproject.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [4893/7715]C:\Qt\Doc\webxml\qtquick-virtualkeyboard-qmlmodule.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [4894/7715]C:\Qt\Doc\webxml\qtquick-virtualkeyboard-settings-qmlmodule.webxml
 [4895/7715]C:\Qt\Doc\webxml\qtquick-virtualkeyboard-styles-qmlmodule.webxml
 [4896/7715]C:\Qt\Doc\webxml\qtquick-visualcanvas-adaptations-d3d12.webxml
@@ -5501,8 +5499,8 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 [5156/7715]C:\Qt\Doc\webxml\qtquickcontrols2-menus.webxml
-[5157/7715]C:\Qt\Doc\webxml\qtquickcontrols2-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5157/7715]C:\Qt\Doc\webxml\qtquickcontrols2-module.webxml
 [5158/7715]C:\Qt\Doc\webxml\qtquickcontrols2-navigation.webxml
 [5159/7715]C:\Qt\Doc\webxml\qtquickcontrols2-popups.webxml
 [5160/7715]C:\Qt\Doc\webxml\qtquickcontrols2-separators.webxml
@@ -5666,8 +5664,8 @@ WARNING: Text outside a paragraph
 [5295/7715]C:\Qt\Doc\webxml\qtquicklayouts-overview.webxml
 [5296/7715]C:\Qt\Doc\webxml\qtquicktemplates2-index.webxml
 [5297/7715]C:\Qt\Doc\webxml\qtquicktest-index.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [5298/7715]C:\Qt\Doc\webxml\qtquickwidgets-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [5299/7715]C:\Qt\Doc\webxml\qtransform.webxml
 [5300/7715]C:\Qt\Doc\webxml\qtranslator.webxml
 [5301/7715]C:\Qt\Doc\webxml\qtreeview.webxml
@@ -5775,8 +5773,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5402/7715]C:\Qt\Doc\webxml\qtscripttools-embedded-raycasting-example.webxml
 [5403/7715]C:\Qt\Doc\webxml\qtscripttools-embedded-styleexample-example.webxml
 [5404/7715]C:\Qt\Doc\webxml\qtscripttools-index.webxml
-[5405/7715]C:\Qt\Doc\webxml\qtscripttools-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5405/7715]C:\Qt\Doc\webxml\qtscripttools-module.webxml
 [5406/7715]C:\Qt\Doc\webxml\qtscripttools-tools-customtypesending-example.webxml
 [5407/7715]C:\Qt\Doc\webxml\qtscripttools-touch-fingerpaint-example.webxml
 [5408/7715]C:\Qt\Doc\webxml\qtscripttools-touch-pinchzoom-example.webxml
@@ -5848,8 +5846,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5474/7715]C:\Qt\Doc\webxml\qtscxml-mediaplayer-widgets-static-example.webxml
 [5475/7715]C:\Qt\Doc\webxml\qtscxml-mediaplayer-widgets-static-mediaplayer-widgets-static-cpp.webxml
 [5476/7715]C:\Qt\Doc\webxml\qtscxml-mediaplayer-widgets-static-mediaplayer-widgets-static-pro.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [5477/7715]C:\Qt\Doc\webxml\qtscxml-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [5478/7715]C:\Qt\Doc\webxml\qtscxml-overview.webxml
 [5479/7715]C:\Qt\Doc\webxml\qtscxml-pinball-example.webxml
 [5480/7715]C:\Qt\Doc\webxml\qtscxml-pinball-main-cpp.webxml
@@ -6484,10 +6482,10 @@ WARNING: generatedlist type not implemented: classesbymodule
 [6106/7715]C:\Qt\Doc\webxml\qtwebengine-index.webxml
 [6107/7715]C:\Qt\Doc\webxml\qtwebengine-licensing.webxml
 [6108/7715]C:\Qt\Doc\webxml\qtwebengine-module.webxml
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
 [6109/7715]C:\Qt\Doc\webxml\qtwebengine-modules.webxml
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
 [6110/7715]C:\Qt\Doc\webxml\qtwebengine-overview.webxml
 [6111/7715]C:\Qt\Doc\webxml\qtwebengine-platform-notes.webxml
 [6112/7715]C:\Qt\Doc\webxml\qtwebengine-qmlmodule.webxml
@@ -8100,7 +8098,7 @@ WARNING: generatedlist type not implemented: classesbymodule
 [7710/7715]C:\Qt\Doc\webxml\xml-sax.webxml
 [7711/7715]C:\Qt\Doc\webxml\xml-streaming.webxml
 [7712/7715]C:\Qt\Doc\webxml\xml-tools.webxml
-Warning at char 7 in xsl:variable/@select on line 867 column 126 of webxml_to_docbook.xslt:
+Warning at char 7 in xsl:variable/@select on line 897 column 126 of webxml_to_docbook.xslt:
   FODC0002: I/O error reported by XML parser processing
   file:///C:/Qt/Doc/webxml/pullbridge.webxml: C:\Qt\Doc\webxml\pullbridge.webxml (The system
   cannot find the file specified)

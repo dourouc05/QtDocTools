@@ -852,6 +852,36 @@
               </xsl:for-each>
             </db:itemizedlist>
           </xsl:when>
+          <xsl:when test="$type = 'overviews'">
+            <db:informaltable>
+              <db:tbody>
+                <xsl:variable name="overviews" as="map(xs:string, xs:string+)">
+                  <xsl:map>
+                    <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                      <xsl:if test="./WebXML/document/group">
+                        <xsl:variable name="root" select="./WebXML/document/group" as="element(group)"/>
+                        <xsl:map-entry key="string($root/@name)" select="(string($root/@title), string($root/@brief))"/>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </xsl:map>
+                </xsl:variable>
+                <xsl:for-each select="map:keys($overviews)">
+                  <xsl:sort/>
+                  
+                  <db:tr>
+                    <db:td>
+                      <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="map:get($overviews, .)[1]" xrefstyle="class" annotations="{.}">
+                        <xsl:value-of select="map:get($overviews, .)[1]"/>
+                      </db:link>
+                    </db:td>
+                    <db:td>
+                      <xsl:value-of select="map:get($overviews, .)[2]"/>
+                    </db:td>
+                  </db:tr>
+                </xsl:for-each>
+              </db:tbody>
+            </db:informaltable>
+          </xsl:when>
           <xsl:when test="$type = 'related'">
             <xsl:if test="not(/WebXML/document/child::node()[1]/@members) or /WebXML/document/child::node()[1]/@members=''">
               <xsl:message>WARNING: generatedlist not implemented with type related and no members attribute.</xsl:message>
@@ -1002,6 +1032,47 @@
                     </db:listitem>
                   </xsl:for-each-group>
                 </db:itemizedlist>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
+          <xsl:when test="$type = 'cpp-modules'">
+            <xsl:variable name="modules" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/module">
+                    <xsl:variable name="root" select="./WebXML/document/module" as="element(module)"/>
+                    <xsl:variable name="moduleName" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="$moduleName" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($modules)" group-by="substring(string(.), 3, 2)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                            <xsl:value-of select="."/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($modules, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
