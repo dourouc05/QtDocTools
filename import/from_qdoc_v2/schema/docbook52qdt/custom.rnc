@@ -1,0 +1,238 @@
+default namespace = "http://docbook.org/ns/docbook"
+include "docbookxi.rnc" {
+  db.classsynopsis =
+    element classsynopsis {
+      db.classsynopsis.attlist,
+      db.oo.inlines+,
+      (db.classsynopsisinfo
+       | db.methodsynopsis
+       | db.constructorsynopsis
+       | db.destructorsynopsis
+       | db.fieldsynopsis
+       | qdt.synopsis)*
+    }
+    
+  # GitHub issue: https://github.com/docbook/docbook/issues/59
+  # Solved for DocBook 5.2. 
+  db.paramdef =
+    element paramdef {
+      db.paramdef.attlist,
+      (db._text
+       | db.initializer
+       | db.modifier
+       | db.type
+       | db.parameter
+       | db.funcparams)*
+    }
+  
+  # GitHub issue: https://github.com/docbook/docbook/issues/60
+  # Solved for DocBook 5.2. 
+  db.funcdef =
+    element funcdef {
+      db.funcdef.attlist, (db._text | db.type | db.void | db.function)*
+    }
+}
+qdt.synopsis = qdt.enumsynopsis | qdt.typedefsynopsis
+
+# Deal with namespaces. 
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.namespace | qdt.namespacename
+
+    qdt.namespace.role.attribute = attribute role { text }
+    qdt.namespace.attlist =
+       qdt.namespace.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.namespace = element namespace { qdt.namespace.attlist, qdt.namespacename }
+
+    qdt.namespacename.role.attribute = attribute role { text }
+    qdt.namespacename.attlist =
+       qdt.namespacename.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.namespacename = element namespacename { qdt.namespacename.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= qdt.namespacesynopsis
+    
+    qdt.namespacesynopsisinfo.role.attribute = attribute role { text }
+    qdt.namespacesynopsisinfo.attlist =
+      qdt.namespacesynopsisinfo.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.verbatim.attributes
+    qdt.namespacesynopsisinfo =
+      element namespacesynopsisinfo {
+        qdt.namespacesynopsisinfo.attlist, db.verbatim.contentmodel
+      }
+    
+    qdt.namespacesynopsis.role.attribute = attribute role { text }
+    qdt.namespacesynopsis.attlist =
+      qdt.namespacesynopsis.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.language.attribute?
+    qdt.namespacesynopsis = 
+      element namespacesynopsis { 
+        qdt.namespacesynopsis.attlist,
+        db.programming.inlines+,
+        (qdt.namespacesynopsisinfo
+        | db.classsynopsis
+        | db.funcsynopsis
+        | db.fieldsynopsis
+        | qdt.typedefsynopsis
+        | qdt.macrosynopsis
+        | qdt.enumsynopsis)*
+      }
+}
+
+# Deal with macros. Adapted from db.funcsynopsis.
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.macro
+        
+    qdt.macro.role.attribute = attribute role { text }
+    qdt.macro.attlist =
+      qdt.macro.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+    qdt.macro =
+      element macro { db.function.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= qdt.macrosynopsis
+    
+    qdt.macrosynopsis.role.attribute = attribute role { text }
+    qdt.macrosynopsis.attlist =
+      qdt.macrosynopsis.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+      & db.language.attribute?
+    qdt.macrosynopsis.info = db._info.title.forbidden
+    qdt.macrosynopsis =
+      element macrosynopsis {
+        qdt.macrosynopsis.attlist,
+        qdt.macrosynopsis.info,
+        (qdt.macrosynopsisinfo | qdt.macroprototype)+
+      }
+    
+   qdt.macrosynopsisinfo.role.attribute = attribute role { text }
+   qdt.macrosynopsisinfo.attlist =
+     qdt.macrosynopsisinfo.role.attribute?
+     & db.common.attributes
+     & db.common.linking.attributes
+     & db.verbatim.attributes
+   qdt.macrosynopsisinfo =
+     element macrosynopsisinfo {
+       qdt.macrosynopsisinfo.attlist, db.verbatim.contentmodel
+     }
+     
+    qdt.macroprototype.role.attribute = attribute role { text }
+    qdt.macroprototype.attlist =
+      qdt.macroprototype.role.attribute?
+      & db.common.attributes
+      & db.common.linking.attributes
+    qdt.macroprototype =
+      element macroprototype {
+        qdt.macroprototype.attlist,
+        db.modifier*,
+        qdt.macrodef,
+        (db.void
+         | db.varargs
+         | ((db.paramdef | db.group.paramdef)+, db.varargs?)),
+        db.modifier*
+      }
+      
+      qdt.macrodef.role.attribute = attribute role { text }
+      qdt.macrodef.attlist =
+        qdt.macrodef.role.attribute?
+        & db.common.attributes
+        & db.common.linking.attributes
+      qdt.macrodef =
+        element macrodef {
+          qdt.macrodef.attlist, (db._text | db.type | qdt.macro)*
+        }
+}
+    
+# Deal with enums. 
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.enumname | qdt.enumvalue | qdt.enumidentifier
+
+    qdt.enumname.role.attribute = attribute role { text }
+    qdt.enumname.attlist =
+       qdt.enumname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumname = element enumname { qdt.enumname.attlist, db._text }
+    
+    qdt.enumvalue.role.attribute = attribute role { text }
+    qdt.enumvalue.attlist =
+       qdt.enumvalue.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumvalue = element enumvalue { qdt.enumvalue.attlist, db._text }
+    
+    qdt.enumidentifier.role.attribute = attribute role { text }
+    qdt.enumidentifier.attlist =
+       qdt.enumidentifier.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumidentifier = element enumidentifier { qdt.enumidentifier.attlist, db._text }
+
+    ## Then the synopsis.
+    db.synopsis.blocks |= qdt.enumsynopsis
+    
+    qdt.enumitem.role.attribute = attribute role { text }
+    qdt.enumitem.attlist =
+       qdt.enumitem.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.enumitem = element enumitem { qdt.enumvalue.attlist, qdt.enumidentifier, qdt.enumvalue? }
+    
+    qdt.enumsynopsisinfo =
+      element enumsynopsisinfo {
+        db.funcsynopsisinfo.attlist, db.verbatim.contentmodel
+      }
+    
+    qdt.enumsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+    qdt.enumsynopsis = 
+      element enumsynopsis {
+        qdt.enumsynopsis.attlist, 
+        db.programming.inlines+, 
+        qdt.enumsynopsisinfo*,
+        qdt.enumitem*
+      }
+}
+  
+# Deal with typedefs.
+div {
+    ## First the inline elements. 
+    db.programming.inlines |= qdt.typedefname
+    
+    qdt.typedefname.role.attribute = attribute role { text }
+    qdt.typedefname.attlist =
+       qdt.typedefname.role.attribute?
+       & db.common.attributes
+       & db.common.linking.attributes
+    qdt.typedefname = element typedefname { qdt.typedefname.attlist, db._text }
+    
+    ## Then the synopsis.
+    db.synopsis.blocks |= qdt.typedefsynopsis
+    
+    qdt.typedefsynopsis.attlist = 
+       db.common.attributes
+       & db.common.linking.attributes
+       & db.language.attribute?
+    qdt.typedefsynopsis = 
+      element typedefsynopsis {
+        qdt.typedefsynopsis.attlist, 
+        qdt.typedefname, 
+        db.programming.inlines*
+      }
+}
+  

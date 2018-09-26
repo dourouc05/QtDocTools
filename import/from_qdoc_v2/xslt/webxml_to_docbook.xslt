@@ -20,6 +20,21 @@
     <xsl:apply-templates select="WebXML/document"/>
   </xsl:template>
   
+  <xsl:function name="tc:sanitise-xml-id" as="xs:string">
+    <xsl:param name="xml-id" as="xs:string"/>
+    <xsl:choose>
+      <xsl:when test="contains($xml-id, ':')">
+        <xsl:value-of select="translate($xml-id, ':', '-')"/>
+      </xsl:when>
+      <xsl:when test="matches($xml-id, '^[0-9]')">
+        <xsl:value-of select="concat('a', $xml-id)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$xml-id"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
   <xsl:template match="document">
     <xsl:variable name="mainTag" select="child::node()[1]" as="node()"/>
     
@@ -78,7 +93,14 @@
       </db:info>
       
       <!-- Deal with the rest of the content. -->
-      <xsl:apply-templates mode="content"/>
+      <xsl:choose>
+        <xsl:when test="child::node()[1]/description[not(*)]">
+          <db:para/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates mode="content"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </db:article>
   </xsl:template>
   
@@ -734,7 +756,7 @@
   <xsl:template mode="content" match="section">
     <db:section>
       <xsl:if test="@id">
-        <xsl:attribute name="xml:id" select="@id"/>
+        <xsl:attribute name="xml:id" select="tc:sanitise-xml-id(@id)"/>
       </xsl:if>
       
       <xsl:apply-templates mode="content"/>
@@ -1180,7 +1202,7 @@
       <xsl:when test="child::node()[1]/text()='Note:'">
         <db:note>
           <xsl:if test="not($targetId='')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           <db:para>
             <xsl:apply-templates mode="content_para"/>
@@ -1190,7 +1212,7 @@
       <xsl:when test="child::node()[1]/text()='Important:'">
         <db:note>
           <xsl:if test="not($targetId='')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           <db:para>
             <xsl:apply-templates mode="content_para"/>
@@ -1201,7 +1223,7 @@
         <!-- WTF? A paragraph that contains paragraphs? Yes, indeed! -->
         <db:para>
           <xsl:if test="not($targetId='')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           <xsl:apply-templates mode="content_para">
             <xsl:with-param name="silent" select="true()"/>
@@ -1215,7 +1237,7 @@
       <xsl:otherwise>
         <db:para>
           <xsl:if test="not($targetId='')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           <xsl:apply-templates mode="content_para"/>
         </db:para>
@@ -1700,14 +1722,14 @@
   <xsl:template mode="content" match="newcode">
     <xsl:choose>
       <xsl:when test="parent::node()/self::quote">
-        <db:programlisting language="other" mode="newcode">
+        <db:programlisting language="other" role="newcode">
           <xsl:value-of select="."/>
         </db:programlisting>
       </xsl:when>
       <xsl:otherwise>
         <!-- oldcode-newcode pair is used to automatically generate some text. -->
         <db:para>you can rewrite it as</db:para>
-        <db:programlisting language="other" mode="newcode">
+        <db:programlisting language="other" role="newcode">
           <xsl:value-of select="."/>
         </db:programlisting>
       </xsl:otherwise>
@@ -1816,7 +1838,7 @@
       <xsl:when test="count(header/list) = 1">
         <db:informaltable>
           <xsl:if test="not($targetId = '')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           
           <db:thead>
@@ -1891,7 +1913,7 @@
       <xsl:when test="parent::header">
         <db:th>
           <xsl:if test="$targetId and not($targetId='')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           <xsl:choose>
             <xsl:when test="child::para">
@@ -1906,7 +1928,7 @@
       <xsl:otherwise>
         <db:td>
           <xsl:if test="$targetId and not($targetId='')">
-            <xsl:attribute name="xml:id" select="$targetId"/>
+            <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
           <xsl:choose>
             <xsl:when test="child::node()[1][self::image]">
@@ -1941,7 +1963,7 @@
   
   <xsl:template mode="content_para" match="link">
     <xsl:choose>
-      <xsl:when test="@type='class' or @type='enum' or @type='function' or @type='property'">
+      <xsl:when test="parent::*[not(self::teletype)] and (@type='class' or @type='enum' or @type='function' or @type='property')">
         <db:code>
           <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
             <xsl:apply-templates mode="content_para"/>

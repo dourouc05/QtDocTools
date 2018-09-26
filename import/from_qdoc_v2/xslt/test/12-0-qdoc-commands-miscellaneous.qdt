@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.2">
+            version="5.2"
+            xml:lang="en">
    <db:info>
       <db:title>Miscellaneous</db:title>
       <db:abstract>
@@ -20,12 +21,12 @@
             </db:simplelist>
          </db:para>
       </db:abstract>
-      <db:pubdate>2018-09-12+02:00</db:pubdate>
-      <db:date>2018-09-12+02:00</db:date>
+      <db:pubdate>2018-09-26+02:00</db:pubdate>
+      <db:date>2018-09-26+02:00</db:date>
       <db:productname>Qt</db:productname>
       <db:productnumber>1.2</db:productnumber>
    </db:info>
-   <db:para>These commands provide miscellaneous functions connected to the visual appearance of the documentation, and to the process of generating the documentation.</db:para>
+   <db:para xml:id="annotatedlist-command">These commands provide miscellaneous functions connected to the visual appearance of the documentation, and to the process of generating the documentation.</db:para>
    <db:section xml:id="annotatedlist">
       <db:title>\annotatedlist</db:title>
       <db:para>The \annotatedlist command expands to a list of the members of a group, each member listed with its <db:emphasis>brief</db:emphasis> text. Below is an example from the Qt Reference Documentation:</db:para>
@@ -39,7 +40,7 @@
     \annotatedlist draganddrop
 
 * /</db:programlisting>
-      <db:para>This generates a list of all the C++ classes and/or QML types in the <db:emphasis>draganddrop</db:emphasis> group. A C++ class or QML type in the <db:emphasis>draganddrop</db:emphasis> group will have <db:emphasis>\ingroup draganddrop</db:emphasis> in its <db:emphasis>\class</db:emphasis> or <db:emphasis>\qmltype</db:emphasis> comment.</db:para>
+      <db:para xml:id="generatelist-command">This generates a list of all the C++ classes and/or QML types in the <db:emphasis>draganddrop</db:emphasis> group. A C++ class or QML type in the <db:emphasis>draganddrop</db:emphasis> group will have <db:emphasis>\ingroup draganddrop</db:emphasis> in its <db:emphasis>\class</db:emphasis> or <db:emphasis>\qmltype</db:emphasis> comment.</db:para>
    </db:section>
    <db:section xml:id="generatelist">
       <db:title>\generatelist</db:title>
@@ -53,7 +54,7 @@
 
     \generatelist classes Q
 * /</db:programlisting>
-      <db:para>This generates the <db:emphasis>All Classes</db:emphasis> page. The command accepts the following arguments:</db:para>
+      <db:para xml:id="table-example">This generates the <db:emphasis>All Classes</db:emphasis> page. The command accepts the following arguments:</db:para>
    </db:section>
    <db:section xml:id="annotatedclasses">
       <db:title><db:code>annotatedclasses</db:code></db:title>
@@ -100,7 +101,7 @@
    <db:section xml:id="annotatedattributions">
       <db:title><db:code>annotatedattributions</db:code></db:title>
       <db:para>The <db:code>annotatedattributions</db:code> argument provides a complete list of all attributions as a set of tables containing the titles of all the attributions, and a description of each attribution. Each title is a link to the attribution's page.</db:para>
-      <db:para>A separate table for each module (that has attributions) is generated, provided that the module has defined a navigation.landingpage configuration variable. The <db:emphasis>landingpage</db:emphasis> variable is used as a title for a header that precedes each table.</db:para>
+      <db:para xml:id="list-example">A separate table for each module (that has attributions) is generated, provided that the module has defined a navigation.landingpage configuration variable. The <db:emphasis>landingpage</db:emphasis> variable is used as a title for a header that precedes each table.</db:para>
    </db:section>
    <db:section xml:id="classes-op-lt-op-prefix-op-gt-op">
       <db:title><db:code>classes &lt;prefix&gt;</db:code></db:title>
@@ -255,13 +256,13 @@
       <db:para>This QDoc comment will only be rendered if the <db:code>opensourceedition</db:code> preprocessor symbol is defined, and specified in the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> variable in the configuration file to make QDoc process the code within #ifdef and #endif:</db:para>
       <db:programlisting language="other">defines = opensourceedition</db:programlisting>
       <db:para>You can also define the preprocessor symbol manually on the command line. For more information see the documentation of the <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> variable.</db:para>
-      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command" xrefstyle="page" annotations="endif-command">\endif</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command" xrefstyle="page" annotations="else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" xrefstyle="page" annotations="falsehoods-variable">falsehoods</db:link>.</db:para>
+      <db:para xml:id="endif-command">See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command" xrefstyle="page" annotations="endif-command">\endif</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command" xrefstyle="page" annotations="else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" xrefstyle="page" annotations="falsehoods-variable">falsehoods</db:link>.</db:para>
    </db:section>
    <db:section xml:id="endif">
       <db:title>\endif</db:title>
       <db:para>The \endif command and the corresponding \if command enclose parts of a QDoc comment that will be included if the condition specified by the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link> command's argument is true.</db:para>
       <db:para>For more information, see the documentation of the <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link> command.</db:para>
-      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command" xrefstyle="page" annotations="else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" xrefstyle="page" annotations="falsehoods-variable">falsehoods</db:link>.</db:para>
+      <db:para xml:id="else-command">See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command" xrefstyle="page" annotations="else-command">\else</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" xrefstyle="page" annotations="falsehoods-variable">falsehoods</db:link>.</db:para>
    </db:section>
    <db:section xml:id="else">
       <db:title>\else</db:title>
@@ -315,7 +316,7 @@
          <db:para>To use the Qt 3 support library, you need to have the line QT += qt3support in your .pro file (qmake automatically define the QT3_SUPPORT symbol, turning on compatibility function support).</db:para>
          <db:para>You can also define the symbol manually (e.g., if you don't want to link against the <db:code>Qt3Support</db:code> library), or you can define <db:code>QT3_SUPPORT_WARNINGS</db:code> instead, telling the compiler to emit a warning when a compatibility function is called. (This works only with GCC 3.2+ and MSVC 7.)</db:para>
       </db:blockquote>
-      <db:para>See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command" xrefstyle="page" annotations="endif-command">\endif</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" xrefstyle="page" annotations="falsehoods-variable">falsehoods</db:link>.</db:para>
+      <db:para xml:id="include-command">See also <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link>, <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command" xrefstyle="page" annotations="endif-command">\endif</db:link>, <db:link xlink:href="22-qdoc-configuration-generalvariables.html#defines-variable" xrefstyle="page" annotations="defines-variable">defines</db:link> and <db:link xlink:href="22-qdoc-configuration-generalvariables.html#falsehoods-variable" xrefstyle="page" annotations="falsehoods-variable">falsehoods</db:link>.</db:para>
    </db:section>
    <db:section xml:id="include">
       <db:title>\include</db:title>
@@ -332,7 +333,7 @@
     \include examples/objectmodel.qdocinc
     \include examples/layoutmanagement.qdocinc
 * /</db:programlisting>
-      <db:para>QDoc renders this page <db:link xlink:href="corefeatures.html" xrefstyle="page" annotations="corefeatures.html">as shown here</db:link>.</db:para>
+      <db:para xml:id="a2-argument-form">QDoc renders this page <db:link xlink:href="corefeatures.html" xrefstyle="page" annotations="corefeatures.html">as shown here</db:link>.</db:para>
    </db:section>
    <db:section xml:id="include-filename-snippet-identifier">
       <db:title>\include filename snippet-identifier</db:title>
@@ -352,7 +353,7 @@
       <db:programlisting language="other">\input examples/signalandslots.qdocinc snippet-id2
 \input examples/objectmodel.qdocinc another-snippet-id</db:programlisting>
       <db:para>It works as expected. The sequence of QDoc commands and text found between the two tags with the same name as the second argument is sent to the QDoc input stream. You can even have nested snippets.</db:para>
-      <db:note>
+      <db:note xml:id="meta-command">
          <db:para> Snippet identifiers work also within documentation comment ( .. ) blocks, so it's not necessary to use a separate <db:code>.qdocinc</db:code> file. When processing a comment block, QDoc removes any <db:code>//!</db:code> comment lines from the generated output.</db:para>
       </db:note>
    </db:section>
@@ -416,14 +417,14 @@
     \title Hello World Example
     \meta {tag} {tutorial,basic}
 * /</db:programlisting>
-      <db:para>This would result in the following tags: <db:emphasis>tutorial,basic,hello,world</db:emphasis>. Common words such as <db:emphasis>example</db:emphasis> are ignored.</db:para>
+      <db:para xml:id="noautolist-command">This would result in the following tags: <db:emphasis>tutorial,basic,hello,world</db:emphasis>. Common words such as <db:emphasis>example</db:emphasis> are ignored.</db:para>
    </db:section>
    <db:section xml:id="noautolist">
       <db:title>\noautolist</db:title>
       <db:para>The \noautolist command indicates that the annotated list of C++ classes or QML types, which is automatically generated at the bottom of the C++ or QML module page should be omitted, because the classes or types have been listed manually. This command can also be used with the <db:link xlink:href="13-qdoc-commands-topics.html#group-command" xrefstyle="page" annotations="group-command">\group</db:link> command to omit the list of group members, when they are listed manually.</db:para>
       <db:para>The command must stand on its own line. See <db:link xlink:href="qtsensors-qmlmodule.html" xrefstyle="" annotations="Qt Sensors QML Types">Qt Sensors QML Types</db:link> for an example. The page is generated from <db:code>qtsensors5.qdoc</db:code>. There you will find a qdoc comment containing the <db:code>\qmlmodule</db:code> command for the <db:link xlink:href="qtsensors-module.html" xrefstyle="module" annotations="QtSensors">QtSensors</db:link> module. The same qdoc comment contains two <db:code>\annotated-list</db:code> commands to list the QML types in two separate groups. The QML types have been divided into these two groups because it makes more sense to list them this way than it does to list them in a single alphabetical list. At the bottom of the comment, <db:code>\noautolist</db:code> has been used to tell qdoc not to generate the automatic annotated list.</db:para>
       <db:para>This command was introduced in QDoc 5.6.</db:para>
-      <db:para>Since Qt 5.10, this command can be applied also to <db:link xlink:href="13-qdoc-commands-topics.html#example-command" xrefstyle="page" annotations="example-command">\example</db:link> documentation, where it causes the automatically generated list of files and images belonging to an example project to be omitted.</db:para>
+      <db:para xml:id="omit-command">Since Qt 5.10, this command can be applied also to <db:link xlink:href="13-qdoc-commands-topics.html#example-command" xrefstyle="page" annotations="example-command">\example</db:link> documentation, where it causes the automatically generated list of files and images belonging to an example project to be omitted.</db:para>
    </db:section>
    <db:section xml:id="omit">
       <db:title>\omit</db:title>
@@ -497,7 +498,7 @@
 \tt {\span {id="color-darkBlue"} {dark blue(#000080)}} and
 \tt {\span {id="color-cyan"} {cyan(#00ffff)}}.</db:programlisting>
       <db:para>...which is rendered as:</db:para>
-      <db:para>
+      <db:para xml:id="unicode-command">
          <db:code>Blue(#0000ff)</db:code>, <db:code>dark blue(#000080)</db:code> and <db:code>cyan(#00ffff)</db:code>.</db:para>
    </db:section>
    <db:section xml:id="unicode">
