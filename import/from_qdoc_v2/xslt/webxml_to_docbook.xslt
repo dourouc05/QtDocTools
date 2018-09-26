@@ -1802,9 +1802,16 @@
   </xsl:template>
   
   <xsl:template mode="content" match="item">
-    <db:listitem>
-      <xsl:apply-templates mode="content"/>
-    </db:listitem>
+    <xsl:choose>
+      <xsl:when test="parent::list">
+        <db:listitem>
+          <xsl:apply-templates mode="content"/>
+        </db:listitem>
+      </xsl:when>
+      <xsl:otherwise>
+          <xsl:apply-templates mode="content"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content" match="image">
@@ -1876,7 +1883,7 @@
         
         <db:informaltable>
           <xsl:for-each select="$children[position() &lt; $indexFirstOutsideTable]">
-            <xsl:apply-templates mode="content_table"/>
+            <xsl:apply-templates mode="content_table" select="."/>
           </xsl:for-each>
         </db:informaltable>
         <xsl:for-each select="$children[position() >= $indexFirstOutsideTable]">
@@ -1901,11 +1908,28 @@
   </xsl:template>
   
   <xsl:template mode="content_table" match="row">
-    <db:tr>
-      <xsl:apply-templates mode="content_table"/>
-    </db:tr>
+    <xsl:choose>
+      <xsl:when test="row">
+        <!-- Qdoc is at it again: it outputs rows within rows... -->
+        <xsl:variable name="children" select="child::node()" as="node()*"/>
+        <xsl:variable name="firstOutsideRow" as="xs:integer">
+          <xsl:variable name="isInRow" select="for $i in 1 to count($children) return boolean($children[$i]/self::row) or name($children[$i]/row) = 'row'"/>
+          <xsl:value-of select="index-of($isInRow, true())[1]"/>
+        </xsl:variable>
+        
+        <db:tr>
+          <xsl:apply-templates mode="content_table" select="$children[position() &lt; $firstOutsideRow]"/>
+        </db:tr>
+        <xsl:apply-templates mode="content_table" select="$children[position() >= $firstOutsideRow]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:tr>
+          <xsl:apply-templates mode="content_table"/>
+        </db:tr>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
-  
+    
   <xsl:template mode="content_table" match="item | heading">
     <xsl:variable name="targetId" select="preceding-sibling::node()[1]/self::target/@name" as="xs:string?"/>
     

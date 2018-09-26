@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
             xmlns:xlink="http://www.w3.org/1999/xlink"
-            version="5.2">
+            version="5.2"
+            xml:lang="en">
    <db:info>
       <db:title>Building ActiveX servers in Qt</db:title>
       <db:abstract>
          <db:para>A Windows-only static library for turning a Qt binary into a COM server</db:para>
       </db:abstract>
+      <db:pubdate>2018-09-27+02:00</db:pubdate>
+      <db:date>2018-09-27+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
    </db:info>
    <db:para>A Windows-only static library for turning a Qt binary into a COM server.</db:para>
    <db:para>The <db:link xlink:href="qaxserver-module.html" xrefstyle="module" annotations="QAxServer">QAxServer</db:link> module is part of the <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt">ActiveQt</db:link> framework. It consists of three classes:</db:para>
@@ -126,10 +131,10 @@ Q_CLASSINFO("EventsID", "{0A3E9F27-E4F1-45bb-9E47-63099BCCD0E3}")
 Q_PROPERTY(int value READ value WRITE setValue)
 </db:programlisting>
       <db:para>Use the <db:code><db:link xlink:href="qobject.html#Q_PROPERTY" xrefstyle="function" annotations="Q_PROPERTY()">Q_PROPERTY()</db:link></db:code> macro to declare properties for the ActiveX control.</db:para>
-      <db:para>Declare a standard constructor taking a parent object, and functions, signals and slots like for any <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> subclass. </db:para>
-      <db:footnote>
-         <db:para>If a standard constructor is not present the compiler will issue an error "no overloaded function takes 2 parameters" when using the default factory through the <db:code><db:link xlink:href="qaxfactory.html#QAXFACTORY_DEFAULT" xrefstyle="function" annotations="QAXFACTORY_DEFAULT()">QAXFACTORY_DEFAULT()</db:link></db:code> macro. If you cannot provide a standard constructor you must implement a <db:code><db:link xlink:href="qaxfactory.html" xrefstyle="class" annotations="QAxFactory">QAxFactory</db:link></db:code> custom factory and call the constructor you have in your implementation of <db:code><db:link xlink:href="qaxfactory.html#createObject" xrefstyle="function" annotations="QAxFactory::createObject">QAxFactory::createObject</db:link></db:code>.</db:para>
-      </db:footnote>
+      <db:para>Declare a standard constructor taking a parent object, and functions, signals and slots like for any <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> subclass. <db:footnote>
+            <db:para>If a standard constructor is not present the compiler will issue an error "no overloaded function takes 2 parameters" when using the default factory through the <db:code><db:link xlink:href="qaxfactory.html#QAXFACTORY_DEFAULT" xrefstyle="function" annotations="QAXFACTORY_DEFAULT()">QAXFACTORY_DEFAULT()</db:link></db:code> macro. If you cannot provide a standard constructor you must implement a <db:code><db:link xlink:href="qaxfactory.html" xrefstyle="class" annotations="QAxFactory">QAxFactory</db:link></db:code> custom factory and call the constructor you have in your implementation of <db:code><db:link xlink:href="qaxfactory.html#createObject" xrefstyle="function" annotations="QAxFactory::createObject">QAxFactory::createObject</db:link></db:code>.</db:para>
+         </db:footnote>
+      </db:para>
       <db:programlisting>
 public:
     MyActiveX(QWidget *parent = 0)
@@ -152,111 +157,141 @@ signals:
          <db:title>Data Types</db:title>
          <db:para>The Qt data types that are supported for properties are:</db:para>
          <db:informaltable>
-            <db:th>
-               <db:para>Qt data type</db:para>
-            </db:th>
-            <db:th>
-               <db:para>COM property</db:para>
-            </db:th>
-            <db:td>
-               <db:para>bool</db:para>
-            </db:td>
-            <db:td>
-               <db:para>VARIANT_BOOL</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>BSTR</db:para>
-            </db:td>
-            <db:td>
-               <db:para>int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>uint</db:para>
-            </db:td>
-            <db:td>
-               <db:para>unsigned int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>double</db:para>
-            </db:td>
-            <db:td>
-               <db:para>double</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:link xlink:href="qtglobal.html#qlonglong-typedef" xrefstyle="typedef" annotations="qlonglong">qlonglong</db:link>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>CY</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:link xlink:href="qtglobal.html#qulonglong-typedef" xrefstyle="typedef" annotations="qulonglong">qulonglong</db:link>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>CY</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>OLE_COLOR</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>DATE</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>DATE</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>DATE</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>IFontDisp*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>
-               </db:para>
-            </db:td>
-            <db:td>
-               <db:para>IPictureDisp* <db:footnote>
-                     <db:para>COM cannot marshal IPictureDisp across process boundaries, so <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code> properties cannot be called for out-of-process servers. You can however marshal the image data via e.g. temporary files. See the Microsoft KB article Q150034 for more information.</db:para>
-                  </db:footnote>
-               </db:para>
-            </db:td>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Qt data type</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>COM property</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tr>
+               <db:td>
+                  <db:para>bool</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>VARIANT_BOOL</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>BSTR</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>int</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>int</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>uint</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>unsigned int</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>double</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>double</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qtglobal.html#qlonglong-typedef" xrefstyle="typedef" annotations="qlonglong">qlonglong</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>CY</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="qtglobal.html#qulonglong-typedef" xrefstyle="typedef" annotations="qulonglong">qulonglong</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>CY</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>OLE_COLOR</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>DATE</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>DATE</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>DATE</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>IFontDisp*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>IPictureDisp* <db:footnote>
+                        <db:para>COM cannot marshal IPictureDisp across process boundaries, so <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code> properties cannot be called for out-of-process servers. You can however marshal the image data via e.g. temporary files. See the Microsoft KB article Q150034 for more information.</db:para>
+                     </db:footnote>
+                  </db:para>
+               </db:td>
+            </db:tr>
             <db:tr>
                <db:td>
                   <db:para>
@@ -329,210 +364,270 @@ signals:
          </db:informaltable>
          <db:para>The Qt data types that are supported for parameters in signals and slots are:</db:para>
          <db:informaltable>
-            <db:th>
-               <db:para>Qt data type</db:para>
-            </db:th>
-            <db:th>
-               <db:para>COM parameter</db:para>
-            </db:th>
-            <db:td>
-               <db:para>bool</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] VARIANT_BOOL</db:para>
-            </db:td>
-            <db:td>
-               <db:para>bool&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] VARIANT_BOOL*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, const <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] BSTR</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] BSTR*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] BSTR*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>int&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in,out] int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>uint</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] unsigned int</db:para>
-            </db:td>
-            <db:td>
-               <db:para>uint&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] unsigned int*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>double</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] double</db:para>
-            </db:td>
-            <db:td>
-               <db:para>double&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] double*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>, const <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] OLE_COLOR</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] OLE_COLOR*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>, const <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] DATE</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] DATE*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>, const <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] DATE</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] DATE*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>, const <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] IFontDisp*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] IFontDisp**</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>, const <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] IPictureDisp*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] IPictureDisp**</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>&gt;, const <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>&gt;&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] SAFEARRAY(VARIANT)</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>&gt;&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] SAFEARRAY(VARIANT)*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>, const <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] SAFEARRAY(BSTR)</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] SAFEARRAY(BSTR)*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>, const <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] SAFEARRAY(BYTE)</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>&amp;</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in, out] SAFEARRAY(BYTE)*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code>*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>[in] IDispatch*</db:para>
-            </db:td>
-            <db:td>
-               <db:para>
-                  <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code>&amp; <db:footnote>
-                     <db:para>OLE needs to marshal user defined types by reference (ByRef), and cannot marshal them by value (ByVal). This is why const-references and object parameters are not supported for <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code>, <db:code><db:link xlink:href="qsize.html" xrefstyle="class" annotations="QSize">QSize</db:link></db:code> and <db:code><db:link xlink:href="qpoint.html" xrefstyle="class" annotations="QPoint">QPoint</db:link></db:code>.</db:para>
-                  </db:footnote>
-               </db:para>
-               <db:listitem>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Qt data type</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>COM parameter</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tr>
+               <db:td>
+                  <db:para>bool</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] VARIANT_BOOL</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>bool&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] VARIANT_BOOL*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, const <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] BSTR</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] BSTR*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] BSTR*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>int</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] int</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>int&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in,out] int</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>uint</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] unsigned int</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>uint&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] unsigned int*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>double</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] double</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>double&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] double*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>, const <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] OLE_COLOR</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qcolor.html" xrefstyle="class" annotations="QColor">QColor</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] OLE_COLOR*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>, const <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] DATE</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] DATE*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>, const <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] DATE</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qdatetime.html" xrefstyle="class" annotations="QDateTime">QDateTime</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] DATE*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>, const <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] IFontDisp*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qfont.html" xrefstyle="class" annotations="QFont">QFont</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] IFontDisp**</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>, const <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] IPictureDisp*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qpixmap.html" xrefstyle="class" annotations="QPixmap">QPixmap</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] IPictureDisp**</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>&gt;, const <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>&gt;&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] SAFEARRAY(VARIANT)</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>&gt;&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] SAFEARRAY(VARIANT)*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>, const <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] SAFEARRAY(BSTR)</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] SAFEARRAY(BSTR)*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>, const <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] SAFEARRAY(BYTE)</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>&amp;</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in, out] SAFEARRAY(BYTE)*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code>*</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>[in] IDispatch*</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code>&amp; <db:footnote>
+                        <db:para>OLE needs to marshal user defined types by reference (ByRef), and cannot marshal them by value (ByVal). This is why const-references and object parameters are not supported for <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code>, <db:code><db:link xlink:href="qsize.html" xrefstyle="class" annotations="QSize">QSize</db:link></db:code> and <db:code><db:link xlink:href="qpoint.html" xrefstyle="class" annotations="QPoint">QPoint</db:link></db:code>.</db:para>
+                     </db:footnote>
+                  </db:para>
                   <db:para>[in, out] struct <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code> (user defined)</db:para>
-               </db:listitem>
-            </db:td>
+               </db:td>
+            </db:tr>
             <db:tr>
                <db:td>
                   <db:para>
@@ -1060,14 +1155,17 @@ public:
 };
 </db:programlisting>
             </db:section>
-            <db:para>
-               <db:emphasis role="bold">See Also:</db:emphasis>
-               <db:simplelist type="vert">
-                  <db:member>
-                     <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt Framework">ActiveQt Framework</db:link>
-                  </db:member>
-               </db:simplelist>
-            </db:para>
+            <db:section>
+               <db:title>See Also</db:title>
+               <db:para>
+                  <db:emphasis role="bold">See Also:</db:emphasis>
+                  <db:simplelist type="vert">
+                     <db:member>
+                        <db:link xlink:href="activeqt-index.html" xrefstyle="page" annotations="ActiveQt Framework">ActiveQt Framework</db:link>
+                     </db:member>
+                  </db:simplelist>
+               </db:para>
+            </db:section>
          </db:section>
       </db:section>
    </db:section>
