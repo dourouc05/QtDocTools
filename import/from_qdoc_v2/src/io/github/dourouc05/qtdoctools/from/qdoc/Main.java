@@ -1,10 +1,16 @@
 package io.github.dourouc05.qtdoctools.from.qdoc;
 
+import com.thaiopensource.relaxng.jaxp.CompactSyntaxSchemaFactory;
 import net.sf.saxon.lib.StandardErrorListener;
 import net.sf.saxon.lib.StandardLogger;
 import net.sf.saxon.s9api.*;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -65,6 +71,12 @@ public class Main {
             System.out.flush();
 
             m.runXSLTWebXMLToDocBook(file.toFile(), destination);
+            try {
+                m.validateDocBook(destination.toFile());
+            } catch (SAXException e) {
+                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
+                e.printStackTrace();
+            }
             ++i;
         }
 
@@ -96,6 +108,7 @@ public class Main {
     private final String qdocPath; // Path to qdoc.
     private final String xsltWebXMLToDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
     private final String xsltDocBookToDvpMLPath; // Path to the XSLT sheet DocBook to DvpML.
+    private final String docBookRNGPath;
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
 //    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
@@ -117,6 +130,7 @@ public class Main {
         qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
         xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
         xsltDocBookToDvpMLPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\docbook_to_dvpml.xslt";
+        docBookRNGPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\schema\\docbook52qdt\\custom.rnc";
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
@@ -438,6 +452,25 @@ public class Main {
         String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
         if (errors.length() > 0) {
             System.out.println(errors);
+        }
+    }
+
+    private boolean validateDocBook(File file) throws SAXException, IOException {
+        // Required according to https://pages.lip6.fr/Jean-Francois.Perrot/XML-Int/Session3/RNG/.
+        System.setProperty(
+                SchemaFactory.class.getName() + ":" + XMLConstants.RELAXNG_NS_URI,
+                "com.thaiopensource.relaxng.jaxp.CompactSyntaxSchemaFactory"
+        );
+        SchemaFactory factory = CompactSyntaxSchemaFactory.newInstance(XMLConstants.RELAXNG_NS_URI);
+        Schema schema = factory.newSchema(new StreamSource(new File(docBookRNGPath)));
+
+        Validator validator = schema.newValidator();
+        try {
+            validator.validate(new StreamSource(file)); // SAXException when validation error.
+            return true;
+        } catch (SAXException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
