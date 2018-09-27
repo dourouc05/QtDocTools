@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Container Classes</db:title>
+      <db:abstract>
+         <db:para>Qt's template-based container classes</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-27+02:00</db:pubdate>
+      <db:date>2018-09-27+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:para>Qt's template-based container classes.</db:para>
+   <db:section xml:id="introduction">
+      <db:title>Introduction</db:title>
+      <db:para>The Qt library provides a set of general purpose template-based container classes. These classes can be used to store items of a specified type. For example, if you need a resizable array of <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>s, use <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&gt;.</db:para>
+      <db:para>These container classes are designed to be lighter, safer, and easier to use than the STL containers. If you are unfamiliar with the STL, or prefer to do things the "Qt way", you can use these classes instead of the STL classes.</db:para>
+      <db:para>The container classes are <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="implicitly shared">implicitly shared</db:link>, they are <db:link xlink:href="threads-reentrancy.html" xrefstyle="page" annotations="reentrant">reentrant</db:link>, and they are optimized for speed, low memory consumption, and minimal inline code expansion, resulting in smaller executables. In addition, they are <db:link xlink:href="threads-reentrancy.html" xrefstyle="page" annotations="thread-safe">thread-safe</db:link> in situations where they are used as read-only containers by all threads used to access them.</db:para>
+      <db:para>For traversing the items stored in a container, you can use one of two types of iterators: <db:link xlink:href="containers.html#java-style-iterators" xrefstyle="page" annotations="Java-style iterators">Java-style iterators</db:link> and <db:link xlink:href="containers.html#stl-style-iterators" xrefstyle="page" annotations="STL-style iterators">STL-style iterators</db:link>. The Java-style iterators are easier to use and provide high-level functionality, whereas the STL-style iterators are slightly more efficient and can be used together with Qt's and STL's <db:link xlink:href="qtalgorithms.html" xrefstyle="page" annotations="generic algorithms">generic algorithms</db:link>.</db:para>
+      <db:para>Qt also offers a <db:link xlink:href="containers.html#foreach" xrefstyle="page" annotations="foreach">foreach</db:link> keyword that make it very easy to iterate over all the items stored in a container.</db:para>
+   </db:section>
+   <db:section xml:id="the-container-classes">
+      <db:title>The Container Classes</db:title>
+      <db:para>Qt provides the following sequential containers: <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>, <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>, <db:code><db:link xlink:href="qstack.html" xrefstyle="class" annotations="QStack">QStack</db:link></db:code>, and <db:code><db:link xlink:href="qqueue.html" xrefstyle="class" annotations="QQueue">QQueue</db:link></db:code>. For most applications, <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> is the best type to use. Although it is implemented as an array-list, it provides very fast prepends and appends. If you really need a linked-list, use <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>; if you want your items to occupy consecutive memory locations, use <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>. <db:code><db:link xlink:href="qstack.html" xrefstyle="class" annotations="QStack">QStack</db:link></db:code> and <db:code><db:link xlink:href="qqueue.html" xrefstyle="class" annotations="QQueue">QQueue</db:link></db:code> are convenience classes that provide LIFO and FIFO semantics.</db:para>
+      <db:para>Qt also provides these associative containers: <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>, <db:code><db:link xlink:href="qmultimap.html" xrefstyle="class" annotations="QMultiMap">QMultiMap</db:link></db:code>, <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>, <db:code><db:link xlink:href="qmultihash.html" xrefstyle="class" annotations="QMultiHash">QMultiHash</db:link></db:code>, and <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>. The "Multi" containers conveniently support multiple values associated with a single key. The "Hash" containers provide faster lookup by using a hash function instead of a binary search on a sorted set.</db:para>
+      <db:para>As special cases, the <db:code><db:link xlink:href="qcache.html" xrefstyle="class" annotations="QCache">QCache</db:link></db:code> and <db:code><db:link xlink:href="qcontiguouscache.html" xrefstyle="class" annotations="QContiguousCache">QContiguousCache</db:link></db:code> classes provide efficient hash-lookup of objects in a limited cache storage.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Class</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Summary</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This is by far the most commonly used container class. It stores a list of values of a given type (T) that can be accessed by index. Internally, the <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> is implemented using an array, ensuring that index-based access is very fast.</db:para>
+               <db:para>Items can be added at either end of the list using <db:code><db:link xlink:href="qlist.html#append" xrefstyle="function" annotations="QList::append()">QList::append()</db:link></db:code> and <db:code><db:link xlink:href="qlist.html#prepend" xrefstyle="function" annotations="QList::prepend()">QList::prepend()</db:link></db:code>, or they can be inserted in the middle using <db:code><db:link xlink:href="qlist.html#insert" xrefstyle="function" annotations="QList::insert()">QList::insert()</db:link></db:code>. More than any other container class, <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> is highly optimized to expand to as little code as possible in the executable. <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code> inherits from <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&gt;.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This is similar to <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>, except that it uses iterators rather than integer indexes to access items. It also provides better performance than <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> when inserting in the middle of a huge list, and it has nicer iterator semantics. (Iterators pointing to an item in a <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code> remain valid as long as the item exists, whereas iterators to a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> can become invalid after any insertion or removal.)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This stores an array of values of a given type at adjacent positions in memory. Inserting at the front or in the middle of a vector can be quite slow, because it can lead to large numbers of items having to be moved by one position in memory.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qstack.html" xrefstyle="class" annotations="QStack">QStack</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This is a convenience subclass of <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code> that provides "last in, first out" (LIFO) semantics. It adds the following functions to those already present in <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>: <db:code><db:link xlink:href="qstack.html#push" xrefstyle="function" annotations="QStack::push()">push()</db:link></db:code>, <db:code><db:link xlink:href="qstack.html#pop" xrefstyle="function" annotations="QStack::pop()">pop()</db:link></db:code>, and <db:code><db:link xlink:href="qstack.html#top" xrefstyle="function" annotations="QStack::top()">top()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qqueue.html" xrefstyle="class" annotations="QQueue">QQueue</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This is a convenience subclass of <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> that provides "first in, first out" (FIFO) semantics. It adds the following functions to those already present in <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>: <db:code><db:link xlink:href="qqueue.html#enqueue" xrefstyle="function" annotations="QQueue::enqueue()">enqueue()</db:link></db:code>, <db:code><db:link xlink:href="qqueue.html#dequeue" xrefstyle="function" annotations="QQueue::dequeue()">dequeue()</db:link></db:code>, and <db:code><db:link xlink:href="qqueue.html#head" xrefstyle="function" annotations="QQueue::head()">head()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This provides a single-valued mathematical set with fast lookups.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This provides a dictionary (associative array) that maps keys of type Key to values of type T. Normally each key is associated with a single value. <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code> stores its data in Key order; if order doesn't matter <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code> is a faster alternative.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmultimap.html" xrefstyle="class" annotations="QMultiMap">QMultiMap</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This is a convenience subclass of <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code> that provides a nice interface for multi-valued maps, i.e. maps where one key can be associated with multiple values.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This has almost the same API as <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>, but provides significantly faster lookups. <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code> stores its data in an arbitrary order.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmultihash.html" xrefstyle="class" annotations="QMultiHash">QMultiHash</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>This is a convenience subclass of <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code> that provides a nice interface for multi-valued hashes.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>Containers can be nested. For example, it is perfectly possible to use a <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;int&gt;&gt;, where the key type is <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> and the value type <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;int&gt;.</db:para>
+      <db:para xml:id="assignable-data-type">The containers are defined in individual header files with the same name as the container (e.g., <db:code>&lt;QLinkedList&gt;</db:code>). For convenience, the containers are forward declared in <db:code>&lt;QtContainerFwd&gt;</db:code>.</db:para>
+      <db:para xml:id="assignable-data-types">The values stored in the various containers can be of any <db:emphasis>assignable data type</db:emphasis>. To qualify, a type must provide a default constructor, a copy constructor, and an assignment operator. This covers most data types you are likely to want to store in a container, including basic types such as <db:code>int</db:code> and <db:code>double</db:code>, pointer types, and Qt data types such as <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, <db:code><db:link xlink:href="qdate.html" xrefstyle="class" annotations="QDate">QDate</db:link></db:code>, and <db:code><db:link xlink:href="qtime.html" xrefstyle="class" annotations="QTime">QTime</db:link></db:code>, but it doesn't cover <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> or any <db:code><db:link xlink:href="qobject.html" xrefstyle="class" annotations="QObject">QObject</db:link></db:code> subclass (<db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code>, <db:code><db:link xlink:href="qdialog.html" xrefstyle="class" annotations="QDialog">QDialog</db:link></db:code>, <db:code><db:link xlink:href="qtimer.html" xrefstyle="class" annotations="QTimer">QTimer</db:link></db:code>, etc.). If you attempt to instantiate a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code>&gt;, the compiler will complain that <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code>'s copy constructor and assignment operators are disabled. If you want to store these kinds of objects in a container, store them as pointers, for example as <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code> *&gt;.</db:para>
+      <db:para>Here's an example custom data type that meets the requirement of an assignable data type:</db:para>
+      <db:programlisting>
+class Employee
+{
+public:
+    Employee() {}
+    Employee(const Employee &amp;other);
+
+    Employee &amp;operator=(const Employee &amp;other);
+
+private:
+    QString myName;
+    QDate myDateOfBirth;
+};
+</db:programlisting>
+      <db:para>If we don't provide a copy constructor or an assignment operator, C++ provides a default implementation that performs a member-by-member copy. In the example above, that would have been sufficient. Also, if you don't provide any constructors, C++ provides a default constructor that initializes its member using default constructors. Although it doesn't provide any explicit constructors or assignment operator, the following data type can be stored in a container:</db:para>
+      <db:programlisting>
+struct Movie
+{
+    int id;
+    QString title;
+    QDate releaseDate;
+};
+</db:programlisting>
+      <db:para>Some containers have additional requirements for the data types they can store. For example, the Key type of a <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt; must provide <db:code>operator&lt;()</db:code>. Such special requirements are documented in a class's detailed description. In some cases, specific functions have special requirements; these are described on a per-function basis. The compiler will always emit an error if a requirement isn't met.</db:para>
+      <db:para>Qt's containers provide operator&lt;&lt;() and operator&gt;&gt;() so that they can easily be read and written using a <db:code><db:link xlink:href="qdatastream.html" xrefstyle="class" annotations="QDataStream">QDataStream</db:link></db:code>. This means that the data types stored in the container must also support operator&lt;&lt;() and operator&gt;&gt;(). Providing such support is straightforward; here's how we could do it for the Movie struct above:</db:para>
+      <db:programlisting>
+QDataStream &amp;operator&lt;&lt;(QDataStream &amp;out, const Movie &amp;movie)
+{
+    out &lt;&lt; (quint32)movie.id &lt;&lt; movie.title
+        &lt;&lt; movie.releaseDate;
+    return out;
+}
+</db:programlisting>
+      <db:programlisting>
+QDataStream &amp;operator&gt;&gt;(QDataStream &amp;in, Movie &amp;movie)
+{
+    quint32 id;
+    QDate date;
+
+    in &gt;&gt; id &gt;&gt; movie.title &gt;&gt; date;
+    movie.id = (int)id;
+    movie.releaseDate = date;
+    return in;
+}
+</db:programlisting>
+      <db:para xml:id="default-constructed-value">The documentation of certain container class functions refer to <db:emphasis>default-constructed values</db:emphasis>; for example, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code> automatically initializes its items with default-constructed values, and <db:code><db:link xlink:href="qmap.html#value" xrefstyle="function" annotations="QMap::value()">QMap::value()</db:link></db:code> returns a default-constructed value if the specified key isn't in the map. For most value types, this simply means that a value is created using the default constructor (e.g. an empty string for <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>). But for primitive types like <db:code>int</db:code> and <db:code>double</db:code>, as well as for pointer types, the C++ language doesn't specify any initialization; in those cases, Qt's containers automatically initialize the value to 0.</db:para>
+   </db:section>
+   <db:section xml:id="the-iterator-classes">
+      <db:title>The Iterator Classes</db:title>
+      <db:para>Iterators provide a uniform means to access items in a container. Qt's container classes provide two types of iterators: Java-style iterators and STL-style iterators. Iterators of both types are invalidated when the data in the container is modified or detached from <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="Implicit Sharing">implicitly shared copies</db:link> due to a call to a non-const member function.</db:para>
+   </db:section>
+   <db:section xml:id="java-style-iterators">
+      <db:title>Java-Style Iterators</db:title>
+      <db:para>The Java-style iterators are new in Qt 4 and are the standard ones used in Qt applications. They are more convenient to use than the STL-style iterators, at the price of being slightly less efficient. Their API is modelled on Java's iterator classes.</db:para>
+      <db:para>For each container class, there are two Java-style iterator data types: one that provides read-only access and one that provides read-write access.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Containers</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Read-only iterator</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Read-write iterator</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qqueue.html" xrefstyle="class" annotations="QQueue">QQueue</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html" xrefstyle="class" annotations="QListIterator">QListIterator</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmutablelistiterator.html" xrefstyle="class" annotations="QMutableListIterator">QMutableListIterator</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>QLinkedListIterator&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>QMutableLinkedListIterator&lt;T&gt;</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qstack.html" xrefstyle="class" annotations="QStack">QStack</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvectoriterator.html" xrefstyle="class" annotations="QVectorIterator">QVectorIterator</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmutablevectoriterator.html" xrefstyle="class" annotations="QMutableVectorIterator">QMutableVectorIterator</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qsetiterator.html" xrefstyle="class" annotations="QSetIterator">QSetIterator</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmutablesetiterator.html" xrefstyle="class" annotations="QMutableSetIterator">QMutableSetIterator</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt;, <db:code><db:link xlink:href="qmultimap.html" xrefstyle="class" annotations="QMultiMap">QMultiMap</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmapiterator.html" xrefstyle="class" annotations="QMapIterator">QMapIterator</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmutablemapiterator.html" xrefstyle="class" annotations="QMutableMapIterator">QMutableMapIterator</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;, <db:code><db:link xlink:href="qmultihash.html" xrefstyle="class" annotations="QMultiHash">QMultiHash</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhashiterator.html" xrefstyle="class" annotations="QHashIterator">QHashIterator</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmutablehashiterator.html" xrefstyle="class" annotations="QMutableHashIterator">QMutableHashIterator</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>In this discussion, we will concentrate on <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> and <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>. The iterator types for <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>, and <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code> have exactly the same interface as <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>'s iterators; similarly, the iterator types for <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code> have the same interface as <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>'s iterators.</db:para>
+      <db:para>Unlike STL-style iterators (covered <db:link xlink:href="containers.html#stl-style-iterators" xrefstyle="page" annotations="STL-style iterators">below</db:link>), Java-style iterators point <db:emphasis>between</db:emphasis> items rather than directly <db:emphasis>at</db:emphasis> items. For this reason, they are either pointing to the very beginning of the container (before the first item), at the very end of the container (after the last item), or between two items. The diagram below shows the valid iterator positions as red arrows for a list containing four items:</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/javaiterators1.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Here's a typical loop for iterating through all the elements of a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&gt; in order and printing them to the console:</db:para>
+      <db:programlisting>
+QList&lt;QString&gt; list;
+list &lt;&lt; "A" &lt;&lt; "B" &lt;&lt; "C" &lt;&lt; "D";
+
+QListIterator&lt;QString&gt; i(list);
+while (i.hasNext())
+    qDebug() &lt;&lt; i.next();
+</db:programlisting>
+      <db:para>It works as follows: The <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> to iterate over is passed to the <db:code><db:link xlink:href="qlistiterator.html" xrefstyle="class" annotations="QListIterator">QListIterator</db:link></db:code> constructor. At that point, the iterator is located just in front of the first item in the list (before item "A"). Then we call <db:code><db:link xlink:href="qlistiterator.html#hasNext" xrefstyle="function" annotations="QListIterator::hasNext()">hasNext()</db:link></db:code> to check whether there is an item after the iterator. If there is, we call <db:code><db:link xlink:href="qlistiterator.html#next" xrefstyle="function" annotations="QListIterator::next()">next()</db:link></db:code> to jump over that item. The next() function returns the item that it jumps over. For a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&gt;, that item is of type <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>.</db:para>
+      <db:para>Here's how to iterate backward in a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>:</db:para>
+      <db:programlisting>
+QListIterator&lt;QString&gt; i(list);
+i.toBack();
+while (i.hasPrevious())
+    qDebug() &lt;&lt; i.previous();
+</db:programlisting>
+      <db:para>The code is symmetric with iterating forward, except that we start by calling <db:code><db:link xlink:href="qlistiterator.html#toBack" xrefstyle="function" annotations="QListIterator::toBack()">toBack()</db:link></db:code> to move the iterator after the last item in the list.</db:para>
+      <db:para>The diagram below illustrates the effect of calling <db:code><db:link xlink:href="qlistiterator.html#next" xrefstyle="function" annotations="QListIterator::next()">next()</db:link></db:code> and <db:code><db:link xlink:href="qlistiterator.html#previous" xrefstyle="function" annotations="QListIterator::previous()">previous()</db:link></db:code> on an iterator:</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/javaiterators2.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>The following table summarizes the <db:code><db:link xlink:href="qlistiterator.html" xrefstyle="class" annotations="QListIterator">QListIterator</db:link></db:code> API:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Function</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Behavior</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#toFront" xrefstyle="function" annotations="QListIterator::toFront()">toFront()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Moves the iterator to the front of the list (before the first item)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#toBack" xrefstyle="function" annotations="QListIterator::toBack()">toBack()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Moves the iterator to the back of the list (after the last item)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#hasNext" xrefstyle="function" annotations="QListIterator::hasNext()">hasNext()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns <db:code>true</db:code> if the iterator isn't at the back of the list</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#next" xrefstyle="function" annotations="QListIterator::next()">next()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns the next item and advances the iterator by one position</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#peekNext" xrefstyle="function" annotations="QListIterator::peekNext()">peekNext()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns the next item without moving the iterator</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#hasPrevious" xrefstyle="function" annotations="QListIterator::hasPrevious()">hasPrevious()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns <db:code>true</db:code> if the iterator isn't at the front of the list</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#previous" xrefstyle="function" annotations="QListIterator::previous()">previous()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns the previous item and moves the iterator back by one position</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlistiterator.html#peekPrevious" xrefstyle="function" annotations="QListIterator::peekPrevious()">peekPrevious()</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns the previous item without moving the iterator</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>
+         <db:code><db:link xlink:href="qlistiterator.html" xrefstyle="class" annotations="QListIterator">QListIterator</db:link></db:code> provides no functions to insert or remove items from the list as we iterate. To accomplish this, you must use <db:code><db:link xlink:href="qmutablelistiterator.html" xrefstyle="class" annotations="QMutableListIterator">QMutableListIterator</db:link></db:code>. Here's an example where we remove all odd numbers from a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;int&gt; using <db:code><db:link xlink:href="qmutablelistiterator.html" xrefstyle="class" annotations="QMutableListIterator">QMutableListIterator</db:link></db:code>:</db:para>
+      <db:programlisting>
+QMutableListIterator&lt;int&gt; i(list);
+while (i.hasNext()) {
+    if (i.next() % 2 != 0)
+        i.remove();
+}
+</db:programlisting>
+      <db:para>The next() call in the loop is made every time. It jumps over the next item in the list. The <db:code><db:link xlink:href="qmutablelistiterator.html#remove" xrefstyle="function" annotations="QMutableListIterator::remove()">remove()</db:link></db:code> function removes the last item that we jumped over from the list. The call to <db:code><db:link xlink:href="qmutablelistiterator.html#remove" xrefstyle="function" annotations="QMutableListIterator::remove()">remove()</db:link></db:code> does not invalidate the iterator, so it is safe to continue using it. This works just as well when iterating backward:</db:para>
+      <db:programlisting>
+QMutableListIterator&lt;int&gt; i(list);
+i.toBack();
+while (i.hasPrevious()) {
+    if (i.previous() % 2 != 0)
+        i.remove();
+}
+</db:programlisting>
+      <db:para>If we just want to modify the value of an existing item, we can use <db:code><db:link xlink:href="qmutablelistiterator.html#setValue" xrefstyle="function" annotations="QMutableListIterator::setValue()">setValue()</db:link></db:code>. In the code below, we replace any value larger than 128 with 128:</db:para>
+      <db:programlisting>
+QMutableListIterator&lt;int&gt; i(list);
+while (i.hasNext()) {
+    if (i.next() &gt; 128)
+        i.setValue(128);
+}
+</db:programlisting>
+      <db:para>Just like <db:code><db:link xlink:href="qmutablelistiterator.html#remove" xrefstyle="function" annotations="QMutableListIterator::remove()">remove()</db:link></db:code>, <db:code><db:link xlink:href="qmutablelistiterator.html#setValue" xrefstyle="function" annotations="QMutableListIterator::setValue()">setValue()</db:link></db:code> operates on the last item that we jumped over. If we iterate forward, this is the item just before the iterator; if we iterate backward, this is the item just after the iterator.</db:para>
+      <db:para>The <db:code><db:link xlink:href="qmutablelistiterator.html#next" xrefstyle="function" annotations="QMutableListIterator::next()">next()</db:link></db:code> function returns a non-const reference to the item in the list. For simple operations, we don't even need <db:code><db:link xlink:href="qmutablelistiterator.html#setValue" xrefstyle="function" annotations="QMutableListIterator::setValue()">setValue()</db:link></db:code>:</db:para>
+      <db:programlisting>
+QMutableListIterator&lt;int&gt; i(list);
+while (i.hasNext())
+    i.next() *= 2;
+</db:programlisting>
+      <db:para>As mentioned above, <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>'s, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>'s, and <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>'s iterator classes have exactly the same API as <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>'s. We will now turn to <db:code><db:link xlink:href="qmapiterator.html" xrefstyle="class" annotations="QMapIterator">QMapIterator</db:link></db:code>, which is somewhat different because it iterates on (key, value) pairs.</db:para>
+      <db:para>Like <db:code><db:link xlink:href="qlistiterator.html" xrefstyle="class" annotations="QListIterator">QListIterator</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html" xrefstyle="class" annotations="QMapIterator">QMapIterator</db:link></db:code> provides <db:code><db:link xlink:href="qmapiterator.html#toFront" xrefstyle="function" annotations="QMapIterator::toFront()">toFront()</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html#toBack" xrefstyle="function" annotations="QMapIterator::toBack()">toBack()</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html#hasNext" xrefstyle="function" annotations="QMapIterator::hasNext()">hasNext()</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html#next" xrefstyle="function" annotations="QMapIterator::next()">next()</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html#peekNext" xrefstyle="function" annotations="QMapIterator::peekNext()">peekNext()</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html#hasPrevious" xrefstyle="function" annotations="QMapIterator::hasPrevious()">hasPrevious()</db:link></db:code>, <db:code><db:link xlink:href="qmapiterator.html#previous" xrefstyle="function" annotations="QMapIterator::previous()">previous()</db:link></db:code>, and <db:code><db:link xlink:href="qmapiterator.html#peekPrevious" xrefstyle="function" annotations="QMapIterator::peekPrevious()">peekPrevious()</db:link></db:code>. The key and value components are extracted by calling <db:code><db:link xlink:href="qmapiterator.html#key" xrefstyle="function" annotations="QMapIterator::key()">key()</db:link></db:code> and <db:code><db:link xlink:href="qmapiterator.html#value" xrefstyle="function" annotations="QMapIterator::value()">value()</db:link></db:code> on the object returned by next(), peekNext(), previous(), or peekPrevious().</db:para>
+      <db:para>The following example removes all (capital, country) pairs where the capital's name ends with "City":</db:para>
+      <db:programlisting>
+QMap&lt;QString, QString&gt; map;
+map.insert("Paris", "France");
+map.insert("Guatemala City", "Guatemala");
+map.insert("Mexico City", "Mexico");
+map.insert("Moscow", "Russia");
+...
+
+QMutableMapIterator&lt;QString, QString&gt; i(map);
+while (i.hasNext()) {
+    if (i.next().key().endsWith("City"))
+        i.remove();
+}
+</db:programlisting>
+      <db:para>
+         <db:code><db:link xlink:href="qmapiterator.html" xrefstyle="class" annotations="QMapIterator">QMapIterator</db:link></db:code> also provides a <db:code><db:link xlink:href="qmapiterator.html#key" xrefstyle="function" annotations="QMapIterator::key()">key()</db:link></db:code> and a <db:code><db:link xlink:href="qmapiterator.html#value" xrefstyle="function" annotations="QMapIterator::value()">value()</db:link></db:code> function that operate directly on the iterator and that return the key and value of the last item that the iterator jumped above. For example, the following code copies the contents of a <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code> into a <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>:</db:para>
+      <db:programlisting>
+QMap&lt;int, QWidget *&gt; map;
+QHash&lt;int, QWidget *&gt; hash;
+
+QMapIterator&lt;int, QWidget *&gt; i(map);
+while (i.hasNext()) {
+    i.next();
+    hash.insert(i.key(), i.value());
+}
+</db:programlisting>
+      <db:para>If we want to iterate through all the items with the same value, we can use <db:code><db:link xlink:href="qmapiterator.html#findNext" xrefstyle="function" annotations="QMapIterator::findNext()">findNext()</db:link></db:code> or <db:code><db:link xlink:href="qmapiterator.html#findPrevious" xrefstyle="function" annotations="QMapIterator::findPrevious()">findPrevious()</db:link></db:code>. Here's an example where we remove all the items with a particular value:</db:para>
+      <db:programlisting>
+QMutableMapIterator&lt;int, QWidget *&gt; i(map);
+while (i.findNext(widget))
+    i.remove();
+</db:programlisting>
+   </db:section>
+   <db:section xml:id="stl-style-iterators">
+      <db:title>STL-Style Iterators</db:title>
+      <db:para>STL-style iterators have been available since the release of Qt 2.0. They are compatible with Qt's and STL's <db:link xlink:href="qtalgorithms.html" xrefstyle="page" annotations="generic algorithms">generic algorithms</db:link> and are optimized for speed.</db:para>
+      <db:para>For each container class, there are two STL-style iterator types: one that provides read-only access and one that provides read-write access. Read-only iterators should be used wherever possible because they are faster than read-write iterators.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Containers</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Read-only iterator</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Read-write iterator</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qqueue.html" xrefstyle="class" annotations="QQueue">QQueue</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt;::const_iterator</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt;::iterator</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;T&gt;::const_iterator</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;T&gt;::iterator</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qstack.html" xrefstyle="class" annotations="QStack">QStack</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;::const_iterator</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;::iterator</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt;::const_iterator</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt;::iterator</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt;, <db:code><db:link xlink:href="qmultimap.html" xrefstyle="class" annotations="QMultiMap">QMultiMap</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt;::const_iterator</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt;::iterator</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;, <db:code><db:link xlink:href="qmultihash.html" xrefstyle="class" annotations="QMultiHash">QMultiHash</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;::const_iterator</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;::iterator</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>The API of the STL iterators is modelled on pointers in an array. For example, the <db:code>++</db:code> operator advances the iterator to the next item, and the <db:code>*</db:code> operator returns the item that the iterator points to. In fact, for <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code> and <db:code><db:link xlink:href="qstack.html" xrefstyle="class" annotations="QStack">QStack</db:link></db:code>, which store their items at adjacent memory positions, the <db:link xlink:href="qvector.html#iterator-typedef" xrefstyle="typedef" annotations="QVector::iterator">iterator</db:link> type is just a typedef for <db:code>T *</db:code>, and the <db:link xlink:href="qvector.html#iterator-typedef" xrefstyle="typedef" annotations="QVector::iterator">const_iterator</db:link> type is just a typedef for <db:code>const T *</db:code>.</db:para>
+      <db:para>In this discussion, we will concentrate on <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> and <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>. The iterator types for <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>, and <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code> have exactly the same interface as <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>'s iterators; similarly, the iterator types for <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code> have the same interface as <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>'s iterators.</db:para>
+      <db:para>Here's a typical loop for iterating through all the elements of a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&gt; in order and converting them to lowercase:</db:para>
+      <db:programlisting>
+QList&lt;QString&gt; list;
+list &lt;&lt; "A" &lt;&lt; "B" &lt;&lt; "C" &lt;&lt; "D";
+
+QList&lt;QString&gt;::iterator i;
+for (i = list.begin(); i != list.end(); ++i)
+    *i = (*i).toLower();
+</db:programlisting>
+      <db:para>Unlike <db:link xlink:href="containers.html#java-style-iterators" xrefstyle="page" annotations="Java-style iterators">Java-style iterators</db:link>, STL-style iterators point directly at items. The <db:code><db:link xlink:href="qlist.html#begin" xrefstyle="function" annotations="QList::begin()">begin()</db:link></db:code> function of a container returns an iterator that points to the first item in the container. The <db:code><db:link xlink:href="qlist.html#end" xrefstyle="function" annotations="QList::end()">end()</db:link></db:code> function of a container returns an iterator to the imaginary item one position past the last item in the container. <db:code><db:link xlink:href="qlist.html#end" xrefstyle="function" annotations="QList::end()">end()</db:link></db:code> marks an invalid position; it must never be dereferenced. It is typically used in a loop's break condition. If the list is empty, <db:code><db:link xlink:href="qlist.html#begin" xrefstyle="function" annotations="QList::begin">begin()</db:link></db:code> equals <db:code><db:link xlink:href="qlist.html#end" xrefstyle="function" annotations="QList::end()">end()</db:link></db:code>, so we never execute the loop.</db:para>
+      <db:para>The diagram below shows the valid iterator positions as red arrows for a vector containing four items:</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/stliterators1.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Iterating backward with an STL-style iterator is done with reverse iterators:</db:para>
+      <db:programlisting>
+QList&lt;QString&gt; list;
+list &lt;&lt; "A" &lt;&lt; "B" &lt;&lt; "C" &lt;&lt; "D";
+
+QList&lt;QString&gt;::reverse_iterator i;
+for (i = list.rbegin(); i != list.rend(); ++i)
+    *i = i-&gt;toLower();
+}
+</db:programlisting>
+      <db:para>In the code snippets so far, we used the unary <db:code>*</db:code> operator to retrieve the item (of type <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>) stored at a certain iterator position, and we then called <db:code><db:link xlink:href="qstring.html#toLower" xrefstyle="function" annotations="QString::toLower()">QString::toLower()</db:link></db:code> on it. Most C++ compilers also allow us to write <db:code>i-&gt;toLower()</db:code>, but some don't.</db:para>
+      <db:para>For read-only access, you can use const_iterator, <db:code><db:link xlink:href="qlist.html#constBegin" xrefstyle="function" annotations="QList::constBegin">constBegin()</db:link></db:code>, and <db:code><db:link xlink:href="qlist.html#constEnd" xrefstyle="function" annotations="QList::constEnd()">constEnd()</db:link></db:code>. For example:</db:para>
+      <db:programlisting>
+QList&lt;QString&gt;::const_iterator i;
+for (i = list.constBegin(); i != list.constEnd(); ++i)
+    qDebug() &lt;&lt; *i;
+</db:programlisting>
+      <db:para>The following table summarizes the STL-style iterators' API:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Expression</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Behavior</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>*i</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns the current item</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>++i</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Advances the iterator to the next item</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>i += n</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Advances the iterator by <db:code>n</db:code> items</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>--i</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Moves the iterator back by one item</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>i -= n</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Moves the iterator back by <db:code>n</db:code> items</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>i - j</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Returns the number of items between iterators <db:code>i</db:code> and <db:code>j</db:code>
+               </db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>The <db:code>++</db:code> and <db:code>--</db:code> operators are available both as prefix (<db:code>++i</db:code>, <db:code>--i</db:code>) and postfix (<db:code>i++</db:code>, <db:code>i--</db:code>) operators. The prefix versions modify the iterators and return a reference to the modified iterator; the postfix versions take a copy of the iterator before they modify it, and return that copy. In expressions where the return value is ignored, we recommend that you use the prefix operators (<db:code>++i</db:code>, <db:code>--i</db:code>), as these are slightly faster.</db:para>
+      <db:para>For non-const iterator types, the return value of the unary <db:code>*</db:code> operator can be used on the left side of the assignment operator.</db:para>
+      <db:para>For <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code> and <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>, the <db:code>*</db:code> operator returns the value component of an item. If you want to retrieve the key, call key() on the iterator. For symmetry, the iterator types also provide a  function to retrieve the value. For example, here's how we would print all items in a <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code> to the console:</db:para>
+      <db:programlisting>
+QMap&lt;int, int&gt; map;
+...
+QMap&lt;int, int&gt;::const_iterator i;
+for (i = map.constBegin(); i != map.constEnd(); ++i)
+    qDebug() &lt;&lt; i.key() &lt;&lt; ':' &lt;&lt; i.value();
+</db:programlisting>
+      <db:para>Thanks to <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="implicit sharing">implicit sharing</db:link>, it is very inexpensive for a function to return a container per value. The Qt API contains dozens of functions that return a <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code> or <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code> per value (e.g., <db:code><db:link xlink:href="qsplitter.html#sizes" xrefstyle="function" annotations="QSplitter::sizes()">QSplitter::sizes()</db:link></db:code>). If you want to iterate over these using an STL iterator, you should always take a copy of the container and iterate over the copy. For example:</db:para>
+      <db:programlisting>
+// RIGHT
+const QList&lt;int&gt; sizes = splitter-&gt;sizes();
+QList&lt;int&gt;::const_iterator i;
+for (i = sizes.begin(); i != sizes.end(); ++i)
+    ...
+
+// WRONG
+QList&lt;int&gt;::const_iterator i;
+for (i = splitter-&gt;sizes().begin();
+        i != splitter-&gt;sizes().end(); ++i)
+    ...
+</db:programlisting>
+      <db:para>This problem doesn't occur with functions that return a const or non-const reference to a container.</db:para>
+   </db:section>
+   <db:section xml:id="implicit-sharing-iterator-problem">
+      <db:title>Implicit sharing iterator problem</db:title>
+      <db:para>
+         <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="Implicit sharing">Implicit sharing</db:link> has another consequence on STL-style iterators: you should avoid copying a container while iterators are active on that container. The iterators point to an internal structure, and if you copy a container you should be very careful with your iterators. E.g:</db:para>
+      <db:programlisting>
+QVector&lt;int&gt; a, b;
+a.resize(100000); // make a big vector filled with 0.
+
+QVector&lt;int&gt;::iterator i = a.begin();
+// WRONG way of using the iterator i:
+b = a;
+/*
+    Now we should be careful with iterator i since it will point to shared data
+    If we do *i = 4 then we would change the shared instance (both vectors)
+    The behavior differs from STL containers. Avoid doing such things in Qt.
+*/
+
+a[0] = 5;
+/*
+    Container a is now detached from the shared data,
+    and even though i was an iterator from the container a, it now works as an iterator in b.
+    Here the situation is that (*i) == 0.
+*/
+
+b.clear(); // Now the iterator i is completely invalid.
+
+int j = *i; // Undefined behavior!
+/*
+    The data from b (which i pointed to) is gone.
+    This would be well-defined with STL containers (and (*i) == 5),
+    but with QVector this is likely to crash.
+*/
+</db:programlisting>
+      <db:para xml:id="foreach">The above example only shows a problem with <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>, but the problem exists for all the implicitly shared Qt containers.</db:para>
+   </db:section>
+   <db:section xml:id="the-foreach-keyword">
+      <db:title>The foreach Keyword</db:title>
+      <db:para>If you just want to iterate over all the items in a container in order, you can use Qt's <db:code>foreach</db:code> keyword. The keyword is a Qt-specific addition to the C++ language, and is implemented using the preprocessor.</db:para>
+      <db:para>Its syntax is: <db:code>foreach</db:code> (<db:emphasis>variable</db:emphasis>, <db:emphasis>container</db:emphasis>) <db:emphasis>statement</db:emphasis>. For example, here's how to use <db:code>foreach</db:code> to iterate over a <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;<db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>&gt;:</db:para>
+      <db:programlisting>
+QLinkedList&lt;QString&gt; list;
+...
+QString str;
+foreach (str, list)
+    qDebug() &lt;&lt; str;
+</db:programlisting>
+      <db:para>The <db:code>foreach</db:code> code is significantly shorter than the equivalent code that uses iterators:</db:para>
+      <db:programlisting>
+QLinkedList&lt;QString&gt; list;
+...
+QLinkedListIterator&lt;QString&gt; i(list);
+while (i.hasNext())
+    qDebug() &lt;&lt; i.next();
+</db:programlisting>
+      <db:para>Unless the data type contains a comma (e.g., <db:code>QPair&lt;int, int&gt;</db:code>), the variable used for iteration can be defined within the <db:code>foreach</db:code> statement:</db:para>
+      <db:programlisting>
+QLinkedList&lt;QString&gt; list;
+...
+foreach (const QString &amp;str, list)
+    qDebug() &lt;&lt; str;
+</db:programlisting>
+      <db:para>And like any other C++ loop construct, you can use braces around the body of a <db:code>foreach</db:code> loop, and you can use <db:code>break</db:code> to leave the loop:</db:para>
+      <db:programlisting>
+QLinkedList&lt;QString&gt; list;
+...
+foreach (const QString &amp;str, list) {
+    if (str.isEmpty())
+        break;
+    qDebug() &lt;&lt; str;
+}
+</db:programlisting>
+      <db:para>With <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code> and <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>, <db:code>foreach</db:code> accesses the value component of the (key, value) pairs automatically, so you should not call values() on the container (it would generate an unnecessary copy, see below). If you want to iterate over both the keys and the values, you can use iterators (which are faster), or you can obtain the keys, and use them to get the values too:</db:para>
+      <db:programlisting>
+QMap&lt;QString, int&gt; map;
+...
+foreach (const QString &amp;str, map.keys())
+    qDebug() &lt;&lt; str &lt;&lt; ':' &lt;&lt; map.value(str);
+</db:programlisting>
+      <db:para>For a multi-valued map:</db:para>
+      <db:programlisting>
+QMultiMap&lt;QString, int&gt; map;
+...
+foreach (const QString &amp;str, map.uniqueKeys()) {
+    foreach (int i, map.values(str))
+        qDebug() &lt;&lt; str &lt;&lt; ':' &lt;&lt; i;
+}
+</db:programlisting>
+      <db:para>Qt automatically takes a copy of the container when it enters a <db:code>foreach</db:code> loop. If you modify the container as you are iterating, that won't affect the loop. (If you do not modify the container, the copy still takes place, but thanks to <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="implicit sharing">implicit sharing</db:link> copying a container is very fast.)</db:para>
+      <db:para>Since foreach creates a copy of the container, using a non-const reference for the variable does not allow you to modify the original container. It only affects the copy, which is probably not what you want.</db:para>
+      <db:para>An alternative to Qt's <db:code>foreach</db:code> loop is the range-based <db:code>for</db:code> that is part of C++ 11 and newer. However, keep in mind that the range-based <db:code>for</db:code> might force a Qt container to <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="Implicit Sharing">detach</db:link>, whereas <db:code>foreach</db:code> would not. But using <db:code>foreach</db:code> always copies the container, which is usually not cheap for STL containers. If in doubt, prefer <db:code>foreach</db:code> for Qt containers, and range based <db:code>for</db:code> for STL ones.</db:para>
+      <db:para>In addition to <db:code>foreach</db:code>, Qt also provides a <db:code>forever</db:code> pseudo-keyword for infinite loops:</db:para>
+      <db:programlisting>
+forever {
+    ...
+}
+</db:programlisting>
+      <db:para>If you're worried about namespace pollution, you can disable these macros by adding the following line to your <db:code>.pro</db:code> file:</db:para>
+      <db:programlisting>
+CONFIG += no_keywords
+</db:programlisting>
+   </db:section>
+   <db:section xml:id="other-container-like-classes">
+      <db:title>Other Container-Like Classes</db:title>
+      <db:para>Qt includes three template classes that resemble containers in some respects. These classes don't provide iterators and cannot be used with the <db:code>foreach</db:code> keyword.</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qvarlengtharray.html" xrefstyle="class" annotations="QVarLengthArray">QVarLengthArray</db:link></db:code>&lt;T, Prealloc&gt; provides a low-level variable-length array. It can be used instead of <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code> in places where speed is particularly important.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qcache.html" xrefstyle="class" annotations="QCache">QCache</db:link></db:code>&lt;Key, T&gt; provides a cache to store objects of a certain type T associated with keys of type Key.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qcontiguouscache.html" xrefstyle="class" annotations="QContiguousCache">QContiguousCache</db:link></db:code>&lt;T&gt; provides an efficient way of caching data that is typically accessed in a contiguous way.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qpair.html" xrefstyle="class" annotations="QPair">QPair</db:link></db:code>&lt;T1, T2&gt; stores a pair of elements.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>Additional non-template types that compete with Qt's template containers are <db:code><db:link xlink:href="qbitarray.html" xrefstyle="class" annotations="QBitArray">QBitArray</db:link></db:code>, <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code>, <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, and <db:code><db:link xlink:href="qstringlist.html" xrefstyle="class" annotations="QStringList">QStringList</db:link></db:code>.</db:para>
+   </db:section>
+   <db:section xml:id="algorithmic-complexity">
+      <db:title>Algorithmic Complexity</db:title>
+      <db:para>Algorithmic complexity is concerned about how fast (or slow) each function is as the number of items in the container grow. For example, inserting an item in the middle of a <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code> is an extremely fast operation, irrespective of the number of items stored in the <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>. On the other hand, inserting an item in the middle of a <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code> is potentially very expensive if the <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code> contains many items, since half of the items must be moved one position in memory.</db:para>
+      <db:para xml:id="constant-time">To describe algorithmic complexity, we use the following terminology, based on the "big Oh" notation:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Constant time:</db:emphasis> O(1). A function is said to run in constant time if it requires the same amount of time no matter how many items are present in the container. One example is <db:code><db:link xlink:href="qlinkedlist.html#insert" xrefstyle="function" annotations="QLinkedList::insert()">QLinkedList::insert()</db:link></db:code>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Logarithmic time:</db:emphasis> O(log <db:emphasis>n</db:emphasis>). A function that runs in logarithmic time is a function whose running time is proportional to the logarithm of the number of items in the container. One example is <db:code><db:link xlink:href="qtalgorithms-obsolete.html#qBinaryFind" xrefstyle="function" annotations="qBinaryFind()">qBinaryFind()</db:link></db:code>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Linear time:</db:emphasis> O(<db:emphasis>n</db:emphasis>). A function that runs in linear time will execute in a time directly proportional to the number of items stored in the container. One example is <db:code><db:link xlink:href="qvector.html#insert" xrefstyle="function" annotations="QVector::insert()">QVector::insert()</db:link></db:code>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Linear-logarithmic time:</db:emphasis> O(<db:emphasis>n</db:emphasis> log <db:emphasis>n</db:emphasis>). A function that runs in linear-logarithmic time is asymptotically slower than a linear-time function, but faster than a quadratic-time function.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:emphasis role="bold">Quadratic time:</db:emphasis> O(<db:emphasis>n</db:emphasis>²). A quadratic-time function executes in a time that is proportional to the square of the number of items stored in the container.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The following table summarizes the algorithmic complexity of Qt's sequential container classes:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th/>
+               <db:th>
+                  <db:para>Index lookup</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Insertion</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Prepending</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Appending</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlinkedlist.html" xrefstyle="class" annotations="QLinkedList">QLinkedList</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(<db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(1)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(n)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(n)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(n)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>In the table, "Amort." stands for "amortized behavior". For example, "Amort. O(1)" means that if you call the function only once, you might get O(<db:emphasis>n</db:emphasis>) behavior, but if you call it multiple times (e.g., <db:emphasis>n</db:emphasis> times), the average behavior will be O(1).</db:para>
+      <db:para>The following table summarizes the algorithmic complexity of Qt's associative containers and sets:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th rowspan="2"/>
+               <db:th colspan="2">
+                  <db:para>Key lookup</db:para>
+               </db:th>
+               <db:th colspan="2">
+                  <db:para>Insertion</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Average</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Worst case</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Average</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Worst case</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmap.html" xrefstyle="class" annotations="QMap">QMap</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qmultimap.html" xrefstyle="class" annotations="QMultiMap">QMultiMap</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(log <db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(<db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(<db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;Key&gt;</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(<db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Amort. O(1)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>O(<db:emphasis>n</db:emphasis>)</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>With <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>, <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>, and <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>, the performance of appending items is amortized O(log <db:emphasis>n</db:emphasis>). It can be brought down to O(1) by calling <db:code><db:link xlink:href="qvector.html#reserve" xrefstyle="function" annotations="QVector::reserve()">QVector::reserve()</db:link></db:code>, <db:code><db:link xlink:href="qhash.html#reserve" xrefstyle="function" annotations="QHash::reserve()">QHash::reserve()</db:link></db:code>, or <db:code><db:link xlink:href="qset.html#reserve" xrefstyle="function" annotations="QSet::reserve()">QSet::reserve()</db:link></db:code> with the expected number of items before you insert the items. The next section discusses this topic in more depth.</db:para>
+   </db:section>
+   <db:section xml:id="growth-strategies">
+      <db:title>Growth Strategies</db:title>
+      <db:para>
+         <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, and <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code> store their items contiguously in memory; <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt; maintains an array of pointers to the items it stores to provide fast index-based access (unless T is a pointer type or a basic type of the size of a pointer, in which case the value itself is stored in the array); <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt; keeps a hash table whose size is proportional to the number of items in the hash. To avoid reallocating the data every single time an item is added at the end of the container, these classes typically allocate more memory than necessary.</db:para>
+      <db:para>Consider the following code, which builds a <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> from another <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>:</db:para>
+      <db:programlisting>
+QString onlyLetters(const QString &amp;in)
+{
+    QString out;
+    for (int j = 0; j &lt; in.size(); ++j) {
+        if (in[j].isLetter())
+            out += in[j];
+    }
+    return out;
+}
+</db:programlisting>
+      <db:para>We build the string <db:code>out</db:code> dynamically by appending one character to it at a time. Let's assume that we append 15000 characters to the <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> string. Then the following 18 reallocations (out of a possible 15000) occur when <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> runs out of space: 4, 8, 12, 16, 20, 52, 116, 244, 500, 1012, 2036, 4084, 6132, 8180, 10228, 12276, 14324, 16372. At the end, the <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> has 16372 Unicode characters allocated, 15000 of which are occupied.</db:para>
+      <db:para>The values above may seem a bit strange, but here are the guiding principles:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code> allocates 4 characters at a time until it reaches size 20.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>From 20 to 4084, it advances by doubling the size each time. More precisely, it advances to the next power of two, minus 12. (Some memory allocators perform worst when requested exact powers of two, because they use a few bytes per block for book-keeping.)</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>From 4084 on, it advances by blocks of 2048 characters (4096 bytes). This makes sense because modern operating systems don't copy the entire data when reallocating a buffer; the physical memory pages are simply reordered, and only the data on the first and last pages actually needs to be copied.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>
+         <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code> and <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;T&gt; use more or less the same algorithm as <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt; also uses that algorithm for data types that can be moved around in memory using <db:code>memcpy()</db:code> (including the basic C++ types, the pointer types, and Qt's <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="shared classes">shared classes</db:link>) but uses a different algorithm for data types that can only be moved by calling the copy constructor and a destructor. Since the cost of reallocating is higher in that case, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt; reduces the number of reallocations by always doubling the memory when running out of space.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt; is a totally different case. <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>'s internal hash table grows by powers of two, and each time it grows, the items are relocated in a new bucket, computed as <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="qHash">qHash</db:link></db:code>(<db:emphasis>key</db:emphasis>) % <db:code><db:link xlink:href="qhash.html#capacity" xrefstyle="function" annotations="QHash::capacity()">QHash::capacity()</db:link></db:code> (the number of buckets). This remark applies to <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt; and <db:code><db:link xlink:href="qcache.html" xrefstyle="class" annotations="QCache">QCache</db:link></db:code>&lt;Key, T&gt; as well.</db:para>
+      <db:para>For most applications, the default growing algorithm provided by Qt does the trick. If you need more control, <db:code><db:link xlink:href="qvector.html" xrefstyle="class" annotations="QVector">QVector</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code>&lt;Key, T&gt;, <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>&lt;T&gt;, <db:code><db:link xlink:href="qstring.html" xrefstyle="class" annotations="QString">QString</db:link></db:code>, and <db:code><db:link xlink:href="qbytearray.html" xrefstyle="class" annotations="QByteArray">QByteArray</db:link></db:code> provide a trio of functions that allow you to check and specify how much memory to use to store the items:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qstring.html#capacity" xrefstyle="function" annotations="QString::capacity()">capacity()</db:link></db:code> returns the number of items for which memory is allocated (for <db:code><db:link xlink:href="qhash.html#qhash" xrefstyle="class" annotations="QHash">QHash</db:link></db:code> and <db:code><db:link xlink:href="qset.html" xrefstyle="class" annotations="QSet">QSet</db:link></db:code>, the number of buckets in the hash table).</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qstring.html#reserve" xrefstyle="function" annotations="QString::reserve()">reserve</db:link></db:code>(<db:emphasis>size</db:emphasis>) explicitly preallocates memory for <db:emphasis>size</db:emphasis> items.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qstring.html#squeeze" xrefstyle="function" annotations="QString::squeeze()">squeeze()</db:link></db:code> frees any memory not required to store the items.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>If you know approximately how many items you will store in a container, you can start by calling <db:code><db:link xlink:href="qstring.html#reserve" xrefstyle="function" annotations="QString::reserve()">reserve()</db:link></db:code>, and when you are done populating the container, you can call <db:code><db:link xlink:href="qstring.html#squeeze" xrefstyle="function" annotations="QString::squeeze()">squeeze()</db:link></db:code> to release the extra preallocated memory.</db:para>
+   </db:section>
+</db:article>

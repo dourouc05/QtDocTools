@@ -94,7 +94,7 @@
       
       <!-- Deal with the rest of the content. -->
       <xsl:choose>
-        <xsl:when test="child::node()[1]/description[not(*)]">
+        <xsl:when test="child::node()[1]/description[not(*)] or (count(child::node()[1]/description/*) = 1 and child::node()[1]/description/brief)">
           <db:para/>
         </xsl:when>
         <xsl:otherwise>
@@ -128,7 +128,7 @@
         <db:classsynopsisinfo role="module">
           <xsl:value-of select="@module"/>
         </db:classsynopsisinfo> 
-        <db:namespacesynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:namespacesynopsisinfo>
+        <db:classsynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:classsynopsisinfo>
         <xsl:if test="@since">
           <db:classsynopsisinfo role="since">
             <xsl:value-of select="@since"/>
@@ -1939,6 +1939,13 @@
           <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
+          <xsl:if test="@rowspan">
+            <xsl:attribute name="rowspan" select="@rowspan"/>
+          </xsl:if>
+          <xsl:if test="@colspan">
+            <xsl:attribute name="colspan" select="@colspan"/>
+          </xsl:if>
+          
           <xsl:choose>
             <xsl:when test="child::para">
               <xsl:apply-templates mode="content"/>
@@ -1954,6 +1961,13 @@
           <xsl:if test="$targetId and not($targetId='')">
             <xsl:attribute name="xml:id" select="tc:sanitise-xml-id($targetId)"/>
           </xsl:if>
+          <xsl:if test="@rowspan">
+            <xsl:attribute name="rowspan" select="@rowspan"/>
+          </xsl:if>
+          <xsl:if test="@colspan">
+            <xsl:attribute name="colspan" select="@colspan"/>
+          </xsl:if>
+          
           <xsl:choose>
             <xsl:when test="child::node()[1][self::image]">
               <!-- An image (not inline, hence block) and its caption. -->
