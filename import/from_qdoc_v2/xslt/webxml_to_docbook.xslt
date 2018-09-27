@@ -1890,6 +1890,21 @@
           <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
       </xsl:when>
+      <!-- Okayish case: multiple header rows. DocBook forces to merge them. -->
+      <xsl:when test="count(header) > 1">
+        <db:informaltable>
+          <db:thead>
+            <xsl:for-each select="header">
+              <db:tr>
+                <xsl:apply-templates mode="content_table"/>
+              </db:tr>
+            </xsl:for-each>
+          </db:thead>
+          <db:tbody>
+            <xsl:apply-templates mode="content_table" select="header[last()]/following-sibling::row"/>
+          </db:tbody>
+        </db:informaltable>
+      </xsl:when>
       <!-- Finally, sometimes, things are just OK. -->
       <xsl:otherwise>
         <db:informaltable>

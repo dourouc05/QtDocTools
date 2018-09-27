@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2"
+   xml:lang="en">
+   <db:info>
+      <db:title>Supported Platforms</db:title>
+      <db:abstract>
+         <db:para>Platforms supported by Qt</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-27+02:00</db:pubdate>
+      <db:date>2018-09-27+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:para>The platforms supported by Qt.</db:para>
+   <db:para>Qt is a commercial and open source licensed cross-platform application and UI framework. It is developed by The Qt Company, together with the Qt Project Community under an open source governance model.</db:para>
+   <db:para>Using Qt, you can write GUI applications once and deploy them across desktop, mobile and embedded operating systems without rewriting the source code.</db:para>
+   <db:para>Qt is supported on a variety of 32-bit and 64-bit platforms, and can usually be built on each platform with GCC, a vendor-supplied compiler, or a third party compiler. Open GL (ES) 2.0, DirectX 9 or 11 (with ANGLE), or an <db:link xlink:href="http://doc.qt.io/QtQuick2DRenderer" xrefstyle="page" annotations="Qt Quick 2D Renderer">alternative renderer</db:link> is required for <db:link xlink:href="qtquick-index.html" xrefstyle="page" annotations="Qt Quick">Qt Quick</db:link> 2. <db:link xlink:href="qtwidgets-index.html" xrefstyle="page" annotations="Qt Widgets">Widgets</db:link> can be used without hardware acceleration.</db:para>
+   <db:para xml:id="desktop-platforms">In Qt 5 all platforms are created using the <db:link xlink:href="qpa.html" xrefstyle="page" annotations="Qt Platform Abstraction">Qt Platform Abstraction</db:link> (QPA), which makes it easier than before to port Qt into a new operating system.</db:para>
+   <db:section xml:id="supported-configurations">
+      <db:title>Supported Configurations</db:title>
+      <db:para>The following table lists configurations supported by The Qt Company. A <db:emphasis>configuration</db:emphasis> is a combination of an operating system version, a compiler version, and a graphics system.</db:para>
+      <db:para>
+         <db:emphasis role="bold">Supported configurations for Qt 1.0</db:emphasis>
+      </db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Platform</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Compiler</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Notes</db:para>
+               </db:th>
+            </db:tr>
+            <db:tr>
+               <db:th colspan="3">
+                  <db:para>
+                     <db:link xlink:href="windows-support.html" xrefstyle="page" annotations="Qt for Windows">Windows</db:link>
+                  </db:para>
+               </db:th>
+            </db:tr>
+            <db:tr>
+               <db:th colspan="3">
+                  <db:para>Universal Windows Platform (UWP)</db:para>
+               </db:th>
+            </db:tr>
+            <db:tr>
+               <db:th colspan="3">
+                  <db:para>
+                     <db:link xlink:href="linux.html" xrefstyle="page" annotations="Qt for Linux/X11">Linux/X11</db:link>
+                  </db:para>
+               </db:th>
+            </db:tr>
+            <db:tr>
+               <db:th colspan="3">
+                  <db:para>
+                     <db:link xlink:href="android-support.html" xrefstyle="page" annotations="Qt for Android">Android</db:link>
+                  </db:para>
+               </db:th>
+            </db:tr>
+            <db:tr>
+               <db:th colspan="3">
+                  <db:para>Darwin Platforms: <db:link xlink:href="osx.html" xrefstyle="page" annotations="Qt for macOS">macOS</db:link>, <db:link xlink:href="ios-support.html" xrefstyle="page" annotations="Qt for iOS">iOS</db:link>, tvOS, watchOS</db:para>
+               </db:th>
+            </db:tr>
+            <db:tr>
+               <db:th colspan="3">
+                  <db:para>Embedded Platforms: <db:link xlink:href="embedded-linux.html" xrefstyle="page" annotations="Qt for Embedded Linux">Embedded Linux</db:link>, <db:link xlink:href="platform-notes-qnx.html" xrefstyle="page" annotations="QNX">QNX</db:link>, <db:link xlink:href="platform-notes-integrity.html" xrefstyle="page" annotations="INTEGRITY">INTEGRITY</db:link>
+                  </db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tbody>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="embedded-linux.html" xrefstyle="page" annotations="Qt for Embedded Linux">Embedded Linux</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>GCC</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>ARM Cortex-A, Intel boards with GCC-based toolchains</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="http://doc.qt.io/QtForDeviceCreation" xrefstyle="page" annotations="Qt for Device Creation">Embedded Linux (Boot2Qt)</db:link> (armv7, armv8, x86, x86_64)</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">GCC 6.2</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">Yocto 2.3</db:emphasis>, Hosts: RHEL 7.2 (x86_64), Windows 7 (x86_64)</db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">QNX 6.6.0</db:emphasis>, 7.0 (armv7 and x86)</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>
+                     <db:emphasis role="bold">QCC as provided by QNX</db:emphasis>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Hosts: <db:emphasis role="bold">RHEL 7.2 (x86_64)</db:emphasis>, <db:emphasis role="bold">Windows 7 (x86_64)</db:emphasis>, <db:emphasis role="bold">Windows 10 (x86_64)</db:emphasis>, <db:emphasis role="bold">Windows 7 (x86)</db:emphasis>, <db:emphasis role="bold"> 10.12</db:emphasis>
+                  </db:para>
+               </db:td>
+            </db:tr>
+            <db:tr>
+               <db:td>
+                  <db:para>
+                     <db:link xlink:href="platform-notes-integrity.html" xrefstyle="page" annotations="INTEGRITY">INTEGRITY 11.4.4</db:link>
+                  </db:para>
+               </db:td>
+               <db:td>
+                  <db:para>As provided by Green Hills INTEGRITY</db:para>
+               </db:td>
+               <db:td>
+                  <db:para>Host: RHEL 7.2 (x86_64)</db:para>
+               </db:td>
+            </db:tr>
+         </db:tbody>
+      </db:informaltable>
+      <db:para>In the above table, the configurations in <db:emphasis role="bold">bold</db:emphasis> are <db:emphasis>reference configurations</db:emphasis>.</db:para>
+      <db:para>
+         <db:emphasis role="bold">See also</db:emphasis>: Qt for Device Creation: Supported Target Devices and Development Hosts.</db:para>
+   </db:section>
+   <db:section xml:id="reference-configurations">
+      <db:title>Reference Configurations</db:title>
+      <db:para>The reference configurations are run on the continuous integration (CI) system within Qt Project. In addition, they are subjected to unit test suite and other internal testing tools on a frequent basis (prior to new version releases, source tree branching, and at other significant period points in the development process). Errors or bugs discovered in these platforms are prioritized for correction. Significant errors discovered in tested configurations can impact release dates.</db:para>
+      <db:para>Any configurations not listed above are not actively tested by the Qt Project. However, Qt may run on configurations other than those actively tested on, and additional configurations may be raised to tested state, if sufficient effort is made to bring continuous integration to an acceptable state for that particular configuration.</db:para>
+      <db:para>The following page lists the configurations supported by The Qt Company for each released Qt version:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="supported-platforms-and-configurations.html" xrefstyle="page" annotations="Supported Platforms and Configurations">Supported Platforms and Configurations</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The Qt Company, Qt partners, open source projects and community users are able to provide assistance with various different supported platforms and configurations.</db:para>
+   </db:section>
+   <db:section xml:id="availability-of-packages">
+      <db:title>Availability of Packages</db:title>
+      <db:para>You can download the Qt 5 installers and source packages from the <db:link xlink:href="http://qt.io/download" xrefstyle="page" annotations="Downloads">Downloads</db:link> page. For more information, visit the <db:link xlink:href="gettingstarted.html" xrefstyle="page" annotations="Getting Started with Qt">Getting Started with Qt</db:link> page.</db:para>
+   </db:section>
+   <db:section xml:id="deployment-of-qt-applications">
+      <db:title>Deployment of Qt Applications</db:title>
+      <db:para>The deployment procedure for each platform is different and they are covered in greater detail in their platform pages. Meanwhile, there is a deployment article for summarizing the deployment procedure in general.</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="deployment.html" xrefstyle="page" annotations="Deploying Qt Applications">Deploying Qt Applications</db:link>
+            </db:para>
+            <db:itemizedlist>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="platform-notes-android.html#deployment" xrefstyle="page" annotations="Platform and Compiler Notes - Android#Deployment">Android</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="ios-support.html" xrefstyle="page" annotations="Qt for iOS">iOS</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="linux-deployment.html" xrefstyle="page" annotations="Qt for Linux/X11 - Deployment">Linux/X11</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="osx-deployment.html" xrefstyle="page" annotations="Qt for macOS - Deployment">macOS</db:link>
+                  </db:para>
+               </db:listitem>
+               <db:listitem>
+                  <db:para>
+                     <db:link xlink:href="windows-deployment.html" xrefstyle="page" annotations="Qt for Windows - Deployment">Windows</db:link>
+                  </db:para>
+               </db:listitem>
+            </db:itemizedlist>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="general-legal-disclaimer">
+      <db:title>General Legal Disclaimer</db:title>
+      <db:para>Please note that Qt is offered on an "as is" basis without warranty of any kind and that our products are not error or bug free. To the maximum extent permitted by applicable law, The Qt Company on behalf of itself and its suppliers, disclaims all warranties and conditions, either express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, title and non-infringement with regard to the Licensed Software.</db:para>
+   </db:section>
+</db:article>
