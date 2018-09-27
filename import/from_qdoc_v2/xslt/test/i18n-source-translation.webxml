@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="i18n-source-translation.html" href="i18n-source-translation.html" status="active" location="i18n.qdoc" filepath="C:/Qt/5.11.1/Src/qtdoc/doc/src/internationalization/i18n.qdoc" lineno="365" subtype="page" title="Writing Source Code for Translation" fulltitle="Writing Source Code for Translation" subtitle="" module="QtDoc" groups="internationalization" brief="How to write source code in a way that makes it possible for user-visible text to be translated">
+            <contents name="using-qstring-for-all-user-visible-text" title="Using QString for All User-Visible Text" level="1"/>
+            <contents name="using-tr-for-all-literal-text" title="Using tr() for All Literal Text" level="1"/>
+            <contents name="defining-a-translation-context" title="Defining a Translation Context" level="1"/>
+            <contents name="using-tr-to-obtain-a-translation" title="Using tr() to Obtain a Translation" level="1"/>
+            <contents name="using-tr-to-localize-numbers" title="Using tr() to Localize Numbers" level="1"/>
+            <contents name="translating-non-qt-classes" title="Translating Non-Qt Classes" level="1"/>
+            <contents name="translator-comments" title="Translator Comments" level="1"/>
+            <contents name="adding-meta-data-to-strings" title="Adding Meta-Data to Strings" level="1"/>
+            <contents name="disambiguation" title="Disambiguation" level="1"/>
+            <contents name="handling-plurals" title="Handling Plurals" level="1"/>
+            <contents name="translating-text-that-is-outside-of-a-qobject-subclass" title="Translating Text That is Outside of a QObject Subclass" level="1"/>
+            <contents name="using-qcoreapplication-translate" title="Using QCoreApplication::translate()" level="2"/>
+            <contents name="using-qt-tr-noop-and-qt-translate-noop-in-c" title="Using QT_TR_NOOP() and QT_TRANSLATE_NOOP() in C++" level="2"/>
+            <contents name="using-qkeysequence-for-accelerator-values" title="Using QKeySequence() for Accelerator Values" level="1"/>
+            <contents name="using-numbered-arguments" title="Using Numbered Arguments" level="1"/>
+            <contents name="further-reading" title="Further Reading" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qtdoc/doc/src/internationalization/i18n.qdoc" line="365" column="4">
+                <relation href="i18n-plural-rules.html" type="page" meta="next" description="Translation Rules for Plurals"/>
+                <relation href="internationalization.html" type="" meta="previous" description=""/>
+                <relation href="internationalization.html" type="" meta="contents" description=""/>
+                <brief>How to write source code in a way that makes it possible for user-visible text to be translated.</brief>
+                <para>Writing cross-platform international software with Qt is a gentle, incremental process. Your software can become internationalized in the stages described in the following sections. For more information about internalizing Qt Quick application, see <link raw="Internationalization and Localization with Qt Quick" href="qtquick-internationalization.html" type="page" page="Internationalization and Localization with Qt Quick">Internationalization and Localization with Qt Quick</link>.</para>
+                <section id="using-qstring-for-all-user-visible-text">
+                    <heading level="1">Using QString for All User-Visible Text</heading>
+                    <para>Since <link raw="QString" href="qstring.html" type="class">QString</link> uses the Unicode encoding internally, every language in the world can be processed transparently using familiar text processing operations. Also, since all Qt functions that present text to the user take a <link raw="QString" href="qstring.html" type="class">QString</link> as a parameter, there is no <teletype type="highlighted">char *</teletype> to <link raw="QString" href="qstring.html" type="class">QString</link> conversion overhead.</para>
+                    <para>Strings that are in &quot;programmer space&quot; (such as <link raw="QObject" href="qobject.html" type="class">QObject</link> names and file format texts) need not use <link raw="QString" href="qstring.html" type="class">QString</link>; the traditional <teletype type="highlighted">char *</teletype> or the <link raw="QByteArray" href="qbytearray.html" type="class">QByteArray</link> class will suffice.</para>
+                    <para>You're unlikely to notice that you are using Unicode; <link raw="QString" href="qstring.html" type="class">QString</link>, and <link raw="QChar" href="qchar.html" type="class">QChar</link> are just easier versions of the crude <teletype type="highlighted">const char *</teletype> and <teletype type="highlighted">char</teletype> from traditional C.</para>
+                    <para>
+                        <teletype type="highlighted">char *</teletype> strings in source code are assumed to be UTF-8 encoded when being implicitly converted to a <link raw="QString" href="qstring.html" type="class">QString</link>. If your C string literal uses a different encoding, use <link raw="QString::fromLatin1()" href="qstring.html#fromLatin1" type="function">QString::fromLatin1()</link> or <link raw="QTextCodec" href="qtextcodec.html" type="class">QTextCodec</link> to convert the literal to a Unicode encoded <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                </section>
+                <section id="using-tr-for-all-literal-text">
+                    <heading level="1">Using tr() for All Literal Text</heading>
+                    <para>Wherever your program uses a string literal (quoted text) that will be presented to the user, ensure that it is processed by the <link raw="QCoreApplication::translate()" href="qcoreapplication.html#translate" type="function">QCoreApplication::translate()</link> function. Essentially all that is necessary to achieve this is to use the <link raw="QObject::tr()" href="qobject.html#tr" type="function">tr()</link> function to obtain translated text for your classes, typically for display purposes. This function is also used to indicate which text strings in an application are translatable.</para>
+                    <para>For example, assuming the <teletype type="highlighted">LoginWidget</teletype> is a subclass of <link raw="QWidget" href="qwidget.html" type="class">QWidget</link>:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="0"/>
+                    <para>This accounts for 99% of the user-visible strings you're likely to write.</para>
+                    <para>If the quoted text is not in a member function of a <link raw="QObject" href="qobject.html" type="class">QObject</link> subclass, use either the tr() function of an appropriate class, or the <link raw="QCoreApplication::translate()" href="qcoreapplication.html#translate" type="function">QCoreApplication::translate()</link> function directly:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="1"/>
+                    <para>Qt indexes each translatable string by the <italic>translation context</italic> it is associated with; this is generally the name of the <link raw="QObject" href="qobject.html" type="class">QObject</link> subclass it is used in.</para>
+                    <para>Translation contexts are defined for new <link raw="QObject" href="qobject.html" type="class">QObject</link>-based classes by the use of the <link raw="Q_OBJECT" href="qobject.html#Q_OBJECT" type="function">Q_OBJECT</link> macro in each new class definition.</para>
+                    <para>When tr() is called, it looks up the translatable string using a <link raw="QTranslator" href="qtranslator.html" type="class">QTranslator</link> object. For translation to work, one or more of these must have been installed on the application object in the way described in <link raw="Enabling Translation" href="internationalization.html#enabling-translation" type="">Enabling Translation</link>.</para>
+                    <para>Translating strings in QML works exactly the same way as in C++, with the only difference being that you need to call qsTr() instead of <link raw="QObject::tr()" href="qobject.html#tr" type="function">tr()</link>. See also the page on <link raw="Internationalization and Localization with Qt Quick" href="qtquick-internationalization.html" type="page" page="Internationalization and Localization with Qt Quick">Internationalization and Localization with Qt Quick</link>.</para>
+                </section>
+                <section id="defining-a-translation-context">
+                    <heading level="1">Defining a Translation Context</heading>
+                    <para>The translation context for <link raw="QObject" href="qobject.html" type="class">QObject</link> and each <link raw="QObject" href="qobject.html" type="class">QObject</link> subclass is the class name itself. Developers subclassing <link raw="QObject" href="qobject.html" type="class">QObject</link> must use the <link raw="Q_OBJECT" href="qobject.html#Q_OBJECT" type="function">Q_OBJECT</link> macro in their class definition to override the translation context. This macro sets the context to the name of the subclass.</para>
+                    <para>For example, the following class definition includes the <link raw="Q_OBJECT" href="qobject.html#Q_OBJECT" type="function">Q_OBJECT</link> macro, implementing a new tr() that uses the <teletype type="highlighted">MainWindow</teletype> context:</para>
+                    <code>class MainWindow : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    MainWindow();
+    ...</code>
+                    <dots indent="4">...</dots>
+                    <para>If <link raw="Q_OBJECT" href="qobject.html#Q_OBJECT" type="function">Q_OBJECT</link> is not used in a class definition, the context will be inherited from the base class. For example, since all <link raw="QObject" href="qobject.html" type="class">QObject</link>-based classes in Qt provide a context, a new <link raw="QWidget" href="qwidget.html" type="class">QWidget</link> subclass defined without a <link raw="Q_OBJECT" href="qobject.html#Q_OBJECT" type="function">Q_OBJECT</link> macro will use the <teletype type="highlighted">QWidget</teletype> context if its tr() function is invoked.</para>
+                </section>
+                <section id="using-tr-to-obtain-a-translation">
+                    <heading level="1">Using tr() to Obtain a Translation</heading>
+                    <para>The following example shows how a translation is obtained for the class shown in the previous section:</para>
+                    <code>void MainWindow::createMenus()
+{
+    fileMenu = menuBar()-&gt;addMenu(tr(&quot;&amp;File&quot;));
+    ...</code>
+                    <dots indent="4">...</dots>
+                    <para>Here, the translation context is <teletype type="highlighted">MainWindow</teletype> because it is the <teletype type="highlighted">MainWindow::tr()</teletype> function that is invoked. The text returned by the tr() function is a translation of &quot;&amp;File&quot; obtained from the <teletype type="highlighted">MainWindow</teletype> context.</para>
+                    <para>When Qt's translation tool, <link raw="Using lupdate" href="linguist-manager.html#using-lupdate" type="page" page="Qt Linguist Manual: Release Manager">lupdate</link>, is used to process a set of source files, the text wrapped in tr() calls is stored in a section of the translation file that corresponds to its translation context.</para>
+                    <para>In some situations, it is useful to give a translation context explicitly by fully qualifying the call to tr(); for example:</para>
+                    <snippet location="snippets/code/src_corelib_kernel_qobject.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/src_corelib_kernel_qobject.cpp" identifier="explicit tr context"/>
+                    <para>This call obtains the translated text for &quot;Page up&quot; from the <teletype type="highlighted">QScrollBar</teletype> context. Developers can also use the <link raw="QCoreApplication::translate()" href="qcoreapplication.html#translate" type="function">QCoreApplication::translate()</link> function to obtain a translation for a particular translation context.</para>
+                </section>
+                <section id="using-tr-to-localize-numbers">
+                    <heading level="1">Using tr() to Localize Numbers</heading>
+                    <para>You can localize numbers by using appropriate tr() strings:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="11"/>
+                    <para>In the example, for the US we would leave the translation of &quot;AMPM&quot; as it is and thereby use the 12-hour clock branch; but in Europe we would translate it as something else to make the code use the 24-hour clock branch.</para>
+                </section>
+                <section id="translating-non-qt-classes">
+                    <heading level="1">Translating Non-Qt Classes</heading>
+                    <para>It is sometimes necessary to provide internationalization support for strings used in classes that do not inherit <link raw="QObject" href="qobject.html" type="class">QObject</link> or use the <link raw="Q_OBJECT" href="qobject.html#Q_OBJECT" type="function">Q_OBJECT</link> macro to enable translation features. Since Qt translates strings at run-time based on the class they are associated with and <teletype type="highlighted">lupdate</teletype> looks for translatable strings in the source code, non-Qt classes must use mechanisms that also provide this information.</para>
+                    <para>One way to do this is to add translation support to a non-Qt class using the <link raw="Q_DECLARE_TR_FUNCTIONS()" href="qcoreapplication.html#Q_DECLARE_TR_FUNCTIONS" type="function">Q_DECLARE_TR_FUNCTIONS()</link> macro; for example:</para>
+                    <snippet location="snippets/i18n-non-qt-class/myclass.h" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/i18n-non-qt-class/myclass.h" identifier="0"/>
+                    <dots indent="4">...</dots>
+                    <snippet location="snippets/i18n-non-qt-class/myclass.h" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/i18n-non-qt-class/myclass.h" identifier="1"/>
+                    <para>This provides the class with <link raw="QObject::tr()" href="qobject.html#tr" type="function">tr()</link> functions that can be used to translate strings associated with the class, and makes it possible for <teletype type="highlighted">lupdate</teletype> to find translatable strings in the source code.</para>
+                    <para>Alternatively, the <link raw="QCoreApplication::translate()" href="qcoreapplication.html#translate" type="function">QCoreApplication::translate()</link> function can be called with a specific context, and this will be recognized by <teletype type="highlighted">lupdate</teletype> and Qt Linguist.</para>
+                </section>
+                <section id="translator-comments">
+                    <heading level="1">Translator Comments</heading>
+                    <para>Developers can include information about each translatable string to help translators with the translation process. These are extracted when <teletype type="highlighted">lupdate</teletype> is used to process the source files. The recommended way to add comments is to annotate the tr() calls in your code with comments of the form:</para>
+                    <para>
+                        <teletype>//: ...</teletype></para>
+                    <para>or</para>
+                    <para>
+                        <teletype>
+                            <teletype type="highlighted">/*</teletype>: ... <teletype type="highlighted">*/</teletype>
+                        </teletype></para>
+                    <para>Examples:</para>
+                    <snippet location="snippets/code/src_corelib_kernel_qobject.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/src_corelib_kernel_qobject.cpp" identifier="40"/>
+                    <para>In these examples, the comments will be associated with the strings passed to tr() in the context of each call.</para>
+                </section>
+                <section id="adding-meta-data-to-strings">
+                    <heading level="1">Adding Meta-Data to Strings</heading>
+                    <para>Additional data can be attached to each translatable message. These are extracted when <teletype type="highlighted">lupdate</teletype> is used to process the source files. The recommended way to add meta-data is to annotate the tr() calls in your code with comments of the form:</para>
+                    <para>
+                        <teletype>//= &lt;id&gt;</teletype></para>
+                    <para>This can be used to give the message a unique identifier to support tools which need it.</para>
+                    <para>An alternative way to attach meta-data is to use the following syntax:</para>
+                    <para>
+                        <teletype>//~ &lt;field name&gt; &lt;field contents&gt;</teletype></para>
+                    <para>This can be used to attach meta-data to the message. The field name should consist of a domain prefix (possibly the conventional file extension of the file format the field is inspired by), a hyphen and the actual field name in underscore-delimited notation. For storage in TS files, the field name together with the prefix &quot;extra-&quot; will form an XML element name. The field contents will be XML-escaped, but otherwise appear verbatim as the element's contents. Any number of unique fields can be added to each message.</para>
+                    <para>Example:</para>
+                    <snippet location="snippets/code/src_corelib_kernel_qobject.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/src_corelib_kernel_qobject.cpp" identifier="meta data"/>
+                    <para>You can use the keyword <italic>TRANSLATOR</italic> for translator comments. Meta-data appearing right in front of the TRANSLATOR keyword applies to the whole TS file.</para>
+                </section>
+                <section id="disambiguation">
+                    <heading level="1">Disambiguation</heading>
+                    <para>If the same translatable string is used in different roles within the same translation context, an additional identifying string may be passed in the call to <link raw="QObject::tr()" href="qobject.html#tr" type="function">tr()</link>. This optional disambiguation argument is used to distinguish between otherwise identical strings.</para>
+                    <para>Example:</para>
+                    <snippet location="snippets/code/src_corelib_kernel_qobject.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/src_corelib_kernel_qobject.cpp" identifier="17"/>
+                    <dots indent="4">...</dots>
+                    <para>In Qt 4.4 and earlier, this disambiguation parameter was the preferred way to specify comments to translators.</para>
+                </section>
+                <section id="handling-plurals">
+                    <heading level="1">Handling Plurals</heading>
+                    <para>Some translatable strings contain placeholders for integer values and need to be translated differently depending on the values in use.</para>
+                    <para>To help with this problem, developers pass an additional integer argument to the <link raw="QObject::tr()" href="qobject.html#tr" type="function">tr()</link> function, and typically use a special notation for plurals in each translatable string.</para>
+                    <para>If this argument is equal or greater than zero, all occurrences of <teletype type="highlighted">%n</teletype> in the resulting string are replaced with a decimal representation of the value supplied. In addition, the translation used will adapt to the value according to the rules for each language.</para>
+                    <para>Example:</para>
+                    <snippet location="snippets/code/src_corelib_kernel_qobject.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/src_corelib_kernel_qobject.cpp" identifier="18"/>
+                    <para>The table below shows what string is returned depending on the active translation:</para>
+                    <table>
+                        <header>
+                            <item/>
+                            <item colspan="3">
+                                <para>Active Translation</para>
+                            </item>
+                        </header>
+                        <header>
+                            <item>
+                                <para>
+                                    <argument>n</argument></para>
+                            </item>
+                            <item>
+                                <para>No Translation</para>
+                            </item>
+                            <item>
+                                <para>French</para>
+                            </item>
+                            <item>
+                                <para>English</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>0</para>
+                            </item>
+                            <item>
+                                <para>&quot;0 message(s) saved&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;0 message sauvegardé&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;0 message<bold>s</bold> saved&quot;</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>1</para>
+                            </item>
+                            <item>
+                                <para>&quot;1 message(s) saved&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;1 message sauvegardé&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;1 message saved&quot;</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>2</para>
+                            </item>
+                            <item>
+                                <para>&quot;2 message(s) saved&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;2 message<bold>s</bold> sauvegardé<bold>s</bold>&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;2 message<bold>s</bold> saved&quot;</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>37</para>
+                            </item>
+                            <item>
+                                <para>&quot;37 message(s) saved&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;37 message<bold>s</bold> sauvegardé<bold>s</bold>&quot;</para>
+                            </item>
+                            <item>
+                                <para>&quot;37 message<bold>s</bold> saved&quot;</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>This idiom is more flexible than the traditional approach; e.g.,</para>
+                    <snippet location="snippets/code/src_corelib_kernel_qobject.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/src_corelib_kernel_qobject.cpp" identifier="19"/>
+                    <para>because it also works with target languages that have several plural forms (e.g., Irish has a special &quot;dual&quot; form that should be used when <teletype type="highlighted">n</teletype> is 2), and it handles the <italic>n</italic> == 0 case correctly for languages such as French that require the singular.</para>
+                    <para>To handle plural forms in the native language, you need to load a translation file for this language, too. The lupdate tool has the <teletype type="highlighted">-pluralonly</teletype> command line option, which allows the creation of TS files containing only entries with plural forms.</para>
+                    <para>See the <link raw="Qt Quarterly" href="http://doc.qt.io/archives/qq/" type="page" page="Qt Quarterly">Qt Quarterly</link> Article Plural Forms in Translations for further details on this issue.</para>
+                    <para>Instead of <teletype type="highlighted">%n</teletype>, you can use <teletype type="highlighted">%Ln</teletype> to produce a localized representation of <argument>n</argument>. The conversion uses the default locale, set using <link raw="QLocale::setDefault()" href="qlocale.html#setDefault" type="function">QLocale::setDefault()</link>. (If no default locale was specified, the system wide locale is used.)</para>
+                    <para>A summary of the rules used to translate strings containing plurals can be found in the <link raw="Translation Rules for Plurals" href="i18n-plural-rules.html" type="page" page="Translation Rules for Plurals">Translation Rules for Plurals</link> document.</para>
+                </section>
+                <section id="translating-text-that-is-outside-of-a-qobject-subclass">
+                    <heading level="1">Translating Text That is Outside of a QObject Subclass</heading>
+                </section>
+                <section id="using-qcoreapplication-translate">
+                    <heading level="2">Using QCoreApplication::translate()</heading>
+                    <para>If the quoted text is not in a member function of a <link raw="QObject" href="qobject.html" type="class">QObject</link> subclass, use either the tr() function of an appropriate class, or the <link raw="QCoreApplication::translate()" href="qcoreapplication.html#translate" type="function">QCoreApplication::translate()</link> function directly:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="13"/>
+                </section>
+                <section id="using-qt-tr-noop-and-qt-translate-noop-in-c">
+                    <heading level="2">Using QT_TR_NOOP() and QT_TRANSLATE_NOOP() in C++</heading>
+                    <para>If you need to have translatable text completely outside a function, there are two macros to help: <link raw="QT_TR_NOOP()" href="qtglobal.html#QT_TR_NOOP" type="function">QT_TR_NOOP()</link> and <link raw="QT_TRANSLATE_NOOP()" href="qtglobal.html#QT_TRANSLATE_NOOP" type="function">QT_TRANSLATE_NOOP()</link>. They merely mark the text for extraction by the <teletype type="highlighted">lupdate</teletype> tool. The macros expand to just the text (without the context).</para>
+                    <para>Example of <link raw="QT_TR_NOOP()" href="qtglobal.html#QT_TR_NOOP" type="function">QT_TR_NOOP()</link>:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="2"/>
+                    <para>Example of <link raw="QT_TRANSLATE_NOOP()" href="qtglobal.html#QT_TRANSLATE_NOOP" type="function">QT_TRANSLATE_NOOP()</link>:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="3"/>
+                    <para>If you disable the <teletype type="highlighted">const char *</teletype> to <link raw="QString" href="qstring.html" type="class">QString</link> automatic conversion by compiling your software with the macro <teletype type="highlighted">QT_NO_CAST_FROM_ASCII</teletype> defined, you'll be very likely to catch any strings you are missing. See <link raw="QString::fromUtf8()" href="qstring.html#fromUtf8" type="function">QString::fromUtf8()</link> and <link raw="QString::fromLatin1()" href="qstring.html#fromLatin1" type="function">QString::fromLatin1()</link> for more information.</para>
+                </section>
+                <section id="using-qkeysequence-for-accelerator-values">
+                    <heading level="1">Using QKeySequence() for Accelerator Values</heading>
+                    <para>Accelerator values such as Ctrl+Q or Alt+F need to be translated too. If you hardcode <teletype type="highlighted">Qt::CTRL + Qt::Key_Q</teletype> for &quot;quit&quot; in your application, translators won't be able to override it. The correct idiom is:</para>
+                    <code>exitAct = new QAction(tr(&quot;E&amp;xit&quot;), this);
+exitAct-&gt;setShortcuts(QKeySequence::Quit);</code>
+                </section>
+                <section id="using-numbered-arguments">
+                    <heading level="1">Using Numbered Arguments</heading>
+                    <para>The <link raw="QString::arg()" href="qstring.html#arg" type="function">QString::arg()</link> functions offer a simple means for substituting arguments:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="4"/>
+                    <para>In some languages the order of arguments may need to change, and this can easily be achieved by changing the order of the % arguments. For example:</para>
+                    <snippet location="snippets/code/doc_src_i18n.cpp" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.cpp" identifier="5"/>
+                    <para>produces the correct output in English and Norwegian:</para>
+                    <snippet location="snippets/code/doc_src_i18n.qdoc" path="C:/Qt/5.11.1/Src/qtdoc/doc/src/snippets/code/doc_src_i18n.qdoc" identifier="6"/>
+                </section>
+                <section id="further-reading">
+                    <heading level="1">Further Reading</heading>
+                    <para>
+                        <link raw="Qt Linguist Manual" href="qtlinguist-index.html" type="page" page="Qt Linguist Manual">Qt Linguist Manual</link>, <link raw="Hello tr() Example" href="qtlinguist-hellotr-example.html" type="page" page="Hello tr() Example">Hello tr() Example</link>, <link raw="Translation Rules for Plurals" href="i18n-plural-rules.html" type="page" page="Translation Rules for Plurals">Translation Rules for Plurals</link></para>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

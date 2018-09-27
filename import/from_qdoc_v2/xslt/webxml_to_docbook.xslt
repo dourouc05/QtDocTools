@@ -2032,9 +2032,21 @@
   </xsl:template>
   
   <xsl:template mode="content_para" match="teletype">
-    <db:code>
-      <xsl:apply-templates mode="content_para"/>
-    </db:code>
+    <xsl:choose>
+      <xsl:when test="parent::teletype and @type='highlighted'">
+        <db:emphasis>
+          <xsl:apply-templates mode="content_para"/>
+        </db:emphasis>
+      </xsl:when>
+      <xsl:when test="parent::teletype and not(@type='highlighted')">
+        <xsl:apply-templates mode="content_para"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:code>
+          <xsl:apply-templates mode="content_para"/>
+        </db:code>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content_para" match="italic">
