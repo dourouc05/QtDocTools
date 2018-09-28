@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <class threadsafety="reentrant" name="QUrl" href="qurl.html" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="124" module="QtCore" groups="io,network,shared" brief="Convenient interface for working with URLs">
+            <contents name="relative-urls-vs-relative-paths" title="Relative URLs vs Relative Paths" level="2"/>
+            <contents name="error-checking" title="Error checking" level="2"/>
+            <contents name="character-conversions" title="Character Conversions" level="2"/>
+            <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="41" column="4">
+                <brief>The <link raw="QUrl" href="qurl.html" type="class">QUrl</link> class provides a convenient interface for working with URLs.</brief>
+                <para>It can parse and construct URLs in both encoded and unencoded form. <link raw="QUrl" href="qurl.html" type="class">QUrl</link> also has support for internationalized domain names (IDNs).</para>
+                <para>The most common way to use <link raw="QUrl" href="qurl.html" type="class">QUrl</link> is to initialize it via the constructor by passing a <link raw="QString" href="qstring.html" type="class">QString</link>. Otherwise, <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link> can also be used.</para>
+                <para>URLs can be represented in two forms: encoded or unencoded. The unencoded representation is suitable for showing to users, but the encoded representation is typically what you would send to a web server. For example, the unencoded URL &quot;http://bühler.example.com/List of applicants.xml&quot; would be sent to the server as &quot;http://xn--bhler-kva.example.com/List%20of%20applicants.xml&quot;.</para>
+                <para>A URL can also be constructed piece by piece by calling <link raw="setScheme()" href="qurl.html#setScheme" type="function">setScheme()</link>, <link raw="setUserName()" href="qurl.html#setUserName" type="function">setUserName()</link>, <link raw="setPassword()" href="qurl.html#setPassword" type="function">setPassword()</link>, <link raw="setHost()" href="qurl.html#setHost" type="function">setHost()</link>, <link raw="setPort()" href="qurl.html#setPort" type="function">setPort()</link>, <link raw="setPath()" href="qurl.html#setPath" type="function">setPath()</link>, <link raw="setQuery()" href="qurl.html#setQuery" type="function">setQuery()</link> and <link raw="setFragment()" href="qurl.html#setFragment" type="function">setFragment()</link>. Some convenience functions are also available: <link raw="setAuthority()" href="qurl.html#setAuthority" type="function">setAuthority()</link> sets the user name, password, host and port. <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link> sets the user name and password at once.</para>
+                <para>Call <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> to check if the URL is valid. This can be done at any point during the constructing of a URL. If <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> returns <teletype type="highlighted">false</teletype>, you should <link raw="clear()" href="qurl.html#clear" type="function">clear()</link> the URL before proceeding, or start over by parsing a new URL with <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link>.</para>
+                <para>Constructing a query is particularly convenient through the use of the <link raw="QUrlQuery" href="qurlquery.html" type="class">QUrlQuery</link> class and its methods <link raw="QUrlQuery::setQueryItems()" href="qurlquery.html#setQueryItems" type="function">QUrlQuery::setQueryItems()</link>, <link raw="QUrlQuery::addQueryItem()" href="qurlquery.html#addQueryItem" type="function">QUrlQuery::addQueryItem()</link> and <link raw="QUrlQuery::removeQueryItem()" href="qurlquery.html#removeQueryItem" type="function">QUrlQuery::removeQueryItem()</link>. Use <link raw="QUrlQuery::setQueryDelimiters()" href="qurlquery.html#setQueryDelimiters" type="function">QUrlQuery::setQueryDelimiters()</link> to customize the delimiters used for generating the query string.</para>
+                <para>For the convenience of generating encoded URL strings or query strings, there are two static functions called <link raw="fromPercentEncoding()" href="qurl.html#fromPercentEncoding" type="function">fromPercentEncoding()</link> and <link raw="toPercentEncoding()" href="qurl.html#toPercentEncoding" type="function">toPercentEncoding()</link> which deal with percent encoding and decoding of <link raw="QString" href="qstring.html" type="class">QString</link> objects.</para>
+                <para>
+                    <link raw="fromLocalFile()" href="qurl.html#fromLocalFile" type="function">fromLocalFile()</link> constructs a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> by parsing a local file path. <link raw="toLocalFile()" href="qurl.html#toLocalFile" type="function">toLocalFile()</link> converts a URL to a local file path.</para>
+                <para>The human readable representation of the URL is fetched with <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>. This representation is appropriate for displaying a URL to a user in unencoded form. The encoded form however, as returned by <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>, is for internal use, passing to web servers, mail clients and so on. Both forms are technically correct and represent the same URL unambiguously -- in fact, passing either form to <link raw="QUrl" href="qurl.html" type="class">QUrl</link>'s constructor or to <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link> will yield the same <link raw="QUrl" href="qurl.html" type="class">QUrl</link> object.</para>
+                <para>
+                    <link raw="QUrl" href="qurl.html" type="class">QUrl</link> conforms to the URI specification from <link raw="RFC 3986" href="http://www.rfc-editor.org/rfc/rfc3986.txt" type="page" page="RFC 3986">RFC 3986</link> (Uniform Resource Identifier: Generic Syntax), and includes scheme extensions from <link raw="RFC 1738" href="http://www.rfc-editor.org/rfc/rfc1738.txt" type="page" page="RFC 1738">RFC 1738</link> (Uniform Resource Locators). Case folding rules in <link raw="QUrl" href="qurl.html" type="class">QUrl</link> conform to <link raw="RFC 3491" href="http://www.rfc-editor.org/rfc/rfc3491.txt" type="page" page="RFC 3491">RFC 3491</link> (Nameprep: A Stringprep Profile for Internationalized Domain Names (IDN)). It is also compatible with the file URI specification from freedesktop.org, provided that the locale encodes file names using UTF-8 (required by IDN).</para>
+                <section id="relative-urls-vs-relative-paths">
+                    <heading level="2">Relative URLs vs Relative Paths</heading>
+                    <para>Calling <link raw="isRelative()" href="qurl.html#isRelative" type="function">isRelative()</link> will return whether or not the URL is relative. A relative URL has no <link raw="scheme" href="qurl.html#scheme" type="function">scheme</link>. For example:</para>
+                    <code>qDebug() &lt;&lt; QUrl(&quot;main.qml&quot;).isRelative();          // true: no scheme
+qDebug() &lt;&lt; QUrl(&quot;qml/main.qml&quot;).isRelative();      // true: no scheme
+qDebug() &lt;&lt; QUrl(&quot;file:main.qml&quot;).isRelative();     // false: has &quot;file&quot; scheme
+qDebug() &lt;&lt; QUrl(&quot;file:qml/main.qml&quot;).isRelative(); // false: has &quot;file&quot; scheme</code>
+                    <para>Notice that a URL can be absolute while containing a relative path, and vice versa:</para>
+                    <code>// Absolute URL, relative path
+QUrl url(&quot;file:file.txt&quot;);
+qDebug() &lt;&lt; url.isRelative();                 // false: has &quot;file&quot; scheme
+qDebug() &lt;&lt; QDir::isAbsolutePath(url.path()); // false: relative path
+
+// Relative URL, absolute path
+url = QUrl(&quot;/home/user/file.txt&quot;);
+qDebug() &lt;&lt; url.isRelative();                 // true: has no scheme
+qDebug() &lt;&lt; QDir::isAbsolutePath(url.path()); // true: absolute path</code>
+                    <para>A relative URL can be resolved by passing it as an argument to <link raw="resolved()" href="qurl.html#resolved" type="function">resolved()</link>, which returns an absolute URL. <link raw="isParentOf()" href="qurl.html#isParentOf" type="function">isParentOf()</link> is used for determining whether one URL is a parent of another.</para>
+                </section>
+                <section id="error-checking">
+                    <heading level="2">Error checking</heading>
+                    <para>
+                        <link raw="QUrl" href="qurl.html" type="class">QUrl</link> is capable of detecting many errors in URLs while parsing it or when components of the URL are set with individual setter methods (like <link raw="setScheme()" href="qurl.html#setScheme" type="function">setScheme()</link>, <link raw="setHost()" href="qurl.html#setHost" type="function">setHost()</link> or <link raw="setPath()" href="qurl.html#setPath" type="function">setPath()</link>). If the parsing or setter function is successful, any previously recorded error conditions will be discarded.</para>
+                    <para>By default, <link raw="QUrl" href="qurl.html" type="class">QUrl</link> setter methods operate in <link raw="QUrl::TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::TolerantMode</link>, which means they accept some common mistakes and mis-representation of data. An alternate method of parsing is <link raw="QUrl::StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::StrictMode</link>, which applies further checks. See <link raw="QUrl::ParsingMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::ParsingMode</link> for a description of the difference of the parsing modes.</para>
+                    <para>
+                        <link raw="QUrl" href="qurl.html" type="class">QUrl</link> only checks for conformance with the URL specification. It does not try to verify that high-level protocol URLs are in the format they are expected to be by handlers elsewhere. For example, the following URIs are all considered valid by <link raw="QUrl" href="qurl.html" type="class">QUrl</link>, even if they do not make sense when used:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>&quot;http:/filename.html&quot;</para>
+                        </item>
+                        <item>
+                            <para>&quot;mailto://example.com&quot;</para>
+                        </item>
+                    </list>
+                    <para>When the parser encounters an error, it signals the event by making <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> return false and <link raw="toString()" href="qurl.html#toString" type="function">toString()</link> / <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link> return an empty string. If it is necessary to show the user the reason why the URL failed to parse, the error condition can be obtained from <link raw="QUrl" href="qurl.html" type="class">QUrl</link> by calling <link raw="errorString()" href="qurl.html#errorString" type="function">errorString()</link>. Note that this message is highly technical and may not make sense to end-users.</para>
+                    <para>
+                        <link raw="QUrl" href="qurl.html" type="class">QUrl</link> is capable of recording only one error condition. If more than one error is found, it is undefined which error is reported.</para>
+                </section>
+                <section id="character-conversions">
+                    <heading level="2">Character Conversions</heading>
+                    <para>Follow these rules to avoid erroneous character conversion when dealing with URLs and strings:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>When creating a <link raw="QString" href="qstring.html" type="class">QString</link> to contain a URL from a <link raw="QByteArray" href="qbytearray.html" type="class">QByteArray</link> or a char*, always use <link raw="QString::fromUtf8()" href="qstring.html#fromUtf8" type="function">QString::fromUtf8()</link>.</para>
+                        </item>
+                    </list>
+                </section>
+            </description>
+            <enum threadsafety="unspecified" name="ParsingMode" fullname="QUrl::ParsingMode" href="qurl.html#ParsingMode-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="127">
+                <value name="TolerantMode" value="0"/>
+                <value name="StrictMode" value="1"/>
+                <value name="DecodedMode" value="2"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="189" column="4">
+                    <para>The parsing mode controls the way <link raw="QUrl" href="qurl.html" type="class">QUrl</link> parses strings.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QUrl::TolerantMode</term>TolerantMode</definition>
+                        <item>
+                            <para>
+                                <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will try to correct some common errors in URLs. This mode is useful for parsing URLs coming from sources not known to be strictly standards-conforming.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::StrictMode</term>StrictMode</definition>
+                        <item>
+                            <para>Only valid URLs are accepted. This mode is useful for general URL validation.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::DecodedMode</term>DecodedMode</definition>
+                        <item>
+                            <para>
+                                <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will interpret the URL component in the fully-decoded form, where percent characters stand for themselves, not as the beginning of a percent-encoded sequence. This mode is only valid for the setters setting components of a URL; it is not permitted in the <link raw="QUrl" href="qurl.html" type="class">QUrl</link> constructor, in <link raw="fromEncoded()" href="qurl.html#fromEncoded" type="function">fromEncoded()</link> or in <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link>. For more information on this mode, see the documentation for <link raw="QUrl::ComponentFormattingOption" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>.</para>
+                        </item>
+                    </list>
+                    <para>In , the parser has the following behaviour:</para>
+                    <list type="bullet">
+                        <item>
+                            <para>Spaces and &quot;%20&quot;: unencoded space characters will be accepted and will be treated as equivalent to &quot;%20&quot;.</para>
+                        </item>
+                        <item>
+                            <para>Single &quot;%&quot; characters: Any occurrences of a percent character &quot;%&quot; not followed by exactly two hexadecimal characters (e.g., &quot;13% coverage.html&quot;) will be replaced by &quot;%25&quot;. Note that one lone &quot;%&quot; character will trigger the correction mode for all percent characters.</para>
+                        </item>
+                        <item>
+                            <para>Reserved and unreserved characters: An encoded URL should only contain a few characters as literals; all other characters should be percent-encoded. In , these characters will be accepted if they are found in the URL: space / double-quote / &quot;&lt;&quot; / &quot;&gt;&quot; / &quot;&quot; / &quot;^&quot; / &quot;`&quot; / &quot;{&quot; / &quot;|&quot; / &quot;}&quot; Those same characters can be decoded again by passing <link raw="QUrl::DecodeReserved" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::DecodeReserved</link> to <link raw="toString()" href="qurl.html#toString" type="function">toString()</link> or <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>. In the getters of individual components, those characters are often returned in decoded form.</para>
+                        </item>
+                    </list>
+                    <para>When in , if a parsing error is found, <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> will return <teletype type="highlighted">false</teletype> and <link raw="errorString()" href="qurl.html#errorString" type="function">errorString()</link> will return a message describing the error. If more than one error is detected, it is undefined which error gets reported.</para>
+                    <para>Note that  is not usually enough for parsing user input, which often contains more errors and expectations than the parser can deal with. When dealing with data coming directly from the user -- as opposed to data coming from data-transfer sources, such as other programs -- it is recommended to use <link raw="fromUserInput()" href="qurl.html#fromUserInput" type="function">fromUserInput()</link>.</para>
+                    <see-also>
+                        <link raw="fromUserInput()" href="qurl.html#fromUserInput" type="function">fromUserInput()</link>
+                        <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link>
+                        <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>
+                        <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>
+                        <link raw="QUrl::FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">QUrl::FormattingOptions</link>
+                    </see-also>
+                </description>
+            </enum>
+            <enum threadsafety="unspecified" name="UrlFormattingOption" fullname="QUrl::UrlFormattingOption" href="qurl.html#UrlFormattingOption-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="134" typedef="QUrl::FormattingOptions">
+                <value name="None" value="0x0"/>
+                <value name="RemoveScheme" value="0x1"/>
+                <value name="RemovePassword" value="0x2"/>
+                <value name="RemoveUserInfo" value="RemovePassword | 0x4"/>
+                <value name="RemovePort" value="0x8"/>
+                <value name="RemoveAuthority" value="RemoveUserInfo | RemovePort | 0x10"/>
+                <value name="RemovePath" value="0x20"/>
+                <value name="RemoveQuery" value="0x40"/>
+                <value name="RemoveFragment" value="0x80"/>
+                <value name="PreferLocalFile" value="0x200"/>
+                <value name="StripTrailingSlash" value="0x400"/>
+                <value name="RemoveFilename" value="0x800"/>
+                <value name="NormalizePathSegments" value="0x1000"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="247" column="4">
+                    <para>The formatting options define how the URL is formatted when written out as text.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QUrl::None</term>None</definition>
+                        <item>
+                            <para>The format of the URL is unchanged.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemoveScheme</term>RemoveScheme</definition>
+                        <item>
+                            <para>The scheme is removed from the URL.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemovePassword</term>RemovePassword</definition>
+                        <item>
+                            <para>Any password in the URL is removed.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemoveUserInfo</term>RemoveUserInfo</definition>
+                        <item>
+                            <para>Any user information in the URL is removed.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemovePort</term>RemovePort</definition>
+                        <item>
+                            <para>Any specified port is removed from the URL.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemoveAuthority</term>RemoveAuthority</definition>
+                        <item/>
+                        <definition>
+                            <term>QUrl::RemovePath</term>RemovePath</definition>
+                        <item>
+                            <para>The URL's path is removed, leaving only the scheme, host address, and port (if present).</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemoveQuery</term>RemoveQuery</definition>
+                        <item>
+                            <para>The query part of the URL (following a '?' character) is removed.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::RemoveFragment</term>RemoveFragment</definition>
+                        <item/>
+                        <definition>
+                            <term>QUrl::RemoveFilename</term>RemoveFilename</definition>
+                        <item>
+                            <para>The filename (i.e. everything after the last '/' in the path) is removed. The trailing '/' is kept, unless  is set. Only valid if  is not set.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::PreferLocalFile</term>PreferLocalFile</definition>
+                        <item>
+                            <para>If the URL is a local file according to <link raw="isLocalFile()" href="qurl.html#isLocalFile" type="function">isLocalFile()</link> and contains no query or fragment, a local file path is returned.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::StripTrailingSlash</term>StripTrailingSlash</definition>
+                        <item>
+                            <para>The trailing slash is removed from the path, if one is present.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::NormalizePathSegments</term>NormalizePathSegments</definition>
+                        <item>
+                            <para>Modifies the path to remove redundant directory separators, and to resolve &quot;.&quot;s and &quot;..&quot;s (as far as possible).</para>
+                        </item>
+                    </list>
+                    <para>Note that the case folding rules in <link raw="RFC 3491" href="http://www.rfc-editor.org/rfc/rfc3491.txt" type="page" page="RFC 3491">Nameprep</link>, which <link raw="QUrl" href="qurl.html" type="class">QUrl</link> conforms to, require host names to always be converted to lower case, regardless of the Qt::FormattingOptions used.</para>
+                    <para>The options from <link raw="QUrl::ComponentFormattingOptions" href="qurl.html#ComponentFormattingOption-enum" type="typedef">QUrl::ComponentFormattingOptions</link> are also possible.</para>
+                    <see-also>
+                        <link raw="QUrl::ComponentFormattingOptions" href="qurl.html#ComponentFormattingOption-enum" type="typedef">QUrl::ComponentFormattingOptions</link>
+                    </see-also>
+                </description>
+            </enum>
+            <enum threadsafety="unspecified" name="ComponentFormattingOption" fullname="QUrl::ComponentFormattingOption" href="qurl.html#ComponentFormattingOption-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="151" since="5.0" typedef="QUrl::ComponentFormattingOptions">
+                <value name="PrettyDecoded" value="0x000000"/>
+                <value name="EncodeSpaces" value="0x100000"/>
+                <value name="EncodeUnicode" value="0x200000"/>
+                <value name="EncodeDelimiters" value="0x400000 | 0x800000"/>
+                <value name="EncodeReserved" value="0x1000000"/>
+                <value name="DecodeReserved" value="0x2000000"/>
+                <value name="FullyEncoded" value="EncodeSpaces | EncodeUnicode | EncodeDelimiters | EncodeReserved"/>
+                <value name="FullyDecoded" value="FullyEncoded | DecodeReserved | 0x4000000"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="282" column="4">
+                    <para>The component formatting options define how the components of an URL will be formatted when written out as text. They can be combined with the options from <link raw="QUrl::FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">QUrl::FormattingOptions</link> when used in <link raw="toString()" href="qurl.html#toString" type="function">toString()</link> and <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QUrl::PrettyDecoded</term>PrettyDecoded</definition>
+                        <item>
+                            <para>The component is returned in a &quot;pretty form&quot;, with most percent-encoded characters decoded. The exact behavior of  varies from component to component and may also change from Qt release to Qt release. This is the default.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::EncodeSpaces</term>EncodeSpaces</definition>
+                        <item>
+                            <para>Leave space characters in their encoded form (&quot;%20&quot;).</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::EncodeUnicode</term>EncodeUnicode</definition>
+                        <item>
+                            <para>Leave non-US-ASCII characters encoded in their UTF-8 percent-encoded form (e.g., &quot;%C3%A9&quot; for the U+00E9 codepoint, LATIN SMALL LETTER E WITH ACUTE).</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::EncodeDelimiters</term>EncodeDelimiters</definition>
+                        <item>
+                            <para>Leave certain delimiters in their encoded form, as would appear in the URL when the full URL is represented as text. The delimiters are affected by this option change from component to component. This flag has no effect in <link raw="toString()" href="qurl.html#toString" type="function">toString()</link> or <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::EncodeReserved</term>EncodeReserved</definition>
+                        <item>
+                            <para>Leave US-ASCII characters not permitted in the URL by the specification in their encoded form. This is the default on <link raw="toString()" href="qurl.html#toString" type="function">toString()</link> and <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::DecodeReserved</term>DecodeReserved</definition>
+                        <item>
+                            <para>Decode the US-ASCII characters that the URL specification does not allow to appear in the URL. This is the default on the getters of individual components.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::FullyEncoded</term>FullyEncoded</definition>
+                        <item>
+                            <para>Leave all characters in their properly-encoded form, as this component would appear as part of a URL. When used with <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>, this produces a fully-compliant URL in <link raw="QString" href="qstring.html" type="class">QString</link> form, exactly equal to the result of <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link></para>
+                        </item>
+                        <definition>
+                            <term>QUrl::FullyDecoded</term>FullyDecoded</definition>
+                        <item>
+                            <para>Attempt to decode as much as possible. For individual components of the URL, this decodes every percent encoding sequence, including control characters (U+0000 to U+001F) and UTF-8 sequences found in percent-encoded form. Use of this mode may cause data loss, see below for more information.</para>
+                        </item>
+                    </list>
+                    <para>The values of  and  should not be used together in one call. The behavior is undefined if that happens. They are provided as separate values because the behavior of the &quot;pretty mode&quot; with regards to reserved characters is different on certain components and specially on the full URL.</para>
+                    <section id="full-decoding">
+                        <heading level="2">Full decoding</heading>
+                        <para>The  mode is similar to the behavior of the functions returning <link raw="QString" href="qstring.html" type="class">QString</link> in Qt 4.x, in that every character represents itself and never has any special meaning. This is true even for the percent character ('%'), which should be interpreted to mean a literal percent, not the beginning of a percent-encoded sequence. The same actual character, in all other decoding modes, is represented by the sequence &quot;%25&quot;.</para>
+                        <para>Whenever re-applying data obtained with  into a <link raw="QUrl" href="qurl.html" type="class">QUrl</link>, care must be taken to use the <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link> parameter to the setters (like <link raw="setPath()" href="qurl.html#setPath" type="function">setPath()</link> and <link raw="setUserName()" href="qurl.html#setUserName" type="function">setUserName()</link>). Failure to do so may cause re-interpretation of the percent character ('%') as the beginning of a percent-encoded sequence.</para>
+                        <para>This mode is quite useful when portions of a URL are used in a non-URL context. For example, to extract the username, password or file paths in an FTP client application, the  mode should be used.</para>
+                        <para>This mode should be used with care, since there are two conditions that cannot be reliably represented in the returned <link raw="QString" href="qstring.html" type="class">QString</link>. They are:</para>
+                        <list type="bullet">
+                            <item>
+                                <para>
+                                    <bold>Non-UTF-8 sequences:</bold> URLs may contain sequences of percent-encoded characters that do not form valid UTF-8 sequences. Since URLs need to be decoded using UTF-8, any decoder failure will result in the <link raw="QString" href="qstring.html" type="class">QString</link> containing one or more replacement characters where the sequence existed.</para>
+                            </item>
+                            <item>
+                                <para>
+                                    <bold>Encoded delimiters:</bold> URLs are also allowed to make a distinction between a delimiter found in its literal form and its equivalent in percent-encoded form. This is most commonly found in the query, but is permitted in most parts of the URL.</para>
+                            </item>
+                        </list>
+                        <para>The following example illustrates the problem:</para>
+                        <code>QUrl original(&quot;http://example.com/?q=a%2B%3Db%26c&quot;);
+QUrl copy(original);
+copy.setQuery(copy.query(QUrl::FullyDecoded), QUrl::DecodedMode);
+
+qDebug() &lt;&lt; original.toString();   // prints: http://example.com/?q=a%2B%3Db%26c
+qDebug() &lt;&lt; copy.toString();       // prints: http://example.com/?q=a+=b&amp;c</code>
+                        <para>If the two URLs were used via HTTP GET, the interpretation by the web server would probably be different. In the first case, it would interpret as one parameter, with a key of &quot;q&quot; and value &quot;a+=b&amp;c&quot;. In the second case, it would probably interpret as two parameters, one with a key of &quot;q&quot; and value &quot;a =b&quot;, and the second with a key &quot;c&quot; and no value.</para>
+                    </section>
+                    <see-also>
+                        <link raw="QUrl::FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">QUrl::FormattingOptions</link>
+                    </see-also>
+                </description>
+            </enum>
+            <typedef threadsafety="unspecified" name="ComponentFormattingOptions" fullname="QUrl::ComponentFormattingOptions" href="qurl.html#ComponentFormattingOption-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="163" enum="QUrl::ComponentFormattingOption">
+                <description path="" line="0" column="0"/>
+            </typedef>
+            <class threadsafety="unspecified" name="QFlags" fullname="QUrl::QFlags" href="qurl-qflags.html" status="active" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="168" bases="QUrlTwoFlags">
+                <description path="" line="0" column="0"/>
+            </class>
+            <typedef threadsafety="unspecified" name="FormattingOptions" fullname="QUrl::FormattingOptions" href="qurl.html#UrlFormattingOption-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="171" enum="QUrl::UrlFormattingOption">
+                <description path="" line="0" column="0"/>
+            </typedef>
+            <function threadsafety="unspecified" name="QUrl" fullname="QUrl::QUrl" href="qurl.html#QUrl" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="176" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QUrl()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1863" column="4">
+                    <para>Constructs an empty <link raw="QUrl" href="qurl.html" type="class">QUrl</link> object.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QUrl" fullname="QUrl::QUrl" href="qurl.html#QUrl-1" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="177" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QUrl(const QUrl &amp;other)">
+                <parameter type="const QUrl &amp;" name="other" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1870" column="4">
+                    <para>Constructs a copy of <argument>other</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QUrl::operator=" href="qurl.html#operator-eq" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="178" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUrl &amp;" signature="QUrl &amp; operator=(const QUrl &amp;url)">
+                <parameter type="const QUrl &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3783" column="4">
+                    <para>Assigns the specified <argument>url</argument> to this object.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QUrl" fullname="QUrl::QUrl" href="qurl.html#QUrl-2" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="182" virtual="non" meta="constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QUrl(const QString &amp;url, QUrl::ParsingMode parsingMode)">
+                <parameter type="const QString &amp;" name="url" default=""/>
+                <parameter type="QUrl::ParsingMode" name="parsingMode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1827" column="4">
+                    <para>Constructs a URL by parsing <argument>url</argument>. <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will automatically percent encode all characters that are not allowed in a URL and decode the percent-encoded sequences that represent an unreserved character (letters, digits, hyphens, undercores, dots and tildes). All other characters are left in their original forms.</para>
+                    <para>Parses the <argument>url</argument> using the parser mode <argument>parsingMode</argument>. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> (the default), <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will correct certain mistakes, notably the presence of a percent character ('%') not followed by two hexadecimal digits, and it will accept any character in any position. In <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, encoding mistakes will not be tolerated and <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will also check that certain forbidden characters are not present in unencoded form. If an error is detected in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> will return false. The parsing mode <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link> is not permitted in this context.</para>
+                    <para>Example:</para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="0"/>
+                    <para>To construct a URL from an encoded string, you can also use <link raw="fromEncoded()" href="qurl.html#fromEncoded" type="function">fromEncoded()</link>:</para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="1"/>
+                    <para>Both functions are equivalent and, in Qt 5, both functions accept encoded data. Usually, the choice of the <link raw="QUrl" href="qurl.html" type="class">QUrl</link> constructor or <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link> versus <link raw="fromEncoded()" href="qurl.html#fromEncoded" type="function">fromEncoded()</link> will depend on the source data: the constructor and <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link> take a <link raw="QString" href="qstring.html" type="class">QString</link>, whereas <link raw="fromEncoded" href="qurl.html#fromEncoded" type="function">fromEncoded</link> takes a <link raw="QByteArray" href="qbytearray.html" type="class">QByteArray</link>.</para>
+                    <see-also>
+                        <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link>
+                        <link raw="fromEncoded()" href="qurl.html#fromEncoded" type="function">fromEncoded()</link>
+                        <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QUrl::operator=" href="qurl.html#operator-eq-1" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="183" virtual="non" meta="copy-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUrl &amp;" signature="QUrl &amp; operator=(const QString &amp;url)">
+                <parameter type="const QString &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3802" column="4">
+                    <para>Assigns the specified <argument>url</argument> to this object.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="QUrl" fullname="QUrl::QUrl" href="qurl.html#QUrl-3" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="186" virtual="non" meta="move-constructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="QUrl(QUrl &amp;&amp;other)">
+                <parameter type="QUrl &amp;&amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="operator=" fullname="QUrl::operator=" href="qurl.html#operator-eq-2" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="188" virtual="non" meta="move-assign" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUrl &amp;" signature="QUrl &amp; operator=(QUrl &amp;&amp;other)">
+                <parameter type="QUrl &amp;&amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="~QUrl" fullname="QUrl::~QUrl" href="qurl.html#dtor.QUrl" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="191" virtual="non" meta="destructor" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="" signature="~QUrl()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1879" column="4">
+                    <para>Destructor; called immediately before the object is deleted.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="swap" fullname="QUrl::swap" href="qurl.html#swap" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="193" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void swap(QUrl &amp;other)">
+                <parameter type="QUrl &amp;" name="other" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setUrl" fullname="QUrl::setUrl" href="qurl.html#setUrl" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="195" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setUrl(const QString &amp;url, QUrl::ParsingMode parsingMode)">
+                <parameter type="const QString &amp;" name="url" default=""/>
+                <parameter type="QUrl::ParsingMode" name="parsingMode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1931" column="4">
+                    <para>Parses <argument>url</argument> and sets this object to that value. <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will automatically percent encode all characters that are not allowed in a URL and decode the percent-encoded sequences that represent an unreserved character (letters, digits, hyphens, undercores, dots and tildes). All other characters are left in their original forms.</para>
+                    <para>Parses the <argument>url</argument> using the parser mode <argument>parsingMode</argument>. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> (the default), <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will correct certain mistakes, notably the presence of a percent character ('%') not followed by two hexadecimal digits, and it will accept any character in any position. In <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, encoding mistakes will not be tolerated and <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will also check that certain forbidden characters are not present in unencoded form. If an error is detected in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> will return false. The parsing mode <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link> is not permitted in this context and will produce a run-time warning.</para>
+                    <see-also>
+                        <link raw="url()" href="qurl.html#url" type="function">url()</link>
+                        <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="url" fullname="QUrl::url" href="qurl.html#url" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="196" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString url(QUrl::FormattingOptions options) const">
+                <parameter type="QUrl::FormattingOptions" name="options" default="FormattingOptions(PrettyDecoded)"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3326" column="4">
+                    <para>Returns a string representation of the URL. The output can be customized by passing flags with <argument>options</argument>. The option <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> is not permitted in this function since it would generate ambiguous data.</para>
+                    <para>The resulting <link raw="QString" href="qstring.html" type="class">QString</link> can be passed back to a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> later on.</para>
+                    <para>Synonym for <link raw="toString" href="qurl.html#toString" type="function">toString</link>(options).</para>
+                    <see-also>
+                        <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link>
+                        <link raw="FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">FormattingOptions</link>
+                        <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>
+                        <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toString" fullname="QUrl::toString" href="qurl.html#toString" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="197" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString toString(QUrl::FormattingOptions options) const">
+                <parameter type="QUrl::FormattingOptions" name="options" default="FormattingOptions(PrettyDecoded)"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3342" column="4">
+                    <para>Returns a string representation of the URL. The output can be customized by passing flags with <argument>options</argument>. The option <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> is not permitted in this function since it would generate ambiguous data.</para>
+                    <para>The default formatting option is <link raw="QUrl::FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">PrettyDecoded</link>.</para>
+                    <see-also>
+                        <link raw="FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">FormattingOptions</link>
+                        <link raw="url()" href="qurl.html#url" type="function">url()</link>
+                        <link raw="setUrl()" href="qurl.html#setUrl" type="function">setUrl()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toDisplayString" fullname="QUrl::toDisplayString" href="qurl.html#toDisplayString" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="198" since="5.0" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString toDisplayString(QUrl::FormattingOptions options) const">
+                <parameter type="QUrl::FormattingOptions" name="options" default="FormattingOptions(PrettyDecoded)"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3410" column="4">
+                    <para>Returns a human-displayable string representation of the URL. The output can be customized by passing flags with <argument>options</argument>. The option <link raw="RemovePassword" href="qurl.html#UrlFormattingOption-enum" type="enum" enum="QUrl::UrlFormattingOption">RemovePassword</link> is always enabled, since passwords should never be shown back to users.</para>
+                    <para>With the default options, the resulting <link raw="QString" href="qstring.html" type="class">QString</link> can be passed back to a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> later on, but any password that was present initially will be lost.</para>
+                    <see-also>
+                        <link raw="FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">FormattingOptions</link>
+                        <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>
+                        <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="adjusted" fullname="QUrl::adjusted" href="qurl.html#adjusted" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="199" since="5.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl adjusted(QUrl::FormattingOptions options) const">
+                <parameter type="QUrl::FormattingOptions" name="options" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3430" column="4">
+                    <para>Returns an adjusted version of the URL. The output can be customized by passing flags with <argument>options</argument>.</para>
+                    <para>The encoding options from <link raw="QUrl::ComponentFormattingOption" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::ComponentFormattingOption</link> don't make much sense for this method, nor does <link raw="QUrl::PreferLocalFile" href="qurl.html#UrlFormattingOption-enum" type="enum" enum="QUrl::UrlFormattingOption">QUrl::PreferLocalFile</link>.</para>
+                    <para>This is always equivalent to <link raw="QUrl" href="qurl.html" type="class">QUrl</link>(url.<link raw="toString" href="qurl.html#toString" type="function">toString</link>(options)).</para>
+                    <see-also>
+                        <link raw="FormattingOptions" href="qurl.html#UrlFormattingOption-enum" type="typedef">FormattingOptions</link>
+                        <link raw="toEncoded()" href="qurl.html#toEncoded" type="function">toEncoded()</link>
+                        <link raw="toString()" href="qurl.html#toString" type="function">toString()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toEncoded" fullname="QUrl::toEncoded" href="qurl.html#toEncoded" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="201" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray toEncoded(QUrl::FormattingOptions options) const">
+                <parameter type="QUrl::FormattingOptions" name="options" default="FullyEncoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3477" column="4">
+                    <para>Returns the encoded representation of the URL if it's valid; otherwise an empty <link raw="QByteArray" href="qbytearray.html" type="class">QByteArray</link> is returned. The output can be customized by passing flags with <argument>options</argument>.</para>
+                    <para>The user info, path and fragment are all converted to UTF-8, and all non-ASCII characters are then percent encoded. The host name is encoded using Punycode.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromEncoded" fullname="QUrl::fromEncoded" href="qurl.html#fromEncoded" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="202" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl fromEncoded(const QByteArray &amp;url, QUrl::ParsingMode mode)">
+                <parameter type="const QByteArray &amp;" name="url" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <enum threadsafety="unspecified" name="UserInputResolutionOption" fullname="QUrl::UserInputResolutionOption" href="qurl.html#UserInputResolutionOption-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="204" since="5.4" typedef="QUrl::UserInputResolutionOptions">
+                <value name="DefaultResolution" value="0"/>
+                <value name="AssumeLocalFile" value="1"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="390" column="4">
+                    <para>The user input resolution options define how <link raw="fromUserInput()" href="qurl.html#fromUserInput" type="function">fromUserInput()</link> should interpret strings that could either be a relative path or the short form of a HTTP URL. For instance <teletype type="highlighted">file.pl</teletype> can be either a local file or the URL <teletype type="highlighted">http://file.pl</teletype>.</para>
+                    <list type="enum">
+                        <definition>
+                            <term>QUrl::DefaultResolution</term>DefaultResolution</definition>
+                        <item>
+                            <para>The default resolution mechanism is to check whether a local file exists, in the working directory given to <link raw="fromUserInput" href="qurl.html#fromUserInput" type="function">fromUserInput</link>, and only return a local path in that case. Otherwise a URL is assumed.</para>
+                        </item>
+                        <definition>
+                            <term>QUrl::AssumeLocalFile</term>AssumeLocalFile</definition>
+                        <item>
+                            <para>This option makes <link raw="fromUserInput()" href="qurl.html#fromUserInput" type="function">fromUserInput()</link> always return a local path unless the input contains a scheme, such as <teletype type="highlighted">http://file.pl</teletype>. This is useful for applications such as text editors, which are able to create the file if it doesn't exist.</para>
+                        </item>
+                    </list>
+                    <see-also>
+                        <link raw="fromUserInput()" href="qurl.html#fromUserInput" type="function">fromUserInput()</link>
+                    </see-also>
+                </description>
+            </enum>
+            <typedef threadsafety="unspecified" name="UserInputResolutionOptions" fullname="QUrl::UserInputResolutionOptions" href="qurl.html#UserInputResolutionOption-enum" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="208" enum="QUrl::UserInputResolutionOption">
+                <description path="" line="0" column="0"/>
+            </typedef>
+            <function threadsafety="unspecified" name="fromUserInput" fullname="QUrl::fromUserInput" href="qurl.html#fromUserInput" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="210" since="4.6" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl fromUserInput(const QString &amp;userInput)">
+                <parameter type="const QString &amp;" name="userInput" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4299" column="4">
+                    <para>Returns a valid URL from a user supplied <argument>userInput</argument> string if one can be deducted. In the case that is not possible, an invalid <link raw="QUrl()" href="qurl.html#QUrl" type="function">QUrl()</link> is returned.</para>
+                    <para>Most applications that can browse the web, allow the user to input a URL in the form of a plain string. This string can be manually typed into a location bar, obtained from the clipboard, or passed in via command line arguments.</para>
+                    <para>When the string is not already a valid URL, a best guess is performed, making various web related assumptions.</para>
+                    <para>In the case the string corresponds to a valid file path on the system, a file:// URL is constructed, using <link raw="QUrl::fromLocalFile()" href="qurl.html#fromLocalFile" type="function">QUrl::fromLocalFile()</link>.</para>
+                    <para>If that is not the case, an attempt is made to turn the string into a http:// or ftp:// URL. The latter in the case the string starts with 'ftp'. The result is then passed through <link raw="QUrl" href="qurl.html" type="class">QUrl</link>'s tolerant parser, and in the case or success, a valid <link raw="QUrl" href="qurl.html" type="class">QUrl</link> is returned, or else a <link raw="QUrl()" href="qurl.html#QUrl" type="function">QUrl()</link>.</para>
+                    <section id="examples">
+                        <heading level="1">Examples:</heading>
+                        <list type="bullet">
+                            <item>
+                                <para>qt-project.org becomes http://qt-project.org</para>
+                            </item>
+                            <item>
+                                <para>ftp.qt-project.org becomes ftp://ftp.qt-project.org</para>
+                            </item>
+                            <item>
+                                <para>hostname becomes http://hostname</para>
+                            </item>
+                            <item>
+                                <para>/home/user/test.html becomes file:///home/user/test.html</para>
+                            </item>
+                        </list>
+                    </section>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromUserInput" fullname="QUrl::fromUserInput" href="qurl.html#fromUserInput-1" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="212" since="5.4" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl fromUserInput(const QString &amp;userInput, const QString &amp;workingDirectory, QUrl::UserInputResolutionOptions options)">
+                <parameter type="const QString &amp;" name="userInput" default=""/>
+                <parameter type="const QString &amp;" name="workingDirectory" default=""/>
+                <parameter type="QUrl::UserInputResolutionOptions" name="options" default="DefaultResolution"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4249" column="4">
+                    <para>Returns a valid URL from a user supplied <argument>userInput</argument> string if one can be deducted. In the case that is not possible, an invalid <link raw="QUrl()" href="qurl.html#QUrl" type="function">QUrl()</link> is returned.</para>
+                    <para>This overload takes a <argument>workingDirectory</argument> path, in order to be able to handle relative paths. This is especially useful when handling command line arguments. If <argument>workingDirectory</argument> is empty, no handling of relative paths will be done, so this method will behave like its one argument overload.</para>
+                    <para>By default, an input string that looks like a relative path will only be treated as such if the file actually exists in the given working directory.</para>
+                    <para>If the application can handle files that don't exist yet, it should pass the flag <link raw="AssumeLocalFile" href="qurl.html#UserInputResolutionOption-enum" type="enum" enum="QUrl::UserInputResolutionOption">AssumeLocalFile</link> in <argument>options</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isValid" fullname="QUrl::isValid" href="qurl.html#isValid" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="215" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isValid() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1888" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if the URL is non-empty and valid; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <para>The URL is run through a conformance test. Every part of the URL must conform to the standard encoding rules of the URI standard for the URL to be reported as valid.</para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="2"/>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="errorString" fullname="QUrl::errorString" href="qurl.html#errorString" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="216" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString errorString() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4123" column="4">
+                    <para>Returns an error message if the last operation that modified this <link raw="QUrl" href="qurl.html" type="class">QUrl</link> object ran into a parsing error. If no error was detected, this function returns an empty string and <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> returns <teletype type="highlighted">true</teletype>.</para>
+                    <para>The error message returned by this function is technical in nature and may not be understood by end users. It is mostly useful to developers trying to understand why <link raw="QUrl" href="qurl.html" type="class">QUrl</link> will not accept some input.</para>
+                    <see-also>
+                        <link raw="QUrl::ParsingMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::ParsingMode</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isEmpty" fullname="QUrl::isEmpty" href="qurl.html#isEmpty" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="218" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isEmpty() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1906" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if the URL has no data; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <see-also>
+                        <link raw="clear()" href="qurl.html#clear" type="function">clear()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="clear" fullname="QUrl::clear" href="qurl.html#clear" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="219" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void clear()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1917" column="4">
+                    <para>Resets the content of the <link raw="QUrl" href="qurl.html" type="class">QUrl</link>. After calling this function, the <link raw="QUrl" href="qurl.html" type="class">QUrl</link> is equal to one that has been constructed with the default empty constructor.</para>
+                    <see-also>
+                        <link raw="isEmpty()" href="qurl.html#isEmpty" type="function">isEmpty()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setScheme" fullname="QUrl::setScheme" href="qurl.html#setScheme" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="221" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setScheme(const QString &amp;scheme)">
+                <parameter type="const QString &amp;" name="scheme" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1974" column="4">
+                    <para>Sets the scheme of the URL to <argument>scheme</argument>. As a scheme can only contain ASCII characters, no conversion or decoding is done on the input. It must also start with an ASCII letter.</para>
+                    <para>The scheme describes the type (or protocol) of the URL. It's represented by one or more ASCII characters at the start the URL.</para>
+                    <para>A scheme is strictly RFC 3986-compliant: <teletype>scheme = ALPHA *( ALPHA / DIGIT / &quot;+&quot; / &quot;-&quot; / &quot;.&quot; )</teletype></para>
+                    <para>The following example shows a URL where the scheme is &quot;ftp&quot;:</para>
+                    <image href="images/qurl-authority2.png"/>
+                    <para>To set the scheme, the following call is used:</para>
+                    <code>QUrl url;
+url.setScheme(&quot;ftp&quot;);</code>
+                    <para>The scheme can also be empty, in which case the URL is interpreted as relative.</para>
+                    <see-also>
+                        <link raw="scheme()" href="qurl.html#scheme" type="function">scheme()</link>
+                        <link raw="isRelative()" href="qurl.html#isRelative" type="function">isRelative()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="scheme" fullname="QUrl::scheme" href="qurl.html#scheme" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="222" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString scheme() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2014" column="4">
+                    <para>Returns the scheme of the URL. If an empty string is returned, this means the scheme is undefined and the URL is then relative.</para>
+                    <para>The scheme can only contain US-ASCII letters or digits, which means it cannot contain any character that would otherwise require encoding. Additionally, schemes are always returned in lowercase form.</para>
+                    <see-also>
+                        <link raw="setScheme()" href="qurl.html#setScheme" type="function">setScheme()</link>
+                        <link raw="isRelative()" href="qurl.html#isRelative" type="function">isRelative()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setAuthority" fullname="QUrl::setAuthority" href="qurl.html#setAuthority" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="224" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setAuthority(const QString &amp;authority, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="authority" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2031" column="4">
+                    <para>Sets the authority of the URL to <argument>authority</argument>.</para>
+                    <para>The authority of a URL is the combination of user info, a host name and a port. All of these elements are optional; an empty authority is therefore valid.</para>
+                    <para>The user info and host are separated by a '@', and the host and port are separated by a ':'. If the user info is empty, the '@' must be omitted; although a stray ':' is permitted if the port is empty.</para>
+                    <para>The following example shows a valid authority string:</para>
+                    <image href="images/qurl-authority.png"/>
+                    <para>The <argument>authority</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> (the default), all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters.</para>
+                    <para>This function does not allow <argument>mode</argument> to be <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link>. To set fully decoded data, call <link raw="setUserName()" href="qurl.html#setUserName" type="function">setUserName()</link>, <link raw="setPassword()" href="qurl.html#setPassword" type="function">setPassword()</link>, <link raw="setHost()" href="qurl.html#setHost" type="function">setHost()</link> and <link raw="setPort()" href="qurl.html#setPort" type="function">setPort()</link> individually.</para>
+                    <see-also>
+                        <link raw="authority()" href="qurl.html#authority" type="function">authority()</link>
+                        <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link>
+                        <link raw="setHost()" href="qurl.html#setHost" type="function">setHost()</link>
+                        <link raw="setPort()" href="qurl.html#setPort" type="function">setPort()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="authority" fullname="QUrl::authority" href="qurl.html#authority" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="225" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString authority(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="PrettyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2078" column="4">
+                    <para>Returns the authority of the URL if it is defined; otherwise an empty string is returned.</para>
+                    <para>This function returns an unambiguous value, which may contain that characters still percent-encoded, plus some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>The <argument>options</argument> argument controls how to format the user info component. The value of <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> is not permitted in this function. If you need to obtain fully decoded data, call <link raw="userName()" href="qurl.html#userName" type="function">userName()</link>, <link raw="password()" href="qurl.html#password" type="function">password()</link>, <link raw="host()" href="qurl.html#host" type="function">host()</link> and <link raw="port()" href="qurl.html#port" type="function">port()</link> individually.</para>
+                    <see-also>
+                        <link raw="setAuthority()" href="qurl.html#setAuthority" type="function">setAuthority()</link>
+                        <link raw="userInfo()" href="qurl.html#userInfo" type="function">userInfo()</link>
+                        <link raw="userName()" href="qurl.html#userName" type="function">userName()</link>
+                        <link raw="password()" href="qurl.html#password" type="function">password()</link>
+                        <link raw="host()" href="qurl.html#host" type="function">host()</link>
+                        <link raw="port()" href="qurl.html#port" type="function">port()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setUserInfo" fullname="QUrl::setUserInfo" href="qurl.html#setUserInfo" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="227" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setUserInfo(const QString &amp;userInfo, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="userInfo" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2108" column="4">
+                    <para>Sets the user info of the URL to <argument>userInfo</argument>. The user info is an optional part of the authority of the URL, as described in <link raw="setAuthority()" href="qurl.html#setAuthority" type="function">setAuthority()</link>.</para>
+                    <para>The user info consists of a user name and optionally a password, separated by a ':'. If the password is empty, the colon must be omitted. The following example shows a valid user info string:</para>
+                    <image href="images/qurl-authority3.png"/>
+                    <para>The <argument>userInfo</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> (the default), all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters.</para>
+                    <para>This function does not allow <argument>mode</argument> to be <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link>. To set fully decoded data, call <link raw="setUserName()" href="qurl.html#setUserName" type="function">setUserName()</link> and <link raw="setPassword()" href="qurl.html#setPassword" type="function">setPassword()</link> individually.</para>
+                    <see-also>
+                        <link raw="userInfo()" href="qurl.html#userInfo" type="function">userInfo()</link>
+                        <link raw="setUserName()" href="qurl.html#setUserName" type="function">setUserName()</link>
+                        <link raw="setPassword()" href="qurl.html#setPassword" type="function">setPassword()</link>
+                        <link raw="setAuthority()" href="qurl.html#setAuthority" type="function">setAuthority()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="userInfo" fullname="QUrl::userInfo" href="qurl.html#userInfo" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="228" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString userInfo(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="PrettyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2153" column="4">
+                    <para>Returns the user info of the URL, or an empty string if the user info is undefined.</para>
+                    <para>This function returns an unambiguous value, which may contain that characters still percent-encoded, plus some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>The <argument>options</argument> argument controls how to format the user info component. The value of <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> is not permitted in this function. If you need to obtain fully decoded data, call <link raw="userName()" href="qurl.html#userName" type="function">userName()</link> and <link raw="password()" href="qurl.html#password" type="function">password()</link> individually.</para>
+                    <see-also>
+                        <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link>
+                        <link raw="userName()" href="qurl.html#userName" type="function">userName()</link>
+                        <link raw="password()" href="qurl.html#password" type="function">password()</link>
+                        <link raw="authority()" href="qurl.html#authority" type="function">authority()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setUserName" fullname="QUrl::setUserName" href="qurl.html#setUserName" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="230" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setUserName(const QString &amp;userName, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="userName" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="DecodedMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2182" column="4">
+                    <para>Sets the URL's user name to <argument>userName</argument>. The <argument>userName</argument> is part of the user info element in the authority of the URL, as described in <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link>.</para>
+                    <para>The <argument>userName</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> (the default), all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters. In <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link>, '%' stand for themselves and encoded characters are not possible.</para>
+                    <para>
+                        <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link> should be used when setting the user name from a data source which is not a URL, such as a password dialog shown to the user or with a user name obtained by calling <link raw="userName()" href="qurl.html#userName" type="function">userName()</link> with the <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> formatting option.</para>
+                    <see-also>
+                        <link raw="userName()" href="qurl.html#userName" type="function">userName()</link>
+                        <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="userName" fullname="QUrl::userName" href="qurl.html#userName" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="231" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString userName(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="FullyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2220" column="4">
+                    <para>Returns the user name of the URL if it is defined; otherwise an empty string is returned.</para>
+                    <para>The <argument>options</argument> argument controls how to format the user name component. All values produce an unambiguous result. With <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>, all percent-encoded sequences are decoded; otherwise, the returned value may contain some percent-encoded sequences for some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>Note that <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> may cause data loss if those non-representable sequences are present. It is recommended to use that value when the result will be used in a non-URL context, such as setting in <link raw="QAuthenticator" href="qauthenticator.html" type="class">QAuthenticator</link> or negotiating a login.</para>
+                    <see-also>
+                        <link raw="setUserName()" href="qurl.html#setUserName" type="function">setUserName()</link>
+                        <link raw="userInfo()" href="qurl.html#userInfo" type="function">userInfo()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPassword" fullname="QUrl::setPassword" href="qurl.html#setPassword" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="233" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setPassword(const QString &amp;password, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="password" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="DecodedMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2274" column="4">
+                    <para>Sets the URL's password to <argument>password</argument>. The <argument>password</argument> is part of the user info element in the authority of the URL, as described in <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link>.</para>
+                    <para>The <argument>password</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link>, all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters. In <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link>, '%' stand for themselves and encoded characters are not possible.</para>
+                    <para>
+                        <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link> should be used when setting the password from a data source which is not a URL, such as a password dialog shown to the user or with a password obtained by calling <link raw="password()" href="qurl.html#password" type="function">password()</link> with the <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> formatting option.</para>
+                    <see-also>
+                        <link raw="password()" href="qurl.html#password" type="function">password()</link>
+                        <link raw="setUserInfo()" href="qurl.html#setUserInfo" type="function">setUserInfo()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="password" fullname="QUrl::password" href="qurl.html#password" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="234" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString password(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="FullyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2312" column="4">
+                    <para>Returns the password of the URL if it is defined; otherwise an empty string is returned.</para>
+                    <para>The <argument>options</argument> argument controls how to format the user name component. All values produce an unambiguous result. With <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>, all percent-encoded sequences are decoded; otherwise, the returned value may contain some percent-encoded sequences for some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>Note that <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> may cause data loss if those non-representable sequences are present. It is recommended to use that value when the result will be used in a non-URL context, such as setting in <link raw="QAuthenticator" href="qauthenticator.html" type="class">QAuthenticator</link> or negotiating a login.</para>
+                    <see-also>
+                        <link raw="setPassword()" href="qurl.html#setPassword" type="function">setPassword()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setHost" fullname="QUrl::setHost" href="qurl.html#setHost" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="236" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setHost(const QString &amp;host, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="host" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="DecodedMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2366" column="4">
+                    <para>Sets the host of the URL to <argument>host</argument>. The host is part of the authority.</para>
+                    <para>The <argument>host</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link>, all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters. In <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link>, '%' stand for themselves and encoded characters are not possible.</para>
+                    <para>Note that, in all cases, the result of the parsing must be a valid hostname according to STD 3 rules, as modified by the Internationalized Resource Identifiers specification (RFC 3987). Invalid hostnames are not permitted and will cause <link raw="isValid()" href="qurl.html#isValid" type="function">isValid()</link> to become false.</para>
+                    <see-also>
+                        <link raw="host()" href="qurl.html#host" type="function">host()</link>
+                        <link raw="setAuthority()" href="qurl.html#setAuthority" type="function">setAuthority()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="host" fullname="QUrl::host" href="qurl.html#host" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="237" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString host(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="FullyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2418" column="4">
+                    <para>Returns the host of the URL if it is defined; otherwise an empty string is returned.</para>
+                    <para>The <argument>options</argument> argument controls how the hostname will be formatted. The <link raw="QUrl::EncodeUnicode" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::EncodeUnicode</link> option will cause this function to return the hostname in the ASCII-Compatible Encoding (ACE) form, which is suitable for use in channels that are not 8-bit clean or that require the legacy hostname (such as DNS requests or in HTTP request headers). If that flag is not present, this function returns the International Domain Name (IDN) in Unicode form, according to the list of permissible top-level domains (see <link raw="idnWhitelist()" href="qurl.html#idnWhitelist" type="function">idnWhitelist()</link>).</para>
+                    <para>All other flags are ignored. Host names cannot contain control or percent characters, so the returned value can be considered fully decoded.</para>
+                    <see-also>
+                        <link raw="setHost()" href="qurl.html#setHost" type="function">setHost()</link>
+                        <link raw="idnWhitelist()" href="qurl.html#idnWhitelist" type="function">idnWhitelist()</link>
+                        <link raw="setIdnWhitelist()" href="qurl.html#setIdnWhitelist" type="function">setIdnWhitelist()</link>
+                        <link raw="authority()" href="qurl.html#authority" type="function">authority()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="topLevelDomain" fullname="QUrl::topLevelDomain" href="qurl.html#topLevelDomain" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="239" since="4.8" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString topLevelDomain(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="FullyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3190" column="4">
+                    <para>Returns the TLD (Top-Level Domain) of the URL, (e.g. .co.uk, .net). Note that the return value is prefixed with a '.' unless the URL does not contain a valid TLD, in which case the function returns an empty string.</para>
+                    <para>Note that this function considers a TLD to be any domain that allows users to register subdomains under, including many home, dynamic DNS websites and blogging providers. This is useful for determining whether two websites belong to the same infrastructure and communication should be allowed, such as browser cookies: two domains should be considered part of the same website if they share at least one label in addition to the value returned by this function.</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <teletype type="highlighted">foo.co.uk</teletype> and <teletype type="highlighted">foo.com</teletype> do not share a top-level domain</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">foo.co.uk</teletype> and <teletype type="highlighted">bar.co.uk</teletype> share the <teletype type="highlighted">.co.uk</teletype> domain, but the next label is different</para>
+                        </item>
+                        <item>
+                            <para>
+                                <teletype type="highlighted">www.foo.co.uk</teletype> and <teletype type="highlighted">ftp.foo.co.uk</teletype> share the same top-level domain and one more label, so they are considered part of the same site</para>
+                        </item>
+                    </list>
+                    <para>If <argument>options</argument> includes <link raw="EncodeUnicode" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">EncodeUnicode</link>, the returned string will be in ASCII Compatible Encoding.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPort" fullname="QUrl::setPort" href="qurl.html#setPort" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="242" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setPort(int port)">
+                <parameter type="int" name="port" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2481" column="4">
+                    <para>Sets the port of the URL to <argument>port</argument>. The port is part of the authority of the URL, as described in <link raw="setAuthority()" href="qurl.html#setAuthority" type="function">setAuthority()</link>.</para>
+                    <para>
+                        <argument>port</argument> must be between 0 and 65535 inclusive. Setting the port to -1 indicates that the port is unspecified.</para>
+                    <see-also>
+                        <link raw="port()" href="qurl.html#port" type="function">port()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="port" fullname="QUrl::port" href="qurl.html#port" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="243" since="4.1" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="int" signature="int port(int defaultPort) const">
+                <parameter type="int" name="defaultPort" default="-1"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2503" column="4">
+                    <para>Returns the port of the URL, or <argument>defaultPort</argument> if the port is unspecified.</para>
+                    <para>Example:</para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="3"/>
+                    <see-also>
+                        <link raw="setPort()" href="qurl.html#setPort" type="function">setPort()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setPath" fullname="QUrl::setPath" href="qurl.html#setPath" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="245" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setPath(const QString &amp;path, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="path" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="DecodedMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2519" column="4">
+                    <para>Sets the path of the URL to <argument>path</argument>. The path is the part of the URL that comes after the authority but before the query string.</para>
+                    <image href="images/qurl-ftppath.png"/>
+                    <para>For non-hierarchical schemes, the path will be everything following the scheme declaration, as in the following example:</para>
+                    <image href="images/qurl-mailtopath.png"/>
+                    <para>The <argument>path</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> (the default), all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters. In <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link>, '%' stand for themselves and encoded characters are not possible.</para>
+                    <para>
+                        <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link> should be used when setting the path from a data source which is not a URL, such as a dialog shown to the user or with a path obtained by calling <link raw="path()" href="qurl.html#path" type="function">path()</link> with the <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> formatting option.</para>
+                    <see-also>
+                        <link raw="path()" href="qurl.html#path" type="function">path()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="path" fullname="QUrl::path" href="qurl.html#path" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="246" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString path(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="FullyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2565" column="4">
+                    <para>Returns the path of the URL.</para>
+                    <code>qDebug() &lt;&lt; QUrl(&quot;file:file.txt&quot;).path();                   // &quot;file.txt&quot;
+qDebug() &lt;&lt; QUrl(&quot;/home/user/file.txt&quot;).path();             // &quot;/home/user/file.txt&quot;
+qDebug() &lt;&lt; QUrl(&quot;http://www.example.com/test/123&quot;).path(); // &quot;/test/123&quot;</code>
+                    <para>The <argument>options</argument> argument controls how to format the path component. All values produce an unambiguous result. With <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>, all percent-encoded sequences are decoded; otherwise, the returned value may contain some percent-encoded sequences for some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>Note that <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> may cause data loss if those non-representable sequences are present. It is recommended to use that value when the result will be used in a non-URL context, such as sending to an FTP server.</para>
+                    <para>An example of data loss is when you have non-Unicode percent-encoded sequences and use <link raw="FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">FullyDecoded</link> (the default):</para>
+                    <code>qDebug() &lt;&lt; QUrl(&quot;/foo%FFbar&quot;).path();</code>
+                    <para>In this example, there will be some level of data loss because the <teletype type="highlighted">%FF</teletype> cannot be converted.</para>
+                    <para>Data loss can also occur when the path contains sub-delimiters (such as <teletype type="highlighted">+</teletype>):</para>
+                    <code>qDebug() &lt;&lt; QUrl(&quot;/foo+bar%2B&quot;).path(); // &quot;/foo+bar+&quot;</code>
+                    <para>Other decoding examples:</para>
+                    <code>const QUrl url(&quot;/tmp/Mambo %235%3F.mp3&quot;);
+qDebug() &lt;&lt; url.path(QUrl::FullyDecoded);  // &quot;/tmp/Mambo #5?.mp3&quot;
+qDebug() &lt;&lt; url.path(QUrl::PrettyDecoded); // &quot;/tmp/Mambo #5?.mp3&quot;
+qDebug() &lt;&lt; url.path(QUrl::FullyEncoded);  // &quot;/tmp/Mambo%20%235%3F.mp3&quot;</code>
+                    <see-also>
+                        <link raw="setPath()" href="qurl.html#setPath" type="function">setPath()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fileName" fullname="QUrl::fileName" href="qurl.html#fileName" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="247" since="5.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString fileName(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="FullyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2655" column="4">
+                    <para>Returns the name of the file, excluding the directory path.</para>
+                    <para>Note that, if this <link raw="QUrl" href="qurl.html" type="class">QUrl</link> object is given a path ending in a slash, the name of the file is considered empty.</para>
+                    <para>If the path doesn't contain any slash, it is fully returned as the .</para>
+                    <para>Example:</para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="7"/>
+                    <para>The <argument>options</argument> argument controls how to format the file name component. All values produce an unambiguous result. With <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>, all percent-encoded sequences are decoded; otherwise, the returned value may contain some percent-encoded sequences for some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <see-also>
+                        <link raw="path()" href="qurl.html#path" type="function">path()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasQuery" fullname="QUrl::hasQuery" href="qurl.html#hasQuery" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="249" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasQuery() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2685" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL contains a Query (i.e., if ? was seen on it).</para>
+                    <see-also>
+                        <link raw="setQuery()" href="qurl.html#setQuery" type="function">setQuery()</link>
+                        <link raw="query()" href="qurl.html#query" type="function">query()</link>
+                        <link raw="hasFragment()" href="qurl.html#hasFragment" type="function">hasFragment()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setQuery" fullname="QUrl::setQuery" href="qurl.html#setQuery" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="250" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setQuery(const QString &amp;query, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="query" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2698" column="4">
+                    <para>Sets the query string of the URL to <argument>query</argument>.</para>
+                    <para>This function is useful if you need to pass a query string that does not fit into the key-value pattern, or that uses a different scheme for encoding special characters than what is suggested by <link raw="QUrl" href="qurl.html" type="class">QUrl</link>.</para>
+                    <para>Passing a value of QString() to <argument>query</argument> (a null <link raw="QString" href="qstring.html" type="class">QString</link>) unsets the query completely. However, passing a value of <link raw="QString" href="qstring.html" type="class">QString</link>(&quot;&quot;) will set the query to an empty value, as if the original URL had a lone &quot;?&quot;.</para>
+                    <para>The <argument>query</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link>, all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters. In <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link>, '%' stand for themselves and encoded characters are not possible.</para>
+                    <para>Query strings often contain percent-encoded sequences, so use of <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link> is discouraged. One special sequence to be aware of is that of the plus character ('+'). <link raw="QUrl" href="qurl.html" type="class">QUrl</link> does not convert spaces to plus characters, even though HTML forms posted by web browsers do. In order to represent an actual plus character in a query, the sequence &quot;%2B&quot; is usually used. This function will leave &quot;%2B&quot; sequences untouched in <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link> or <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>.</para>
+                    <see-also>
+                        <link raw="query()" href="qurl.html#query" type="function">query()</link>
+                        <link raw="hasQuery()" href="qurl.html#hasQuery" type="function">hasQuery()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setQuery" fullname="QUrl::setQuery" href="qurl.html#setQuery-1" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="251" since="5.0" virtual="non" meta="plain" const="false" static="false" overload="true" delete="false" default="false" final="false" override="false" overload-number="1" type="void" signature="void setQuery(const QUrlQuery &amp;query)">
+                <parameter type="const QUrlQuery &amp;" name="query" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="2770" column="4">
+                    <para>This is an overloaded function.</para>
+                    <para>Sets the query string of the URL to <argument>query</argument>.</para>
+                    <para>This function reconstructs the query string from the <link raw="QUrlQuery" href="qurlquery.html" type="class">QUrlQuery</link> object and sets on this <link raw="QUrl" href="qurl.html" type="class">QUrl</link> object. This function does not have parsing parameters because the <link raw="QUrlQuery" href="qurlquery.html" type="class">QUrlQuery</link> contains data that is already parsed.</para>
+                    <see-also>
+                        <link raw="query()" href="qurl.html#query" type="function">query()</link>
+                        <link raw="hasQuery()" href="qurl.html#hasQuery" type="function">hasQuery()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="query" fullname="QUrl::query" href="qurl.html#query" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="252" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString query(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="PrettyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3036" column="4">
+                    <para>Returns the query string of the URL if there's a query string, or an empty result if not. To determine if the parsed URL contained a query string, use <link raw="hasQuery()" href="qurl.html#hasQuery" type="function">hasQuery()</link>.</para>
+                    <para>The <argument>options</argument> argument controls how to format the query component. All values produce an unambiguous result. With <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>, all percent-encoded sequences are decoded; otherwise, the returned value may contain some percent-encoded sequences for some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>Note that use of <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> in queries is discouraged, as queries often contain data that is supposed to remain percent-encoded, including the use of the &quot;%2B&quot; sequence to represent a plus character ('+').</para>
+                    <see-also>
+                        <link raw="setQuery()" href="qurl.html#setQuery" type="function">setQuery()</link>
+                        <link raw="hasQuery()" href="qurl.html#hasQuery" type="function">hasQuery()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasFragment" fullname="QUrl::hasFragment" href="qurl.html#hasFragment" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="254" since="4.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasFragment() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3176" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL contains a fragment (i.e., if # was seen on it).</para>
+                    <see-also>
+                        <link raw="fragment()" href="qurl.html#fragment" type="function">fragment()</link>
+                        <link raw="setFragment()" href="qurl.html#setFragment" type="function">setFragment()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fragment" fullname="QUrl::fragment" href="qurl.html#fragment" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="255" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString fragment(QUrl::ComponentFormattingOptions options) const">
+                <parameter type="QUrl::ComponentFormattingOptions" name="options" default="PrettyDecoded"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3110" column="4">
+                    <para>Returns the fragment of the URL. To determine if the parsed URL contained a fragment, use <link raw="hasFragment()" href="qurl.html#hasFragment" type="function">hasFragment()</link>.</para>
+                    <para>The <argument>options</argument> argument controls how to format the fragment component. All values produce an unambiguous result. With <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link>, all percent-encoded sequences are decoded; otherwise, the returned value may contain some percent-encoded sequences for some control sequences not representable in decoded form in <link raw="QString" href="qstring.html" type="class">QString</link>.</para>
+                    <para>Note that <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> may cause data loss if those non-representable sequences are present. It is recommended to use that value when the result will be used in a non-URL context.</para>
+                    <see-also>
+                        <link raw="setFragment()" href="qurl.html#setFragment" type="function">setFragment()</link>
+                        <link raw="hasFragment()" href="qurl.html#hasFragment" type="function">hasFragment()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setFragment" fullname="QUrl::setFragment" href="qurl.html#setFragment" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="256" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setFragment(const QString &amp;fragment, QUrl::ParsingMode mode)">
+                <parameter type="const QString &amp;" name="fragment" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3064" column="4">
+                    <para>Sets the fragment of the URL to <argument>fragment</argument>. The fragment is the last part of the URL, represented by a '#' followed by a string of characters. It is typically used in HTTP for referring to a certain link or point on a page:</para>
+                    <image href="images/qurl-fragment.png"/>
+                    <para>The fragment is sometimes also referred to as the URL &quot;reference&quot;.</para>
+                    <para>Passing an argument of QString() (a null <link raw="QString" href="qstring.html" type="class">QString</link>) will unset the fragment. Passing an argument of <link raw="QString" href="qstring.html" type="class">QString</link>(&quot;&quot;) (an empty but not null <link raw="QString" href="qstring.html" type="class">QString</link>) will set the fragment to an empty string (as if the original URL had a lone &quot;#&quot;).</para>
+                    <para>The <argument>fragment</argument> data is interpreted according to <argument>mode</argument>: in <link raw="StrictMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">StrictMode</link>, any '%' characters must be followed by exactly two hexadecimal characters and some characters (including space) are not allowed in undecoded form. In <link raw="TolerantMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">TolerantMode</link>, all characters are accepted in undecoded form and the tolerant parser will correct stray '%' not followed by two hex characters. In <link raw="DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">DecodedMode</link>, '%' stand for themselves and encoded characters are not possible.</para>
+                    <para>
+                        <link raw="QUrl::DecodedMode" href="qurl.html#ParsingMode-enum" type="enum" enum="QUrl::ParsingMode">QUrl::DecodedMode</link> should be used when setting the fragment from a data source which is not a URL or with a fragment obtained by calling <link raw="fragment()" href="qurl.html#fragment" type="function">fragment()</link> with the <link raw="QUrl::FullyDecoded" href="qurl.html#ComponentFormattingOption-enum" type="enum" enum="QUrl::ComponentFormattingOption">QUrl::FullyDecoded</link> formatting option.</para>
+                    <see-also>
+                        <link raw="fragment()" href="qurl.html#fragment" type="function">fragment()</link>
+                        <link raw="hasFragment()" href="qurl.html#hasFragment" type="function">hasFragment()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="resolved" fullname="QUrl::resolved" href="qurl.html#resolved" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="258" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl resolved(const QUrl &amp;relative) const">
+                <parameter type="const QUrl &amp;" name="relative" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3226" column="4">
+                    <para>Returns the result of the merge of this URL with <argument>relative</argument>. This URL is used as a base to convert <argument>relative</argument> to an absolute URL.</para>
+                    <para>If <argument>relative</argument> is not a relative URL, this function will return <argument>relative</argument> directly. Otherwise, the paths of the two URLs are merged, and the new URL returned has the scheme and authority of the base URL, but with the merged path, as in the following example:</para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="5"/>
+                    <para>Calling  with &quot;..&quot; returns a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> whose directory is one level higher than the original. Similarly, calling  with &quot;../..&quot; removes two levels from the path. If <argument>relative</argument> is &quot;/&quot;, the path becomes &quot;/&quot;.</para>
+                    <see-also>
+                        <link raw="isRelative()" href="qurl.html#isRelative" type="function">isRelative()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isRelative" fullname="QUrl::isRelative" href="qurl.html#isRelative" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="260" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isRelative() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3311" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if the URL is relative; otherwise returns <teletype type="highlighted">false</teletype>. A URL is relative reference if its scheme is undefined; this function is therefore equivalent to calling <link raw="scheme()" href="qurl.html#scheme" type="function">scheme()</link>.<link raw="isEmpty()" href="qurl.html#isEmpty" type="function">isEmpty()</link>.</para>
+                    <para>Relative references are defined in RFC 3986 section 4.2.</para>
+                    <see-also>
+                        <link raw="Relative URLs vs Relative Paths" href="qurl.html#relative-urls-vs-relative-paths" type="class">Relative URLs vs Relative Paths</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isParentOf" fullname="QUrl::isParentOf" href="qurl.html#isParentOf" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="261" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isParentOf(const QUrl &amp;childUrl) const">
+                <parameter type="const QUrl &amp;" name="childUrl" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3973" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL is a parent of <argument>childUrl</argument>. <argument>childUrl</argument> is a child of this URL if the two URLs share the same scheme and authority, and this URL's path is a parent of the path of <argument>childUrl</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isLocalFile" fullname="QUrl::isLocalFile" href="qurl.html#isLocalFile" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="263" since="4.8" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isLocalFile() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3957" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL is pointing to a local file path. A URL is a local file path if the scheme is &quot;file&quot;.</para>
+                    <para>Note that this function considers URLs with hostnames to be local file paths, even if the eventual file path cannot be opened with <link raw="QFile::open()" href="qfile.html#open" type="function">QFile::open()</link>.</para>
+                    <see-also>
+                        <link raw="fromLocalFile()" href="qurl.html#fromLocalFile" type="function">fromLocalFile()</link>
+                        <link raw="toLocalFile()" href="qurl.html#toLocalFile" type="function">toLocalFile()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromLocalFile" fullname="QUrl::fromLocalFile" href="qurl.html#fromLocalFile" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="264" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl fromLocalFile(const QString &amp;localFile)">
+                <parameter type="const QString &amp;" name="localFile" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3846" column="4">
+                    <para>Returns a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> representation of <argument>localFile</argument>, interpreted as a local file. This function accepts paths separated by slashes as well as the native separator for this platform.</para>
+                    <para>This function also accepts paths with a doubled leading slash (or backslash) to indicate a remote file, as in &quot;//servername/path/to/file.txt&quot;. Note that only certain platforms can actually open this file using <link raw="QFile::open()" href="qfile.html#open" type="function">QFile::open()</link>.</para>
+                    <para>An empty <argument>localFile</argument> leads to an empty URL (since Qt 5.4).</para>
+                    <code>qDebug() &lt;&lt; QUrl::fromLocalFile(&quot;file.txt&quot;);            // QUrl(&quot;file:file.txt&quot;)
+qDebug() &lt;&lt; QUrl::fromLocalFile(&quot;/home/user/file.txt&quot;); // QUrl(&quot;file:///home/user/file.txt&quot;)
+qDebug() &lt;&lt; QUrl::fromLocalFile(&quot;file:file.txt&quot;);       // doesn't make sense; expects path, not url with scheme</code>
+                    <para>In the first line in snippet above, a file URL is constructed from a local, relative path. A file URL with a relative path only makes sense if there is a base URL to resolve it against. For example:</para>
+                    <code>QUrl url = QUrl::fromLocalFile(&quot;file.txt&quot;);
+QUrl baseUrl = QUrl(&quot;file:/home/user/&quot;);
+// wrong: prints QUrl(&quot;file:file.txt&quot;), as url already has a scheme
+qDebug() &lt;&lt; baseUrl.resolved(url);</code>
+                    <para>To resolve such a URL, it's necessary to remove the scheme beforehand:</para>
+                    <code>// correct: prints QUrl(&quot;file:///home/user/file.txt&quot;)
+url.setScheme(QString());
+qDebug() &lt;&lt; baseUrl.resolved(url);</code>
+                    <para>For this reason, it is better to use a relative URL (that is, no scheme) for relative file paths:</para>
+                    <code>QUrl url = QUrl(&quot;file.txt&quot;);
+QUrl baseUrl = QUrl(&quot;file:/home/user/&quot;);
+// prints QUrl(&quot;file:///home/user/file.txt&quot;)
+qDebug() &lt;&lt; baseUrl.resolved(url);</code>
+                    <see-also>
+                        <link raw="toLocalFile()" href="qurl.html#toLocalFile" type="function">toLocalFile()</link>
+                        <link raw="isLocalFile()" href="qurl.html#isLocalFile" type="function">isLocalFile()</link>
+                        <link raw="QDir::toNativeSeparators()" href="qdir.html#toNativeSeparators" type="function">QDir::toNativeSeparators()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toLocalFile" fullname="QUrl::toLocalFile" href="qurl.html#toLocalFile" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="265" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString toLocalFile() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3928" column="4">
+                    <para>Returns the path of this URL formatted as a local file path. The path returned will use forward slashes, even if it was originally created from one with backslashes.</para>
+                    <para>If this URL contains a non-empty hostname, it will be encoded in the returned value in the form found on SMB networks (for example, &quot;//servername/path/to/file.txt&quot;).</para>
+                    <code>qDebug() &lt;&lt; QUrl(&quot;file:file.txt&quot;).toLocalFile();            // &quot;file:file.txt&quot;
+qDebug() &lt;&lt; QUrl(&quot;file:/home/user/file.txt&quot;).toLocalFile(); // &quot;file:///home/user/file.txt&quot;
+qDebug() &lt;&lt; QUrl(&quot;file.txt&quot;).toLocalFile();                 // &quot;&quot;; wasn't a local file as it had no scheme</code>
+                    <para>Note: if the path component of this URL contains a non-UTF-8 binary sequence (such as %80), the behaviour of this function is undefined.</para>
+                    <see-also>
+                        <link raw="fromLocalFile()" href="qurl.html#fromLocalFile" type="function">fromLocalFile()</link>
+                        <link raw="isLocalFile()" href="qurl.html#isLocalFile" type="function">isLocalFile()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="detach" fullname="QUrl::detach" href="qurl.html#detach" status="internal" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="267" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void detach()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3824" column="4">
+                    <para>Forces a detach.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="isDetached" fullname="QUrl::isDetached" href="qurl.html#isDetached" status="internal" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="268" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool isDetached() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3837" column="4"/>
+            </function>
+            <function threadsafety="unspecified" name="operator&lt;" fullname="QUrl::operator&lt;" href="qurl.html#operator-lt" status="internal" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="270" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator&lt;(const QUrl &amp;url) const">
+                <parameter type="const QUrl &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3613" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL is &quot;less than&quot; the given <argument>url</argument>. This provides a means of ordering URLs.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator==" fullname="QUrl::operator==" href="qurl.html#operator-eq-eq" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="271" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator==(const QUrl &amp;url) const">
+                <parameter type="const QUrl &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3667" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL and the given <argument>url</argument> are equal; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator!=" fullname="QUrl::operator!=" href="qurl.html#operator-not-eq" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="272" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool operator!=(const QUrl &amp;url) const">
+                <parameter type="const QUrl &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3774" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL and the given <argument>url</argument> are not equal; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="matches" fullname="QUrl::matches" href="qurl.html#matches" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="274" since="5.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool matches(const QUrl &amp;url, QUrl::FormattingOptions options) const">
+                <parameter type="const QUrl &amp;" name="url" default=""/>
+                <parameter type="QUrl::FormattingOptions" name="options" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3698" column="4">
+                    <para>Returns <teletype type="highlighted">true</teletype> if this URL and the given <argument>url</argument> are equal after applying <argument>options</argument> to both; otherwise returns <teletype type="highlighted">false</teletype>.</para>
+                    <para>This is equivalent to calling adjusted(options) on both URLs and comparing the resulting urls, but faster.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromPercentEncoding" fullname="QUrl::fromPercentEncoding" href="qurl.html#fromPercentEncoding" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="276" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString fromPercentEncoding(const QByteArray &amp;input)">
+                <parameter type="const QByteArray &amp;" name="input" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3508" column="4">
+                    <para>Returns a decoded copy of <argument>input</argument>. <argument>input</argument> is first decoded from percent encoding, then converted from UTF-8 to unicode.</para>
+                    <para>
+                        <bold>Note:</bold> Given invalid input (such as a string containing the sequence &quot;%G5&quot;, which is not a valid hexadecimal number) the output will be invalid as well. As an example: the sequence &quot;%G5&quot; could be decoded to 'W'.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toPercentEncoding" fullname="QUrl::toPercentEncoding" href="qurl.html#toPercentEncoding" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="277" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray toPercentEncoding(const QString &amp;input, const QByteArray &amp;exclude, const QByteArray &amp;include)">
+                <parameter type="const QString &amp;" name="input" default=""/>
+                <parameter type="const QByteArray &amp;" name="exclude" default="QByteArray()"/>
+                <parameter type="const QByteArray &amp;" name="include" default="QByteArray()"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3522" column="4">
+                    <para>Returns an encoded copy of <argument>input</argument>. <argument>input</argument> is first converted to UTF-8, and all ASCII-characters that are not in the unreserved group are percent encoded. To prevent characters from being percent encoded pass them to <argument>exclude</argument>. To force characters to be percent encoded pass them to <argument>include</argument>.</para>
+                    <para>Unreserved is defined as: <teletype>ALPHA / DIGIT / &quot;-&quot; / &quot;.&quot; / &quot;_&quot; / &quot;~&quot;</teletype></para>
+                    <snippet location="code/src_corelib_io_qurl.cpp" path="C:/Qt/5.11.1/Src/qtbase/src/corelib/doc/snippets/code/src_corelib_io_qurl.cpp" identifier="6"/>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromCFURL" fullname="QUrl::fromCFURL" href="qurl.html#fromCFURL" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="281" since="5.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl fromCFURL(CFURLRef url)">
+                <parameter type="CFURLRef" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qcore_foundation.mm" line="324" column="4">
+                    <para>Constructs a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> containing a copy of the CFURL <argument>url</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toCFURL" fullname="QUrl::toCFURL" href="qurl.html#toCFURL" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="282" since="5.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="CFURLRef" signature="CFURLRef toCFURL() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qcore_foundation.mm" line="336" column="4">
+                    <para>Creates a CFURL from a <link raw="QUrl" href="qurl.html" type="class">QUrl</link>. The caller owns the CFURL and is responsible for releasing it.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromNSURL" fullname="QUrl::fromNSURL" href="qurl.html#fromNSURL" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="283" since="5.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QUrl" signature="QUrl fromNSURL(const NSURL *url)">
+                <parameter type="const NSURL *" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qcore_foundation.mm" line="353" column="4">
+                    <para>Constructs a <link raw="QUrl" href="qurl.html" type="class">QUrl</link> containing a copy of the NSURL <argument>url</argument>.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toNSURL" fullname="QUrl::toNSURL" href="qurl.html#toNSURL" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="284" since="5.2" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="NSURL *" signature="NSURL * toNSURL() const">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/kernel/qcore_foundation.mm" line="365" column="4">
+                    <para>Creates a NSURL from a <link raw="QUrl" href="qurl.html" type="class">QUrl</link>. The NSURL is autoreleased.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromPunycode" fullname="QUrl::fromPunycode" href="qurl.html#fromPunycode" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="288" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString fromPunycode(const QByteArray &amp;punycode)">
+                <parameter type="const QByteArray &amp;" name="punycode" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="toPunycode" fullname="QUrl::toPunycode" href="qurl.html#toPunycode" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="290" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray toPunycode(const QString &amp;string)">
+                <parameter type="const QString &amp;" name="string" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setQueryItems" fullname="QUrl::setQueryItems" href="qurl.html#setQueryItems" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="293" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setQueryItems(const QList&lt;QPair&lt;QString, QString&gt; &gt; &amp;qry)">
+                <parameter type="const QList&lt;QPair&lt;QString, QString&gt; &gt; &amp;" name="qry" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="queryItems()" href="qurl.html#queryItems" type="function">queryItems()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addQueryItem" fullname="QUrl::addQueryItem" href="qurl.html#addQueryItem" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="294" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void addQueryItem(const QString &amp;key, const QString &amp;value)">
+                <parameter type="const QString &amp;" name="key" default=""/>
+                <parameter type="const QString &amp;" name="value" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="queryItems" fullname="QUrl::queryItems" href="qurl.html#queryItems" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="295" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QList&lt;QPair&lt;QString, QString&gt; &gt;" signature="QList&lt;QPair&lt;QString, QString&gt; &gt; queryItems() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setQueryItems()" href="qurl.html#setQueryItems" type="function">setQueryItems()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasQueryItem" fullname="QUrl::hasQueryItem" href="qurl.html#hasQueryItem" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="296" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasQueryItem(const QString &amp;key) const">
+                <parameter type="const QString &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="queryItemValue" fullname="QUrl::queryItemValue" href="qurl.html#queryItemValue" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="297" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString queryItemValue(const QString &amp;key) const">
+                <parameter type="const QString &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="allQueryItemValues" fullname="QUrl::allQueryItemValues" href="qurl.html#allQueryItemValues" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="298" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QStringList" signature="QStringList allQueryItemValues(const QString &amp;key) const">
+                <parameter type="const QString &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="removeQueryItem" fullname="QUrl::removeQueryItem" href="qurl.html#removeQueryItem" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="299" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void removeQueryItem(const QString &amp;key)">
+                <parameter type="const QString &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="removeAllQueryItems" fullname="QUrl::removeAllQueryItems" href="qurl.html#removeAllQueryItems" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="300" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void removeAllQueryItems(const QString &amp;key)">
+                <parameter type="const QString &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedQueryItems" fullname="QUrl::setEncodedQueryItems" href="qurl.html#setEncodedQueryItems" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="302" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedQueryItems(const QList&lt;QPair&lt;QByteArray, QByteArray&gt; &gt; &amp;query)">
+                <parameter type="const QList&lt;QPair&lt;QByteArray, QByteArray&gt; &gt; &amp;" name="query" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedQueryItems()" href="qurl.html#encodedQueryItems" type="function">encodedQueryItems()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="addEncodedQueryItem" fullname="QUrl::addEncodedQueryItem" href="qurl.html#addEncodedQueryItem" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="303" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void addEncodedQueryItem(const QByteArray &amp;key, const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="key" default=""/>
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="encodedQueryItems" fullname="QUrl::encodedQueryItems" href="qurl.html#encodedQueryItems" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="304" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QList&lt;QPair&lt;QByteArray, QByteArray&gt; &gt;" signature="QList&lt;QPair&lt;QByteArray, QByteArray&gt; &gt; encodedQueryItems() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedQueryItems()" href="qurl.html#setEncodedQueryItems" type="function">setEncodedQueryItems()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="hasEncodedQueryItem" fullname="QUrl::hasEncodedQueryItem" href="qurl.html#hasEncodedQueryItem" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="305" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="bool" signature="bool hasEncodedQueryItem(const QByteArray &amp;key) const">
+                <parameter type="const QByteArray &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="encodedQueryItemValue" fullname="QUrl::encodedQueryItemValue" href="qurl.html#encodedQueryItemValue" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="306" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedQueryItemValue(const QByteArray &amp;key) const">
+                <parameter type="const QByteArray &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="allEncodedQueryItemValues" fullname="QUrl::allEncodedQueryItemValues" href="qurl.html#allEncodedQueryItemValues" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="307" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QList&lt;QByteArray&gt;" signature="QList&lt;QByteArray&gt; allEncodedQueryItemValues(const QByteArray &amp;key) const">
+                <parameter type="const QByteArray &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="removeEncodedQueryItem" fullname="QUrl::removeEncodedQueryItem" href="qurl.html#removeEncodedQueryItem" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="308" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void removeEncodedQueryItem(const QByteArray &amp;key)">
+                <parameter type="const QByteArray &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="removeAllEncodedQueryItems" fullname="QUrl::removeAllEncodedQueryItems" href="qurl.html#removeAllEncodedQueryItems" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="309" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void removeAllEncodedQueryItems(const QByteArray &amp;key)">
+                <parameter type="const QByteArray &amp;" name="key" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedUrl" fullname="QUrl::setEncodedUrl" href="qurl.html#setEncodedUrl" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="311" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedUrl(const QByteArray &amp;u, QUrl::ParsingMode mode)">
+                <parameter type="const QByteArray &amp;" name="u" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="encodedUserName" fullname="QUrl::encodedUserName" href="qurl.html#encodedUserName" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="314" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedUserName() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedUserName()" href="qurl.html#setEncodedUserName" type="function">setEncodedUserName()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedUserName" fullname="QUrl::setEncodedUserName" href="qurl.html#setEncodedUserName" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="316" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedUserName(const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedUserName()" href="qurl.html#encodedUserName" type="function">encodedUserName()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="encodedPassword" fullname="QUrl::encodedPassword" href="qurl.html#encodedPassword" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="319" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedPassword() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedPassword()" href="qurl.html#setEncodedPassword" type="function">setEncodedPassword()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedPassword" fullname="QUrl::setEncodedPassword" href="qurl.html#setEncodedPassword" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="321" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedPassword(const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedPassword()" href="qurl.html#encodedPassword" type="function">encodedPassword()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="encodedHost" fullname="QUrl::encodedHost" href="qurl.html#encodedHost" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="324" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedHost() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedHost()" href="qurl.html#setEncodedHost" type="function">setEncodedHost()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedHost" fullname="QUrl::setEncodedHost" href="qurl.html#setEncodedHost" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="326" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedHost(const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedHost()" href="qurl.html#encodedHost" type="function">encodedHost()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="encodedPath" fullname="QUrl::encodedPath" href="qurl.html#encodedPath" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="329" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedPath() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedPath()" href="qurl.html#setEncodedPath" type="function">setEncodedPath()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedPath" fullname="QUrl::setEncodedPath" href="qurl.html#setEncodedPath" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="331" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedPath(const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedPath()" href="qurl.html#encodedPath" type="function">encodedPath()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="encodedQuery" fullname="QUrl::encodedQuery" href="qurl.html#encodedQuery" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="334" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedQuery() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedQuery()" href="qurl.html#setEncodedQuery" type="function">setEncodedQuery()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedQuery" fullname="QUrl::setEncodedQuery" href="qurl.html#setEncodedQuery" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="336" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedQuery(const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedQuery()" href="qurl.html#encodedQuery" type="function">encodedQuery()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="encodedFragment" fullname="QUrl::encodedFragment" href="qurl.html#encodedFragment" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="339" virtual="non" meta="plain" const="true" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray encodedFragment() const">
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="setEncodedFragment()" href="qurl.html#setEncodedFragment" type="function">setEncodedFragment()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setEncodedFragment" fullname="QUrl::setEncodedFragment" href="qurl.html#setEncodedFragment" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="341" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setEncodedFragment(const QByteArray &amp;value)">
+                <parameter type="const QByteArray &amp;" name="value" default=""/>
+                <description path="" line="0" column="0">
+                    <see-also>
+                        <link raw="encodedFragment()" href="qurl.html#encodedFragment" type="function">encodedFragment()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toLatin1_helper" fullname="QUrl::toLatin1_helper" href="qurl.html#toLatin1_helper" status="active" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="346" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray toLatin1_helper(const QString &amp;string)">
+                <parameter type="const QString &amp;" name="string" default=""/>
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="fromEncodedComponent_helper" fullname="QUrl::fromEncodedComponent_helper" href="qurl.html#fromEncodedComponent_helper" status="internal" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="354" since="5.0" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString fromEncodedComponent_helper(const QByteArray &amp;ba)">
+                <parameter type="const QByteArray &amp;" name="ba" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3539" column="4">
+                    <para>Used in the setEncodedXXX compatibility functions. Converts <argument>ba</argument> to <link raw="QString" href="qstring.html" type="class">QString</link> form.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromAce" fullname="QUrl::fromAce" href="qurl.html#fromAce" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="357" since="4.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QString" signature="QString fromAce(const QByteArray &amp;domain)">
+                <parameter type="const QByteArray &amp;" name="domain" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3571" column="4">
+                    <para>Returns the Unicode form of the given domain name <argument>domain</argument>, which is encoded in the ASCII Compatible Encoding (ACE). The result of this function is considered equivalent to <argument>domain</argument>.</para>
+                    <para>If the value in <argument>domain</argument> cannot be encoded, it will be converted to <link raw="QString" href="qstring.html" type="class">QString</link> and returned.</para>
+                    <para>The ASCII Compatible Encoding (ACE) is defined by RFC 3490, RFC 3491 and RFC 3492. It is part of the Internationalizing Domain Names in Applications (IDNA) specification, which allows for domain names (like <teletype type="highlighted">&quot;example.com&quot;</teletype>) to be written using international characters.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toAce" fullname="QUrl::toAce" href="qurl.html#toAce" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="358" since="4.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QByteArray" signature="QByteArray toAce(const QString &amp;domain)">
+                <parameter type="const QString &amp;" name="domain" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3592" column="4">
+                    <para>Returns the ASCII Compatible Encoding of the given domain name <argument>domain</argument>. The result of this function is considered equivalent to <argument>domain</argument>.</para>
+                    <para>The ASCII-Compatible Encoding (ACE) is defined by RFC 3490, RFC 3491 and RFC 3492. It is part of the Internationalizing Domain Names in Applications (IDNA) specification, which allows for domain names (like <teletype type="highlighted">&quot;example.com&quot;</teletype>) to be written using international characters.</para>
+                    <para>This function returns an empty <link raw="QByteArray" href="qbytearray.html" type="class">QByteArray</link> if <argument>domain</argument> is not a valid hostname. Note, in particular, that IPv6 literals are not valid domain names.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="idnWhitelist" fullname="QUrl::idnWhitelist" href="qurl.html#idnWhitelist" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="359" since="4.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QStringList" signature="QStringList idnWhitelist()">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurlidna.cpp" line="2596" column="4">
+                    <para>Returns the current whitelist of top-level domains that are allowed to have non-ASCII characters in their compositions.</para>
+                    <para>See <link raw="setIdnWhitelist()" href="qurl.html#setIdnWhitelist" type="function">setIdnWhitelist()</link> for the rationale of this list.</para>
+                    <see-also>
+                        <link raw="setIdnWhitelist()" href="qurl.html#setIdnWhitelist" type="function">setIdnWhitelist()</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="toStringList" fullname="QUrl::toStringList" href="qurl.html#toStringList" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="360" since="5.1" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QStringList" signature="QStringList toStringList(const QList&lt;QUrl&gt; &amp;urls, QUrl::FormattingOptions options)">
+                <parameter type="const QList&lt;QUrl&gt; &amp;" name="urls" default=""/>
+                <parameter type="QUrl::FormattingOptions" name="options" default="FormattingOptions(PrettyDecoded)"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4171" column="4">
+                    <para>Converts a list of <argument>urls</argument> into a list of <link raw="QString" href="qstring.html" type="class">QString</link> objects, using <link raw="toString" href="qurl.html#toString" type="function">toString</link>(<argument>options</argument>).</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="fromStringList" fullname="QUrl::fromStringList" href="qurl.html#fromStringList" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="361" since="5.1" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="QList&lt;QUrl&gt;" signature="QList&lt;QUrl&gt; fromStringList(const QStringList &amp;urls, QUrl::ParsingMode mode)">
+                <parameter type="const QStringList &amp;" name="urls" default=""/>
+                <parameter type="QUrl::ParsingMode" name="mode" default="TolerantMode"/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4186" column="4">
+                    <para>Converts a list of strings representing <argument>urls</argument> into a list of urls, using <link raw="QUrl" href="qurl.html" type="class">QUrl</link>(str, <argument>mode</argument>). Note that this means all strings must be urls, not for instance local paths.</para>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="setIdnWhitelist" fullname="QUrl::setIdnWhitelist" href="qurl.html#setIdnWhitelist" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="363" since="4.2" virtual="non" meta="plain" const="false" static="true" overload="false" delete="false" default="false" final="false" override="false" type="void" signature="void setIdnWhitelist(const QStringList &amp;list)">
+                <parameter type="const QStringList &amp;" name="list" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurlidna.cpp" line="2618" column="4">
+                    <para>Sets the whitelist of Top-Level Domains (TLDs) that are allowed to have non-ASCII characters in domains to the value of <argument>list</argument>.</para>
+                    <para>Note that if you call this function, you need to do so <italic>before</italic> you start any threads that might access <link raw="idnWhitelist()" href="qurl.html#idnWhitelist" type="function">idnWhitelist()</link>.</para>
+                    <para>Qt comes with a default list that contains the Internet top-level domains that have published support for Internationalized Domain Names (IDNs) and rules to guarantee that no deception can happen between similarly-looking characters (such as the Latin lowercase letter <teletype type="highlighted">'a'</teletype> and the Cyrillic equivalent, which in most fonts are visually identical).</para>
+                    <para>This list is periodically maintained, as registrars publish new rules.</para>
+                    <para>This function is provided for those who need to manipulate the list, in order to add or remove a TLD. It is not recommended to change its value for purposes other than testing, as it may expose users to security risks.</para>
+                    <see-also>
+                        <link raw="idnWhitelist()" href="qurl.html#idnWhitelist" type="function">idnWhitelist()</link>
+                    </see-also>
+                </description>
+            </function>
+            <variable threadsafety="unspecified" name="d" fullname="QUrl::d" href="qurl.html#d-var" status="active" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="367" type="QUrlPrivate *" static="false">
+                <description path="" line="0" column="0"/>
+            </variable>
+            <typedef threadsafety="unspecified" name="DataPtr" fullname="QUrl::DataPtr" href="qurl.html#DataPtr-typedef" status="internal" access="private" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="371">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4201" column="4"/>
+            </typedef>
+            <function threadsafety="unspecified" name="data_ptr" fullname="QUrl::data_ptr" href="qurl.html#data_ptr" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="372" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" type="QUrl::DataPtr &amp;" signature="QUrl::DataPtr &amp; data_ptr()">
+                <description path="" line="0" column="0"/>
+            </function>
+            <function threadsafety="unspecified" name="QT_NO_URL_CAST_FROM_STRING" href="qurl.html#QT_NO_URL_CAST_FROM_STRING" status="active" access="public" virtual="non" meta="macrowithoutparams" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" relates="QUrl" type="" signature="QT_NO_URL_CAST_FROM_STRING">
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="1804" column="4">
+                    <para>Disables automatic conversions from <link raw="QString" href="qstring.html" type="class">QString</link> (or char *) to <link raw="QUrl" href="qurl.html" type="class">QUrl</link>.</para>
+                    <para>Compiling your code with this define is useful when you have a lot of code that uses <link raw="QString" href="qstring.html" type="class">QString</link> for file names and you wish to convert it to use <link raw="QUrl" href="qurl.html" type="class">QUrl</link> for network transparency. In any code that uses <link raw="QUrl" href="qurl.html" type="class">QUrl</link>, it can help avoid missing <link raw="QUrl::resolved()" href="qurl.html#resolved" type="function">QUrl::resolved()</link> calls, and other misuses of <link raw="QString" href="qstring.html" type="class">QString</link> to <link raw="QUrl" href="qurl.html" type="class">QUrl</link> conversions.</para>
+                    <para>For example, if you have code like</para>
+                    <oldcode>url = filename; // probably not what you want</oldcode>
+                    <para>you can rewrite it as</para>
+                    <newcode>url = QUrl::fromLocalFile(filename);
+url = baseurl.resolved(QUrl(filename));</newcode>
+                    <see-also>
+                        <link raw="QT_NO_CAST_FROM_ASCII" href="qstring.html#QT_NO_CAST_FROM_ASCII" type="function">QT_NO_CAST_FROM_ASCII</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator&lt;&lt;" href="qurl.html#operator-lt-lt" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="410" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" relates="QUrl" type="QDataStream &amp;" signature="QDataStream &amp; operator&lt;&lt;(QDataStream &amp;out, const QUrl &amp;url)">
+                <parameter type="QDataStream &amp;" name="out" default=""/>
+                <parameter type="const QUrl &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="3999" column="4">
+                    <para>Writes url <argument>url</argument> to the stream <argument>out</argument> and returns a reference to the stream.</para>
+                    <see-also>
+                        <link raw="Serializing Qt Data Types" href="datastreamformat.html" type="page" page="Serializing Qt Data Types">Format of the QDataStream operators</link>
+                    </see-also>
+                </description>
+            </function>
+            <function threadsafety="unspecified" name="operator&gt;&gt;" href="qurl.html#operator-gt-gt" status="active" access="public" location="qurl.h" filepath="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.h" lineno="411" virtual="non" meta="plain" const="false" static="false" overload="false" delete="false" default="false" final="false" override="false" relates="QUrl" type="QDataStream &amp;" signature="QDataStream &amp; operator&gt;&gt;(QDataStream &amp;in, QUrl &amp;url)">
+                <parameter type="QDataStream &amp;" name="in" default=""/>
+                <parameter type="QUrl &amp;" name="url" default=""/>
+                <description path="C:/Qt/5.11.1/Src/qtbase/src/corelib/io/qurl.cpp" line="4015" column="4">
+                    <para>Reads a url into <argument>url</argument> from the stream <argument>in</argument> and returns a reference to the stream.</para>
+                    <see-also>
+                        <link raw="Serializing Qt Data Types" href="datastreamformat.html" type="page" page="Serializing Qt Data Types">Format of the QDataStream operators</link>
+                    </see-also>
+                </description>
+            </function>
+        </class>
+    </document>
+</WebXML>

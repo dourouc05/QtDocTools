@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=65227:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=57054:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\jing-20140903-saxon95.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -47,12 +47,12 @@
 --> Found module: qtserialport; qdocconf: C:\Qt\5.11.1\Src\qtserialport\src\serialport\doc\qtserialport.qdocconf
 --> Found module: qtspeech; qdocconf: C:\Qt\5.11.1\Src\qtspeech\src\doc\qtspeech.qdocconf
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
---> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
---> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
+--> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
 --> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
 --> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
+--> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
+--> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
 --> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
---> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
 --> Found module: qtwebchannel; qdocconf: C:\Qt\5.11.1\Src\qtwebchannel\src\webchannel\doc\qtwebchannel.qdocconf
@@ -259,6 +259,26 @@
 [0127/7715]C:\Qt\Doc\webxml\changes.webxml
 [0128/7715]C:\Qt\Doc\webxml\classes.webxml
 [0129/7715]C:\Qt\Doc\webxml\classesandfunctions.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/classes.qdt; lineNumber: 8251; columnNumber: 13; element "db:para" not allowed here; expected the element end-tag or element "db:acknowledgements", "db:appendix", "db:bibliography", "db:colophon", "db:dedication", "db:glossary", "db:index", "db:section", "db:simplesect", "db:toc" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.startElement(ValidatorHandlerImpl.java:63)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:374)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0130/7715]C:\Qt\Doc\webxml\cmake-manual.webxml
 [0131/7715]C:\Qt\Doc\webxml\codec-big5.webxml
 [0132/7715]C:\Qt\Doc\webxml\codec-big5hkscs.webxml
@@ -449,9 +469,9 @@ WARNING: generatedlist type not implemented: annotatedattributions
 [0315/7715]C:\Qt\Doc\webxml\nfc-examples.webxml
 [0316/7715]C:\Qt\Doc\webxml\object.webxml
 [0317/7715]C:\Qt\Doc\webxml\objecttrees.webxml
-[0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 WARNING: generatedlist type not implemented: obsoleteclasses
 WARNING: generatedlist type not implemented: obsoletecppmembers
+[0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 [0319/7715]C:\Qt\Doc\webxml\obsoleteqmltypes.webxml
 WARNING: generatedlist type not implemented: obsoleteqmltypes
 WARNING: generatedlist type not implemented: obsoleteqmlmembers
@@ -507,6 +527,22 @@ WARNING: generatedlist type not implemented: obsoleteqmlmembers
 [0369/7715]C:\Qt\Doc\webxml\qabstracteventdispatcher-timerinfo.webxml
 [0370/7715]C:\Qt\Doc\webxml\qabstracteventdispatcher.webxml
 [0371/7715]C:\Qt\Doc\webxml\qabstractextensionfactory.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qabstracteventdispatcher.qdt; lineNumber: 56; columnNumber: 62; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0372/7715]C:\Qt\Doc\webxml\qabstractextensionmanager.webxml
 [0373/7715]C:\Qt\Doc\webxml\qabstractformbuilder.webxml
 [0374/7715]C:\Qt\Doc\webxml\qabstractgraphicsshapeitem.webxml
@@ -531,12 +567,28 @@ WARNING: generatedlist type not implemented: obsoleteqmlmembers
 [0393/7715]C:\Qt\Doc\webxml\qabstracttextdocumentlayout-paintcontext.webxml
 [0394/7715]C:\Qt\Doc\webxml\qabstracttextdocumentlayout-selection.webxml
 [0395/7715]C:\Qt\Doc\webxml\qabstracttextdocumentlayout.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qabstracttextdocumentlayout.qdt; lineNumber: 47; columnNumber: 68; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0396/7715]C:\Qt\Doc\webxml\qabstracttransition.webxml
 [0397/7715]C:\Qt\Doc\webxml\qabstracturiresolver.webxml
 [0398/7715]C:\Qt\Doc\webxml\qabstractxmlnodemodel.webxml
 [0399/7715]C:\Qt\Doc\webxml\qabstractxmlreceiver.webxml
-[0400/7715]C:\Qt\Doc\webxml\qaccessible-state.webxml
 WARNING: Text outside a paragraph
+[0400/7715]C:\Qt\Doc\webxml\qaccessible-state.webxml
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -623,6 +675,22 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaccessible.qdt; lineNumber: 69; columnNumber: 45; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0402/7715]C:\Qt\Doc\webxml\qaccessibleactioninterface.webxml
 [0403/7715]C:\Qt\Doc\webxml\qaccessibleeditabletextinterface.webxml
 [0404/7715]C:\Qt\Doc\webxml\qaccessibleevent.webxml
@@ -661,6 +729,22 @@ WARNING: Text outside a paragraph
 [0437/7715]C:\Qt\Doc\webxml\qassociativeiterable-const-iterator.webxml
 [0438/7715]C:\Qt\Doc\webxml\qassociativeiterable.webxml
 [0439/7715]C:\Qt\Doc\webxml\qatomicint.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qassociativeiterable.qdt; lineNumber: 72; columnNumber: 63; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0440/7715]C:\Qt\Doc\webxml\qatomicinteger.webxml
 [0441/7715]C:\Qt\Doc\webxml\qatomicpointer.webxml
 [0442/7715]C:\Qt\Doc\webxml\qaudio.webxml
@@ -678,9 +762,69 @@ WARNING: Text outside a paragraph
 [0454/7715]C:\Qt\Doc\webxml\qaxselect.webxml
 [0455/7715]C:\Qt\Doc\webxml\qaxserver-demo-hierarchy.webxml
 [0456/7715]C:\Qt\Doc\webxml\qaxserver-demo-menus.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-hierarchy.qdt; lineNumber: 13; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0457/7715]C:\Qt\Doc\webxml\qaxserver-demo-multiple.webxml
 [0458/7715]C:\Qt\Doc\webxml\qaxserver-demo-opengl.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-opengl.qdt; lineNumber: 13; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0459/7715]C:\Qt\Doc\webxml\qaxserver-demo-simple.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-simple.qdt; lineNumber: 13; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0460/7715]C:\Qt\Doc\webxml\qaxserver-demo-wrapper.webxml
 [0461/7715]C:\Qt\Doc\webxml\qaxserver-module.webxml
 [0462/7715]C:\Qt\Doc\webxml\qaxwidget.webxml
@@ -707,7 +851,23 @@ WARNING: Text outside a paragraph
 [0483/7715]C:\Qt\Doc\webxml\qbluetoothserviceinfo-alternative.webxml
 [0484/7715]C:\Qt\Doc\webxml\qbluetoothserviceinfo-sequence.webxml
 [0485/7715]C:\Qt\Doc\webxml\qbluetoothserviceinfo.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qbluetoothserviceinfo.qdt; lineNumber: 38; columnNumber: 61; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 [0486/7715]C:\Qt\Doc\webxml\qbluetoothsocket.webxml
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0487/7715]C:\Qt\Doc\webxml\qbluetoothtransfermanager.webxml
 [0488/7715]C:\Qt\Doc\webxml\qbluetoothtransferreply.webxml
 [0489/7715]C:\Qt\Doc\webxml\qbluetoothtransferrequest.webxml
@@ -902,6 +1062,22 @@ WARNING: Text outside a paragraph
 [0676/7715]C:\Qt\Doc\webxml\qformbuilder.webxml
 [0677/7715]C:\Qt\Doc\webxml\qformlayout-takerowresult.webxml
 [0678/7715]C:\Qt\Doc\webxml\qformlayout.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qformlayout.qdt; lineNumber: 178; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0679/7715]C:\Qt\Doc\webxml\qframe.webxml
 [0680/7715]C:\Qt\Doc\webxml\qfuturewatcher.webxml
 [0681/7715]C:\Qt\Doc\webxml\qgenericargument.webxml
@@ -923,6 +1099,26 @@ WARNING: Text outside a paragraph
 [0697/7715]C:\Qt\Doc\webxml\qglfunctions.webxml
 [0698/7715]C:\Qt\Doc\webxml\qglobalstatic.webxml
 [0699/7715]C:\Qt\Doc\webxml\qglpixelbuffer.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qdt; lineNumber: 151; columnNumber: 19; element "db:para" not allowed here; expected the element end-tag or element "db:bibliography", "db:glossary", "db:index", "db:section", "db:simplesect", "db:toc" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.startElement(ValidatorHandlerImpl.java:63)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:374)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0700/7715]C:\Qt\Doc\webxml\qglshader.webxml
 [0701/7715]C:\Qt\Doc\webxml\qglshaderprogram.webxml
 [0702/7715]C:\Qt\Doc\webxml\qglwidget.webxml
@@ -976,6 +1172,22 @@ WARNING: Text outside a paragraph
 [0750/7715]C:\Qt\Doc\webxml\qhash-key-iterator.webxml
 [0751/7715]C:\Qt\Doc\webxml\qhash.webxml
 [0752/7715]C:\Qt\Doc\webxml\qhashiterator.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qhash.qdt; lineNumber: 213; columnNumber: 48; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0753/7715]C:\Qt\Doc\webxml\qhbarmodelmapper.webxml
 [0754/7715]C:\Qt\Doc\webxml\qhboxlayout.webxml
 [0755/7715]C:\Qt\Doc\webxml\qhboxplotmodelmapper.webxml
@@ -1014,6 +1226,22 @@ WARNING: Text outside a paragraph
 [0788/7715]C:\Qt\Doc\webxml\qiconengine-scaledpixmapargument.webxml
 [0789/7715]C:\Qt\Doc\webxml\qiconengine.webxml
 [0790/7715]C:\Qt\Doc\webxml\qiconengineplugin.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qiconengine.qdt; lineNumber: 44; columnNumber: 62; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0791/7715]C:\Qt\Doc\webxml\qidentityproxymodel.webxml
 [0792/7715]C:\Qt\Doc\webxml\qimage.webxml
 [0793/7715]C:\Qt\Doc\webxml\qimageiohandler.webxml
@@ -1026,6 +1254,22 @@ WARNING: Text outside a paragraph
 [0800/7715]C:\Qt\Doc\webxml\qinputmethodevent-attribute.webxml
 [0801/7715]C:\Qt\Doc\webxml\qinputmethodevent.webxml
 [0802/7715]C:\Qt\Doc\webxml\qinputmethodqueryevent.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qinputmethodevent.qdt; lineNumber: 87; columnNumber: 55; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0803/7715]C:\Qt\Doc\webxml\qintvalidator.webxml
 [0804/7715]C:\Qt\Doc\webxml\qiodevice.webxml
 [0805/7715]C:\Qt\Doc\webxml\qitemdelegate.webxml
@@ -1043,10 +1287,42 @@ WARNING: Text outside a paragraph
 [0817/7715]C:\Qt\Doc\webxml\qjsonarray-iterator.webxml
 [0818/7715]C:\Qt\Doc\webxml\qjsonarray.webxml
 [0819/7715]C:\Qt\Doc\webxml\qjsondocument.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qjsonarray.qdt; lineNumber: 52; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0820/7715]C:\Qt\Doc\webxml\qjsonobject-const-iterator.webxml
 [0821/7715]C:\Qt\Doc\webxml\qjsonobject-iterator.webxml
 [0822/7715]C:\Qt\Doc\webxml\qjsonobject.webxml
 [0823/7715]C:\Qt\Doc\webxml\qjsonparseerror.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qjsonobject.qdt; lineNumber: 52; columnNumber: 54; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0824/7715]C:\Qt\Doc\webxml\qjsonvalue.webxml
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -1064,11 +1340,131 @@ WARNING: Text outside a paragraph
 [0831/7715]C:\Qt\Doc\webxml\qkeyvalueiterator.webxml
 [0832/7715]C:\Qt\Doc\webxml\qlabel.webxml
 [0833/7715]C:\Qt\Doc\webxml\qlalr-external-references.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-external-references.qdt; lineNumber: 26; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0834/7715]C:\Qt\Doc\webxml\qlalr-files.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-files.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0835/7715]C:\Qt\Doc\webxml\qlalr-generating.webxml
 [0836/7715]C:\Qt\Doc\webxml\qlalr-grammar-specification.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-generating.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-grammar-specification.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0837/7715]C:\Qt\Doc\webxml\qlalr-handling-conflicts.webxml
 [0838/7715]C:\Qt\Doc\webxml\qlalr-handling-errors.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-conflicts.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-errors.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanEndElement(XMLDocumentFragmentScannerImpl.java:1714)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2879)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0839/7715]C:\Qt\Doc\webxml\qlalr.webxml
 [0840/7715]C:\Qt\Doc\webxml\qlatin1char.webxml
 [0841/7715]C:\Qt\Doc\webxml\qlatin1string.webxml
@@ -1089,10 +1485,42 @@ WARNING: Text outside a paragraph
 [0856/7715]C:\Qt\Doc\webxml\qlinkedlist-iterator.webxml
 [0857/7715]C:\Qt\Doc\webxml\qlinkedlist.webxml
 [0858/7715]C:\Qt\Doc\webxml\qlist-const-iterator.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlinkedlist.qdt; lineNumber: 84; columnNumber: 54; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0859/7715]C:\Qt\Doc\webxml\qlist-iterator.webxml
 [0860/7715]C:\Qt\Doc\webxml\qlist-memorylayout.webxml
 [0861/7715]C:\Qt\Doc\webxml\qlist.webxml
 [0862/7715]C:\Qt\Doc\webxml\qlistiterator.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlist.qdt; lineNumber: 146; columnNumber: 48; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0863/7715]C:\Qt\Doc\webxml\qlistview.webxml
 [0864/7715]C:\Qt\Doc\webxml\qlistwidget.webxml
 [0865/7715]C:\Qt\Doc\webxml\qlistwidgetitem.webxml
@@ -1107,6 +1535,22 @@ WARNING: Text outside a paragraph
 [0874/7715]C:\Qt\Doc\webxml\qlowenergyadvertisingdata.webxml
 [0875/7715]C:\Qt\Doc\webxml\qlowenergyadvertisingparameters-addressinfo.webxml
 [0876/7715]C:\Qt\Doc\webxml\qlowenergyadvertisingparameters.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlowenergyadvertisingparameters.qdt; lineNumber: 46; columnNumber: 71; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0877/7715]C:\Qt\Doc\webxml\qlowenergycharacteristic.webxml
 [0878/7715]C:\Qt\Doc\webxml\qlowenergycharacteristicdata.webxml
 [0879/7715]C:\Qt\Doc\webxml\qlowenergyconnectionparameters.webxml
@@ -1154,6 +1598,22 @@ WARNING: Text outside a paragraph
 [0921/7715]C:\Qt\Doc\webxml\qmap-iterator.webxml
 [0922/7715]C:\Qt\Doc\webxml\qmap-key-iterator.webxml
 [0923/7715]C:\Qt\Doc\webxml\qmap.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmap.qdt; lineNumber: 183; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0924/7715]C:\Qt\Doc\webxml\qmapiterator.webxml
 [0925/7715]C:\Qt\Doc\webxml\qmargins.webxml
 [0926/7715]C:\Qt\Doc\webxml\qmarginsf.webxml
@@ -1174,6 +1634,22 @@ WARNING: Text outside a paragraph
 [0941/7715]C:\Qt\Doc\webxml\qmetaobject-connection.webxml
 [0942/7715]C:\Qt\Doc\webxml\qmetaobject.webxml
 [0943/7715]C:\Qt\Doc\webxml\qmetaproperty.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmetaobject.qdt; lineNumber: 87; columnNumber: 50; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0944/7715]C:\Qt\Doc\webxml\qmetatype.webxml
 [0945/7715]C:\Qt\Doc\webxml\qmimedata.webxml
 [0946/7715]C:\Qt\Doc\webxml\qmimedatabase.webxml
@@ -1190,15 +1666,15 @@ WARNING: Text outside a paragraph
 [0957/7715]C:\Qt\Doc\webxml\qml-tutorial2.webxml
 [0958/7715]C:\Qt\Doc\webxml\qml-tutorial3.webxml
 [0959/7715]C:\Qt\Doc\webxml\qmlapplications.webxml
-[0960/7715]C:\Qt\Doc\webxml\qmlbasictypes.webxml
 WARNING: generatedlist type not implemented: qmlbasictypes
+[0960/7715]C:\Qt\Doc\webxml\qmlbasictypes.webxml
 [0961/7715]C:\Qt\Doc\webxml\qmlexampletoggleswitch.webxml
 [0962/7715]C:\Qt\Doc\webxml\qmlextendingexamples.webxml
 [0963/7715]C:\Qt\Doc\webxml\qmlfirststeps.webxml
 [0964/7715]C:\Qt\Doc\webxml\qmlreference.webxml
 [0965/7715]C:\Qt\Doc\webxml\qmlstatemachine.webxml
-[0966/7715]C:\Qt\Doc\webxml\qmltypes.webxml
 WARNING: generatedlist type not implemented: qmltypes
+[0966/7715]C:\Qt\Doc\webxml\qmltypes.webxml
 [0967/7715]C:\Qt\Doc\webxml\qmodbusexceptionresponse.webxml
 [0968/7715]C:\Qt\Doc\webxml\qmodbusrequest.webxml
 [0969/7715]C:\Qt\Doc\webxml\qmodbusresponse.webxml
@@ -1299,6 +1775,22 @@ WARNING: generatedlist type not implemented: qmltypes
 [1064/7715]C:\Qt\Doc\webxml\qopenglvertexarrayobject-binder.webxml
 [1065/7715]C:\Qt\Doc\webxml\qopenglvertexarrayobject.webxml
 [1066/7715]C:\Qt\Doc\webxml\qopenglwidget.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qopenglvertexarrayobject.qdt; lineNumber: 84; columnNumber: 59; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1067/7715]C:\Qt\Doc\webxml\qopenglwindow.webxml
 [1068/7715]C:\Qt\Doc\webxml\qoperatingsystemversion.webxml
 [1069/7715]C:\Qt\Doc\webxml\qoutputrange.webxml
@@ -1314,8 +1806,40 @@ WARNING: generatedlist type not implemented: qmltypes
 [1079/7715]C:\Qt\Doc\webxml\qpaintenginestate.webxml
 [1080/7715]C:\Qt\Doc\webxml\qpainter-pixmapfragment.webxml
 [1081/7715]C:\Qt\Doc\webxml\qpainter.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qpainter.qdt; lineNumber: 435; columnNumber: 51; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1082/7715]C:\Qt\Doc\webxml\qpainterpath-element.webxml
 [1083/7715]C:\Qt\Doc\webxml\qpainterpath.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qpainterpath.qdt; lineNumber: 190; columnNumber: 48; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1084/7715]C:\Qt\Doc\webxml\qpainterpathstroker.webxml
 [1085/7715]C:\Qt\Doc\webxml\qpaintevent.webxml
 [1086/7715]C:\Qt\Doc\webxml\qpair.webxml
@@ -1339,6 +1863,22 @@ WARNING: generatedlist type not implemented: qmltypes
 [1104/7715]C:\Qt\Doc\webxml\qpixmapcache-key.webxml
 [1105/7715]C:\Qt\Doc\webxml\qpixmapcache-keydata.webxml
 [1106/7715]C:\Qt\Doc\webxml\qpixmapcache.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qpixmapcache.qdt; lineNumber: 50; columnNumber: 44; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1107/7715]C:\Qt\Doc\webxml\qplaintextdocumentlayout.webxml
 [1108/7715]C:\Qt\Doc\webxml\qplaintextedit.webxml
 [1109/7715]C:\Qt\Doc\webxml\qplatformsurfaceevent.webxml
@@ -1359,6 +1899,22 @@ WARNING: generatedlist type not implemented: qmltypes
 [1124/7715]C:\Qt\Doc\webxml\qprocess-createprocessarguments.webxml
 [1125/7715]C:\Qt\Doc\webxml\qprocess.webxml
 [1126/7715]C:\Qt\Doc\webxml\qprocessenvironment.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qprocess.qdt; lineNumber: 135; columnNumber: 59; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1127/7715]C:\Qt\Doc\webxml\qprogressbar.webxml
 [1128/7715]C:\Qt\Doc\webxml\qprogressdialog.webxml
 [1129/7715]C:\Qt\Doc\webxml\qpropertyanimation.webxml
@@ -1368,6 +1924,22 @@ WARNING: generatedlist type not implemented: qmltypes
 [1133/7715]C:\Qt\Doc\webxml\qqmlcomponent.webxml
 [1134/7715]C:\Qt\Doc\webxml\qqmlcontext-propertypair.webxml
 [1135/7715]C:\Qt\Doc\webxml\qqmlcontext.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qqmlcontext.qdt; lineNumber: 88; columnNumber: 52; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1136/7715]C:\Qt\Doc\webxml\qqmlengine.webxml
 [1137/7715]C:\Qt\Doc\webxml\qqmlerror.webxml
 [1138/7715]C:\Qt\Doc\webxml\qqmlexpression.webxml
@@ -1434,9 +2006,41 @@ WARNING: generatedlist type not implemented: qmltypes
 [1199/7715]C:\Qt\Doc\webxml\qsequentialiterable-const-iterator.webxml
 [1200/7715]C:\Qt\Doc\webxml\qsequentialiterable.webxml
 [1201/7715]C:\Qt\Doc\webxml\qsessionmanager.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qsequentialiterable.qdt; lineNumber: 67; columnNumber: 62; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1202/7715]C:\Qt\Doc\webxml\qset-const-iterator.webxml
 [1203/7715]C:\Qt\Doc\webxml\qset-iterator.webxml
 [1204/7715]C:\Qt\Doc\webxml\qset.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qset.qdt; lineNumber: 100; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1205/7715]C:\Qt\Doc\webxml\qsetiterator.webxml
 [1206/7715]C:\Qt\Doc\webxml\qsettings.webxml
 [1207/7715]C:\Qt\Doc\webxml\qsgmaterialtype.webxml
@@ -1505,6 +2109,22 @@ WARNING: generatedlist type not implemented: qmltypes
 [1270/7715]C:\Qt\Doc\webxml\qstatemachine-wrappedevent.webxml
 [1271/7715]C:\Qt\Doc\webxml\qstatemachine.webxml
 [1272/7715]C:\Qt\Doc\webxml\qstaticbytearraymatcher.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qstatemachine.qdt; lineNumber: 78; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1273/7715]C:\Qt\Doc\webxml\qstaticplugin.webxml
 [1274/7715]C:\Qt\Doc\webxml\qstatictext.webxml
 [1275/7715]C:\Qt\Doc\webxml\qstatusbar.webxml
@@ -1574,12 +2194,12 @@ WARNING: generatedlist type not implemented: qmltypes
 [1339/7715]C:\Qt\Doc\webxml\qt-embedded-kmap2qmap.webxml
 [1340/7715]C:\Qt\Doc\webxml\qt-embedded-makeqpf.webxml
 [1341/7715]C:\Qt\Doc\webxml\qt-gui-concepts.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [1342/7715]C:\Qt\Doc\webxml\qt-labs-calendar-qmlmodule.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [1343/7715]C:\Qt\Doc\webxml\qt-labs-folderlistmodel-qmlmodule.webxml
 [1344/7715]C:\Qt\Doc\webxml\qt-labs-handlers-qmlmodule.webxml
-[1345/7715]C:\Qt\Doc\webxml\qt-labs-platform-qmlmodule.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[1345/7715]C:\Qt\Doc\webxml\qt-labs-platform-qmlmodule.webxml
 [1346/7715]C:\Qt\Doc\webxml\qt-labs-settings-qmlmodule.webxml
 [1347/7715]C:\Qt\Doc\webxml\qt-labs-sharedimage-qmlmodule.webxml
 [1348/7715]C:\Qt\Doc\webxml\qt.webxml
@@ -1615,13 +2235,13 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [1378/7715]C:\Qt\Doc\webxml\qt3d-complexpingpong-example.webxml
 [1379/7715]C:\Qt\Doc\webxml\qt3d-core-qmlmodule.webxml
 WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
 [1380/7715]C:\Qt\Doc\webxml\qt3d-cpp.webxml
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
 [1381/7715]C:\Qt\Doc\webxml\qt3d-dbus-dbus-chat-example.webxml
 [1382/7715]C:\Qt\Doc\webxml\qt3d-embedded-digiflip-example.webxml
 [1383/7715]C:\Qt\Doc\webxml\qt3d-embedded-flickable-example.webxml
@@ -1736,6 +2356,27 @@ WARNING: Quote from file with no content.
 [1482/7715]C:\Qt\Doc\webxml\qt3d-simple-qml-cameracontroller-qml.webxml
 [1483/7715]C:\Qt\Doc\webxml\qt3d-simple-qml-example.webxml
 [1484/7715]C:\Qt\Doc\webxml\qt3d-simple-qml-main-cpp.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qt3d-simple-qml-example.qdt; lineNumber: 64; columnNumber: 55; element "db:section" incomplete; expected element "db:info", "db:subtitle", "db:title" or "db:titleabbrev"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractXMLDocumentParser.emptyElement(AbstractXMLDocumentParser.java:184)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:351)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [1485/7715]C:\Qt\Doc\webxml\qt3d-simple-qml-main-qml.webxml
 [1486/7715]C:\Qt\Doc\webxml\qt3d-simple-qml-simple-qml-pro.webxml
 [1487/7715]C:\Qt\Doc\webxml\qt3d-simple-qml-simple-qml-qrc.webxml
@@ -3080,12 +3721,44 @@ WARNING: Quote from file with no content.
 [2826/7715]C:\Qt\Doc\webxml\qtest-tutorial.webxml
 [2827/7715]C:\Qt\Doc\webxml\qtest.webxml
 [2828/7715]C:\Qt\Doc\webxml\qtesteventlist.webxml
-[2829/7715]C:\Qt\Doc\webxml\qtexamples.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtest.qdt; lineNumber: 33; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 WARNING: generatedlist type not implemented: annotatedexamples
+[2829/7715]C:\Qt\Doc\webxml\qtexamples.webxml
 [2830/7715]C:\Qt\Doc\webxml\qtexamplesandtutorials.webxml
 [2831/7715]C:\Qt\Doc\webxml\qtextblock-iterator.webxml
 [2832/7715]C:\Qt\Doc\webxml\qtextblock.webxml
 [2833/7715]C:\Qt\Doc\webxml\qtextblockformat.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextblock.qdt; lineNumber: 59; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [2834/7715]C:\Qt\Doc\webxml\qtextblockgroup.webxml
 [2835/7715]C:\Qt\Doc\webxml\qtextblockuserdata.webxml
 [2836/7715]C:\Qt\Doc\webxml\qtextboundaryfinder.webxml
@@ -3100,17 +3773,65 @@ WARNING: generatedlist type not implemented: annotatedexamples
 [2845/7715]C:\Qt\Doc\webxml\qtextdocumentwriter.webxml
 [2846/7715]C:\Qt\Doc\webxml\qtextedit-extraselection.webxml
 [2847/7715]C:\Qt\Doc\webxml\qtextedit.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextedit.qdt; lineNumber: 438; columnNumber: 52; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [2848/7715]C:\Qt\Doc\webxml\qtextencoder.webxml
 [2849/7715]C:\Qt\Doc\webxml\qtextformat.webxml
 [2850/7715]C:\Qt\Doc\webxml\qtextfragment.webxml
 [2851/7715]C:\Qt\Doc\webxml\qtextframe-iterator.webxml
 [2852/7715]C:\Qt\Doc\webxml\qtextframe.webxml
 [2853/7715]C:\Qt\Doc\webxml\qtextframeformat.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextframe.qdt; lineNumber: 52; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [2854/7715]C:\Qt\Doc\webxml\qtextimageformat.webxml
 [2855/7715]C:\Qt\Doc\webxml\qtextinlineobject.webxml
 [2856/7715]C:\Qt\Doc\webxml\qtextitem.webxml
 [2857/7715]C:\Qt\Doc\webxml\qtextlayout-formatrange.webxml
 [2858/7715]C:\Qt\Doc\webxml\qtextlayout.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextlayout.qdt; lineNumber: 75; columnNumber: 51; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [2859/7715]C:\Qt\Doc\webxml\qtextlength.webxml
 [2860/7715]C:\Qt\Doc\webxml\qtextline.webxml
 [2861/7715]C:\Qt\Doc\webxml\qtextlist.webxml
@@ -3119,6 +3840,22 @@ WARNING: generatedlist type not implemented: annotatedexamples
 [2864/7715]C:\Qt\Doc\webxml\qtextobjectinterface.webxml
 [2865/7715]C:\Qt\Doc\webxml\qtextoption-tab.webxml
 [2866/7715]C:\Qt\Doc\webxml\qtextoption.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextoption.qdt; lineNumber: 50; columnNumber: 43; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [2867/7715]C:\Qt\Doc\webxml\qtextstream.webxml
 [2868/7715]C:\Qt\Doc\webxml\qtexttable.webxml
 [2869/7715]C:\Qt\Doc\webxml\qtexttablecell.webxml
@@ -3316,6 +4053,22 @@ WARNING: generatedlist type not implemented: classesbymodule
 [3060/7715]C:\Qt\Doc\webxml\qtimerevent.webxml
 [3061/7715]C:\Qt\Doc\webxml\qtimezone-offsetdata.webxml
 [3062/7715]C:\Qt\Doc\webxml\qtimezone.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtimezone.qdt; lineNumber: 88; columnNumber: 48; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [3063/7715]C:\Qt\Doc\webxml\qtjavascript.webxml
 [3064/7715]C:\Qt\Doc\webxml\qtlabscalendar-bearermonitor-example.webxml
 [3065/7715]C:\Qt\Doc\webxml\qtlabscalendar-complexpingpong-example.webxml
@@ -3342,8 +4095,8 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [3085/7715]C:\Qt\Doc\webxml\qtlabsplatform-embedded-lightmaps-example.webxml
 [3086/7715]C:\Qt\Doc\webxml\qtlabsplatform-embedded-raycasting-example.webxml
 [3087/7715]C:\Qt\Doc\webxml\qtlabsplatform-embedded-styleexample-example.webxml
-[3088/7715]C:\Qt\Doc\webxml\qtlabsplatform-index.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[3088/7715]C:\Qt\Doc\webxml\qtlabsplatform-index.webxml
 [3089/7715]C:\Qt\Doc\webxml\qtlabsplatform-tools-customtypesending-example.webxml
 [3090/7715]C:\Qt\Doc\webxml\qtlabsplatform-touch-fingerpaint-example.webxml
 [3091/7715]C:\Qt\Doc\webxml\qtlabsplatform-touch-pinchzoom-example.webxml
@@ -3536,9 +4289,9 @@ WARNING: Text outside a paragraph
 [3264/7715]C:\Qt\Doc\webxml\qtmultimedia-index.webxml
 [3265/7715]C:\Qt\Doc\webxml\qtmultimedia-ios.webxml
 [3266/7715]C:\Qt\Doc\webxml\qtmultimedia-module.webxml
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
 [3267/7715]C:\Qt\Doc\webxml\qtmultimedia-modules.webxml
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
 [3268/7715]C:\Qt\Doc\webxml\qtmultimedia-multimedia-audiodevices-audiodevices-cpp.webxml
 [3269/7715]C:\Qt\Doc\webxml\qtmultimedia-multimedia-audiodevices-audiodevices-h.webxml
 [3270/7715]C:\Qt\Doc\webxml\qtmultimedia-multimedia-audiodevices-audiodevices-pro.webxml
@@ -4099,6 +4852,22 @@ WARNING: Quote from file with no content.
 [3822/7715]C:\Qt\Doc\webxml\qtouchdevice.webxml
 [3823/7715]C:\Qt\Doc\webxml\qtouchevent-touchpoint.webxml
 [3824/7715]C:\Qt\Doc\webxml\qtouchevent.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtouchevent.qdt; lineNumber: 112; columnNumber: 50; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:475)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [3825/7715]C:\Qt\Doc\webxml\qtplatformheaders-bearermonitor-example.webxml
 [3826/7715]C:\Qt\Doc\webxml\qtplatformheaders-complexpingpong-example.webxml
 [3827/7715]C:\Qt\Doc\webxml\qtplatformheaders-dbus-dbus-chat-example.webxml
@@ -5442,6 +6211,11 @@ WARNING: generatedlist type not implemented: exampleimages
 [5152/7715]C:\Qt\Doc\webxml\qtquickcontrols2-index.webxml
 [5153/7715]C:\Qt\Doc\webxml\qtquickcontrols2-indicators.webxml
 [5154/7715]C:\Qt\Doc\webxml\qtquickcontrols2-input.webxml
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
 [5155/7715]C:\Qt\Doc\webxml\qtquickcontrols2-material.webxml
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -5493,12 +6267,28 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
 [5156/7715]C:\Qt\Doc\webxml\qtquickcontrols2-menus.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2-material.qdt; lineNumber: 250; columnNumber: 27; element "db:listitem" incomplete; expected element "db:address", "db:anchor", "db:annotation", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glosslist", "db:important", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:synopsis", "db:table", "db:task", "db:tip", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractXMLDocumentParser.emptyElement(AbstractXMLDocumentParser.java:184)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:351)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 WARNING: generatedlist type not implemented: classesbymodule
 [5157/7715]C:\Qt\Doc\webxml\qtquickcontrols2-module.webxml
 [5158/7715]C:\Qt\Doc\webxml\qtquickcontrols2-navigation.webxml
@@ -5549,6 +6339,27 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2-universal.qdt; lineNumber: 221; columnNumber: 27; element "db:listitem" incomplete; expected element "db:address", "db:anchor", "db:annotation", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glosslist", "db:important", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:synopsis", "db:table", "db:task", "db:tip", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.endElement(AbstractSAXParser.java:609)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractXMLDocumentParser.emptyElement(AbstractXMLDocumentParser.java:184)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:351)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [5183/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-example.webxml
 [5184/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-qml-alarms-alarmspage-qml.webxml
 [5185/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-qml-fitness-fitness-js.webxml
@@ -5664,8 +6475,8 @@ WARNING: Text outside a paragraph
 [5295/7715]C:\Qt\Doc\webxml\qtquicklayouts-overview.webxml
 [5296/7715]C:\Qt\Doc\webxml\qtquicktemplates2-index.webxml
 [5297/7715]C:\Qt\Doc\webxml\qtquicktest-index.webxml
-[5298/7715]C:\Qt\Doc\webxml\qtquickwidgets-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5298/7715]C:\Qt\Doc\webxml\qtquickwidgets-module.webxml
 [5299/7715]C:\Qt\Doc\webxml\qtransform.webxml
 [5300/7715]C:\Qt\Doc\webxml\qtranslator.webxml
 [5301/7715]C:\Qt\Doc\webxml\qtreeview.webxml
@@ -5846,8 +6657,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5474/7715]C:\Qt\Doc\webxml\qtscxml-mediaplayer-widgets-static-example.webxml
 [5475/7715]C:\Qt\Doc\webxml\qtscxml-mediaplayer-widgets-static-mediaplayer-widgets-static-cpp.webxml
 [5476/7715]C:\Qt\Doc\webxml\qtscxml-mediaplayer-widgets-static-mediaplayer-widgets-static-pro.webxml
-[5477/7715]C:\Qt\Doc\webxml\qtscxml-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5477/7715]C:\Qt\Doc\webxml\qtscxml-module.webxml
 [5478/7715]C:\Qt\Doc\webxml\qtscxml-overview.webxml
 [5479/7715]C:\Qt\Doc\webxml\qtscxml-pinball-example.webxml
 [5480/7715]C:\Qt\Doc\webxml\qtscxml-pinball-main-cpp.webxml
@@ -6106,8 +6917,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5733/7715]C:\Qt\Doc\webxml\qtserialport-enumerator-main-cpp.webxml
 [5734/7715]C:\Qt\Doc\webxml\qtserialport-examples.webxml
 [5735/7715]C:\Qt\Doc\webxml\qtserialport-index.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [5736/7715]C:\Qt\Doc\webxml\qtserialport-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [5737/7715]C:\Qt\Doc\webxml\qtserialport-terminal-console-cpp.webxml
 [5738/7715]C:\Qt\Doc\webxml\qtserialport-terminal-console-h.webxml
 [5739/7715]C:\Qt\Doc\webxml\qtserialport-terminal-example.webxml
@@ -6377,8 +7188,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [6003/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-minimal-qml-main-qml.webxml
 [6004/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-minimal-qml-minimal-qml-pro.webxml
 [6005/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-minimal-qml-minimal-qml-qrc.webxml
-[6006/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[6006/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-module.webxml
 [6007/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-multi-output-example.webxml
 [6008/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-multi-output-main-cpp.webxml
 [6009/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-multi-output-multi-output-pro.webxml
@@ -6450,8 +7261,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [6075/7715]C:\Qt\Doc\webxml\qtwebchannel-examples.webxml
 [6076/7715]C:\Qt\Doc\webxml\qtwebchannel-index.webxml
 [6077/7715]C:\Qt\Doc\webxml\qtwebchannel-javascript.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [6078/7715]C:\Qt\Doc\webxml\qtwebchannel-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [6079/7715]C:\Qt\Doc\webxml\qtwebchannel-qmlmodule.webxml
 [6080/7715]C:\Qt\Doc\webxml\qtwebchannel-standalone-core-h.webxml
 [6081/7715]C:\Qt\Doc\webxml\qtwebchannel-standalone-dialog-cpp.webxml
@@ -6659,8 +7470,8 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [6274/7715]C:\Qt\Doc\webxml\qtwebengine-xml-rsslisting-example.webxml
 [6275/7715]C:\Qt\Doc\webxml\qtwebengine.webxml
 [6276/7715]C:\Qt\Doc\webxml\qtwebenginecore-index.webxml
-[6277/7715]C:\Qt\Doc\webxml\qtwebenginecore-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[6277/7715]C:\Qt\Doc\webxml\qtwebenginecore-module.webxml
 [6278/7715]C:\Qt\Doc\webxml\qtwebenginewidgets-index.webxml
 [6279/7715]C:\Qt\Doc\webxml\qtwebenginewidgets-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
@@ -7893,6 +8704,26 @@ WARNING: generatedlist type not implemented: classesbymodule
 [7505/7715]C:\Qt\Doc\webxml\qunhandledexception.webxml
 [7506/7715]C:\Qt\Doc\webxml\qurl.webxml
 [7507/7715]C:\Qt\Doc\webxml\qurlquery.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qurl.qdt; lineNumber: 245; columnNumber: 19; element "db:para" not allowed here; expected the element end-tag or element "db:bibliography", "db:glossary", "db:index", "db:section", "db:simplesect", "db:toc" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
+	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.startElement(ValidatorHandlerImpl.java:63)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:374)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
+	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
+	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
+	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
+	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [7508/7715]C:\Qt\Doc\webxml\quuid.webxml
 [7509/7715]C:\Qt\Doc\webxml\qvalidator.webxml
 [7510/7715]C:\Qt\Doc\webxml\qvalue3daxis.webxml
@@ -8098,7 +8929,7 @@ WARNING: generatedlist type not implemented: classesbymodule
 [7710/7715]C:\Qt\Doc\webxml\xml-sax.webxml
 [7711/7715]C:\Qt\Doc\webxml\xml-streaming.webxml
 [7712/7715]C:\Qt\Doc\webxml\xml-tools.webxml
-Warning at char 7 in xsl:variable/@select on line 897 column 126 of webxml_to_docbook.xslt:
+Warning at char 7 in xsl:variable/@select on line 919 column 126 of webxml_to_docbook.xslt:
   FODC0002: I/O error reported by XML parser processing
   file:///C:/Qt/Doc/webxml/pullbridge.webxml: C:\Qt\Doc\webxml\pullbridge.webxml (The system
   cannot find the file specified)

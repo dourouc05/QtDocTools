@@ -517,15 +517,33 @@
         <xsl:if test="following-sibling::*[1][self::typedef]">
           <xsl:apply-templates mode="content_class_synopsis" select="following-sibling::*[1][self::typedef]"/>
         </xsl:if>
-        <xsl:apply-templates mode="content" select="description"/>
+        <xsl:apply-templates mode="content" select="description/*[not(self::see-also)]"/>
         
-        <xsl:if test="@since and not(@since='')">
-          <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
-        </xsl:if>
+        <!-- Generate some text (sometimes in a section, UNLIKE the original documentation). -->
+        <xsl:variable name="generatedText" as="node()*">
+          <xsl:if test="@since and not(@since='')">
+            <db:para>This enum was introduced or modified in Qt <xsl:value-of select="@since"/>.</db:para>
+          </xsl:if>
+          
+          <xsl:if test="following-sibling::typedef[1]">
+            <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
+          </xsl:if>
+        </xsl:variable>
         
-        <xsl:if test="following-sibling::typedef[1]">
-          <db:para>The <db:code><xsl:value-of select="./following-sibling::typedef[1]/@name"/></db:code> type is a typedef for <db:code>QFlags&lt;<xsl:value-of select="@name"/>&gt;</db:code>. It stores an OR combination of  values.</db:para>
-        </xsl:if>
+        <xsl:choose>
+          <xsl:when test="description/*[not(self::see-also)][last()][self::section]">
+            <db:section>
+              <db:title>Notes</db:title>
+              <xsl:copy-of select="$generatedText"></xsl:copy-of>
+            </db:section>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="$generatedText"></xsl:copy-of>
+          </xsl:otherwise>
+        </xsl:choose>
+        
+        <!-- Ensure the see-also is always at the end of the section. -->
+        <xsl:apply-templates mode="content" select="description/see-also"/>
       </db:section>
     </xsl:if>
   </xsl:template>
@@ -764,7 +782,9 @@
   </xsl:template>
   
   <xsl:template mode="content" match="see-also">
-    <xsl:if test="count(link) > 0">
+    <xsl:param name="allowSeeAlso" as="xs:boolean" select="true()"/>
+    
+    <xsl:if test="$allowSeeAlso and count(link) > 0">
       <xsl:variable name="content">
         <db:para>
           <db:emphasis role="bold">See Also:</db:emphasis>
