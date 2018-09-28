@@ -375,7 +375,11 @@
   
   <xsl:template mode="content_class_synopsis" match="class">
     <db:classsynopsis>
-      <db:ooclass><xsl:value-of select="@fullname"/></db:ooclass>
+      <db:ooclass>
+        <db:classname>
+          <xsl:value-of select="@fullname"/>
+        </db:classname>
+      </db:ooclass>
       
       <xsl:if test="variable">
         <xsl:for-each select="variable">

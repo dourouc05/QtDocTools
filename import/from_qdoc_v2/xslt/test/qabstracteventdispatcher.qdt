@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.2">
+  version="5.2"
+  xml:lang="en">
   <db:info>
     <db:title>QAbstractEventDispatcher</db:title>
     <db:abstract>
       <db:para>Interface to manage Qt's event queue</db:para>
     </db:abstract>
-    <db:pubdate>2018-09-02+02:00</db:pubdate>
-    <db:date>2018-09-02+02:00</db:date>
+    <db:pubdate>2018-09-28+02:00</db:pubdate>
+    <db:date>2018-09-28+02:00</db:date>
     <db:productname>Qt</db:productname>
     <db:productnumber>1.2</db:productnumber>
   </db:info>
@@ -17,7 +18,7 @@
       <db:classname>QAbstractEventDispatcher</db:classname>
     </db:ooclass>
     <db:classsynopsisinfo role="module">QtCore</db:classsynopsisinfo>
-    <db:namespacesynopsisinfo role="headers">#include &lt;qabstracteventdispatcher.h&gt;</db:namespacesynopsisinfo>
+    <db:classsynopsisinfo role="headers">#include &lt;qabstracteventdispatcher.h&gt;</db:classsynopsisinfo>
     <db:classsynopsisinfo role="inherits">QObject</db:classsynopsisinfo>
     <db:classsynopsisinfo role="group">events</db:classsynopsisinfo>
   </db:classsynopsis>
@@ -52,7 +53,9 @@
     <db:section>
       <db:title>QAbstractEventDispatcher::TimerInfo</db:title>
       <db:classsynopsis>
-        <db:ooclass>QAbstractEventDispatcher::TimerInfo</db:ooclass>
+        <db:ooclass>
+          <db:classname>QAbstractEventDispatcher::TimerInfo</db:classname>
+        </db:ooclass>
         <db:fieldsynopsis>
           <db:type>int</db:type>
           <db:varname>timerId</db:varname>
