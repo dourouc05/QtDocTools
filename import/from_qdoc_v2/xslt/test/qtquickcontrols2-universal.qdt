@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Universal Style</db:title>
+      <db:pubdate>2018-09-28+02:00</db:pubdate>
+      <db:date>2018-09-28+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:para>The Universal Style is based on the Microsoft Universal Design Guidelines. <db:link xlink:href="qtquickcontrols2-universal.html#detailed-desc-universal" xrefstyle="page" annotations="detailed-desc-universal">More...</db:link>
+   </db:para>
+   <db:programlisting role="raw-html">&lt;table class="alignedsummary"&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class="memItemLeft rightAlign topAlign"&gt; Import Statement:&lt;/td&gt;&lt;td class="memItemRight bottomAlign"&gt; import QtQuick.Controls.Universal 2.4&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class="memItemLeft rightAlign topAlign"&gt; Since:&lt;/td&gt;&lt;td class="memItemRight bottomAlign"&gt; Qt 5.7&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</db:programlisting>
+   <db:section xml:id="attached-properties">
+      <db:title>Attached Properties</db:title>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquickcontrols2-universal.html#universal-accent-attached-prop" xrefstyle="page" annotations="universal-accent-attached-prop"><db:emphasis role="bold">accent</db:emphasis></db:link> : color</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquickcontrols2-universal.html#universal-background-attached-prop" xrefstyle="page" annotations="universal-background-attached-prop"><db:emphasis role="bold">background</db:emphasis></db:link> : color</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquickcontrols2-universal.html#universal-foreground-attached-prop" xrefstyle="page" annotations="universal-foreground-attached-prop"><db:emphasis role="bold">foreground</db:emphasis></db:link> : color</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquickcontrols2-universal.html#universal-theme-attached-prop" xrefstyle="page" annotations="universal-theme-attached-prop"><db:emphasis role="bold">theme</db:emphasis></db:link> : enumeration</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="attached-methods">
+      <db:title>Attached Methods</db:title>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>color <db:link xlink:href="qtquickcontrols2-universal.html#color-attached-method" xrefstyle="page" annotations="color-attached-method"><db:emphasis role="bold">color</db:emphasis></db:link>(enumeration predefined)</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+   <db:section xml:id="detailed-description">
+      <db:title>Detailed Description</db:title>
+      <db:para xml:id="detailed-desc-universal">The Universal style is a device-agnostic style based on the Microsoft Universal Design Guidelines. The Universal style has been designed to look good on all devices, from phones and tablets to PCs.</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-light.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+               <db:para/>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-dark.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+               <db:para/>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>To run an application with the Universal style, see <db:link xlink:href="qtquickcontrols2-styles.html#using-styles-in-qt-quick-controls-2" xrefstyle="page" annotations="Using Styles in Qt Quick Controls 2">Using Styles in Qt Quick Controls 2</db:link>.</db:para>
+      <db:note>
+         <db:para> The Universal style is not a native Windows 10 style. The Universal style is a 100% cross-platform Qt Quick Controls 2 style implementation that follows the Microsoft Universal Design Guidelines. The style runs on any platform, and looks more or less identical everywhere. Minor differences may occur due to differences in available system fonts and font rendering engines.</db:para>
+      </db:note>
+   </db:section>
+   <db:section xml:id="customization">
+      <db:title>Customization</db:title>
+      <db:para>The Universal style allows customizing four attributes, <db:link xlink:href="qtquickcontrols2-universal.html#universal-theme-attached-prop" xrefstyle="page" annotations="universal-theme-attached-prop">theme</db:link>, <db:link xlink:href="qtquickcontrols2-universal.html#universal-accent-attached-prop" xrefstyle="page" annotations="universal-accent-attached-prop">accent</db:link>, <db:link xlink:href="qtquickcontrols2-universal.html#universal-foreground-attached-prop" xrefstyle="page" annotations="universal-foreground-attached-prop">foreground</db:link>, and <db:link xlink:href="qtquickcontrols2-universal.html#universal-background-attached-prop" xrefstyle="page" annotations="universal-background-attached-prop">background</db:link>.</db:para>
+      <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="images/qtquickcontrols2-universal-attributes.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+      <db:para>Both attributes can be specified for any window or item, and they automatically propagate to children in the same manner as <db:link xlink:href="qml-qtquick-controls2-control.html#font-prop" xrefstyle="" annotations="Control::font">fonts</db:link>. In the following example, the window and all three radio buttons appear in the dark theme using a violet accent color:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td/>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-violet.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>In addition to specifying the attributes in QML, it is also possible to specify them via environment variables or in a configuration file. Attributes specified in QML take precedence over all other methods.</db:para>
+   </db:section>
+   <db:section xml:id="configuration-file">
+      <db:title>Configuration File</db:title>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Variable</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>Theme</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-theme-attached-prop" xrefstyle="page" annotations="universal-theme-attached-prop">Universal theme</db:link>. The value can be one of the available themes, for example <db:code>"Dark"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>Accent</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-accent-attached-prop" xrefstyle="page" annotations="universal-accent-attached-prop">Universal accent color</db:link>. The value can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, but it is recommended to use one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link>, for example <db:code>"Violet"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>Foreground</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-foreground-attached-prop" xrefstyle="page" annotations="universal-foreground-attached-prop">Universal foreground color</db:link>. The value can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, or one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link>, for example <db:code>"Brown"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>Background</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-background-attached-prop" xrefstyle="page" annotations="universal-background-attached-prop">Universal background color</db:link>. The value can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, or one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link>, for example <db:code>"Steel"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>See <db:link xlink:href="qtquickcontrols2-configuration.html" xrefstyle="page" annotations="Qt Quick Controls 2 Configuration File">Qt Quick Controls 2 Configuration File</db:link> for more details about the configuration file.</db:para>
+   </db:section>
+   <db:section xml:id="environment-variables">
+      <db:title>Environment Variables</db:title>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Variable</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>QT_QUICK_CONTROLS_UNIVERSAL_THEME</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-theme-attached-prop" xrefstyle="page" annotations="universal-theme-attached-prop">Universal theme</db:link>. The value can be one of the available themes, for example <db:code>"Dark"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>QT_QUICK_CONTROLS_UNIVERSAL_ACCENT</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-accent-attached-prop" xrefstyle="page" annotations="universal-accent-attached-prop">Universal accent color</db:link>. The value can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, but it is recommended to use one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link>, for example <db:code>"Violet"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>QT_QUICK_CONTROLS_UNIVERSAL_FOREGROUND</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-foreground-attached-prop" xrefstyle="page" annotations="universal-foreground-attached-prop">Universal foreground color</db:link>. The value can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, or one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link>, for example <db:code>"Brown"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>QT_QUICK_CONTROLS_UNIVERSAL_BACKGROUND</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the default <db:link xlink:href="qtquickcontrols2-universal.html#universal-background-attached-prop" xrefstyle="page" annotations="universal-background-attached-prop">Universal background color</db:link>. The value can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, or one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link>, for example <db:code>"Steel"</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>See <db:link xlink:href="qtquickcontrols2-environment.html" xrefstyle="page" annotations="Supported Environment Variables in Qt Quick Controls 2">Supported Environment Variables in Qt Quick Controls 2</db:link> for the full list of supported environment variables.</db:para>
+   </db:section>
+   <db:section xml:id="dependency">
+      <db:title>Dependency</db:title>
+      <db:para>The Universal style must be separately imported to gain access to the attributes that are specific to the Universal style. It should be noted that regardless of the references to the Universal style, the same application code runs with any other style. Universal-specific attributes only have an effect when the application is run with the Universal style.</db:para>
+      <db:para>If the Universal style is imported in a QML file that is always loaded, the Universal style must be deployed with the application in order to be able to run the application regardless of which style the application is run with. By using <db:link xlink:href="qtquickcontrols2-fileselectors.html" xrefstyle="page" annotations="Using File Selectors with Qt Quick Controls 2">file selectors</db:link>, style-specific tweaks can be applied without creating a hard dependency to a style.</db:para>
+   </db:section>
+   <db:section xml:id="pre-defined-universal-colors">
+      <db:title>Pre-defined Universal Colors</db:title>
+      <db:para>Available pre-defined colors:</db:para>
+      <db:variablelist>
+         <db:varlistentry>
+            <db:term>Universal.Lime</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#A4C400;"&gt;#A4C400 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Green</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#60A917;"&gt;#60A917 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Emerald</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#008A00;"&gt;#008A00 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Teal</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#00ABA9;"&gt;#00ABA9 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Cyan</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#1BA1E2;"&gt;#1BA1E2 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Cobalt</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#3E65FF;"&gt;#3E65FF (default accent)&lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Indigo</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#6A00FF;"&gt;#6A00FF &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Violet</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#AA00FF;"&gt;#AA00FF &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Pink</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#F472D0;"&gt;#F472D0 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Magenta</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#D80073;"&gt;#D80073 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Crimson</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#A20025;"&gt;#A20025 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Red</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#E51400;"&gt;#E51400 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Orange</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#FA6800;"&gt;#FA6800 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Amber</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#F0A30A;"&gt;#F0A30A &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Yellow</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#E3C800;"&gt;#E3C800 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Brown</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#825A2C;"&gt;#825A2C &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Olive</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#6D8764;"&gt;#6D8764 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Steel</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#647687;"&gt;#647687 &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Mauve</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#76608A;"&gt;#76608A &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Taupe</db:term>
+            <db:listitem>
+               <db:programlisting role="raw-html">&lt;div style="padding:10px;color:#fff;background:#87794E;"&gt;#87794E &lt;/div&gt;</db:programlisting>
+            </db:listitem>
+         </db:varlistentry>
+      </db:variablelist>
+      <db:para>
+         <db:emphasis role="bold">See also</db:emphasis>
+         <db:link xlink:href="qtquickcontrols2-default.html" xrefstyle="page" annotations="Default Style">Default Style</db:link>, <db:link xlink:href="qtquickcontrols2-material.html" xrefstyle="page" annotations="Material Style">Material Style</db:link>
+      </db:para>
+   </db:section>
+   <db:section xml:id="attached-property-documentation">
+      <db:title>Attached Property Documentation</db:title>
+      <db:programlisting role="raw-html">&lt;div class="qmlproto"&gt;&lt;table class="qmlname"&gt;&lt;tbody&gt;&lt;tr valign="top" class="odd" id="universal-accent-attached-prop"&gt;&lt;td class="tblQmlPropNode"&gt;&lt;p&gt;&lt;span class="name"&gt;Universal.accent&lt;/span&gt; : &lt;span class="type"&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</db:programlisting>
+      <db:para xml:id="universal-accent-attached-prop">This attached property holds the accent color of the theme. The property can be attached to any window or item. The value is propagated to children.</db:para>
+      <db:para>The default value is <db:code>Universal.Cobalt</db:code>.</db:para>
+      <db:para>In the following example, the accent color of the highlighted button is changed to <db:code>Universal.Orange</db:code>:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:programlisting>
+Button {
+    text: qsTr("Button")
+    highlighted: true
+    Universal.accent: Universal.Orange
+}
+</db:programlisting>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-accent.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:note>
+         <db:para> Even though the accent can be any <db:link xlink:href="qml-color.html#colorbasictypedocs" xrefstyle="" annotations="colorbasictypedocs">color</db:link>, it is recommended to use one of the <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal colors</db:link> that have been designed to work well with the rest of the Universal style palette.</db:para>
+      </db:note>
+      <db:para/>
+      <db:programlisting role="raw-html">&lt;div class="qmlproto"&gt;&lt;table class="qmlname"&gt;&lt;tbody&gt;&lt;tr valign="top" class="odd" id="universal-background-attached-prop"&gt;&lt;td class="tblQmlPropNode"&gt;&lt;p&gt;&lt;span class="name"&gt;Universal.background&lt;/span&gt; : &lt;span class="type"&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</db:programlisting>
+      <db:para xml:id="universal-background-attached-prop">This attached property holds the background color of the theme. The property can be attached to any window or item. The value is propagated to children.</db:para>
+      <db:para>The default value is theme-specific (light or dark).</db:para>
+      <db:para>In the following example, the background color of the pane is changed to <db:code>Universal.Steel</db:code>:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:programlisting>
+Pane {
+    Universal.background: Universal.Steel
+
+    Button {
+        text: qsTr("Button")
+    }
+}
+</db:programlisting>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-background.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para/>
+      <db:programlisting role="raw-html">&lt;div class="qmlproto"&gt;&lt;table class="qmlname"&gt;&lt;tbody&gt;&lt;tr valign="top" class="odd" id="universal-foreground-attached-prop"&gt;&lt;td class="tblQmlPropNode"&gt;&lt;p&gt;&lt;span class="name"&gt;Universal.foreground&lt;/span&gt; : &lt;span class="type"&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</db:programlisting>
+      <db:para xml:id="universal-foreground-attached-prop">This attached property holds the foreground color of the theme. The property can be attached to any window or item. The value is propagated to children.</db:para>
+      <db:para>The default value is theme-specific (light or dark).</db:para>
+      <db:para>In the following example, the foreground color of the button is set to <db:code>Universal.Pink</db:code>:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:programlisting>
+Button {
+    text: qsTr("Button")
+    Universal.foreground: Universal.Pink
+}
+</db:programlisting>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-foreground.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:programlisting role="raw-html">&lt;div class="qmlproto"&gt;&lt;table class="qmlname"&gt;&lt;tbody&gt;&lt;tr valign="top" class="odd" id="universal-theme-attached-prop"&gt;&lt;td class="tblQmlPropNode"&gt;&lt;p&gt;&lt;span class="name"&gt;Universal.theme&lt;/span&gt; : &lt;span class="type"&gt;enumeration&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</db:programlisting>
+      <db:para xml:id="universal-theme-attached-prop">This attached property holds whether the theme is light or dark. The property can be attached to any window or item. The value is propagated to children.</db:para>
+      <db:para>Available themes:</db:para>
+      <db:variablelist>
+         <db:varlistentry>
+            <db:term>Universal.Light</db:term>
+            <db:listitem>
+               <db:para>Light theme (default)</db:para>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.Dark</db:term>
+            <db:listitem>
+               <db:para>Dark theme</db:para>
+            </db:listitem>
+         </db:varlistentry>
+         <db:varlistentry>
+            <db:term>Universal.System</db:term>
+            <db:listitem>
+               <db:para>System theme</db:para>
+            </db:listitem>
+         </db:varlistentry>
+      </db:variablelist>
+      <db:para>Setting the theme to <db:code>System</db:code> chooses either the light or dark theme based on the system theme colors. However, when reading the value of the theme property, the value is never <db:code>System</db:code>, but the actual theme.</db:para>
+      <db:para>In the following example, the theme for both the pane and the button is set to <db:code>Universal.Dark</db:code>:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:programlisting>
+Pane {
+    Universal.theme: Universal.Dark
+
+    Button {
+        text: qsTr("Button")
+    }
+}
+</db:programlisting>
+            </db:td>
+            <db:td>
+               <db:mediaobject>
+                  <db:imageobject>
+                     <db:imagedata fileref="images/qtquickcontrols2-universal-theme.png"/>
+                  </db:imageobject>
+               </db:mediaobject>
+               <db:para/>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para/>
+   </db:section>
+   <db:section xml:id="attached-method-documentation">
+      <db:title>Attached Method Documentation</db:title>
+      <db:programlisting role="raw-html">&lt;div class="qmlproto"&gt;&lt;table class="qmlname"&gt;&lt;tbody&gt;&lt;tr valign="top" class="odd" id="color-attached-method"&gt;&lt;td class="tblQmlFuncNode"&gt;&lt;p&gt;&lt;span class="type"&gt;color&lt;/span&gt; &lt;span class="name"&gt;color&lt;/span&gt;(&lt;span class= type&gt;enumeration&lt;/span&gt; &lt;i&gt;predefined&lt;/i&gt;)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</db:programlisting>
+      <db:para xml:id="color-attached-method">This attached method returns the effective color value of the specified <db:link xlink:href="qtquickcontrols2-universal.html#pre-defined-universal-colors" xrefstyle="page" annotations="pre-defined Universal colors">pre-defined Universal color</db:link>.</db:para>
+      <db:para/>
+   </db:section>
+   <db:section xml:id="related-information">
+      <db:title>Related Information</db:title>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtquickcontrols2-styles.html" xrefstyle="page" annotations="Styling Qt Quick Controls 2">Styling Qt Quick Controls 2</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+   </db:section>
+</db:article>

@@ -6,6 +6,8 @@
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   
+  <!-- TODO: <db:codelisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
+  
   <xsl:output method="xml" indent="yes"
     suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>

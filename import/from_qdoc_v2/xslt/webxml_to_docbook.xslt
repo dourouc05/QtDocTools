@@ -838,12 +838,19 @@
   </xsl:template>
   
   <xsl:template mode="content" match="raw">
-    <!-- Must skip, no way to encode raw HTML here (except when it's not for tweaking the output). -->
-    <xsl:if test="parent::node()[1]/self::quote">
-      <db:programlisting>
-        <xsl:value-of select="text()"/>
-      </db:programlisting>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="parent::node()[1]/self::quote">
+        <db:programlisting>
+          <xsl:value-of select="text()"/>
+        </db:programlisting>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Cheating, right. But we have no choice here. -->
+        <db:programlisting role="raw-html">
+          <xsl:apply-templates mode="content_para"/>
+        </db:programlisting>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content" match="contents | keyword">
@@ -1903,7 +1910,7 @@
       <xsl:for-each select="definition">
         <db:varlistentry>
           <db:term>
-            <xsl:apply-templates mode="content" select="term/child::node()"/>
+            <xsl:apply-templates mode="content_para" select="term/child::node()"/>
           </db:term>
           <xsl:apply-templates mode="content" select="following-sibling::item[1]"/>
         </db:varlistentry>
@@ -2213,7 +2220,10 @@
   </xsl:template>
   
   <xsl:template mode="content_para" match="raw">
-    <!-- Must skip, no way to encode raw HTML here. -->
+    <!-- Cheating, right. But we have no choice here. -->
+    <db:programlisting role="raw-html">
+      <xsl:apply-templates mode="content_para"/>
+    </db:programlisting>
   </xsl:template>
   
   <xsl:template mode="content content_para" match="target">
