@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=57054:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\jing-20140903-saxon95.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=50698:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\jing-20140903-saxon95.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -49,10 +49,10 @@
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
 --> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
 --> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
---> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
+--> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
 --> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
 --> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
---> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
+--> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
 --> Found module: qtwebchannel; qdocconf: C:\Qt\5.11.1\Src\qtwebchannel\src\webchannel\doc\qtwebchannel.qdocconf
@@ -62,8 +62,8 @@
 --> Found module: qtwinextras; qdocconf: C:\Qt\5.11.1\Src\qtwinextras\src\winextras\doc\qtwinextras.qdocconf
 --> Found module: qtx11extras; qdocconf: C:\Qt\5.11.1\Src\qtx11extras\src\x11extras\doc\qtx11extras.qdocconf
 --> Found module: qtxmlpatterns; qdocconf: C:\Qt\5.11.1\Src\qtxmlpatterns\src\xmlpatterns\doc\qtxmlpatterns.qdocconf
---> Found submodule: qtbase / qlalr; qdocconf: C:\Qt\5.11.1\Src\qtbase\src\tools\qlalr\doc\qlalr.qdocconf
 --> Found submodule: qtbase / qmake; qdocconf: C:\Qt\5.11.1\Src\qtbase\qmake\doc\qmake.qdocconf
+--> Found submodule: qtbase / qlalr; qdocconf: C:\Qt\5.11.1\Src\qtbase\src\tools\qlalr\doc\qlalr.qdocconf
 ::> 65 modules found
 ++> Module qdocconf rewritten: qt3d
 ++> Module qdocconf rewritten: qtactiveqt
@@ -469,9 +469,9 @@ WARNING: generatedlist type not implemented: annotatedattributions
 [0315/7715]C:\Qt\Doc\webxml\nfc-examples.webxml
 [0316/7715]C:\Qt\Doc\webxml\object.webxml
 [0317/7715]C:\Qt\Doc\webxml\objecttrees.webxml
+[0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 WARNING: generatedlist type not implemented: obsoleteclasses
 WARNING: generatedlist type not implemented: obsoletecppmembers
-[0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 [0319/7715]C:\Qt\Doc\webxml\obsoleteqmltypes.webxml
 WARNING: generatedlist type not implemented: obsoleteqmltypes
 WARNING: generatedlist type not implemented: obsoleteqmlmembers
@@ -568,6 +568,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qabstracteventdi
 [0394/7715]C:\Qt\Doc\webxml\qabstracttextdocumentlayout-selection.webxml
 [0395/7715]C:\Qt\Doc\webxml\qabstracttextdocumentlayout.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qabstracttextdocumentlayout.qdt; lineNumber: 47; columnNumber: 68; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
+[0396/7715]C:\Qt\Doc\webxml\qabstracttransition.webxml
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
@@ -583,12 +584,11 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qabstracttextdoc
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0396/7715]C:\Qt\Doc\webxml\qabstracttransition.webxml
 [0397/7715]C:\Qt\Doc\webxml\qabstracturiresolver.webxml
 [0398/7715]C:\Qt\Doc\webxml\qabstractxmlnodemodel.webxml
 [0399/7715]C:\Qt\Doc\webxml\qabstractxmlreceiver.webxml
-WARNING: Text outside a paragraph
 [0400/7715]C:\Qt\Doc\webxml\qaccessible-state.webxml
+WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -675,6 +675,7 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
+[0402/7715]C:\Qt\Doc\webxml\qaccessibleactioninterface.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaccessible.qdt; lineNumber: 69; columnNumber: 45; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -691,7 +692,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaccessible.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0402/7715]C:\Qt\Doc\webxml\qaccessibleactioninterface.webxml
 [0403/7715]C:\Qt\Doc\webxml\qaccessibleeditabletextinterface.webxml
 [0404/7715]C:\Qt\Doc\webxml\qaccessibleevent.webxml
 [0405/7715]C:\Qt\Doc\webxml\qaccessibleinterface.webxml
@@ -728,7 +728,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaccessible.qdt;
 [0436/7715]C:\Qt\Doc\webxml\qareaseries.webxml
 [0437/7715]C:\Qt\Doc\webxml\qassociativeiterable-const-iterator.webxml
 [0438/7715]C:\Qt\Doc\webxml\qassociativeiterable.webxml
-[0439/7715]C:\Qt\Doc\webxml\qatomicint.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qassociativeiterable.qdt; lineNumber: 72; columnNumber: 63; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -745,6 +744,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qassociativeiter
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0439/7715]C:\Qt\Doc\webxml\qatomicint.webxml
 [0440/7715]C:\Qt\Doc\webxml\qatomicinteger.webxml
 [0441/7715]C:\Qt\Doc\webxml\qatomicpointer.webxml
 [0442/7715]C:\Qt\Doc\webxml\qaudio.webxml
@@ -761,7 +761,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qassociativeiter
 [0453/7715]C:\Qt\Doc\webxml\qaxscriptmanager.webxml
 [0454/7715]C:\Qt\Doc\webxml\qaxselect.webxml
 [0455/7715]C:\Qt\Doc\webxml\qaxserver-demo-hierarchy.webxml
-[0456/7715]C:\Qt\Doc\webxml\qaxserver-demo-menus.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-hierarchy.qdt; lineNumber: 13; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -782,6 +781,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-h
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0456/7715]C:\Qt\Doc\webxml\qaxserver-demo-menus.webxml
 [0457/7715]C:\Qt\Doc\webxml\qaxserver-demo-multiple.webxml
 [0458/7715]C:\Qt\Doc\webxml\qaxserver-demo-opengl.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-opengl.qdt; lineNumber: 13; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
@@ -851,8 +851,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qaxserver-demo-s
 [0483/7715]C:\Qt\Doc\webxml\qbluetoothserviceinfo-alternative.webxml
 [0484/7715]C:\Qt\Doc\webxml\qbluetoothserviceinfo-sequence.webxml
 [0485/7715]C:\Qt\Doc\webxml\qbluetoothserviceinfo.webxml
-org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qbluetoothserviceinfo.qdt; lineNumber: 38; columnNumber: 61; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 [0486/7715]C:\Qt\Doc\webxml\qbluetoothsocket.webxml
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qbluetoothserviceinfo.qdt; lineNumber: 38; columnNumber: 61; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.characters(AbstractSAXParser.java:546)
@@ -1062,6 +1062,7 @@ WARNING: Text outside a paragraph
 [0676/7715]C:\Qt\Doc\webxml\qformbuilder.webxml
 [0677/7715]C:\Qt\Doc\webxml\qformlayout-takerowresult.webxml
 [0678/7715]C:\Qt\Doc\webxml\qformlayout.webxml
+[0679/7715]C:\Qt\Doc\webxml\qframe.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qformlayout.qdt; lineNumber: 178; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1078,7 +1079,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qformlayout.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0679/7715]C:\Qt\Doc\webxml\qframe.webxml
 [0680/7715]C:\Qt\Doc\webxml\qfuturewatcher.webxml
 [0681/7715]C:\Qt\Doc\webxml\qgenericargument.webxml
 [0682/7715]C:\Qt\Doc\webxml\qgenericmatrix.webxml
@@ -1225,7 +1225,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qhash.qdt; lineN
 [0787/7715]C:\Qt\Doc\webxml\qiconengine-availablesizesargument.webxml
 [0788/7715]C:\Qt\Doc\webxml\qiconengine-scaledpixmapargument.webxml
 [0789/7715]C:\Qt\Doc\webxml\qiconengine.webxml
-[0790/7715]C:\Qt\Doc\webxml\qiconengineplugin.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qiconengine.qdt; lineNumber: 44; columnNumber: 62; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1242,6 +1241,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qiconengine.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0790/7715]C:\Qt\Doc\webxml\qiconengineplugin.webxml
 [0791/7715]C:\Qt\Doc\webxml\qidentityproxymodel.webxml
 [0792/7715]C:\Qt\Doc\webxml\qimage.webxml
 [0793/7715]C:\Qt\Doc\webxml\qimageiohandler.webxml
@@ -1253,7 +1253,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qiconengine.qdt;
 [0799/7715]C:\Qt\Doc\webxml\qinputmethod.webxml
 [0800/7715]C:\Qt\Doc\webxml\qinputmethodevent-attribute.webxml
 [0801/7715]C:\Qt\Doc\webxml\qinputmethodevent.webxml
-[0802/7715]C:\Qt\Doc\webxml\qinputmethodqueryevent.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qinputmethodevent.qdt; lineNumber: 87; columnNumber: 55; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1270,6 +1269,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qinputmethodeven
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0802/7715]C:\Qt\Doc\webxml\qinputmethodqueryevent.webxml
 [0803/7715]C:\Qt\Doc\webxml\qintvalidator.webxml
 [0804/7715]C:\Qt\Doc\webxml\qiodevice.webxml
 [0805/7715]C:\Qt\Doc\webxml\qitemdelegate.webxml
@@ -1286,7 +1286,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qinputmethodeven
 [0816/7715]C:\Qt\Doc\webxml\qjsonarray-const-iterator.webxml
 [0817/7715]C:\Qt\Doc\webxml\qjsonarray-iterator.webxml
 [0818/7715]C:\Qt\Doc\webxml\qjsonarray.webxml
-[0819/7715]C:\Qt\Doc\webxml\qjsondocument.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qjsonarray.qdt; lineNumber: 52; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1303,10 +1302,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qjsonarray.qdt; 
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0819/7715]C:\Qt\Doc\webxml\qjsondocument.webxml
 [0820/7715]C:\Qt\Doc\webxml\qjsonobject-const-iterator.webxml
 [0821/7715]C:\Qt\Doc\webxml\qjsonobject-iterator.webxml
 [0822/7715]C:\Qt\Doc\webxml\qjsonobject.webxml
-[0823/7715]C:\Qt\Doc\webxml\qjsonparseerror.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qjsonobject.qdt; lineNumber: 52; columnNumber: 54; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1323,6 +1322,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qjsonobject.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0823/7715]C:\Qt\Doc\webxml\qjsonparseerror.webxml
 [0824/7715]C:\Qt\Doc\webxml\qjsonvalue.webxml
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -1361,6 +1361,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-external-r
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
 [0834/7715]C:\Qt\Doc\webxml\qlalr-files.webxml
+[0835/7715]C:\Qt\Doc\webxml\qlalr-generating.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-files.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -1381,8 +1382,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-files.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0835/7715]C:\Qt\Doc\webxml\qlalr-generating.webxml
-[0836/7715]C:\Qt\Doc\webxml\qlalr-grammar-specification.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-generating.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -1403,6 +1402,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-generating
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0836/7715]C:\Qt\Doc\webxml\qlalr-grammar-specification.webxml
+[0837/7715]C:\Qt\Doc\webxml\qlalr-handling-conflicts.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-grammar-specification.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -1423,8 +1424,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-grammar-sp
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0837/7715]C:\Qt\Doc\webxml\qlalr-handling-conflicts.webxml
-[0838/7715]C:\Qt\Doc\webxml\qlalr-handling-errors.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-conflicts.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -1445,6 +1444,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-c
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0838/7715]C:\Qt\Doc\webxml\qlalr-handling-errors.webxml
+[0839/7715]C:\Qt\Doc\webxml\qlalr.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-errors.qdt; lineNumber: 29; columnNumber: 14; element "db:article" incomplete; expected element "db:acknowledgements", "db:address", "db:anchor", "db:annotation", "db:appendix", "db:bibliography", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:colophon", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:dedication", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glossary", "db:glosslist", "db:important", "db:index", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:refentry", "db:refsect1", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:sect1", "db:section", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:simplesect", "db:synopsis", "db:table", "db:task", "db:tip", "db:toc", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -1465,7 +1466,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-e
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0839/7715]C:\Qt\Doc\webxml\qlalr.webxml
 [0840/7715]C:\Qt\Doc\webxml\qlatin1char.webxml
 [0841/7715]C:\Qt\Doc\webxml\qlatin1string.webxml
 [0842/7715]C:\Qt\Doc\webxml\qlayout.webxml
@@ -1484,7 +1484,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlalr-handling-e
 [0855/7715]C:\Qt\Doc\webxml\qlinkedlist-const-iterator.webxml
 [0856/7715]C:\Qt\Doc\webxml\qlinkedlist-iterator.webxml
 [0857/7715]C:\Qt\Doc\webxml\qlinkedlist.webxml
-[0858/7715]C:\Qt\Doc\webxml\qlist-const-iterator.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlinkedlist.qdt; lineNumber: 84; columnNumber: 54; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1501,6 +1500,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlinkedlist.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0858/7715]C:\Qt\Doc\webxml\qlist-const-iterator.webxml
 [0859/7715]C:\Qt\Doc\webxml\qlist-iterator.webxml
 [0860/7715]C:\Qt\Doc\webxml\qlist-memorylayout.webxml
 [0861/7715]C:\Qt\Doc\webxml\qlist.webxml
@@ -1598,6 +1598,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qlowenergyadvert
 [0921/7715]C:\Qt\Doc\webxml\qmap-iterator.webxml
 [0922/7715]C:\Qt\Doc\webxml\qmap-key-iterator.webxml
 [0923/7715]C:\Qt\Doc\webxml\qmap.webxml
+[0924/7715]C:\Qt\Doc\webxml\qmapiterator.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmap.qdt; lineNumber: 183; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1614,7 +1615,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmap.qdt; lineNu
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[0924/7715]C:\Qt\Doc\webxml\qmapiterator.webxml
 [0925/7715]C:\Qt\Doc\webxml\qmargins.webxml
 [0926/7715]C:\Qt\Doc\webxml\qmarginsf.webxml
 [0927/7715]C:\Qt\Doc\webxml\qmatrix.webxml
@@ -1633,7 +1633,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmap.qdt; lineNu
 [0940/7715]C:\Qt\Doc\webxml\qmetamethod.webxml
 [0941/7715]C:\Qt\Doc\webxml\qmetaobject-connection.webxml
 [0942/7715]C:\Qt\Doc\webxml\qmetaobject.webxml
-[0943/7715]C:\Qt\Doc\webxml\qmetaproperty.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmetaobject.qdt; lineNumber: 87; columnNumber: 50; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1650,6 +1649,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmetaobject.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[0943/7715]C:\Qt\Doc\webxml\qmetaproperty.webxml
 [0944/7715]C:\Qt\Doc\webxml\qmetatype.webxml
 [0945/7715]C:\Qt\Doc\webxml\qmimedata.webxml
 [0946/7715]C:\Qt\Doc\webxml\qmimedatabase.webxml
@@ -1666,15 +1666,15 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qmetaobject.qdt;
 [0957/7715]C:\Qt\Doc\webxml\qml-tutorial2.webxml
 [0958/7715]C:\Qt\Doc\webxml\qml-tutorial3.webxml
 [0959/7715]C:\Qt\Doc\webxml\qmlapplications.webxml
-WARNING: generatedlist type not implemented: qmlbasictypes
 [0960/7715]C:\Qt\Doc\webxml\qmlbasictypes.webxml
+WARNING: generatedlist type not implemented: qmlbasictypes
 [0961/7715]C:\Qt\Doc\webxml\qmlexampletoggleswitch.webxml
 [0962/7715]C:\Qt\Doc\webxml\qmlextendingexamples.webxml
 [0963/7715]C:\Qt\Doc\webxml\qmlfirststeps.webxml
 [0964/7715]C:\Qt\Doc\webxml\qmlreference.webxml
 [0965/7715]C:\Qt\Doc\webxml\qmlstatemachine.webxml
-WARNING: generatedlist type not implemented: qmltypes
 [0966/7715]C:\Qt\Doc\webxml\qmltypes.webxml
+WARNING: generatedlist type not implemented: qmltypes
 [0967/7715]C:\Qt\Doc\webxml\qmodbusexceptionresponse.webxml
 [0968/7715]C:\Qt\Doc\webxml\qmodbusrequest.webxml
 [0969/7715]C:\Qt\Doc\webxml\qmodbusresponse.webxml
@@ -1863,6 +1863,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qpainterpath.qdt
 [1104/7715]C:\Qt\Doc\webxml\qpixmapcache-key.webxml
 [1105/7715]C:\Qt\Doc\webxml\qpixmapcache-keydata.webxml
 [1106/7715]C:\Qt\Doc\webxml\qpixmapcache.webxml
+[1107/7715]C:\Qt\Doc\webxml\qplaintextdocumentlayout.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qpixmapcache.qdt; lineNumber: 50; columnNumber: 44; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1879,7 +1880,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qpixmapcache.qdt
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[1107/7715]C:\Qt\Doc\webxml\qplaintextdocumentlayout.webxml
 [1108/7715]C:\Qt\Doc\webxml\qplaintextedit.webxml
 [1109/7715]C:\Qt\Doc\webxml\qplatformsurfaceevent.webxml
 [1110/7715]C:\Qt\Doc\webxml\qpluginloader.webxml
@@ -1924,6 +1924,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qprocess.qdt; li
 [1133/7715]C:\Qt\Doc\webxml\qqmlcomponent.webxml
 [1134/7715]C:\Qt\Doc\webxml\qqmlcontext-propertypair.webxml
 [1135/7715]C:\Qt\Doc\webxml\qqmlcontext.webxml
+[1136/7715]C:\Qt\Doc\webxml\qqmlengine.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qqmlcontext.qdt; lineNumber: 88; columnNumber: 52; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -1940,7 +1941,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qqmlcontext.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[1136/7715]C:\Qt\Doc\webxml\qqmlengine.webxml
 [1137/7715]C:\Qt\Doc\webxml\qqmlerror.webxml
 [1138/7715]C:\Qt\Doc\webxml\qqmlexpression.webxml
 [1139/7715]C:\Qt\Doc\webxml\qqmlextensionplugin.webxml
@@ -2005,7 +2005,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qqmlcontext.qdt;
 [1198/7715]C:\Qt\Doc\webxml\qsequentialanimationgroup.webxml
 [1199/7715]C:\Qt\Doc\webxml\qsequentialiterable-const-iterator.webxml
 [1200/7715]C:\Qt\Doc\webxml\qsequentialiterable.webxml
-[1201/7715]C:\Qt\Doc\webxml\qsessionmanager.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qsequentialiterable.qdt; lineNumber: 67; columnNumber: 62; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -2022,9 +2021,11 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qsequentialitera
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[1201/7715]C:\Qt\Doc\webxml\qsessionmanager.webxml
 [1202/7715]C:\Qt\Doc\webxml\qset-const-iterator.webxml
 [1203/7715]C:\Qt\Doc\webxml\qset-iterator.webxml
 [1204/7715]C:\Qt\Doc\webxml\qset.webxml
+[1205/7715]C:\Qt\Doc\webxml\qsetiterator.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qset.qdt; lineNumber: 100; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -2041,7 +2042,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qset.qdt; lineNu
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[1205/7715]C:\Qt\Doc\webxml\qsetiterator.webxml
 [1206/7715]C:\Qt\Doc\webxml\qsettings.webxml
 [1207/7715]C:\Qt\Doc\webxml\qsgmaterialtype.webxml
 [1208/7715]C:\Qt\Doc\webxml\qshareddata.webxml
@@ -2194,12 +2194,12 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qstatemachine.qd
 [1339/7715]C:\Qt\Doc\webxml\qt-embedded-kmap2qmap.webxml
 [1340/7715]C:\Qt\Doc\webxml\qt-embedded-makeqpf.webxml
 [1341/7715]C:\Qt\Doc\webxml\qt-gui-concepts.webxml
-[1342/7715]C:\Qt\Doc\webxml\qt-labs-calendar-qmlmodule.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[1342/7715]C:\Qt\Doc\webxml\qt-labs-calendar-qmlmodule.webxml
 [1343/7715]C:\Qt\Doc\webxml\qt-labs-folderlistmodel-qmlmodule.webxml
 [1344/7715]C:\Qt\Doc\webxml\qt-labs-handlers-qmlmodule.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [1345/7715]C:\Qt\Doc\webxml\qt-labs-platform-qmlmodule.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [1346/7715]C:\Qt\Doc\webxml\qt-labs-settings-qmlmodule.webxml
 [1347/7715]C:\Qt\Doc\webxml\qt-labs-sharedimage-qmlmodule.webxml
 [1348/7715]C:\Qt\Doc\webxml\qt.webxml
@@ -2234,8 +2234,8 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [1377/7715]C:\Qt\Doc\webxml\qt3d-bearermonitor-example.webxml
 [1378/7715]C:\Qt\Doc\webxml\qt3d-complexpingpong-example.webxml
 [1379/7715]C:\Qt\Doc\webxml\qt3d-core-qmlmodule.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [1380/7715]C:\Qt\Doc\webxml\qt3d-cpp.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 WARNING: generatedlist type not implemented: classesbymodule
 WARNING: generatedlist type not implemented: classesbymodule
 WARNING: generatedlist type not implemented: classesbymodule
@@ -2306,15 +2306,15 @@ WARNING: generatedlist type not implemented: classesbymodule
 [1442/7715]C:\Qt\Doc\webxml\qt3d-planets-qml-solarsystem-qml.webxml
 [1443/7715]C:\Qt\Doc\webxml\qt3d-planets-qml-styledslider-qml.webxml
 [1444/7715]C:\Qt\Doc\webxml\qt3d-planets-qml-suneffect-qml.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [1445/7715]C:\Qt\Doc\webxml\qt3d-qml.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [1446/7715]C:\Qt\Doc\webxml\qt3d-render-qmlmodule.webxml
 [1447/7715]C:\Qt\Doc\webxml\qt3d-scene2d-example.webxml
 WARNING: Quote from file with no content.
@@ -3720,7 +3720,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qt3d-simple-qml-
 [2825/7715]C:\Qt\Doc\webxml\qtest-qtoucheventsequence.webxml
 [2826/7715]C:\Qt\Doc\webxml\qtest-tutorial.webxml
 [2827/7715]C:\Qt\Doc\webxml\qtest.webxml
-[2828/7715]C:\Qt\Doc\webxml\qtesteventlist.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtest.qdt; lineNumber: 33; columnNumber: 53; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -3737,12 +3736,12 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtest.qdt; lineN
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-WARNING: generatedlist type not implemented: annotatedexamples
+[2828/7715]C:\Qt\Doc\webxml\qtesteventlist.webxml
 [2829/7715]C:\Qt\Doc\webxml\qtexamples.webxml
+WARNING: generatedlist type not implemented: annotatedexamples
 [2830/7715]C:\Qt\Doc\webxml\qtexamplesandtutorials.webxml
 [2831/7715]C:\Qt\Doc\webxml\qtextblock-iterator.webxml
 [2832/7715]C:\Qt\Doc\webxml\qtextblock.webxml
-[2833/7715]C:\Qt\Doc\webxml\qtextblockformat.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextblock.qdt; lineNumber: 59; columnNumber: 47; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -3759,6 +3758,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextblock.qdt; 
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[2833/7715]C:\Qt\Doc\webxml\qtextblockformat.webxml
 [2834/7715]C:\Qt\Doc\webxml\qtextblockgroup.webxml
 [2835/7715]C:\Qt\Doc\webxml\qtextblockuserdata.webxml
 [2836/7715]C:\Qt\Doc\webxml\qtextboundaryfinder.webxml
@@ -3773,6 +3773,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextblock.qdt; 
 [2845/7715]C:\Qt\Doc\webxml\qtextdocumentwriter.webxml
 [2846/7715]C:\Qt\Doc\webxml\qtextedit-extraselection.webxml
 [2847/7715]C:\Qt\Doc\webxml\qtextedit.webxml
+[2848/7715]C:\Qt\Doc\webxml\qtextencoder.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextedit.qdt; lineNumber: 438; columnNumber: 52; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -3789,7 +3790,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextedit.qdt; l
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[2848/7715]C:\Qt\Doc\webxml\qtextencoder.webxml
 [2849/7715]C:\Qt\Doc\webxml\qtextformat.webxml
 [2850/7715]C:\Qt\Doc\webxml\qtextfragment.webxml
 [2851/7715]C:\Qt\Doc\webxml\qtextframe-iterator.webxml
@@ -3816,6 +3816,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextframe.qdt; 
 [2856/7715]C:\Qt\Doc\webxml\qtextitem.webxml
 [2857/7715]C:\Qt\Doc\webxml\qtextlayout-formatrange.webxml
 [2858/7715]C:\Qt\Doc\webxml\qtextlayout.webxml
+[2859/7715]C:\Qt\Doc\webxml\qtextlength.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextlayout.qdt; lineNumber: 75; columnNumber: 51; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -3832,7 +3833,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextlayout.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[2859/7715]C:\Qt\Doc\webxml\qtextlength.webxml
 [2860/7715]C:\Qt\Doc\webxml\qtextline.webxml
 [2861/7715]C:\Qt\Doc\webxml\qtextlist.webxml
 [2862/7715]C:\Qt\Doc\webxml\qtextlistformat.webxml
@@ -3840,6 +3840,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextlayout.qdt;
 [2864/7715]C:\Qt\Doc\webxml\qtextobjectinterface.webxml
 [2865/7715]C:\Qt\Doc\webxml\qtextoption-tab.webxml
 [2866/7715]C:\Qt\Doc\webxml\qtextoption.webxml
+[2867/7715]C:\Qt\Doc\webxml\qtextstream.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextoption.qdt; lineNumber: 50; columnNumber: 43; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -3856,7 +3857,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextoption.qdt;
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[2867/7715]C:\Qt\Doc\webxml\qtextstream.webxml
 [2868/7715]C:\Qt\Doc\webxml\qtexttable.webxml
 [2869/7715]C:\Qt\Doc\webxml\qtexttablecell.webxml
 [2870/7715]C:\Qt\Doc\webxml\qtexttablecellformat.webxml
@@ -3886,8 +3886,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtextoption.qdt;
 [2894/7715]C:\Qt\Doc\webxml\qtgamepad-keynavigation-main-cpp.webxml
 [2895/7715]C:\Qt\Doc\webxml\qtgamepad-keynavigation-qml-main-qml.webxml
 [2896/7715]C:\Qt\Doc\webxml\qtgamepad-keynavigation-qml-qrc.webxml
-[2897/7715]C:\Qt\Doc\webxml\qtgamepad-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[2897/7715]C:\Qt\Doc\webxml\qtgamepad-module.webxml
 [2898/7715]C:\Qt\Doc\webxml\qtgamepad-mouseitem-example.webxml
 [2899/7715]C:\Qt\Doc\webxml\qtgamepad-mouseitem-main-cpp.webxml
 [2900/7715]C:\Qt\Doc\webxml\qtgamepad-mouseitem-mouseitem-pro.webxml
@@ -4053,6 +4053,7 @@ WARNING: generatedlist type not implemented: classesbymodule
 [3060/7715]C:\Qt\Doc\webxml\qtimerevent.webxml
 [3061/7715]C:\Qt\Doc\webxml\qtimezone-offsetdata.webxml
 [3062/7715]C:\Qt\Doc\webxml\qtimezone.webxml
+[3063/7715]C:\Qt\Doc\webxml\qtjavascript.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtimezone.qdt; lineNumber: 88; columnNumber: 48; text not allowed here; expected element "db:classname", "db:modifier" or "db:package"
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.characters(ValidatorHandlerImpl.java:107)
@@ -4069,7 +4070,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtimezone.qdt; l
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[3063/7715]C:\Qt\Doc\webxml\qtjavascript.webxml
 [3064/7715]C:\Qt\Doc\webxml\qtlabscalendar-bearermonitor-example.webxml
 [3065/7715]C:\Qt\Doc\webxml\qtlabscalendar-complexpingpong-example.webxml
 [3066/7715]C:\Qt\Doc\webxml\qtlabscalendar-dbus-dbus-chat-example.webxml
@@ -4079,8 +4079,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtimezone.qdt; l
 [3070/7715]C:\Qt\Doc\webxml\qtlabscalendar-embedded-lightmaps-example.webxml
 [3071/7715]C:\Qt\Doc\webxml\qtlabscalendar-embedded-raycasting-example.webxml
 [3072/7715]C:\Qt\Doc\webxml\qtlabscalendar-embedded-styleexample-example.webxml
-[3073/7715]C:\Qt\Doc\webxml\qtlabscalendar-index.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[3073/7715]C:\Qt\Doc\webxml\qtlabscalendar-index.webxml
 [3074/7715]C:\Qt\Doc\webxml\qtlabscalendar-tools-customtypesending-example.webxml
 [3075/7715]C:\Qt\Doc\webxml\qtlabscalendar-touch-fingerpaint-example.webxml
 [3076/7715]C:\Qt\Doc\webxml\qtlabscalendar-touch-pinchzoom-example.webxml
@@ -4095,8 +4095,8 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [3085/7715]C:\Qt\Doc\webxml\qtlabsplatform-embedded-lightmaps-example.webxml
 [3086/7715]C:\Qt\Doc\webxml\qtlabsplatform-embedded-raycasting-example.webxml
 [3087/7715]C:\Qt\Doc\webxml\qtlabsplatform-embedded-styleexample-example.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [3088/7715]C:\Qt\Doc\webxml\qtlabsplatform-index.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [3089/7715]C:\Qt\Doc\webxml\qtlabsplatform-tools-customtypesending-example.webxml
 [3090/7715]C:\Qt\Doc\webxml\qtlabsplatform-touch-fingerpaint-example.webxml
 [3091/7715]C:\Qt\Doc\webxml\qtlabsplatform-touch-pinchzoom-example.webxml
@@ -4173,8 +4173,8 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [3162/7715]C:\Qt\Doc\webxml\qtlocation-minimal-map-main-qml.webxml
 [3163/7715]C:\Qt\Doc\webxml\qtlocation-minimal-map-minimal-map-pro.webxml
 [3164/7715]C:\Qt\Doc\webxml\qtlocation-minimal-map-qml-qrc.webxml
-[3165/7715]C:\Qt\Doc\webxml\qtlocation-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[3165/7715]C:\Qt\Doc\webxml\qtlocation-module.webxml
 [3166/7715]C:\Qt\Doc\webxml\qtlocation-places-example.webxml
 [3167/7715]C:\Qt\Doc\webxml\qtlocation-places-forms-message-qml.webxml
 [3168/7715]C:\Qt\Doc\webxml\qtlocation-places-forms-messageform-ui-qml.webxml
@@ -4289,9 +4289,9 @@ WARNING: Text outside a paragraph
 [3264/7715]C:\Qt\Doc\webxml\qtmultimedia-index.webxml
 [3265/7715]C:\Qt\Doc\webxml\qtmultimedia-ios.webxml
 [3266/7715]C:\Qt\Doc\webxml\qtmultimedia-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
+WARNING: generatedlist type not implemented: classesbymodule
 [3267/7715]C:\Qt\Doc\webxml\qtmultimedia-modules.webxml
-WARNING: generatedlist type not implemented: classesbymodule
-WARNING: generatedlist type not implemented: classesbymodule
 [3268/7715]C:\Qt\Doc\webxml\qtmultimedia-multimedia-audiodevices-audiodevices-cpp.webxml
 [3269/7715]C:\Qt\Doc\webxml\qtmultimedia-multimedia-audiodevices-audiodevices-h.webxml
 [3270/7715]C:\Qt\Doc\webxml\qtmultimedia-multimedia-audiodevices-audiodevices-pro.webxml
@@ -4878,8 +4878,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtouchevent.qdt;
 [3832/7715]C:\Qt\Doc\webxml\qtplatformheaders-embedded-raycasting-example.webxml
 [3833/7715]C:\Qt\Doc\webxml\qtplatformheaders-embedded-styleexample-example.webxml
 [3834/7715]C:\Qt\Doc\webxml\qtplatformheaders-index.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [3835/7715]C:\Qt\Doc\webxml\qtplatformheaders-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [3836/7715]C:\Qt\Doc\webxml\qtplatformheaders-tools-customtypesending-example.webxml
 [3837/7715]C:\Qt\Doc\webxml\qtplatformheaders-touch-fingerpaint-example.webxml
 [3838/7715]C:\Qt\Doc\webxml\qtplatformheaders-touch-pinchzoom-example.webxml
@@ -4923,8 +4923,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [3876/7715]C:\Qt\Doc\webxml\qtpositioning-logfilepositionsource-logfilepositionsource-h.webxml
 [3877/7715]C:\Qt\Doc\webxml\qtpositioning-logfilepositionsource-logfilepositionsource-pro.webxml
 [3878/7715]C:\Qt\Doc\webxml\qtpositioning-logfilepositionsource-main-cpp.webxml
-[3879/7715]C:\Qt\Doc\webxml\qtpositioning-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[3879/7715]C:\Qt\Doc\webxml\qtpositioning-module.webxml
 [3880/7715]C:\Qt\Doc\webxml\qtpositioning-plugins.webxml
 [3881/7715]C:\Qt\Doc\webxml\qtpositioning-qmlmodule.webxml
 [3882/7715]C:\Qt\Doc\webxml\qtpositioning-satelliteinfo-example.webxml
@@ -5299,8 +5299,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [4250/7715]C:\Qt\Doc\webxml\qtquick-complexpingpong-example.webxml
 [4251/7715]C:\Qt\Doc\webxml\qtquick-controls-qmlmodule.webxml
 [4252/7715]C:\Qt\Doc\webxml\qtquick-controls-styles-qmlmodule.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [4253/7715]C:\Qt\Doc\webxml\qtquick-controls2-qmlmodule.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
 [4254/7715]C:\Qt\Doc\webxml\qtquick-convenience-topic.webxml
 [4255/7715]C:\Qt\Doc\webxml\qtquick-cppextensionpoints.webxml
 [4256/7715]C:\Qt\Doc\webxml\qtquick-customitems-dialcontrol-content-dial-qml.webxml
@@ -5809,8 +5809,8 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [4759/7715]C:\Qt\Doc\webxml\qtquick-statesanimations-behaviors.webxml
 [4760/7715]C:\Qt\Doc\webxml\qtquick-statesanimations-states.webxml
 [4761/7715]C:\Qt\Doc\webxml\qtquick-statesanimations-topic.webxml
-[4762/7715]C:\Qt\Doc\webxml\qtquick-templates2-qmlmodule.webxml
 WARNING: generatedlist type not implemented: qmltypesbymodule
+[4762/7715]C:\Qt\Doc\webxml\qtquick-templates2-qmlmodule.webxml
 [4763/7715]C:\Qt\Doc\webxml\qtquick-text-example.webxml
 [4764/7715]C:\Qt\Doc\webxml\qtquick-text-fonts-availablefonts-qml.webxml
 [4765/7715]C:\Qt\Doc\webxml\qtquick-text-fonts-banner-qml.webxml
@@ -5941,8 +5941,8 @@ WARNING: generatedlist type not implemented: qmltypesbymodule
 [4890/7715]C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-dragselection-qml.webxml
 [4891/7715]C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-slideshow-qml.webxml
 [4892/7715]C:\Qt\Doc\webxml\qtquick-views-visualdatamodel-visualdatamodel-qmlproject.webxml
-WARNING: generatedlist type not implemented: qmltypesbymodule
 [4893/7715]C:\Qt\Doc\webxml\qtquick-virtualkeyboard-qmlmodule.webxml
+WARNING: generatedlist type not implemented: qmltypesbymodule
 WARNING: generatedlist type not implemented: qmltypesbymodule
 WARNING: generatedlist type not implemented: qmltypesbymodule
 WARNING: generatedlist type not implemented: qmltypesbymodule
@@ -6211,11 +6211,6 @@ WARNING: generatedlist type not implemented: exampleimages
 [5152/7715]C:\Qt\Doc\webxml\qtquickcontrols2-index.webxml
 [5153/7715]C:\Qt\Doc\webxml\qtquickcontrols2-indicators.webxml
 [5154/7715]C:\Qt\Doc\webxml\qtquickcontrols2-input.webxml
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
-WARNING: Text outside a paragraph
 [5155/7715]C:\Qt\Doc\webxml\qtquickcontrols2-material.webxml
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
@@ -6267,7 +6262,11 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
-[5156/7715]C:\Qt\Doc\webxml\qtquickcontrols2-menus.webxml
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
+WARNING: Text outside a paragraph
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2-material.qdt; lineNumber: 250; columnNumber: 27; element "db:listitem" incomplete; expected element "db:address", "db:anchor", "db:annotation", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glosslist", "db:important", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:synopsis", "db:table", "db:task", "db:tip", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -6289,6 +6288,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[5156/7715]C:\Qt\Doc\webxml\qtquickcontrols2-menus.webxml
 WARNING: generatedlist type not implemented: classesbymodule
 [5157/7715]C:\Qt\Doc\webxml\qtquickcontrols2-module.webxml
 [5158/7715]C:\Qt\Doc\webxml\qtquickcontrols2-navigation.webxml
@@ -6339,6 +6339,7 @@ WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
 WARNING: Text outside a paragraph
+[5183/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-example.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2-universal.qdt; lineNumber: 221; columnNumber: 27; element "db:listitem" incomplete; expected element "db:address", "db:anchor", "db:annotation", "db:bibliolist", "db:blockquote", "db:bridgehead", "db:calloutlist", "db:caution", "db:classsynopsis", "db:cmdsynopsis", "db:constraintdef", "db:constructorsynopsis", "db:danger", "db:destructorsynopsis", "db:enumsynopsis", "db:epigraph", "db:equation", "db:example", "db:fieldsynopsis", "db:figure", "db:formalgroup", "db:formalpara", "db:funcsynopsis", "db:glosslist", "db:important", "db:indexterm", "db:informalequation", "db:informalexample", "db:informalfigure", "db:informaltable", "db:itemizedlist", "db:literallayout", "db:macrosynopsis", "db:mediaobject", "db:methodsynopsis", "db:msgset", "db:namespacesynopsis", "db:note", "db:orderedlist", "db:para", "db:procedure", "db:productionset", "db:programlisting", "db:programlistingco", "db:qandaset", "db:remark", "db:revhistory", "db:screen", "db:screenco", "db:screenshot", "db:segmentedlist", "db:sidebar", "db:simpara", "db:simplelist", "db:synopsis", "db:table", "db:task", "db:tip", "db:typedefsynopsis", "db:variablelist", "db:warning" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.endElement(ValidatorHandlerImpl.java:89)
@@ -6360,7 +6361,6 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
-[5183/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-example.webxml
 [5184/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-qml-alarms-alarmspage-qml.webxml
 [5185/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-qml-fitness-fitness-js.webxml
 [5186/7715]C:\Qt\Doc\webxml\qtquickcontrols2-wearable-qml-fitness-fitnesspage-qml.webxml
@@ -6475,8 +6475,8 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qtquickcontrols2
 [5295/7715]C:\Qt\Doc\webxml\qtquicklayouts-overview.webxml
 [5296/7715]C:\Qt\Doc\webxml\qtquicktemplates2-index.webxml
 [5297/7715]C:\Qt\Doc\webxml\qtquicktest-index.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [5298/7715]C:\Qt\Doc\webxml\qtquickwidgets-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [5299/7715]C:\Qt\Doc\webxml\qtransform.webxml
 [5300/7715]C:\Qt\Doc\webxml\qtranslator.webxml
 [5301/7715]C:\Qt\Doc\webxml\qtreeview.webxml
@@ -6520,8 +6520,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5339/7715]C:\Qt\Doc\webxml\qtscript-embedded-raycasting-example.webxml
 [5340/7715]C:\Qt\Doc\webxml\qtscript-embedded-styleexample-example.webxml
 [5341/7715]C:\Qt\Doc\webxml\qtscript-index.webxml
-[5342/7715]C:\Qt\Doc\webxml\qtscript-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5342/7715]C:\Qt\Doc\webxml\qtscript-module.webxml
 [5343/7715]C:\Qt\Doc\webxml\qtscript-script-context2d-context2d-cpp.webxml
 [5344/7715]C:\Qt\Doc\webxml\qtscript-script-context2d-context2d-h.webxml
 [5345/7715]C:\Qt\Doc\webxml\qtscript-script-context2d-context2d-pro.webxml
@@ -6584,8 +6584,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5402/7715]C:\Qt\Doc\webxml\qtscripttools-embedded-raycasting-example.webxml
 [5403/7715]C:\Qt\Doc\webxml\qtscripttools-embedded-styleexample-example.webxml
 [5404/7715]C:\Qt\Doc\webxml\qtscripttools-index.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [5405/7715]C:\Qt\Doc\webxml\qtscripttools-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [5406/7715]C:\Qt\Doc\webxml\qtscripttools-tools-customtypesending-example.webxml
 [5407/7715]C:\Qt\Doc\webxml\qtscripttools-touch-fingerpaint-example.webxml
 [5408/7715]C:\Qt\Doc\webxml\qtscripttools-touch-pinchzoom-example.webxml
@@ -6917,8 +6917,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [5733/7715]C:\Qt\Doc\webxml\qtserialport-enumerator-main-cpp.webxml
 [5734/7715]C:\Qt\Doc\webxml\qtserialport-examples.webxml
 [5735/7715]C:\Qt\Doc\webxml\qtserialport-index.webxml
-[5736/7715]C:\Qt\Doc\webxml\qtserialport-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[5736/7715]C:\Qt\Doc\webxml\qtserialport-module.webxml
 [5737/7715]C:\Qt\Doc\webxml\qtserialport-terminal-console-cpp.webxml
 [5738/7715]C:\Qt\Doc\webxml\qtserialport-terminal-console-h.webxml
 [5739/7715]C:\Qt\Doc\webxml\qtserialport-terminal-example.webxml
@@ -7188,8 +7188,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [6003/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-minimal-qml-main-qml.webxml
 [6004/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-minimal-qml-minimal-qml-pro.webxml
 [6005/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-minimal-qml-minimal-qml-qrc.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [6006/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [6007/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-multi-output-example.webxml
 [6008/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-multi-output-main-cpp.webxml
 [6009/7715]C:\Qt\Doc\webxml\qtwaylandcompositor-multi-output-multi-output-pro.webxml
@@ -7470,8 +7470,8 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [6274/7715]C:\Qt\Doc\webxml\qtwebengine-xml-rsslisting-example.webxml
 [6275/7715]C:\Qt\Doc\webxml\qtwebengine.webxml
 [6276/7715]C:\Qt\Doc\webxml\qtwebenginecore-index.webxml
-WARNING: generatedlist type not implemented: classesbymodule
 [6277/7715]C:\Qt\Doc\webxml\qtwebenginecore-module.webxml
+WARNING: generatedlist type not implemented: classesbymodule
 [6278/7715]C:\Qt\Doc\webxml\qtwebenginewidgets-index.webxml
 [6279/7715]C:\Qt\Doc\webxml\qtwebenginewidgets-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
@@ -8586,8 +8586,8 @@ WARNING: generatedlist type not implemented: classesbymodule
 [7388/7715]C:\Qt\Doc\webxml\qtx11extras-embedded-raycasting-example.webxml
 [7389/7715]C:\Qt\Doc\webxml\qtx11extras-embedded-styleexample-example.webxml
 [7390/7715]C:\Qt\Doc\webxml\qtx11extras-index.webxml
-[7391/7715]C:\Qt\Doc\webxml\qtx11extras-module.webxml
 WARNING: generatedlist type not implemented: classesbymodule
+[7391/7715]C:\Qt\Doc\webxml\qtx11extras-module.webxml
 [7392/7715]C:\Qt\Doc\webxml\qtx11extras-tools-customtypesending-example.webxml
 [7393/7715]C:\Qt\Doc\webxml\qtx11extras-touch-fingerpaint-example.webxml
 [7394/7715]C:\Qt\Doc\webxml\qtx11extras-touch-pinchzoom-example.webxml
@@ -8703,8 +8703,7 @@ WARNING: generatedlist type not implemented: classesbymodule
 [7504/7715]C:\Qt\Doc\webxml\qundoview.webxml
 [7505/7715]C:\Qt\Doc\webxml\qunhandledexception.webxml
 [7506/7715]C:\Qt\Doc\webxml\qurl.webxml
-[7507/7715]C:\Qt\Doc\webxml\qurlquery.webxml
-org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qurl.qdt; lineNumber: 245; columnNumber: 19; element "db:para" not allowed here; expected the element end-tag or element "db:bibliography", "db:glossary", "db:index", "db:section", "db:simplesect", "db:toc" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
+org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qurl.qdt; lineNumber: 1521; columnNumber: 19; element "db:para" not allowed here; expected the element end-tag or element "db:bibliography", "db:glossary", "db:index", "db:section", "db:simplesect", "db:toc" or "include" (with xmlns="http://www.w3.org/2001/XInclude")
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
 	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.startElement(ValidatorHandlerImpl.java:63)
 	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
@@ -8724,6 +8723,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qurl.qdt; lineNu
 	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:469)
 	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:75)
+[7507/7715]C:\Qt\Doc\webxml\qurlquery.webxml
 [7508/7715]C:\Qt\Doc\webxml\quuid.webxml
 [7509/7715]C:\Qt\Doc\webxml\qvalidator.webxml
 [7510/7715]C:\Qt\Doc\webxml\qvalue3daxis.webxml
@@ -8929,7 +8929,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qurl.qdt; lineNu
 [7710/7715]C:\Qt\Doc\webxml\xml-sax.webxml
 [7711/7715]C:\Qt\Doc\webxml\xml-streaming.webxml
 [7712/7715]C:\Qt\Doc\webxml\xml-tools.webxml
-Warning at char 7 in xsl:variable/@select on line 919 column 126 of webxml_to_docbook.xslt:
+Warning at char 7 in xsl:variable/@select on line 939 column 126 of webxml_to_docbook.xslt:
   FODC0002: I/O error reported by XML parser processing
   file:///C:/Qt/Doc/webxml/pullbridge.webxml: C:\Qt\Doc\webxml\pullbridge.webxml (The system
   cannot find the file specified)
