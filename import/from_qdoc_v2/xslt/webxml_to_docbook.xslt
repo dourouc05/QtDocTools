@@ -93,8 +93,9 @@
       </db:info>
       
       <!-- Deal with the rest of the content. -->
+      <xsl:variable name="nChildren" select="count(child::node()[1]/description/*)"/>
       <xsl:choose>
-        <xsl:when test="child::node()[1]/description[not(*)] or (count(child::node()[1]/description/*) = 1 and child::node()[1]/description/brief)">
+        <xsl:when test="child::node()[1]/description[not(*)] or ($nChildren = 1 and child::node()[1]/description/brief) or ($nChildren = count(child::node()[1]/description/relation))">
           <db:para/>
         </xsl:when>
         <xsl:otherwise>
