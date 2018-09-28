@@ -873,13 +873,15 @@
   </xsl:template>
   
   <xsl:template mode="content" match="section">
-    <db:section>
-      <xsl:if test="@id">
-        <xsl:attribute name="xml:id" select="tc:sanitise-xml-id(@id)"/>
-      </xsl:if>
-      
-      <xsl:apply-templates mode="content"/>
-    </db:section>
+    <xsl:if test="count(child::node()) > 0">
+      <db:section>
+        <xsl:if test="@id">
+          <xsl:attribute name="xml:id" select="tc:sanitise-xml-id(@id)"/>
+        </xsl:if>
+        
+        <xsl:apply-templates mode="content"/>
+      </db:section>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="content" match="see-also">

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="simple-qml" href="qt3d-simple-qml-example.html" status="active" location="simple-qml.qdoc" filepath="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simple-qml/doc/src/simple-qml.qdoc" lineno="28" subtype="example" title="Qt 3D: Simple QML Example" fulltitle="Qt 3D: Simple QML Example" subtitle="" module="Qt3D" groups="qt3d-examples-qml" brief="A QML application that demonstrates how to render a scene in Qt 3D">
+            <contents name="running-the-example" title="Running the Example" level="1"/>
+            <contents name="setting-up-the-scene" title="Setting Up the Scene" level="1"/>
+            <contents name="specifying-settings-and-axes" title="Specifying Settings and Axes" level="1"/>
+            <contents name="specifying-settings-and-axes" title="Specifying Settings and Axes" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qt3d/examples/qt3d/simple-qml/doc/src/simple-qml.qdoc" line="28" column="4">
+                <brief>A QML application that demonstrates how to render a scene in Qt 3D.</brief>
+                <image href="images/simple-qml.png"/>
+                <para>
+                    <italic>Simple</italic> demonstrates how to render a scene in Qt 3D.</para>
+                <section id="running-the-example">
+                    <heading level="1">Running the Example</heading>
+                    <para>To run the example from <link raw="Qt Creator Manual" href="http://doc.qt.io/qtcreator/index.html" type="page" page="Qt Creator Manual">Qt Creator</link>, open the <bold>Welcome</bold> mode and select the example from <bold>Examples</bold>. For more information, visit <link raw="Qt Creator: Building and Running an Example" href="http://doc.qt.io/qtcreator/creator-build-example-application.html" type="page" page="Qt Creator: Building and Running an Example">Building and Running an Example</link>.</para>
+                </section>
+                <section id="setting-up-the-scene">
+                    <heading level="1">Setting Up the Scene</heading>
+                    <para>We set up the entire scene in the <italic>main.qml</italic> file.</para>
+                    <para>To be able to use the types in the Q3D and Q3D Render modules, we must import the modules:</para>
+                    <quotefromfile>simple-qml/main.qml</quotefromfile>
+                    <skipto>import Qt3D.Core</skipto>
+                    <printuntil>Render 2.0</printuntil>
+                    <para>The first entities we create are a <link raw="Camera" href="qml-qt3d-render-camera.html" type="">Camera</link>, which represents the camera used for the final rendering, and a camera controller, which allows us to control this camera using the keyboard or the mouse:</para>
+                    <skipto>Camera {</skipto>
+                    <printuntil>}</printuntil>
+                    <printuntil>}</printuntil>
+                    <para>A <link raw="RenderSettings" href="qml-qt3d-render-rendersettings.html" type="">RenderSettings</link> entity specifies a <link raw="ForwardRenderer" href="qml-qt3d-extras-forwardrenderer.html" type="">ForwardRenderer</link> as the active framegraph:</para>
+                    <printuntil>},</printuntil>
+                    <para>The event source is set by the Qt3DQuickWindow:</para>
+                    <skipto>InputSettings</skipto>
+                    <printuntil>}</printuntil>
+                </section>
+                <section id="specifying-settings-and-axes"/>
+                <section id="specifying-settings-and-axes">
+                    <heading level="1">Specifying Settings and Axes</heading>
+                    <para>In the <italic>CameraController.qml</italic> file, we use the <link raw="LogicalDevice" href="qml-qt3d-input-logicaldevice.html" type="">LogicalDevice</link> type to define a set of actions and axes to use within the application:</para>
+                    <quotefromfile>simple-qml/CameraController.qml</quotefromfile>
+                    <skipto>LogicalDevice {</skipto>
+                    <printuntil>]</printuntil>
+                    <dots indent="4">...</dots>
+                    <skipto>axes</skipto>
+                    <printuntil>]</printuntil>
+                    <dots indent="4">...</dots>
+                    <skipto>/^\}/</skipto>
+                </section>
+            </description>
+            <page name="simple-qml/CameraController.qml" href="qt3d-simple-qml-cameracontroller-qml.html" status="active" subtype="file" title="" fulltitle="CameraController.qml Example File" subtitle="simple-qml/CameraController.qml">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simple-qml/main.qml" href="qt3d-simple-qml-main-qml.html" status="active" subtype="file" title="" fulltitle="main.qml Example File" subtitle="simple-qml/main.qml">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simple-qml/main.cpp" href="qt3d-simple-qml-main-cpp.html" status="active" subtype="file" title="" fulltitle="main.cpp Example File" subtitle="simple-qml/main.cpp">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simple-qml/simple-qml.pro" href="qt3d-simple-qml-simple-qml-pro.html" status="active" subtype="file" title="" fulltitle="simple-qml.pro Example File" subtitle="simple-qml/simple-qml.pro">
+                <description path="" line="0" column="0"/>
+            </page>
+            <page name="simple-qml/simple-qml.qrc" href="qt3d-simple-qml-simple-qml-qrc.html" status="active" subtype="file" title="" fulltitle="simple-qml.qrc Example File" subtitle="simple-qml/simple-qml.qrc">
+                <description path="" line="0" column="0"/>
+            </page>
+        </page>
+    </document>
+</WebXML>
