@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="qtquickcontrols2-material.html" href="qtquickcontrols2-material.html" status="active" location="qtquickcontrols2-material.qdoc" filepath="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/src/qtquickcontrols2-material.qdoc" lineno="28" subtype="page" title="Material Style" fulltitle="Material Style" subtitle="" module="QtQuickControls2">
+            <target name="detailed-desc-material"/>
+            <target name="material-accent-attached-prop"/>
+            <target name="material-background-attached-prop"/>
+            <target name="material-elevation-attached-prop"/>
+            <target name="material-foreground-attached-prop"/>
+            <target name="material-primary-attached-prop"/>
+            <target name="material-theme-attached-prop"/>
+            <target name="material-color-attached-method"/>
+            <contents name="attached-properties" title="Attached Properties" level="1"/>
+            <contents name="attached-methods" title="Attached Methods" level="1"/>
+            <contents name="detailed-description" title="Detailed Description" level="1"/>
+            <contents name="customization" title="Customization" level="2"/>
+            <contents name="configuration-file" title="Configuration File" level="3"/>
+            <contents name="environment-variables" title="Environment Variables" level="3"/>
+            <contents name="dependency" title="Dependency" level="2"/>
+            <contents name="pre-defined-material-colors" title="Pre-defined Material Colors" level="2"/>
+            <contents name="pre-defined-shades" title="Pre-defined Shades" level="2"/>
+            <contents name="attached-property-documentation" title="Attached Property Documentation" level="1"/>
+            <contents name="attached-method-documentation" title="Attached Method Documentation" level="1"/>
+            <contents name="related-information" title="Related Information" level="1"/>
+            <description path="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/src/qtquickcontrols2-material.qdoc" line="28" column="4">
+                <para>The Material Style is based on the Google Material Design Guidelines. <link raw="detailed-desc-material" href="qtquickcontrols2-material.html#detailed-desc-material" type="page" page="Material Style">More...</link></para>
+                <raw format="HTML">&lt;table class=&quot;alignedsummary&quot;&gt;&lt;tbody&gt;&lt;tr&gt;&lt;td class=&quot;memItemLeft rightAlign topAlign&quot;&gt; Import Statement:&lt;/td&gt;&lt;td class=&quot;memItemRight bottomAlign&quot;&gt; import QtQuick.Controls.Material 2.4&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td class=&quot;memItemLeft rightAlign topAlign&quot;&gt; Since:&lt;/td&gt;&lt;td class=&quot;memItemRight bottomAlign&quot;&gt; Qt 5.7&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;</raw>
+                <section id="attached-properties">
+                    <heading level="1">Attached Properties</heading>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <link raw="material-accent-attached-prop" href="qtquickcontrols2-material.html#material-accent-attached-prop" type="page" page="Material Style">
+                                    <bold>accent</bold>
+                                </link> : color</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="material-background-attached-prop" href="qtquickcontrols2-material.html#material-background-attached-prop" type="page" page="Material Style">
+                                    <bold>background</bold>
+                                </link> : color</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="material-elevation-attached-prop" href="qtquickcontrols2-material.html#material-elevation-attached-prop" type="page" page="Material Style">
+                                    <bold>elevation</bold>
+                                </link> : int</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="material-foreground-attached-prop" href="qtquickcontrols2-material.html#material-foreground-attached-prop" type="page" page="Material Style">
+                                    <bold>foreground</bold>
+                                </link> : color</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="material-primary-attached-prop" href="qtquickcontrols2-material.html#material-primary-attached-prop" type="page" page="Material Style">
+                                    <bold>primary</bold>
+                                </link> : color</para>
+                        </item>
+                        <item>
+                            <para>
+                                <link raw="material-theme-attached-prop" href="qtquickcontrols2-material.html#material-theme-attached-prop" type="page" page="Material Style">
+                                    <bold>theme</bold>
+                                </link> : enumeration</para>
+                        </item>
+                    </list>
+                </section>
+                <section id="attached-methods">
+                    <heading level="1">Attached Methods</heading>
+                    <list type="bullet">
+                        <item>
+                            <para>color <link raw="material-color-attached-method" href="qtquickcontrols2-material.html#material-color-attached-method" type="page" page="Material Style">
+                                    <bold>color</bold>
+                                </link>(enumeration predefined, enumeration shade)</para>
+                        </item>
+                    </list>
+                </section>
+                <section id="detailed-description">
+                    <heading level="1">Detailed Description</heading>
+                    <target name="detailed-desc-material"/>
+                    <para>The Material style is based on the Google Material Design Guidelines. It allows for a unified experience across platforms and device sizes.</para>
+                    <table>
+                        <row>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-light.png"/>The Material style in light theme</item>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-dark.png"/>The Material style in dark theme</item>
+                        </row>
+                    </table>
+                    <para>To run an application with the Material style, see <link raw="Using Styles in Qt Quick Controls 2" href="qtquickcontrols2-styles.html#using-styles-in-qt-quick-controls-2" type="page" page="Styling Qt Quick Controls 2">Using Styles in Qt Quick Controls 2</link>.</para>
+                    <para>
+                        <bold>Note:</bold> The Material style is not a native Android style. The Material style is a 100% cross-platform Qt Quick Controls 2 style implementation that follows the Google Material Design Guidelines. The style runs on any platform, and looks more or less identical everywhere. Minor differences may occur due to differences in available system fonts and font rendering engines.</para>
+                </section>
+                <section id="customization">
+                    <heading level="2">Customization</heading>
+                    <para>The Material style allows customizing five attributes, <link raw="material-theme-attached-prop" href="qtquickcontrols2-material.html#material-theme-attached-prop" type="page" page="Material Style">theme</link>, <link raw="material-primary-attached-prop" href="qtquickcontrols2-material.html#material-primary-attached-prop" type="page" page="Material Style">primary</link>, <link raw="material-accent-attached-prop" href="qtquickcontrols2-material.html#material-accent-attached-prop" type="page" page="Material Style">accent</link>, <link raw="material-foreground-attached-prop" href="qtquickcontrols2-material.html#material-foreground-attached-prop" type="page" page="Material Style">foreground</link>, and <link raw="material-background-attached-prop" href="qtquickcontrols2-material.html#material-background-attached-prop" type="page" page="Material Style">background</link>.</para>
+                    <image href="images/qtquickcontrols2-material-attributes.png"/>
+                    <para>All attributes can be specified for any window or item, and they automatically propagate to children in the same manner as <link raw="Control::font" href="qml-qtquick-controls2-control.html#font-prop" type="">fonts</link>. In the following example, the window and all three radio buttons appear in the dark theme using a purple accent color:</para>
+                    <table>
+                        <row>
+                            <item/>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-purple.png"/>
+                            </item>
+                        </row>
+                    </table>
+                    <para>In addition to specifying the attributes in QML, it is also possible to specify them via environment variables or in a configuration file. Attributes specified in QML take precedence over all other methods.</para>
+                </section>
+                <section id="configuration-file">
+                    <heading level="3">Configuration File</heading>
+                    <table>
+                        <header>
+                            <item>
+                                <para>Variable</para>
+                            </item>
+                            <item>
+                                <para>Description</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">Theme</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-theme-attached-prop" href="qtquickcontrols2-material.html#material-theme-attached-prop" type="page" page="Material Style">Material theme</link>. The value can be one of the available themes, for example <teletype type="highlighted">&quot;Dark&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">Accent</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-accent-attached-prop" href="qtquickcontrols2-material.html#material-accent-attached-prop" type="page" page="Material Style">Material accent color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, but it is recommended to use one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;Teal&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">Primary</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-primary-attached-prop" href="qtquickcontrols2-material.html#material-primary-attached-prop" type="page" page="Material Style">Material primary color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, but it is recommended to use one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;BlueGrey&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">Foreground</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-foreground-attached-prop" href="qtquickcontrols2-material.html#material-foreground-attached-prop" type="page" page="Material Style">Material foreground color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, or one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;Brown&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">Background</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-background-attached-prop" href="qtquickcontrols2-material.html#material-background-attached-prop" type="page" page="Material Style">Material background color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, or one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;Grey&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>See <link raw="Qt Quick Controls 2 Configuration File" href="qtquickcontrols2-configuration.html" type="page" page="Qt Quick Controls 2 Configuration File">Qt Quick Controls 2 Configuration File</link> for more details about the configuration file.</para>
+                </section>
+                <section id="environment-variables">
+                    <heading level="3">Environment Variables</heading>
+                    <table>
+                        <header>
+                            <item>
+                                <para>Variable</para>
+                            </item>
+                            <item>
+                                <para>Description</para>
+                            </item>
+                        </header>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">QT_QUICK_CONTROLS_MATERIAL_THEME</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-theme-attached-prop" href="qtquickcontrols2-material.html#material-theme-attached-prop" type="page" page="Material Style">Material theme</link>. The value can be one of the available themes, for example <teletype type="highlighted">&quot;Dark&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">QT_QUICK_CONTROLS_MATERIAL_ACCENT</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-accent-attached-prop" href="qtquickcontrols2-material.html#material-accent-attached-prop" type="page" page="Material Style">Material accent color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, but it is recommended to use one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;Teal&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">QT_QUICK_CONTROLS_MATERIAL_PRIMARY</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-primary-attached-prop" href="qtquickcontrols2-material.html#material-primary-attached-prop" type="page" page="Material Style">Material primary color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, but it is recommended to use one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;BlueGrey&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">QT_QUICK_CONTROLS_MATERIAL_FOREGROUND</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-foreground-attached-prop" href="qtquickcontrols2-material.html#material-foreground-attached-prop" type="page" page="Material Style">Material foreground color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, or one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;Brown&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                        <row>
+                            <item>
+                                <para>
+                                    <teletype type="highlighted">QT_QUICK_CONTROLS_MATERIAL_BACKGROUND</teletype></para>
+                            </item>
+                            <item>
+                                <para>Specifies the default <link raw="material-background-attached-prop" href="qtquickcontrols2-material.html#material-background-attached-prop" type="page" page="Material Style">Material background color</link>. The value can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, or one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link>, for example <teletype type="highlighted">&quot;Grey&quot;</teletype>.</para>
+                            </item>
+                        </row>
+                    </table>
+                    <para>See <link raw="Supported Environment Variables in Qt Quick Controls 2" href="qtquickcontrols2-environment.html" type="page" page="Supported Environment Variables in Qt Quick Controls 2">Supported Environment Variables in Qt Quick Controls 2</link> for the full list of supported environment variables.</para>
+                </section>
+                <section id="dependency">
+                    <heading level="2">Dependency</heading>
+                    <para>The Material style must be separately imported to gain access to the attributes that are specific to the Material style. It should be noted that regardless of the references to the Material style, the same application code runs with any other style. Material-specific attributes only have an effect when the application is run with the Material style.</para>
+                    <para>If the Material style is imported in a QML file that is always loaded, the Material style must be deployed with the application in order to be able to run the application regardless of which style the application is run with. By using <link raw="Using File Selectors with Qt Quick Controls 2" href="qtquickcontrols2-fileselectors.html" type="page" page="Using File Selectors with Qt Quick Controls 2">file selectors</link>, style-specific tweaks can be applied without creating a hard dependency to a style.</para>
+                </section>
+                <section id="pre-defined-material-colors">
+                    <heading level="2">Pre-defined Material Colors</heading>
+                    <para>Even though primary and accent can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, it is recommended to use one of the pre-defined colors that have been designed to work well with the rest of the Material style palette:</para>
+                    <para>Available pre-defined colors:</para>
+                    <list type="definition">
+                        <definition>
+                            <term>Material.Red</term>Material.Red</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#F44336;&quot;&gt;#F44336 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Pink</term>Material.Pink</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#E91E63;&quot;&gt;#E91E63 (default accent)&lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Purple</term>Material.Purple</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#9C27B0;&quot;&gt;#9C27B0 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.DeepPurple</term>Material.DeepPurple</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#673AB7;&quot;&gt;#673AB7 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Indigo</term>Material.Indigo</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#3F51B5;&quot;&gt;#3F51B5 (default primary)&lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Blue</term>Material.Blue</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#2196F3;&quot;&gt;#2196F3 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.LightBlue</term>Material.LightBlue</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#03A9F4;&quot;&gt;#03A9F4 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Cyan</term>Material.Cyan</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#00BCD4;&quot;&gt;#00BCD4 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Teal</term>Material.Teal</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#009688;&quot;&gt;#009688 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Green</term>Material.Green</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#4CAF50;&quot;&gt;#4CAF50 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.LightGreen</term>Material.LightGreen</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#8BC34A;&quot;&gt;#8BC34A &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Lime</term>Material.Lime</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#CDDC39;&quot;&gt;#CDDC39 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Yellow</term>Material.Yellow</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FFEB3B;&quot;&gt;#FFEB3B &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Amber</term>Material.Amber</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FFC107;&quot;&gt;#FFC107 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Orange</term>Material.Orange</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FF9800;&quot;&gt;#FF9800 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.DeepOrange</term>Material.DeepOrange</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FF5722;&quot;&gt;#FF5722 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Brown</term>Material.Brown</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#795548;&quot;&gt;#795548 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Grey</term>Material.Grey</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#9E9E9E;&quot;&gt;#9E9E9E &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.BlueGrey</term>Material.BlueGrey</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#607D8B;&quot;&gt;#607D8B &lt;/div&gt;</raw>
+                        </item>
+                    </list>
+                    <para>When the dark theme is in use, different <link raw="Pre-defined Shades" href="qtquickcontrols2-material.html#pre-defined-shades" type="page" page="Material Style">shades</link> of the pre-defined colors are used by default:</para>
+                    <list type="definition">
+                        <definition>
+                            <term>Material.Red</term>Material.Red</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#EF9A9A;&quot;&gt;#EF9A9A &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Pink</term>Material.Pink</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#F48FB1;&quot;&gt;#F48FB1 (default accent)&lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Purple</term>Material.Purple</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#CE93D8;&quot;&gt;#CE93D8 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.DeepPurple</term>Material.DeepPurple</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#B39DDB;&quot;&gt;#B39DDB &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Indigo</term>Material.Indigo</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#9FA8DA;&quot;&gt;#9FA8DA (default primary)&lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Blue</term>Material.Blue</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#90CAF9;&quot;&gt;#90CAF9 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.LightBlue</term>Material.LightBlue</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#81D4FA;&quot;&gt;#81D4FA &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Cyan</term>Material.Cyan</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#80DEEA;&quot;&gt;#80DEEA &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Teal</term>Material.Teal</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#80CBC4;&quot;&gt;#80CBC4 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Green</term>Material.Green</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#A5D6A7;&quot;&gt;#A5D6A7 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.LightGreen</term>Material.LightGreen</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#C5E1A5;&quot;&gt;#C5E1A5 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Lime</term>Material.Lime</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#E6EE9C;&quot;&gt;#E6EE9C &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Yellow</term>Material.Yellow</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FFF59D;&quot;&gt;#FFF59D &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Amber</term>Material.Amber</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FFE082;&quot;&gt;#FFE082 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Orange</term>Material.Orange</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FFCC80;&quot;&gt;#FFCC80 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.DeepOrange</term>Material.DeepOrange</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#FFAB91;&quot;&gt;#FFAB91 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Brown</term>Material.Brown</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#BCAAA4;&quot;&gt;#BCAAA4 &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.Grey</term>Material.Grey</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#EEEEEE;&quot;&gt;#EEEEEE &lt;/div&gt;</raw>
+                        </item>
+                        <definition>
+                            <term>Material.BlueGrey</term>Material.BlueGrey</definition>
+                        <item>
+                            <raw format="HTML">&lt;div style=&quot;padding:10px;color:#fff;background:#B0BEC5;&quot;&gt;#B0BEC5 &lt;/div&gt;</raw>
+                        </item>
+                    </list>
+                </section>
+                <section id="pre-defined-shades">
+                    <heading level="2">Pre-defined Shades</heading>
+                    <para>There are several different shades of each <link raw="Pre-defined Material Colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined color</link> that can be passed to the <link raw="material-color-attached-method" href="qtquickcontrols2-material.html#material-color-attached-method" type="page" page="Material Style">Material.color()</link> function:</para>
+                    <list type="definition">
+                        <definition>
+                            <term>Material.Shade50</term>Material.Shade50</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade100</term>Material.Shade100</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade200</term>Material.Shade200</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade300</term>Material.Shade300</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade400</term>Material.Shade400</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade500</term>Material.Shade500</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade600</term>Material.Shade600</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade700</term>Material.Shade700</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade800</term>Material.Shade800</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.Shade900</term>Material.Shade900</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.ShadeA100</term>Material.ShadeA100</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.ShadeA200</term>Material.ShadeA200</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.ShadeA400</term>Material.ShadeA400</definition>
+                        <item/>
+                        <definition>
+                            <term>Material.ShadeA700</term>Material.ShadeA700</definition>
+                        <item/>
+                    </list>
+                    <para>
+                        <bold>See also</bold> <link raw="Default Style" href="qtquickcontrols2-default.html" type="page" page="Default Style">Default Style</link>, <link raw="Universal Style" href="qtquickcontrols2-universal.html" type="page" page="Universal Style">Universal Style</link></para>
+                </section>
+                <section id="attached-property-documentation">
+                    <heading level="1">Attached Property Documentation</heading>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-accent-attached-prop&quot;&gt;&lt;td class=&quot;tblQmlPropNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;name&quot;&gt;Material.accent&lt;/span&gt; : &lt;span class=&quot;type&quot;&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-accent-attached-prop"/>
+                    <para>This attached property holds the accent color of the theme. The property can be attached to any window or item. The value is propagated to children.</para>
+                    <para>The default value is <teletype type="highlighted">Material.Pink</teletype>.</para>
+                    <para>In the following example, the accent color of the highlighted button is changed to <teletype type="highlighted">Material.Orange</teletype>:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <snippet location="qtquickcontrols2-material-accent.qml" path="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/snippets/qtquickcontrols2-material-accent.qml" identifier="1"/>
+                            </item>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-accent.png"/>
+                            </item>
+                        </row>
+                    </table>
+                    <para>
+                        <bold>Note:</bold> Even though the accent can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, it is recommended to use one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link> that have been designed to work well with the rest of the Material style palette.</para>
+                    <para/>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-background-attached-prop&quot;&gt;&lt;td class=&quot;tblQmlPropNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;name&quot;&gt;Material.background&lt;/span&gt; : &lt;span class=&quot;type&quot;&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-background-attached-prop"/>
+                    <para>This attached property holds the background color of the theme. The property can be attached to any window or item. The value is propagated to children.</para>
+                    <para>The default value is theme-specific (light or dark).</para>
+                    <para>In the following example, the background color of the button is changed to <teletype type="highlighted">Material.Teal</teletype>:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <snippet location="qtquickcontrols2-material-background.qml" path="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/snippets/qtquickcontrols2-material-background.qml" identifier="1"/>
+                            </item>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-background.png"/>
+                            </item>
+                        </row>
+                    </table>
+                    <para/>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-elevation-attached-prop&quot;&gt;&lt;td class=&quot;tblQmlPropNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;name&quot;&gt;Material.elevation&lt;/span&gt; : &lt;span class=&quot;type&quot;&gt;int&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-elevation-attached-prop"/>
+                    <para>This attached property holds the elevation of the control. The higher the elevation, the deeper the shadow. The property can be attached to any control, but not all controls visualize elevation.</para>
+                    <para>The default value is control-specific.</para>
+                    <para>In the following example, the elevation of the pane is set to <teletype type="highlighted">6</teletype> in order to achieve the look of an elevated card:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <snippet location="qtquickcontrols2-material-elevation.qml" path="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/snippets/qtquickcontrols2-material-elevation.qml" identifier="1"/>
+                            </item>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-elevation.png"/>
+                            </item>
+                        </row>
+                    </table>
+                    <para/>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-foreground-attached-prop&quot;&gt;&lt;td class=&quot;tblQmlPropNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;name&quot;&gt;Material.foreground&lt;/span&gt; : &lt;span class=&quot;type&quot;&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-foreground-attached-prop"/>
+                    <para>This attached property holds the foreground color of the theme. The property can be attached to any window or item. The value is propagated to children.</para>
+                    <para>The default value is theme-specific (light or dark).</para>
+                    <para>In the following example, the foreground color of the button is set to <teletype type="highlighted">Material.Pink</teletype>:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <snippet location="qtquickcontrols2-material-foreground.qml" path="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/snippets/qtquickcontrols2-material-foreground.qml" identifier="1"/>
+                            </item>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-foreground.png"/>
+                            </item>
+                        </row>
+                    </table>
+                    <para/>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-primary-attached-prop&quot;&gt;&lt;td class=&quot;tblQmlPropNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;name&quot;&gt;Material.primary&lt;/span&gt; : &lt;span class=&quot;type&quot;&gt;color&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-primary-attached-prop"/>
+                    <para>This attached property holds the primary color of the theme. The property can be attached to any window or item. The value is propagated to children.</para>
+                    <para>The primary color is used as the background color of <link raw="ToolBar" href="qml-qtquick-controls2-toolbar.html" type="">ToolBar</link> by default.</para>
+                    <para>The default value is <teletype type="highlighted">Material.Indigo</teletype>.</para>
+                    <para>
+                        <bold>Note:</bold> Even though the primary can be any <link raw="colorbasictypedocs" href="qml-color.html#colorbasictypedocs" type="">color</link>, it is recommended to use one of the <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material colors</link> that have been designed to work well with the rest of the Material style palette.</para>
+                    <para/>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-theme-attached-prop&quot;&gt;&lt;td class=&quot;tblQmlPropNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;name&quot;&gt;Material.theme&lt;/span&gt; : &lt;span class=&quot;type&quot;&gt;enumeration&lt;/span&gt;&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-theme-attached-prop"/>
+                    <para>This attached property holds whether the theme is light or dark. The property can be attached to any window or item. The value is propagated to children.</para>
+                    <para>Available themes:</para>
+                    <list type="definition">
+                        <definition>
+                            <term>Material.Light</term>Material.Light</definition>
+                        <item>
+                            <para>Light theme (default)</para>
+                        </item>
+                        <definition>
+                            <term>Material.Dark</term>Material.Dark</definition>
+                        <item>
+                            <para>Dark theme</para>
+                        </item>
+                        <definition>
+                            <term>Material.System</term>Material.System</definition>
+                        <item>
+                            <para>System theme</para>
+                        </item>
+                    </list>
+                    <para>Setting the theme to <teletype type="highlighted">System</teletype> chooses either the light or dark theme based on the system theme colors. However, when reading the value of the theme property, the value is never <teletype type="highlighted">System</teletype>, but the actual theme.</para>
+                    <para>In the following example, the theme for both the pane and the button is set to <teletype type="highlighted">Material.Dark</teletype>:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <snippet location="qtquickcontrols2-material-theme.qml" path="C:/Qt/5.11.1/Src/qtquickcontrols2/src/imports/controls/doc/snippets/qtquickcontrols2-material-theme.qml" identifier="1"/>
+                            </item>
+                            <item>
+                                <image href="images/qtquickcontrols2-material-theme.png"/>
+                            </item>
+                        </row>
+                    </table>
+                    <para/>
+                </section>
+                <section id="attached-method-documentation">
+                    <heading level="1">Attached Method Documentation</heading>
+                    <raw format="HTML">&lt;div class=&quot;qmlproto&quot;&gt;&lt;table class=&quot;qmlname&quot;&gt;&lt;tbody&gt;&lt;tr valign=&quot;top&quot; class=&quot;odd&quot; id=&quot;material-color-attached-method&quot;&gt;&lt;td class=&quot;tblQmlFuncNode&quot;&gt;&lt;p&gt;&lt;span class=&quot;type&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;name&quot;&gt;color&lt;/span&gt;(&lt;span class= type&gt;enumeration&lt;/span&gt; &lt;i&gt;predefined&lt;/i&gt;, &lt;span class= type&gt;enumeration&lt;/span&gt; &lt;i&gt;shade&lt;/i&gt;)&lt;/p&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;</raw>
+                    <target name="material-color-attached-method"/>
+                    <para>This attached method returns the effective color value of the specified <link raw="pre-defined Material colors" href="qtquickcontrols2-material.html#pre-defined-material-colors" type="page" page="Material Style">pre-defined Material color</link> combined with the given <link raw="pre-defined shades" href="qtquickcontrols2-material.html#pre-defined-shades" type="page" page="Material Style">shade</link>. If omitted, the shade argument defaults to <teletype type="highlighted">Material.Shade500</teletype>.</para>
+                    <para/>
+                </section>
+                <section id="related-information">
+                    <heading level="1">Related Information</heading>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <link raw="Styling Qt Quick Controls 2" href="qtquickcontrols2-styles.html" type="page" page="Styling Qt Quick Controls 2">Styling Qt Quick Controls 2</link></para>
+                        </item>
+                    </list>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>

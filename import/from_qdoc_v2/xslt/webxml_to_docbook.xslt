@@ -1916,7 +1916,16 @@
           <db:term>
             <xsl:apply-templates mode="content_para" select="term/child::node()"/>
           </db:term>
-          <xsl:apply-templates mode="content" select="following-sibling::item[1]"/>
+          <xsl:choose>
+            <xsl:when test="count(following-sibling::item[1]/child::node()) = 0">
+              <db:listitem>
+                <db:para/>
+              </db:listitem>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="content" select="following-sibling::item[1]"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </db:varlistentry>
       </xsl:for-each>
     </db:variablelist>
