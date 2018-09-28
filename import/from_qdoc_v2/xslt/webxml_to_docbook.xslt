@@ -896,7 +896,7 @@
       </xsl:variable>
       
       <xsl:choose>
-        <xsl:when test="preceding-sibling::node()[1][self::section]">
+        <xsl:when test="preceding-sibling::node()[1][self::section or self::generatedlist]">
           <db:section>
             <db:title>See Also</db:title>
             <xsl:copy-of select="$content"></xsl:copy-of>
@@ -2221,9 +2221,9 @@
   
   <xsl:template mode="content_para" match="raw">
     <!-- Cheating, right. But we have no choice here. -->
-    <db:programlisting role="raw-html">
+    <db:code role="raw-html">
       <xsl:apply-templates mode="content_para"/>
-    </db:programlisting>
+    </db:code>
   </xsl:template>
   
   <xsl:template mode="content content_para" match="target">
