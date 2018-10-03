@@ -3,8 +3,8 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:saxon="http://saxon.sf.net/" xmlns:map="http://www.w3.org/2005/xpath-functions/map" 
-  xmlns:tc="http://dourouc05.github.io"
-  exclude-result-prefixes="xsl xs html saxon map tc"
+  xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:tc="http://tcuvelier.be"
+  exclude-result-prefixes="xsl xs html saxon map array tc"
   version="3.0">
   
   <xsl:output method="xml" indent="yes"
@@ -922,6 +922,78 @@
     </db:title>
   </xsl:template>
   
+  <xsl:function name="tc:reverse-class-map" as="map(xs:string, array(xs:string))">
+    <xsl:param name="mapToReverse" as="map(xs:string, xs:string*)"/>
+    <xsl:copy-of select="tc:reverse-class-map-sub($mapToReverse, map {}, map:keys($mapToReverse))"/>
+  </xsl:function>
+  <xsl:function name="tc:reverse-class-map-sub" as="map(xs:string, array(xs:string))">
+    <!-- Iterate through children. -->
+    <xsl:param name="mapToReverse" as="map(xs:string, xs:string*)"/><!-- Parent to children. -->
+    <xsl:param name="reverseMap" as="map(xs:string, array(xs:string))"/><!-- Child to parents (being built). -->
+    <xsl:param name="keysLeft" as="xs:string*"/><!-- Parents still to process -->
+    
+    <xsl:variable name="child" select="$keysLeft[1]" as="xs:string"/>
+    <xsl:variable name="remainingChildren" select="$keysLeft[position() > 1]"/>
+    <xsl:variable name="parents" select="map:get($mapToReverse, $child)"/>
+    
+    <xsl:variable name="newMap" as="map(xs:string, array(xs:string))">
+      <xsl:choose>
+        <!-- No parents? Thus no parent -> child mapping. -->
+        <xsl:when test="count($parents) = 0">
+          <xsl:copy-of select="$reverseMap"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="tc:reverse-class-map-sub2($mapToReverse, $reverseMap, $child, $parents)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="count($keysLeft) > 0">
+        <xsl:copy-of select="tc:reverse-class-map-sub($mapToReverse, $newMap, $remainingChildren)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$newMap"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  <xsl:function name="tc:reverse-class-map-sub2" as="map(xs:string, array(xs:string))">
+    <!-- Iterate through parents. -->
+    <xsl:param name="mapToReverse" as="map(xs:string, xs:string*)"/><!-- Parent to children. -->
+    <xsl:param name="reverseMap" as="map(xs:string, array(xs:string))"/><!-- Child to parents (being built). -->
+    <xsl:param name="key" as="xs:string"/><!-- Parent being processed. -->
+    <xsl:param name="valuesLeft" as="xs:string*"/><!-- Children still to process for the first parent still to process. -->
+    
+    <xsl:choose>
+      <xsl:when test="count($valuesLeft) > 0">
+        <xsl:variable name="child" select="$key" as="xs:string"/>
+        <xsl:variable name="parent" select="$valuesLeft[1]" as="xs:string"/>
+        <xsl:variable name="remainingParents" select="$valuesLeft[position() > 1]" as="xs:string*"/>
+        
+        <!-- Ensure the parent is within the reverse map. -->
+        <xsl:variable name="reverseMapWithEntry" as="map(xs:string, array(xs:string))">
+          <xsl:choose>
+            <xsl:when test="map:contains($reverseMap, $child)">
+              <xsl:copy-of select="$reverseMap"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:copy-of select="map:put($reverseMap, $child, [])"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        
+        <!-- Add the current child as necessary, then recurse. -->
+        <xsl:variable name="reverseMapWithChild" as="map(xs:string, array(xs:string))">
+          <xsl:variable name="currentArray" select="map:get($reverseMapWithEntry, $child)" as="array(xs:string)"/>
+          <xsl:variable name="filledArray" select="array:append($currentArray, $parent)" as="array(xs:string)"/>
+          <xsl:copy-of select="map:put($reverseMapWithEntry, $child, $filledArray)"/>
+        </xsl:variable>
+        <xsl:copy-of select="tc:reverse-class-map-sub2($mapToReverse, $reverseMapWithChild, $child, $remainingParents)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$reverseMap"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
   <xsl:template mode="content" match="generatedlist">
     <xsl:variable name="currentDocument" select="string(base-uri())" as="xs:string"/>
     <xsl:choose>
@@ -1296,6 +1368,93 @@
                         </db:td>
                         <db:td>
                           <xsl:value-of select="map:get($namespaces, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
+          <xsl:when test="$type = 'classhierarchy'">
+            <xsl:variable name="allClasses" as="map(xs:string, xs:string*)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/class">
+                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:variable name="classBases" select="tokenize($root/@bases, ',')" as="xs:string*"/>
+                    
+                    <xsl:choose>
+                      <xsl:when test="count($classBases) = 0">
+                        <xsl:map-entry key="$className" select="''"/>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <xsl:map-entry key="$className" select="$classBases"/>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            
+            <!-- All classes that have nothing higher in the hierachy, i.e. no base class. -->
+            <xsl:variable name="rootClasses">
+              <xsl:for-each select="map:keys($allClasses)">
+                <xsl:if test="map:contains($allClasses, .)">
+                  <xsl:value-of select="."/>
+                </xsl:if>
+              </xsl:for-each>
+            </xsl:variable>
+            
+            <!-- Reverse the map to allow easy searches from base to children. Rather difficult to do declaratively... -->
+            <xsl:variable name="childrenClasses" select="tc:reverse-class-map($allClasses)" as="map(xs:string, array(xs:string))"/>
+            
+            <!-- Start iterating. -->
+            <db:itemizedlist>
+              <xsl:for-each select="$rootClasses">
+                <db:listitem>
+                  <db:para>
+                    <xsl:value-of select="."/>
+                  </db:para>
+                  
+                  <xsl:if test="true()"> </xsl:if>
+                </db:listitem>
+              </xsl:for-each>
+            </db:itemizedlist>
+            
+            <xsl:variable name="classes" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/class">
+                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="$className" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($classes)" group-by="substring(string(.), 2, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                            <xsl:value-of select="."/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($classes, .)"/>
                         </db:td>
                       </db:tr>
                     </xsl:for-each>
