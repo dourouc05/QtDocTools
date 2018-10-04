@@ -922,23 +922,6 @@
     </db:title>
   </xsl:template>
   
-  <xsl:function name="tc:reverse-class-map" as="map(xs:string, array(xs:string))">
-    <xsl:param name="mapToReverse" as="map(xs:string, xs:string*)"/><!-- Parent to children. -->
-    
-    <xsl:variable name="mapsParents" as="map(xs:string, array(xs:string))*">
-      <xsl:for-each select="map:keys($mapToReverse)">
-        <xsl:variable name="parent" select="." as="xs:string"/>
-        <xsl:variable name="mapsChildren" as="map(xs:string, array(xs:string))*">
-          <xsl:for-each select="map:get($mapToReverse, $parent)">
-            <xsl:variable name="child" select="." as="xs:string"/>
-            <xsl:copy-of select="map {$child: [$parent]}"/>
-          </xsl:for-each>
-        </xsl:variable>
-        <xsl:copy-of select="map:merge($mapsChildren, map {'duplicates': 'combine'})"/>
-      </xsl:for-each>
-    </xsl:variable>
-    <xsl:copy-of select="map:merge($mapsParents, map {'duplicates': 'combine'})"/>
-  </xsl:function>
   <xsl:template mode="content" match="generatedlist">
     <xsl:variable name="currentDocument" select="string(base-uri())" as="xs:string"/>
     <xsl:choose>
@@ -1344,7 +1327,7 @@
             </xsl:variable>
             
             <!-- All classes that have nothing higher in the hierachy, i.e. no base class. -->
-            <xsl:variable name="rootClasses">
+            <xsl:variable name="rootClasses" as="xs:string*">
               <xsl:for-each select="map:keys($allClasses)">
                 <xsl:if test="map:contains($allClasses, .)">
                   <xsl:value-of select="."/>
@@ -1353,17 +1336,119 @@
             </xsl:variable>
             
             <!-- Reverse the map to allow easy searches from base to children. Rather difficult to do declaratively... -->
-            <xsl:variable name="childrenClasses" select="tc:reverse-class-map($allClasses)" as="map(xs:string, array(xs:string))"/>
+            <xsl:variable name="childrenClasses" as="map(xs:string, array(xs:string))">
+              <xsl:variable name="mapsParents" as="map(xs:string, array(xs:string))*">
+                <xsl:for-each select="map:keys($allClasses)">
+                  <xsl:variable name="parent" select="." as="xs:string"/>
+                  <xsl:variable name="mapsChildren" as="map(xs:string, array(xs:string))*">
+                    <xsl:for-each select="map:get($allClasses, $parent)">
+                      <xsl:variable name="child" select="." as="xs:string"/>
+                      <xsl:copy-of select="map {$child: [$parent]}"/>
+                    </xsl:for-each>
+                  </xsl:variable>
+                  <xsl:copy-of select="map:merge($mapsChildren, map {'duplicates': 'combine'})"/>
+                </xsl:for-each>
+              </xsl:variable>
+              <xsl:copy-of select="map:merge($mapsParents, map {'duplicates': 'combine'})"/>
+            </xsl:variable>
             
             <!-- Start iterating. -->
             <db:itemizedlist>
               <xsl:for-each select="$rootClasses">
+                <xsl:sort/>
+                <xsl:variable name="class1" select="." as="xs:string"/>
                 <db:listitem>
                   <db:para>
-                    <xsl:value-of select="."/>
+                    <xsl:value-of select="$class1"/>
                   </db:para>
                   
-                  <xsl:if test="true()"> </xsl:if>
+                  <xsl:if test="count(map:get($childrenClasses, $class1)) > 0">
+                    <db:itemizedlist>
+                      <xsl:for-each select="map:get($childrenClasses, $class1)">
+                        <xsl:sort/>
+                        <xsl:variable name="class2" select="." as="xs:string"/>
+                        <db:listitem>
+                          <db:para>
+                            <xsl:value-of select="$class2"/>
+                          </db:para>
+                          
+                          <xsl:if test="count(map:get($childrenClasses, $class2)) > 0">
+                            <db:itemizedlist>
+                              <xsl:for-each select="map:get($childrenClasses, $class2)">
+                                <xsl:sort/>
+                                <xsl:variable name="class3" select="." as="xs:string"/>
+                                <db:listitem>
+                                  <db:para>
+                                    <xsl:value-of select="$class3"/>
+                                  </db:para>
+                                  
+                                  <xsl:if test="count(map:get($childrenClasses, $class3)) > 0">
+                                    <db:itemizedlist>
+                                      <xsl:for-each select="map:get($childrenClasses, $class3)">
+                                        <xsl:sort/>
+                                        <xsl:variable name="class4" select="." as="xs:string"/>
+                                        <db:listitem>
+                                          <db:para>
+                                            <xsl:value-of select="$class4"/>
+                                          </db:para>
+                                          
+                                          <xsl:if test="count(map:get($childrenClasses, $class4)) > 0">
+                                            <db:itemizedlist>
+                                              <xsl:for-each select="map:get($childrenClasses, $class4)">
+                                                <xsl:sort/>
+                                                <xsl:variable name="class5" select="." as="xs:string"/>
+                                                <db:listitem>
+                                                  <db:para>
+                                                    <xsl:value-of select="$class5"/>
+                                                  </db:para>
+                                                  
+                                                  <xsl:if test="count(map:get($childrenClasses, $class5)) > 0">
+                                                    <db:itemizedlist>
+                                                      <xsl:for-each select="map:get($childrenClasses, $class5)">
+                                                        <xsl:sort/>
+                                                        <xsl:variable name="class6" select="." as="xs:string"/>
+                                                        <db:listitem>
+                                                          <db:para>
+                                                            <xsl:value-of select="$class6"/>
+                                                          </db:para>
+                                                          
+                                                          <xsl:if test="count(map:get($childrenClasses, $class6)) > 0">
+                                                            <db:itemizedlist>
+                                                              <xsl:for-each select="map:get($childrenClasses, $class6)">
+                                                                <xsl:sort/>
+                                                                <xsl:variable name="class7" select="." as="xs:string"/>
+                                                                <db:listitem>
+                                                                  <db:para>
+                                                                    <xsl:value-of select="$class7"/>
+                                                                  </db:para>
+                                                                  
+                                                                  <xsl:if test="count(map:get($childrenClasses, $class7)) > 0">
+                                                                    <xsl:message>WARNING: classhierarchy not fully implemented. </xsl:message>
+                                                                  </xsl:if>
+                                                                </db:listitem>
+                                                              </xsl:for-each>
+                                                            </db:itemizedlist>
+                                                          </xsl:if>
+                                                        </db:listitem>
+                                                      </xsl:for-each>
+                                                    </db:itemizedlist>
+                                                  </xsl:if>
+                                                </db:listitem>
+                                              </xsl:for-each>
+                                            </db:itemizedlist>
+                                          </xsl:if>
+                                        </db:listitem>
+                                      </xsl:for-each>
+                                    </db:itemizedlist>
+                                  </xsl:if>
+                                </db:listitem>
+                              </xsl:for-each>
+                            </db:itemizedlist>
+                          </xsl:if>
+                        </db:listitem>
+                      </xsl:for-each>
+                    </db:itemizedlist>
+                  </xsl:if>
                 </db:listitem>
               </xsl:for-each>
             </db:itemizedlist>
