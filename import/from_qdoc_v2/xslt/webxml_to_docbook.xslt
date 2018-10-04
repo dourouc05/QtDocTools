@@ -1134,6 +1134,47 @@
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
+          <xsl:when test="$type = 'obsoleteclasses'">
+            <xsl:variable name="classes" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/class[@status='obsolete']">
+                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="$className" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($classes)" group-by="substring(string(.), 2, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                            <xsl:value-of select="."/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($classes, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
           <xsl:when test="$type = 'functionindex'">
             <xsl:variable name="functions" as="map(xs:string, xs:string)">
               <xsl:map>
@@ -1453,8 +1494,11 @@
               </xsl:for-each>
             </db:itemizedlist>
           </xsl:when>
-          <xsl:when test="$type = 'groupsbymodule'">
+          <xsl:when test="$type = 'groupsbymodule' or $type = 'annotatedattributions'">
             <!-- TODO: Currently not implemented, requires attributions -->
+            <!-- Examples:  -->
+            <!--   qt3d-index.webxml    <generatedlist contents="groupsbymodule attributions-qt3d"/> -->
+            <!--   licenses-used-in-qt.webxml -->
           </xsl:when>
           <xsl:otherwise>
             <xsl:message>WARNING: generatedlist type not implemented: <xsl:value-of select="$type"/></xsl:message>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="5.2"
+   xml:lang="en">
+   <db:info>
+      <db:title>Obsolete Classes</db:title>
+      <db:abstract>
+         <db:para>Classes and members marked obsolete that should not be used in new code</db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-04+02:00</db:pubdate>
+      <db:date>2018-10-04+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:para>Classes and members marked obsolete that should not be used in new code.</db:para>
+   <db:section xml:id="c-classes-that-are-deprecated">
+      <db:title>C++ classes that are deprecated</db:title>
+      <db:para>The following Qt C++ classes are now obsolete. Obsolete classes are no longer maintained. They are provided to keep old source code working, but they can be removed in a future release. We strongly advise against using these classes in new code.</db:para>
+      <db:section>
+         <db:title>D</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qdesktopwidget.webxml" xlink:title="QDesktopWidget" xrefstyle="class" annotations="QDesktopWidget">QDesktopWidget</db:link>
+                  </db:td>
+                  <db:td>Access to screen information on multi-head systems</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qdirmodel.webxml" xlink:title="QDirModel" xrefstyle="class" annotations="QDirModel">QDirModel</db:link>
+                  </db:td>
+                  <db:td>Data model for the local filesystem</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>G</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglbuffer.webxml" xlink:title="QGLBuffer" xrefstyle="class" annotations="QGLBuffer">QGLBuffer</db:link>
+                  </db:td>
+                  <db:td>Functions for creating and managing GL buffer objects</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglcolormap.webxml" xlink:title="QGLColormap" xrefstyle="class" annotations="QGLColormap">QGLColormap</db:link>
+                  </db:td>
+                  <db:td>Used for installing custom colormaps into a QGLWidget</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglcontext.webxml" xlink:title="QGLContext" xrefstyle="class" annotations="QGLContext">QGLContext</db:link>
+                  </db:td>
+                  <db:td>Encapsulates an OpenGL rendering context</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglformat.webxml" xlink:title="QGLFormat" xrefstyle="class" annotations="QGLFormat">QGLFormat</db:link>
+                  </db:td>
+                  <db:td>Specifies the display format of an OpenGL rendering context</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglframebufferobject.webxml" xlink:title="QGLFramebufferObject" xrefstyle="class" annotations="QGLFramebufferObject">QGLFramebufferObject</db:link>
+                  </db:td>
+                  <db:td>Encapsulates an OpenGL framebuffer object</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglframebufferobjectformat.webxml" xlink:title="QGLFramebufferObjectFormat" xrefstyle="class" annotations="QGLFramebufferObjectFormat">QGLFramebufferObjectFormat</db:link>
+                  </db:td>
+                  <db:td>Specifies the format of an OpenGL framebuffer object</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglfunctions.webxml" xlink:title="QGLFunctions" xrefstyle="class" annotations="QGLFunctions">QGLFunctions</db:link>
+                  </db:td>
+                  <db:td>Cross-platform access to the OpenGL ES 2.0 API</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglpixelbuffer.webxml" xlink:title="QGLPixelBuffer" xrefstyle="class" annotations="QGLPixelBuffer">QGLPixelBuffer</db:link>
+                  </db:td>
+                  <db:td>Encapsulates an OpenGL pbuffer</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglshader.webxml" xlink:title="QGLShader" xrefstyle="class" annotations="QGLShader">QGLShader</db:link>
+                  </db:td>
+                  <db:td>Allows OpenGL shaders to be compiled</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglshaderprogram.webxml" xlink:title="QGLShaderProgram" xrefstyle="class" annotations="QGLShaderProgram">QGLShaderProgram</db:link>
+                  </db:td>
+                  <db:td>Allows OpenGL shader programs to be linked and used</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qglwidget.webxml" xlink:title="QGLWidget" xrefstyle="class" annotations="QGLWidget">QGLWidget</db:link>
+                  </db:td>
+                  <db:td>Widget for rendering OpenGL graphics</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qgraphicsitemanimation.webxml" xlink:title="QGraphicsItemAnimation" xrefstyle="class" annotations="QGraphicsItemAnimation">QGraphicsItemAnimation</db:link>
+                  </db:td>
+                  <db:td>Simple animation support for QGraphicsItem</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>H</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qhelpsearchquery.webxml" xlink:title="QHelpSearchQuery" xrefstyle="class" annotations="QHelpSearchQuery">QHelpSearchQuery</db:link>
+                  </db:td>
+                  <db:td>Contains the field name and the associated search term</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>M</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qmatrix.webxml" xlink:title="QMatrix" xrefstyle="class" annotations="QMatrix">QMatrix</db:link>
+                  </db:td>
+                  <db:td>Specifies 2D transformations of a coordinate system</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>P</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qpictureformatplugin.webxml" xlink:title="QPictureFormatPlugin" xrefstyle="class" annotations="QPictureFormatPlugin">QPictureFormatPlugin</db:link>
+                  </db:td>
+                  <db:td>Abstract base for custom picture format plugins</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qpictureio.webxml" xlink:title="QPictureIO" xrefstyle="class" annotations="QPictureIO">QPictureIO</db:link>
+                  </db:td>
+                  <db:td>Contains parameters for loading and saving pictures</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>S</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qsignalmapper.webxml" xlink:title="QSignalMapper" xrefstyle="class" annotations="QSignalMapper">QSignalMapper</db:link>
+                  </db:td>
+                  <db:td>Bundles signals from identifiable senders</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+      <db:section>
+         <db:title>t</db:title>
+         <db:informaltable>
+            <db:tbody>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qdiffusemapmaterial.webxml" xlink:title="Qt3DExtras::QDiffuseMapMaterial" xrefstyle="class" annotations="Qt3DExtras::QDiffuseMapMaterial">Qt3DExtras::QDiffuseMapMaterial</db:link>
+                  </db:td>
+                  <db:td>Default implementation of the phong lighting effect where the diffuse light component is read from a texture map</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qdiffusespecularmapmaterial.webxml" xlink:title="Qt3DExtras::QDiffuseSpecularMapMaterial" xrefstyle="class" annotations="Qt3DExtras::QDiffuseSpecularMapMaterial">Qt3DExtras::QDiffuseSpecularMapMaterial</db:link>
+                  </db:td>
+                  <db:td>Default implementation of the phong lighting effect where the diffuse and specular light components are read from texture maps</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qnormaldiffusemapalphamaterial.webxml" xlink:title="Qt3DExtras::QNormalDiffuseMapAlphaMaterial" xrefstyle="class" annotations="Qt3DExtras::QNormalDiffuseMapAlphaMaterial">Qt3DExtras::QNormalDiffuseMapAlphaMaterial</db:link>
+                  </db:td>
+                  <db:td>Specialization of QNormalDiffuseMapMaterial with alpha coverage and a depth test performed in the rendering pass</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qnormaldiffusemapmaterial.webxml" xlink:title="Qt3DExtras::QNormalDiffuseMapMaterial" xrefstyle="class" annotations="Qt3DExtras::QNormalDiffuseMapMaterial">Qt3DExtras::QNormalDiffuseMapMaterial</db:link>
+                  </db:td>
+                  <db:td>Default implementation of the phong lighting and bump effect where the diffuse light component is read from a texture map and the normals of the mesh being rendered from a normal texture map</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qnormaldiffusespecularmapmaterial.webxml" xlink:title="Qt3DExtras::QNormalDiffuseSpecularMapMaterial" xrefstyle="class" annotations="Qt3DExtras::QNormalDiffuseSpecularMapMaterial">Qt3DExtras::QNormalDiffuseSpecularMapMaterial</db:link>
+                  </db:td>
+                  <db:td>Default implementation of the phong lighting and bump effect where the diffuse and specular light components are read from texture maps and the normals of the mesh being rendered from a normal texture map</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qphongalphamaterial.webxml" xlink:title="Qt3DExtras::QPhongAlphaMaterial" xrefstyle="class" annotations="Qt3DExtras::QPhongAlphaMaterial">Qt3DExtras::QPhongAlphaMaterial</db:link>
+                  </db:td>
+                  <db:td>Default implementation of the phong lighting effect with alpha</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qphongmaterial.webxml" xlink:title="Qt3DExtras::QPhongMaterial" xrefstyle="class" annotations="Qt3DExtras::QPhongMaterial">Qt3DExtras::QPhongMaterial</db:link>
+                  </db:td>
+                  <db:td>Default implementation of the phong lighting effect</db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>
+                     <db:link xlink:href="qt3dextras::qtexturedmetalroughmaterial.webxml" xlink:title="Qt3DExtras::QTexturedMetalRoughMaterial" xrefstyle="class" annotations="Qt3DExtras::QTexturedMetalRoughMaterial">Qt3DExtras::QTexturedMetalRoughMaterial</db:link>
+                  </db:td>
+                  <db:td>This class is deprecated; use QMetalRoughMaterial instead</db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+      </db:section>
+   </db:section>
+   <db:section xml:id="c-classes-that-contain-one-or-more-members-that-are-deprecated">
+      <db:title>C++ classes that contain one or more members that are deprecated</db:title>
+      <db:para>The following Qt C++ classes contain one or more members that are now obsolete. Obsolete members are no longer maintained. They are provided to keep old source code working, but they can be removed in a future release. We strongly advise against using these obsolete members in new code. Click on a class to see its deprecated members.</db:para>
+   </db:section>
+</db:article>

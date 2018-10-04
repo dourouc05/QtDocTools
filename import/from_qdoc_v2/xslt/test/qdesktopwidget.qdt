@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>QDesktopWidget</db:title>
+      <db:abstract>
+         <db:para>Access to screen information on multi-head systems</db:para>
+      </db:abstract>
+      <db:pubdate>2018-09-28+02:00</db:pubdate>
+      <db:date>2018-09-28+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qdesktopwidget.html" xrefstyle="class" annotations="QDesktopWidget">QDesktopWidget</db:link></db:code> class provides access to screen information on multi-head systems.</db:para>
+      <db:para>Systems with more than one graphics card and monitor can manage the physical screen space available either as multiple desktops, or as a large virtual desktop.</db:para>
+      <db:para>This class provides information about the user's desktop, such as its total size, number of screens, the geometry of each screen, and whether they are configured as separate desktops or a single virtual desktop.</db:para>
+      <db:para>Widgets provided by Qt use this class to place tooltips, menus and dialog boxes on the correct screen for their parent or application widgets. Applications can use this class to obtain information that can be used to save window positions, or to place child widgets and dialogs on one particular screen.</db:para>
+      <db:section xml:id="obtaining-a-desktop-widget">
+         <db:title>Obtaining a Desktop Widget</db:title>
+         <db:para>The <db:code><db:link xlink:href="qapplication.html#desktop" xrefstyle="function" annotations="QApplication::desktop()">QApplication::desktop()</db:link></db:code> function is used to get an instance of <db:code><db:link xlink:href="qdesktopwidget.html" xrefstyle="class" annotations="QDesktopWidget">QDesktopWidget</db:link></db:code>.</db:para>
+         <db:para>The widget's <db:code><db:link xlink:href="qdesktopwidget.html#screenGeometry" xrefstyle="function" annotations="screenGeometry()">screenGeometry()</db:link></db:code> function provides information about the geometry of the available screens with. The number of screens available is returned by <db:code><db:link xlink:href="qdesktopwidget-obsolete.html#screenCount-prop" xrefstyle="property" annotations="screenCount">screenCount</db:link></db:code>, and the <db:code><db:link xlink:href="qdesktopwidget.html#screenCount-prop" xrefstyle="function" annotations="screenCountChanged()">screenCountChanged()</db:link></db:code> signal is emitted when screens are added or removed. The screen number that a particular point or widget is located in is returned by <db:code><db:link xlink:href="qdesktopwidget.html#screenNumber" xrefstyle="function" annotations="screenNumber()">screenNumber()</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="screen-geometry">
+         <db:title>Screen Geometry</db:title>
+         <db:para>To obtain the dimensions of a particular screen, call the <db:code><db:link xlink:href="qdesktopwidget.html#screenGeometry" xrefstyle="function" annotations="screenGeometry()">screenGeometry()</db:link></db:code> function. On some desktop environments, not all of the screen is available for applications to use; for example, an application dock or menu bar may take up some space. Use the <db:code><db:link xlink:href="qdesktopwidget.html#availableGeometry" xrefstyle="function" annotations="availableGeometry()">availableGeometry()</db:link></db:code> function to obtain the available area for applications.</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qdesktopwidget.html" xrefstyle="class" annotations="QDesktopWidget">QDesktopWidget</db:link></db:code> also inherits the <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code> properties, <db:code><db:link xlink:href="qwidget.html#width-prop" xrefstyle="function" annotations="width()">width()</db:link></db:code> and <db:code><db:link xlink:href="qwidget.html#height-prop" xrefstyle="function" annotations="height()">height()</db:link></db:code>, which specify the size of the desktop. However, for desktops with multiple screens, the size of the desktop is the union of all the screen sizes, so <db:code><db:link xlink:href="qwidget.html#width-prop" xrefstyle="function" annotations="width()">width()</db:link></db:code> and <db:code><db:link xlink:href="qwidget.html#height-prop" xrefstyle="function" annotations="height()">height()</db:link></db:code> should <db:emphasis>not</db:emphasis> be used for computing the size of a widget to be placed on one of the screens.</db:para>
+         <db:para>On systems that are configured to use the available screens as a single, large virtual desktop, the <db:code><db:link xlink:href="qdesktopwidget-obsolete.html#virtualDesktop-prop" xrefstyle="property" annotations="virtualDesktop">virtualDesktop</db:link></db:code> property will be set to true. In this case, the widget's size is usually the size of the bounding rectangle of all the screens.</db:para>
+      </db:section>
+      <db:section xml:id="use-of-the-primary-screen">
+         <db:title>Use of the Primary Screen</db:title>
+         <db:para>For an application, the screen where the main widget resides is the primary screen. This is stored in the <db:code><db:link xlink:href="qdesktopwidget-obsolete.html#primaryScreen-prop" xrefstyle="property" annotations="primaryScreen">primaryScreen</db:link></db:code> property. All windows opened in the context of the application should be constrained to the boundaries of the primary screen; for example, it would be inconvenient if a dialog box popped up on a different screen, or split over two screens.</db:para>
+         <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="images/qdesktopwidget.png"/>
+            </db:imageobject>
+         </db:mediaobject>
+         <db:para>In the illustration above, Application One's primary screen is screen 0, and App Two's primary screen is screen 1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>See Also</db:title>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#desktop" xrefstyle="function" annotations="QApplication::desktop()">QApplication::desktop()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+</db:article>
