@@ -943,8 +943,19 @@
         <!-- Never check for correctness, qdoc has already done this. -->
         <!-- (Things would just crash if an argument is needed but not provided.) -->
         <xsl:choose>
-          <xsl:when test="$type = 'examplefiles'">
+          <xsl:when test="$type = 'examplefiles' or $type = 'exampleimages'">
             <!-- List the example files that match the regular expression. -->
+            
+            <xsl:variable name="cleanedArgument" as="xs:string">
+              <xsl:choose>
+                <xsl:when test="$argument">
+                  <xsl:value-of select="$argument"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="'.*\.png'"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </xsl:variable>
             
             <!-- First, find back the folder containing the example files. -->
             <xsl:variable name="oneFileAtRandomTag" select="(preceding::quotefromfile[1] union preceding::quotefile[1] union preceding::snippet[1])[1]"/>
@@ -966,7 +977,7 @@
             <xsl:variable name="files" as="xs:string*">
               <xsl:variable name="filesInDir" select="for $f in collection(concat('file:///', $folder, '?metadata=yes&amp;recurse=yes')) return translate($f?path, '\\', '/')" as="xs:string*"/>
               <xsl:for-each select="$filesInDir">
-                <xsl:if test="matches(., $argument)">
+                <xsl:if test="matches(., $cleanedArgument)">
                   <xsl:value-of select="replace(., concat($hiddenFolder, '/'), '')"/>
                 </xsl:if>
               </xsl:for-each>
@@ -974,7 +985,7 @@
             
             <!-- Print what is needed. -->
             <db:para>
-              Files: 
+              <xsl:value-of select="if ($type = 'examplefiles') then 'Files: ' else 'Images: '"/>
             </db:para>
             <db:itemizedlist>
               <xsl:for-each select="$files">
@@ -1332,46 +1343,8 @@
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
-          <xsl:when test="$type = 'obsoletecppmembers'">
-            <xsl:variable name="classes" as="map(xs:string, xs:string)">
-              <xsl:map>
-                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
-                  <xsl:if test="./WebXML/document/type/child::node()[@status='obsolete']">
-                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
-                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
-                    <xsl:map-entry key="$className" select="string($root/@brief)"/>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:map>
-            </xsl:variable>
-            <xsl:for-each-group select="map:keys($classes)" group-by="substring(string(.), 2, 1)">
-              <xsl:sort/>
-              
-              <db:section>
-                <db:title>
-                  <xsl:value-of select="current-grouping-key()"/>
-                </db:title>
-                
-                <db:informaltable>
-                  <db:tbody>
-                    <xsl:for-each select="current-group()">
-                      <xsl:sort/>
-                      
-                      <db:tr>
-                        <db:td>
-                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
-                            <xsl:value-of select="."/>
-                          </db:link>
-                        </db:td>
-                        <db:td>
-                          <xsl:value-of select="map:get($classes, .)"/>
-                        </db:td>
-                      </db:tr>
-                    </xsl:for-each>
-                  </db:tbody>
-                </db:informaltable>
-              </db:section>
-            </xsl:for-each-group>
+          <xsl:when test="$type = 'obsoleteqmlmembers'">
+            <!-- TODO: No example available, so not implemented. -->
           </xsl:when>
           <xsl:when test="$type = 'functionindex'">
             <xsl:variable name="functions" as="map(xs:string, xs:string)">
