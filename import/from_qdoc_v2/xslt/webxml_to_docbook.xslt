@@ -1093,6 +1093,40 @@
               </db:tbody>
             </db:informaltable>
           </xsl:when>
+          <xsl:when test="$type = 'annotatedexamples'">
+            <db:informaltable>
+              <db:tbody>
+                <xsl:variable name="examples">
+                  <examples>
+                    <xsl:for-each select="collection(concat($local-folder, '?select=*-example.webxml'))">
+                      <xsl:if test="./WebXML/document/page[@subtype='example']">
+                        <example>
+                          <xsl:variable name="root" select="./WebXML/document/page" as="element(page)"/>
+                          <title><xsl:value-of select="string($root/@title)"/></title>
+                          <brief><xsl:value-of select="string($root/@brief)"/></brief>
+                          <href><xsl:value-of select="replace(string($root/@href), '\.html', '.qdt')"/></href>
+                        </example>
+                      </xsl:if>
+                    </xsl:for-each>
+                  </examples>
+                </xsl:variable>
+                <xsl:for-each select="$examples/examples/example">
+                  <xsl:sort select="./title"/>
+                  
+                  <db:tr>
+                    <db:td>
+                      <db:link xlink:href="{./url}" xlink:title="{./title}" xrefstyle="page" annotations="{./title}">
+                        <xsl:value-of select="./title"/>
+                      </db:link>
+                    </db:td>
+                    <db:td>
+                      <xsl:value-of select="./brief"/>
+                    </db:td>
+                  </db:tr>
+                </xsl:for-each>
+              </db:tbody>
+            </db:informaltable>
+          </xsl:when>
           <xsl:when test="$type = 'classes'">
             <xsl:variable name="classes" as="map(xs:string, xs:string)">
               <xsl:map>
