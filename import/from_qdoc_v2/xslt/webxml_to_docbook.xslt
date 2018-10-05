@@ -1134,6 +1134,47 @@
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
+          <xsl:when test="$type = 'classesbymodule'">
+            <xsl:variable name="classes" as="map(xs:string, xs:string)">
+              <xsl:map>
+                <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+                  <xsl:if test="./WebXML/document/class[@module = $argument]">
+                    <xsl:variable name="root" select="./WebXML/document/class" as="element(class)"/>
+                    <xsl:variable name="className" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
+                    <xsl:map-entry key="$className" select="string($root/@brief)"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:map>
+            </xsl:variable>
+            <xsl:for-each-group select="map:keys($classes)" group-by="substring(string(.), 2, 1)">
+              <xsl:sort/>
+              
+              <db:section>
+                <db:title>
+                  <xsl:value-of select="current-grouping-key()"/>
+                </db:title>
+                
+                <db:informaltable>
+                  <db:tbody>
+                    <xsl:for-each select="current-group()">
+                      <xsl:sort/>
+                      
+                      <db:tr>
+                        <db:td>
+                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                            <xsl:value-of select="."/>
+                          </db:link>
+                        </db:td>
+                        <db:td>
+                          <xsl:value-of select="map:get($classes, .)"/>
+                        </db:td>
+                      </db:tr>
+                    </xsl:for-each>
+                  </db:tbody>
+                </db:informaltable>
+              </db:section>
+            </xsl:for-each-group>
+          </xsl:when>
           <xsl:when test="$type = 'obsoleteclasses'">
             <xsl:variable name="classes" as="map(xs:string, xs:string)">
               <xsl:map>
@@ -1427,8 +1468,8 @@
               </db:section>
             </xsl:for-each-group>
           </xsl:when>
-          <xsl:when test="$type = 'qmlbasictypes' or $type = 'qmltypes'">
-            <!-- TODO: These files do not seem to get generated... -->
+          <xsl:when test="$type = 'qmlbasictypes' or $type = 'qmltypes' or $type = 'qmltypesbymodule'">
+            <!-- TODO: These files do not seem to get generated... so no way to generate these lists for now. -->
           </xsl:when>
           <xsl:when test="$type = 'namespaces'">
             <xsl:variable name="namespaces" as="map(xs:string, xs:string)">

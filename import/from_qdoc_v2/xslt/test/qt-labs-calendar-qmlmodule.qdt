@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <db:article xmlns:db="http://docbook.org/ns/docbook"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  version="5.2">
-  <db:info>
-    <db:title>Qt Labs Calendar QML Types</db:title>
-    <db:abstract>
-      <db:para>Provides QML types for calendars (Qt Labs Calendar)</db:para>
-    </db:abstract>
-  </db:info>
-  <db:section xml:id="details">
-    <db:title>Detailed Description</db:title>
-    <db:para>The <db:link xlink:href="qtlabscalendar-index.html" xrefstyle="page" annotations="Qt Labs Calendar">Qt Labs Calendar</db:link> module provides QML types for creating calendars. These QML types work in conjunction with <db:link xlink:href="qtquick-index.html" xrefstyle="page" annotations="Qt Quick">Qt Quick</db:link> and <db:link xlink:href="qtquickcontrols2-index.html" xrefstyle="page" annotations="Qt Quick Controls 2">Qt Quick Controls 2</db:link>.</db:para>
-    <db:para>The QML types can be imported into your application using the following import statement in your .qml file:</db:para>
-    <db:programlisting language="other" role="badcode">import Qt.labs.calendar 1.0</db:programlisting>
-    <db:section xml:id="qml-types">
-      <db:title>QML Types</db:title>
-      <db:note>
-        <db:para>
-          <db:emphasis>Types in Qt.labs modules are not guaranteed to remain compatible in future versions.</db:emphasis>
-        </db:para>
-      </db:note>
-    </db:section>
-    <db:section xml:id="related-information">
-      <db:title>Related Information</db:title>
-      <db:itemizedlist>
-        <db:listitem>
-          <db:para>
-            <db:link xlink:href="qtquick-controls2-qmlmodule.html" xrefstyle="" annotations="Qt Quick Controls 2 QML Types">Qt Quick Controls 2 QML Types</db:link>
-          </db:para>
-        </db:listitem>
-      </db:itemizedlist>
-    </db:section>
-  </db:section>
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Qt Labs Calendar QML Types</db:title>
+      <db:abstract>
+         <db:para>Provides QML types for calendars (Qt Labs Calendar)</db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-05+02:00</db:pubdate>
+      <db:date>2018-10-05+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:link xlink:href="qtlabscalendar-index.html" xrefstyle="page" annotations="Qt Labs Calendar">Qt Labs Calendar</db:link> module provides QML types for creating calendars. These QML types work in conjunction with <db:link xlink:href="qtquick-index.html" xrefstyle="page" annotations="Qt Quick">Qt Quick</db:link> and <db:link xlink:href="qtquickcontrols2-index.html" xrefstyle="page" annotations="Qt Quick Controls 2">Qt Quick Controls 2</db:link>.</db:para>
+      <db:para>The QML types can be imported into your application using the following import statement in your .qml file:</db:para>
+      <db:programlisting language="other" role="badcode">import Qt.labs.calendar 1.0</db:programlisting>
+      <db:section xml:id="qml-types">
+         <db:title>QML Types</db:title>
+         <db:note>
+            <db:para>
+               <db:emphasis>Types in Qt.labs modules are not guaranteed to remain compatible in future versions.</db:emphasis>
+            </db:para>
+         </db:note>
+      </db:section>
+      <db:section xml:id="related-information">
+         <db:title>Related Information</db:title>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>
+                  <db:link xlink:href="qtquick-controls2-qmlmodule.html" xrefstyle="" annotations="Qt Quick Controls 2 QML Types">Qt Quick Controls 2 QML Types</db:link>
+               </db:para>
+            </db:listitem>
+         </db:itemizedlist>
+      </db:section>
+   </db:section>
 </db:article>
