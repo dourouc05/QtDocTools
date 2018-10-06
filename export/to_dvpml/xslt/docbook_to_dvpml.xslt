@@ -9,7 +9,7 @@
   <!-- TODO: <db:codelisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
   
   <xsl:output method="xml" indent="yes"
-    suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
+    suppress-indentation="inline link"/>
   <xsl:strip-space elements="*"/>
   <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>   
   
@@ -118,7 +118,19 @@
         </synopsis>
         
         <summary>
-          <xsl:apply-templates mode="content" select="./*"/>
+          <xsl:choose>
+            <xsl:when test="not(child::*[1][self::section])">
+              <!-- A document must have a section. -->
+              <section id="I" noNumber="1">
+                <title><xsl:value-of select="db:info/db:title"/></title>
+                
+                <xsl:apply-templates mode="content" select="./*"/>
+              </section>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="content" select="./*"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </summary>
       </document>
     </xsl:result-document>
@@ -180,7 +192,7 @@
   <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
   
   <xsl:template mode="content" match="db:para">
-    <xsl:if test="..[self::db:section]">
+    <xsl:if test="..[self::db:section] or ..[self::db:listitem]">
       <xsl:choose>
         <xsl:when test="db:informaltable | db:note | db:programlisting">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
@@ -289,9 +301,18 @@
   </xsl:template>
   
   <xsl:template mode="content_para" match="db:code">
-    <inline>
-      <xsl:apply-templates mode="content_para"/>
-    </inline>
+    <xsl:choose>
+      <!-- To annoy people, <link>s cannot appear within <inline>. -->
+      <!-- Handled within links, hence just let through here. -->
+      <xsl:when test="db:link">
+        <xsl:apply-templates mode="content_para"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <inline>
+          <xsl:apply-templates mode="content_para"/>
+        </inline>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content_para" match="db:superscript">
@@ -319,9 +340,25 @@
       </xsl:choose>
     </xsl:variable>
     
-    <link href="{$translatedLink}">
-      <xsl:apply-templates mode="content_para"/>
-    </link> 
+    <!-- Generate the link. -->
+    <xsl:variable name="generatedLink">
+      <link href="{$translatedLink}">
+        <xsl:apply-templates mode="content_para"/>
+      </link> 
+    </xsl:variable>
+    
+    <!-- Depending on the parent node, in order to fulfill the XSD's insane requirements,  -->
+    <!-- conditionnally wrap the link (implemented here and not in the other tags). -->
+    <xsl:choose>
+      <xsl:when test="parent::node()[self::db:code]">
+        <inline>
+          <xsl:copy-of select="$generatedLink"/>
+        </inline>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$generatedLink"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content_para" match="db:inlinemediaobject">

@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Markup Commands</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="04-qdoc-commands-textmarkup.html" xlink:title="next">Text Markup &gt;</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="20-qdoc-commands-namingthings.html" xlink:title="previous">&lt; Naming Things</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qdoc-index.html" xlink:title="contents">^ QDoc Manual ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-06+02:00</db:pubdate>
+      <db:date>2018-10-06+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:para>The markup commands indicate the generated documentation's visual appearance and logical structure.</db:para>
+   <db:itemizedlist>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#a-command" xrefstyle="page" annotations="a-command">\a</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#annotatedlist-command" xrefstyle="page" annotations="annotatedlist-command">\annotatedlist</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#b-command" xrefstyle="page" annotations="b-command">\b</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="06-qdoc-commands-includecodeinline.html#badcode-command" xrefstyle="page" annotations="badcode-command">\badcode</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#b-command" xrefstyle="page" annotations="b-command">\bold</db:link> (deprecated, use \b)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#brief-command" xrefstyle="page" annotations="brief-command">\brief</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#c-command" xrefstyle="page" annotations="c-command">\c</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="09-qdoc-commands-includingimages.html#caption-command" xrefstyle="page" annotations="caption-command">\caption</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="06-qdoc-commands-includecodeinline.html#code-command" xrefstyle="page" annotations="code-command">\code</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#codeline-command" xrefstyle="page" annotations="codeline-command">\codeline</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#div-command" xrefstyle="page" annotations="div-command">\div</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#dots-command" xrefstyle="page" annotations="dots-command">\dots</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#e-command" xrefstyle="page" annotations="e-command">\e</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#else-command" xrefstyle="page" annotations="else-command">\else</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#endif-command" xrefstyle="page" annotations="endif-command">\endif</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#footnote-command" xrefstyle="page" annotations="footnote-command">\footnote</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#generatelist-command" xrefstyle="page" annotations="generatelist-command">\generatelist</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="10-qdoc-commands-tablesandlists.html#header-command" xrefstyle="page" annotations="header-command">\header</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#e-command" xrefstyle="page" annotations="e-command">\i</db:link> (deprecated, use \e)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#if-command" xrefstyle="page" annotations="if-command">\if</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="09-qdoc-commands-includingimages.html#image-command" xrefstyle="page" annotations="image-command">\image</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#include-command" xrefstyle="page" annotations="include-command">\include</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#include-command" xrefstyle="page" annotations="include-command">\input</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="09-qdoc-commands-includingimages.html#inlineimage-command" xrefstyle="page" annotations="inlineimage-command">\inlineimage</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="08-qdoc-commands-creatinglinks.html#keyword-command" xrefstyle="page" annotations="keyword-command">\keyword</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#legalese-command" xrefstyle="page" annotations="legalese-command">\legalese</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="10-qdoc-commands-tablesandlists.html#li-command" xrefstyle="page" annotations="li-command">\li</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="10-qdoc-commands-tablesandlists.html#list-command" xrefstyle="page" annotations="list-command">\list</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#meta-command" xrefstyle="page" annotations="meta-command">\meta</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#noautolist-command" xrefstyle="page" annotations="noautolist-command">\noautolist</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="06-qdoc-commands-includecodeinline.html#newcode-command" xrefstyle="page" annotations="newcode-command">\newcode</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="10-qdoc-commands-tablesandlists.html#li-command" xrefstyle="page" annotations="li-command">\o</db:link> (deprecated, use \li)</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#note-command" xrefstyle="page" annotations="note-command">\note</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="06-qdoc-commands-includecodeinline.html#oldcode-command" xrefstyle="page" annotations="oldcode-command">\oldcode</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#omit-command" xrefstyle="page" annotations="omit-command">\omit</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printline-command" xrefstyle="page" annotations="printline-command">\printline</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printto-command" xrefstyle="page" annotations="printto-command">\printto</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#printuntil-command" xrefstyle="page" annotations="printuntil-command">\printuntil</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="06-qdoc-commands-includecodeinline.html#qml-command" xrefstyle="page" annotations="qml-command">\qml</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#quotation-command" xrefstyle="page" annotations="quotation-command">\quotation</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefile-command" xrefstyle="page" annotations="quotefile-command">\quotefile</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#raw-command" xrefstyle="page" annotations="raw-command">\raw</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="10-qdoc-commands-tablesandlists.html#row-command" xrefstyle="page" annotations="row-command">\row</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="08-qdoc-commands-creatinglinks.html#sa-command" xrefstyle="page" annotations="sa-command">\sa</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="05-qdoc-commands-documentstructure.html#sectionone-command" xrefstyle="page" annotations="sectionOne-command">\section1</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="05-qdoc-commands-documentstructure.html#sectiontwo-command" xrefstyle="page" annotations="sectionTwo-command">\section2</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="05-qdoc-commands-documentstructure.html#sectionthree-command" xrefstyle="page" annotations="sectionThree-command">\section3</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="05-qdoc-commands-documentstructure.html#sectionfour-command" xrefstyle="page" annotations="sectionFour-command">\section4</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipline-command" xrefstyle="page" annotations="skipline-command">\skipline</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipto-command" xrefstyle="page" annotations="skipto-command">\skipto</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#skipuntil-command" xrefstyle="page" annotations="skipuntil-command">\skipuntil</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#snippet-command" xrefstyle="page" annotations="snippet-command">\snippet</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#span-command" xrefstyle="page" annotations="span-command">\span</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#sub-command" xrefstyle="page" annotations="sub-command">\sub</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#sup-command" xrefstyle="page" annotations="sup-command">\sup</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="10-qdoc-commands-tablesandlists.html#table-command" xrefstyle="page" annotations="table-command">\table</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#tableofcontents-command" xrefstyle="page" annotations="tableofcontents-command">\tableofcontents</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="08-qdoc-commands-creatinglinks.html#target-command" xrefstyle="page" annotations="target-command">\target</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#tt-command" xrefstyle="page" annotations="tt-command">\tt</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#uicontrol-command" xrefstyle="page" annotations="uicontrol-command">\uicontrol</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#underline-command" xrefstyle="page" annotations="underline-command">\underline</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="12-0-qdoc-commands-miscellaneous.html#raw-command" xrefstyle="page" annotations="raw-command">\unicode</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="11-qdoc-commands-specialcontent.html#warning-command" xrefstyle="page" annotations="warning-command">\warning</db:link>
+         </db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>
+            <db:link xlink:href="04-qdoc-commands-textmarkup.html#backslash-command" xrefstyle="page" annotations="backslash-command">\\</db:link>
+         </db:para>
+      </db:listitem>
+   </db:itemizedlist>
+</db:article>

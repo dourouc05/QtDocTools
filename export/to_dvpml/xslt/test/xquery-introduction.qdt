@@ -14,10 +14,10 @@
             </db:simplelist>
          </db:para>
       </db:abstract>
-      <db:pubdate>2018-09-11+02:00</db:pubdate>
-      <db:date>2018-09-11+02:00</db:date>
+      <db:pubdate>2018-09-12+02:00</db:pubdate>
+      <db:date>2018-09-12+02:00</db:date>
       <db:productname>Qt</db:productname>
-      <db:productnumber>5.11</db:productnumber>
+      <db:productnumber>1.2</db:productnumber>
    </db:info>
    <db:para>
       <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> is a language for querying XML data or non-XML data that can be modeled as XML. <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> is specified by the W3C.</db:para>
@@ -452,7 +452,7 @@ doc('cookbook.xml')/descendant-or-self::element(recipe)/child::element(title)
             </db:td>
          </db:tr>
       </db:informaltable>
-      <db:para>The <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> language specification has a more detailed section on the shorthand form, which it calls the abbreviated syntax. More examples of path expressions written in the shorthand form are found there. There is also a section listing examples of path expressions written in the longhand form.</db:para>
+      <db:para xml:id="name-tests">The <db:link xlink:href="xmlprocessing.html" xrefstyle="page" annotations="XQuery">XQuery</db:link> language specification has a more detailed section on the shorthand form, which it calls the abbreviated syntax. More examples of path expressions written in the shorthand form are found there. There is also a section listing examples of path expressions written in the longhand form.</db:para>
    </db:section>
    <db:section xml:id="name-tests">
       <db:title>Name Tests</db:title>
