@@ -192,7 +192,7 @@
   <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
   
   <xsl:template mode="content" match="db:para">
-    <xsl:if test="..[self::db:section] or ..[self::db:listitem]">
+    <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote]">
       <xsl:choose>
         <xsl:when test="db:informaltable | db:note | db:programlisting">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->

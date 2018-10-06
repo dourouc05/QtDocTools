@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Including Code Inline</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html" xlink:title="next">Including External Code &gt;</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="05-qdoc-commands-documentstructure.html" xlink:title="previous">&lt; Document Structure</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qdoc-index.html" xlink:title="contents">^ QDoc Manual ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-06+02:00</db:pubdate>
+      <db:date>2018-10-06+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:para>The following commands are used to render source code without formatting. The source code begins on a new line, rendered in the code.</db:para>
+   <db:note xml:id="code-command">
+      <db:para> Although most of these commands are for rendering C++ code, the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#snippet-command" xrefstyle="page" annotations="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#codeline-command" xrefstyle="page" annotations="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</db:link> commands are preferred over the others. These commands allow equivalent code snippets for other Qt language bindings to be substituted for the C++ snippets in the documentation.</db:para>
+   </db:note>
+   <db:section xml:id="code">
+      <db:title>\code</db:title>
+      <db:para>The \code and \endcode commands enclose a snippet of source code.</db:para>
+      <db:note>
+         <db:para> The <db:link xlink:href="04-qdoc-commands-textmarkup.html#c-command" xrefstyle="page" annotations="c-command">\c</db:link> command can be used for short code fragments within a sentence. The \code command is for longer code snippets. It renders the code verbatim in a separate paragraph in a html &lt;pre&gt; element, and parses the enclosed snippet, creating links to any known types in the code.</db:para>
+      </db:note>
+      <db:para>For documenting command-line instructions, shell scripts, or any content that is not in a Qt language recognized by QDoc, use <db:link xlink:href="06-qdoc-commands-includecodeinline.html#badcode-command" xrefstyle="page" annotations="badcode-command">\badcode</db:link> instead.</db:para>
+      <db:para>When processing any of the \code, <db:link xlink:href="06-qdoc-commands-includecodeinline.html#newcode-command" xrefstyle="page" annotations="newcode-command">\newcode</db:link> or <db:link xlink:href="06-qdoc-commands-includecodeinline.html#oldcode-command" xrefstyle="page" annotations="oldcode-command">\oldcode</db:link> commands, QDoc removes all indentation that is common for the verbatim code blocks within a <db:code>/</db:code>
+         <db:code>*!</db:code> ... <db:code>*</db:code>
+         <db:code>/</db:code> comment before it adds the standard indentation.</db:para>
+      <db:note>
+         <db:para> This doesn't apply to externally quoted code using the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="quotefromfile-command">\quotefromfile</db:link> or <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefile-command" xrefstyle="page" annotations="quotefile-command">\quotefile</db:link> command.</db:para>
+      </db:note>
+      <db:programlisting language="other">/ *!
+    \code
+        #include &lt;QApplication&gt;
+        #include &lt;QPushButton&gt;
+
+        int main(int argc, char *argv[])
+        {
+            ...
+        }
+    \ endcode
+* /</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:programlisting language="other">#include &lt;QApplication&gt;
+#include &lt;QPushButton&gt;
+
+int main(int argc, char *argv[])
+{
+    ...
+}</db:programlisting>
+      <db:para>Other QDoc commands are disabled within \code... \endcode, and the special character '\' is accepted and rendered like the rest of the code.</db:para>
+      <db:para>To include code snippets from an external file, use the <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#snippet-command" xrefstyle="page" annotations="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</db:link> and <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#codeline-command" xrefstyle="page" annotations="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</db:link> commands.</db:para>
+      <db:para xml:id="badcode-command">See also <db:link xlink:href="04-qdoc-commands-textmarkup.html#c-command" xrefstyle="page" annotations="c-command">\c</db:link>, <db:link xlink:href="06-qdoc-commands-includecodeinline.html#badcode-command" xrefstyle="page" annotations="badcode-command">\badcode</db:link>, <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command" xrefstyle="page" annotations="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromfile</db:link>, <db:link xlink:href="06-qdoc-commands-includecodeinline.html#newcode-command" xrefstyle="page" annotations="newcode-command">\newcode</db:link>, and <db:link xlink:href="06-qdoc-commands-includecodeinline.html#oldcode-command" xrefstyle="page" annotations="oldcode-command">\oldcode</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="badcode">
+      <db:title>\badcode</db:title>
+      <db:para>Similar to <db:link xlink:href="06-qdoc-commands-includecodeinline.html#code-command" xrefstyle="page" annotations="code-command">\code</db:link>, \badcode and \endcode commands enclose content that is rendered verbatim in a separate paragraph, but no parsing or automatic link creation is performed. Instead, the content is treated as plain text.</db:para>
+      <db:para xml:id="newcode-command">Substitute \code with this command when documenting command-line instructions, shell scripts or any other content that is not in a Qt language, but should still be styled similarly to a \code paragraph.</db:para>
+   </db:section>
+   <db:section xml:id="newcode">
+      <db:title>\newcode</db:title>
+      <db:para>The \newcode, \oldcode, and \endcode commands enable you to show how to port a snippet of code to a new version of an API.</db:para>
+      <db:para>The \newcode command and its companion the \oldcode command are a convenience combination of the <db:link xlink:href="06-qdoc-commands-includecodeinline.html#code-command" xrefstyle="page" annotations="code-command">\code</db:link> commands: this combination provides a text relating the two code snippets to each other.</db:para>
+      <db:para>The \newcode command requires a preceding \oldcode statement.</db:para>
+      <db:para>Like the <db:link xlink:href="06-qdoc-commands-includecodeinline.html#code-command" xrefstyle="page" annotations="code-command">\code</db:link> command, the \newcode command renders its code on a new line in the documentation using a monospace font and the standard indentation.</db:para>
+      <db:programlisting language="other">/ *!
+    \oldcode
+        if (printer-&gt;setup(parent))
+            ...
+    \newcode
+        QPrintDialog dialog(printer, parent);
+            if (dialog.exec())
+                ...
+    \ endcode
+* /</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>For example, if you have code like</db:para>
+         <db:programlisting language="other" role="badcode">if (printer-&gt;setup(parent))
+    ...</db:programlisting>
+         <db:para>you can rewrite it as</db:para>
+         <db:programlisting language="other" role="newcode">QPrintDialog dialog(printer, parent);
+    if (dialog.exec())
+        ...</db:programlisting>
+      </db:blockquote>
+      <db:para xml:id="oldcode-command">Other QDoc commands are disabled within \oldcode ... \endcode, and the '\' character doesn't need to be escaped.</db:para>
+   </db:section>
+   <db:section xml:id="oldcode">
+      <db:title>\oldcode</db:title>
+      <db:para>The \oldcode command requires a corresponding \newcode statement; otherwise QDoc fails to parse the command and emits a warning.</db:para>
+      <db:para xml:id="qml-command">See also <db:link xlink:href="06-qdoc-commands-includecodeinline.html#newcode-command" xrefstyle="page" annotations="newcode-command">\newcode</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="qml">
+      <db:title>\qml</db:title>
+      <db:para>The \qml and \endqml commands enclose a snippet of QML source code.</db:para>
+      <db:programlisting language="other">/ *!
+    \qml
+        import QtQuick 2.0
+
+        Row {
+            Rectangle {
+                width: 100; height: 100
+                color: "blue"
+                transform: Translate { y: 20 }
+            }
+            Rectangle {
+                width: 100; height: 100
+                color: "red"
+                transform: Translate { y: -20 }
+            }
+        }
+    \endqml
+* /</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+   </db:section>
+</db:article>

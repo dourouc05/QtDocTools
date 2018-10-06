@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Creating Links</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="09-qdoc-commands-includingimages.html" xlink:title="next">Including Images &gt;</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="07-0-qdoc-commands-includingexternalcode.html" xlink:title="previous">&lt; Including External Code</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qdoc-index.html" xlink:title="contents">^ QDoc Manual ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-06+02:00</db:pubdate>
+      <db:date>2018-10-06+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:para xml:id="l-command">These commands are for creating hyperlinks to classes, functions, examples, and other targets.</db:para>
+   <db:section xml:id="l-link">
+      <db:title>\l (link)</db:title>
+      <db:para>The \l link command is used to create a hyperlink to many different kinds of targets. The command's general syntax is:</db:para>
+      <db:programlisting language="other">\l [ link criteria ] { link target } { link text }</db:programlisting>
+      <db:para>...where the <db:code>link criteria</db:code> in square brackets are optional but may be required when the <db:code>link target</db:code> is ambiguous. See <db:link xlink:href="08-qdoc-commands-creatinglinks.html#fixing-ambiguous-links" xrefstyle="page" annotations="Fixing Ambiguous Links">Fixing Ambiguous Links</db:link> below.</db:para>
+      <db:para>Here is an example using the \l command to link to an external page:</db:para>
+      <db:programlisting language="other">/ *!
+   Read the \l {http://doc.qt.io/qt-5/}
+   {Qt 5.0 Documentation} carefully.
+* /</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>Read the Qt 5.0 Documentation carefully.</db:para>
+      </db:blockquote>
+      <db:para>If the link target is equivalent to the link text, the second argument can be omitted.</db:para>
+      <db:para>For example, if you have documentation like:</db:para>
+      <db:programlisting language="other">/ *!
+   \target assertions
+
+   Assertions make some statement about the text at the
+   point where they occur in the regexp, but they do not
+   match any characters.
+
+   ...
+
+   Regexps are built up from expressions, quantifiers, and
+   \l {assertions} {assertions}.
+* /</db:programlisting>
+      <db:para>You can simplify this as follows:</db:para>
+      <db:programlisting language="other">/ *!
+  \target assertions
+
+  Assertions make some statement about the text at the
+  point where they occur in the regexp, but they do not
+  match any characters.
+
+  ...
+
+  Regexps are built up from expressions, quantifiers, and
+  \l assertions.
+* /</db:programlisting>
+      <db:para>For the one-parameter version, the braces can often be omitted. The \l command supports several ways of linking:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l QWidget</db:code> - The name of a class documented with the <db:link xlink:href="13-qdoc-commands-topics.html#class-command" xrefstyle="page" annotations="class-command">\class</db:link> command.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l QWidget::sizeHint()</db:code> - The signature of a function without parameters. If a matching function without parameters can't be found, the link is satisfied with the first matching function found.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l QWidget::removeAction(QAction* action)</db:code> - The signature of a function with parameters. If an exact match is not found, the link is not satisfied and qdoc reports a <db:emphasis>Can't link to...</db:emphasis> error.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l &lt;QtGlobal&gt;</db:code> - The subject of a <db:link xlink:href="13-qdoc-commands-topics.html#headerfile-command" xrefstyle="page" annotations="headerfile-command">\headerfile</db:link> command.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l widgets/wiggly</db:code> - The relative path used in an <db:link xlink:href="13-qdoc-commands-topics.html#example-command" xrefstyle="page" annotations="example-command">\example</db:link> command.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l {QWidget Class Reference}</db:code> - The title used in a <db:link xlink:href="20-qdoc-commands-namingthings.html#title-command" xrefstyle="page" annotations="title-command">\title</db:link> command.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l {Introduction to QDoc}</db:code>- The text from one of the <db:link xlink:href="05-qdoc-commands-documentstructure.html#section-commands" xrefstyle="page" annotations="section-commands">Section commands</db:link>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l fontmatching</db:code> - The argument of a <db:link xlink:href="08-qdoc-commands-creatinglinks.html#target-command" xrefstyle="page" annotations="target-command">\target</db:link> command.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l {Shared Classes}</db:code> - A keyword named in a <db:link xlink:href="08-qdoc-commands-creatinglinks.html#keyword-command" xrefstyle="page" annotations="keyword-command">\keyword</db:link> command.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>\l http://qt-project.org/</db:code> - A URL.</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>QDoc also tries to make a link out of any word that doesn't resemble a normal English word, for example, Qt class names or functions, like <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code> or <db:code><db:link xlink:href="qwidget.html#sizeHint-prop" xrefstyle="function" annotations="QWidget::sizeHint()">QWidget::sizeHint()</db:link></db:code>. In these cases, the \l command can actually be omitted, but by using the command, you ensure that QDoc will emit a warning if it cannot find the link target. In addition, if you only want the function name to appear in the link, you can use the following syntax:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l {QWidget::} {sizeHint()}</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>
+            <db:code><db:link xlink:href="qwidget.html#sizeHint-prop" xrefstyle="function" annotations="QWidget::sizeHint()">sizeHint()</db:link></db:code>
+         </db:para>
+      </db:blockquote>
+   </db:section>
+   <db:section xml:id="fixing-ambiguous-links">
+      <db:title>Fixing Ambiguous Links</db:title>
+      <db:para>Because of the modularization of Qt beginning with Qt 5.0, The possibility that qdoc will have to deal with ambiguous links has increased. An ambiguous link is one that has a matching target in more than one Qt module, e.g. the same section title can appear in more than one Qt module, or the name of a C++ class in one module can also be the name of a QML type in another module. A real example in Qt5 is the name Qt itself. Qt is the name of both a C++ namespace in <db:link xlink:href="qtcore-module.html" xrefstyle="module" annotations="QtCore">QtCore</db:link> and a QML type in <db:link xlink:href="qtqml-module.html" xrefstyle="module" annotations="QtQml">QtQml</db:link>.</db:para>
+      <db:para>Suppose we want to link to the <db:link xlink:href="qt.html" xrefstyle="namespace" annotations="Qt">Qt C++ namespace</db:link>. At the time qdoc generated this HTML page, that link was correct. Does it still go to the C++ namespace? Qdoc generated that link from this link command:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l {Qt} {Qt C++ namespace}</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>Now suppose we want to link to the <db:link xlink:href="qml-qtqml-qt.html" xrefstyle="" annotations="Qt">Qt QML type</db:link>. At the time qdoc generated this HTML page, that link was also correct, but we had to use this link command:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l [QML] {Qt} {Qt QML type}</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The <db:emphasis>QML</db:emphasis> in <db:emphasis>square brackets</db:emphasis> tells qdoc to accept a matching target only if the traget is on a QML page. Qdoc actually finds the C++ namespace target first, but since that target is on a C++ page, qdoc ignores it and keeps looking until it finds the same target on a QML page.</db:para>
+      <db:para>Without the guidance in the <db:emphasis>\l command</db:emphasis> in the optional <db:emphasis>square bracket</db:emphasis> argument, qdoc links to the first matching target it finds. qdoc can't warn that the link was ambiguous in such cases because it doesn't know that another matching target exists.</db:para>
+   </db:section>
+   <db:section xml:id="what-arguments-can-appear-in-square-brackets">
+      <db:title>What arguments can appear in square brackets?</db:title>
+      <db:para>A link command with square bracket argument has the following syntax:</db:para>
+      <db:para>
+         <db:code>\l [QML|CPP|DOC|QtModuleName] {link target} {link text}</db:code>
+      </db:para>
+      <db:para>The <db:emphasis>square bracket</db:emphasis> argument is only allowed in the <db:code>\l (link)</db:code> command. The example above shows how <db:code>QML</db:code> is used as the <db:emphasis>square brackets</db:emphasis> argument to force qdoc to match a QML target. Most often, this will be a QML type, but it can also be a QML member function of property.</db:para>
+      <db:para>In the example, qdoc didn't need a <db:emphasis>square bracket</db:emphasis> argument to find the Qt C++ namespace page, because that one was the first matching target qdoc found anyway. However, to force qdoc to find a C++ target when a matching QML target gets in the way, <db:code>CPP</db:code> can be used as the <db:emphasis>square bracket</db:emphasis> argument. For example:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l [CPP] {Qt} {Qt C++ namespace}</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>...will force qdoc to ignore the Qt QML type and continue searching until it matches the Qt C++ namespace.</db:para>
+      <db:para>If the link target is neither a C++ nor a QML entity, <db:code>DOC</db:code> can be used as the <db:emphasis>square bracket</db:emphasis> argument to prevent qdoc from matching either of those. At this writing, there were no cases of ambiguous links where using <db:code>DOC</db:code> was required.</db:para>
+      <db:para>Often, the documentor knows which Qt module the link target is in. When the module name is known, use the module name as the <db:emphasis>square bracket</db:emphasis> argument. In the example above, if we know that the QML type named Qt is located in the <db:link xlink:href="qtqml-module.html" xrefstyle="module" annotations="QtQml">QtQml</db:link> module, we can write the link command like this:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l [QtQml] {Qt} {Qt QML type}</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>When a module name is used as the <db:emphasis>square bracket</db:emphasis> argument, qdoc will search for link the target in that module only. This makes searching for link targets more efficient.</db:para>
+      <db:para>Finally, the module name and entity type arguments can be combined, separated by a blank, so something like this is also allowed:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l [CPP QtQml] {Window} {C++ class Window}</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>As of this writing, there were no cases where combining the two was required.</db:para>
+      <db:para xml:id="sa-command">See also <db:link xlink:href="08-qdoc-commands-creatinglinks.html#sa-command" xrefstyle="page" annotations="sa-command">\sa</db:link>, <db:link xlink:href="08-qdoc-commands-creatinglinks.html#target-command" xrefstyle="page" annotations="target-command">\target</db:link>, and <db:link xlink:href="08-qdoc-commands-creatinglinks.html#keyword-command" xrefstyle="page" annotations="keyword-command">\keyword</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="sa-see-also">
+      <db:title>\sa (see also)</db:title>
+      <db:para>The \sa command defines a list of links that will be rendered in a separate "See also" section at the bottom of the documentation unit.</db:para>
+      <db:para>The command takes a comma-separated list of links as its argument. If the line ends with a comma, you can continue the list on the next line. The general syntax is:</db:para>
+      <db:programlisting language="other">\sa {the first link}, {the second link},
+    {the third link}, ...</db:programlisting>
+      <db:para>QDoc will automatically try to generate "See also" links interconnecting a property's various functions. For example, a setVisible() function will automatically get a link to visible() and vice versa.</db:para>
+      <db:para>In general, QDoc will generate "See also" links that interconnect the functions that access the same property. It recognizes four different syntax versions:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>property()</db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>setProperty()</db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>isProperty()</db:code>
+            </db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code>hasProperty()</db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>The \sa command supports the same kind of links as the <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l</db:link> command.</db:para>
+      <db:programlisting language="other">/ *!
+   Appends the actions \a actions to this widget's
+   list of actions.
+
+   \sa removeAction(), QMenu, addAction()
+* /
+void QWidget::addActions(QList&lt;QAction *&gt; actions)
+{
+...
+}</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>
+            <db:emphasis role="bold">void <db:code><db:link xlink:href="qwidget.html#addActions" xrefstyle="function" annotations="QWidget::addActions">QWidget::addActions</db:link></db:code> ( <db:code><db:link xlink:href="qlist.html" xrefstyle="class" annotations="QList">QList</db:link></db:code>&lt;<db:code><db:link xlink:href="qaction.html" xrefstyle="class" annotations="QAction">QAction</db:link></db:code>*&gt; <db:emphasis>actions</db:emphasis> )</db:emphasis>
+         </db:para>
+         <db:para>Appends the actions <db:emphasis>actions</db:emphasis> to this widget's list of actions.</db:para>
+         <db:para>See also <db:code><db:link xlink:href="qwidget.html#removeAction" xrefstyle="function" annotations="QWidget::removeAction()">removeAction()</db:link></db:code>, <db:code><db:link xlink:href="qmenu.html" xrefstyle="class" annotations="QMenu">QMenu</db:link></db:code>, and <db:code><db:link xlink:href="qwidget.html#addAction" xrefstyle="function" annotations="QWidget::addAction()">addAction()</db:link></db:code>.</db:para>
+      </db:blockquote>
+      <db:para xml:id="target-command">See also <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l</db:link>, <db:link xlink:href="08-qdoc-commands-creatinglinks.html#target-command" xrefstyle="page" annotations="target-command">\target</db:link> and <db:link xlink:href="08-qdoc-commands-creatinglinks.html#keyword-command" xrefstyle="page" annotations="keyword-command">\keyword</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="target">
+      <db:title>\target</db:title>
+      <db:para>The \target command names a place in the documentation that you can link to using the <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l (link)</db:link> and <db:link xlink:href="08-qdoc-commands-creatinglinks.html#sa-command" xrefstyle="page" annotations="sa-command">\sa (see also)</db:link> commands.</db:para>
+      <db:para>The text up to the line break becomes the target name. Be sure to follow the target name with a line break. Curly brackets are not required around the target name, but they may be required when the target name is used in a link command. See below.</db:para>
+      <db:programlisting language="other">/ *!
+    \target capturing parentheses
+    \section1 Capturing Text
+
+    Parentheses allow us to group elements together so that
+    we can quantify and capture them.
+
+    ...
+* /</db:programlisting>
+      <db:para>The target name <db:emphasis>capturing parentheses</db:emphasis> can be linked from within the same document containing the target in the following way:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:code>\l {capturing parentheses}</db:code> (from within the same QDoc comment)</db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:note>
+         <db:para> The brackets in the link example are required because the target name contains spaces.</db:para>
+      </db:note>
+      <db:para xml:id="keyword-command">See also <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l</db:link>, <db:link xlink:href="08-qdoc-commands-creatinglinks.html#sa-command" xrefstyle="page" annotations="sa-command">\sa</db:link> and <db:link xlink:href="08-qdoc-commands-creatinglinks.html#keyword-command" xrefstyle="page" annotations="keyword-command">\keyword</db:link>.</db:para>
+   </db:section>
+   <db:section xml:id="keyword">
+      <db:title>\keyword</db:title>
+      <db:para>The \keyword command names a place in the documentation that you can link to using the <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l (link)</db:link> and <db:link xlink:href="08-qdoc-commands-creatinglinks.html#sa-command" xrefstyle="page" annotations="sa-command">\sa (see also)</db:link> commands.</db:para>
+      <db:para>The \keyword command is like the <db:link xlink:href="08-qdoc-commands-creatinglinks.html#target-command" xrefstyle="page" annotations="target-command">\target</db:link> command, except when linking to keyword the link goes to the top of the QDoc comment where the \keyword appears in. If you want to create a link target to a <db:code>section</db:code> unit within a \page, use \target instead. A keyword can be linked from anywhere using a simple syntax.</db:para>
+      <db:para>Keywords must be unique over all the documents processed during the QDoc run. The command uses the rest of the line as its argument. Be sure to follow the keyword with a line break.</db:para>
+      <db:programlisting language="other">/ *!
+    \class QRegExp
+    \reentrant
+    \brief The QRegExp class provides pattern
+           matching using regular expressions.
+    \ingroup tools
+    \ingroup misc
+    \ingroup shared
+
+    \keyword regular expression
+
+    Regular expressions, or "regexps", provide a way to
+    find patterns within text.
+
+    ...
+* /</db:programlisting>
+      <db:para>The location marked with the keyword can be linked to with:</db:para>
+      <db:programlisting language="other">/ *!
+    When a string is surrounded by slashes, it is
+    interpreted as a \l {QRegExp}{regular expression}.
+* /</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:para>When a string is surrounded by slashes, it is interpreted as a <db:code><db:link xlink:href="qregularexpression.html" xrefstyle="class" annotations="regular expression">regular expression</db:link></db:code>.</db:para>
+      </db:blockquote>
+      <db:para>If the keyword text contains spaces, the brackets are required.</db:para>
+      <db:para>See also <db:link xlink:href="08-qdoc-commands-creatinglinks.html#l-command" xrefstyle="page" annotations="l-command">\l (link)</db:link>, <db:link xlink:href="08-qdoc-commands-creatinglinks.html#sa-command" xrefstyle="page" annotations="sa-command">\sa (see also)</db:link> and <db:link xlink:href="08-qdoc-commands-creatinglinks.html#target-command" xrefstyle="page" annotations="target-command">\target</db:link>.</db:para>
+   </db:section>
+</db:article>
