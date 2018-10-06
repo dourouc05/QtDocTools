@@ -34,9 +34,9 @@ public class Main {
         Main m = new Main();
 
         // Ensure the output folder exists.
-//        if (! m.outputFolder.toFile().isDirectory()) {
-//            Files.createDirectories(m.outputFolder);
-//        }
+        if (! m.outputFolder.toFile().isDirectory()) {
+            Files.createDirectories(m.outputFolder);
+        }
 
         // Explore the source directory for the qdocconf files.
         List<Pair<String, Path>> modules = m.findModules();
@@ -64,19 +64,19 @@ public class Main {
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
         for (Path file : webxml) {
-            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
-
-            // Print the name of the file to process to ease debugging.
-            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
-            System.out.flush();
-
-            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
-            try {
-                m.validateDocBook(destination.toFile());
-            } catch (SAXException e) {
-                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
-                e.printStackTrace();
-            }
+//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+//
+//            // Print the name of the file to process to ease debugging.
+//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+//            System.out.flush();
+//
+//            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
+//            try {
+//                m.validateDocBook(destination.toFile());
+//            } catch (SAXException e) {
+//                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
+//                e.printStackTrace();
+//            }
             ++i;
         }
 
@@ -90,14 +90,20 @@ public class Main {
         i = 0;
         iFormat = "%0" + Integer.toString(qdt.size()).length() + "d";
         for (Path file : qdt) {
-//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
-//
-//            // Print the name of the file to process to ease debugging.
-//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
-//            System.out.flush();
-//
-//            m.runXSLTDocBookToDvpML(file.toFile(), destination);
-//            ++i;
+            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
+
+            // Print the name of the file to process to ease debugging.
+            System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
+            System.out.flush();
+
+            m.runXSLTDocBookToDvpML(file.toFile(), destination);
+            try {
+                m.validateDvpML(destination.toFile());
+            } catch (SAXException e) {
+                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
+                e.printStackTrace();
+            }
+            ++i;
         }
     }
 
@@ -109,6 +115,7 @@ public class Main {
     private final String xsltWebXMLToDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
     private final String xsltDocBookToDvpMLPath; // Path to the XSLT sheet DocBook to DvpML.
     private final String docBookRNGPath;
+    private final String dvpMLXSDPath;
 
     private List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
 //    private Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
@@ -131,6 +138,7 @@ public class Main {
         xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
         xsltDocBookToDvpMLPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\docbook_to_dvpml.xslt";
         docBookRNGPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\schema\\docbook52qdt\\custom.rnc";
+        dvpMLXSDPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\article.xsd";
 
         sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
         outputFolder = Paths.get("C:\\Qt\\Doc");
@@ -463,8 +471,11 @@ public class Main {
         );
         SchemaFactory factory = CompactSyntaxSchemaFactory.newInstance(XMLConstants.RELAXNG_NS_URI);
         Schema schema = factory.newSchema(new StreamSource(new File(docBookRNGPath)));
-
         Validator validator = schema.newValidator();
+        return subValidate(file, validator);
+    }
+
+    private boolean subValidate(File file, Validator validator) throws SAXException, IOException {
         try {
             validator.validate(new StreamSource(file)); // SAXException when validation error.
             return true;
@@ -494,5 +505,13 @@ public class Main {
         if (errors.length() > 0) {
             System.out.println(errors);
         }
+    }
+
+    private boolean validateDvpML(File file) throws SAXException, IOException {
+        SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+        Schema schema = factory.newSchema(new StreamSource(new File(dvpMLXSDPath)));
+
+        Validator validator = schema.newValidator();
+        return subValidate(file, validator);
     }
 }
