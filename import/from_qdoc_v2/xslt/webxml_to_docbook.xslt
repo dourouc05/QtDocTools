@@ -42,10 +42,21 @@
       <db:info>
         <db:title>
           <xsl:choose>
-            <xsl:when test="$mainTag/@fulltitle"><xsl:value-of select="$mainTag/@fulltitle"/></xsl:when>
-            <xsl:when test="$mainTag/@title"><xsl:value-of select="$mainTag/@title"/></xsl:when>
-            <xsl:when test="$mainTag/@name"><xsl:value-of select="$mainTag/@name"/></xsl:when>
-            <xsl:otherwise><xsl:message>WARNING: No title found.</xsl:message></xsl:otherwise>
+            <xsl:when test="$mainTag/@fulltitle and not($mainTag/@fulltitle = '')">
+              <xsl:value-of select="$mainTag/@fulltitle"/>
+            </xsl:when>
+            <xsl:when test="$mainTag/@title and not($mainTag/@title = '')">
+              <xsl:value-of select="$mainTag/@title"/>
+            </xsl:when>
+            <xsl:when test="$mainTag/@name and not($mainTag/@title = '') and not(contains($mainTag/@title, '.html'))">
+              <xsl:value-of select="$mainTag/@name"/>
+            </xsl:when>
+            <xsl:when test="$mainTag/contents/@title and not($mainTag/contents/@title = '')">
+              <xsl:value-of select="$mainTag/contents/@title"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>WARNING: No title found.</xsl:message>
+            </xsl:otherwise>
           </xsl:choose>
         </db:title>
         

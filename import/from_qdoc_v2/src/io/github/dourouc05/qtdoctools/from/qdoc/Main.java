@@ -49,14 +49,14 @@ public class Main {
         }
 
         // Generate the main qdocconf file.
-//        Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
-//        m.makeMainQdocconf(modules, mainQdocconfPath);
-//        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+        Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
+        m.makeMainQdocconf(modules, mainQdocconfPath);
+        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
 
         // Run qdoc.
-//        System.out.println("++> Running qdoc.");
-//        m.runQdoc(mainQdocconfPath);
-//        System.out.println("++> Qdoc done.");
+        System.out.println("++> Running qdoc.");
+        m.runQdoc(mainQdocconfPath);
+        System.out.println("++> Qdoc done.");
 
         // Gather all WebXML files and transform them into DocBook.
         List<Path> webxml = m.findWebXML();
@@ -64,19 +64,19 @@ public class Main {
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
         for (Path file : webxml) {
-//            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
-//
-//            // Print the name of the file to process to ease debugging.
-//            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
-//            System.out.flush();
-//
-//            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
-//            try {
-//                m.validateDocBook(destination.toFile());
-//            } catch (SAXException e) {
-//                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
-//                e.printStackTrace();
-//            }
+            Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+
+            // Print the name of the file to process to ease debugging.
+            System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+            System.out.flush();
+
+            m.runXSLTWebXMLToDocBook(file.toFile(), destination);
+            try {
+                m.validateDocBook(destination.toFile());
+            } catch (SAXException e) {
+                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
+                e.printStackTrace();
+            }
             ++i;
         }
 
@@ -133,15 +133,17 @@ public class Main {
     private XsltExecutable saxonExecutableDocBookToDvpML;
 
     private Main() {
-        qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
+        qdocPath = "C:\\Qt\\5.12.0\\msvc2017_64\\bin\\qdoc.exe";
+//        qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
         qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
         xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
         xsltDocBookToDvpMLPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\docbook_to_dvpml.xslt";
         docBookRNGPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\schema\\docbook52qdt\\custom.rnc";
         dvpMLXSDPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\article.xsd";
 
-        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
-        outputFolder = Paths.get("C:\\Qt\\Doc");
+        sourceFolder = Paths.get("C:\\Qt\\5.12.0\\Src");
+//        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
+        outputFolder = Paths.get("C:\\Qt\\Doc512");
 
         generateFileMappings();
     }
@@ -353,6 +355,7 @@ public class Main {
         }
 
         // Rewrite a more suitable qdocconf file.
+        qdocconf += "\n\n";
         qdocconf += "outputdir                 = " + outputFolder.toString() + "\n";
         qdocconf += "outputformats             = WebXML\n";
         qdocconf += "WebXML.quotinginformation = true\n";

@@ -218,9 +218,13 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:blockquote">
-    <citation>
-      <xsl:apply-templates mode="content"/>
-    </citation>
+    <tableau width="95%" border="3">
+      <ligne>
+        <colonne useText="0">
+          <xsl:apply-templates mode="content"/>
+        </colonne>
+      </ligne>
+    </tableau>
   </xsl:template>
   
   <xsl:template mode="content" match="db:programlisting">
@@ -288,14 +292,23 @@
   <!-- Within a paragraph. -->
   <xsl:template mode="content_para" match="db:emphasis">
     <xsl:choose>
-      <xsl:when test="@role='bold'">
-        <b><xsl:apply-templates mode="content_para"/></b>
-      </xsl:when>
-      <xsl:when test="@role='underline'">
-        <u><xsl:apply-templates mode="content_para"/></u>
+      <xsl:when test="not(parent::node()[self::db:code])">
+        <!-- Nesting tags this way is not allowed (just text within <inline>).  -->
+        <xsl:choose>
+          <xsl:when test="@role='bold'">
+            <b><xsl:apply-templates mode="content_para"/></b>
+          </xsl:when>
+          <xsl:when test="@role='underline'">
+            <u><xsl:apply-templates mode="content_para"/></u>
+          </xsl:when>
+          <xsl:otherwise>
+            <i><xsl:apply-templates mode="content_para"/></i>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:otherwise>
-        <i><xsl:apply-templates mode="content_para"/></i>
+        <!-- If nesting, just copy the text. -->
+        <xsl:apply-templates mode="content_para"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -351,9 +364,10 @@
     <!-- conditionnally wrap the link (implemented here and not in the other tags). -->
     <xsl:choose>
       <xsl:when test="parent::node()[self::db:code]">
-        <inline>
+        <!-- No, this piece of "software" won't allow <inline><link>, that would be useful. -->
+        <i>
           <xsl:copy-of select="$generatedLink"/>
-        </inline>
+        </i>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="$generatedLink"/>
