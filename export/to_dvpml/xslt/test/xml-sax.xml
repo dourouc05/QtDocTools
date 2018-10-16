@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+   <entete>
+      <rubrique>65</rubrique>
+      <meta>
+         <description/>
+         <keywords>documentation, qt, français</keywords>
+      </meta>
+      <titre>
+         <page>The SAX interface</page>
+         <article>The SAX interface</article>
+      </titre>
+      <date>2018-10-06</date>
+      <miseajour>2018-10-06</miseajour>
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      <serveur>Qt</serveur>
+      <chemin>/doc/qt/5.11/xml-sax</chemin>
+      <urlhttp>http://qt.developpez.com/doc/qt/5.11/xml-sax</urlhttp>
+   </entete>
+   <voiraussi>
+      <lien>
+         <texte>Working with the DOM Tree &gt;</texte>
+         <url>http://qt.developpez.com/doc/qt/5.11/xml-dom-tml</url>
+      </lien>
+      <lien>
+         <texte>&lt; XML Streaming</texte>
+         <url>http://qt.developpez.com/doc/qt/5.11/xml-streaming</url>
+      </lien>
+      <lien>
+         <texte>^ XML Processing ^</texte>
+         <url>http://qt.developpez.com/doc/qt/5.11/xml-processing</url>
+      </lien>
+   </voiraussi>
+   <authorDescriptions>
+      <authorDescription name="Dummy" role="auteur">
+         <fullname>Dummy</fullname>
+         <url>https://www.developpez.net/forums/u1/dummy/</url>
+      </authorDescription>
+   </authorDescriptions>
+   <synopsis>
+      <paragraph sautDePagePdf="0" type="important">SAX is an event-based standard interface for XML parsers. The Qt interface follows the design of the SAX2 Java implementation. Its naming scheme was adapted to fit the Qt naming conventions. Details on SAX2 can be found at http://www.saxproject.org.</paragraph>
+      <paragraph sautDePagePdf="0" type="important">Support for SAX2 filters and the reader factory are under development. The Qt implementation does not include the SAX1 compatibility classes present in the Java interface.</paragraph>
+   </synopsis>
+   <summary>
+      <section id="I" noNumber="1" sautDePagePdf="0">
+         <title>The SAX interface</title>
+         <section id="1" sautDePagePdf="0" noNumber="0">
+            <title>Introduction to SAX2</title>
+            <paragraph sautDePagePdf="0" type="important">The SAX2 interface is an event-driven mechanism to provide the user with document information. An "event" in this context means something reported by the parser, for example, it has encountered a start tag, or an end tag, etc.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">To make it less abstract consider the following example:</paragraph>
+            <code langage="other">
+&lt;quote&gt;A quotation.&lt;/quote&gt;
+</code>
+            <paragraph sautDePagePdf="0" type="important">Whilst reading (a SAX2 parser is usually referred to as "reader") the above document three events would be triggered:</paragraph>
+            <liste type="1" sautDePagePdf="0">
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important">A start tag occurs (<inline>&lt;quote&gt;</inline>).</paragraph>
+               </element>
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important">Character data (i.e. text) is found, "A quotation.".</paragraph>
+               </element>
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important">An end tag is parsed (<inline>&lt;/quote&gt;</inline>).</paragraph>
+               </element>
+            </liste>
+            <paragraph sautDePagePdf="0" type="important">Each time such an event occurs the parser reports it; you can set up event handlers to respond to these events.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">Whilst this is a fast and simple approach to read XML documents, manipulation is difficult because data is not stored, simply handled and discarded serially. The <link href="xml-dom-tml.html">DOM interface</link> reads in and stores the whole document in a tree structure; this takes more memory, but makes it easier to manipulate the document's structure.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">The Qt XML module provides an abstract class, <i><link href="qxmlreader.html">QXmlReader</link></i>, that defines the interface for potential SAX2 readers. Qt includes a reader implementation, <i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i>, that is easy to adapt through subclassing.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">The reader reports parsing events through special handler classes:</paragraph>
+            <tableau width="80%" border="1" sautDePagePdf="0">
+               <entete>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Handler class</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Description</paragraph>
+                  </colonne>
+               </entete>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlcontenthandler.html">QXmlContentHandler</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Reports events related to the content of a document (e.g. the start tag or characters).</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmldtdhandler.html">QXmlDTDHandler</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Reports events related to the DTD (e.g. notation declarations).</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlerrorhandler.html">QXmlErrorHandler</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Reports errors or warnings that occurred during parsing.</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlentityresolver.html">QXmlEntityResolver</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Reports external entities during parsing and allows users to resolve external entities themselves instead of leaving it to the reader.</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmldeclhandler.html">QXmlDeclHandler</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Reports further DTD related events (e.g. attribute declarations).</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmllexicalhandler.html">QXmlLexicalHandler</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Reports events related to the lexical structure of the document (the beginning of the DTD, comments etc.).</paragraph>
+                  </colonne>
+               </ligne>
+            </tableau>
+            <paragraph sautDePagePdf="0" type="important">These classes are abstract classes describing the interface. The <i><link href="qxmldefaulthandler.html">QXmlDefaultHandler</link></i> class provides a "do nothing" default implementation for all of them. Therefore users only need to overload the <i><link href="qxmldefaulthandler.html">QXmlDefaultHandler</link></i> functions they are interested in.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">To read input XML data a special class <i><link href="qxmlinputsource.html">QXmlInputSource</link></i> is used.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">Apart from those already mentioned, the following SAX2 support classes provide additional useful functionality:</paragraph>
+            <tableau width="80%" border="1" sautDePagePdf="0">
+               <entete>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Class</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Description</paragraph>
+                  </colonne>
+               </entete>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlattributes.html">QXmlAttributes</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Used to pass attributes in a start element event.</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmllocator.html">QXmlLocator</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Used to obtain the actual parsing position of an event.</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlnamespacesupport.html">QXmlNamespaceSupport</link></i></paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Used to implement namespace support for a reader. Note that namespaces do not change the parsing behavior. They are only reported through the handler.</paragraph>
+                  </colonne>
+               </ligne>
+            </tableau>
+            <paragraph sautDePagePdf="0" type="important">The <link href="qtxml-saxbookmarks-example.html">SAX Bookmarks example</link> illustrates how to subclass <i><link href="qxmldefaulthandler.html">QXmlDefaultHandler</link></i> to read an XML bookmark file (XBEL) and how to generate XML by hand.</paragraph>
+         </section>
+         <section id="2" sautDePagePdf="0" noNumber="0">
+            <title>SAX2 Features</title>
+            <paragraph sautDePagePdf="0" type="important">The behavior of an XML reader depends on its support for certain optional features. For example, a reader may have the feature "report attributes used for namespace declarations and prefixes along with the local name of a tag". Like every other feature this has a unique name represented by a URI: it is called <i>http://xml.org/sax/features/namespace-prefixes</i>.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">The Qt SAX2 implementation can report whether the reader has particular functionality using the <i><link href="qxmlreader.html#hasFeature">QXmlReader::hasFeature()</link></i> function. Available features can be tested with <i><link href="qxmlreader.html#feature">QXmlReader::feature()</link></i>, and switched on or off using <i><link href="qxmlreader.html#setFeature">QXmlReader::setFeature()</link></i>.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">Consider the example</paragraph>
+            <code langage="other">
+&lt;document xmlns:book = 'http://example.com/fnord/book/'
+          xmlns      = 'http://example.com/fnord/' &gt;
+</code>
+            <paragraph sautDePagePdf="0" type="important">A reader that does not support the <i>http://xml.org/sax/features/namespace-prefixes</i> feature would report the element name <i>document</i> but not its attributes <i>xmlns:book</i> and <i>xmlns</i> with their values. A reader with the feature <i>http://xml.org/sax/features/namespace-prefixes</i> reports the namespace attributes if the <i><link href="qxmlreader.html#feature">feature</link></i> is switched on.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">Other features include <i>http://xml.org/sax/features/namespace</i> (namespace processing, implies <i>http://xml.org/sax/features/namespace-prefixes</i>) and <i>http://xml.org/sax/features/validation</i> (the ability to report validation errors).</paragraph>
+            <paragraph sautDePagePdf="0" type="important">Whilst SAX2 leaves it to the user to define and implement whatever features are required, support for <i>http://xml.org/sax/features/namespace</i> (and thus <i>http://xml.org/sax/features/namespace-prefixes</i>) is mandantory. The <i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> implementation of <i><link href="qxmlreader.html">QXmlReader</link></i>, supports them, and can do namespace processing.</paragraph>
+            <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> is not validating, so it does not support <i>http://xml.org/sax/features/validation</i>.</paragraph>
+         </section>
+         <section id="3" sautDePagePdf="0" noNumber="0">
+            <title>Namespace Support via Features</title>
+            <paragraph sautDePagePdf="0" type="important">As we have seen in the previous section, we can configure the behavior of the reader when it comes to namespace processing. This is done by setting and unsetting the <i>http://xml.org/sax/features/namespaces</i> and <i>http://xml.org/sax/features/namespace-prefixes</i> features.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">They influence the reporting behavior in the following way:</paragraph>
+            <liste type="1" sautDePagePdf="0">
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important">Namespace prefixes and local parts of elements and attributes can be reported.</paragraph>
+               </element>
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important">The qualified names of elements and attributes are reported.</paragraph>
+               </element>
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlcontenthandler.html#startPrefixMapping">QXmlContentHandler::startPrefixMapping()</link></i> and <i><link href="qxmlcontenthandler.html#endPrefixMapping">QXmlContentHandler::endPrefixMapping()</link></i> are called by the reader.</paragraph>
+               </element>
+               <element useText="0">
+                  <paragraph sautDePagePdf="0" type="important">Attributes that declare namespaces (i.e. the attribute <i>xmlns</i> and attributes starting with <i>xmlns:</i>) are reported.</paragraph>
+               </element>
+            </liste>
+            <paragraph sautDePagePdf="0" type="important">Consider the following element:</paragraph>
+            <code langage="other">
+&lt;author xmlns:fnord = 'http://example.com/fnord/'
+             title="Ms"
+             fnord:title="Goddess"
+             name="Eris Kallisti"/&gt;
+</code>
+            <paragraph sautDePagePdf="0" type="important">With <i>http://xml.org/sax/features/namespace-prefixes</i> set to true the reader will report four attributes; but with the <i>namespace-prefixes</i> feature set to false only three, with the <i>xmlns:fnord</i> attribute defining a namespace being "invisible" to the reader.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">The <i>http://xml.org/sax/features/namespaces</i> feature is responsible for reporting local names, namespace prefixes and URIs. With <i>http://xml.org/sax/features/namespaces</i> set to true the parser will report <i>title</i> as the local name of the <i>fnord:title</i> attribute, <i>fnord</i> being the namespace prefix and <i>http://example.com/fnord/</i> as the namespace URI. When <i>http://xml.org/sax/features/namespaces</i> is false none of them are reported.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">In the current implementation the Qt XML classes follow the definition that the prefix <i>xmlns</i> itself isn't associated with any namespace at all (see http://www.w3.org/TR/1999/REC-xml-names-19990114/#ns-using). Therefore even with <i>http://xml.org/sax/features/namespaces</i> and <i>http://xml.org/sax/features/namespace-prefixes</i> both set to true the reader won't return either a local name, a namespace prefix or a namespace URI for <i>xmlns:fnord</i>.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">This might be changed in the future following the W3C suggestion http://www.w3.org/2000/xmlns/ to associate <i>xmlns</i> with the namespace <i>http://www.w3.org/2000/xmlns</i>.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">As the SAX2 standard suggests, <i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> defaults to having <i>http://xml.org/sax/features/namespaces</i> set to true and <i>http://xml.org/sax/features/namespace-prefixes</i> set to false. When changing this behavior using <i><link href="qxmlsimplereader.html#setFeature">QXmlSimpleReader::setFeature()</link></i> note that the combination of both features set to false is illegal.</paragraph>
+         </section>
+         <section id="4" sautDePagePdf="0" noNumber="0">
+            <title>Summary</title>
+            <paragraph sautDePagePdf="0" type="important"><i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> implements the following behavior:</paragraph>
+            <tableau width="80%" border="1" sautDePagePdf="0">
+               <entete>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">(namespaces, namespace-prefixes)</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Namespace prefix and local part</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Qualified names</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Prefix mapping</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">xmlns attributes</paragraph>
+                  </colonne>
+               </entete>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">(true, false)</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes*</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">No</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">(true, true)</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">(false, true)</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">No*</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">No*</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Yes</paragraph>
+                  </colonne>
+               </ligne>
+               <ligne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">(false, false)</paragraph>
+                  </colonne>
+                  <colonne useText="0">
+                     <paragraph sautDePagePdf="0" type="important">Illegal</paragraph>
+                  </colonne>
+               </ligne>
+            </tableau>
+            <paragraph sautDePagePdf="0" type="important">The behavior of the entries marked with an asterisk (*) is not specified by SAX.</paragraph>
+         </section>
+         <section id="5" sautDePagePdf="0" noNumber="0">
+            <title>Properties</title>
+            <paragraph sautDePagePdf="0" type="important">Properties are a more general concept. They have a unique name, represented as an URI, but their value is <inline>void*</inline>. Thus nearly anything can be used as a property value. This concept involves some danger, though: there is no means of ensuring type-safety; the user must take care that they pass the right type. Properties are useful if a reader supports special handler classes.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">The URIs used for features and properties often look like URLs, e.g. <inline>http://xml.org/sax/features/namespace</inline>. This does not mean that the data required is at this address. It is simply a way of defining unique names.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">Anyone can define and use new SAX2 properties for their readers. Property support is not mandatory.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">To set or query properties the following functions are provided: <i><link href="qxmlreader.html#setProperty">QXmlReader::setProperty()</link></i>, <i><link href="qxmlreader.html#property">QXmlReader::property()</link></i> and <i><link href="qxmlreader.html#hasProperty">QXmlReader::hasProperty()</link></i>.</paragraph>
+         </section>
+      </section>
+   </summary>
+</document>

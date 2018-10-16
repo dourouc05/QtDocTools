@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>The SAX interface</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="xml-dom-tml.html" xlink:title="next">Working with the DOM Tree &gt;</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="xml-streaming.html" xlink:title="previous">&lt; XML Streaming</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="xml-processing.html" xlink:title="contents">^ XML Processing ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-06+02:00</db:pubdate>
+      <db:date>2018-10-06+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:para>SAX is an event-based standard interface for XML parsers. The Qt interface follows the design of the SAX2 Java implementation. Its naming scheme was adapted to fit the Qt naming conventions. Details on SAX2 can be found at http://www.saxproject.org.</db:para>
+   <db:para>Support for SAX2 filters and the reader factory are under development. The Qt implementation does not include the SAX1 compatibility classes present in the Java interface.</db:para>
+   <db:section xml:id="introduction-to-sax2">
+      <db:title>Introduction to SAX2</db:title>
+      <db:para>The SAX2 interface is an event-driven mechanism to provide the user with document information. An "event" in this context means something reported by the parser, for example, it has encountered a start tag, or an end tag, etc.</db:para>
+      <db:para>To make it less abstract consider the following example:</db:para>
+      <db:programlisting>
+&lt;quote&gt;A quotation.&lt;/quote&gt;
+</db:programlisting>
+      <db:para>Whilst reading (a SAX2 parser is usually referred to as "reader") the above document three events would be triggered:</db:para>
+      <db:orderedlist>
+         <db:listitem>
+            <db:para>A start tag occurs (<db:code>&lt;quote&gt;</db:code>).</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Character data (i.e. text) is found, "A quotation.".</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>An end tag is parsed (<db:code>&lt;/quote&gt;</db:code>).</db:para>
+         </db:listitem>
+      </db:orderedlist>
+      <db:para>Each time such an event occurs the parser reports it; you can set up event handlers to respond to these events.</db:para>
+      <db:para>Whilst this is a fast and simple approach to read XML documents, manipulation is difficult because data is not stored, simply handled and discarded serially. The <db:link xlink:href="xml-dom-tml.html" xrefstyle="page" annotations="Working with the DOM Tree">DOM interface</db:link> reads in and stores the whole document in a tree structure; this takes more memory, but makes it easier to manipulate the document's structure.</db:para>
+      <db:para>The Qt XML module provides an abstract class, <db:code><db:link xlink:href="qxmlreader.html" xrefstyle="class" annotations="QXmlReader">QXmlReader</db:link></db:code>, that defines the interface for potential SAX2 readers. Qt includes a reader implementation, <db:code><db:link xlink:href="qxmlsimplereader.html" xrefstyle="class" annotations="QXmlSimpleReader">QXmlSimpleReader</db:link></db:code>, that is easy to adapt through subclassing.</db:para>
+      <db:para>The reader reports parsing events through special handler classes:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Handler class</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmlcontenthandler.html" xrefstyle="class" annotations="QXmlContentHandler">QXmlContentHandler</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Reports events related to the content of a document (e.g. the start tag or characters).</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmldtdhandler.html" xrefstyle="class" annotations="QXmlDTDHandler">QXmlDTDHandler</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Reports events related to the DTD (e.g. notation declarations).</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmlerrorhandler.html" xrefstyle="class" annotations="QXmlErrorHandler">QXmlErrorHandler</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Reports errors or warnings that occurred during parsing.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmlentityresolver.html" xrefstyle="class" annotations="QXmlEntityResolver">QXmlEntityResolver</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Reports external entities during parsing and allows users to resolve external entities themselves instead of leaving it to the reader.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmldeclhandler.html" xrefstyle="class" annotations="QXmlDeclHandler">QXmlDeclHandler</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Reports further DTD related events (e.g. attribute declarations).</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmllexicalhandler.html" xrefstyle="class" annotations="QXmlLexicalHandler">QXmlLexicalHandler</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Reports events related to the lexical structure of the document (the beginning of the DTD, comments etc.).</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>These classes are abstract classes describing the interface. The <db:code><db:link xlink:href="qxmldefaulthandler.html" xrefstyle="class" annotations="QXmlDefaultHandler">QXmlDefaultHandler</db:link></db:code> class provides a "do nothing" default implementation for all of them. Therefore users only need to overload the <db:code><db:link xlink:href="qxmldefaulthandler.html" xrefstyle="class" annotations="QXmlDefaultHandler">QXmlDefaultHandler</db:link></db:code> functions they are interested in.</db:para>
+      <db:para>To read input XML data a special class <db:code><db:link xlink:href="qxmlinputsource.html" xrefstyle="class" annotations="QXmlInputSource">QXmlInputSource</db:link></db:code> is used.</db:para>
+      <db:para>Apart from those already mentioned, the following SAX2 support classes provide additional useful functionality:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Class</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmlattributes.html" xrefstyle="class" annotations="QXmlAttributes">QXmlAttributes</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Used to pass attributes in a start element event.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmllocator.html" xrefstyle="class" annotations="QXmlLocator">QXmlLocator</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Used to obtain the actual parsing position of an event.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qxmlnamespacesupport.html" xrefstyle="class" annotations="QXmlNamespaceSupport">QXmlNamespaceSupport</db:link></db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Used to implement namespace support for a reader. Note that namespaces do not change the parsing behavior. They are only reported through the handler.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>The <db:link xlink:href="qtxml-saxbookmarks-example.html" xrefstyle="page" annotations="SAX Bookmarks example">SAX Bookmarks example</db:link> illustrates how to subclass <db:code><db:link xlink:href="qxmldefaulthandler.html" xrefstyle="class" annotations="QXmlDefaultHandler">QXmlDefaultHandler</db:link></db:code> to read an XML bookmark file (XBEL) and how to generate XML by hand.</db:para>
+   </db:section>
+   <db:section xml:id="sax2-features">
+      <db:title>SAX2 Features</db:title>
+      <db:para>The behavior of an XML reader depends on its support for certain optional features. For example, a reader may have the feature "report attributes used for namespace declarations and prefixes along with the local name of a tag". Like every other feature this has a unique name represented by a URI: it is called <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis>.</db:para>
+      <db:para>The Qt SAX2 implementation can report whether the reader has particular functionality using the <db:code><db:link xlink:href="qxmlreader.html#hasFeature" xrefstyle="function" annotations="QXmlReader::hasFeature()">QXmlReader::hasFeature()</db:link></db:code> function. Available features can be tested with <db:code><db:link xlink:href="qxmlreader.html#feature" xrefstyle="function" annotations="QXmlReader::feature()">QXmlReader::feature()</db:link></db:code>, and switched on or off using <db:code><db:link xlink:href="qxmlreader.html#setFeature" xrefstyle="function" annotations="QXmlReader::setFeature()">QXmlReader::setFeature()</db:link></db:code>.</db:para>
+      <db:para>Consider the example</db:para>
+      <db:programlisting>
+&lt;document xmlns:book = 'http://example.com/fnord/book/'
+          xmlns      = 'http://example.com/fnord/' &gt;
+</db:programlisting>
+      <db:para>A reader that does not support the <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis> feature would report the element name <db:emphasis>document</db:emphasis> but not its attributes <db:emphasis>xmlns:book</db:emphasis> and <db:emphasis>xmlns</db:emphasis> with their values. A reader with the feature <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis> reports the namespace attributes if the <db:code><db:link xlink:href="qxmlreader.html#feature" xrefstyle="function" annotations="QXmlReader::feature()">feature</db:link></db:code> is switched on.</db:para>
+      <db:para>Other features include <db:emphasis>http://xml.org/sax/features/namespace</db:emphasis> (namespace processing, implies <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis>) and <db:emphasis>http://xml.org/sax/features/validation</db:emphasis> (the ability to report validation errors).</db:para>
+      <db:para>Whilst SAX2 leaves it to the user to define and implement whatever features are required, support for <db:emphasis>http://xml.org/sax/features/namespace</db:emphasis> (and thus <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis>) is mandantory. The <db:code><db:link xlink:href="qxmlsimplereader.html" xrefstyle="class" annotations="QXmlSimpleReader">QXmlSimpleReader</db:link></db:code> implementation of <db:code><db:link xlink:href="qxmlreader.html" xrefstyle="class" annotations="QXmlReader">QXmlReader</db:link></db:code>, supports them, and can do namespace processing.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qxmlsimplereader.html" xrefstyle="class" annotations="QXmlSimpleReader">QXmlSimpleReader</db:link></db:code> is not validating, so it does not support <db:emphasis>http://xml.org/sax/features/validation</db:emphasis>.</db:para>
+   </db:section>
+   <db:section xml:id="namespace-support-via-features">
+      <db:title>Namespace Support via Features</db:title>
+      <db:para>As we have seen in the previous section, we can configure the behavior of the reader when it comes to namespace processing. This is done by setting and unsetting the <db:emphasis>http://xml.org/sax/features/namespaces</db:emphasis> and <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis> features.</db:para>
+      <db:para>They influence the reporting behavior in the following way:</db:para>
+      <db:orderedlist>
+         <db:listitem>
+            <db:para>Namespace prefixes and local parts of elements and attributes can be reported.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>The qualified names of elements and attributes are reported.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>
+               <db:code><db:link xlink:href="qxmlcontenthandler.html#startPrefixMapping" xrefstyle="function" annotations="QXmlContentHandler::startPrefixMapping()">QXmlContentHandler::startPrefixMapping()</db:link></db:code> and <db:code><db:link xlink:href="qxmlcontenthandler.html#endPrefixMapping" xrefstyle="function" annotations="QXmlContentHandler::endPrefixMapping()">QXmlContentHandler::endPrefixMapping()</db:link></db:code> are called by the reader.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>Attributes that declare namespaces (i.e. the attribute <db:emphasis>xmlns</db:emphasis> and attributes starting with <db:emphasis>xmlns:</db:emphasis>) are reported.</db:para>
+         </db:listitem>
+      </db:orderedlist>
+      <db:para>Consider the following element:</db:para>
+      <db:programlisting>
+&lt;author xmlns:fnord = 'http://example.com/fnord/'
+             title="Ms"
+             fnord:title="Goddess"
+             name="Eris Kallisti"/&gt;
+</db:programlisting>
+      <db:para>With <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis> set to true the reader will report four attributes; but with the <db:emphasis>namespace-prefixes</db:emphasis> feature set to false only three, with the <db:emphasis>xmlns:fnord</db:emphasis> attribute defining a namespace being "invisible" to the reader.</db:para>
+      <db:para>The <db:emphasis>http://xml.org/sax/features/namespaces</db:emphasis> feature is responsible for reporting local names, namespace prefixes and URIs. With <db:emphasis>http://xml.org/sax/features/namespaces</db:emphasis> set to true the parser will report <db:emphasis>title</db:emphasis> as the local name of the <db:emphasis>fnord:title</db:emphasis> attribute, <db:emphasis>fnord</db:emphasis> being the namespace prefix and <db:emphasis>http://example.com/fnord/</db:emphasis> as the namespace URI. When <db:emphasis>http://xml.org/sax/features/namespaces</db:emphasis> is false none of them are reported.</db:para>
+      <db:para>In the current implementation the Qt XML classes follow the definition that the prefix <db:emphasis>xmlns</db:emphasis> itself isn't associated with any namespace at all (see http://www.w3.org/TR/1999/REC-xml-names-19990114/#ns-using). Therefore even with <db:emphasis>http://xml.org/sax/features/namespaces</db:emphasis> and <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis> both set to true the reader won't return either a local name, a namespace prefix or a namespace URI for <db:emphasis>xmlns:fnord</db:emphasis>.</db:para>
+      <db:para>This might be changed in the future following the W3C suggestion http://www.w3.org/2000/xmlns/ to associate <db:emphasis>xmlns</db:emphasis> with the namespace <db:emphasis>http://www.w3.org/2000/xmlns</db:emphasis>.</db:para>
+      <db:para>As the SAX2 standard suggests, <db:code><db:link xlink:href="qxmlsimplereader.html" xrefstyle="class" annotations="QXmlSimpleReader">QXmlSimpleReader</db:link></db:code> defaults to having <db:emphasis>http://xml.org/sax/features/namespaces</db:emphasis> set to true and <db:emphasis>http://xml.org/sax/features/namespace-prefixes</db:emphasis> set to false. When changing this behavior using <db:code><db:link xlink:href="qxmlsimplereader.html#setFeature" xrefstyle="function" annotations="QXmlSimpleReader::setFeature()">QXmlSimpleReader::setFeature()</db:link></db:code> note that the combination of both features set to false is illegal.</db:para>
+   </db:section>
+   <db:section xml:id="summary">
+      <db:title>Summary</db:title>
+      <db:para>
+         <db:code><db:link xlink:href="qxmlsimplereader.html" xrefstyle="class" annotations="QXmlSimpleReader">QXmlSimpleReader</db:link></db:code> implements the following behavior:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>(namespaces, namespace-prefixes)</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Namespace prefix and local part</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Qualified names</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Prefix mapping</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>xmlns attributes</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>(true, false)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes*</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+            <db:td>
+               <db:para>No</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>(true, true)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>(false, true)</db:para>
+            </db:td>
+            <db:td>
+               <db:para>No*</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+            <db:td>
+               <db:para>No*</db:para>
+            </db:td>
+            <db:td>
+               <db:para>Yes</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>(false, false)</db:para>
+            </db:td>
+            <db:td colspan="4">
+               <db:para>Illegal</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>The behavior of the entries marked with an asterisk (*) is not specified by SAX.</db:para>
+   </db:section>
+   <db:section xml:id="properties">
+      <db:title>Properties</db:title>
+      <db:para>Properties are a more general concept. They have a unique name, represented as an URI, but their value is <db:code>void*</db:code>. Thus nearly anything can be used as a property value. This concept involves some danger, though: there is no means of ensuring type-safety; the user must take care that they pass the right type. Properties are useful if a reader supports special handler classes.</db:para>
+      <db:para>The URIs used for features and properties often look like URLs, e.g. <db:code>http://xml.org/sax/features/namespace</db:code>. This does not mean that the data required is at this address. It is simply a way of defining unique names.</db:para>
+      <db:para>Anyone can define and use new SAX2 properties for their readers. Property support is not mandatory.</db:para>
+      <db:para>To set or query properties the following functions are provided: <db:code><db:link xlink:href="qxmlreader.html#setProperty" xrefstyle="function" annotations="QXmlReader::setProperty()">QXmlReader::setProperty()</db:link></db:code>, <db:code><db:link xlink:href="qxmlreader.html#property" xrefstyle="function" annotations="QXmlReader::property()">QXmlReader::property()</db:link></db:code> and <db:code><db:link xlink:href="qxmlreader.html#hasProperty" xrefstyle="function" annotations="QXmlReader::hasProperty()">QXmlReader::hasProperty()</db:link></db:code>.</db:para>
+   </db:section>
+</db:article>

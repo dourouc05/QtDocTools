@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+   <entete>
+      <rubrique>65</rubrique>
+      <meta>
+         <description>Describes how source/replica interaction works</description>
+         <keywords>documentation, qt, français</keywords>
+      </meta>
+      <titre>
+         <page/>
+         <article/>
+      </titre>
+      <date>2018-10-06</date>
+      <miseajour>2018-10-06</miseajour>
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      <serveur>Qt</serveur>
+      <chemin>/doc/qt/5.11/qtremoteobjects-interaction</chemin>
+      <urlhttp>http://qt.developpez.com/doc/qt/5.11/qtremoteobjects-interaction</urlhttp>
+   </entete>
+   <authorDescriptions>
+      <authorDescription name="Dummy" role="auteur">
+         <fullname>Dummy</fullname>
+         <url>https://www.developpez.net/forums/u1/dummy/</url>
+      </authorDescription>
+   </authorDescriptions>
+   <synopsis>
+      <paragraph>Describes how source/replica interaction works</paragraph>
+   </synopsis>
+   <summary>
+      <section id="I" noNumber="1">
+         <title/>
+         <section id="1">
+            <title>Remote Object Interaction</title>
+            <paragraph>Source/replica interaction is directional. Property changes and signal emission happen on the source, and are propagated to all replicas. If a property is writable, you can call the setter function on a replica. This will be forwarded to the source, and if a change is made, it will be made on the source and subsequently forwarded to all replicas. To the replica, it is then an asynchronous call, with latency before the change takes effect.</paragraph>
+            <paragraph>Whereas you can emit a signal on a replica, this may have unexpected results and is discouraged for that reason. It will only trigger slots connected to the replica itself, no slots connected to the source or other replicas. Like property setters, slot invocations on a replica are forwarded to the Source to run.</paragraph>
+            <paragraph>The behavior above is implemented automatically by QtRO, there is no need to write any replica implementation code. It will be handled automatically at runtime for dynamic replicas, or at compile time for repc generated headers.</paragraph>
+         </section>
+      </section>
+   </summary>
+</document>

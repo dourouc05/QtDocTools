@@ -8,9 +8,7 @@
   
   <!-- TODO: <db:codelisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
   
-  <xsl:output method="xml" indent="yes"
-    suppress-indentation="inline link"/>
-  <xsl:strip-space elements="*"/>
+  <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>   
   
   <xsl:template match="db:article">
@@ -46,7 +44,7 @@
             <xsl:value-of select="format-date(db:info/db:date, '[Y0001]-[M01]-[D01]')"/>
           </miseajour>
           
-          <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+          <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
           
           <serveur>Qt</serveur>
           <xsl:variable name="url">
@@ -58,13 +56,18 @@
           <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
         </entete>
         
-        <xsl:if test="db:info/db:abstract/db:para[2]">
+        <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
+        <!-- consider this list has links to linked documents. -->
+        <xsl:if test="db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist]">
           <voiraussi>
             <!-- First, the linked documents (previous/next). -->
             <xsl:for-each select="db:info/db:abstract/db:para[2]/db:simplelist/db:member">
               <lien>
                 <texte><xsl:value-of select="db:link/text()"/></texte>
-                <url><xsl:value-of select="db:link/@href"/></url>
+                <url>
+                  <xsl:variable name="filename" select="substring-before(string(db:link/@xlink:href), '.html')"/>
+                  <xsl:value-of select="concat('http://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"/>
+                </url>
               </lien>
             </xsl:for-each>
             <!-- Then, anything else? -->
@@ -112,9 +115,31 @@
         </authorDescriptions>
         
         <synopsis>
-          <paragraph>
-            <xsl:apply-templates mode="content_para" select="db:info/db:abstract/db:para[1]/node()"/>
-          </paragraph>
+          <xsl:variable name="abstractParagraphs" as="node()*">
+            <xsl:choose>
+              <xsl:when test="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()) > 0]">
+                <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
+                <!-- Do some checks to ensure that no text is ignored (paragraphs outside sections). -->
+                <xsl:if test="db:info/following-sibling::*[1][self::db:para]">
+                  <xsl:message>WARNING: Paragraphs outside sections not being converted!</xsl:message>
+                </xsl:if>
+                
+                <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()) > 0]"/>
+              </xsl:when>
+              <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
+                <!-- Just links in the DocBook abstract, but something resembling an abstract -->
+                <!-- (paragraphs before the first section). -->
+                <xsl:copy-of select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <!-- Nothing to do, sorry about that... -->
+                <db:para/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          <xsl:for-each select="$abstractParagraphs">
+            <xsl:apply-templates mode="content" select="."/>
+          </xsl:for-each>
         </synopsis>
         
         <summary>
@@ -143,7 +168,16 @@
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
     </xsl:variable>
+    
     <section id="{$sectionId}">
+      <xsl:if test="@xml:id">
+        <html-brut>
+          <xsl:value-of select="'&lt;![CDATA['"/>
+          <a name="{@xml:id}"/>
+          <xsl:value-of select="']]>'"/>
+        </html-brut>
+      </xsl:if>
+      
       <xsl:apply-templates mode="content"/>
     </section>
   </xsl:template>
@@ -192,7 +226,7 @@
   <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
   
   <xsl:template mode="content" match="db:para">
-    <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote]">
+    <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or string-length(name(preceding-sibling::*[1])) = 0">
       <xsl:choose>
         <xsl:when test="db:informaltable | db:note | db:programlisting">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
@@ -247,7 +281,19 @@
   
   <xsl:template mode="content content_para" match="db:simplelist">
     <xsl:for-each select="db:member">
-      <xsl:apply-templates mode="content_para"/>
+      <xsl:variable name="test">
+        <xsl:apply-templates mode="content_para"/>
+      </xsl:variable>
+      <xsl:for-each select="$test/child::node()">
+        <xsl:choose>
+          <xsl:when test=". instance of text()">
+            <xsl:value-of select="normalize-space(.)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
       <xsl:if test="position() != last()">
         <xsl:text>, </xsl:text>
       </xsl:if>

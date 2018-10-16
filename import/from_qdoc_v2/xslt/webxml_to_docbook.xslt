@@ -8,7 +8,7 @@
   version="3.0">
   
   <xsl:output method="xml" indent="yes"
-    suppress-indentation="db:code db:emphasis db:link db:programlisting db:title"/>
+    suppress-indentation="db:code db:programlisting db:emphasis db:link db:programlisting db:title"/>
   <xsl:strip-space elements="*"/>
   
   <xsl:param name="qt-version" as="xs:string" select="'1.2'"/>
@@ -174,20 +174,26 @@
   <xsl:function name="tc:is-element-included" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
     
-    <xsl:value-of select="not($currentNode/@access='private') and (not($currentNode/@delete) or $currentNode/@delete='false') and $currentNode/@status='active' and count($currentNode/description/*[not(self::see-also)]) > 0"/>
+    <!-- Either it has text -->
+    <xsl:variable name="hasText" select="count($currentNode/description/*[not(self::see-also)]) > 0"/>
+    <!-- or it is not private and not deleted. -->
+    <xsl:variable name="isPrivate" select="boolean($currentNode/@access) and $currentNode/@access='private'" as="xs:boolean"/>
+    <xsl:variable name="isDeleted" select="boolean($currentNode/@delete) and not($currentNode/@delete='false')" as="xs:boolean"/>
+    
+    <xsl:value-of select="$hasText or not($isPrivate or $isDeleted)"/>
   </xsl:function>
   
   <xsl:template name="content_class_elements">
     <xsl:param name="elements" as="node()*"/>
     
     <!-- Order of elements: namespaces, classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
-    <xsl:variable name="namespaces" select="$elements/self::namespace[(@access='public' or @access='protected')and description/node()]" as="node()*"/>
-    <xsl:variable name="classes" select="$elements/self::class[(@access='public' or @access='protected')and description/node()]" as="node()*"/>
-    <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected') and description/node()] | $elements/self::typedef[(@access='public' or @access='protected')]" as="node()*"/>
-    <xsl:variable name="properties" select="$elements/self::property[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
-    <xsl:variable name="memberVariables" select="$elements/self::variable[(@access='public' or @access='protected') and description/node()]" as="node()*"/>
-    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
-    <xsl:variable name="macros" select="$elements/self::function[(@access='public' or @access='protected') and description/node() and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    <xsl:variable name="namespaces" select="$elements/self::namespace[(@access='public' or @access='protected')]" as="node()*"/>
+    <xsl:variable name="classes" select="$elements/self::class[(@access='public' or @access='protected')]" as="node()*"/>
+    <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected')] | $elements/self::typedef[(@access='public' or @access='protected')]" as="node()*"/>
+    <xsl:variable name="properties" select="$elements/self::property[(@access='public' or @access='protected')]" as="node()*"/>
+    <xsl:variable name="memberVariables" select="$elements/self::variable[(@access='public' or @access='protected')]" as="node()*"/>
+    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    <xsl:variable name="macros" select="$elements/self::function[(@access='public' or @access='protected') and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
     <xsl:variable name="allTakenIntoAccount" select="($namespaces union $classes union $memberTypes union $properties union $memberVariables union $functions union $macros)"/>
     <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and description/node()]) != count($elements[(@access='public' or @access='protected') and description/node()])">
@@ -316,6 +322,8 @@
   <xsl:template mode="content_class_elements" match="namespace">
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
+        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        
         <db:title>namespace <xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
@@ -358,6 +366,8 @@
   <xsl:template mode="content_class_elements" match="class">
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
+        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        
         <db:title><xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
@@ -425,6 +435,8 @@
   <xsl:template mode="content_class_elements" match="variable">
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
+        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        
         <db:title><xsl:value-of select="@fullname"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
@@ -462,6 +474,21 @@
   <xsl:template mode="content_class_elements" match="function">
     <xsl:if test="tc:is-element-included(.)">
       <db:section>
+        <xsl:attribute name="xml:id">
+          <xsl:variable name="baseAnchor" select="tokenize(@href, '#')[2]" as="xs:string"/>
+          <xsl:choose>
+            <!-- Likely a bug in qdoc: some property-related methods (signals, mostly) -->
+            <!-- have the anchor of the property, and not their own, albeit they should -->
+            <!-- (these methods have their own section in the official doc). -->
+            <xsl:when test="not(ends-with($baseAnchor, '-prop'))">
+              <xsl:value-of select="$baseAnchor"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="@name"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:attribute>
+        
         <db:title>
           <!-- For constructors: -->
           <!-- @name:      QWidget -->
@@ -472,8 +499,62 @@
           <!-- @fullname:  QWidget::backingStore -->
           <!-- @signature: QBackingStore * backingStore() const -->
           <xsl:variable name="sanitisedName" select="replace(replace(replace(replace(@name, '\+', '\\+'), '\[', '\\['), '\]', '\\]'), '\|', '\\|')" as="xs:string"/>
-          <xsl:value-of select="
-            if(contains(@fullname, '::')) then concat(@type, ' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature "/>
+          <xsl:variable name="pretitle" select="if(contains(@fullname, '::')) then concat(@type, ' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature"/>
+          
+          <!-- Generate the modifiers in the right order. -->
+          <xsl:variable name="posttitle">
+            <xsl:variable name="seq" as="xs:string*">
+              <xsl:if test="@virtual = 'pure'">
+                <xsl:text>pure virtual</xsl:text>
+              </xsl:if>
+              <xsl:if test="@virtual = 'virtual'">
+                <xsl:text>virtual</xsl:text>
+              </xsl:if>
+              
+              <xsl:if test="@access = 'protected'">
+                <xsl:text>protected</xsl:text>
+              </xsl:if>
+              
+              <xsl:if test="@delete = 'true'">
+                <xsl:text>delete</xsl:text>
+              </xsl:if>
+              <xsl:if test="@default = 'true'">
+                <xsl:text>default</xsl:text>
+              </xsl:if>
+              
+              <xsl:if test="@meta = 'signal'">
+                <xsl:text>signal</xsl:text>
+              </xsl:if>
+              <xsl:if test="@meta = 'slot'">
+                <xsl:text>slot</xsl:text>
+              </xsl:if>
+              
+              <xsl:if test="@final = 'true'">
+                <xsl:text>final</xsl:text>
+              </xsl:if>
+              <xsl:if test="@overload = 'true'">
+                <xsl:text>overload</xsl:text>
+              </xsl:if>
+              <xsl:if test="@override = 'true'">
+                <xsl:text>override</xsl:text>
+              </xsl:if>
+              
+              <!-- const is already shown in the signature. -->
+            </xsl:variable>
+            
+            <xsl:choose>
+              <xsl:when test="count($seq) > 0">
+                <!-- Space before [! -->
+                <xsl:value-of select="concat(' [', string-join($seq, ' '), ']')"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="''"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
+          <!-- Concatenate the two components. -->
+          <xsl:value-of select="concat(normalize-space($pretitle), $posttitle)"/>
         </db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
@@ -521,8 +602,19 @@
       <db:modifier>
         <xsl:value-of select="@access"/>
       </db:modifier>
+      
+      <xsl:if test="@virtual = 'pure'">
+        <db:modifier>pure virtual</db:modifier>
+      </xsl:if>
+      <xsl:if test="@virtual = 'virtual'">
+        <db:modifier>virtual</db:modifier>
+      </xsl:if>
+      
       <xsl:if test="not(@static='false')">
         <db:modifier>static</db:modifier>
+      </xsl:if>
+      <xsl:if test="not(@delete='false')">
+        <db:modifier>delete</db:modifier>
       </xsl:if>
       <xsl:if test="not(@default='false')">
         <db:modifier>default</db:modifier>
@@ -532,6 +624,9 @@
       </xsl:if>
       <xsl:if test="not(@override='false')">
         <db:modifier>override</db:modifier>
+      </xsl:if>
+      <xsl:if test="not(@overload='false')">
+        <db:modifier>overload</db:modifier>
       </xsl:if>
       
       <!-- Return type. Constructors have no type. -->
@@ -581,6 +676,8 @@
   <xsl:template mode="content_class_elements" match="enum">
     <xsl:if test="tc:is-element-included(.)">
       <db:section>
+        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        
         <db:title>
           <xsl:text>enum </xsl:text><xsl:value-of select="@fullname"/>
           <xsl:if test="following-sibling::typedef[1]">
@@ -650,6 +747,8 @@
     <!-- Typedefs appear mostly with enums, hence most of the work is done there. -->
     <xsl:if test="tc:is-element-included(.)">
       <db:section>
+        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        
         <db:title>typedef <xsl:value-of select="@name"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
@@ -694,6 +793,8 @@
   <xsl:template mode="content_class_elements" match="property">
     <xsl:if test="tc:is-element-included(.)">
       <db:section>
+        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        
         <db:title><xsl:value-of select="@name"/> : <xsl:value-of select="@type"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>

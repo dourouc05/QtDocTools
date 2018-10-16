@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+   <entete>
+      <rubrique>65</rubrique>
+      <meta>
+         <description>Specifies a clip region for a painter</description>
+         <keywords>documentation, qt, français</keywords>
+      </meta>
+      <titre>
+         <page>QRegion</page>
+         <article>QRegion</article>
+      </titre>
+      <date>2018-10-06</date>
+      <miseajour>2018-10-06</miseajour>
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      <serveur>Qt</serveur>
+      <chemin>/doc/qt/5.11/qregion</chemin>
+      <urlhttp>http://qt.developpez.com/doc/qt/5.11/qregion</urlhttp>
+   </entete>
+   <authorDescriptions>
+      <authorDescription name="Dummy" role="auteur">
+         <fullname>Dummy</fullname>
+         <url>https://www.developpez.net/forums/u1/dummy/</url>
+      </authorDescription>
+   </authorDescriptions>
+   <synopsis>
+      <paragraph sautDePagePdf="0" type="important">Specifies a clip region for a painter</paragraph>
+   </synopsis>
+   <summary>
+      <section id="I" noNumber="1" sautDePagePdf="0">
+         <title>QRegion</title>
+         <section id="1" sautDePagePdf="0" noNumber="0">
+            <title>Detailed Description</title>
+            <paragraph sautDePagePdf="0" type="important">The <i><link href="qregion.html">QRegion</link></i> class specifies a clip region for a painter.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">
+               <i><link href="qregion.html">QRegion</link></i> is used with <i><link href="qpainter.html#setClipRegion">QPainter::setClipRegion()</link></i> to limit the paint area to what needs to be painted. There is also a <i><link href="qwidget.html#repaint">QWidget::repaint()</link></i> function that takes a <i><link href="qregion.html">QRegion</link></i> parameter. <i><link href="qregion.html">QRegion</link></i> is the best tool for minimizing the amount of screen area to be updated by a repaint.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">This class is not suitable for constructing shapes for rendering, especially as outlines. Use <i><link href="qpainterpath.html">QPainterPath</link></i> to create paths and shapes for use with <i><link href="qpainter.html">QPainter</link></i>.</paragraph>
+            <paragraph sautDePagePdf="0" type="important">
+               <i><link href="qregion.html">QRegion</link></i> is an <link href="implicit-sharing.html">implicitly shared</link> class.</paragraph>
+            <section id="1.1" sautDePagePdf="0" noNumber="0">
+               <title>Creating and Using Regions</title>
+               <paragraph sautDePagePdf="0" type="important">A region can be created from a rectangle, an ellipse, a polygon or a bitmap. Complex regions may be created by combining simple regions using <i><link href="qregion.html#united">united()</link></i>, <i><link href="qregion.html#intersected">intersected()</link></i>, <i><link href="qregion.html#subtracted">subtracted()</link></i>, or <i><link href="qregion.html#xored">xored()</link></i> (exclusive or). You can move a region using <i><link href="qregion.html#translate">translate()</link></i>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">You can test whether a region <i><link href="qregion.html#isEmpty">isEmpty()</link></i> or if it <i><link href="qregion.html#contains">contains()</link></i> a <i><link href="qpoint.html">QPoint</link></i> or <i><link href="qrect.html">QRect</link></i>. The bounding rectangle can be found with <i><link href="qregion.html#boundingRect">boundingRect()</link></i>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">Iteration over the region (with <i><link href="qregion.html#begin">begin()</link></i>, <i><link href="qregion.html#end">end()</link></i>, or C++11 ranged-for loops) gives a decomposition of the region into rectangles.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">Example of using complex regions:</paragraph>
+               <code langage="other">
+                  void MyWidget::paintEvent(QPaintEvent *)
+                  {
+                  QRegion r1(QRect(100, 100, 200, 80),    // r1: elliptic region
+                  QRegion::Ellipse);
+                  QRegion r2(QRect(100, 120, 90, 30));    // r2: rectangular region
+                  QRegion r3 = r1.intersected(r2);        // r3: intersection
+                  
+                  QPainter painter(this);
+                  painter.setClipRegion(r3);
+                  ...                                     // paint clipped graphics
+                  }
+               </code>
+            </section>
+            <section id="1.2" sautDePagePdf="0" noNumber="0">
+               <title>Additional License Information</title>
+               <paragraph sautDePagePdf="0" type="important">On Embedded Linux and X11 platforms, parts of this class rely on code obtained under the following licenses:</paragraph>
+               <rich-imgtext type="info">
+                  <paragraph sautDePagePdf="0" type="important">Copyright (c) 1987 X Consortium</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">Except as contained in this notice, the name of the X Consortium shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization from the X Consortium.</paragraph>
+               </rich-imgtext>
+               <paragraph sautDePagePdf="0" type="important"/>
+               <rich-imgtext type="info">
+                  <paragraph sautDePagePdf="0" type="important">Copyright 1987 by Digital Equipment Corporation, Maynard, Massachusetts.</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">All Rights Reserved</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the name of Digital not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.</paragraph>
+                  <paragraph sautDePagePdf="0" type="important">DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL DIGITAL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</paragraph>
+               </rich-imgtext>
+            </section>
+            <section id="1.3" sautDePagePdf="0" noNumber="0">
+               <title>See Also</title>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qpainter.html#setClipRegion">QPainter::setClipRegion()</link></i>, <i><link href="qpainter.html#setClipRect">QPainter::setClipRect()</link></i>, <i><link href="qpainterpath.html">QPainterPath</link></i>
+               </paragraph>
+            </section>
+         </section>
+         <section id="2" sautDePagePdf="0" noNumber="0">
+            <title>Member Types Documentation</title>
+            <section id="2.1" sautDePagePdf="0" noNumber="0">
+               <title>enum QRegion::RegionType, flags </title>
+               
+               <paragraph sautDePagePdf="0" type="important">Specifies the shape of the region to be created.</paragraph>
+               <tableau width="80%" border="1" sautDePagePdf="0">
+                  
+                  <entete>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">Constant</paragraph>
+                     </colonne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">Value</paragraph>
+                     </colonne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">Description</paragraph>
+                     </colonne>
+                  </entete>
+                  
+                  
+                  <ligne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">QRegion::Rectangle</paragraph>
+                     </colonne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">0</paragraph>
+                     </colonne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">the region covers the entire rectangle.</paragraph>
+                     </colonne>
+                  </ligne>
+                  <ligne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">QRegion::Ellipse</paragraph>
+                     </colonne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">1</paragraph>
+                     </colonne>
+                     <colonne useText="0">
+                        <paragraph sautDePagePdf="0" type="important">the region is an ellipse inside the rectangle.</paragraph>
+                     </colonne>
+                  </ligne>
+                  
+               </tableau>
+               <paragraph sautDePagePdf="0" type="important">The <inline>const_iterator</inline> type is a typedef for <inline>QFlags&lt;RegionType&gt;</inline>. It stores an OR combination of  values.</paragraph>
+            </section>
+            <section id="2.2" sautDePagePdf="0" noNumber="0">
+               <title>typedef const_iterator</title>
+               
+               
+               <paragraph sautDePagePdf="0" type="important">An iterator over the non-overlapping rectangles that make up the region.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">The union of all the rectangles is equal to the original region.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <i><link href="qregion.html">QRegion</link></i> does not offer mutable iterators.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#begin">begin()</link></i>, <i><link href="qregion.html#end">end()</link></i>
+               </paragraph>
+               <paragraph sautDePagePdf="0" type="important">This enum was introduced or modified in Qt 5.8.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">The <inline>const_reverse_iterator</inline> type is a typedef for <inline>QFlags&lt;const_iterator&gt;</inline>. It stores an OR combination of  values.</paragraph>
+            </section>
+            <section id="2.3" sautDePagePdf="0" noNumber="0">
+               <title>typedef const_reverse_iterator</title>
+               
+               <paragraph sautDePagePdf="0" type="important">A reverse iterator over the non-overlapping rectangles that make up the region.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">The union of all the rectangles is equal to the original region.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <i><link href="qregion.html">QRegion</link></i> does not offer mutable iterators.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#rbegin">rbegin()</link></i>, <i><link href="qregion.html#rend">rend()</link></i>
+               </paragraph>
+               <paragraph sautDePagePdf="0" type="important">This enum was introduced or modified in Qt 5.8.</paragraph>
+            </section>
+         </section>
+         <section id="3" sautDePagePdf="0" noNumber="0">
+            <title>Member Function Documentation</title>
+            <section id="3.1" sautDePagePdf="0" noNumber="0">
+               <title> QRegion::QRegion(int x, int y, int w, int h, QRegion::RegionType t)</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Constructs a rectangular or elliptic region.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">If <inline>t</inline> is <inline>Rectangle</inline>, the region is the filled rectangle (<inline>x</inline>, <inline>y</inline>, <inline>w</inline>, <inline>h</inline>). If <inline>t</inline> is <inline>Ellipse</inline>, the region is the filled ellipse with center at (<inline>x</inline> + <inline>w</inline> / 2, <inline>y</inline> + <inline>h</inline> / 2) and size (<inline>w</inline> ,<inline>h</inline>).</paragraph>
+            </section>
+            <section id="3.2" sautDePagePdf="0" noNumber="0">
+               <title>QDataStream &amp; operator&lt;&lt;(QDataStream &amp;s, const QRegion &amp;r)</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Writes the region <inline>r</inline> to the stream <inline>s</inline> and returns a reference to the stream.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <link href="datastreamformat.html">Format of the QDataStream operators</link>
+               </paragraph>
+            </section>
+            <section id="3.3" sautDePagePdf="0" noNumber="0">
+               <title>QDataStream &amp; operator&gt;&gt;(QDataStream &amp;s, QRegion &amp;r)</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Reads a region from the stream <inline>s</inline> into <inline>r</inline> and returns a reference to the stream.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <link href="datastreamformat.html">Format of the QDataStream operators</link>
+               </paragraph>
+            </section>
+            <section id="3.4" sautDePagePdf="0" noNumber="0">
+               <title>QRegion &amp; QRegion::operator&amp;=(const QRect &amp;r)</title>
+               
+               <paragraph sautDePagePdf="0" type="important">This is an overloaded function.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">This property was introduced in Qt 4.4.</paragraph>
+            </section>
+            <section id="3.5" sautDePagePdf="0" noNumber="0">
+               <title>QRegion &amp; QRegion &amp; operator^=(const QRegion &amp;r)</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#xored">xored()</link></i> function to this region and <inline>r</inline> and assigns the result to this region. <inline>r1^=r2</inline> is equivalent to <inline>r1 = r1.xored(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#xored">xored()</link></i>
+               </paragraph>
+            </section>
+            <section id="3.6" sautDePagePdf="0" noNumber="0">
+               <title>QRegion &amp; QRegion::operator|=(const QRegion &amp;r)</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#united">united()</link></i> function to this region and <inline>r</inline> and assigns the result to this region. <inline>r1|=r2</inline> is equivalent to <inline>r1 = r1.united(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#united">united()</link></i>
+               </paragraph>
+            </section>
+            <section id="3.7" sautDePagePdf="0" noNumber="0">
+               <title>QRegion QRegion::translated(int dx, int dy) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Returns a copy of the region that is translated <inline>dx</inline> along the x axis and <inline>dy</inline> along the y axis, relative to the current position. Positive values move the region to the right and down.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#translate">translate()</link></i>
+               </paragraph>
+               <paragraph sautDePagePdf="0" type="important">This property was introduced in Qt 4.1.</paragraph>
+            </section>
+            <section id="3.8" sautDePagePdf="0" noNumber="0">
+               <title>QVariant QRegion::operator QVariant() const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Returns the region as a <i><link href="qvariant.html">QVariant</link></i>
+               </paragraph>
+            </section>
+            <section id="3.9" sautDePagePdf="0" noNumber="0">
+               <title>bool QRegion::intersects(const QRegion &amp;region) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Returns <inline>true</inline> if this region intersects with <inline>region</inline>, otherwise returns <inline>false</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">This property was introduced in Qt 4.2.</paragraph>
+            </section>
+            <section id="3.10" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion QRegion::operator&amp;(const QRect &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">This is an overloaded function.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">This property was introduced in Qt 4.4.</paragraph>
+            </section>
+            <section id="3.11" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion QRegion::operator&amp;(const QRegion &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#intersected">intersected()</link></i> function to this region and <inline>r</inline>. <inline>r1&amp;r2</inline> is equivalent to <inline>r1.intersected(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#intersected">intersected()</link></i>
+               </paragraph>
+            </section>
+            <section id="3.12" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion QRegion::operator+(const QRect &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">This is an overloaded function.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">This property was introduced in Qt 4.4.</paragraph>
+            </section>
+            <section id="3.13" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion QRegion::operator+(const QRegion &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#united">united()</link></i> function to this region and <inline>r</inline>. <inline>r1+r2</inline> is equivalent to <inline>r1.united(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#united">united()</link></i>, <i><link href="qregion.html#operator-7c">operator|()</link></i>
+               </paragraph>
+            </section>
+            <section id="3.14" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion QRegion::operator-(const QRegion &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#subtracted">subtracted()</link></i> function to this region and <inline>r</inline>. <inline>r1-r2</inline> is equivalent to <inline>r1.subtracted(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#subtracted">subtracted()</link></i>
+               </paragraph>
+            </section>
+            <section id="3.15" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion const QRegion operator^(const QRegion &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#xored">xored()</link></i> function to this region and <inline>r</inline>. <inline>r1^r2</inline> is equivalent to <inline>r1.xored(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#xored">xored()</link></i>
+               </paragraph>
+            </section>
+            <section id="3.16" sautDePagePdf="0" noNumber="0">
+               <title>const QRegion QRegion::operator|(const QRegion &amp;r) const</title>
+               
+               <paragraph sautDePagePdf="0" type="important">Applies the <i><link href="qregion.html#united">united()</link></i> function to this region and <inline>r</inline>. <inline>r1|r2</inline> is equivalent to <inline>r1.united(r2)</inline>.</paragraph>
+               <paragraph sautDePagePdf="0" type="important">
+                  <b>See Also:</b>
+                  <i><link href="qregion.html#united">united()</link></i>, <i><link href="qregion.html#operator-2b">operator+()</link></i>
+               </paragraph>
+            </section>
+         </section>
+      </section>
+   </summary>
+</document>

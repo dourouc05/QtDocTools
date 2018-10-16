@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>QRegion</db:title>
+      <db:abstract>
+         <db:para>Specifies a clip region for a painter</db:para>
+      </db:abstract>
+      <db:pubdate>2018-10-06+02:00</db:pubdate>
+      <db:date>2018-10-06+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QRegion</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">QtGui</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="headers">#include &lt;qregion.h&gt;</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="group">painting</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="group">shared</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> class specifies a clip region for a painter.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> is used with <db:code><db:link xlink:href="qpainter.html#setClipRegion" xrefstyle="function" annotations="QPainter::setClipRegion()">QPainter::setClipRegion()</db:link></db:code> to limit the paint area to what needs to be painted. There is also a <db:code><db:link xlink:href="qwidget.html#repaint" xrefstyle="function" annotations="QWidget::repaint()">QWidget::repaint()</db:link></db:code> function that takes a <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> parameter. <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> is the best tool for minimizing the amount of screen area to be updated by a repaint.</db:para>
+      <db:para>This class is not suitable for constructing shapes for rendering, especially as outlines. Use <db:code><db:link xlink:href="qpainterpath.html" xrefstyle="class" annotations="QPainterPath">QPainterPath</db:link></db:code> to create paths and shapes for use with <db:code><db:link xlink:href="qpainter.html" xrefstyle="class" annotations="QPainter">QPainter</db:link></db:code>.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> is an <db:link xlink:href="implicit-sharing.html" xrefstyle="page" annotations="implicitly shared">implicitly shared</db:link> class.</db:para>
+      <db:section xml:id="creating-and-using-regions">
+         <db:title>Creating and Using Regions</db:title>
+         <db:para>A region can be created from a rectangle, an ellipse, a polygon or a bitmap. Complex regions may be created by combining simple regions using <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code>, <db:code><db:link xlink:href="qregion.html#intersected" xrefstyle="function" annotations="intersected()">intersected()</db:link></db:code>, <db:code><db:link xlink:href="qregion.html#subtracted" xrefstyle="function" annotations="subtracted()">subtracted()</db:link></db:code>, or <db:code><db:link xlink:href="qregion.html#xored" xrefstyle="function" annotations="xored()">xored()</db:link></db:code> (exclusive or). You can move a region using <db:code><db:link xlink:href="qregion.html#translate" xrefstyle="function" annotations="translate()">translate()</db:link></db:code>.</db:para>
+         <db:para>You can test whether a region <db:code><db:link xlink:href="qregion.html#isEmpty" xrefstyle="function" annotations="isEmpty()">isEmpty()</db:link></db:code> or if it <db:code><db:link xlink:href="qregion.html#contains" xrefstyle="function" annotations="contains()">contains()</db:link></db:code> a <db:code><db:link xlink:href="qpoint.html" xrefstyle="class" annotations="QPoint">QPoint</db:link></db:code> or <db:code><db:link xlink:href="qrect.html" xrefstyle="class" annotations="QRect">QRect</db:link></db:code>. The bounding rectangle can be found with <db:code><db:link xlink:href="qregion.html#boundingRect" xrefstyle="function" annotations="boundingRect()">boundingRect()</db:link></db:code>.</db:para>
+         <db:para>Iteration over the region (with <db:code><db:link xlink:href="qregion.html#begin" xrefstyle="function" annotations="begin()">begin()</db:link></db:code>, <db:code><db:link xlink:href="qregion.html#end" xrefstyle="function" annotations="end()">end()</db:link></db:code>, or C++11 ranged-for loops) gives a decomposition of the region into rectangles.</db:para>
+         <db:para>Example of using complex regions:</db:para>
+         <db:programlisting>
+void MyWidget::paintEvent(QPaintEvent *)
+{
+    QRegion r1(QRect(100, 100, 200, 80),    // r1: elliptic region
+               QRegion::Ellipse);
+    QRegion r2(QRect(100, 120, 90, 30));    // r2: rectangular region
+    QRegion r3 = r1.intersected(r2);        // r3: intersection
+
+    QPainter painter(this);
+    painter.setClipRegion(r3);
+    ...                                     // paint clipped graphics
+}
+</db:programlisting>
+      </db:section>
+      <db:section xml:id="additional-license-information">
+         <db:title>Additional License Information</db:title>
+         <db:para>On Embedded Linux and X11 platforms, parts of this class rely on code obtained under the following licenses:</db:para>
+         <db:note>
+            <db:para>Copyright (c) 1987 X Consortium</db:para>
+            <db:para>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</db:para>
+            <db:para>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</db:para>
+            <db:para>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE X CONSORTIUM BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</db:para>
+            <db:para>Except as contained in this notice, the name of the X Consortium shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Software without prior written authorization from the X Consortium.</db:para>
+         </db:note>
+         <db:para/>
+         <db:note>
+            <db:para>Copyright 1987 by Digital Equipment Corporation, Maynard, Massachusetts.</db:para>
+            <db:para>All Rights Reserved</db:para>
+            <db:para>Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the name of Digital not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.</db:para>
+            <db:para>DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL DIGITAL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</db:para>
+         </db:note>
+      </db:section>
+      <db:section>
+         <db:title>See Also</db:title>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qpainter.html#setClipRegion" xrefstyle="function" annotations="QPainter::setClipRegion()">QPainter::setClipRegion()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qpainter.html#setClipRect" xrefstyle="function" annotations="QPainter::setClipRect()">QPainter::setClipRect()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qpainterpath.html" xrefstyle="class" annotations="QPainterPath">QPainterPath</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Types Documentation</db:title>
+      <db:section>
+         <db:title>enum QRegion::RegionType, flags </db:title>
+         <db:enumsynopsis>
+            <db:enumname>QRegion::RegionType</db:enumname>
+            <db:enumitem>
+               <db:enumidentifier>Rectangle</db:enumidentifier>
+               <db:enumvalue>0</db:enumvalue>
+            </db:enumitem>
+            <db:enumitem>
+               <db:enumidentifier>Ellipse</db:enumidentifier>
+               <db:enumvalue>1</db:enumvalue>
+            </db:enumitem>
+         </db:enumsynopsis>
+         <db:para>Specifies the shape of the region to be created.</db:para>
+         <db:informaltable>
+            <db:thead>
+               <db:tr>
+                  <db:th>
+                     <db:para>Constant</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Value</db:para>
+                  </db:th>
+                  <db:th>
+                     <db:para>Description</db:para>
+                  </db:th>
+               </db:tr>
+            </db:thead>
+            <db:tbody>
+               <db:tr>
+                  <db:td>QRegion::Rectangle</db:td>
+                  <db:td>0</db:td>
+                  <db:td>
+                     <db:para>the region covers the entire rectangle.</db:para>
+                  </db:td>
+               </db:tr>
+               <db:tr>
+                  <db:td>QRegion::Ellipse</db:td>
+                  <db:td>1</db:td>
+                  <db:td>
+                     <db:para>the region is an ellipse inside the rectangle.</db:para>
+                  </db:td>
+               </db:tr>
+            </db:tbody>
+         </db:informaltable>
+         <db:para>The <db:code>const_iterator</db:code> type is a typedef for <db:code>QFlags&lt;RegionType&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>typedef const_iterator</db:title>
+         <db:typedefsynopsis>
+            <db:typedefname>QRegion::const_iterator</db:typedefname>
+         </db:typedefsynopsis>
+         <db:typedefsynopsis>
+            <db:typedefname>QRegion::const_reverse_iterator</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para>An iterator over the non-overlapping rectangles that make up the region.</db:para>
+         <db:para>The union of all the rectangles is equal to the original region.</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> does not offer mutable iterators.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#begin" xrefstyle="function" annotations="begin()">begin()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#end" xrefstyle="function" annotations="end()">end()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This enum was introduced or modified in Qt 5.8.</db:para>
+         <db:para>The <db:code>const_reverse_iterator</db:code> type is a typedef for <db:code>QFlags&lt;const_iterator&gt;</db:code>. It stores an OR combination of  values.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>typedef const_reverse_iterator</db:title>
+         <db:typedefsynopsis>
+            <db:typedefname>QRegion::const_reverse_iterator</db:typedefname>
+         </db:typedefsynopsis>
+         <db:para>A reverse iterator over the non-overlapping rectangles that make up the region.</db:para>
+         <db:para>The union of all the rectangles is equal to the original region.</db:para>
+         <db:para>
+            <db:code><db:link xlink:href="qregion.html" xrefstyle="class" annotations="QRegion">QRegion</db:link></db:code> does not offer mutable iterators.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#rbegin" xrefstyle="function" annotations="rbegin()">rbegin()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#rend" xrefstyle="function" annotations="rend()">rend()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This enum was introduced or modified in Qt 5.8.</db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section>
+         <db:title> QRegion::QRegion(int x, int y, int w, int h, QRegion::RegionType t)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QRegion</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>x</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>y</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>w</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>h</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QRegion::RegionType</db:type>
+               <db:parameter>t</db:parameter>
+               <db:initializer>Rectangle</db:initializer>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Constructs a rectangular or elliptic region.</db:para>
+         <db:para>If <db:code role="argument">t</db:code> is <db:code>Rectangle</db:code>, the region is the filled rectangle (<db:code role="argument">x</db:code>, <db:code role="argument">y</db:code>, <db:code role="argument">w</db:code>, <db:code role="argument">h</db:code>). If <db:code role="argument">t</db:code> is <db:code>Ellipse</db:code>, the region is the filled ellipse with center at (<db:code role="argument">x</db:code> + <db:code role="argument">w</db:code> / 2, <db:code role="argument">y</db:code> + <db:code role="argument">h</db:code> / 2) and size (<db:code role="argument">w</db:code> ,<db:code role="argument">h</db:code>).</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDataStream &amp; operator&lt;&lt;(QDataStream &amp;s, const QRegion &amp;r)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDataStream &amp;</db:type>
+            <db:methodname>operator&lt;&lt;</db:methodname>
+            <db:methodparam>
+               <db:type>QDataStream &amp;</db:type>
+               <db:parameter>s</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Writes the region <db:code role="argument">r</db:code> to the stream <db:code role="argument">s</db:code> and returns a reference to the stream.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="datastreamformat.html" xrefstyle="page" annotations="Serializing Qt Data Types">Format of the QDataStream operators</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QDataStream &amp; operator&gt;&gt;(QDataStream &amp;s, QRegion &amp;r)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QDataStream &amp;</db:type>
+            <db:methodname>operator&gt;&gt;</db:methodname>
+            <db:methodparam>
+               <db:type>QDataStream &amp;</db:type>
+               <db:parameter>s</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Reads a region from the stream <db:code role="argument">s</db:code> into <db:code role="argument">r</db:code> and returns a reference to the stream.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:link xlink:href="datastreamformat.html" xrefstyle="page" annotations="Serializing Qt Data Types">Format of the QDataStream operators</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QRegion &amp; QRegion::operator&amp;=(const QRect &amp;r)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QRegion &amp;</db:type>
+            <db:methodname>operator&amp;=</db:methodname>
+            <db:methodparam>
+               <db:type>const QRect &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>This property was introduced in Qt 4.4.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QRegion &amp; QRegion &amp; operator^=(const QRegion &amp;r)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QRegion &amp;</db:type>
+            <db:methodname>operator^=</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#xored" xrefstyle="function" annotations="xored()">xored()</db:link></db:code> function to this region and <db:code role="argument">r</db:code> and assigns the result to this region. <db:code>r1^=r2</db:code> is equivalent to <db:code>r1 = r1.xored(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#xored" xrefstyle="function" annotations="xored()">xored()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QRegion &amp; QRegion::operator|=(const QRegion &amp;r)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QRegion &amp;</db:type>
+            <db:methodname>operator|=</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code> function to this region and <db:code role="argument">r</db:code> and assigns the result to this region. <db:code>r1|=r2</db:code> is equivalent to <db:code>r1 = r1.united(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>QRegion QRegion::translated(int dx, int dy) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QRegion</db:type>
+            <db:methodname>translated</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>dx</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>dy</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns a copy of the region that is translated <db:code role="argument">dx</db:code> along the x axis and <db:code role="argument">dy</db:code> along the y axis, relative to the current position. Positive values move the region to the right and down.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#translate" xrefstyle="function" annotations="translate()">translate()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>QVariant QRegion::operator QVariant() const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>QVariant</db:type>
+            <db:methodname>operator QVariant</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the region as a <db:code><db:link xlink:href="qvariant.html" xrefstyle="class" annotations="QVariant">QVariant</db:link></db:code>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>bool QRegion::intersects(const QRegion &amp;region) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>intersects</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>region</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if this region intersects with <db:code role="argument">region</db:code>, otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion QRegion::operator&amp;(const QRect &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator&amp;</db:methodname>
+            <db:methodparam>
+               <db:type>const QRect &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>This property was introduced in Qt 4.4.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion QRegion::operator&amp;(const QRegion &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator&amp;</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#intersected" xrefstyle="function" annotations="intersected()">intersected()</db:link></db:code> function to this region and <db:code role="argument">r</db:code>. <db:code>r1&amp;r2</db:code> is equivalent to <db:code>r1.intersected(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#intersected" xrefstyle="function" annotations="intersected()">intersected()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion QRegion::operator+(const QRect &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator+</db:methodname>
+            <db:methodparam>
+               <db:type>const QRect &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>This property was introduced in Qt 4.4.</db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion QRegion::operator+(const QRegion &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator+</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code> function to this region and <db:code role="argument">r</db:code>. <db:code>r1+r2</db:code> is equivalent to <db:code>r1.united(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#operator-7c" xrefstyle="function" annotations="operator|()">operator|()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion QRegion::operator-(const QRegion &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator-</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#subtracted" xrefstyle="function" annotations="subtracted()">subtracted()</db:link></db:code> function to this region and <db:code role="argument">r</db:code>. <db:code>r1-r2</db:code> is equivalent to <db:code>r1.subtracted(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#subtracted" xrefstyle="function" annotations="subtracted()">subtracted()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion const QRegion operator^(const QRegion &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator^</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#xored" xrefstyle="function" annotations="xored()">xored()</db:link></db:code> function to this region and <db:code role="argument">r</db:code>. <db:code>r1^r2</db:code> is equivalent to <db:code>r1.xored(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#xored" xrefstyle="function" annotations="xored()">xored()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section>
+         <db:title>const QRegion QRegion::operator|(const QRegion &amp;r) const</db:title>
+         <db:methodsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:type>const QRegion</db:type>
+            <db:methodname>operator|</db:methodname>
+            <db:methodparam>
+               <db:type>const QRegion &amp;</db:type>
+               <db:parameter>r</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Applies the <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code> function to this region and <db:code role="argument">r</db:code>. <db:code>r1|r2</db:code> is equivalent to <db:code>r1.united(r2)</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert">
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#united" xrefstyle="function" annotations="united()">united()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qregion.html#operator-2b" xrefstyle="function" annotations="operator+()">operator+()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+</db:article>
