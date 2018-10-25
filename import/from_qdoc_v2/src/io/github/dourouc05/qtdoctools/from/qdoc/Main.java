@@ -55,7 +55,7 @@ public class Main {
 
         // Run qdoc.
         System.out.println("++> Running qdoc.");
-        m.runQdoc(mainQdocconfPath);
+//        m.runQdoc(mainQdocconfPath);
         System.out.println("++> Qdoc done.");
 
         // Gather all WebXML files and transform them into DocBook.
@@ -141,9 +141,10 @@ public class Main {
         docBookRNGPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\schema\\docbook52qdt\\custom.rnc";
         dvpMLXSDPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\article.xsd";
 
-        sourceFolder = Paths.get("C:\\Qt\\5.12.0\\Src");
-//        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
-        outputFolder = Paths.get("C:\\Qt\\Doc512");
+//        sourceFolder = Paths.get("C:\\Qt\\5.12.0\\Src");
+//        outputFolder = Paths.get("C:\\Qt\\Doc512");
+        sourceFolder = Paths.get("C:\\Qt\\5.11.1\\Src");
+        outputFolder = Paths.get("C:\\Qt\\Doc");
 
         generateFileMappings();
     }

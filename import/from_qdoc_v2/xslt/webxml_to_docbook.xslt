@@ -171,16 +171,86 @@
     </db:section>
   </xsl:template>
   
+  <xsl:function name="tc:load-class" as="node()">
+    <xsl:param name="class" as="xs:string"/>
+    
+    <xsl:variable name="matchingClasses" as="node()*">
+      <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
+        <xsl:if test="./WebXML/document/class and ./WebXML/document/class/@fullname = $class">
+          <xsl:copy-of select="."/>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="count($matchingClasses) = 1">
+        <xsl:copy-of select="$matchingClasses[1]"/>
+      </xsl:when>
+      <xsl:when test="count($matchingClasses) = 0">
+        <xsl:message>WARNING: Cannot find a class whose name is <xsl:value-of select="$class"/></xsl:message>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Multiple classes with the name <xsl:value-of select="$class"/> have been found</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
   <xsl:function name="tc:is-element-included" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
     
-    <!-- Either it has text -->
-    <xsl:variable name="hasText" select="count($currentNode/description/*[not(self::see-also)]) > 0"/>
-    <!-- or it is not private and not deleted. -->
-    <xsl:variable name="isPrivate" select="boolean($currentNode/@access) and $currentNode/@access='private'" as="xs:boolean"/>
-    <xsl:variable name="isDeleted" select="boolean($currentNode/@delete) and not($currentNode/@delete='false')" as="xs:boolean"/>
+    <!-- Implementation based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/shiboken2/generator/qtdoc/qtdocgenerator.cpp#L55 -->
+    <xsl:variable name="shouldSkip" as="xs:boolean">
+      <xsl:choose>
+        <xsl:when test="boolean($currentNode/@const) and $currentNode/@const='true'">
+          <xsl:value-of select="false()"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:variable name="potentialDuplicates" as="node()*" 
+            select="$currentNode/parent::*/function[. != $currentNode and @name=$currentNode/@name and @fullname=$currentNode/@fullname and @constant='true' and count(parameter) = count($currentNode/parameter)]"/>
+          <xsl:choose>
+            <xsl:when test="count($potentialDuplicates) = 0">
+              <xsl:value-of select="false()"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:variable name="actualDuplicates" select="$potentialDuplicates[string-join($currentNode/parameter/@type, ',') = string-join(./parameter/@type, ',')]"/>
+              <xsl:value-of select="count($actualDuplicates) > 0"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     
-    <xsl:value-of select="$hasText or not($isPrivate or $isDeleted)"/>
+    <!-- Implementation based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/shiboken2/ApiExtractor/docparser.cpp#L81 -->
+    <xsl:variable name="shouldSkipForQuery" as="xs:boolean">
+      <xsl:variable name="isPrivate" select="boolean($currentNode/@access) and $currentNode/@access='private'" as="xs:boolean"/>
+      <xsl:variable name="isDeleted" select="boolean($currentNode/@delete) and not($currentNode/@delete='false')" as="xs:boolean"/>
+      <xsl:variable name="hasDifferentDeclaringClass">
+        <xsl:variable name="baseClasses" select="$currentNode/ancestor::class/@bases" as="xs:string?"/>
+        <xsl:choose>
+          <xsl:when test="$baseClasses or string-length($baseClasses) = 0">
+            <xsl:value-of select="false()"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="baseClassHasMethod" as="xs:boolean+">
+              <xsl:for-each select="tokenize($baseClasses, ',')">
+                <xsl:variable name="otherClass" select="tc:load-class(.)/WebXML/document/class"/>
+                <xsl:value-of select="boolean($otherClass/function[@name = $currentNode/@name and count(parameter) = count($currentNode/parameter) and string-join(./parameter/@type, ',') = string-join($currentNode/parameter/@type, ',')])"/>
+              </xsl:for-each>
+            </xsl:variable>
+            
+            <xsl:value-of select="some $x in $baseClassHasMethod satisfies $x = true()"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:value-of select="$isPrivate or $isDeleted or $hasDifferentDeclaringClass"/>
+    </xsl:variable>
+    
+    <!-- Implementation based on https://github.com/pyside/pyside2-setup/blob/5.9/sources/shiboken2/ApiExtractor/abstractmetalang.cpp#L2001 -->
+    <!-- TODO: Really needed? -->
+    
+    <!-- TODO: Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
+    
+    <!-- Merge the blocks. -->
+    <xsl:value-of select="not($shouldSkip or $shouldSkipForQuery)"/>
   </xsl:function>
   
   <xsl:template name="content_class_elements">
