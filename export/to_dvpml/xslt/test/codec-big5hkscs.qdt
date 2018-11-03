@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Big5-HKSCS Text Codec</db:title>
+      <db:pubdate>2018-10-25+02:00</db:pubdate>
+      <db:date>2018-10-25+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.11</db:productnumber>
+   </db:info>
+   <db:para>The Big5-HKSCS codec provides conversion to and from the Big5-HKSCS encoding.</db:para>
+   <db:para>The codec grew out of the QBig5Codec originally contributed by Ming-Che Chuang &lt;mingche@cobra.ee.ntu.edu.tw&gt;. James Su &lt;suzhe@turbolinux.com.cn&gt; &lt;suzhe@gnuchina.org&gt; and Anthony Fok &lt;anthony@thizlinux.com&gt; &lt;foka@debian.org&gt; implemented HKSCS-1999 QBig5hkscsCodec for Qt-2.3.x, but it was too late in Qt development schedule to be officially included in the Qt-2.3.x series.</db:para>
+   <db:para>Wu Yi &lt;wuyi@hancom.com&gt; ported the HKSCS-1999 QBig5hkscsCodec to Qt-3.0.1 in March 2002.</db:para>
+   <db:para>With the advent of the new HKSCS-2001 standard, James Su &lt;suzhe@turbolinux.com.cn&gt; &lt;suzhe@gnuchina.org&gt; generated the Big5-HKSCS&lt;-&gt;Unicode tables with a very space-efficient algorithm. He generously donated his code to glibc in May 2002. Subsequently, James has generously allowed Anthony Fok to adapt the code for Qt-3.0.5.</db:para>
+   <db:para>Currently, the Big5-HKSCS tables are generated from the following sources, and with the Euro character added:</db:para>
+   <db:orderedlist>
+      <db:listitem>
+         <db:para>http://www.microsoft.com/typography/unicode/950.txt</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>http://www.info.gov.hk/digital21/chi/hkscs/download/big5-iso.txt</db:para>
+      </db:listitem>
+      <db:listitem>
+         <db:para>http://www.info.gov.hk/digital21/chi/hkscs/download/big5cmp.txt</db:para>
+      </db:listitem>
+   </db:orderedlist>
+   <db:para>There may be more fine-tuning to the QBig5hkscsCodec to maximize its compatibility with the standard Big5 (2002) mapping as determined by Li18nux Big5 Standard Subgroup. See http://www.autrijus.org/xml/ for the various Big5 CharMapML tables.</db:para>
+</db:article>

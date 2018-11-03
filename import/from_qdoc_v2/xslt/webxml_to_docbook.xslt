@@ -248,6 +248,9 @@
     <!-- TODO: Really needed? -->
     
     <!-- TODO: Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
+    <xsl:if test="not($shouldSkip or $shouldSkipForQuery) and count($currentNode/description/*) > 0">
+      <xsl:message>WARNING: The description of <xsl:value-of select="$currentNode/@name"/> is skipped while it has some content.</xsl:message>
+    </xsl:if>
     
     <!-- Merge the blocks. -->
     <xsl:value-of select="not($shouldSkip or $shouldSkipForQuery)"/>
@@ -1249,6 +1252,7 @@
                     <xsl:catch>
                       <!-- Sometimes, there is something strange in @members: just skip -->
                       <!-- (does not appear in the official documentation). -->
+                      <xsl:message>WARNING</xsl:message>
                     </xsl:catch>
                   </xsl:try>
                 </xsl:for-each>
@@ -2785,10 +2789,27 @@
   </xsl:template>
   
   <xsl:template mode="content_para" match="raw">
-    <!-- Cheating, right. But we have no choice here. -->
-    <db:code role="raw-html">
-      <xsl:apply-templates mode="content_para"/>
-    </db:code>
+    <xsl:choose>
+      <xsl:when test="starts-with(string(), '&amp;') and ends-with(string(), ';')">
+        <!-- HTML entities. -->
+        <xsl:value-of select="string()"/>
+      </xsl:when>
+      <xsl:when test="starts-with(string(), '&lt;')">
+        <!-- HTML entities. -->
+        <xsl:value-of select="string()"/>
+      </xsl:when>
+      <xsl:when test="starts-with(string(), '/') or ends-with(string(), '/')">
+        <!-- Qdoc specificities. -->
+        <xsl:value-of select="string()"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Cheating, right. But we have no choice here. -->
+        <xsl:message>WARNING: Inline raw HTML.</xsl:message>
+        <db:code role="raw-html">
+          <xsl:apply-templates mode="content_para"/>
+        </db:code>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content content_para" match="target">

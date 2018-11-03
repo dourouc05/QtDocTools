@@ -1,4 +1,4 @@
-"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=60285:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\jing-20140903-saxon95.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
+"C:\Program Files\Java\jdk-10.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\lib\idea_rt.jar=54707:C:\Program Files\JetBrains\IntelliJ IDEA 2018.2.2\bin" -Dfile.encoding=UTF-8 -classpath D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\out\production\from_qdoc_v2;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\saxon9he.jar;D:\Dvp\QtDoc\QtDocTools\import\from_qdoc_v2\jing-20140903-saxon95.jar io.github.dourouc05.qtdoctools.from.qdoc.Main
 --> Found module: qt3d; qdocconf: C:\Qt\5.11.1\Src\qt3d\src\doc\qt3d.qdocconf
 --> Found module: qtactiveqt; qdocconf: C:\Qt\5.11.1\Src\qtactiveqt\src\activeqt\doc\activeqt.qdocconf
 --> Found module: qtandroidextras; qdocconf: C:\Qt\5.11.1\Src\qtandroidextras\src\androidextras\doc\qtandroidextras.qdocconf
@@ -48,11 +48,11 @@
 --> Found module: qtspeech; qdocconf: C:\Qt\5.11.1\Src\qtspeech\src\doc\qtspeech.qdocconf
 --> Found module: qtsvg; qdocconf: C:\Qt\5.11.1\Src\qtsvg\src\svg\doc\qtsvg.qdocconf
 --> Found submodule: qttools / designer; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\designer\doc\qtdesigner.qdocconf
---> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
 --> Found submodule: qttools / linguist; qdocconf: C:\Qt\5.11.1\Src\qttools\src\linguist\linguist\doc\qtlinguist.qdocconf
+--> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
+--> Found submodule: qttools / uitools; qdocconf: C:\Qt\5.11.1\Src\qttools\src\designer\src\uitools\doc\qtuitools.qdocconf
 --> Found submodule: qttools / qdoc; qdocconf: C:\Qt\5.11.1\Src\qttools\src\qdoc\doc\config\qdoc.qdocconf
 --> Found submodule: qttools / assistant; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\assistant\doc\qtassistant.qdocconf
---> Found submodule: qttools / help; qdocconf: C:\Qt\5.11.1\Src\qttools\src\assistant\help\doc\qthelp.qdocconf
 --> Found module: qtvirtualkeyboard; qdocconf: C:\Qt\5.11.1\Src\qtvirtualkeyboard\src\virtualkeyboard\doc\qtvirtualkeyboard.qdocconf
 --> Found submodule: qtwayland / compositor; qdocconf: C:\Qt\5.11.1\Src\qtwayland\src\compositor\doc\qtwaylandcompositor.qdocconf
 --> Found module: qtwebchannel; qdocconf: C:\Qt\5.11.1\Src\qtwebchannel\src\webchannel\doc\qtwebchannel.qdocconf
@@ -130,6 +130,9 @@
 ++> Module qdocconf rewritten: qtxmlpatterns
 ++> Module qdocconf rewritten: qtbase
 ++> Module qdocconf rewritten: qtbase
+++> Main qdocconf rewritten: C:\Qt\Doc\qtdoctools-main.qdocconf
+++> Running qdoc.
+++> Qdoc done.
 [0001/7715]C:\Qt\Doc\webxml\01-qdoc-manual.webxml
 [0002/7715]C:\Qt\Doc\webxml\03-qdoc-commands-markup.webxml
 [0003/7715]C:\Qt\Doc\webxml\04-qdoc-commands-textmarkup.webxml
@@ -449,7 +452,6 @@
 [0317/7715]C:\Qt\Doc\webxml\objecttrees.webxml
 [0318/7715]C:\Qt\Doc\webxml\obsoleteclasses.webxml
 [0319/7715]C:\Qt\Doc\webxml\obsoleteqmltypes.webxml
-WARNING: generatedlist type not implemented: obsoleteqmlmembers
 [0320/7715]C:\Qt\Doc\webxml\opensourcelicense.webxml
 [0321/7715]C:\Qt\Doc\webxml\opensslsupport.webxml
 [0322/7715]C:\Qt\Doc\webxml\osx-building.webxml
@@ -5183,10 +5185,6 @@ WARNING: Quote from file with no content.
 [5047/7715]C:\Qt\Doc\webxml\qtquickcontrols2-chattutorial-chapter5-styling-sqlconversationmodel-h.webxml
 [5048/7715]C:\Qt\Doc\webxml\qtquickcontrols2-chattutorial-chattutorial-pro.webxml
 [5049/7715]C:\Qt\Doc\webxml\qtquickcontrols2-chattutorial-example.webxml
-WARNING: generatedlist type not implemented: exampleimages
-WARNING: generatedlist type not implemented: exampleimages
-WARNING: generatedlist type not implemented: exampleimages
-WARNING: generatedlist type not implemented: exampleimages
 [5050/7715]C:\Qt\Doc\webxml\qtquickcontrols2-chattutorial-shared-shared-qrc.webxml
 [5051/7715]C:\Qt\Doc\webxml\qtquickcontrols2-complexpingpong-example.webxml
 [5052/7715]C:\Qt\Doc\webxml\qtquickcontrols2-configuration.webxml
@@ -7856,7 +7854,7 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7710/7715]C:\Qt\Doc\webxml\xml-sax.webxml
 [7711/7715]C:\Qt\Doc\webxml\xml-streaming.webxml
 [7712/7715]C:\Qt\Doc\webxml\xml-tools.webxml
-Warning at char 7 in xsl:variable/@select on line 1043 column 126 of webxml_to_docbook.xslt:
+Warning at char 7 in xsl:variable/@select on line 1236 column 126 of webxml_to_docbook.xslt:
   FODC0002: I/O error reported by XML parser processing
   file:///C:/Qt/Doc/webxml/pullbridge.webxml: C:\Qt\Doc\webxml\pullbridge.webxml (The system
   cannot find the file specified)

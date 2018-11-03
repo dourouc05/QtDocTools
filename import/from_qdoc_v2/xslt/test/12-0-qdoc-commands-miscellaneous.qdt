@@ -21,8 +21,8 @@
             </db:simplelist>
          </db:para>
       </db:abstract>
-      <db:pubdate>2018-09-26+02:00</db:pubdate>
-      <db:date>2018-09-26+02:00</db:date>
+      <db:pubdate>2018-11-03+01:00</db:pubdate>
+      <db:date>2018-11-03+01:00</db:date>
       <db:productname>Qt</db:productname>
       <db:productnumber>1.2</db:productnumber>
    </db:info>
@@ -354,7 +354,7 @@
 \input examples/objectmodel.qdocinc another-snippet-id</db:programlisting>
       <db:para>It works as expected. The sequence of QDoc commands and text found between the two tags with the same name as the second argument is sent to the QDoc input stream. You can even have nested snippets.</db:para>
       <db:note xml:id="meta-command">
-         <db:para> Snippet identifiers work also within documentation comment ( .. ) blocks, so it's not necessary to use a separate <db:code>.qdocinc</db:code> file. When processing a comment block, QDoc removes any <db:code>//!</db:code> comment lines from the generated output.</db:para>
+         <db:para> Snippet identifiers work also within documentation comment (/*! .. */) blocks, so it's not necessary to use a separate <db:code>.qdocinc</db:code> file. When processing a comment block, QDoc removes any <db:code>//!</db:code> comment lines from the generated output.</db:para>
       </db:note>
    </db:section>
    <db:section xml:id="meta">
@@ -449,6 +449,21 @@
     \endtable
 * /</db:programlisting>
       <db:para>QDoc renders this as:</db:para>
+      <db:programlisting role="raw-html">                &lt;table align="center" cellpadding="2"
+                    cellspacing="1" border="0"&gt;
+
+                &lt;tr valign="top" bgcolor="#d0d0d0"&gt;
+                    &lt;td&gt;Basic Widgets&lt;/td&gt;
+                    &lt;td&gt;Basic GUI widgets such as buttons, comboboxes
+                       and scrollbars.&lt;/td&gt;
+                &lt;/tr&gt;
+
+                &lt;tr valign="top" bgcolor="#c0c0c0"&gt;
+                    &lt;td&gt;Database Classes&lt;/td&gt;
+                    &lt;td&gt;Database related classes, e.g. for SQL databases.&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;/table&gt;
+            </db:programlisting>
    </db:section>
    <db:section xml:id="raw-avoid">
       <db:title>\raw (avoid)</db:title>

@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Customizing Qt Assistant</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist>
+               <db:member>
+                  <db:link xlink:href="assistant-details.html" xlink:title="previous">&lt; Using Qt Assistant</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qtassistant-index.html" xlink:title="contents">^ Qt Assistant Manual ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2018-11-03+01:00</db:pubdate>
+      <db:date>2018-11-03+01:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:para>Using <db:emphasis>Qt Assistant</db:emphasis> as custom help viewer requires more than just being able to display custom documentation. It is equally important that the appearance of <db:emphasis>Qt Assistant</db:emphasis> can be customized so that it is seen as a application-specific help viewer rather than <db:emphasis>Qt Assistant</db:emphasis>. This is achieved by changing the window title or icon, as well as some application-specific menu texts and actions. For a complete list of possible customizations, see <db:link xlink:href="assistant-custom-help-viewer.html#creating-a-custom-help-collection-file" xrefstyle="page" annotations="Creating a Custom Help Collection File">Creating a Custom Help Collection File</db:link>.</db:para>
+   <db:para>Another requirement of a custom help viewer is the ability to receive actions or commands from the application it provides help for. This is especially important when the application offers context sensitive help. When used in this way, the help viewer may need to change its contents depending on the state the application is currently in. This means that the application has to communicate the current state to the help viewer. For more information, see <db:link xlink:href="assistant-custom-help-viewer.html#using-qt-assistant-remotely" xrefstyle="page" annotations="Using Qt Assistant Remotely">Using Qt Assistant Remotely</db:link>.</db:para>
+   <db:para>The <db:link xlink:href="qtassistant-simpletextviewer-example.html" xrefstyle="page" annotations="Simple Text Viewer Example">Simple Text Viewer</db:link> example uses the techniques described in this document to show how to use <db:emphasis>Qt Assistant</db:emphasis> as a custom help viewer for an application.</db:para>
+   <db:para>
+      <db:emphasis role="bold">Warning:</db:emphasis> In order to ship Qt Assistant in your application, it is crucial that you include the sqlite plugin. For more information on how to include plugins in your application, refer to the <db:link xlink:href="deployment.html" xrefstyle="page" annotations="Deploying Qt Applications">deployment documentation</db:link>.</db:para>
+   <db:section xml:id="qt-help-collection-files">
+      <db:title>Qt Help Collection Files</db:title>
+      <db:para>The first important point to know about <db:emphasis>Qt Assistant</db:emphasis> is that it stores all settings related to its appearance <db:emphasis>and</db:emphasis> a list of installed documentation in a help collection file. This means, when starting <db:emphasis>Qt Assistant</db:emphasis> with different collection files, <db:emphasis>Qt Assistant</db:emphasis> may look totally different. This complete separation of settings makes it possible to deploy <db:emphasis>Qt Assistant</db:emphasis> as a custom help viewer for more than one application on one machine without risk of interference between different instances of <db:emphasis>Qt Assistant</db:emphasis>.</db:para>
+      <db:para>To apply a certain help collection to <db:emphasis>Qt Assistant</db:emphasis>, specify the respective collection file on the command line when starting it. For example:</db:para>
+      <db:programlisting>
+assistant -collectionFile mycollection.qhc
+</db:programlisting>
+      <db:para>However, storing all settings in one collection file raises some problems. The collection file is usually installed in the same directory as the application itself, or one of its subdirectories. Depending on the directory and the operating system, the user may not have any permissions to modify this file which would happen when the user settings are stored. Also, it may not even be possible to give the user write permissions, for example when the file is located on a read-only medium like a CD-ROM.</db:para>
+      <db:para>Even if it is possible to give everybody the right to store their settings in a globally available collection file, the settings from one user would be overwritten by another user when exiting <db:emphasis>Qt Assistant</db:emphasis>.</db:para>
+      <db:para>To solve this dilemma, <db:emphasis>Qt Assistant</db:emphasis> creates user specific collection files which are more or less copied from the original collection file. The user-specific collection file will be saved in a subdirectory of the path returned by <db:code><db:link xlink:href="qdesktopservices-obsolete.html#StandardLocation-enum" xrefstyle="enum" annotations="QDesktopServices::DataLocation">QDesktopServices::DataLocation</db:link></db:code>. The subdirectory, or <db:emphasis>cache directory</db:emphasis> within this user-specific location, can be defined in the help collection project file. For example:</db:para>
+      <db:programlisting>
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;QHelpCollectionProject version="1.0"&gt;
+    &lt;assistant&gt;
+        &lt;title&gt;My Application Help&lt;/title&gt;
+        &lt;cacheDirectory&gt;mycompany/myapplication&lt;/cacheDirectory&gt;
+        ...
+    &lt;/assistant&gt;
+&lt;/QHelpCollectionProject&gt;
+</db:programlisting>
+      <db:para>So, when calling</db:para>
+      <db:programlisting>
+assistant -collectionFile mycollection.qhc
+</db:programlisting>
+      <db:para>
+         <db:emphasis>Qt Assistant</db:emphasis> actually uses the collection file:</db:para>
+      <db:programlisting>
+%QDesktopServices::DataLocation%/mycompany/myapplication/mycollection.qhc
+</db:programlisting>
+      <db:para>There is no need ever to start <db:emphasis>Qt Assistant</db:emphasis> with the user specific collection file. Instead, the collection file shipped with the application should always be used. Also, when adding or removing documentation from the collection file (see next section) always use the normal collection file. <db:emphasis>Qt Assistant</db:emphasis> will take care of synchronizing the user collection files when the list of installed documentation has changed.</db:para>
+   </db:section>
+   <db:section xml:id="displaying-custom-documentation">
+      <db:title>Displaying Custom Documentation</db:title>
+      <db:para>Before <db:emphasis>Qt Assistant</db:emphasis> is able to show documentation, it has to know where it can find the actual documentation files, meaning that it has to know the location of the Qt compressed help file (*.qch). As already mentioned, <db:emphasis>Qt Assistant</db:emphasis> stores references to the compressed help files in the currently used collection file. So, when creating a new collection file you can list all compressed help files <db:emphasis>Qt Assistant</db:emphasis> should display.</db:para>
+      <db:programlisting>
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;QHelpCollectionProject version="1.0"&gt;
+    ...
+    &lt;docFiles&gt;
+        &lt;register&gt;
+            &lt;file&gt;myapplication-manual.qch&lt;/file&gt;
+            &lt;file&gt;another-manual.qch&lt;/file&gt;
+        &lt;/register&gt;
+    &lt;/docFiles&gt;
+&lt;/QHelpCollectionProject&gt;
+</db:programlisting>
+      <db:para>Sometimes, depending on the application for which <db:emphasis>Qt Assistant</db:emphasis> acts as a help viewer, more documentation needs to be added over time; for example, when installing more application components or plugins. This can be done manually in <db:emphasis>Qt Assistant</db:emphasis> by selecting <db:emphasis role="bold">Edit</db:emphasis> &gt; <db:emphasis role="bold">Preferences</db:emphasis> &gt; <db:emphasis role="bold">Documentation</db:emphasis>. However, this approach has the disadvantage that every user has to do it manually to get access to the new documentation.</db:para>
+      <db:para>The preferred way of adding documentation to an already existing collection file is to use the <db:code>-register</db:code> command line flag of <db:emphasis>Qt Assistant</db:emphasis>. When starting <db:emphasis>Qt Assistant</db:emphasis> with this flag, the documentation will be added and <db:emphasis>Qt Assistant</db:emphasis> will exit right away displaying a message if the registration was successful or not.</db:para>
+      <db:para>The search indexing will only index your custom *.html, *.htm, and *.txt files.</db:para>
+      <db:programlisting>
+assistant -collectionFile mycollection.qhc -register myapplication-manual.qch
+</db:programlisting>
+      <db:para>The <db:code>-quiet</db:code> flag can be passed on to <db:emphasis>Qt Assistant</db:emphasis> to prevent it from writing out the status message.</db:para>
+      <db:note>
+         <db:para>
+            <db:emphasis>Qt Assistant</db:emphasis> shows the documentation in the <db:emphasis role="bold">Contents</db:emphasis> view in the same order as it was registered.</db:para>
+      </db:note>
+   </db:section>
+   <db:section xml:id="changing-the-appearance-of-qt-assistant">
+      <db:title>Changing the Appearance of Qt Assistant</db:title>
+      <db:para>The appearance of <db:emphasis>Qt Assistant</db:emphasis> can be changed by passing different command line options on startup. However, these command line options only allow to show or hide specific widgets, like the contents or index view. Other customizations, such as changing the application title or icon, or disabling the filter functionality, can be done by creating a custom help collection file.</db:para>
+   </db:section>
+   <db:section xml:id="creating-a-custom-help-collection-file">
+      <db:title>Creating a Custom Help Collection File</db:title>
+      <db:para>The help collection file (*.qhc) used by <db:emphasis>Qt Assistant</db:emphasis> is created when running the <db:code>qcollectiongenerator</db:code> tool on a help collection project file (*.qhcp). The project file format is XML and it supports the following tags:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Tag</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Brief Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;title&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies a window title for <db:emphasis>Qt Assistant</db:emphasis>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;homePage&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the page to display when selecting <db:emphasis role="bold">Home</db:emphasis> in the <db:emphasis>Qt Assistant</db:emphasis> main window.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;startPage&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the page to display initially when the help collection is used.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;currentFilter&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the filter that is initially used. If this filter is not specified, the documentation will not be filtered. This has no impact if only one documentation set is installed.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;applicationIcon&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Describes an icon that will be used instead of the normal <db:emphasis>Qt Assistant</db:emphasis> application icon. This is specified as a relative path from the directory containing the collection file.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;enableFilterFunctionality&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables or disables user accessible filter functionality, making it possible to prevent the user from changing any filter when running <db:emphasis>Qt Assistant</db:emphasis>. It does not mean that the internal filter functionality is completely disabled. Set the value to <db:code>false</db:code> if you want to disable the filtering. If the filter toolbar should be shown by default, set the attribute <db:code>visible</db:code> to <db:code>true</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;enableDocumentationManager&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Shows or hides the <db:emphasis role="bold">Documentation</db:emphasis> tab in the <db:emphasis role="bold">Preferences</db:emphasis> dialog. Disabling the <db:emphasis role="bold">Documentation</db:emphasis> tab allows you to limit <db:emphasis>Qt Assistant</db:emphasis> to display a specific documentation set or make it impossible for the end user to accidentally remove or install documentation. To hide the <db:emphasis role="bold">Documentation</db:emphasis> tab, set the tag value to <db:code>false</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;enableAddressBar&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables or disables the address bar functionality. By default it is enabled. To disable it, set the tag value to <db:code>false</db:code>. If the address bar functionality is enabled, the address bar can be shown by setting the tag attribute <db:code>visible</db:code> to <db:code>true</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;aboutMenuText&gt;, &lt;text&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Lists localized versions for the <db:emphasis role="bold">About</db:emphasis> menu item in the <db:emphasis role="bold">Help</db:emphasis> menu. For example, <db:emphasis role="bold">About Application</db:emphasis>. The text is specified within the <db:code>text</db:code> tags. The <db:code>language</db:code> attribute takes the two letter language name. The text is used as the default text if no language attribute is specified.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;aboutDialog&gt;, &lt;file&gt;, &lt;icon&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the text for the <db:emphasis role="bold">About</db:emphasis> dialog that can be opened from the <db:emphasis role="bold">Help</db:emphasis> menu. The text is taken from the file in the <db:code>file</db:code> tags. It is possible to specify a different file or any language. The icon defined by the <db:code>icon</db:code> tags is applied to any language.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;cacheDirectory base="collection &gt; default"&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Specifies the cache directory that is used to store index files needed for the full text search and a copy of the collection file. The copy is needed because <db:emphasis>Qt Assistant</db:emphasis> stores all its settings in the collection file, and therefore, it must be writable for the user. The directory is specified as a relative path. If the <db:code>base</db:code> attribute is set to "collection", the path is relative to the directory the collection file resides in. If the attribute is set to "default" or if it is missing, the path is relative to the directory given by <db:code><db:link xlink:href="qdesktopservices-obsolete.html#StandardLocation-enum" xrefstyle="enum" annotations="QDesktopServices::DataLocation">QDesktopServices::DataLocation</db:link></db:code>. The first form is useful for collections that are used in a <db:emphasis>mobile</db:emphasis> way, such as carried around on a USB stick.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>&lt;enableFullTextSearchFallback&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Enables or disables the ability to fallback and use the full text search if a keyword cannot be found in the index. This functionality can be used while remote controlling <db:emphasis>Qt Assistant</db:emphasis>. To make it available for remote control, set the tag value to <db:code>true</db:code>.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>In addition to those <db:emphasis>Qt Assistant</db:emphasis> specific tags, the tags for generating and registering documentation can be used. See <db:link xlink:href="assistant-custom-help-viewer.html#qt-help-collection-files" xrefstyle="page" annotations="Qt Help Collection Files">Qt Help Collection Files</db:link> documentation for more information.</db:para>
+      <db:para>An example of a help collection file that uses all the available tags is shown below:</db:para>
+      <db:programlisting>
+&lt;?xml version="1.0" encoding="utf-8" ?&gt;
+&lt;QHelpCollectionProject version="1.0"&gt;
+    &lt;assistant&gt;
+        &lt;title&gt;My Application Help&lt;/title&gt;
+        &lt;startPage&gt;qthelp://com.mycompany.1_0_0/doc/index.html&lt;/startPage&gt;
+        &lt;currentFilter&gt;myfilter&lt;/currentFilter&gt;
+        &lt;applicationIcon&gt;application.png&lt;/applicationIcon&gt;
+        &lt;enableFilterFunctionality&gt;false&lt;/enableFilterFunctionality&gt;
+        &lt;enableDocumentationManager&gt;false&lt;/enableDocumentationManager&gt;
+        &lt;enableAddressBar visible="true"&gt;true&lt;/enableAddressBar&gt;
+        &lt;cacheDirectory&gt;mycompany/myapplication&lt;/cacheDirectory&gt;
+        &lt;aboutMenuText&gt;
+            &lt;text&gt;About My Application&lt;/text&gt;
+            &lt;text language="de"&gt;Über meine Applikation...&lt;/text&gt;
+        &lt;/aboutMenuText&gt;
+        &lt;aboutDialog&gt;
+            &lt;file&gt;about.txt&lt;/file&gt;
+            &lt;file language="de"&gt;ueber.txt&lt;/file&gt;
+            &lt;icon&gt;about.png&lt;/icon&gt;
+        &lt;/aboutDialog&gt;
+    &lt;/assistant&gt;
+    &lt;docFiles&gt;
+        &lt;generate&gt;
+            &lt;file&gt;
+                &lt;input&gt;myapplication-manual.qhp&lt;/input&gt;
+                &lt;output&gt;myapplication-manual.qch&lt;/output&gt;
+            &lt;/file&gt;
+        &lt;/generate&gt;
+        &lt;register&gt;
+            &lt;file&gt;myapplication-manual.qch&lt;/file&gt;
+        &lt;/register&gt;
+    &lt;/docFiles&gt;
+&lt;/QHelpCollectionProject&gt;
+</db:programlisting>
+      <db:para>To create the binary collection file, run the <db:code>qcollectiongenerator</db:code> tool:</db:para>
+      <db:programlisting>
+qcollectiongenerator mycollection.qhcp -o mycollection.qhc
+</db:programlisting>
+      <db:para>To test the generated collection file, start <db:emphasis>Qt Assistant</db:emphasis> in the following way:</db:para>
+      <db:programlisting>
+assistant -collectionFile mycollection.qhc
+</db:programlisting>
+   </db:section>
+   <db:section xml:id="using-qt-assistant-remotely">
+      <db:title>Using Qt Assistant Remotely</db:title>
+      <db:para>Even though the help viewer is a standalone application, it will mostly be launched by the application it provides help for. This approach gives the application the possibility to ask for specific help contents to be displayed as soon as the help viewer is started. Another advantage with this approach is that the application can communicate with the help viewer process and can therefore request other help contents to be shown depending on the current state of the application.</db:para>
+      <db:para>So, to use <db:emphasis>Qt Assistant</db:emphasis> as the custom help viewer of your application, simply create a <db:code><db:link xlink:href="qprocess.html" xrefstyle="class" annotations="QProcess">QProcess</db:link></db:code> and specify the path to the <db:emphasis>Qt Assistant</db:emphasis> executable. In order to make <db:emphasis>Qt Assistant</db:emphasis> listen to your application, turn on its remote control functionality by passing the <db:code>-enableRemoteControl</db:code> command line option.</db:para>
+      <db:para>The following example shows how this can be done:</db:para>
+      <db:programlisting>
+QProcess *process = new QProcess;
+QStringList args;
+args &lt;&lt; QLatin1String("-collectionFile")
+    &lt;&lt; QLatin1String("mycollection.qhc")
+    &lt;&lt; QLatin1String("-enableRemoteControl");
+process-&gt;start(QLatin1String("assistant"), args);
+if (!process-&gt;waitForStarted())
+    return;
+</db:programlisting>
+      <db:para>Once <db:emphasis>Qt Assistant</db:emphasis> is running, you can send commands by using the stdin channel of the process. The code snippet below shows how to tell <db:emphasis>Qt Assistant</db:emphasis> to show a certain page in the documentation.</db:para>
+      <db:programlisting>
+QByteArray ba;
+ba.append("setSource qthelp://com.mycompany.1_0_0/doc/index.html\n");
+process-&gt;write(ba);
+</db:programlisting>
+      <db:note>
+         <db:para> The trailing newline character is required to mark the end of the input.</db:para>
+      </db:note>
+      <db:para>The following commands can be used to control <db:emphasis>Qt Assistant</db:emphasis>:</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th>
+                  <db:para>Command</db:para>
+               </db:th>
+               <db:th>
+                  <db:para>Brief Description</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>show &lt;Widget&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Shows the sidebar window (dock widget) specified by &lt;Widget&gt;. If the widget is already shown and this command is sent again, the widget will be activated, meaning that it will be raised and given the input focus. Possible values for &lt;Widget&gt; are "contents", "index", "bookmarks" or "search".</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>hide &lt;Widget&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Hides the dock widget specified by &lt;Widget&gt;. Possible values for &lt;Widget&gt; are "contents", "index", "bookmarks" and "search".</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>setSource &lt;Url&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Displays the given &lt;Url&gt;. The URL can be absolute or relative to the currently displayed page. If the URL is absolute, it has to be a valid Qt help system URL. That is, starting with "qthelp://".</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>activateKeyword &lt;Keyword&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Inserts the specified &lt;Keyword&gt; into the line edit of the index dock widget and activates the corresponding item in the index list. If such an item has more than one link associated with it, a topic chooser will be shown.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>activateIdentifier &lt;Id&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Displays the help contents for the given &lt;Id&gt;. An ID is unique in each namespace and has only one link associated to it, so the topic chooser will never pop up.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>syncContents</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Selects the item in the contents widget which corresponds to the currently displayed page.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>setCurrentFilter &lt;filter&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Selects the specified filter and updates the visual representation accordingly.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>expandToc &lt;Depth&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Expands the table of contents tree to the given depth. If depth is 0, the tree will be collapsed completely. If depth is -1, the tree will be expanded completely.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>register &lt;help file&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Adds the given Qt compressed help file to the collection.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>
+                  <db:code>unregister &lt;help file&gt;</db:code>
+               </db:para>
+            </db:td>
+            <db:td>
+               <db:para>Removes the given Qt compressed help file from the collection.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>If you want to send several commands within a short period of time, it is recommended that you write only a single line to the stdin of the process instead of one line for every command. The commands have to be separated by a semicolon, as shown in the following example:</db:para>
+      <db:programlisting>
+QByteArray ba;
+ba.append("hide bookmarks;");
+ba.append("hide index;");
+ba.append("setSource qthelp://com.mycompany.1_0_0/doc/index.html\n");
+process-&gt;write(ba);
+</db:programlisting>
+   </db:section>
+   <db:section xml:id="compatibility-with-old-formats">
+      <db:title>Compatibility with Old Formats</db:title>
+      <db:para>In Qt versions up to 4.3, the help system was based on Document Content File (DCF) and Qt Assistant Documentation Profile (ADP) formats. Unfortunately, the old file formats are not compatible with the new ones that are described in this manual and that are used from Qt 4.4 on, also in Qt 5. In general, the differences are not that big &amp;mdash; in most cases is the old format is just a subset of the new one. One example is the <db:code>namespace</db:code> tag in the Qt Help Project format, which was not part of the old format, but plays a vital role in the new one. To help you to move to the new file format, we have created a conversion wizard.</db:para>
+      <db:para>The wizard is started by executing <db:code>qhelpconverter</db:code>. It guides you through the conversion of different parts of the file and generates a new <db:code>qch</db:code> or <db:code>qhcp</db:code> file.</db:para>
+      <db:para>Once the wizard is finished and the files created, run the <db:code>qhelpgenerator</db:code> or the <db:code>qcollectiongenerator</db:code> tool to generate the binary help files used by <db:emphasis>Qt Assistant</db:emphasis>.</db:para>
+   </db:section>
+</db:article>

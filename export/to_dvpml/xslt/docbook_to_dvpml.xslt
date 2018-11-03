@@ -129,7 +129,8 @@
               <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
                 <!-- Just links in the DocBook abstract, but something resembling an abstract -->
                 <!-- (paragraphs before the first section). -->
-                <xsl:copy-of select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+                <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+                <xsl:copy-of select="if (count($tentative) &lt; count(db:info/following-sibling::*)) then $tentative else $tentative[1]"/>
               </xsl:when>
               <xsl:otherwise>
                 <!-- Nothing to do, sorry about that... -->
@@ -170,15 +171,20 @@
     </xsl:variable>
     
     <section id="{$sectionId}">
-      <xsl:if test="@xml:id">
-        <html-brut>
-          <xsl:value-of select="'&lt;![CDATA['"/>
-          <a name="{@xml:id}"/>
-          <xsl:value-of select="']]>'"/>
-        </html-brut>
-      </xsl:if>
+      <xsl:choose>
+        <xsl:when test="@xml:id">
+          <!-- First the title, then some raw HTML. -->
+          <title><xsl:value-of select="node()[db:title][1]"/></title>
+          <html-brut>
+            <xsl:value-of select="concat('&lt;![CDATA[&lt;a name=&#34;', @xml:id, '&#34;]]>')"/>
+          </html-brut>
+          <xsl:apply-templates mode="content" select="node()[not(db:title)]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates mode="content" select="node()"/>
+        </xsl:otherwise>
+      </xsl:choose>
       
-      <xsl:apply-templates mode="content"/>
     </section>
   </xsl:template>
   
@@ -226,7 +232,7 @@
   <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
   
   <xsl:template mode="content" match="db:para">
-    <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or string-length(name(preceding-sibling::*[1])) = 0">
+    <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or ..[self::db:article] or string-length(name(preceding-sibling::*[1])) = 0">
       <xsl:choose>
         <xsl:when test="db:informaltable | db:note | db:programlisting">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
@@ -391,7 +397,7 @@
       <xsl:choose>
         <xsl:when test="ends-with(string(@xlink:href), '.webxml')">
           <xsl:variable name="filename" select="substring-before(string(@xlink:href), '.webxml')"/>
-          <xsl:value-of select="concat('http://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"/>
+          <xsl:value-of select="concat('https://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="@xlink:href"/>
