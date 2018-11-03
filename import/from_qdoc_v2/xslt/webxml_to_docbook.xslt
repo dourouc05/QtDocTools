@@ -247,13 +247,15 @@
     <!-- Implementation based on https://github.com/pyside/pyside2-setup/blob/5.9/sources/shiboken2/ApiExtractor/abstractmetalang.cpp#L2001 -->
     <!-- TODO: Really needed? -->
     
-    <!-- TODO: Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
-    <xsl:if test="not($shouldSkip or $shouldSkipForQuery) and count($currentNode/description/*) > 0">
+    <!-- Merge the blocks. -->
+    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery)"/>
+    
+    <!-- Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
+    <xsl:if test="$shouldInclude and count($currentNode/description/*) > 0">
       <xsl:message>WARNING: The description of <xsl:value-of select="$currentNode/@name"/> is skipped while it has some content.</xsl:message>
     </xsl:if>
     
-    <!-- Merge the blocks. -->
-    <xsl:value-of select="not($shouldSkip or $shouldSkipForQuery)"/>
+    <xsl:value-of select="$shouldInclude"/>
   </xsl:function>
   
   <xsl:template name="content_class_elements">
@@ -1087,6 +1089,12 @@
         </db:para>
       </xsl:variable>
       
+      <xsl:for-each select="$content/db:para/db:simplelist/db:member">
+        <xsl:if test="not(.//db:link)">
+          <xsl:message>WARNING: A see-also has no generated link.</xsl:message>
+        </xsl:if>
+      </xsl:for-each>
+      
       <xsl:choose>
         <xsl:when test="preceding-sibling::node()[1][self::section or self::generatedlist]">
           <db:section>
@@ -1252,7 +1260,6 @@
                     <xsl:catch>
                       <!-- Sometimes, there is something strange in @members: just skip -->
                       <!-- (does not appear in the official documentation). -->
-                      <xsl:message>WARNING</xsl:message>
                     </xsl:catch>
                   </xsl:try>
                 </xsl:for-each>
