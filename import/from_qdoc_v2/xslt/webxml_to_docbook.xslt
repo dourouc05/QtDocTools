@@ -15,6 +15,7 @@
   <!--<xsl:param name="qt-version" as="xs:string" required="true"/>-->
   <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc/webxml/'"/>
   <!--<xsl:param name="local-foldern" as="xs:string" required="true"/>-->
+  <xsl:param name="debug-build" as="xs:boolean" select="true()"/> <!-- Requires some Saxon extensions only available in PE/EE. -->
   
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>
@@ -152,6 +153,29 @@
             <xsl:value-of select="."/>
           </db:classsynopsisinfo>
         </xsl:for-each>
+        
+        <xsl:variable name="className" select="." as="xs:string"/>
+        <xsl:variable name="classes" select="collection(concat($local-folder, '?select=*.webxml'))[./WebXML/document/class]"/>
+        <xsl:variable name="test" select="$classes[contains(./WebXML/document/class/@bases, @name)]"/>
+        <xsl:variable name="inheritedBy" select="collection(concat($local-folder, '?select=*.webxml'))[./WebXML/document/class and contains(./WebXML/document/class/@bases, @name)]" as="node()*"/>
+        <xsl:for-each select="$inheritedBy">
+          <db:classsynopsisinfo role="inheritedBy">
+            <xsl:value-of select="./WebXML/document/class/@name"/>
+          </db:classsynopsisinfo>
+        </xsl:for-each>
+        
+        <xsl:if test="$debug-build">
+          <!-- Expensive test: check in the online documentation the number of inherited-by classes. -->
+          <xsl:variable name="onlineClass" select="saxon:parse-html(unparsed-text(concat('http://doc.qt.io/qt-5/', lower-case(@name), '.html')))" as="node()"/>
+          <xsl:variable name="inheritedByTag" select="$onlineClass//node()[contains(text(),  'Inherited By:')]" as="node()"/>
+          <xsl:variable name="nInheritedBy" select="count($inheritedByTag/parent::node()//a)" as="xs:integer"/>
+          <xsl:if test="count($inheritedBy) != $nInheritedBy">
+            <xsl:message>DEBUG: Not the right number of inherited-by classes. 
+              In DocBook: <xsl:value-of select="string-join($inheritedBy/WebXML/document/class/@name, ', ')"/> (<xsl:value-of select="count($inheritedBy)"/> classes). 
+              Online: <xsl:value-of select="string-join($inheritedByTag/parent::node()//a/text(), ', ')"/> (<xsl:value-of select="$nInheritedBy"/> classes). 
+            </xsl:message>
+          </xsl:if>
+        </xsl:if>
         
         <xsl:for-each select="tokenize(@groups, ',')">
           <db:classsynopsisinfo role="group">
