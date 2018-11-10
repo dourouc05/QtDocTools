@@ -64,6 +64,9 @@ public class Main {
         int i = 0;
         String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
         for (Path file : webxml) {
+            if (! file.getFileName().toString().startsWith("q"))
+                continue;
+
             Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
 
             // Print the name of the file to process to ease debugging.
@@ -77,6 +80,7 @@ public class Main {
                 System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
                 e.printStackTrace();
             }
+            ConsistencyChecks.check(destination, "[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]");
             ++i;
         }
 

@@ -164,19 +164,6 @@
           </db:classsynopsisinfo>
         </xsl:for-each>
         
-        <xsl:if test="$debug-build">
-          <!-- Expensive test: check in the online documentation the number of inherited-by classes. -->
-          <xsl:variable name="onlineClass" select="saxon:parse-html(unparsed-text(concat('http://doc.qt.io/qt-5/', lower-case(@name), '.html')))" as="node()"/>
-          <xsl:variable name="inheritedByTag" select="$onlineClass//node()[contains(text(),  'Inherited By:')]" as="node()"/>
-          <xsl:variable name="nInheritedBy" select="count($inheritedByTag/parent::node()//a)" as="xs:integer"/>
-          <xsl:if test="count($inheritedBy) != $nInheritedBy">
-            <xsl:message>DEBUG: Not the right number of inherited-by classes. 
-              In DocBook: <xsl:value-of select="string-join($inheritedBy/WebXML/document/class/@name, ', ')"/> (<xsl:value-of select="count($inheritedBy)"/> classes). 
-              Online: <xsl:value-of select="string-join($inheritedByTag/parent::node()//a/text(), ', ')"/> (<xsl:value-of select="$nInheritedBy"/> classes). 
-            </xsl:message>
-          </xsl:if>
-        </xsl:if>
-        
         <xsl:for-each select="tokenize(@groups, ',')">
           <db:classsynopsisinfo role="group">
             <xsl:value-of select="."/>
