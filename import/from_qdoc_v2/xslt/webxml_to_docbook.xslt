@@ -154,13 +154,10 @@
           </db:classsynopsisinfo>
         </xsl:for-each>
         
-        <xsl:variable name="className" select="." as="xs:string"/>
-        <xsl:variable name="classes" select="collection(concat($local-folder, '?select=*.webxml'))[./WebXML/document/class]"/>
-        <xsl:variable name="test" select="$classes[contains(./WebXML/document/class/@bases, @name)]"/>
-        <xsl:variable name="inheritedBy" select="collection(concat($local-folder, '?select=*.webxml'))[./WebXML/document/class and contains(./WebXML/document/class/@bases, @name)]" as="node()*"/>
-        <xsl:for-each select="$inheritedBy">
+        <xsl:variable name="className" select="@name" as="xs:string"/>
+        <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))[./WebXML/document/class and ./WebXML/document/class/@status = 'active' and contains(WebXML/document/class/@bases, $className)]">
           <db:classsynopsisinfo role="inheritedBy">
-            <xsl:value-of select="./WebXML/document/class/@name"/>
+            <xsl:value-of select="if (./WebXML/document/class/@fullname) then ./WebXML/document/class/@fullname else ./WebXML/document/class/@name"/>
           </db:classsynopsisinfo>
         </xsl:for-each>
         

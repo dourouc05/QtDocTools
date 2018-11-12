@@ -43,20 +43,20 @@ public class Main {
         System.out.println("::> " + modules.size() + " modules found");
 
         // Rewrite the needed qdocconf files (one per module, may be multiple times per folder).
-        for (Pair<String, Path> module : modules) {
-            m.rewriteQdocconf(module.first, module.second);
-            System.out.println("++> Module qdocconf rewritten: " + module.first);
-        }
+//        for (Pair<String, Path> module : modules) {
+//            m.rewriteQdocconf(module.first, module.second);
+//            System.out.println("++> Module qdocconf rewritten: " + module.first);
+//        }
 
         // Generate the main qdocconf file.
         Path mainQdocconfPath = m.outputFolder.resolve("qtdoctools-main.qdocconf"); // TODO: Get m.outputFolder from the command-line parameters.
-        m.makeMainQdocconf(modules, mainQdocconfPath);
-        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+//        m.makeMainQdocconf(modules, mainQdocconfPath);
+//        System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
 
         // Run qdoc.
-        System.out.println("++> Running qdoc.");
+//        System.out.println("++> Running qdoc.");
 //        m.runQdoc(mainQdocconfPath);
-        System.out.println("++> Qdoc done.");
+//        System.out.println("++> Qdoc done.");
 
         // Gather all WebXML files and transform them into DocBook.
         List<Path> webxml = m.findWebXML();

@@ -1,22 +1,13 @@
 package io.github.dourouc05.qtdoctools.from.qdoc;
 
 import net.sf.saxon.s9api.*;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -36,7 +27,11 @@ public class ConsistencyChecks {
                 System.out.println(prefix + "     - DocBook has: " + Arrays.toString(inheritedBy.xml.toArray()));
                 System.out.println(prefix + "     - HTML has: " + Arrays.toString(inheritedBy.html.toArray()));
             }
-        } catch (IOException | ParserConfigurationException | SAXException | XPathExpressionException | SaxonApiException e) {
+        } catch (HttpStatusException e) {
+            System.out.println(prefix + " Error while performing the inherited-by class check: 404 when downloading the original class.");
+            // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html exists,
+            // but not http://doc.qt.io/qt-5/qabstractxmlreceiver.html.
+        } catch (IOException | SaxonApiException e) {
             System.out.println(prefix + " Error while performing the inherited-by class check: ");
             e.printStackTrace();
         }
@@ -63,9 +58,7 @@ public class ConsistencyChecks {
         }
     }
 
-    public static InheritedByResult checkInheritedBy(Path fileName) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException, SaxonApiException {
-        System.out.println(fileName);
-
+    public static InheritedByResult checkInheritedBy(Path fileName) throws IOException, SaxonApiException {
         // Initialise Saxon's S9 API and load the local XML file.
         Processor processor = new Processor(false);
         XdmNode xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(fileName.toFile())));
@@ -93,7 +86,9 @@ public class ConsistencyChecks {
         Set<String> inheritedBySetHTML = new HashSet<>();
 
         if (inheritedByTagHTML.size() > 0) {
-            Elements inheritedByListHTML = html.getElementsContainingText("Inherited By:").get(0).firstElementSibling().getElementsByTag("a");
+            // inheritedByTagHTML contains all tags that contain a tag that has "Inherited by": take the last one,
+            // the most precise of this collection.
+            Elements inheritedByListHTML = inheritedByTagHTML.get(inheritedByTagHTML.size() - 1).siblingElements().get(0).getElementsByTag("a");
             for (Element e : inheritedByListHTML) {
                 inheritedBySetHTML.add(e.text());
             }
