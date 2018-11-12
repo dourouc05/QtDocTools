@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import javax.xml.transform.stream.StreamSource;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -37,6 +38,32 @@ public class ConsistencyChecks {
         }
     }
 
+    private static class SaxonState {
+        Processor processor;
+        XdmNode xdm;
+        XPathCompiler compiler;
+
+        SaxonState(Path fileName) throws FileNotFoundException, SaxonApiException {
+            processor = new Processor(false);
+            xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(fileName.toFile())));
+            compiler = processor.newXPathCompiler();
+            compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
+            compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
+        }
+
+        XdmValue xpath(String expression) throws SaxonApiException {
+            return compiler.evaluate(expression, xdm);
+        }
+
+        boolean isClass() throws SaxonApiException {
+            return xpath("//db:classsynopsis").size() > 0;
+        }
+    }
+
+    private static Document readOnline(Path fileName) throws IOException {
+        return Jsoup.connect("http://doc.qt.io/qt-5/" + fileName.getFileName().toString().replace(".qdt", "") + ".html").get();
+    }
+
     public static class InheritedByResult {
         public final boolean result;
         public final Set<String> xml;
@@ -59,21 +86,15 @@ public class ConsistencyChecks {
     }
 
     public static InheritedByResult checkInheritedBy(Path fileName) throws IOException, SaxonApiException {
-        // Initialise Saxon's S9 API and load the local XML file.
-        Processor processor = new Processor(false);
-        XdmNode xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(fileName.toFile())));
-        XPathCompiler compiler = processor.newXPathCompiler();
-        compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
-        compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
+        SaxonState saxon = new SaxonState(fileName);
 
         // If the local file is not a class, the test is passed (only for classes).
-        boolean isClass = compiler.evaluate("//db:classsynopsis", xdm).size() > 0;
-        if (! isClass) {
+        if (! saxon.isClass()) {
             return new InheritedByResult(true);
         }
 
         // Find the inherited-by classes.
-        XdmValue inheritedByListXML = compiler.evaluate("//db:classsynopsisinfo[@role='inheritedBy']/text()", xdm);
+        XdmValue inheritedByListXML = saxon.xpath("//db:classsynopsisinfo[@role='inheritedBy']/text()");
 
         Set<String> inheritedBySetXML = new HashSet<>();
         for (int i = 0; i < inheritedByListXML.size(); ++i) {
@@ -81,7 +102,7 @@ public class ConsistencyChecks {
         }
 
         // Load the remote HTML.
-        Document html = Jsoup.connect("http://doc.qt.io/qt-5/" + fileName.getFileName().toString().replace(".qdt", "") + ".html").get();
+        Document html = readOnline(fileName);
         Elements inheritedByTagHTML = html.getElementsContainingText("Inherited By:");
         Set<String> inheritedBySetHTML = new HashSet<>();
 
@@ -96,5 +117,24 @@ public class ConsistencyChecks {
 
         // Compare.
         return new InheritedByResult(inheritedBySetXML, inheritedBySetHTML);
+    }
+
+    public static class ItemsResult {
+        public final boolean result;
+
+        ItemsResult() {
+            result = true;
+        }
+    }
+
+    public static ItemsResult checkItems(Path fileName) throws IOException, SaxonApiException {
+        SaxonState saxon = new SaxonState(fileName);
+
+        // If the local file is not a class, the test is passed (only for classes).
+        if (! saxon.isClass()) {
+            return new ItemsResult();
+        }
+
+        return new ItemsResult();
     }
 }

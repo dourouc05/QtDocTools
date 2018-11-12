@@ -66,6 +66,26 @@
             <db:para>
               <xsl:value-of select="child::node()[1]/@brief"/>
             </db:para>
+            
+            <!-- Generate some paragraphs for classes. -->
+            <xsl:if test="$mainTag/@threadsafety = 'reentrant'">
+              <db:note>
+                <db:para>All functions in this class are <db:link xlink:href="threads-reentrancy.html">reentrant</db:link>.</db:para>
+              </db:note>
+            </xsl:if>
+            <xsl:if test="$mainTag/function[@threadsafety='thread safe']">
+              <db:note>
+                <db:para>These functions are also <db:link xlink:href="threads-reentrancy.html">thread-safe</db:link>:</db:para>
+                <db:itemizedlist>
+                  <xsl:for-each select="$mainTag/function[@threadsafety='thread safe']">
+                    <db:listitem>
+                      <db:para><db:link xlink:href="{@href}"><xsl:value-of select="@signature"/></db:link></db:para>
+                    </db:listitem>
+                  </xsl:for-each>
+                </db:itemizedlist>
+              </db:note>
+            </xsl:if>
+            
             <xsl:if test="$mainTag/description/relation">
               <db:para>
                 <db:simplelist>
