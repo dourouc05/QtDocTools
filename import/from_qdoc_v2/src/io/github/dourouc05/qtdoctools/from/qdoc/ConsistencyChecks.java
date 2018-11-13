@@ -94,6 +94,29 @@ public class ConsistencyChecks {
             return compiler.evaluate(expression, xdm);
         }
 
+        Set<String> xpathToSet(String expression) throws SaxonApiException {
+            XdmValue xml = xpath(expression);
+            Set<String> set = new HashSet<>();
+            for (int i = 0; i < xml.size(); ++i) {
+                set.add(xml.itemAt(i).getStringValue());
+            }
+            return set;
+        }
+
+        Set<String> htmlToSet(String expression) {
+            Elements html = this.html.getElementsContainingText(expression);
+            Set<String> set = new HashSet<>();
+            if (html.size() > 0) {
+                // html contains all tags that contain a tag that contains the requested expression: take the last one,
+                // the most precise of this collection.
+                Elements propertiesListHTML = html.get(html.size() - 1).nextElementSibling().getElementsByTag("a");
+                for (Element e : propertiesListHTML) {
+                    set.add(e.text());
+                }
+            }
+            return set;
+        }
+
         boolean isClass() throws SaxonApiException {
             return xpath("//db:classsynopsis").size() > 0;
         }
@@ -139,6 +162,8 @@ public class ConsistencyChecks {
             // inheritedByTagHTML contains all tags that contain a tag that has "Inherited by": take the last one,
             // the most precise of this collection.
             Elements inheritedByListHTML = inheritedByTagHTML.get(inheritedByTagHTML.size() - 1).siblingElements().get(0).getElementsByTag("a");
+            //                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+            //                                                                                   Differences with htmlToSet()
             for (Element e : inheritedByListHTML) {
                 inheritedBySetHTML.add(e.text());
             }
@@ -153,20 +178,50 @@ public class ConsistencyChecks {
         public final boolean resultPublicTypes;
         public final Set<String> publicTypesXML;
         public final Set<String> publicTypesHTML;
+        public final boolean resultProperties;
+        public final Set<String> propertiesXML;
+        public final Set<String> propertiesHTML;
+        public final boolean resultFunctions;
+        public final Set<String> functionsXML;
+        public final Set<String> functionsHTML;
+        public final boolean resultSignals;
+        public final Set<String> signalsXML;
+        public final Set<String> signalsHTML;
 
         ItemsResult() {
             result = true;
             resultPublicTypes = true;
             publicTypesXML = new HashSet<>();
             publicTypesHTML = new HashSet<>();
+            resultProperties = true;
+            propertiesXML = new HashSet<>();
+            propertiesHTML = new HashSet<>();
+            resultFunctions = true;
+            functionsXML = new HashSet<>();
+            functionsHTML = new HashSet<>();
+            resultSignals = true;
+            signalsXML = new HashSet<>();
+            signalsHTML = new HashSet<>();
         }
 
-        ItemsResult(Set<String> publicTypesXML, Set<String> publicTypesHTML) {
+        ItemsResult(Set<String> publicTypesXML, Set<String> publicTypesHTML,
+                    Set<String> propertiesXML, Set<String> propertiesHTML,
+                    Set<String> functionsXML, Set<String> functionsHTML,
+                    Set<String> signalsXML, Set<String> signalsHTML) {
             this.publicTypesXML = publicTypesXML;
             this.publicTypesHTML = publicTypesHTML;
             resultPublicTypes = compareSets(publicTypesXML, publicTypesHTML);
+            this.propertiesXML = propertiesXML;
+            this.propertiesHTML = propertiesHTML;
+            resultProperties = compareSets(propertiesXML, propertiesHTML);
+            this.functionsXML = propertiesXML;
+            this.functionsHTML = propertiesHTML;
+            resultFunctions = compareSets(functionsXML, functionsHTML);
+            this.signalsXML = signalsXML;
+            this.signalsHTML = signalsHTML;
+            resultSignals = compareSets(signalsXML, signalsHTML);
 
-            result = resultPublicTypes;
+            result = resultPublicTypes && resultProperties && resultFunctions && resultSignals;
         }
     }
 
@@ -177,28 +232,23 @@ public class ConsistencyChecks {
         }
 
         // Count the public types.
-        XdmValue publicTypesXML = request.xpath("//db:enumsynopsis/db:enumname/text()");
-
-        Set<String> publicTypesSetXML = new HashSet<>();
-        for (int i = 0; i < publicTypesXML.size(); ++i) {
-            publicTypesSetXML.add(publicTypesXML.itemAt(i).getStringValue());
-        }
-
-        Elements publicTypesHTML = request.html.getElementsContainingText("Public Types");
-        Set<String> publicTypesSetHTML = new HashSet<>();
-        if (publicTypesHTML.size() > 0) {
-            Elements publicTypesListHTML = publicTypesHTML.get(publicTypesHTML.size() - 1).nextElementSibling().getElementsByTag("a");
-            for (Element e : publicTypesListHTML) {
-                publicTypesSetHTML.add(e.text());
-            }
-        }
+        Set<String> publicTypesSetXML = request.xpathToSet("//db:enumsynopsis/db:enumname/text()");
+        Set<String> publicTypesSetHTML = request.htmlToSet("Public Types");
 
         // Count the properties.
+        Set<String> propertiesSetXML = request.xpathToSet("//db:fieldsynopsis/db:varname/text()");
+        Set<String> propertiesSetHTML = request.htmlToSet("Properties");
 
         // Count the public functions.
+        Set<String> functionsSetXML = request.xpathToSet("//db:methodsynopsis[not(db:modifier[text() = 'signal'])]/db:varname/text()");
+        Set<String> functionsSetHTML = request.htmlToSet("Public Functions");
+        // TODO: What about "Reimplemented Public Functions", like in http://doc.qt.io/qt-5/q3dcamera.html?
 
-        // Count the signals.
+        // Count the signals.Signals
+        Set<String> signalsSetXML = request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal'])]/db:varname/text()");
+        Set<String> signalsSetHTML = request.htmlToSet("Signals");
 
-        return new ItemsResult(publicTypesSetXML, publicTypesSetHTML);
+        return new ItemsResult(publicTypesSetXML, publicTypesSetHTML, propertiesSetXML, propertiesSetHTML,
+                functionsSetXML, functionsSetHTML, signalsSetXML, signalsSetHTML);
     }
 }
