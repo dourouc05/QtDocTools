@@ -59,7 +59,7 @@ public class ConsistencyChecks {
         try {
             ItemsResult items = checkItems(r);
             if (! items.result) {
-                System.out.println(prefix + " File: " + fileName.toString());
+//                System.out.println(prefix + " File: " + fileName.toString());
 
                 if (! items.resultPublicTypes) {
                     System.out.println(prefix + " Public types mismatch: ");
@@ -103,13 +103,13 @@ public class ConsistencyChecks {
             return set;
         }
 
-        Set<String> htmlToSet(String expression) {
-            Elements html = this.html.getElementsContainingText(expression);
+        Set<String> htmlToSet(String expression, String tag, String anchor) {
+            Elements html = this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty()? "" : ("#" + anchor)));
             Set<String> set = new HashSet<>();
             if (html.size() > 0) {
                 // html contains all tags that contain a tag that contains the requested expression: take the last one,
                 // the most precise of this collection.
-                Elements propertiesListHTML = html.get(html.size() - 1).nextElementSibling().getElementsByTag("a");
+                Elements propertiesListHTML = html.get(0).nextElementSibling().getElementsByTag("a");
                 for (Element e : propertiesListHTML) {
                     set.add(e.text());
                 }
@@ -187,6 +187,9 @@ public class ConsistencyChecks {
         public final boolean resultSignals;
         public final Set<String> signalsXML;
         public final Set<String> signalsHTML;
+        public final boolean resultPublicVariables;
+        public final Set<String> publicVariablesSetXML;
+        public final Set<String> publicVariablesSetHTML;
 
         ItemsResult() {
             result = true;
@@ -202,26 +205,33 @@ public class ConsistencyChecks {
             resultSignals = true;
             signalsXML = new HashSet<>();
             signalsHTML = new HashSet<>();
+            resultPublicVariables = true;
+            publicVariablesSetXML = new HashSet<>();
+            publicVariablesSetHTML = new HashSet<>();
         }
 
         ItemsResult(Set<String> publicTypesXML, Set<String> publicTypesHTML,
                     Set<String> propertiesXML, Set<String> propertiesHTML,
                     Set<String> functionsXML, Set<String> functionsHTML,
-                    Set<String> signalsXML, Set<String> signalsHTML) {
+                    Set<String> signalsXML, Set<String> signalsHTML,
+                    Set<String> publicVariablesSetXML, Set<String> publicVariablesSetHTML) {
             this.publicTypesXML = publicTypesXML;
             this.publicTypesHTML = publicTypesHTML;
             resultPublicTypes = compareSets(publicTypesXML, publicTypesHTML);
             this.propertiesXML = propertiesXML;
             this.propertiesHTML = propertiesHTML;
             resultProperties = compareSets(propertiesXML, propertiesHTML);
-            this.functionsXML = propertiesXML;
-            this.functionsHTML = propertiesHTML;
+            this.functionsXML = functionsXML;
+            this.functionsHTML = functionsHTML;
             resultFunctions = compareSets(functionsXML, functionsHTML);
             this.signalsXML = signalsXML;
             this.signalsHTML = signalsHTML;
             resultSignals = compareSets(signalsXML, signalsHTML);
+            this.publicVariablesSetXML = publicVariablesSetXML;
+            this.publicVariablesSetHTML = publicVariablesSetHTML;
+            resultPublicVariables = compareSets(publicVariablesSetXML, publicVariablesSetHTML);
 
-            result = resultPublicTypes && resultProperties && resultFunctions && resultSignals;
+            result = resultPublicTypes && resultProperties && resultFunctions && resultSignals && resultPublicVariables;
         }
     }
 
@@ -233,22 +243,26 @@ public class ConsistencyChecks {
 
         // Count the public types.
         Set<String> publicTypesSetXML = request.xpathToSet("//db:enumsynopsis/db:enumname/text()");
-        Set<String> publicTypesSetHTML = request.htmlToSet("Public Types");
+        Set<String> publicTypesSetHTML = request.htmlToSet("Public Types", "h2", "public-types");
 
         // Count the properties.
         Set<String> propertiesSetXML = request.xpathToSet("//db:fieldsynopsis/db:varname/text()");
-        Set<String> propertiesSetHTML = request.htmlToSet("Properties");
+        Set<String> propertiesSetHTML = request.htmlToSet("Properties", "h2", "properties");
 
         // Count the public functions.
         Set<String> functionsSetXML = request.xpathToSet("//db:methodsynopsis[not(db:modifier[text() = 'signal'])]/db:varname/text()");
-        Set<String> functionsSetHTML = request.htmlToSet("Public Functions");
+        Set<String> functionsSetHTML = request.htmlToSet("Public Functions", "h2", "public-functions");
         // TODO: What about "Reimplemented Public Functions", like in http://doc.qt.io/qt-5/q3dcamera.html?
 
         // Count the signals.Signals
-        Set<String> signalsSetXML = request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal'])]/db:varname/text()");
-        Set<String> signalsSetHTML = request.htmlToSet("Signals");
+        Set<String> signalsSetXML = request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:varname/text()");
+        Set<String> signalsSetHTML = request.htmlToSet("Signals", "h2", "signals");
+
+        // Count the public variables.
+        Set<String> publicVariablesSetXML = request.xpathToSet("//db:enumsynopsis/db:enumname/text()"); // TODO:
+        Set<String> publicVariablesSetHTML = request.htmlToSet("Public Types", "h2", "public-variables");
 
         return new ItemsResult(publicTypesSetXML, publicTypesSetHTML, propertiesSetXML, propertiesSetHTML,
-                functionsSetXML, functionsSetHTML, signalsSetXML, signalsSetHTML);
+                functionsSetXML, functionsSetHTML, signalsSetXML, signalsSetHTML, publicVariablesSetXML, publicVariablesSetHTML);
     }
 }
