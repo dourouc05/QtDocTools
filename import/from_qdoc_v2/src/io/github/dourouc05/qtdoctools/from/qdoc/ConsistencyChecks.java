@@ -197,8 +197,8 @@ public class ConsistencyChecks {
             return true;
         }
 
-        public String[] tests() {
-            return (String[]) results.values().toArray();
+        public Set<String> tests() {
+            return results.keySet();
         }
 
         public Set<String> getXML(String name) {

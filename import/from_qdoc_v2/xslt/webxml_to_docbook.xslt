@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- CAUTION! TODO! -->
+<!-- The information that QAbstractEventDispatcher::TimerInfo is in another HTML page is not -->
+<!-- in the WebXML files. Thus, will have to redirect "qabstracteventdispatcher-timerinfo.html" -->
+<!-- to "qabstracteventdispatcher.html#timerinfo" (lower-case). -->
+
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -469,7 +475,7 @@
   <xsl:template mode="content_class_elements" match="class">
     <xsl:if test="not(@access='private') and (not(@delete) or @delete='false') and @status='active'">
       <db:section>
-        <xsl:attribute name="xml:id" select="tokenize(@href, '#')[2]"/>
+        <xsl:attribute name="xml:id" select="if (string-length(tokenize(@href, '#')[2])) then tokenize(@href, '#')[2] else lower-case(@name)"/>
         
         <db:title><xsl:value-of select="@fullname"/></db:title>
         
