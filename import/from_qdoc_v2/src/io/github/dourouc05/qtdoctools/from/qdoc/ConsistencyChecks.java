@@ -282,6 +282,7 @@ public class ConsistencyChecks {
 //                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"), // Example: http://doc.qt.io/qt-5/qstyleoptionrubberband.html
 //                request.htmlToSet("Public Types", "h2", "public-variables")
 //        );
+        // TODO: Public functions, like https://doc.qt.io/qt-5.11/qopenglfunctions-1-0.html
 
         return ir;
     }

@@ -210,7 +210,7 @@
     
     <xsl:variable name="matchingClasses" as="node()*">
       <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
-        <xsl:if test="./WebXML/document/class and ./WebXML/document/class/@fullname = $class">
+        <xsl:if test="./WebXML/document/class and (./WebXML/document/class/@fullname = $class or ./WebXML/document/class/@name = $class)">
           <xsl:copy-of select="."/>
         </xsl:if>
       </xsl:for-each>
@@ -260,7 +260,7 @@
       <xsl:variable name="hasDifferentDeclaringClass" as="xs:boolean">
         <xsl:variable name="baseClasses" select="tokenize($currentNode/ancestor::class/@bases, ',')" as="xs:string*"/>
         <xsl:choose>
-          <xsl:when test="$baseClasses or string-length($baseClasses) = 0">
+          <xsl:when test="count($baseClasses) = 0">
             <xsl:value-of select="false()"/>
           </xsl:when>
           <xsl:otherwise>
