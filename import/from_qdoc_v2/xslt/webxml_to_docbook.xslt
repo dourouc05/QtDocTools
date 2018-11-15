@@ -278,9 +278,6 @@
       <xsl:value-of select="$isPrivate or $isDeleted or $hasDifferentDeclaringClass"/>
     </xsl:variable>
     
-    <!-- Implementation based on https://github.com/pyside/pyside2-setup/blob/5.9/sources/shiboken2/ApiExtractor/abstractmetalang.cpp#L2001 -->
-    <!-- TODO: Really needed? -->
-    
     <!-- QObject methods. (Could add QObject as a base class in $hasDifferentDeclaringClass, but that would increase computation times too much.) -->
     <xsl:variable name="shouldSkipForQObject" as="xs:boolean">
       <xsl:choose>
@@ -292,6 +289,9 @@
         <xsl:when test="$currentNode/self::function and $currentNode/@name = 'trUtf8'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::function and $currentNode/@name = 'qt_static_metacall'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::class and $currentNode/@name = 'QPrivateSignal'"><xsl:value-of select="true()"/></xsl:when>
+        <!-- The next ones are not from QObject, but are still exceptions. -->
+        <xsl:when test="$currentNode/self::variable and $currentNode/@name = 'd_ptr'"><xsl:value-of select="true()"/></xsl:when>
+        <!-- Base case: don't skip. -->
         <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

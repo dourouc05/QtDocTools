@@ -27,9 +27,24 @@ public class ConsistencyChecks {
     }
 
     private static <T> Set<T> union(Set<T> a, Set<T> b) {
-        Set<T> c = new HashSet<>(a);
-        c.addAll(b);
-        return c;
+        Set<T> result = new HashSet<>(a);
+        result.addAll(b);
+        return result;
+    }
+
+    private static <T> Set<T> union(Set<T> a, Set<T> b, Set<T> c) {
+        Set<T> result = new HashSet<>(a);
+        result.addAll(b);
+        result.addAll(c);
+        return result;
+    }
+
+    private static <T> Set<T> union(Set<T> a, Set<T> b, Set<T> c, Set<T> d) {
+        Set<T> result = new HashSet<>(a);
+        result.addAll(b);
+        result.addAll(c);
+        result.addAll(d);
+        return result;
     }
 
     private static <T> boolean compareSets(Set<T> a, Set<T> b) {
@@ -112,7 +127,12 @@ public class ConsistencyChecks {
             XdmValue xml = xpath(expression);
             Set<String> set = new HashSet<>();
             for (int i = 0; i < xml.size(); ++i) {
-                set.add(xml.itemAt(i).getStringValue());
+                String element = xml.itemAt(i).getStringValue();
+                if (! element.contains("::")) {
+                    set.add(element);
+                } else {
+                    set.add(element.split("::")[1]);
+                }
             }
             return set;
         }
@@ -249,7 +269,9 @@ public class ConsistencyChecks {
                 request.xpathToSet("//(db:methodsynopsis[not(db:modifier[text() = 'signal'])] union db:constructorsynopsis union db:destructorsynopsis)/db:methodname/text()"), // Methods, constructors, destructors.
                 union(
                         request.htmlToSet("Public Functions", "h2", "public-functions"),
-                        request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions") // Example: http://doc.qt.io/qt-5/q3dcamera.html
+                        request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions"), // Example: http://doc.qt.io/qt-5/q3dcamera.html
+                        request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
+                        request.htmlToSet("Protected Functions", "h2", "protected-functions") // Example: https://doc.qt.io/qt-5.11/q3dobject.html
                 )
         );
         ir.addComparison("Signals",
