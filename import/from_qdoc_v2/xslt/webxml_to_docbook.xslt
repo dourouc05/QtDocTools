@@ -251,7 +251,7 @@
     <xsl:variable name="shouldSkipForQuery" as="xs:boolean">
       <xsl:variable name="isPrivate" select="boolean($currentNode/@access) and $currentNode/@access='private'" as="xs:boolean"/>
       <xsl:variable name="isDeleted" select="boolean($currentNode/@delete) and not($currentNode/@delete='false')" as="xs:boolean"/>
-      <xsl:variable name="hasDifferentDeclaringClass">
+      <xsl:variable name="hasDifferentDeclaringClass" as="xs:boolean">
         <xsl:variable name="baseClasses" select="$currentNode/ancestor::class/@bases" as="xs:string?"/>
         <xsl:choose>
           <xsl:when test="$baseClasses or string-length($baseClasses) = 0">
