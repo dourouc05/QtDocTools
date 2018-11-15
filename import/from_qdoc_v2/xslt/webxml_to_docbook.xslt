@@ -279,7 +279,7 @@
     <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery)"/>
     
     <!-- Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
-    <xsl:if test="$shouldInclude and count($currentNode/description/*) > 0">
+    <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0">
       <xsl:message>WARNING: The description of <xsl:value-of select="$currentNode/@name"/> is skipped while it has some content.</xsl:message>
     </xsl:if>
     

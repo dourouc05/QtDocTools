@@ -221,7 +221,6 @@ public class ConsistencyChecks {
         }
 
         ItemsResult ir = new ItemsResult();
-
         ir.addComparison("Public types",
                 request.xpathToSet("//db:enumsynopsis/db:enumname/text()"),
                 request.htmlToSet("Public Types", "h2", "public-types")
@@ -239,7 +238,7 @@ public class ConsistencyChecks {
                 request.htmlToSet("Signals", "h2", "signals")
         );
         ir.addComparison("Public variables",
-                request.xpathToSet("//db:enumsynopsis/db:enumname/text()"), // TODO: How are these converted in DocBook?
+                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"),
                 request.htmlToSet("Public Types", "h2", "public-variables")
         );
 
