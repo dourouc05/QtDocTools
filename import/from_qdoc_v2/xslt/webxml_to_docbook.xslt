@@ -258,14 +258,14 @@
       <xsl:variable name="isPrivate" select="boolean($currentNode/@access) and $currentNode/@access='private'" as="xs:boolean"/>
       <xsl:variable name="isDeleted" select="boolean($currentNode/@delete) and not($currentNode/@delete='false')" as="xs:boolean"/>
       <xsl:variable name="hasDifferentDeclaringClass" as="xs:boolean">
-        <xsl:variable name="baseClasses" select="$currentNode/ancestor::class/@bases" as="xs:string?"/>
+        <xsl:variable name="baseClasses" select="tokenize($currentNode/ancestor::class/@bases, ',')" as="xs:string*"/>
         <xsl:choose>
           <xsl:when test="$baseClasses or string-length($baseClasses) = 0">
             <xsl:value-of select="false()"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:variable name="baseClassHasMethod" as="xs:boolean+">
-              <xsl:for-each select="tokenize($baseClasses, ',')">
+              <xsl:for-each select="$baseClasses">
                 <xsl:variable name="otherClass" select="tc:load-class(.)/WebXML/document/class"/>
                 <xsl:value-of select="boolean($otherClass/function[@name = $currentNode/@name and count(parameter) = count($currentNode/parameter) and string-join(./parameter/@type, ',') = string-join($currentNode/parameter/@type, ',')])"/>
               </xsl:for-each>
@@ -281,8 +281,23 @@
     <!-- Implementation based on https://github.com/pyside/pyside2-setup/blob/5.9/sources/shiboken2/ApiExtractor/abstractmetalang.cpp#L2001 -->
     <!-- TODO: Really needed? -->
     
+    <!-- QObject methods. (Could add QObject as a base class in $hasDifferentDeclaringClass, but that would increase computation times too much.) -->
+    <xsl:variable name="shouldSkipForQObject" as="xs:boolean">
+      <xsl:choose>
+        <xsl:when test="$currentNode/self::variable and $currentNode/@name = 'staticMetaObject'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'metaObject'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'qt_metacast'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'qt_metacall'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'tr'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'trUtf8'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'qt_static_metacall'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::class and $currentNode/@name = 'QPrivateSignal'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
     <!-- Merge the blocks. -->
-    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery)"/>
+    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery) and not($shouldSkipForQObject)"/>
     
     <!-- Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
     <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0">

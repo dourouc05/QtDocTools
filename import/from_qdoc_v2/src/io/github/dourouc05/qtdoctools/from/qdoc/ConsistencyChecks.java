@@ -14,10 +14,22 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class ConsistencyChecks {
-    private static <T> Set<T> difference(Set<T> a, Set<T> b) {
+    private static <T> Set<T> setDifference(Set<T> a, Set<T> b) {
         Set<T> difference = new HashSet<>(a);
         difference.removeAll(b);
         return difference;
+    }
+
+    private static <T> Set<T> difference(Set<T> a, Set<T> b) {
+        Set<T> forward = setDifference(a, b);
+        forward.addAll(setDifference(b, a));
+        return forward;
+    }
+
+    private static <T> Set<T> union(Set<T> a, Set<T> b) {
+        Set<T> c = new HashSet<>(a);
+        c.addAll(b);
+        return c;
     }
 
     private static <T> boolean compareSets(Set<T> a, Set<T> b) {
@@ -60,8 +72,12 @@ public class ConsistencyChecks {
                 for (String name: items.tests()) {
                     if (! items.getResult(name)) {
                         System.out.println(prefix + " " + name + " mismatch: ");
-                        System.out.println(prefix + "     - DocBook has: " + Arrays.toString(items.getXML(name).toArray()));
-                        System.out.println(prefix + "     - HTML has: " + Arrays.toString(items.getHTML(name).toArray()));
+                        Object[] docbook = items.getXML(name).toArray();
+                        Arrays.sort(docbook);
+                        System.out.println(prefix + "     - DocBook has: " + Arrays.toString(docbook));
+                        Object[] html = items.getHTML(name).toArray();
+                        Arrays.sort(html);
+                        System.out.println(prefix + "     - HTML has: " + Arrays.toString(html));
                     }
                 }
             }
@@ -230,17 +246,20 @@ public class ConsistencyChecks {
                 request.htmlToSet("Properties", "h2", "properties")
         );
         ir.addComparison("Public functions",
-                request.xpathToSet("//db:methodsynopsis[not(db:modifier[text() = 'signal'])]/db:varname/text()"),
-                request.htmlToSet("Public Functions", "h2", "public-functions") // TODO: What about "Reimplemented Public Functions", like in http://doc.qt.io/qt-5/q3dcamera.html?
+                request.xpathToSet("//(db:methodsynopsis[not(db:modifier[text() = 'signal'])] union db:constructorsynopsis union db:destructorsynopsis)/db:methodname/text()"), // Methods, constructors, destructors.
+                union(
+                        request.htmlToSet("Public Functions", "h2", "public-functions"),
+                        request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions") // Example: http://doc.qt.io/qt-5/q3dcamera.html
+                )
         );
         ir.addComparison("Signals",
-                request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:varname/text()"),
+                request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
                 request.htmlToSet("Signals", "h2", "signals")
         );
-        ir.addComparison("Public variables",
-                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"),
-                request.htmlToSet("Public Types", "h2", "public-variables")
-        );
+//        ir.addComparison("Public variables",
+//                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"), // Example: http://doc.qt.io/qt-5/qstyleoptionrubberband.html
+//                request.htmlToSet("Public Types", "h2", "public-variables")
+//        );
 
         return ir;
     }
