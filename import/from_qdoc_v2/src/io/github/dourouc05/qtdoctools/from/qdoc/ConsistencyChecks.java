@@ -11,9 +11,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ConsistencyChecks {
     private static <T> Set<T> difference(Set<T> a, Set<T> b) {
@@ -58,13 +56,13 @@ public class ConsistencyChecks {
 
         try {
             ItemsResult items = checkItems(r);
-            if (! items.result) {
-//                System.out.println(prefix + " File: " + fileName.toString());
-
-                if (! items.resultPublicTypes) {
-                    System.out.println(prefix + " Public types mismatch: ");
-                    System.out.println(prefix + "     - DocBook has: " + Arrays.toString(items.publicTypesXML.toArray()));
-                    System.out.println(prefix + "     - HTML has: " + Arrays.toString(items.publicTypesHTML.toArray()));
+            if (! items.result()) {
+                for (String name: items.tests()) {
+                    if (! items.getResult(name)) {
+                        System.out.println(prefix + " " + name + " mismatch: ");
+                        System.out.println(prefix + "     - DocBook has: " + Arrays.toString(items.getXML(name).toArray()));
+                        System.out.println(prefix + "     - HTML has: " + Arrays.toString(items.getHTML(name).toArray()));
+                    }
                 }
             }
         } catch (SaxonApiException e) {
@@ -174,64 +172,45 @@ public class ConsistencyChecks {
     }
 
     public static class ItemsResult {
-        public final boolean result;
-        public final boolean resultPublicTypes;
-        public final Set<String> publicTypesXML;
-        public final Set<String> publicTypesHTML;
-        public final boolean resultProperties;
-        public final Set<String> propertiesXML;
-        public final Set<String> propertiesHTML;
-        public final boolean resultFunctions;
-        public final Set<String> functionsXML;
-        public final Set<String> functionsHTML;
-        public final boolean resultSignals;
-        public final Set<String> signalsXML;
-        public final Set<String> signalsHTML;
-        public final boolean resultPublicVariables;
-        public final Set<String> publicVariablesSetXML;
-        public final Set<String> publicVariablesSetHTML;
+        private final Map<String, Set<String>> xmls;
+        private final Map<String, Set<String>> htmls;
+        private final Map<String, Boolean> results;
 
         ItemsResult() {
-            result = true;
-            resultPublicTypes = true;
-            publicTypesXML = new HashSet<>();
-            publicTypesHTML = new HashSet<>();
-            resultProperties = true;
-            propertiesXML = new HashSet<>();
-            propertiesHTML = new HashSet<>();
-            resultFunctions = true;
-            functionsXML = new HashSet<>();
-            functionsHTML = new HashSet<>();
-            resultSignals = true;
-            signalsXML = new HashSet<>();
-            signalsHTML = new HashSet<>();
-            resultPublicVariables = true;
-            publicVariablesSetXML = new HashSet<>();
-            publicVariablesSetHTML = new HashSet<>();
+            xmls = new HashMap<>();
+            htmls = new HashMap<>();
+            results = new HashMap<>();
         }
 
-        ItemsResult(Set<String> publicTypesXML, Set<String> publicTypesHTML,
-                    Set<String> propertiesXML, Set<String> propertiesHTML,
-                    Set<String> functionsXML, Set<String> functionsHTML,
-                    Set<String> signalsXML, Set<String> signalsHTML,
-                    Set<String> publicVariablesSetXML, Set<String> publicVariablesSetHTML) {
-            this.publicTypesXML = publicTypesXML;
-            this.publicTypesHTML = publicTypesHTML;
-            resultPublicTypes = compareSets(publicTypesXML, publicTypesHTML);
-            this.propertiesXML = propertiesXML;
-            this.propertiesHTML = propertiesHTML;
-            resultProperties = compareSets(propertiesXML, propertiesHTML);
-            this.functionsXML = functionsXML;
-            this.functionsHTML = functionsHTML;
-            resultFunctions = compareSets(functionsXML, functionsHTML);
-            this.signalsXML = signalsXML;
-            this.signalsHTML = signalsHTML;
-            resultSignals = compareSets(signalsXML, signalsHTML);
-            this.publicVariablesSetXML = publicVariablesSetXML;
-            this.publicVariablesSetHTML = publicVariablesSetHTML;
-            resultPublicVariables = compareSets(publicVariablesSetXML, publicVariablesSetHTML);
+        void addComparison(String name, Set<String> xml, Set<String> html) {
+            xmls.put(name, xml);
+            htmls.put(name, html);
+            results.put(name,compareSets(xml, html));
+        }
 
-            result = resultPublicTypes && resultProperties && resultFunctions && resultSignals && resultPublicVariables;
+        public boolean result() {
+            for (Boolean v: results.values()) {
+                if (! v) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public String[] tests() {
+            return (String[]) results.values().toArray();
+        }
+
+        public Set<String> getXML(String name) {
+            return xmls.get(name);
+        }
+
+        public Set<String> getHTML(String name) {
+            return htmls.get(name);
+        }
+
+        public boolean getResult(String name) {
+            return results.get(name);
         }
     }
 
@@ -241,28 +220,29 @@ public class ConsistencyChecks {
             return new ItemsResult();
         }
 
-        // Count the public types.
-        Set<String> publicTypesSetXML = request.xpathToSet("//db:enumsynopsis/db:enumname/text()");
-        Set<String> publicTypesSetHTML = request.htmlToSet("Public Types", "h2", "public-types");
+        ItemsResult ir = new ItemsResult();
 
-        // Count the properties.
-        Set<String> propertiesSetXML = request.xpathToSet("//db:fieldsynopsis/db:varname/text()");
-        Set<String> propertiesSetHTML = request.htmlToSet("Properties", "h2", "properties");
+        ir.addComparison("Public types",
+                request.xpathToSet("//db:enumsynopsis/db:enumname/text()"),
+                request.htmlToSet("Public Types", "h2", "public-types")
+        );
+        ir.addComparison("Properties",
+                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"),
+                request.htmlToSet("Properties", "h2", "properties")
+        );
+        ir.addComparison("Public functions",
+                request.xpathToSet("//db:methodsynopsis[not(db:modifier[text() = 'signal'])]/db:varname/text()"),
+                request.htmlToSet("Public Functions", "h2", "public-functions") // TODO: What about "Reimplemented Public Functions", like in http://doc.qt.io/qt-5/q3dcamera.html?
+        );
+        ir.addComparison("Signals",
+                request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:varname/text()"),
+                request.htmlToSet("Signals", "h2", "signals")
+        );
+        ir.addComparison("Public variables",
+                request.xpathToSet("//db:enumsynopsis/db:enumname/text()"), // TODO: How are these converted in DocBook?
+                request.htmlToSet("Public Types", "h2", "public-variables")
+        );
 
-        // Count the public functions.
-        Set<String> functionsSetXML = request.xpathToSet("//db:methodsynopsis[not(db:modifier[text() = 'signal'])]/db:varname/text()");
-        Set<String> functionsSetHTML = request.htmlToSet("Public Functions", "h2", "public-functions");
-        // TODO: What about "Reimplemented Public Functions", like in http://doc.qt.io/qt-5/q3dcamera.html?
-
-        // Count the signals.Signals
-        Set<String> signalsSetXML = request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:varname/text()");
-        Set<String> signalsSetHTML = request.htmlToSet("Signals", "h2", "signals");
-
-        // Count the public variables.
-        Set<String> publicVariablesSetXML = request.xpathToSet("//db:enumsynopsis/db:enumname/text()"); // TODO:
-        Set<String> publicVariablesSetHTML = request.htmlToSet("Public Types", "h2", "public-variables");
-
-        return new ItemsResult(publicTypesSetXML, publicTypesSetHTML, propertiesSetXML, propertiesSetHTML,
-                functionsSetXML, functionsSetHTML, signalsSetXML, signalsSetHTML, publicVariablesSetXML, publicVariablesSetHTML);
+        return ir;
     }
 }
