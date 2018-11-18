@@ -210,7 +210,7 @@
     
     <xsl:variable name="matchingClasses" as="node()*">
       <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
-        <xsl:if test="./WebXML/document/class and (./WebXML/document/class/@fullname = $class or ./WebXML/document/class/@name = $class)">
+        <xsl:if test="./WebXML/document/class and ./WebXML/document/class/@name = $class">
           <xsl:copy-of select="."/>
         </xsl:if>
       </xsl:for-each>
