@@ -21,6 +21,7 @@
   <!--<xsl:param name="qt-version" as="xs:string" required="true"/>-->
   <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc/webxml/'"/>
   <!--<xsl:param name="local-folder" as="xs:string" required="true"/>-->
+  <xsl:variable name="list-classes" as="node()+" select="document(concat($local-folder, '/qdt_classes.xml'))/classes"/>
   
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>
@@ -179,10 +180,9 @@
           </db:classsynopsisinfo>
         </xsl:for-each>
         
-        <xsl:variable name="className" select="@name" as="xs:string"/>
-        <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))[./WebXML/document/class and ./WebXML/document/class/@status = 'active' and contains(WebXML/document/class/@bases, $className)]">
+        <xsl:for-each select="$list-classes/class[active/text() = 'active' and contains(bases, @name)]">
           <db:classsynopsisinfo role="inheritedBy">
-            <xsl:value-of select="if (./WebXML/document/class/@fullname) then ./WebXML/document/class/@fullname else ./WebXML/document/class/@name"/>
+            <xsl:value-of select="name"/>
           </db:classsynopsisinfo>
         </xsl:for-each>
         
@@ -213,6 +213,11 @@
           <xsl:copy-of select="."/>
         </xsl:if>
       </xsl:for-each>
+      <!--
+      <xsl:for-each select="$list-classes/class[name/text() = $class]">
+        <xsl:copy-of select="."/>
+      </xsl:for-each>
+      -->
     </xsl:variable>
     
     <xsl:choose>

@@ -138,14 +138,26 @@ public class ConsistencyChecks {
         }
 
         Set<String> htmlToSet(String expression, String tag, String anchor) {
+            return htmlToSet(expression, tag, anchor, false);
+        }
+
+        Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode) {
             Elements html = this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty()? "" : ("#" + anchor)));
             Set<String> set = new HashSet<>();
             if (html.size() > 0) {
-                // html contains all tags that contain a tag that contains the requested expression: take the last one,
-                // the most precise of this collection.
+                // For flags: one enumeration is followed by flags (same name, just in the plural), but only one
+                // documentation entry for the two.
+                String previousElement = "";
                 Elements propertiesListHTML = html.get(0).nextElementSibling().getElementsByTag("a");
                 for (Element e : propertiesListHTML) {
-                    set.add(e.text());
+                    if (enumMode) {
+                        // If there is a previous element and this one just adds an s, skip; otherwise, keep.
+                        if (!(!previousElement.isEmpty() && e.text().equals(previousElement + "s"))) {
+                            set.add(e.text());
+                        }
+                    } else {
+                        set.add(e.text());
+                    }
                 }
             }
             return set;
@@ -259,7 +271,7 @@ public class ConsistencyChecks {
         ItemsResult ir = new ItemsResult();
         ir.addComparison("Public types",
                 request.xpathToSet("//db:enumsynopsis/db:enumname/text()"),
-                request.htmlToSet("Public Types", "h2", "public-types")
+                request.htmlToSet("Public Types", "h2", "public-types", true)
         );
         ir.addComparison("Properties",
                 request.xpathToSet("//db:fieldsynopsis/db:varname/text()"),
