@@ -204,34 +204,6 @@
     </db:section>
   </xsl:template>
   
-  <xsl:function name="tc:load-class" as="node()">
-    <xsl:param name="class" as="xs:string"/>
-    
-    <xsl:variable name="matchingClasses" as="node()*">
-      <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
-        <xsl:if test="./WebXML/document/class and ./WebXML/document/class/@name = $class">
-          <xsl:copy-of select="."/>
-        </xsl:if>
-      </xsl:for-each>
-      <!--
-      <xsl:for-each select="$list-classes/class[name/text() = $class]">
-        <xsl:copy-of select="."/>
-      </xsl:for-each>
-      -->
-    </xsl:variable>
-    
-    <xsl:choose>
-      <xsl:when test="count($matchingClasses) = 1">
-        <xsl:copy-of select="$matchingClasses[1]"/>
-      </xsl:when>
-      <xsl:when test="count($matchingClasses) = 0">
-        <xsl:message>WARNING: Cannot find a class whose name is <xsl:value-of select="$class"/></xsl:message>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message>WARNING: Multiple classes with the name <xsl:value-of select="$class"/> have been found</xsl:message>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:function>
   <xsl:function name="tc:is-element-included" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
     
@@ -270,8 +242,8 @@
           <xsl:otherwise>
             <xsl:variable name="baseClassHasMethod" as="xs:boolean+">
               <xsl:for-each select="$baseClasses">
-                <xsl:variable name="otherClass" select="tc:load-class(.)/WebXML/document/class"/>
-                <xsl:value-of select="boolean($otherClass/function[@name = $currentNode/@name and count(parameter) = count($currentNode/parameter) and string-join(./parameter/@type, ',') = string-join($currentNode/parameter/@type, ',')])"/>
+                <xsl:variable name="otherClass" select="$list-classes/class[name = .]"/>
+                <xsl:value-of select="boolean($otherClass/function[name = $currentNode/@name and parameters = translate(string-join($currentNode/parameter/@type, ','), ' ', '')])"/>
               </xsl:for-each>
             </xsl:variable>
             
