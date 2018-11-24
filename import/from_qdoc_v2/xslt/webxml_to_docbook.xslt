@@ -20,8 +20,7 @@
   <xsl:param name="qt-version" as="xs:string" select="'1.2'"/>
   <!--<xsl:param name="qt-version" as="xs:string" required="true"/>-->
   <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc/webxml/'"/>
-  <!--<xsl:param name="local-foldern" as="xs:string" required="true"/>-->
-  <xsl:param name="debug-build" as="xs:boolean" select="true()"/> <!-- Requires some Saxon extensions only available in PE/EE. -->
+  <!--<xsl:param name="local-folder" as="xs:string" required="true"/>-->
   
   <xsl:template match="/">
     <xsl:apply-templates select="WebXML/document"/>

@@ -26,7 +26,7 @@ public class Main {
         // 3. Generate the attributions. TODO!
         //    C:\Qt\Qt-5.11.1\bin\qtattributionsscanner.exe C:/Qt/5.11.1/Src/qtbase --filter QDocModule=qtcore -o C:/Qt/5.11.1_build/qtbase/src/corelib/codeattributions.qdoc
         // 4. Run QDoc to get the WebXML files.
-        // 5. Run Saxon to retrieve the DocBook files.
+        // 5. Run Saxon to retrieve the DocBook files (including dependencies).
         // 6. Run Saxon to retrieve the DvpML files.
 
         // TODO: Parse inputs!
@@ -117,6 +117,7 @@ public class Main {
     private final String qtattributionsscannerPath; // Path to qtattributionsscanner.
     private final String qdocPath; // Path to qdoc.
     private final String xsltWebXMLToDocBookPath; // Path to the XSLT sheet WebXML to DocBook.
+    private final String xsltWebXMLToDocBookUtilPath; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.
     private final String xsltDocBookToDvpMLPath; // Path to the XSLT sheet DocBook to DvpML.
     private final String docBookRNGPath;
     private final String dvpMLXSDPath;
@@ -141,6 +142,7 @@ public class Main {
 //        qdocPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qdoc.exe";
         qtattributionsscannerPath = "C:\\Qt\\5.11.1\\msvc2017_64\\bin\\qtattributionsscanner.exe"; // TODO!
         xsltWebXMLToDocBookPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\webxml_to_docbook.xslt";
+        xsltWebXMLToDocBookUtilPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\xslt\\class_parser.xslt";
         xsltDocBookToDvpMLPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\docbook_to_dvpml.xslt";
         docBookRNGPath = "D:\\Dvp\\QtDoc\\QtDocTools\\import\\from_qdoc_v2\\schema\\docbook52qdt\\custom.rnc";
         dvpMLXSDPath = "D:\\Dvp\\QtDoc\\QtDocTools\\export\\to_dvpml\\xslt\\article.xsd";
@@ -457,6 +459,15 @@ public class Main {
         }
         if (saxonExecutableWebXMLToDocBook == null) {
             saxonExecutableWebXMLToDocBook = saxonCompiler.compile(new StreamSource(new File(xsltWebXMLToDocBookPath)));
+
+            // Generate the utilities files (may take a bit of time).
+            XsltTransformer utils = saxonCompiler.compile(new StreamSource(new File(xsltWebXMLToDocBookUtilPath))).load();
+            utils.setInitialTemplate(new QName("main"));
+            Serializer out = saxonProcessor.newSerializer();
+            out.setOutputFile(destination.getParent().resolve("qdt_classes.xml").toFile());
+            utils.setDestination(out);
+            utils.setParameter(new QName("local-folder"), new XdmAtomicValue(file.getParentFile().toPath().toUri()));
+            utils.transform();
         }
 
         ByteArrayOutputStream os = new ByteArrayOutputStream();
