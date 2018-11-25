@@ -26,24 +26,12 @@ public class ConsistencyChecks {
         return forward;
     }
 
-    private static <T> Set<T> union(Set<T> a, Set<T> b) {
+    @SafeVarargs
+    private static <T> Set<T> union(Set<T> a, Set<T>... lb) {
         Set<T> result = new HashSet<>(a);
-        result.addAll(b);
-        return result;
-    }
-
-    private static <T> Set<T> union(Set<T> a, Set<T> b, Set<T> c) {
-        Set<T> result = new HashSet<>(a);
-        result.addAll(b);
-        result.addAll(c);
-        return result;
-    }
-
-    private static <T> Set<T> union(Set<T> a, Set<T> b, Set<T> c, Set<T> d) {
-        Set<T> result = new HashSet<>(a);
-        result.addAll(b);
-        result.addAll(c);
-        result.addAll(d);
+        for (Set<T> b: lb) {
+            result.addAll(b);
+        }
         return result;
     }
 
@@ -87,12 +75,20 @@ public class ConsistencyChecks {
                 for (String name: items.tests()) {
                     if (! items.getResult(name)) {
                         System.out.println(prefix + " " + name + " mismatch: ");
+
                         Object[] docbook = items.getXML(name).toArray();
                         Arrays.sort(docbook);
                         System.out.println(prefix + "     - DocBook has: " + Arrays.toString(docbook));
+
                         Object[] html = items.getHTML(name).toArray();
                         Arrays.sort(html);
-                        System.out.println(prefix + "     - HTML has: " + Arrays.toString(html));
+                        System.out.println(prefix + "     - HTML has:    " + Arrays.toString(html));
+
+                        Set<String> docbookMinusHTMLSet = items.getXML(name);
+                        docbookMinusHTMLSet.removeAll(items.getHTML(name));
+                        Object[] docbookMinusHTML = docbookMinusHTMLSet.toArray();
+                        Arrays.sort(docbookMinusHTML);
+                        System.out.println(prefix + "     > Differences between the sets: " + Arrays.toString(docbookMinusHTML));
                     }
                 }
             }
@@ -155,6 +151,7 @@ public class ConsistencyChecks {
                         if (!(!previousElement.isEmpty() && e.text().equals(previousElement + "s"))) {
                             set.add(e.text());
                         }
+                        previousElement = e.text();
                     } else {
                         set.add(e.text());
                     }
@@ -281,7 +278,10 @@ public class ConsistencyChecks {
                 request.xpathToSet("//(db:methodsynopsis[not(db:modifier[text() = 'signal'])] union db:constructorsynopsis union db:destructorsynopsis)/db:methodname/text()"), // Methods, constructors, destructors.
                 union(
                         request.htmlToSet("Public Functions", "h2", "public-functions"),
+                        request.htmlToSet("Public Slots", "h2", "public-slots"),
+                        request.htmlToSet("Signals", "h2", "signals"),
                         request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions"), // Example: http://doc.qt.io/qt-5/q3dcamera.html
+                        request.htmlToSet("Reimplemented Protected Functions", "h2", "reimplemented-protected-functions"), // Example: http://doc.qt.io/qt-5/qabstractanimation.html#event
                         request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
                         request.htmlToSet("Protected Functions", "h2", "protected-functions") // Example: https://doc.qt.io/qt-5.11/q3dobject.html
                 )

@@ -266,14 +266,23 @@
         <xsl:when test="$currentNode/self::function and $currentNode/@name = 'qt_static_metacall'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::class and $currentNode/@name = 'QPrivateSignal'"><xsl:value-of select="true()"/></xsl:when>
         <!-- The next ones are not from QObject, but are still exceptions. -->
+        <xsl:when test="$currentNode/self::variable and $currentNode/@name = 'd'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::variable and $currentNode/@name = 'd_ptr'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::function and $currentNode/@name = 'd_func'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::variable and starts-with($currentNode/@name, 'm_')"><xsl:value-of select="true()"/></xsl:when>
         <!-- Base case: don't skip. -->
         <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
     
+    <!-- Other things not implemented from Shiboken2. -->
+    <xsl:variable name="shouldSkipForOtherReasons" as="xs:boolean">
+      <xsl:variable name="isInternal" select="boolean($currentNode/@status) and $currentNode/@status='internal'" as="xs:boolean"/>
+      <xsl:value-of select="$isInternal"/>
+    </xsl:variable>
+    
     <!-- Merge the blocks. -->
-    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery) and not($shouldSkipForQObject)"/>
+    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery) and not($shouldSkipForQObject) and not($shouldSkipForOtherReasons)"/>
     
     <!-- Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
     <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0">
