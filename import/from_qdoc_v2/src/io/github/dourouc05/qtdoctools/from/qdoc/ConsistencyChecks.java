@@ -141,17 +141,17 @@ public class ConsistencyChecks {
             Elements html = this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty()? "" : ("#" + anchor)));
             Set<String> set = new HashSet<>();
             if (html.size() > 0) {
-                // For flags: one enumeration is followed by flags (same name, just in the plural), but only one
-                // documentation entry for the two.
-                String previousElement = "";
+                // For flags: one enumeration is followed by flags (same name, just in the plural; more robust test:
+                // same links), but only one documentation entry for the two.
+                String previousLink = "";
                 Elements propertiesListHTML = html.get(0).nextElementSibling().getElementsByTag("a");
                 for (Element e : propertiesListHTML) {
                     if (enumMode) {
                         // If there is a previous element and this one just adds an s, skip; otherwise, keep.
-                        if (!(!previousElement.isEmpty() && e.text().equals(previousElement + "s"))) {
+                        if (!(!previousLink.isEmpty() && e.attr("href").equals(previousLink))) {
                             set.add(e.text());
                         }
-                        previousElement = e.text();
+                        previousLink = e.attr("href");
                     } else {
                         set.add(e.text());
                     }
@@ -283,7 +283,8 @@ public class ConsistencyChecks {
                         request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions"), // Example: http://doc.qt.io/qt-5/q3dcamera.html
                         request.htmlToSet("Reimplemented Protected Functions", "h2", "reimplemented-protected-functions"), // Example: http://doc.qt.io/qt-5/qabstractanimation.html#event
                         request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
-                        request.htmlToSet("Protected Functions", "h2", "protected-functions") // Example: https://doc.qt.io/qt-5.11/q3dobject.html
+                        request.htmlToSet("Protected Functions", "h2", "protected-functions"), // Example: https://doc.qt.io/qt-5.11/q3dobject.html
+                        request.htmlToSet("Related Non-Members", "h2", "related-non-members") // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html
                 )
         );
         ir.addComparison("Signals",

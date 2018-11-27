@@ -269,6 +269,7 @@
         <xsl:when test="$currentNode/self::variable and $currentNode/@name = 'd'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::variable and $currentNode/@name = 'd_ptr'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::function and $currentNode/@name = 'd_func'"><xsl:value-of select="true()"/></xsl:when>
+        <xsl:when test="$currentNode/self::property and $currentNode/@name = 'impl'"><xsl:value-of select="true()"/></xsl:when>
         <xsl:when test="$currentNode/self::variable and starts-with($currentNode/@name, 'm_')"><xsl:value-of select="true()"/></xsl:when>
         <!-- Base case: don't skip. -->
         <xsl:otherwise><xsl:value-of select="false()"/></xsl:otherwise>
