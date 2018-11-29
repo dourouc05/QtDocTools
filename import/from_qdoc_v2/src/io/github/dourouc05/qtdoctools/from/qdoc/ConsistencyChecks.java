@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.function.Predicate;
 import javax.xml.transform.stream.StreamSource;
 import java.io.FileReader;
 import java.io.IOException;
@@ -138,6 +139,10 @@ public class ConsistencyChecks {
         }
 
         Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode) {
+            return htmlToSet(expression, tag, anchor, enumMode, (s) -> true);
+        }
+
+        Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode, Predicate<String> firstColumn) {
             Elements html = this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty()? "" : ("#" + anchor)));
             Set<String> set = new HashSet<>();
             if (html.size() > 0) {
@@ -146,13 +151,23 @@ public class ConsistencyChecks {
                 String previousLink = "";
                 Elements propertiesListHTML = html.get(0).nextElementSibling().getElementsByTag("a");
                 for (Element e : propertiesListHTML) {
+                    boolean toConsider = true;
+
+                    // If there is a previous element and this one just adds an s (enum then flags), skip; otherwise, keep.
                     if (enumMode) {
-                        // If there is a previous element and this one just adds an s, skip; otherwise, keep.
-                        if (!(!previousLink.isEmpty() && e.attr("href").equals(previousLink))) {
-                            set.add(e.text());
+                        if (!previousLink.isEmpty() && e.attr("href").equals(previousLink)) {
+                            toConsider = false;
                         }
                         previousLink = e.attr("href");
-                    } else {
+                    }
+
+                    // Imposed first column content.
+                    if (toConsider && e.previousElementSibling() != null) {
+                        toConsider = firstColumn.test(e.previousElementSibling().text());
+                    }
+
+                    // Once all
+                    if (toConsider) {
                         set.add(e.text());
                     }
                 }
@@ -284,12 +299,16 @@ public class ConsistencyChecks {
                         request.htmlToSet("Reimplemented Protected Functions", "h2", "reimplemented-protected-functions"), // Example: http://doc.qt.io/qt-5/qabstractanimation.html#event
                         request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
                         request.htmlToSet("Protected Functions", "h2", "protected-functions"), // Example: https://doc.qt.io/qt-5.11/q3dobject.html
-                        request.htmlToSet("Related Non-Members", "h2", "related-non-members") // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html
+                        request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> !s.equals("typedef")) // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html
                 )
         );
         ir.addComparison("Signals",
                 request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
                 request.htmlToSet("Signals", "h2", "signals")
+        );
+        ir.addComparison("Member Types",
+                request.xpathToSet("//db:typedefsynopsis/db:typedefname/text()"),
+                request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
         );
 //        ir.addComparison("Public variables",
 //                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"), // Example: http://doc.qt.io/qt-5/qstyleoptionrubberband.html
