@@ -162,8 +162,8 @@ public class ConsistencyChecks {
                     }
 
                     // Imposed first column content.
-                    if (toConsider && e.previousElementSibling() != null) {
-                        toConsider = firstColumn.test(e.previousElementSibling().text());
+                    if (toConsider && e.parent().parent().previousElementSibling() != null) {
+                        toConsider = firstColumn.test(e.parent().parent().previousElementSibling().text());
                     }
 
                     // Once all
@@ -299,10 +299,10 @@ public class ConsistencyChecks {
                         request.htmlToSet("Reimplemented Protected Functions", "h2", "reimplemented-protected-functions"), // Example: http://doc.qt.io/qt-5/qabstractanimation.html#event
                         request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
                         request.htmlToSet("Protected Functions", "h2", "protected-functions"), // Example: https://doc.qt.io/qt-5.11/q3dobject.html
-                        request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> !s.equals("typedef")) // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html
+                        request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> ! s.equals("typedef")) // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html http://doc.qt.io/qt-5/qxmlstreamnotationdeclaration.html
                 )
         );
-        ir.addComparison("Signals",
+        ir.addComparison("Signals", // TODO: What the heck, signals are also in the public functions?
                 request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
                 request.htmlToSet("Signals", "h2", "signals")
         );

@@ -1,161 +1,4 @@
-4/7715]     - HTML has:    [DecoderFn]
-[0304/7715]     > Differences between the sets: []
-[0305/7715]C:\Qt\Doc\webxml\qfiledevice.webxml
-[0306/7715]C:\Qt\Doc\webxml\qfiledialog.webxml
-[0306/7715] Public functions mismatch: 
-[0306/7715]     - DocBook has: [QFileDialog, accept, acceptMode, changeEvent, confirmOverwrite, defaultSuffix, directory, directoryUrl, done, fileMode, filter, getExistingDirectory, getExistingDirectoryUrl, getOpenFileName, getOpenFileNames, getOpenFileUrl, getOpenFileUrls, getSaveFileName, getSaveFileUrl, history, iconProvider, isNameFilterDetailsVisible, isReadOnly, itemDelegate, labelText, mimeTypeFilters, nameFilters, open, options, proxyModel, resolveSymlinks, restoreState, saveState, selectFile, selectMimeTypeFilter, selectNameFilter, selectUrl, selectedFiles, selectedMimeTypeFilter, selectedNameFilter, selectedUrls, setAcceptMode, setConfirmOverwrite, setDefaultSuffix, setDirectory, setDirectoryUrl, setFileMode, setFilter, setHistory, setIconProvider, setItemDelegate, setLabelText, setMimeTypeFilters, setNameFilter, setNameFilterDetailsVisible, setNameFilters, setOption, setOptions, setProxyModel, setReadOnly, setResolveSymlinks, setSidebarUrls, setSupportedSchemes, setViewMode, setVisible, sidebarUrls, supportedSchemes, testOption, viewMode, ~QFileDialog]
-[0306/7715]     - HTML has:    [QFileDialog, accept, acceptMode, changeEvent, currentChanged, currentUrlChanged, defaultSuffix, directory, directoryEntered, directoryUrl, directoryUrlEntered, done, fileMode, fileSelected, filesSelected, filter, filterSelected, getExistingDirectory, getExistingDirectoryUrl, getOpenFileName, getOpenFileNames, getOpenFileUrl, getOpenFileUrls, getSaveFileName, getSaveFileUrl, history, iconProvider, itemDelegate, labelText, mimeTypeFilters, nameFilters, open, options, proxyModel, restoreState, saveState, selectFile, selectMimeTypeFilter, selectNameFilter, selectUrl, selectedFiles, selectedMimeTypeFilter, selectedNameFilter, selectedUrls, setAcceptMode, setDefaultSuffix, setDirectory, setDirectoryUrl, setFileMode, setFilter, setHistory, setIconProvider, setItemDelegate, setLabelText, setMimeTypeFilters, setNameFilter, setNameFilters, setOption, setOptions, setProxyModel, setSidebarUrls, setSupportedSchemes, setViewMode, setVisible, sidebarUrls, supportedSchemes, testOption, urlSelected, urlsSelected, viewMode, ~QFileDialog]
-[0306/7715]     > Differences between the sets: [confirmOverwrite, isNameFilterDetailsVisible, isReadOnly, resolveSymlinks, setConfirmOverwrite, setNameFilterDetailsVisible, setReadOnly, setResolveSymlinks]
-[0306/7715] Properties mismatch: 
-[0306/7715]     - DocBook has: [acceptMode, confirmOverwrite, defaultSuffix, fileMode, nameFilterDetailsVisible, options, readOnly, resolveSymlinks, supportedSchemes, viewMode]
-[0306/7715]     - HTML has:    [acceptMode, defaultSuffix, fileMode, options, supportedSchemes, viewMode]
-[0306/7715]     > Differences between the sets: [confirmOverwrite, nameFilterDetailsVisible, readOnly, resolveSymlinks]
-[0307/7715]C:\Qt\Doc\webxml\qfileiconprovider.webxml
-[0308/7715]C:\Qt\Doc\webxml\qfileinfo.webxml
-[0308/7715] Public functions mismatch: 
-[0308/7715]     - DocBook has: [QFileInfo, absoluteDir, absoluteFilePath, absolutePath, baseName, birthTime, bundleName, caching, canonicalFilePath, canonicalPath, completeBaseName, completeSuffix, created, dir, exists, fileName, filePath, fileTime, group, groupId, isAbsolute, isBundle, isDir, isExecutable, isFile, isHidden, isNativePath, isReadable, isRelative, isRoot, isSymLink, isWritable, lastModified, lastRead, makeAbsolute, metadataChangeTime, operator!=, operator=, operator==, owner, ownerId, path, permission, permissions, readLink, refresh, setCaching, setFile, size, suffix, swap, symLinkTarget, ~QFileInfo]
-[0308/7715]     - HTML has:    [QFileInfo, QFileInfoList, absoluteDir, absoluteFilePath, absolutePath, baseName, birthTime, bundleName, caching, canonicalFilePath, canonicalPath, completeBaseName, completeSuffix, dir, exists, fileName, filePath, fileTime, group, groupId, isAbsolute, isBundle, isDir, isExecutable, isFile, isHidden, isNativePath, isReadable, isRelative, isRoot, isSymLink, isWritable, lastModified, lastRead, makeAbsolute, metadataChangeTime, operator!=, operator=, operator==, owner, ownerId, path, permission, permissions, refresh, setCaching, setFile, size, suffix, swap, symLinkTarget, ~QFileInfo]
-[0308/7715]     > Differences between the sets: [created, readLink]
-[0309/7715]C:\Qt\Doc\webxml\qfileopenevent.webxml
-[0310/7715]C:\Qt\Doc\webxml\qfileselector.webxml
-[0311/7715]C:\Qt\Doc\webxml\qfilesystemmodel.webxml
-[0311/7715] Public functions mismatch: 
-[0311/7715]     - DocBook has: [QFileSystemModel, canFetchMore, columnCount, data, dropMimeData, event, fetchMore, fileIcon, fileInfo, fileName, filePath, filter, flags, hasChildren, headerData, iconProvider, index, isDir, isReadOnly, lastModified, mimeData, mimeTypes, mkdir, myComputer, nameFilterDisables, nameFilters, parent, permissions, remove, resolveSymlinks, rmdir, rootDirectory, rootPath, rowCount, setData, setFilter, setIconProvider, setNameFilterDisables, setNameFilters, setReadOnly, setResolveSymlinks, setRootPath, sibling, size, sort, supportedDropActions, timerEvent, type, ~QFileSystemModel]
-[0311/7715]     - HTML has:    [QFileSystemModel, canFetchMore, columnCount, data, directoryLoaded, dropMimeData, event, fetchMore, fileIcon, fileInfo, fileName, filePath, fileRenamed, filter, flags, hasChildren, headerData, iconProvider, index, isDir, isReadOnly, lastModified, mimeData, mimeTypes, mkdir, myComputer, nameFilterDisables, nameFilters, parent, permissions, remove, resolveSymlinks, rmdir, rootDirectory, rootPath, rootPathChanged, rowCount, setData, setFilter, setIconProvider, setNameFilterDisables, setNameFilters, setReadOnly, setResolveSymlinks, setRootPath, sibling, size, sort, supportedDropActions, timerEvent, type, ~QFileSystemModel]
-[0311/7715]     > Differences between the sets: []
-[0312/7715]C:\Qt\Doc\webxml\qfilesystemwatcher.webxml
-[0312/7715] Public functions mismatch: 
-[0312/7715]     - DocBook has: [QFileSystemWatcher, addPath, addPaths, directories, files, removePath, removePaths, ~QFileSystemWatcher]
-[0312/7715]     - HTML has:    [QFileSystemWatcher, addPath, addPaths, directories, directoryChanged, fileChanged, files, removePath, removePaths, ~QFileSystemWatcher]
-[0312/7715]     > Differences between the sets: []
-[0313/7715]C:\Qt\Doc\webxml\qfinalstate.webxml
-[0314/7715]C:\Qt\Doc\webxml\qflag.webxml
-[0314/7715] Public functions mismatch: 
-[0314/7715]     - DocBook has: [QFlag, operator int]
-[0314/7715]     - HTML has:    [QFlag, operator int, operator uint]
-[0314/7715]     > Differences between the sets: []
-[0315/7715]C:\Qt\Doc\webxml\qflags.webxml
-org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qflags.qdt; lineNumber: 156; columnNumber: 49; value of attribute "xml:id" is invalid; must be an XML name without colons
-	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.check(ValidatorHandlerImpl.java:148)
-	at com.thaiopensource.relaxng.jaxp.ValidatorHandlerImpl.startElement(ValidatorHandlerImpl.java:69)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:374)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2706)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
-	at java.xml/com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:532)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:888)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:824)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
-	at java.xml/com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
-	at java.xml/com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:635)
-	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:161)
-	at com.thaiopensource.validation.ValidatorImpl.doValidate(ValidatorImpl.java:110)
-	at com.thaiopensource.validation.ValidatorImpl.validate(ValidatorImpl.java:67)
-	at java.xml/javax.xml.validation.Validator.validate(Validator.java:124)
-	at io.github.dourouc05.qtdoctools.from.qdoc.Main.subValidate(Main.java:499)
-	at io.github.dourouc05.qtdoctools.from.qdoc.Main.validateDocBook(Main.java:494)
-	at io.github.dourouc05.qtdoctools.from.qdoc.Main.main(Main.java:78)
-[0315/7715] Public functions mismatch: 
-[0315/7715]     - DocBook has: [Int, QFlags, Q_DECLARE_FLAGS, Q_DECLARE_OPERATORS_FOR_FLAGS, operator!, operator&, operator&=, operator=, operator^, operator^=, operator|, operator|=, operator~, setFlag, testFlag]
-[0315/7715]     - HTML has:    [QFlags, operator QFlags::Int, operator!, operator&, operator&=, operator=, operator^, operator^=, operator|, operator|=, operator~, setFlag, testFlag]
-[0315/7715]     > Differences between the sets: [Int, Q_DECLARE_FLAGS, Q_DECLARE_OPERATORS_FOR_FLAGS]
-[0315/7715] Public types mismatch: 
-[0315/7715]     - DocBook has: []
-[0315/7715]     - HTML has:    [Int, enum_type]
-[0315/7715]     > Differences between the sets: []
-[0316/7715]C:\Qt\Doc\webxml\qfloat16.webxml
-[0317/7715]C:\Qt\Doc\webxml\qfocusevent.webxml
-[0318/7715]C:\Qt\Doc\webxml\qfocusframe.webxml
-[0319/7715]C:\Qt\Doc\webxml\qfont.webxml
-[0319/7715] Public functions mismatch: 
-[0319/7715]     - DocBook has: [QFont, bold, capitalization, cleanup, defaultFamily, exactMatch, family, fixedPitch, fromString, hintingPreference, initialize, insertSubstitution, insertSubstitutions, isCopyOf, italic, kerning, key, lastResortFamily, lastResortFont, letterSpacing, letterSpacingType, operator QVariant, operator!=, operator<, operator<<, operator=, operator==, operator>>, overline, pixelSize, pointSize, pointSizeF, qHash, qt_check_for_QGADGET_macro, rawMode, rawName, removeSubstitution, removeSubstitutions, resolve, setBold, setCapitalization, setFamily, setFixedPitch, setHintingPreference, setItalic, setKerning, setLetterSpacing, setOverline, setPixelSize, setPointSize, setPointSizeF, setRawMode, setRawName, setStretch, setStrikeOut, setStyle, setStyleHint, setStyleName, setStyleStrategy, setUnderline, setWeight, setWordSpacing, stretch, strikeOut, style, styleHint, styleName, styleStrategy, substitute, substitutes, substitutions, swap, toString, underline, weight, wordSpacing, ~QFont]
-[0319/7715]     - HTML has:    [QFont, bold, capitalization, defaultFamily, exactMatch, family, fixedPitch, fromString, hintingPreference, insertSubstitution, insertSubstitutions, isCopyOf, italic, kerning, key, lastResortFamily, lastResortFont, letterSpacing, letterSpacingType, operator QVariant, operator!=, operator<, operator<<, operator=, operator==, operator>>, overline, pixelSize, pointSize, pointSizeF, qHash, removeSubstitutions, resolve, setBold, setCapitalization, setFamily, setFixedPitch, setHintingPreference, setItalic, setKerning, setLetterSpacing, setOverline, setPixelSize, setPointSize, setPointSizeF, setStretch, setStrikeOut, setStyle, setStyleHint, setStyleName, setStyleStrategy, setUnderline, setWeight, setWordSpacing, stretch, strikeOut, style, styleHint, styleName, styleStrategy, substitute, substitutes, substitutions, swap, toString, underline, weight, wordSpacing, ~QFont]
-[0319/7715]     > Differences between the sets: [cleanup, initialize, qt_check_for_QGADGET_macro, rawMode, rawName, removeSubstitution, setRawMode, setRawName]
-[0320/7715]C:\Qt\Doc\webxml\qfontcombobox.webxml
-[0320/7715] Public functions mismatch: 
-[0320/7715]     - DocBook has: [QFontComboBox, currentFont, event, fontFilters, setCurrentFont, setFontFilters, setWritingSystem, sizeHint, writingSystem, ~QFontComboBox]
-[0320/7715]     - HTML has:    [QFontComboBox, currentFont, currentFontChanged, event, fontFilters, setCurrentFont, setFontFilters, setWritingSystem, sizeHint, writingSystem, ~QFontComboBox]
-[0320/7715]     > Differences between the sets: []
-[0321/7715]C:\Qt\Doc\webxml\qfontdatabase.webxml
-[0321/7715] Public functions mismatch: 
-[0321/7715]     - DocBook has: [QFontDatabase, addApplicationFont, addApplicationFontFromData, applicationFontFamilies, bold, families, font, isBitmapScalable, isFixedPitch, isPrivateFamily, isScalable, isSmoothlyScalable, italic, pointSizes, qt_check_for_QGADGET_macro, removeAllApplicationFonts, removeApplicationFont, smoothSizes, standardSizes, styleString, styles, supportsThreadedFontRendering, systemFont, weight, writingSystemName, writingSystemSample, writingSystems]
-[0321/7715]     - HTML has:    [QFontDatabase, addApplicationFont, addApplicationFontFromData, applicationFontFamilies, bold, families, font, isBitmapScalable, isFixedPitch, isPrivateFamily, isScalable, isSmoothlyScalable, italic, pointSizes, removeAllApplicationFonts, removeApplicationFont, smoothSizes, standardSizes, styleString, styles, systemFont, weight, writingSystemName, writingSystemSample, writingSystems]
-[0321/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro, supportsThreadedFontRendering]
-[0322/7715]C:\Qt\Doc\webxml\qfontdialog.webxml
-[0322/7715] Public functions mismatch: 
-[0322/7715]     - DocBook has: [QFontDialog, changeEvent, currentFont, done, getFont, open, options, selectedFont, setCurrentFont, setOption, setOptions, setVisible, testOption]
-[0322/7715]     - HTML has:    [QFontDialog, changeEvent, currentFont, currentFontChanged, done, fontSelected, getFont, open, options, selectedFont, setCurrentFont, setOption, setOptions, setVisible, testOption]
-[0322/7715]     > Differences between the sets: []
-[0323/7715]C:\Qt\Doc\webxml\qfontinfo.webxml
-[0323/7715] Public functions mismatch: 
-[0323/7715]     - DocBook has: [QFontInfo, bold, exactMatch, family, fixedPitch, italic, operator=, pixelSize, pointSize, pointSizeF, rawMode, style, styleHint, styleName, swap, weight, ~QFontInfo]
-[0323/7715]     - HTML has:    [QFontInfo, bold, exactMatch, family, fixedPitch, italic, operator=, pixelSize, pointSize, pointSizeF, style, styleHint, styleName, swap, weight, ~QFontInfo]
-[0323/7715]     > Differences between the sets: [rawMode]
-[0324/7715]C:\Qt\Doc\webxml\qfontmetrics.webxml
-[0324/7715] Public functions mismatch: 
-[0324/7715]     - DocBook has: [QFontMetrics, ascent, averageCharWidth, boundingRect, capHeight, charWidth, descent, elidedText, height, horizontalAdvance, inFont, inFontUcs4, leading, leftBearing, lineSpacing, lineWidth, maxWidth, minLeftBearing, minRightBearing, operator!=, operator=, operator==, overlinePos, rightBearing, size, strikeOutPos, swap, tightBoundingRect, underlinePos, width, xHeight, ~QFontMetrics]
-[0324/7715]     - HTML has:    [QFontMetrics, ascent, averageCharWidth, boundingRect, capHeight, descent, elidedText, height, horizontalAdvance, inFont, inFontUcs4, leading, leftBearing, lineSpacing, lineWidth, maxWidth, minLeftBearing, minRightBearing, operator!=, operator=, operator==, overlinePos, rightBearing, size, strikeOutPos, swap, tightBoundingRect, underlinePos, xHeight, ~QFontMetrics]
-[0324/7715]     > Differences between the sets: [charWidth, width]
-[0325/7715]C:\Qt\Doc\webxml\qfontmetricsf.webxml
-[0325/7715] Public functions mismatch: 
-[0325/7715]     - DocBook has: [QFontMetricsF, ascent, averageCharWidth, boundingRect, capHeight, descent, elidedText, height, horizontalAdvance, inFont, inFontUcs4, leading, leftBearing, lineSpacing, lineWidth, maxWidth, minLeftBearing, minRightBearing, operator!=, operator=, operator==, overlinePos, rightBearing, size, strikeOutPos, swap, tightBoundingRect, underlinePos, width, xHeight, ~QFontMetricsF]
-[0325/7715]     - HTML has:    [QFontMetricsF, ascent, averageCharWidth, boundingRect, capHeight, descent, elidedText, height, horizontalAdvance, inFont, inFontUcs4, leading, leftBearing, lineSpacing, lineWidth, maxWidth, minLeftBearing, minRightBearing, operator!=, operator=, operator==, overlinePos, rightBearing, size, strikeOutPos, swap, tightBoundingRect, underlinePos, xHeight, ~QFontMetricsF]
-[0325/7715]     > Differences between the sets: [width]
-[0326/7715]C:\Qt\Doc\webxml\qformbuilder.webxml
-[0327/7715]C:\Qt\Doc\webxml\qformlayout-takerowresult.webxml
-[0327/7715] Properties mismatch: 
-[0327/7715]     - DocBook has: [fieldItem, labelItem]
-[0327/7715]     - HTML has:    []
-[0327/7715]     > Differences between the sets: [fieldItem, labelItem]
-[0328/7715]C:\Qt\Doc\webxml\qformlayout.webxml
-[0328/7715] Public types mismatch: 
-[0328/7715]     - DocBook has: [FieldGrowthPolicy, ItemRole, RowWrapPolicy]
-[0328/7715]     - HTML has:    [FieldGrowthPolicy, ItemRole, RowWrapPolicy, TakeRowResult]
-[0328/7715]     > Differences between the sets: []
-[0328/7715] Properties mismatch: 
-[0328/7715]     - DocBook has: [fieldGrowthPolicy, fieldItem, formAlignment, horizontalSpacing, labelAlignment, labelItem, rowWrapPolicy, verticalSpacing]
-[0328/7715]     - HTML has:    [fieldGrowthPolicy, formAlignment, horizontalSpacing, labelAlignment, rowWrapPolicy, verticalSpacing]
-[0328/7715]     > Differences between the sets: [fieldItem, labelItem]
-[0329/7715]C:\Qt\Doc\webxml\qframe.webxml
-[0330/7715]C:\Qt\Doc\webxml\qfuturewatcher.webxml
-[0330/7715] Public functions mismatch: 
-[0330/7715]     - DocBook has: [QFutureWatcher, cancel, future, isCanceled, isFinished, isPaused, isRunning, isStarted, pause, progressMaximum, progressMinimum, progressText, progressValue, result, resultAt, resume, setFuture, setPaused, setPendingResultsLimit, togglePaused, waitForFinished, ~QFutureWatcher]
-[0330/7715]     - HTML has:    [QFutureWatcher, cancel, canceled, finished, future, isCanceled, isFinished, isPaused, isRunning, isStarted, pause, paused, progressMaximum, progressMinimum, progressRangeChanged, progressText, progressTextChanged, progressValue, progressValueChanged, result, resultAt, resultReadyAt, resultsReadyAt, resume, resumed, setFuture, setPaused, setPendingResultsLimit, started, togglePaused, waitForFinished, ~QFutureWatcher]
-[0330/7715]     > Differences between the sets: []
-[0331/7715]C:\Qt\Doc\webxml\qgenericargument.webxml
-[0332/7715]C:\Qt\Doc\webxml\qgenericmatrix.webxml
-[0332/7715] Public functions mismatch: 
-[0332/7715]     - DocBook has: [QGenericMatrix, constData, copyDataTo, data, fill, isIdentity, operator!=, operator(), operator*=, operator+=, operator-=, operator/=, operator==, setToIdentity, transposed]
-[0332/7715]     - HTML has:    [QGenericMatrix, QMatrix2x2, QMatrix2x3, QMatrix2x4, QMatrix3x2, QMatrix3x3, QMatrix3x4, QMatrix4x2, QMatrix4x3, constData, copyDataTo, data, fill, isIdentity, operator!=, operator(), operator*, operator*=, operator+, operator+=, operator-, operator-=, operator/, operator/=, operator<<, operator==, operator>>, setToIdentity, transposed]
-[0332/7715]     > Differences between the sets: []
-[0333/7715]C:\Qt\Doc\webxml\qgenericplugin.webxml
-[0334/7715]C:\Qt\Doc\webxml\qgenericpluginfactory.webxml
-[0335/7715]C:\Qt\Doc\webxml\qgenericreturnargument.webxml
-[0336/7715]C:\Qt\Doc\webxml\qgesture.webxml
-[0337/7715]C:\Qt\Doc\webxml\qgestureevent.webxml
-[0338/7715]C:\Qt\Doc\webxml\qgesturerecognizer.webxml
-[0338/7715] Public types mismatch: 
-[0338/7715]     - DocBook has: [ResultFlag]
-[0338/7715]     - HTML has:    [Result, ResultFlag]
-[0338/7715]     > Differences between the sets: []
-[0339/7715]C:\Qt\Doc\webxml\qgl.webxml
-[0340/7715]C:\Qt\Doc\webxml\qglbuffer.webxml
-[0341/7715]C:\Qt\Doc\webxml\qglcolormap-qglcolormapdata.webxml
-[0341/7715] Error while performing the inherited-by class check: 404 when downloading the original class.
-[0342/7715]C:\Qt\Doc\webxml\qglcolormap.webxml
-[0342/7715] Public functions mismatch: 
-[0342/7715]     - DocBook has: [QGLColormap, detach, entryColor, entryRgb, find, findNearest, handle, isEmpty, operator=, setEntries, setEntry, setHandle, size, ~QGLColormap]
-[0342/7715]     - HTML has:    [QGLColormap, entryColor, entryRgb, find, findNearest, isEmpty, operator=, setEntries, setEntry, size, ~QGLColormap]
-[0342/7715]     > Differences between the sets: [detach, handle, setHandle]
-[0342/7715] Properties mismatch: 
-[0342/7715]     - DocBook has: [cells, cmapHandle, ref]
-[0342/7715]     - HTML has:    []
-[0342/7715]     > Differences between the sets: [cells, cmapHandle, ref]
-[0343/7715]C:\Qt\Doc\webxml\qglcontext.webxml
-[0344/7715]C:\Qt\Doc\webxml\qglformat.webxml
-[0345/7715]C:\Qt\Doc\webxml\qglframebufferobject.webxml
-[0346/7715]C:\Qt\Doc\webxml\qglframebufferobjectformat.webxml
+xml
 [0347/7715]C:\Qt\Doc\webxml\qglfunctions.webxml
 [0348/7715]C:\Qt\Doc\webxml\qglobalstatic.webxml
 org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qdt; lineNumber: 65; columnNumber: 61; value of attribute "xml:id" is invalid; must be an XML name without colons
@@ -187,15 +30,23 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0348/7715]     - DocBook has: []
 [0348/7715]     - HTML has:    [Type]
 [0348/7715]     > Differences between the sets: []
+[0348/7715] Member Types mismatch: 
+[0348/7715]     - DocBook has: [Type]
+[0348/7715]     - HTML has:    []
+[0348/7715]     > Differences between the sets: [Type]
 [0349/7715]C:\Qt\Doc\webxml\qglpixelbuffer.webxml
 [0350/7715]C:\Qt\Doc\webxml\qglshader.webxml
 [0351/7715]C:\Qt\Doc\webxml\qglshaderprogram.webxml
 [0352/7715]C:\Qt\Doc\webxml\qglwidget.webxml
 [0353/7715]C:\Qt\Doc\webxml\qglyphrun.webxml
+[0353/7715] Member Types mismatch: 
+[0353/7715]     - DocBook has: [GlyphRunFlags]
+[0353/7715]     - HTML has:    []
+[0353/7715]     > Differences between the sets: [GlyphRunFlags]
 [0354/7715]C:\Qt\Doc\webxml\qgradient.webxml
 [0354/7715] Public functions mismatch: 
 [0354/7715]     - DocBook has: [coordinateMode, operator!=, operator==, qt_check_for_QGADGET_macro, setColorAt, setCoordinateMode, setSpread, setStops, spread, stops, type]
-[0354/7715]     - HTML has:    [QGradientStop, QGradientStops, coordinateMode, operator!=, operator==, setColorAt, setCoordinateMode, setSpread, setStops, spread, stops, type]
+[0354/7715]     - HTML has:    [coordinateMode, operator!=, operator==, setColorAt, setCoordinateMode, setSpread, setStops, spread, stops, type]
 [0354/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
 [0355/7715]C:\Qt\Doc\webxml\qgraphicsanchor.webxml
 [0356/7715]C:\Qt\Doc\webxml\qgraphicsanchorlayout.webxml
@@ -204,6 +55,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0357/7715]     - DocBook has: [QGraphicsBlurEffect, blurHints, blurRadius, boundingRectFor, draw, setBlurHints, setBlurRadius, ~QGraphicsBlurEffect]
 [0357/7715]     - HTML has:    [QGraphicsBlurEffect, blurHints, blurHintsChanged, blurRadius, blurRadiusChanged, boundingRectFor, draw, setBlurHints, setBlurRadius, ~QGraphicsBlurEffect]
 [0357/7715]     > Differences between the sets: []
+[0357/7715] Member Types mismatch: 
+[0357/7715]     - DocBook has: [BlurHints]
+[0357/7715]     - HTML has:    []
+[0357/7715]     > Differences between the sets: [BlurHints]
 [0358/7715]C:\Qt\Doc\webxml\qgraphicscolorizeeffect.webxml
 [0358/7715] Public functions mismatch: 
 [0358/7715]     - DocBook has: [QGraphicsColorizeEffect, color, draw, setColor, setStrength, strength, ~QGraphicsColorizeEffect]
@@ -219,6 +74,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0360/7715]     - DocBook has: [QGraphicsEffect, boundingRect, boundingRectFor, draw, drawSource, isEnabled, setEnabled, sourceBoundingRect, sourceChanged, sourceIsPixmap, sourcePixmap, update, updateBoundingRect, ~QGraphicsEffect]
 [0360/7715]     - HTML has:    [QGraphicsEffect, boundingRect, boundingRectFor, draw, drawSource, enabledChanged, isEnabled, setEnabled, sourceBoundingRect, sourceChanged, sourceIsPixmap, sourcePixmap, update, updateBoundingRect, ~QGraphicsEffect]
 [0360/7715]     > Differences between the sets: []
+[0360/7715] Member Types mismatch: 
+[0360/7715]     - DocBook has: [ChangeFlags]
+[0360/7715]     - HTML has:    []
+[0360/7715]     > Differences between the sets: [ChangeFlags]
 [0361/7715]C:\Qt\Doc\webxml\qgraphicsellipseitem.webxml
 [0362/7715]C:\Qt\Doc\webxml\qgraphicsgridlayout.webxml
 [0363/7715]C:\Qt\Doc\webxml\qgraphicsitem.webxml
@@ -226,6 +85,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0363/7715]     - DocBook has: [QGraphicsItem, acceptDrops, acceptHoverEvents, acceptTouchEvents, acceptedMouseButtons, acceptsHoverEvents, advance, boundingRect, boundingRegion, boundingRegionGranularity, cacheMode, childItems, children, childrenBoundingRect, clearFocus, clipPath, collidesWithItem, collidesWithPath, collidingItems, commonAncestorItem, contains, contextMenuEvent, cursor, data, deviceTransform, dragEnterEvent, dragLeaveEvent, dragMoveEvent, dropEvent, effectiveOpacity, ensureVisible, filtersChildEvents, flags, focusInEvent, focusItem, focusOutEvent, focusProxy, grabKeyboard, grabMouse, graphicsEffect, group, handlesChildEvents, hasCursor, hasFocus, hide, hoverEnterEvent, hoverLeaveEvent, hoverMoveEvent, inputMethodEvent, inputMethodHints, inputMethodQuery, installSceneEventFilter, isActive, isAncestorOf, isBlockedByModalPanel, isClipped, isEnabled, isObscured, isObscuredBy, isPanel, isSelected, isUnderMouse, isVisible, isVisibleTo, isWidget, isWindow, itemChange, itemTransform, keyPressEvent, keyReleaseEvent, mapFromItem, mapFromParent, mapFromScene, mapRectFromItem, mapRectFromParent, mapRectFromScene, mapRectToItem, mapRectToParent, mapRectToScene, mapToItem, mapToParent, mapToScene, matrix, mouseDoubleClickEvent, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, moveBy, opacity, opaqueArea, paint, panel, panelModality, parentItem, parentObject, parentWidget, pos, prepareGeometryChange, removeSceneEventFilter, resetMatrix, resetTransform, rotate, rotation, scale, scene, sceneBoundingRect, sceneEvent, sceneEventFilter, sceneMatrix, scenePos, sceneTransform, scroll, setAcceptDrops, setAcceptHoverEvents, setAcceptTouchEvents, setAcceptedMouseButtons, setAcceptsHoverEvents, setActive, setBoundingRegionGranularity, setCacheMode, setCursor, setData, setEnabled, setFiltersChildEvents, setFlag, setFlags, setFocus, setFocusProxy, setGraphicsEffect, setGroup, setHandlesChildEvents, setInputMethodHints, setMatrix, setOpacity, setPanelModality, setParentItem, setPos, setRotation, setScale, setSelected, setToolTip, setTransform, setTransformOriginPoint, setTransformations, setVisible, setX, setY, setZValue, shape, shear, show, stackBefore, toGraphicsObject, toolTip, topLevelItem, topLevelWidget, transform, transformOriginPoint, transformations, translate, type, ungrabKeyboard, ungrabMouse, unsetCursor, update, updateMicroFocus, wheelEvent, window, x, y, zValue, ~QGraphicsItem]
 [0363/7715]     - HTML has:    [QGraphicsItem, acceptDrops, acceptHoverEvents, acceptTouchEvents, acceptedMouseButtons, advance, boundingRect, boundingRegion, boundingRegionGranularity, cacheMode, childItems, childrenBoundingRect, clearFocus, clipPath, collidesWithItem, collidesWithPath, collidingItems, commonAncestorItem, contains, contextMenuEvent, cursor, data, deviceTransform, dragEnterEvent, dragLeaveEvent, dragMoveEvent, dropEvent, effectiveOpacity, ensureVisible, filtersChildEvents, flags, focusInEvent, focusItem, focusOutEvent, focusProxy, grabKeyboard, grabMouse, graphicsEffect, group, hasCursor, hasFocus, hide, hoverEnterEvent, hoverLeaveEvent, hoverMoveEvent, inputMethodEvent, inputMethodHints, inputMethodQuery, installSceneEventFilter, isActive, isAncestorOf, isBlockedByModalPanel, isClipped, isEnabled, isObscured, isObscuredBy, isPanel, isSelected, isUnderMouse, isVisible, isVisibleTo, isWidget, isWindow, itemChange, itemTransform, keyPressEvent, keyReleaseEvent, mapFromItem, mapFromParent, mapFromScene, mapRectFromItem, mapRectFromParent, mapRectFromScene, mapRectToItem, mapRectToParent, mapRectToScene, mapToItem, mapToParent, mapToScene, mouseDoubleClickEvent, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, moveBy, opacity, opaqueArea, paint, panel, panelModality, parentItem, parentObject, parentWidget, pos, prepareGeometryChange, qgraphicsitem_cast, removeSceneEventFilter, resetTransform, rotation, scale, scene, sceneBoundingRect, sceneEvent, sceneEventFilter, scenePos, sceneTransform, scroll, setAcceptDrops, setAcceptHoverEvents, setAcceptTouchEvents, setAcceptedMouseButtons, setActive, setBoundingRegionGranularity, setCacheMode, setCursor, setData, setEnabled, setFiltersChildEvents, setFlag, setFlags, setFocus, setFocusProxy, setGraphicsEffect, setGroup, setInputMethodHints, setOpacity, setPanelModality, setParentItem, setPos, setRotation, setScale, setSelected, setToolTip, setTransform, setTransformOriginPoint, setTransformations, setVisible, setX, setY, setZValue, shape, show, stackBefore, toGraphicsObject, toolTip, topLevelItem, topLevelWidget, transform, transformOriginPoint, transformations, type, ungrabKeyboard, ungrabMouse, unsetCursor, update, updateMicroFocus, wheelEvent, window, x, y, zValue, ~QGraphicsItem]
 [0363/7715]     > Differences between the sets: [acceptsHoverEvents, children, handlesChildEvents, matrix, resetMatrix, rotate, sceneMatrix, setAcceptsHoverEvents, setHandlesChildEvents, setMatrix, shear, translate]
+[0363/7715] Member Types mismatch: 
+[0363/7715]     - DocBook has: [GraphicsItemFlags]
+[0363/7715]     - HTML has:    []
+[0363/7715]     > Differences between the sets: [GraphicsItemFlags]
 [0364/7715]C:\Qt\Doc\webxml\qgraphicsitemanimation.webxml
 [0365/7715]C:\Qt\Doc\webxml\qgraphicsitemgroup.webxml
 [0366/7715]C:\Qt\Doc\webxml\qgraphicslayout.webxml
@@ -270,6 +133,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0379/7715]     - DocBook has: [QGraphicsScene, activePanel, activeWindow, addEllipse, addItem, addLine, addPath, addPixmap, addPolygon, addRect, addSimpleText, addText, addWidget, advance, backgroundBrush, bspTreeDepth, clear, clearFocus, clearSelection, collidingItems, contextMenuEvent, createItemGroup, destroyItemGroup, dragEnterEvent, dragLeaveEvent, dragMoveEvent, drawBackground, drawForeground, drawItems, dropEvent, event, eventFilter, focusInEvent, focusItem, focusNextPrevChild, focusOutEvent, font, foregroundBrush, hasFocus, height, helpEvent, inputMethodEvent, inputMethodQuery, invalidate, isActive, isSortCacheEnabled, itemAt, itemIndexMethod, items, itemsBoundingRect, keyPressEvent, keyReleaseEvent, minimumRenderSize, mouseDoubleClickEvent, mouseGrabberItem, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, palette, removeItem, render, sceneRect, selectedItems, selectionArea, sendEvent, setActivePanel, setActiveWindow, setBackgroundBrush, setBspTreeDepth, setFocus, setFocusItem, setFont, setForegroundBrush, setItemIndexMethod, setMinimumRenderSize, setPalette, setSceneRect, setSceneRect setSceneRect, setSelectionArea, setSortCacheEnabled, setStickyFocus, setStyle, stickyFocus, style, update, views, wheelEvent, width, ~QGraphicsScene]
 [0379/7715]     - HTML has:    [QGraphicsScene, activePanel, activeWindow, addEllipse, addItem, addLine, addPath, addPixmap, addPolygon, addRect, addSimpleText, addText, addWidget, advance, backgroundBrush, bspTreeDepth, changed, clear, clearFocus, clearSelection, collidingItems, contextMenuEvent, createItemGroup, destroyItemGroup, dragEnterEvent, dragLeaveEvent, dragMoveEvent, drawBackground, drawForeground, dropEvent, event, eventFilter, focusInEvent, focusItem, focusItemChanged, focusOutEvent, font, foregroundBrush, hasFocus, height, helpEvent, inputMethodEvent, inputMethodQuery, invalidate, isActive, itemAt, itemIndexMethod, items, itemsBoundingRect, keyPressEvent, keyReleaseEvent, minimumRenderSize, mouseDoubleClickEvent, mouseGrabberItem, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, palette, removeItem, render, sceneRect, sceneRectChanged, selectedItems, selectionArea, selectionChanged, sendEvent, setActivePanel, setActiveWindow, setBackgroundBrush, setBspTreeDepth, setFocus, setFocusItem, setFont, setForegroundBrush, setItemIndexMethod, setMinimumRenderSize, setPalette, setSceneRect, setSelectionArea, setStickyFocus, setStyle, stickyFocus, style, update, views, wheelEvent, width, ~QGraphicsScene]
 [0379/7715]     > Differences between the sets: [drawItems, focusNextPrevChild, isSortCacheEnabled, setSceneRect setSceneRect, setSortCacheEnabled]
+[0379/7715] Member Types mismatch: 
+[0379/7715]     - DocBook has: [SceneLayers]
+[0379/7715]     - HTML has:    []
+[0379/7715]     > Differences between the sets: [SceneLayers]
 [0379/7715] Properties mismatch: 
 [0379/7715]     - DocBook has: [backgroundBrush, bspTreeDepth, font, foregroundBrush, itemIndexMethod, minimumRenderSize, palette, sceneRect, sortCacheEnabled, stickyFocus]
 [0379/7715]     - HTML has:    [backgroundBrush, bspTreeDepth, font, foregroundBrush, itemIndexMethod, minimumRenderSize, palette, sceneRect, stickyFocus]
@@ -318,8 +185,12 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0393/7715]     > Differences between the sets: [drawItems, setSceneRect setSceneRect, setupViewport]
 [0393/7715] Public types mismatch: 
 [0393/7715]     - DocBook has: [CacheModeFlag, DragMode, OptimizationFlag, ViewportAnchor, ViewportUpdateMode]
-[0393/7715]     - HTML has:    [CacheMode, CacheModeFlag, DragMode, OptimizationFlag, ViewportAnchor, ViewportUpdateMode]
-[0393/7715]     > Differences between the sets: []
+[0393/7715]     - HTML has:    [CacheMode, DragMode, OptimizationFlag, ViewportAnchor, ViewportUpdateMode]
+[0393/7715]     > Differences between the sets: [CacheModeFlag]
+[0393/7715] Member Types mismatch: 
+[0393/7715]     - DocBook has: [CacheMode, OptimizationFlags]
+[0393/7715]     - HTML has:    []
+[0393/7715]     > Differences between the sets: [CacheMode, OptimizationFlags]
 [0394/7715]C:\Qt\Doc\webxml\qgraphicswidget.webxml
 [0394/7715] Public functions mismatch: 
 [0394/7715]     - DocBook has: [QGraphicsWidget, actions, addAction, addActions, adjustSize, autoFillBackground, boundingRect, changeEvent, close, closeEvent, event, focusInEvent, focusNextPrevChild, focusOutEvent, focusPolicy, focusWidget, font, getContentsMargins, getWindowFrameMargins, grabKeyboardEvent, grabMouseEvent, grabShortcut, hideEvent, hoverLeaveEvent, hoverMoveEvent, initStyleOption, insertAction, insertActions, isActiveWindow, itemChange, layout, layoutDirection, moveEvent, paint, paintWindowFrame, palette, polishEvent, rect, releaseShortcut, removeAction, resize, resize resize, resizeEvent, sceneEvent, setAttribute, setAutoFillBackground, setContentsMargins, setFocusPolicy, setFont, setGeometry, setGeometry setGeometry, setLayout, setLayoutDirection, setPalette, setShortcutAutoRepeat, setShortcutEnabled, setStyle, setTabOrder, setWindowFlags, setWindowFrameMargins, setWindowTitle, shape, showEvent, size, sizeHint, style, testAttribute, type, ungrabKeyboardEvent, ungrabMouseEvent, unsetLayoutDirection, unsetWindowFrameMargins, updateGeometry, windowFlags, windowFrameEvent, windowFrameGeometry, windowFrameRect, windowFrameSectionAt, windowTitle, windowType, ~QGraphicsWidget]
@@ -352,6 +223,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0401/7715]     - DocBook has: []
 [0401/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, const_key_value_iterator, difference_type, iterator, key_iterator, key_type, key_value_iterator, mapped_type, size_type]
 [0401/7715]     > Differences between the sets: []
+[0401/7715] Member Types mismatch: 
+[0401/7715]     - DocBook has: [ConstIterator, Iterator, const_key_value_iterator, difference_type, key_type, key_value_iterator, mapped_type, size_type]
+[0401/7715]     - HTML has:    []
+[0401/7715]     > Differences between the sets: [ConstIterator, Iterator, const_key_value_iterator, difference_type, key_type, key_value_iterator, mapped_type, size_type]
 [0401/7715] Properties mismatch: 
 [0401/7715]     - DocBook has: [i]
 [0401/7715]     - HTML has:    []
@@ -400,6 +275,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0417/7715]     - DocBook has: [QHelpSearchEngine, cancelIndexing, cancelSearching, hitCount, hits, hitsCount, query, queryWidget, reindexDocumentation, resultWidget, search, searchInput, searchResultCount, searchResults, ~QHelpSearchEngine]
 [0417/7715]     - HTML has:    [QHelpSearchEngine, cancelIndexing, cancelSearching, indexingFinished, indexingStarted, queryWidget, reindexDocumentation, resultWidget, search, searchInput, searchResultCount, searchResults, searchingFinished, searchingStarted, ~QHelpSearchEngine]
 [0417/7715]     > Differences between the sets: [hitCount, hits, hitsCount, query]
+[0417/7715] Member Types mismatch: 
+[0417/7715]     - DocBook has: [SearchHit]
+[0417/7715]     - HTML has:    []
+[0417/7715]     > Differences between the sets: [SearchHit]
 [0418/7715]C:\Qt\Doc\webxml\qhelpsearchquery.webxml
 [0419/7715]C:\Qt\Doc\webxml\qhelpsearchquerywidget.webxml
 [0420/7715]C:\Qt\Doc\webxml\qhelpsearchresult.webxml
@@ -416,8 +295,12 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0427/7715]C:\Qt\Doc\webxml\qhostaddress.webxml
 [0427/7715] Public types mismatch: 
 [0427/7715]     - DocBook has: [ConversionModeFlag, SpecialAddress]
-[0427/7715]     - HTML has:    [ConversionMode, ConversionModeFlag, SpecialAddress]
-[0427/7715]     > Differences between the sets: []
+[0427/7715]     - HTML has:    [ConversionMode, SpecialAddress]
+[0427/7715]     > Differences between the sets: [ConversionModeFlag]
+[0427/7715] Member Types mismatch: 
+[0427/7715]     - DocBook has: [ConversionMode]
+[0427/7715]     - HTML has:    []
+[0427/7715]     > Differences between the sets: [ConversionMode]
 [0428/7715]C:\Qt\Doc\webxml\qhostinfo.webxml
 [0429/7715]C:\Qt\Doc\webxml\qhoverevent.webxml
 [0429/7715] Properties mismatch: 
@@ -430,6 +313,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0430/7715]     - HTML has:    [QHPieModelMapper, columnCount, columnCountChanged, firstColumn, firstColumnChanged, labelsRow, labelsRowChanged, model, modelReplaced, series, seriesReplaced, setColumnCount, setFirstColumn, setLabelsRow, setModel, setSeries, setValuesRow, valuesRow, valuesRowChanged]
 [0430/7715]     > Differences between the sets: []
 [0431/7715]C:\Qt\Doc\webxml\qhstspolicy.webxml
+[0431/7715] Member Types mismatch: 
+[0431/7715]     - DocBook has: [PolicyFlags]
+[0431/7715]     - HTML has:    []
+[0431/7715]     > Differences between the sets: [PolicyFlags]
 [0432/7715]C:\Qt\Doc\webxml\qhttpmultipart.webxml
 [0433/7715]C:\Qt\Doc\webxml\qhttppart.webxml
 [0434/7715]C:\Qt\Doc\webxml\qhxymodelmapper.webxml
@@ -467,18 +354,26 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0442/7715]C:\Qt\Doc\webxml\qimage.webxml
 [0442/7715] Public functions mismatch: 
 [0442/7715]     - DocBook has: [QImage, allGray, alphaChannel, bitPlaneCount, bits, byteCount, bytesPerLine, cacheKey, color, colorCount, colorTable, constBits, constScanLine, convertToFormat, copy, createAlphaMask, createHeuristicMask, createMaskFromColor, data_ptr, depth, devicePixelRatio, dotsPerMeterX, dotsPerMeterY, fill, format, fromData, hasAlphaChannel, height, invertPixels, isGrayscale, isNull, load, loadFromData, mirrored, numBytes, numColors, offset, operator QVariant, operator!=, operator=, operator==, pixel, pixelColor, pixelFormat, pixelIndex, rect, reinterpretAsFormat, rgbSwapped, save, scaled, scaledToHeight, scaledToWidth, scanLine, serialNumber, setAlphaChannel, setColor, setColorCount, setColorTable, setDevicePixelRatio, setDotsPerMeterX, setDotsPerMeterY, setNumColors, setOffset, setPixel, setPixelColor, setText, size, sizeInBytes, smoothScaled, swap, text, textKeys, textLanguages, textList, toCGImage, toImageFormat, toPixelFormat, transformed, trueMatrix, valid, width, ~QImage]
-[0442/7715]     - HTML has:    [QImage, QImageCleanupFunction, allGray, bitPlaneCount, bits, bytesPerLine, cacheKey, color, colorCount, colorTable, constBits, constScanLine, convertToFormat, copy, createAlphaMask, createHeuristicMask, createMaskFromColor, depth, devicePixelRatio, dotsPerMeterX, dotsPerMeterY, fill, format, fromData, hasAlphaChannel, height, invertPixels, isGrayscale, isNull, load, loadFromData, mirrored, offset, operator QVariant, operator!=, operator<<, operator=, operator==, operator>>, pixel, pixelColor, pixelFormat, pixelIndex, rect, reinterpretAsFormat, rgbSwapped, save, scaled, scaledToHeight, scaledToWidth, scanLine, setColor, setColorCount, setColorTable, setDevicePixelRatio, setDotsPerMeterX, setDotsPerMeterY, setOffset, setPixel, setPixelColor, setText, size, sizeInBytes, smoothScaled, swap, text, textKeys, toCGImage, toImageFormat, toPixelFormat, transformed, trueMatrix, valid, width, ~QImage]
+[0442/7715]     - HTML has:    [QImage, allGray, bitPlaneCount, bits, bytesPerLine, cacheKey, color, colorCount, colorTable, constBits, constScanLine, convertToFormat, copy, createAlphaMask, createHeuristicMask, createMaskFromColor, depth, devicePixelRatio, dotsPerMeterX, dotsPerMeterY, fill, format, fromData, hasAlphaChannel, height, invertPixels, isGrayscale, isNull, load, loadFromData, mirrored, offset, operator QVariant, operator!=, operator<<, operator=, operator==, operator>>, pixel, pixelColor, pixelFormat, pixelIndex, rect, reinterpretAsFormat, rgbSwapped, save, scaled, scaledToHeight, scaledToWidth, scanLine, setColor, setColorCount, setColorTable, setDevicePixelRatio, setDotsPerMeterX, setDotsPerMeterY, setOffset, setPixel, setPixelColor, setText, size, sizeInBytes, smoothScaled, swap, text, textKeys, toCGImage, toImageFormat, toPixelFormat, transformed, trueMatrix, valid, width, ~QImage]
 [0442/7715]     > Differences between the sets: [alphaChannel, byteCount, data_ptr, numBytes, numColors, serialNumber, setAlphaChannel, setNumColors, textLanguages, textList]
 [0443/7715]C:\Qt\Doc\webxml\qimageiohandler.webxml
 [0443/7715] Public functions mismatch: 
 [0443/7715]     - DocBook has: [QImageIOHandler, canRead, currentImageNumber, currentImageRect, device, format, imageCount, jumpToImage, jumpToNextImage, loopCount, name, nextImageDelay, option, read, setDevice, setFormat, setOption, supportsOption, write, ~QImageIOHandler]
 [0443/7715]     - HTML has:    [QImageIOHandler, canRead, currentImageNumber, currentImageRect, device, format, imageCount, jumpToImage, jumpToNextImage, loopCount, nextImageDelay, option, read, setDevice, setFormat, setOption, supportsOption, write, ~QImageIOHandler]
 [0443/7715]     > Differences between the sets: [name]
+[0443/7715] Member Types mismatch: 
+[0443/7715]     - DocBook has: [Transformations]
+[0443/7715]     - HTML has:    []
+[0443/7715]     > Differences between the sets: [Transformations]
 [0444/7715]C:\Qt\Doc\webxml\qimageioplugin.webxml
 [0444/7715] Public types mismatch: 
 [0444/7715]     - DocBook has: [Capability]
-[0444/7715]     - HTML has:    [Capabilities, Capability]
-[0444/7715]     > Differences between the sets: []
+[0444/7715]     - HTML has:    [Capabilities]
+[0444/7715]     > Differences between the sets: [Capability]
+[0444/7715] Member Types mismatch: 
+[0444/7715]     - DocBook has: [Capabilities]
+[0444/7715]     - HTML has:    []
+[0444/7715]     > Differences between the sets: [Capabilities]
 [0445/7715]C:\Qt\Doc\webxml\qimagereader.webxml
 [0446/7715]C:\Qt\Doc\webxml\qimagewriter.webxml
 [0446/7715] Public functions mismatch: 
@@ -490,6 +385,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0447/7715]     - DocBook has: [QInputDialog, cancelButtonText, comboBoxItems, done, doubleDecimals, doubleMaximum, doubleMinimum, doubleStep, doubleValue, getDouble, getInt, getInteger, getItem, getMultiLineText, getText, inputMode, intMaximum, intMinimum, intStep, intValue, isComboBoxEditable, labelText, minimumSizeHint, okButtonText, open, options, setCancelButtonText, setComboBoxEditable, setComboBoxItems, setDoubleDecimals, setDoubleMaximum, setDoubleMinimum, setDoubleRange, setDoubleStep, setDoubleValue, setInputMode, setIntMaximum, setIntMinimum, setIntRange, setIntStep, setIntValue, setLabelText, setOkButtonText, setOption, setOptions, setTextEchoMode, setTextValue, setVisible, sizeHint, testOption, textEchoMode, textValue, ~QInputDialog]
 [0447/7715]     - HTML has:    [QInputDialog, cancelButtonText, comboBoxItems, done, doubleDecimals, doubleMaximum, doubleMinimum, doubleStep, doubleValue, doubleValueChanged, doubleValueSelected, getDouble, getInt, getItem, getMultiLineText, getText, inputMode, intMaximum, intMinimum, intStep, intValue, intValueChanged, intValueSelected, isComboBoxEditable, labelText, minimumSizeHint, okButtonText, open, options, setCancelButtonText, setComboBoxEditable, setComboBoxItems, setDoubleDecimals, setDoubleMaximum, setDoubleMinimum, setDoubleRange, setDoubleStep, setDoubleValue, setInputMode, setIntMaximum, setIntMinimum, setIntRange, setIntStep, setIntValue, setLabelText, setOkButtonText, setOption, setOptions, setTextEchoMode, setTextValue, setVisible, sizeHint, testOption, textEchoMode, textValue, textValueChanged, textValueSelected, ~QInputDialog]
 [0447/7715]     > Differences between the sets: [getInteger]
+[0447/7715] Member Types mismatch: 
+[0447/7715]     - DocBook has: [InputDialogOptions]
+[0447/7715]     - HTML has:    []
+[0447/7715]     > Differences between the sets: [InputDialogOptions]
 [0448/7715]C:\Qt\Doc\webxml\qinputevent.webxml
 [0449/7715]C:\Qt\Doc\webxml\qinputmethod.webxml
 [0449/7715] Public functions mismatch: 
@@ -523,8 +422,12 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0454/7715]     > Differences between the sets: []
 [0454/7715] Public types mismatch: 
 [0454/7715]     - DocBook has: [OpenModeFlag]
-[0454/7715]     - HTML has:    [OpenMode, OpenModeFlag]
-[0454/7715]     > Differences between the sets: []
+[0454/7715]     - HTML has:    [OpenMode]
+[0454/7715]     > Differences between the sets: [OpenModeFlag]
+[0454/7715] Member Types mismatch: 
+[0454/7715]     - DocBook has: [OpenMode]
+[0454/7715]     - HTML has:    []
+[0454/7715]     > Differences between the sets: [OpenMode]
 [0455/7715]C:\Qt\Doc\webxml\qitemdelegate.webxml
 [0456/7715]C:\Qt\Doc\webxml\qitemeditorcreator.webxml
 [0457/7715]C:\Qt\Doc\webxml\qitemeditorcreatorbase.webxml
@@ -550,6 +453,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0463/7715]     - DocBook has: [QItemSelectionModel, clear, clearCurrentIndex, clearSelection, columnIntersectsSelection, currentIndex, emitSelectionChanged, hasSelection, isColumnSelected, isRowSelected, isSelected, model, reset, rowIntersectsSelection, select, selectedColumns, selectedIndexes, selectedRows, selection, setCurrentIndex, setModel, ~QItemSelectionModel]
 [0463/7715]     - HTML has:    [QItemSelectionModel, clear, clearCurrentIndex, clearSelection, columnIntersectsSelection, currentChanged, currentColumnChanged, currentIndex, currentRowChanged, emitSelectionChanged, hasSelection, isColumnSelected, isRowSelected, isSelected, model, modelChanged, reset, rowIntersectsSelection, select, selectedColumns, selectedIndexes, selectedRows, selection, selectionChanged, setCurrentIndex, setModel, ~QItemSelectionModel]
 [0463/7715]     > Differences between the sets: []
+[0463/7715] Member Types mismatch: 
+[0463/7715]     - DocBook has: [SelectionFlags]
+[0463/7715]     - HTML has:    []
+[0463/7715]     > Differences between the sets: [SelectionFlags]
 [0464/7715]C:\Qt\Doc\webxml\qitemselectionrange.webxml
 [0464/7715] Public functions mismatch: 
 [0464/7715]     - DocBook has: [QItemSelectionRange, bottom, bottomRight, contains, height, indexes, intersect, intersected, intersects, isEmpty, isValid, left, model, operator!=, operator<, operator=, operator==, parent, right, swap, top, topLeft, width]
@@ -560,11 +467,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0465/7715]     - DocBook has: [QJSEngine, collectGarbage, evaluate, fromScriptValue, globalObject, handle, installExtensions, installTranslatorFunctions, newArray, newObject, newQMetaObject, newQObject, qjsEngine, toScriptValue, ~QJSEngine]
 [0465/7715]     - HTML has:    [QJSEngine, collectGarbage, evaluate, fromScriptValue, globalObject, installExtensions, newArray, newObject, newQMetaObject, newQObject, qjsEngine, toScriptValue, ~QJSEngine]
 [0465/7715]     > Differences between the sets: [handle, installTranslatorFunctions]
+[0465/7715] Member Types mismatch: 
+[0465/7715]     - DocBook has: [Extensions]
+[0465/7715]     - HTML has:    []
+[0465/7715]     > Differences between the sets: [Extensions]
 [0466/7715]C:\Qt\Doc\webxml\qjsonarray-const-iterator.webxml
 [0466/7715] Public types mismatch: 
 [0466/7715]     - DocBook has: []
 [0466/7715]     - HTML has:    [iterator_category]
 [0466/7715]     > Differences between the sets: []
+[0466/7715] Member Types mismatch: 
+[0466/7715]     - DocBook has: [const_iterator]
+[0466/7715]     - HTML has:    []
+[0466/7715]     > Differences between the sets: [const_iterator]
 [0466/7715] Properties mismatch: 
 [0466/7715]     - DocBook has: [a, i]
 [0466/7715]     - HTML has:    []
@@ -574,6 +489,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0467/7715]     - DocBook has: []
 [0467/7715]     - HTML has:    [iterator_category]
 [0467/7715]     > Differences between the sets: []
+[0467/7715] Member Types mismatch: 
+[0467/7715]     - DocBook has: [iterator]
+[0467/7715]     - HTML has:    []
+[0467/7715]     > Differences between the sets: [iterator]
 [0467/7715] Properties mismatch: 
 [0467/7715]     - DocBook has: [a, i]
 [0467/7715]     - HTML has:    []
@@ -587,6 +506,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0468/7715]     - DocBook has: []
 [0468/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, const_pointer, const_reference, difference_type, iterator, pointer, reference, size_type, value_type]
 [0468/7715]     > Differences between the sets: []
+[0468/7715] Member Types mismatch: 
+[0468/7715]     - DocBook has: [ConstIterator, Iterator, const_pointer, const_reference, difference_type, pointer, reference, size_type, value_type]
+[0468/7715]     - HTML has:    []
+[0468/7715]     > Differences between the sets: [ConstIterator, Iterator, const_pointer, const_reference, difference_type, pointer, reference, size_type, value_type]
 [0468/7715] Properties mismatch: 
 [0468/7715]     - DocBook has: [a, i]
 [0468/7715]     - HTML has:    []
@@ -601,11 +524,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0470/7715]     - DocBook has: []
 [0470/7715]     - HTML has:    [iterator_category]
 [0470/7715]     > Differences between the sets: []
+[0470/7715] Member Types mismatch: 
+[0470/7715]     - DocBook has: [const_iterator]
+[0470/7715]     - HTML has:    []
+[0470/7715]     > Differences between the sets: [const_iterator]
 [0471/7715]C:\Qt\Doc\webxml\qjsonobject-iterator.webxml
 [0471/7715] Public types mismatch: 
 [0471/7715]     - DocBook has: []
 [0471/7715]     - HTML has:    [iterator_category]
 [0471/7715]     > Differences between the sets: []
+[0471/7715] Member Types mismatch: 
+[0471/7715]     - DocBook has: [iterator]
+[0471/7715]     - HTML has:    []
+[0471/7715]     > Differences between the sets: [iterator]
 [0472/7715]C:\Qt\Doc\webxml\qjsonobject.webxml
 [0472/7715] Public functions mismatch: 
 [0472/7715]     - DocBook has: [QJsonObject, begin, constBegin, constEnd, constFind, const_iterator, contains, count, empty, end, erase, find, fromVariantHash, fromVariantMap, insert, isEmpty, iterator, key, keys, length, operator!=, operator*, operator+, operator++, operator+=, operator-, operator--, operator-=, operator->, operator=, operator==, operator[], remove, size, swap, take, toVariantHash, toVariantMap, value, ~QJsonObject]
@@ -615,6 +546,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0472/7715]     - DocBook has: []
 [0472/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, iterator, key_type, mapped_type, size_type]
 [0472/7715]     > Differences between the sets: []
+[0472/7715] Member Types mismatch: 
+[0472/7715]     - DocBook has: [ConstIterator, Iterator, key_type, mapped_type, size_type]
+[0472/7715]     - HTML has:    []
+[0472/7715]     > Differences between the sets: [ConstIterator, Iterator, key_type, mapped_type, size_type]
 [0472/7715] Properties mismatch: 
 [0472/7715]     - DocBook has: [i, o]
 [0472/7715]     - HTML has:    []
@@ -628,7 +563,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0475/7715]C:\Qt\Doc\webxml\qjsvalue.webxml
 [0475/7715] Public functions mismatch: 
 [0475/7715]     - DocBook has: [QJSValue, call, callAsConstructor, callWithInstance, deleteProperty, engine, equals, hasOwnProperty, hasProperty, isArray, isBool, isCallable, isDate, isError, isNull, isNumber, isObject, isQMetaObject, isQObject, isRegExp, isString, isUndefined, isVariant, operator=, property, prototype, setProperty, setPrototype, strictlyEquals, toBool, toDateTime, toInt, toNumber, toQMetaObject, toQObject, toString, toUInt, toVariant, ~QJSValue]
-[0475/7715]     - HTML has:    [QJSValue, QJSValueList, call, callAsConstructor, callWithInstance, deleteProperty, equals, hasOwnProperty, hasProperty, isArray, isBool, isCallable, isDate, isError, isNull, isNumber, isObject, isQMetaObject, isQObject, isRegExp, isString, isUndefined, isVariant, operator=, property, prototype, setProperty, setPrototype, strictlyEquals, toBool, toDateTime, toInt, toNumber, toQMetaObject, toQObject, toString, toUInt, toVariant, ~QJSValue]
+[0475/7715]     - HTML has:    [QJSValue, call, callAsConstructor, callWithInstance, deleteProperty, equals, hasOwnProperty, hasProperty, isArray, isBool, isCallable, isDate, isError, isNull, isNumber, isObject, isQMetaObject, isQObject, isRegExp, isString, isUndefined, isVariant, operator=, property, prototype, setProperty, setPrototype, strictlyEquals, toBool, toDateTime, toInt, toNumber, toQMetaObject, toQObject, toString, toUInt, toVariant, ~QJSValue]
 [0475/7715]     > Differences between the sets: [engine]
 [0476/7715]C:\Qt\Doc\webxml\qjsvalueiterator.webxml
 [0477/7715]C:\Qt\Doc\webxml\qkeyevent.webxml
@@ -681,6 +616,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0491/7715]     - DocBook has: []
 [0491/7715]     - HTML has:    [const_iterator, const_reference, const_reverse_iterator, difference_type, iterator, reference, reverse_iterator, size_type, value_type]
 [0491/7715]     > Differences between the sets: []
+[0491/7715] Member Types mismatch: 
+[0491/7715]     - DocBook has: [const_iterator, const_reference, const_reverse_iterator, difference_type, iterator, reference, reverse_iterator, size_type, value_type]
+[0491/7715]     - HTML has:    []
+[0491/7715]     > Differences between the sets: [const_iterator, const_reference, const_reverse_iterator, difference_type, iterator, reference, reverse_iterator, size_type, value_type]
 [0492/7715]C:\Qt\Doc\webxml\qlayout.webxml
 [0492/7715] Public functions mismatch: 
 [0492/7715]     - DocBook has: [QLayout, activate, addChildLayout, addChildWidget, addItem, addWidget, alignmentRect, childEvent, closestAcceptableSize, contentsMargins, contentsRect, controlTypes, count, expandingDirections, geometry, getContentsMargins, indexOf, invalidate, isEmpty, isEnabled, itemAt, layout, margin, maximumSize, menuBar, minimumSize, parentWidget, removeItem, removeWidget, replaceWidget, setAlignment, setContentsMargins, setEnabled, setGeometry, setMargin, setMenuBar, setSizeConstraint, setSpacing, sizeConstraint, spacing, takeAt, update]
@@ -712,6 +651,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0496/7715]     > Differences between the sets: []
 [0497/7715]C:\Qt\Doc\webxml\qleinteger.webxml
 [0498/7715]C:\Qt\Doc\webxml\qlibrary.webxml
+[0498/7715] Member Types mismatch: 
+[0498/7715]     - DocBook has: [LoadHints]
+[0498/7715]     - HTML has:    []
+[0498/7715]     > Differences between the sets: [LoadHints]
 [0499/7715]C:\Qt\Doc\webxml\qlibraryinfo.webxml
 [0499/7715] Public functions mismatch: 
 [0499/7715]     - DocBook has: [buildDate, isDebugBuild, licensedProducts, licensee, location, version]
@@ -745,6 +688,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0507/7715]     - DocBook has: []
 [0507/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [0507/7715]     > Differences between the sets: []
+[0507/7715] Member Types mismatch: 
+[0507/7715]     - DocBook has: [ConstIterator, Iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, pointer, reference, reverse_iterator, size_type, value_type]
+[0507/7715]     - HTML has:    []
+[0507/7715]     > Differences between the sets: [ConstIterator, Iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, pointer, reference, reverse_iterator, size_type, value_type]
 [0507/7715] Properties mismatch: 
 [0507/7715]     - DocBook has: [i]
 [0507/7715]     - HTML has:    []
@@ -754,6 +701,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0508/7715]     - DocBook has: []
 [0508/7715]     - HTML has:    [iterator_category]
 [0508/7715]     > Differences between the sets: []
+[0508/7715] Member Types mismatch: 
+[0508/7715]     - DocBook has: [const_iterator]
+[0508/7715]     - HTML has:    []
+[0508/7715]     > Differences between the sets: [const_iterator]
 [0508/7715] Properties mismatch: 
 [0508/7715]     - DocBook has: [i]
 [0508/7715]     - HTML has:    []
@@ -763,6 +714,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0509/7715]     - DocBook has: []
 [0509/7715]     - HTML has:    [iterator_category]
 [0509/7715]     > Differences between the sets: []
+[0509/7715] Member Types mismatch: 
+[0509/7715]     - DocBook has: [iterator]
+[0509/7715]     - HTML has:    []
+[0509/7715]     > Differences between the sets: [iterator]
 [0509/7715] Properties mismatch: 
 [0509/7715]     - DocBook has: [i]
 [0509/7715]     - HTML has:    []
@@ -777,6 +732,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0511/7715]     - DocBook has: []
 [0511/7715]     - HTML has:    [ConstIterator, Iterator, MemoryLayout, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [0511/7715]     > Differences between the sets: []
+[0511/7715] Member Types mismatch: 
+[0511/7715]     - DocBook has: [ConstIterator, Iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, pointer, reference, reverse_iterator, size_type, value_type]
+[0511/7715]     - HTML has:    []
+[0511/7715]     > Differences between the sets: [ConstIterator, Iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, pointer, reference, reverse_iterator, size_type, value_type]
 [0511/7715] Properties mismatch: 
 [0511/7715]     - DocBook has: [i]
 [0511/7715]     - HTML has:    []
@@ -802,11 +761,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0516/7715]     - DocBook has: [QLocale, amText, bcp47Name, c, countriesForLanguage, country, countryToString, createSeparatedList, currencySymbol, dateFormat, dateTimeFormat, dayName, decimalPoint, exponential, firstDayOfWeek, formattedDataSize, groupSeparator, language, languageToString, matchingLocales, measurementSystem, monthName, name, nativeCountryName, nativeLanguageName, negativeSign, numberOptions, operator!=, operator=, operator==, percent, pmText, positiveSign, qHash, qt_check_for_QGADGET_macro, quoteString, script, scriptToString, setDefault, setNumberOptions, standaloneDayName, standaloneMonthName, swap, system, textDirection, timeFormat, toCurrencyString, toDate, toDateTime, toDouble, toFloat, toInt, toLongLong, toLower, toShort, toString, toTime, toUInt, toULongLong, toUShort, toUpper, uiLanguages, weekdays, zeroDigit, ~QLocale]
 [0516/7715]     - HTML has:    [QLocale, amText, bcp47Name, c, country, countryToString, createSeparatedList, currencySymbol, dateFormat, dateTimeFormat, dayName, decimalPoint, exponential, firstDayOfWeek, formattedDataSize, groupSeparator, language, languageToString, matchingLocales, measurementSystem, monthName, name, nativeCountryName, nativeLanguageName, negativeSign, numberOptions, operator!=, operator=, operator==, percent, pmText, positiveSign, qHash, quoteString, script, scriptToString, setDefault, setNumberOptions, standaloneDayName, standaloneMonthName, swap, system, textDirection, timeFormat, toCurrencyString, toDate, toDateTime, toDouble, toFloat, toInt, toLongLong, toLower, toShort, toString, toTime, toUInt, toULongLong, toUShort, toUpper, uiLanguages, weekdays, zeroDigit, ~QLocale]
 [0516/7715]     > Differences between the sets: [countriesForLanguage, qt_check_for_QGADGET_macro]
+[0516/7715] Member Types mismatch: 
+[0516/7715]     - DocBook has: [DataSizeFormats, NumberOptions]
+[0516/7715]     - HTML has:    []
+[0516/7715]     > Differences between the sets: [DataSizeFormats, NumberOptions]
 [0517/7715]C:\Qt\Doc\webxml\qlocalserver.webxml
 [0517/7715] Public functions mismatch: 
 [0517/7715]     - DocBook has: [QLocalServer, close, errorString, fullServerName, hasPendingConnections, incomingConnection, isListening, listen, maxPendingConnections, nextPendingConnection, removeServer, serverError, serverName, setMaxPendingConnections, setSocketOptions, socketDescriptor, socketOptions, waitForNewConnection, ~QLocalServer]
 [0517/7715]     - HTML has:    [QLocalServer, close, errorString, fullServerName, hasPendingConnections, incomingConnection, isListening, listen, maxPendingConnections, newConnection, nextPendingConnection, removeServer, serverError, serverName, setMaxPendingConnections, setSocketOptions, socketDescriptor, socketOptions, waitForNewConnection, ~QLocalServer]
 [0517/7715]     > Differences between the sets: []
+[0517/7715] Member Types mismatch: 
+[0517/7715]     - DocBook has: [SocketOptions]
+[0517/7715]     - HTML has:    []
+[0517/7715]     > Differences between the sets: [SocketOptions]
 [0518/7715]C:\Qt\Doc\webxml\qlocalsocket.webxml
 [0518/7715] Public functions mismatch: 
 [0518/7715]     - DocBook has: [QLocalSocket, abort, bytesAvailable, bytesToWrite, canReadLine, close, connectToServer, disconnectFromServer, error, flush, fullServerName, isSequential, isValid, open, readBufferSize, readData, serverName, setReadBufferSize, setServerName, setSocketDescriptor, socketDescriptor, state, waitForBytesWritten, waitForConnected, waitForDisconnected, waitForReadyRead, writeData, ~QLocalSocket]
@@ -824,6 +791,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0521/7715]     - DocBook has: []
 [0521/7715]     - HTML has:    [CategoryFilter]
 [0521/7715]     > Differences between the sets: []
+[0521/7715] Member Types mismatch: 
+[0521/7715]     - DocBook has: [CategoryFilter]
+[0521/7715]     - HTML has:    []
+[0521/7715]     > Differences between the sets: [CategoryFilter]
 [0521/7715] Properties mismatch: 
 [0521/7715]     - DocBook has: [enabledCritical, enabledDebug, enabledInfo, enabledWarning]
 [0521/7715]     - HTML has:    []
@@ -858,6 +829,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0526/7715]     - HTML has:    []
 [0526/7715]     > Differences between the sets: [address, type]
 [0527/7715]C:\Qt\Doc\webxml\qlowenergycharacteristic.webxml
+[0527/7715] Member Types mismatch: 
+[0527/7715]     - DocBook has: [PropertyTypes]
+[0527/7715]     - HTML has:    []
+[0527/7715]     > Differences between the sets: [PropertyTypes]
 [0527/7715] Properties mismatch: 
 [0527/7715]     - DocBook has: [data]
 [0527/7715]     - HTML has:    []
@@ -880,6 +855,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0533/7715]     - DocBook has: [characteristic, characteristics, contains, discoverDetails, error, includedServices, readCharacteristic, readDescriptor, serviceName, serviceUuid, state, type, writeCharacteristic, writeDescriptor, ~QLowEnergyService]
 [0533/7715]     - HTML has:    [characteristic, characteristicChanged, characteristicRead, characteristicWritten, characteristics, contains, descriptorRead, descriptorWritten, discoverDetails, error, includedServices, readCharacteristic, readDescriptor, serviceName, serviceUuid, state, stateChanged, type, writeCharacteristic, writeDescriptor, ~QLowEnergyService]
 [0533/7715]     > Differences between the sets: []
+[0533/7715] Member Types mismatch: 
+[0533/7715]     - DocBook has: [ServiceTypes]
+[0533/7715]     - HTML has:    []
+[0533/7715]     > Differences between the sets: [ServiceTypes]
 [0534/7715]C:\Qt\Doc\webxml\qlowenergyservicedata.webxml
 [0535/7715]C:\Qt\Doc\webxml\qmaccocoaviewcontainer.webxml
 [0536/7715]C:\Qt\Doc\webxml\qmacnativewidget.webxml
@@ -895,6 +874,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0540/7715]     - DocBook has: [QMainWindow, addDockWidget, addToolBar, addToolBarBreak, centralWidget, contextMenuEvent, corner, createPopupMenu, dockOptions, dockWidgetArea, documentMode, event, iconSize, insertToolBar, insertToolBarBreak, isAnimated, isDockNestingEnabled, menuBar, menuWidget, removeDockWidget, removeToolBar, removeToolBarBreak, resizeDocks, restoreDockWidget, restoreState, saveState, setAnimated, setCentralWidget, setCorner, setDockNestingEnabled, setDockOptions, setDocumentMode, setIconSize, setMenuBar, setMenuWidget, setStatusBar, setTabPosition, setTabShape, setToolButtonStyle, setUnifiedTitleAndToolBarOnMac, splitDockWidget, statusBar, tabPosition, tabShape, tabifiedDockWidgets, tabifyDockWidget, takeCentralWidget, toolBarArea, toolBarBreak, toolButtonStyle, unifiedTitleAndToolBarOnMac, ~QMainWindow]
 [0540/7715]     - HTML has:    [QMainWindow, addDockWidget, addToolBar, addToolBarBreak, centralWidget, contextMenuEvent, corner, createPopupMenu, dockOptions, dockWidgetArea, documentMode, event, iconSize, iconSizeChanged, insertToolBar, insertToolBarBreak, isAnimated, isDockNestingEnabled, menuBar, menuWidget, removeDockWidget, removeToolBar, removeToolBarBreak, resizeDocks, restoreDockWidget, restoreState, saveState, setAnimated, setCentralWidget, setCorner, setDockNestingEnabled, setDockOptions, setDocumentMode, setIconSize, setMenuBar, setMenuWidget, setStatusBar, setTabPosition, setTabShape, setToolButtonStyle, setUnifiedTitleAndToolBarOnMac, splitDockWidget, statusBar, tabPosition, tabShape, tabifiedDockWidgetActivated, tabifiedDockWidgets, tabifyDockWidget, takeCentralWidget, toolBarArea, toolBarBreak, toolButtonStyle, toolButtonStyleChanged, unifiedTitleAndToolBarOnMac, ~QMainWindow]
 [0540/7715]     > Differences between the sets: []
+[0540/7715] Member Types mismatch: 
+[0540/7715]     - DocBook has: [DockOptions]
+[0540/7715]     - HTML has:    []
+[0540/7715]     > Differences between the sets: [DockOptions]
 [0541/7715]C:\Qt\Doc\webxml\qmake-advanced-usage.webxml
 [0542/7715]C:\Qt\Doc\webxml\qmake-bearermonitor-example.webxml
 [0542/7715] Error while performing the inherited-by class check: 404 when downloading the original class.
@@ -943,11 +926,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0570/7715]     - DocBook has: []
 [0570/7715]     - HTML has:    [iterator_category]
 [0570/7715]     > Differences between the sets: []
+[0570/7715] Member Types mismatch: 
+[0570/7715]     - DocBook has: [const_iterator]
+[0570/7715]     - HTML has:    []
+[0570/7715]     > Differences between the sets: [const_iterator]
 [0571/7715]C:\Qt\Doc\webxml\qmap-iterator.webxml
 [0571/7715] Public types mismatch: 
 [0571/7715]     - DocBook has: []
 [0571/7715]     - HTML has:    [iterator_category]
 [0571/7715]     > Differences between the sets: []
+[0571/7715] Member Types mismatch: 
+[0571/7715]     - DocBook has: [iterator]
+[0571/7715]     - HTML has:    []
+[0571/7715]     > Differences between the sets: [iterator]
 [0572/7715]C:\Qt\Doc\webxml\qmap-key-iterator.webxml
 [0573/7715]C:\Qt\Doc\webxml\qmap.webxml
 [0573/7715] Public functions mismatch: 
@@ -958,6 +949,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0573/7715]     - DocBook has: []
 [0573/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, const_key_value_iterator, difference_type, iterator, key_iterator, key_type, key_value_iterator, mapped_type, size_type]
 [0573/7715]     > Differences between the sets: []
+[0573/7715] Member Types mismatch: 
+[0573/7715]     - DocBook has: [ConstIterator, Iterator, const_key_value_iterator, difference_type, key_type, key_value_iterator, mapped_type, size_type]
+[0573/7715]     - HTML has:    []
+[0573/7715]     > Differences between the sets: [ConstIterator, Iterator, const_key_value_iterator, difference_type, key_type, key_value_iterator, mapped_type, size_type]
 [0573/7715] Properties mismatch: 
 [0573/7715]     - DocBook has: [i]
 [0573/7715]     - HTML has:    []
@@ -984,11 +979,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0579/7715]     - DocBook has: [QMdiArea, activateNextSubWindow, activatePreviousSubWindow, activationOrder, activeSubWindow, addSubWindow, background, cascadeSubWindows, childEvent, closeActiveSubWindow, closeAllSubWindows, currentSubWindow, documentMode, event, eventFilter, minimumSizeHint, paintEvent, removeSubWindow, resizeEvent, scrollContentsBy, setActivationOrder, setActiveSubWindow, setBackground, setDocumentMode, setOption, setTabPosition, setTabShape, setTabsClosable, setTabsMovable, setViewMode, setupViewport, showEvent, sizeHint, subWindowList, tabPosition, tabShape, tabsClosable, tabsMovable, testOption, tileSubWindows, timerEvent, viewMode, viewportEvent, ~QMdiArea]
 [0579/7715]     - HTML has:    [QMdiArea, activateNextSubWindow, activatePreviousSubWindow, activationOrder, activeSubWindow, addSubWindow, background, cascadeSubWindows, childEvent, closeActiveSubWindow, closeAllSubWindows, currentSubWindow, documentMode, event, eventFilter, minimumSizeHint, paintEvent, removeSubWindow, resizeEvent, scrollContentsBy, setActivationOrder, setActiveSubWindow, setBackground, setDocumentMode, setOption, setTabPosition, setTabShape, setTabsClosable, setTabsMovable, setViewMode, showEvent, sizeHint, subWindowActivated, subWindowList, tabPosition, tabShape, tabsClosable, tabsMovable, testOption, tileSubWindows, timerEvent, viewMode, viewportEvent, ~QMdiArea]
 [0579/7715]     > Differences between the sets: [setupViewport]
+[0579/7715] Member Types mismatch: 
+[0579/7715]     - DocBook has: [AreaOptions]
+[0579/7715]     - HTML has:    []
+[0579/7715]     > Differences between the sets: [AreaOptions]
 [0580/7715]C:\Qt\Doc\webxml\qmdisubwindow.webxml
 [0580/7715] Public functions mismatch: 
 [0580/7715]     - DocBook has: [QMdiSubWindow, changeEvent, childEvent, closeEvent, contextMenuEvent, event, eventFilter, focusInEvent, focusOutEvent, hideEvent, isShaded, keyPressEvent, keyboardPageStep, keyboardSingleStep, leaveEvent, mdiArea, minimumSizeHint, mouseDoubleClickEvent, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, moveEvent, paintEvent, resizeEvent, setKeyboardPageStep, setKeyboardSingleStep, setOption, setSystemMenu, setWidget, showEvent, showShaded, showSystemMenu, sizeHint, systemMenu, testOption, timerEvent, widget, ~QMdiSubWindow]
 [0580/7715]     - HTML has:    [QMdiSubWindow, aboutToActivate, changeEvent, childEvent, closeEvent, contextMenuEvent, event, eventFilter, focusInEvent, focusOutEvent, hideEvent, isShaded, keyPressEvent, keyboardPageStep, keyboardSingleStep, leaveEvent, mdiArea, minimumSizeHint, mouseDoubleClickEvent, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, moveEvent, paintEvent, resizeEvent, setKeyboardPageStep, setKeyboardSingleStep, setOption, setSystemMenu, setWidget, showEvent, showShaded, showSystemMenu, sizeHint, systemMenu, testOption, timerEvent, widget, windowStateChanged, ~QMdiSubWindow]
 [0580/7715]     > Differences between the sets: []
+[0580/7715] Member Types mismatch: 
+[0580/7715]     - DocBook has: [SubWindowOptions]
+[0580/7715]     - HTML has:    []
+[0580/7715]     > Differences between the sets: [SubWindowOptions]
 [0581/7715]C:\Qt\Doc\webxml\qmediametadata.webxml
 [0582/7715]C:\Qt\Doc\webxml\qmenu.webxml
 [0582/7715] Public functions mismatch: 
@@ -1006,6 +1009,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0585/7715]     - DocBook has: [QMessageBox, about, aboutQt, addButton, button, buttonRole, buttonText, buttons, changeEvent, checkBox, clickedButton, closeEvent, critical, defaultButton, detailedText, escapeButton, event, exec, icon, iconPixmap, information, informativeText, keyPressEvent, open, question, removeButton, resizeEvent, setButtonText, setCheckBox, setDefaultButton, setDetailedText, setEscapeButton, setIcon, setIconPixmap, setInformativeText, setStandardButtons, setText, setTextFormat, setTextInteractionFlags, setWindowModality, setWindowTitle, showEvent, standardButton, standardButtons, standardIcon, text, textFormat, textInteractionFlags, warning, ~QMessageBox]
 [0585/7715]     - HTML has:    [QMessageBox, about, aboutQt, addButton, button, buttonClicked, buttonRole, buttons, changeEvent, checkBox, clickedButton, closeEvent, critical, defaultButton, detailedText, escapeButton, event, exec, icon, iconPixmap, information, informativeText, keyPressEvent, open, question, removeButton, resizeEvent, setCheckBox, setDefaultButton, setDetailedText, setEscapeButton, setIcon, setIconPixmap, setInformativeText, setStandardButtons, setText, setTextFormat, setTextInteractionFlags, setWindowModality, setWindowTitle, showEvent, standardButton, standardButtons, text, textFormat, textInteractionFlags, warning, ~QMessageBox]
 [0585/7715]     > Differences between the sets: [buttonText, setButtonText, standardIcon]
+[0585/7715] Member Types mismatch: 
+[0585/7715]     - DocBook has: [Button, StandardButtons]
+[0585/7715]     - HTML has:    []
+[0585/7715]     > Differences between the sets: [Button, StandardButtons]
 [0586/7715]C:\Qt\Doc\webxml\qmessagelogcontext.webxml
 [0586/7715] Public functions mismatch: 
 [0586/7715]     - DocBook has: [QMessageLogContext]
@@ -1024,6 +1031,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0587/7715]     - DocBook has: []
 [0587/7715]     - HTML has:    [CategoryFunction]
 [0587/7715]     > Differences between the sets: []
+[0587/7715] Member Types mismatch: 
+[0587/7715]     - DocBook has: [CategoryFunction]
+[0587/7715]     - HTML has:    []
+[0587/7715]     > Differences between the sets: [CategoryFunction]
 [0588/7715]C:\Qt\Doc\webxml\qmetaclassinfo.webxml
 [0588/7715] Public functions mismatch: 
 [0588/7715]     - DocBook has: [QMetaClassInfo, enclosingMetaObject, name, value]
@@ -1063,6 +1074,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0594/7715]     - DocBook has: [QMetaType, Q_DECLARE_ASSOCIATIVE_CONTAINER_METATYPE, Q_DECLARE_METATYPE, Q_DECLARE_OPAQUE_POINTER, Q_DECLARE_SEQUENTIAL_CONTAINER_METATYPE, Q_DECLARE_SMART_POINTER_METATYPE, compare, construct, convert, create, debugStream, destroy, destruct, equals, flags, hasRegisteredComparators, hasRegisteredConverterFunction, hasRegisteredDebugStreamOperator, isRegistered, isValid, load, metaObjectForType, qMetaTypeId, qRegisterMetaType, qRegisterMetaTypeStreamOperators, registerComparators, registerConverter, registerDebugStreamOperator, registerEqualsComparator, save, sizeOf, type, typeFlags, typeName, ~QMetaType]
 [0594/7715]     - HTML has:    [QMetaType, compare, construct, convert, create, debugStream, destroy, destruct, equals, flags, hasRegisteredComparators, hasRegisteredConverterFunction, hasRegisteredDebugStreamOperator, isRegistered, isValid, load, metaObject, metaObjectForType, qMetaTypeId, qRegisterMetaType, qRegisterMetaTypeStreamOperators, registerComparators, registerConverter, registerDebugStreamOperator, registerEqualsComparator, save, sizeOf, type, typeFlags, typeName, ~QMetaType]
 [0594/7715]     > Differences between the sets: [Q_DECLARE_ASSOCIATIVE_CONTAINER_METATYPE, Q_DECLARE_METATYPE, Q_DECLARE_OPAQUE_POINTER, Q_DECLARE_SEQUENTIAL_CONTAINER_METATYPE, Q_DECLARE_SMART_POINTER_METATYPE]
+[0594/7715] Member Types mismatch: 
+[0594/7715]     - DocBook has: [TypeFlags]
+[0594/7715]     - HTML has:    []
+[0594/7715]     > Differences between the sets: [TypeFlags]
 [0595/7715]C:\Qt\Doc\webxml\qmimedata.webxml
 [0596/7715]C:\Qt\Doc\webxml\qmimedatabase.webxml
 [0597/7715]C:\Qt\Doc\webxml\qmimetype.webxml
@@ -1112,7 +1127,7 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0621/7715]C:\Qt\Doc\webxml\qmodelindex.webxml
 [0621/7715] Public functions mismatch: 
 [0621/7715]     - DocBook has: [QModelIndex, child, column, data, flags, internalId, internalPointer, isValid, model, operator!=, operator<, operator==, parent, row, sibling, siblingAtColumn, siblingAtRow]
-[0621/7715]     - HTML has:    [QModelIndex, QModelIndexList, column, data, flags, internalId, internalPointer, isValid, model, operator!=, operator<, operator==, parent, row, sibling, siblingAtColumn, siblingAtRow]
+[0621/7715]     - HTML has:    [QModelIndex, column, data, flags, internalId, internalPointer, isValid, model, operator!=, operator<, operator==, parent, row, sibling, siblingAtColumn, siblingAtRow]
 [0621/7715]     > Differences between the sets: [child]
 [0622/7715]C:\Qt\Doc\webxml\qmouseevent.webxml
 [0622/7715] Public functions mismatch: 
@@ -1177,11 +1192,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0644/7715]     - DocBook has: [QNearFieldManager, isAvailable, registerNdefMessageHandler, setTargetAccessModes, startTargetDetection, stopTargetDetection, targetAccessModes, unregisterNdefMessageHandler, ~QNearFieldManager]
 [0644/7715]     - HTML has:    [QNearFieldManager, isAvailable, registerNdefMessageHandler, setTargetAccessModes, startTargetDetection, stopTargetDetection, targetAccessModes, targetDetected, targetLost, unregisterNdefMessageHandler, ~QNearFieldManager]
 [0644/7715]     > Differences between the sets: []
+[0644/7715] Member Types mismatch: 
+[0644/7715]     - DocBook has: [TargetAccessModes]
+[0644/7715]     - HTML has:    []
+[0644/7715]     > Differences between the sets: [TargetAccessModes]
 [0645/7715]C:\Qt\Doc\webxml\qnearfieldsharemanager.webxml
 [0645/7715] Public functions mismatch: 
 [0645/7715]     - DocBook has: [QNearFieldShareManager, setShareModes, shareError, shareModes, supportedShareModes, ~QNearFieldShareManager]
 [0645/7715]     - HTML has:    [QNearFieldShareManager, error, setShareModes, shareError, shareModes, shareModesChanged, supportedShareModes, targetDetected, ~QNearFieldShareManager]
 [0645/7715]     > Differences between the sets: []
+[0645/7715] Member Types mismatch: 
+[0645/7715]     - DocBook has: [ShareModes]
+[0645/7715]     - HTML has:    []
+[0645/7715]     > Differences between the sets: [ShareModes]
 [0646/7715]C:\Qt\Doc\webxml\qnearfieldsharetarget.webxml
 [0646/7715] Public functions mismatch: 
 [0646/7715]     - DocBook has: [cancel, isShareInProgress, share, shareError, shareModes, ~QNearFieldShareTarget]
@@ -1198,6 +1221,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0649/7715]     - DocBook has: [AccessMethod, Error, Type]
 [0649/7715]     - HTML has:    [AccessMethod, Error, RequestId, RequestIdPrivate, Type]
 [0649/7715]     > Differences between the sets: []
+[0649/7715] Member Types mismatch: 
+[0649/7715]     - DocBook has: [AccessMethods]
+[0649/7715]     - HTML has:    []
+[0649/7715]     > Differences between the sets: [AccessMethods]
 [0649/7715] Properties mismatch: 
 [0649/7715]     - DocBook has: [d]
 [0649/7715]     - HTML has:    []
@@ -1217,7 +1244,15 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0652/7715]     - DocBook has: []
 [0652/7715]     - HTML has:    [AttributesMap, RawHeader, RawHeaderList]
 [0652/7715]     > Differences between the sets: []
+[0652/7715] Member Types mismatch: 
+[0652/7715]     - DocBook has: [AttributesMap, RawHeader, RawHeaderList]
+[0652/7715]     - HTML has:    []
+[0652/7715]     > Differences between the sets: [AttributesMap, RawHeader, RawHeaderList]
 [0653/7715]C:\Qt\Doc\webxml\qnetworkconfiguration.webxml
+[0653/7715] Member Types mismatch: 
+[0653/7715]     - DocBook has: [StateFlags]
+[0653/7715]     - HTML has:    []
+[0653/7715]     > Differences between the sets: [StateFlags]
 [0654/7715]C:\Qt\Doc\webxml\qnetworkconfigurationmanager.webxml
 [0654/7715] Public functions mismatch: 
 [0654/7715]     - DocBook has: [QNetworkConfigurationManager, allConfigurations, capabilities, configurationFromIdentifier, defaultConfiguration, isOnline, updateConfigurations, ~QNetworkConfigurationManager]
@@ -1225,8 +1260,12 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0654/7715]     > Differences between the sets: []
 [0654/7715] Public types mismatch: 
 [0654/7715]     - DocBook has: [Capability]
-[0654/7715]     - HTML has:    [Capabilities, Capability]
-[0654/7715]     > Differences between the sets: []
+[0654/7715]     - HTML has:    [Capabilities]
+[0654/7715]     > Differences between the sets: [Capability]
+[0654/7715] Member Types mismatch: 
+[0654/7715]     - DocBook has: [Capabilities]
+[0654/7715]     - HTML has:    []
+[0654/7715]     > Differences between the sets: [Capabilities]
 [0655/7715]C:\Qt\Doc\webxml\qnetworkcookie.webxml
 [0656/7715]C:\Qt\Doc\webxml\qnetworkcookiejar.webxml
 [0657/7715]C:\Qt\Doc\webxml\qnetworkdatagram.webxml
@@ -1236,11 +1275,19 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0659/7715]     - DocBook has: [QNetworkInterface, addressEntries, allAddresses, allInterfaces, flags, hardwareAddress, humanReadableName, index, interfaceFromIndex, interfaceFromName, interfaceIndexFromName, interfaceNameFromIndex, isValid, maximumTransmissionUnit, name, operator=, qt_check_for_QGADGET_macro, swap, type, ~QNetworkInterface]
 [0659/7715]     - HTML has:    [QNetworkInterface, addressEntries, allAddresses, allInterfaces, flags, hardwareAddress, humanReadableName, index, interfaceFromIndex, interfaceFromName, interfaceIndexFromName, interfaceNameFromIndex, isValid, maximumTransmissionUnit, name, operator=, swap, type, ~QNetworkInterface]
 [0659/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
+[0659/7715] Member Types mismatch: 
+[0659/7715]     - DocBook has: [InterfaceFlags]
+[0659/7715]     - HTML has:    []
+[0659/7715]     > Differences between the sets: [InterfaceFlags]
 [0660/7715]C:\Qt\Doc\webxml\qnetworkproxy.webxml
 [0660/7715] Public types mismatch: 
 [0660/7715]     - DocBook has: [Capability, ProxyType]
-[0660/7715]     - HTML has:    [Capabilities, Capability, ProxyType]
-[0660/7715]     > Differences between the sets: []
+[0660/7715]     - HTML has:    [Capabilities, ProxyType]
+[0660/7715]     > Differences between the sets: [Capability]
+[0660/7715] Member Types mismatch: 
+[0660/7715]     - DocBook has: [Capabilities]
+[0660/7715]     - HTML has:    []
+[0660/7715]     > Differences between the sets: [Capabilities]
 [0661/7715]C:\Qt\Doc\webxml\qnetworkproxyfactory.webxml
 [0662/7715]C:\Qt\Doc\webxml\qnetworkproxyquery.webxml
 [0662/7715] Public functions mismatch: 
@@ -1256,6 +1303,10 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0663/7715]     - DocBook has: [NetworkError]
 [0663/7715]     - HTML has:    [NetworkError, RawHeaderPair]
 [0663/7715]     > Differences between the sets: []
+[0663/7715] Member Types mismatch: 
+[0663/7715]     - DocBook has: [RawHeaderPair]
+[0663/7715]     - HTML has:    []
+[0663/7715]     > Differences between the sets: [RawHeaderPair]
 [0664/7715]C:\Qt\Doc\webxml\qnetworkrequest.webxml
 [0665/7715]C:\Qt\Doc\webxml\qnetworksession.webxml
 [0665/7715] Public functions mismatch: 
@@ -1264,14 +1315,18 @@ org.xml.sax.SAXParseException; systemId: file:/C:/Qt/Doc/webxml/qglobalstatic.qd
 [0665/7715]     > Differences between the sets: []
 [0665/7715] Public types mismatch: 
 [0665/7715]     - DocBook has: [SessionError, State, UsagePolicy]
-[0665/7715]     - HTML has:    [SessionError, State, UsagePolicies, UsagePolicy]
-[0665/7715]     > Differences between the sets: []
+[0665/7715]     - HTML has:    [SessionError, State, UsagePolicies]
+[0665/7715]     > Differences between the sets: [UsagePolicy]
+[0665/7715] Member Types mismatch: 
+[0665/7715]     - DocBook has: [UsagePolicies]
+[0665/7715]     - HTML has:    []
+[0665/7715]     > Differences between the sets: [UsagePolicies]
 [0666/7715]C:\Qt\Doc\webxml\qobject.webxml
 WARNING: The description of staticMetaObject is skipped while it has some content.
 WARNING: The description of staticMetaObject is skipped while it has some content.
 [0666/7715] Public functions mismatch: 
 [0666/7715]     - DocBook has: [QObject, QT_NO_NARROWING_CONVERSIONS_IN_CONNECT, Q_CLASSINFO, Q_DISABLE_COPY, Q_EMIT, Q_ENUM, Q_ENUMS, Q_ENUM_NS, Q_FLAG, Q_FLAGS, Q_FLAG_NS, Q_GADGET, Q_INTERFACES, Q_INVOKABLE, Q_NAMESPACE, Q_OBJECT, Q_PROPERTY, Q_REVISION, Q_SET_OBJECT_NAME, Q_SIGNAL, Q_SIGNALS, Q_SLOT, Q_SLOTS, blockSignals, childEvent, children, connect, connectNotify, customEvent, deleteLater, disconnect, disconnectNotify, dumpObjectInfo, dumpObjectTree, dynamicPropertyNames, event, eventFilter, findChild, findChildren, inherits, installEventFilter, isSignalConnected, isWidgetType, isWindowType, killTimer, moveToThread, objectName, parent, property, receivers, removeEventFilter, sender, senderSignalIndex, setObjectName, setParent, setProperty, signalsBlocked, startTimer, thread, timerEvent, ~QObject]
-[0666/7715]     - HTML has:    [QObject, QObjectList, blockSignals, childEvent, children, connect, connectNotify, customEvent, deleteLater, destroyed, disconnect, disconnectNotify, dumpObjectInfo, dumpObjectTree, dynamicPropertyNames, event, eventFilter, findChild, findChildren, inherits, installEventFilter, isSignalConnected, isWidgetType, isWindowType, killTimer, metaObject, moveToThread, objectName, objectNameChanged, parent, property, qFindChildren, qobject_cast, receivers, removeEventFilter, sender, senderSignalIndex, setObjectName, setParent, setProperty, signalsBlocked, startTimer, staticMetaObject, thread, timerEvent, tr, ~QObject]
+[0666/7715]     - HTML has:    [QObject, blockSignals, childEvent, children, connect, connectNotify, customEvent, deleteLater, destroyed, disconnect, disconnectNotify, dumpObjectInfo, dumpObjectTree, dynamicPropertyNames, event, eventFilter, findChild, findChildren, inherits, installEventFilter, isSignalConnected, isWidgetType, isWindowType, killTimer, metaObject, moveToThread, objectName, objectNameChanged, parent, property, qFindChildren, qobject_cast, receivers, removeEventFilter, sender, senderSignalIndex, setObjectName, setParent, setProperty, signalsBlocked, startTimer, staticMetaObject, thread, timerEvent, tr, ~QObject]
 [0666/7715]     > Differences between the sets: [QT_NO_NARROWING_CONVERSIONS_IN_CONNECT, Q_CLASSINFO, Q_DISABLE_COPY, Q_EMIT, Q_ENUM, Q_ENUMS, Q_ENUM_NS, Q_FLAG, Q_FLAGS, Q_FLAG_NS, Q_GADGET, Q_INTERFACES, Q_INVOKABLE, Q_NAMESPACE, Q_OBJECT, Q_PROPERTY, Q_REVISION, Q_SET_OBJECT_NAME, Q_SIGNAL, Q_SIGNALS, Q_SLOT, Q_SLOTS]
 [0666/7715] Properties mismatch: 
 [0666/7715]     - DocBook has: [objectName, staticQtMetaObject]
@@ -1284,6 +1339,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0668/7715]     - HTML has:    [QOffscreenSurface, create, destroy, format, isValid, nativeHandle, requestedFormat, screen, screenChanged, setFormat, setNativeHandle, setScreen, size, surfaceType, ~QOffscreenSurface]
 [0668/7715]     > Differences between the sets: []
 [0669/7715]C:\Qt\Doc\webxml\qopenglbuffer.webxml
+[0669/7715] Member Types mismatch: 
+[0669/7715]     - DocBook has: [RangeAccessFlags]
+[0669/7715]     - HTML has:    []
+[0669/7715]     > Differences between the sets: [RangeAccessFlags]
 [0670/7715]C:\Qt\Doc\webxml\qopenglcontext.webxml
 [0670/7715] Public functions mismatch: 
 [0670/7715]     - DocBook has: [QOpenGLContext, areSharing, create, currentContext, defaultFramebufferObject, doneCurrent, extensions, extraFunctions, format, functions, getProcAddress, globalShareContext, hasExtension, isOpenGLES, isValid, makeCurrent, nativeHandle, openGLModuleHandle, openGLModuleType, screen, setFormat, setNativeHandle, setScreen, setShareContext, shareContext, shareGroup, supportsThreadedOpenGL, surface, swapBuffers, versionFunctions, ~QOpenGLContext]
@@ -1298,8 +1357,12 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0673/7715]C:\Qt\Doc\webxml\qopengldebugmessage.webxml
 [0673/7715] Public types mismatch: 
 [0673/7715]     - DocBook has: [Severity, Source, Type]
-[0673/7715]     - HTML has:    [Severities, Severity, Source, Type]
-[0673/7715]     > Differences between the sets: []
+[0673/7715]     - HTML has:    [Severities, Source, Type]
+[0673/7715]     > Differences between the sets: [Severity]
+[0673/7715] Member Types mismatch: 
+[0673/7715]     - DocBook has: [Severities, Sources, Types]
+[0673/7715]     - HTML has:    []
+[0673/7715]     > Differences between the sets: [Severities, Sources, Types]
 [0674/7715]C:\Qt\Doc\webxml\qopenglextrafunctions.webxml
 [0675/7715]C:\Qt\Doc\webxml\qopenglframebufferobject.webxml
 [0676/7715]C:\Qt\Doc\webxml\qopenglframebufferobjectformat.webxml
@@ -1335,6 +1398,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0704/7715]     - DocBook has: [QOpenGLFunctions, glActiveTexture, glAttachShader, glBindAttribLocation, glBindBuffer, glBindFramebuffer, glBindRenderbuffer, glBindTexture, glBlendColor, glBlendEquation, glBlendEquationSeparate, glBlendFunc, glBlendFuncSeparate, glBufferData, glBufferSubData, glCheckFramebufferStatus, glClear, glClearColor, glClearDepthf, glClearStencil, glColorMask, glCompileShader, glCompressedTexImage2D, glCompressedTexSubImage2D, glCopyTexImage2D, glCopyTexSubImage2D, glCreateProgram, glCreateShader, glCullFace, glDeleteBuffers, glDeleteFramebuffers, glDeleteProgram, glDeleteRenderbuffers, glDeleteShader, glDeleteTextures, glDepthFunc, glDepthMask, glDepthRangef, glDetachShader, glDisable, glDisableVertexAttribArray, glDrawArrays, glDrawElements, glEnable, glEnableVertexAttribArray, glFinish, glFlush, glFramebufferRenderbuffer, glFramebufferTexture2D, glFrontFace, glGenBuffers, glGenFramebuffers, glGenRenderbuffers, glGenTextures, glGenerateMipmap, glGetActiveAttrib, glGetActiveUniform, glGetAttachedShaders, glGetAttribLocation, glGetBooleanv, glGetBufferParameteriv, glGetError, glGetFloatv, glGetFramebufferAttachmentParameteriv, glGetIntegerv, glGetProgramInfoLog, glGetProgramiv, glGetRenderbufferParameteriv, glGetShaderInfoLog, glGetShaderPrecisionFormat, glGetShaderSource, glGetShaderiv, glGetString, glGetTexParameterfv, glGetTexParameteriv, glGetUniformLocation, glGetUniformfv, glGetUniformiv, glGetVertexAttribPointerv, glGetVertexAttribfv, glGetVertexAttribiv, glHint, glIsBuffer, glIsEnabled, glIsFramebuffer, glIsProgram, glIsRenderbuffer, glIsShader, glIsTexture, glLineWidth, glLinkProgram, glPixelStorei, glPolygonOffset, glReadPixels, glReleaseShaderCompiler, glRenderbufferStorage, glSampleCoverage, glScissor, glShaderBinary, glShaderSource, glStencilFunc, glStencilFuncSeparate, glStencilMask, glStencilMaskSeparate, glStencilOp, glStencilOpSeparate, glTexImage2D, glTexParameterf, glTexParameterfv, glTexParameteri, glTexParameteriv, glTexSubImage2D, glUniform1f, glUniform1fv, glUniform1i, glUniform1iv, glUniform2f, glUniform2fv, glUniform2i, glUniform2iv, glUniform3f, glUniform3fv, glUniform3i, glUniform3iv, glUniform4f, glUniform4fv, glUniform4i, glUniform4iv, glUniformMatrix2fv, glUniformMatrix3fv, glUniformMatrix4fv, glUseProgram, glValidateProgram, glVertexAttrib1f, glVertexAttrib1fv, glVertexAttrib2f, glVertexAttrib2fv, glVertexAttrib3f, glVertexAttrib3fv, glVertexAttrib4f, glVertexAttrib4fv, glVertexAttribPointer, glViewport, hasOpenGLFeature, initializeGLFunctions, initializeOpenGLFunctions, isInitialized, openGLFeatures, ~QOpenGLFunctions]
 [0704/7715]     - HTML has:    [QOpenGLFunctions, glActiveTexture, glAttachShader, glBindAttribLocation, glBindBuffer, glBindFramebuffer, glBindRenderbuffer, glBindTexture, glBlendColor, glBlendEquation, glBlendEquationSeparate, glBlendFunc, glBlendFuncSeparate, glBufferData, glBufferSubData, glCheckFramebufferStatus, glClear, glClearColor, glClearDepthf, glClearStencil, glColorMask, glCompileShader, glCompressedTexImage2D, glCompressedTexSubImage2D, glCopyTexImage2D, glCopyTexSubImage2D, glCreateProgram, glCreateShader, glCullFace, glDeleteBuffers, glDeleteFramebuffers, glDeleteProgram, glDeleteRenderbuffers, glDeleteShader, glDeleteTextures, glDepthFunc, glDepthMask, glDepthRangef, glDetachShader, glDisable, glDisableVertexAttribArray, glDrawArrays, glDrawElements, glEnable, glEnableVertexAttribArray, glFinish, glFlush, glFramebufferRenderbuffer, glFramebufferTexture2D, glFrontFace, glGenBuffers, glGenFramebuffers, glGenRenderbuffers, glGenTextures, glGenerateMipmap, glGetActiveAttrib, glGetActiveUniform, glGetAttachedShaders, glGetAttribLocation, glGetBooleanv, glGetBufferParameteriv, glGetError, glGetFloatv, glGetFramebufferAttachmentParameteriv, glGetIntegerv, glGetProgramInfoLog, glGetProgramiv, glGetRenderbufferParameteriv, glGetShaderInfoLog, glGetShaderPrecisionFormat, glGetShaderSource, glGetShaderiv, glGetString, glGetTexParameterfv, glGetTexParameteriv, glGetUniformLocation, glGetUniformfv, glGetUniformiv, glGetVertexAttribPointerv, glGetVertexAttribfv, glGetVertexAttribiv, glHint, glIsBuffer, glIsEnabled, glIsFramebuffer, glIsProgram, glIsRenderbuffer, glIsShader, glIsTexture, glLineWidth, glLinkProgram, glPixelStorei, glPolygonOffset, glReadPixels, glReleaseShaderCompiler, glRenderbufferStorage, glSampleCoverage, glScissor, glShaderBinary, glShaderSource, glStencilFunc, glStencilFuncSeparate, glStencilMask, glStencilMaskSeparate, glStencilOp, glStencilOpSeparate, glTexImage2D, glTexParameterf, glTexParameterfv, glTexParameteri, glTexParameteriv, glTexSubImage2D, glUniform1f, glUniform1fv, glUniform1i, glUniform1iv, glUniform2f, glUniform2fv, glUniform2i, glUniform2iv, glUniform3f, glUniform3fv, glUniform3i, glUniform3iv, glUniform4f, glUniform4fv, glUniform4i, glUniform4iv, glUniformMatrix2fv, glUniformMatrix3fv, glUniformMatrix4fv, glUseProgram, glValidateProgram, glVertexAttrib1f, glVertexAttrib1fv, glVertexAttrib2f, glVertexAttrib2fv, glVertexAttrib3f, glVertexAttrib3fv, glVertexAttrib4f, glVertexAttrib4fv, glVertexAttribPointer, glViewport, hasOpenGLFeature, initializeOpenGLFunctions, openGLFeatures, ~QOpenGLFunctions]
 [0704/7715]     > Differences between the sets: [initializeGLFunctions, isInitialized]
+[0704/7715] Member Types mismatch: 
+[0704/7715]     - DocBook has: [OpenGLFeatures]
+[0704/7715]     - HTML has:    []
+[0704/7715]     > Differences between the sets: [OpenGLFeatures]
 [0705/7715]C:\Qt\Doc\webxml\qopenglpaintdevice.webxml
 [0705/7715] Public functions mismatch: 
 [0705/7715]     - DocBook has: [QOpenGLPaintDevice, context, devType, dotsPerMeterX, dotsPerMeterY, ensureActiveTarget, metric, operator=, paintEngine, paintFlipped, setDevicePixelRatio, setDotsPerMeterX, setDotsPerMeterY, setPaintFlipped, setSize, size, ~QOpenGLPaintDevice]
@@ -1344,14 +1411,22 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0707/7715]C:\Qt\Doc\webxml\qopenglshader.webxml
 [0707/7715] Public types mismatch: 
 [0707/7715]     - DocBook has: [ShaderTypeBit]
-[0707/7715]     - HTML has:    [ShaderType, ShaderTypeBit]
-[0707/7715]     > Differences between the sets: []
+[0707/7715]     - HTML has:    [ShaderType]
+[0707/7715]     > Differences between the sets: [ShaderTypeBit]
+[0707/7715] Member Types mismatch: 
+[0707/7715]     - DocBook has: [ShaderType]
+[0707/7715]     - HTML has:    []
+[0707/7715]     > Differences between the sets: [ShaderType]
 [0708/7715]C:\Qt\Doc\webxml\qopenglshaderprogram.webxml
 [0709/7715]C:\Qt\Doc\webxml\qopengltexture.webxml
 [0709/7715] Public functions mismatch: 
 [0709/7715]     - DocBook has: [QOpenGLTexture, allocateStorage, bind, borderColor, boundTextureId, comparisonFunction, comparisonMode, create, createTextureView, depth, depthStencilMode, destroy, faces, format, generateMipMaps, hasFeature, height, isAutoMipMapGenerationEnabled, isBound, isCreated, isFixedSamplePositions, isStorageAllocated, isTextureView, layers, levelOfDetailRange, levelofDetailBias, magnificationFilter, maximumAnisotropy, maximumLevelOfDetail, maximumMipLevels, minMagFilters, minificationFilter, minimumLevelOfDetail, mipBaseLevel, mipLevelRange, mipLevels, mipMaxLevel, qt_check_for_QGADGET_macro, release, samples, setAutoMipMapGenerationEnabled, setBorderColor, setComparisonFunction, setComparisonMode, setCompressedData, setData, setDepthStencilMode, setFixedSamplePositions, setFormat, setLayers, setLevelOfDetailRange, setLevelofDetailBias, setMagnificationFilter, setMaximumAnisotropy, setMaximumLevelOfDetail, setMinMagFilters, setMinificationFilter, setMinimumLevelOfDetail, setMipBaseLevel, setMipLevelRange, setMipLevels, setMipMaxLevel, setSamples, setSize, setSwizzleMask, setWrapMode, swizzleMask, target, textureId, width, wrapMode, ~QOpenGLTexture]
 [0709/7715]     - HTML has:    [QOpenGLTexture, allocateStorage, bind, borderColor, boundTextureId, comparisonFunction, comparisonMode, create, createTextureView, depth, depthStencilMode, destroy, faces, format, generateMipMaps, hasFeature, height, isAutoMipMapGenerationEnabled, isBound, isCreated, isFixedSamplePositions, isStorageAllocated, isTextureView, layers, levelOfDetailRange, levelofDetailBias, magnificationFilter, maximumAnisotropy, maximumLevelOfDetail, maximumMipLevels, minMagFilters, minificationFilter, minimumLevelOfDetail, mipBaseLevel, mipLevelRange, mipLevels, mipMaxLevel, release, samples, setAutoMipMapGenerationEnabled, setBorderColor, setComparisonFunction, setComparisonMode, setCompressedData, setData, setDepthStencilMode, setFixedSamplePositions, setFormat, setLayers, setLevelOfDetailRange, setLevelofDetailBias, setMagnificationFilter, setMaximumAnisotropy, setMaximumLevelOfDetail, setMinMagFilters, setMinificationFilter, setMinimumLevelOfDetail, setMipBaseLevel, setMipLevelRange, setMipLevels, setMipMaxLevel, setSamples, setSize, setSwizzleMask, setWrapMode, swizzleMask, target, textureId, width, wrapMode, ~QOpenGLTexture]
 [0709/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
+[0709/7715] Member Types mismatch: 
+[0709/7715]     - DocBook has: [Features]
+[0709/7715]     - HTML has:    []
+[0709/7715]     > Differences between the sets: [Features]
 [0710/7715]C:\Qt\Doc\webxml\qopengltextureblitter.webxml
 [0711/7715]C:\Qt\Doc\webxml\qopengltimemonitor.webxml
 [0712/7715]C:\Qt\Doc\webxml\qopengltimerquery.webxml
@@ -1435,6 +1510,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0728/7715]     - DocBook has: [QPaintEngine, begin, clearDirty, drawEllipse, drawImage, drawLines, drawPath, drawPixmap, drawPoints, drawPolygon, drawRects, drawTextItem, drawTiledPixmap, end, fix_neg_rect, hasFeature, isActive, isExtended, paintDevice, painter, setActive, setDirty, syncState, testDirty, type, updateState, ~QPaintEngine]
 [0728/7715]     - HTML has:    [QPaintEngine, begin, drawEllipse, drawImage, drawLines, drawPath, drawPixmap, drawPoints, drawPolygon, drawRects, drawTextItem, drawTiledPixmap, end, hasFeature, isActive, paintDevice, painter, setActive, type, updateState, ~QPaintEngine]
 [0728/7715]     > Differences between the sets: [clearDirty, fix_neg_rect, isExtended, setDirty, syncState, testDirty]
+[0728/7715] Member Types mismatch: 
+[0728/7715]     - DocBook has: [DirtyFlags, PaintEngineFeatures]
+[0728/7715]     - HTML has:    []
+[0728/7715]     > Differences between the sets: [DirtyFlags, PaintEngineFeatures]
 [0728/7715] Properties mismatch: 
 [0728/7715]     - DocBook has: [active, extended, gccaps, selfDestruct, state]
 [0728/7715]     - HTML has:    []
@@ -1462,6 +1541,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0731/7715]     - DocBook has: [CompositionMode, PixmapFragmentHint, RenderHint]
 [0731/7715]     - HTML has:    [CompositionMode, PixmapFragment, PixmapFragmentHint, RenderHint]
 [0731/7715]     > Differences between the sets: []
+[0731/7715] Member Types mismatch: 
+[0731/7715]     - DocBook has: [PixmapFragmentHints, RenderHints]
+[0731/7715]     - HTML has:    []
+[0731/7715]     > Differences between the sets: [PixmapFragmentHints, RenderHints]
 [0731/7715] Properties mismatch: 
 [0731/7715]     - DocBook has: [height, opacity, rotation, scaleX, scaleY, sourceLeft, sourceTop, width, x, y]
 [0731/7715]     - HTML has:    []
@@ -1495,6 +1578,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0736/7715]     - DocBook has: []
 [0736/7715]     - HTML has:    [first_type, second_type]
 [0736/7715]     > Differences between the sets: []
+[0736/7715] Member Types mismatch: 
+[0736/7715]     - DocBook has: [first_type, second_type]
+[0736/7715]     - HTML has:    []
+[0736/7715]     > Differences between the sets: [first_type, second_type]
 [0736/7715] Properties mismatch: 
 [0736/7715]     - DocBook has: [first, second]
 [0736/7715]     - HTML has:    []
@@ -1538,6 +1625,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0750/7715]     - HTML has:    [QPieSlice, angleSpan, angleSpanChanged, borderColor, borderColorChanged, borderWidth, borderWidthChanged, brush, brushChanged, clicked, color, colorChanged, doubleClicked, explodeDistanceFactor, hovered, isExploded, isLabelVisible, label, labelArmLengthFactor, labelBrush, labelBrushChanged, labelChanged, labelColor, labelColorChanged, labelFont, labelFontChanged, labelPosition, labelVisibleChanged, pen, penChanged, percentage, percentageChanged, pressed, released, series, setBorderColor, setBorderWidth, setBrush, setColor, setExplodeDistanceFactor, setExploded, setLabel, setLabelArmLengthFactor, setLabelBrush, setLabelColor, setLabelFont, setLabelPosition, setLabelVisible, setPen, setValue, startAngle, startAngleChanged, value, valueChanged, ~QPieSlice]
 [0750/7715]     > Differences between the sets: []
 [0751/7715]C:\Qt\Doc\webxml\qpinchgesture.webxml
+[0751/7715] Member Types mismatch: 
+[0751/7715]     - DocBook has: [ChangeFlags]
+[0751/7715]     - HTML has:    []
+[0751/7715]     > Differences between the sets: [ChangeFlags]
 [0752/7715]C:\Qt\Doc\webxml\qpixelformat.webxml
 [0752/7715] Public functions mismatch: 
 [0752/7715]     - DocBook has: [QPixelFormat, alphaPosition, alphaSize, alphaUsage, bitsPerPixel, blackSize, blueSize, brightnessSize, byteOrder, channelCount, colorModel, cyanSize, greenSize, hueSize, lightnessSize, magentaSize, premultiplied, redSize, saturationSize, subEnum, typeInterpretation, yellowSize, yuvLayout]
@@ -1600,6 +1691,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0764/7715]     - HTML has:    [QPointingDeviceUniqueId, fromNumericId, isValid, numericId, operator!=, operator==, qHash]
 [0764/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
 [0765/7715]C:\Qt\Doc\webxml\qpolarchart.webxml
+[0765/7715] Member Types mismatch: 
+[0765/7715]     - DocBook has: [PolarOrientations]
+[0765/7715]     - HTML has:    []
+[0765/7715]     > Differences between the sets: [PolarOrientations]
 [0766/7715]C:\Qt\Doc\webxml\qpolygon.webxml
 [0766/7715] Public functions mismatch: 
 [0766/7715]     - DocBook has: [QPolygon, boundingRect, containsPoint, intersected, intersects, operator QVariant, operator=, point, putPoints, setPoint, setPoints, subtracted, swap, translate, translated, united, ~QPolygon]
@@ -1625,6 +1720,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0770/7715]     - DocBook has: [ColorMode, DuplexMode, Orientation, OutputFormat, PageOrder, PaperSource, PrintRange, PrinterMode, PrinterState, Unit]
 [0770/7715]     - HTML has:    [ColorMode, DuplexMode, Orientation, OutputFormat, PageOrder, PaperSize, PaperSource, PrintRange, PrinterMode, PrinterState, Unit]
 [0770/7715]     > Differences between the sets: []
+[0770/7715] Member Types mismatch: 
+[0770/7715]     - DocBook has: [PaperSize]
+[0770/7715]     - HTML has:    []
+[0770/7715]     > Differences between the sets: [PaperSize]
 [0771/7715]C:\Qt\Doc\webxml\qprinterinfo.webxml
 [0771/7715] Public functions mismatch: 
 [0771/7715]     - DocBook has: [QPrinterInfo, availablePrinterNames, availablePrinters, defaultDuplexMode, defaultPageSize, defaultPrinter, defaultPrinterName, description, isDefault, isNull, isRemote, location, makeAndModel, maximumPhysicalPageSize, minimumPhysicalPageSize, operator=, printerInfo, printerName, state, supportedDuplexModes, supportedPageSizes, supportedPaperSizes, supportedResolutions, supportedSizesWithNames, supportsCustomPageSizes, ~QPrinterInfo]
@@ -1648,12 +1747,16 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0775/7715]C:\Qt\Doc\webxml\qprocess.webxml
 [0775/7715] Public functions mismatch: 
 [0775/7715]     - DocBook has: [QProcess, QT_NO_PROCESS_COMBINED_ARGUMENT_START, arguments, atEnd, bytesAvailable, bytesToWrite, canReadLine, close, closeReadChannel, closeWriteChannel, createProcessArgumentsModifier, environment, error, execute, exitCode, exitStatus, inputChannelMode, isSequential, kill, nativeArguments, nullDevice, open, pid, processChannelMode, processEnvironment, processId, program, readAllStandardError, readAllStandardOutput, readChannel, readChannelMode, readData, setArguments, setCreateProcessArgumentsModifier, setEnvironment, setInputChannelMode, setNativeArguments, setProcessChannelMode, setProcessEnvironment, setProcessState, setProgram, setReadChannel, setReadChannelMode, setStandardErrorFile, setStandardInputFile, setStandardOutputFile, setStandardOutputProcess, setWorkingDirectory, setupChildProcess, start, startDetached, state, systemEnvironment, terminate, waitForBytesWritten, waitForFinished, waitForReadyRead, waitForStarted, workingDirectory, writeData, ~QProcess]
-[0775/7715]     - HTML has:    [QProcess, Q_PID, arguments, atEnd, bytesAvailable, bytesToWrite, canReadLine, close, closeReadChannel, closeWriteChannel, createProcessArgumentsModifier, error, errorOccurred, execute, exitCode, exitStatus, finished, inputChannelMode, isSequential, kill, nativeArguments, nullDevice, open, processChannelMode, processEnvironment, processId, program, readAllStandardError, readAllStandardOutput, readChannel, readData, readyReadStandardError, readyReadStandardOutput, setArguments, setCreateProcessArgumentsModifier, setInputChannelMode, setNativeArguments, setProcessChannelMode, setProcessEnvironment, setProcessState, setProgram, setReadChannel, setStandardErrorFile, setStandardInputFile, setStandardOutputFile, setStandardOutputProcess, setWorkingDirectory, setupChildProcess, start, startDetached, started, state, stateChanged, systemEnvironment, terminate, waitForBytesWritten, waitForFinished, waitForReadyRead, waitForStarted, workingDirectory, writeData, ~QProcess]
+[0775/7715]     - HTML has:    [QProcess, arguments, atEnd, bytesAvailable, bytesToWrite, canReadLine, close, closeReadChannel, closeWriteChannel, createProcessArgumentsModifier, error, errorOccurred, execute, exitCode, exitStatus, finished, inputChannelMode, isSequential, kill, nativeArguments, nullDevice, open, processChannelMode, processEnvironment, processId, program, readAllStandardError, readAllStandardOutput, readChannel, readData, readyReadStandardError, readyReadStandardOutput, setArguments, setCreateProcessArgumentsModifier, setInputChannelMode, setNativeArguments, setProcessChannelMode, setProcessEnvironment, setProcessState, setProgram, setReadChannel, setStandardErrorFile, setStandardInputFile, setStandardOutputFile, setStandardOutputProcess, setWorkingDirectory, setupChildProcess, start, startDetached, started, state, stateChanged, systemEnvironment, terminate, waitForBytesWritten, waitForFinished, waitForReadyRead, waitForStarted, workingDirectory, writeData, ~QProcess]
 [0775/7715]     > Differences between the sets: [QT_NO_PROCESS_COMBINED_ARGUMENT_START, environment, pid, readChannelMode, setEnvironment, setReadChannelMode]
 [0775/7715] Public types mismatch: 
 [0775/7715]     - DocBook has: [ExitStatus, InputChannelMode, ProcessChannel, ProcessChannelMode, ProcessError, ProcessState]
 [0775/7715]     - HTML has:    [CreateProcessArgumentModifier, CreateProcessArguments, ExitStatus, InputChannelMode, ProcessChannel, ProcessChannelMode, ProcessError, ProcessState]
 [0775/7715]     > Differences between the sets: []
+[0775/7715] Member Types mismatch: 
+[0775/7715]     - DocBook has: [CreateProcessArgumentModifier, Q_PID]
+[0775/7715]     - HTML has:    [Q_PID]
+[0775/7715]     > Differences between the sets: [CreateProcessArgumentModifier]
 [0775/7715] Signals mismatch: 
 [0775/7715]     - DocBook has: [error, errorOccurred, finished, readyReadStandardError, readyReadStandardOutput, started, stateChanged]
 [0775/7715]     - HTML has:    [errorOccurred, finished, readyReadStandardError, readyReadStandardOutput, started, stateChanged]
@@ -1718,6 +1821,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0789/7715]C:\Qt\Doc\webxml\qqmlextensionplugin.webxml
 [0790/7715]C:\Qt\Doc\webxml\qqmlfileselector.webxml
 [0791/7715]C:\Qt\Doc\webxml\qqmlimageproviderbase.webxml
+[0791/7715] Member Types mismatch: 
+[0791/7715]     - DocBook has: [Flags]
+[0791/7715]     - HTML has:    []
+[0791/7715]     > Differences between the sets: [Flags]
 [0792/7715]C:\Qt\Doc\webxml\qqmlincubationcontroller.webxml
 [0793/7715]C:\Qt\Doc\webxml\qqmlincubator.webxml
 [0794/7715]C:\Qt\Doc\webxml\qqmllistproperty.webxml
@@ -1725,6 +1832,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0794/7715]     - DocBook has: []
 [0794/7715]     - HTML has:    [AppendFunction, AtFunction, ClearFunction, CountFunction]
 [0794/7715]     > Differences between the sets: []
+[0794/7715] Member Types mismatch: 
+[0794/7715]     - DocBook has: [AppendFunction, AtFunction, ClearFunction, CountFunction]
+[0794/7715]     - HTML has:    []
+[0794/7715]     > Differences between the sets: [AppendFunction, AtFunction, ClearFunction, CountFunction]
 [0794/7715] Properties mismatch: 
 [0794/7715]     - DocBook has: [append, at, clear, count, data, dummy1, dummy2, object]
 [0794/7715]     - HTML has:    []
@@ -1770,14 +1881,26 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0807/7715]     - DocBook has: []
 [0807/7715]     - HTML has:    [result_type]
 [0807/7715]     > Differences between the sets: []
+[0807/7715] Member Types mismatch: 
+[0807/7715]     - DocBook has: [result_type]
+[0807/7715]     - HTML has:    []
+[0807/7715]     > Differences between the sets: [result_type]
 [0808/7715]C:\Qt\Doc\webxml\qrandomgenerator64.webxml
 [0808/7715] Public types mismatch: 
 [0808/7715]     - DocBook has: []
 [0808/7715]     - HTML has:    [result_type]
 [0808/7715]     > Differences between the sets: []
+[0808/7715] Member Types mismatch: 
+[0808/7715]     - DocBook has: [result_type]
+[0808/7715]     - HTML has:    []
+[0808/7715]     > Differences between the sets: [result_type]
 [0809/7715]C:\Qt\Doc\webxml\qrasterpaintengine.webxml
 [0810/7715]C:\Qt\Doc\webxml\qrasterwindow.webxml
 [0811/7715]C:\Qt\Doc\webxml\qrawfont.webxml
+[0811/7715] Member Types mismatch: 
+[0811/7715]     - DocBook has: [LayoutFlags]
+[0811/7715]     - HTML has:    []
+[0811/7715]     > Differences between the sets: [LayoutFlags]
 [0812/7715]C:\Qt\Doc\webxml\qreadlocker.webxml
 [0813/7715]C:\Qt\Doc\webxml\qreadwritelock.webxml
 [0814/7715]C:\Qt\Doc\webxml\qrect.webxml
@@ -1805,7 +1928,15 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0818/7715]     - DocBook has: [RegionType]
 [0818/7715]     - HTML has:    [RegionType, const_iterator, const_reverse_iterator]
 [0818/7715]     > Differences between the sets: []
+[0818/7715] Member Types mismatch: 
+[0818/7715]     - DocBook has: [const_iterator, const_reverse_iterator]
+[0818/7715]     - HTML has:    []
+[0818/7715]     > Differences between the sets: [const_iterator, const_reverse_iterator]
 [0819/7715]C:\Qt\Doc\webxml\qregularexpression.webxml
+[0819/7715] Member Types mismatch: 
+[0819/7715]     - DocBook has: [MatchOptions, PatternOptions]
+[0819/7715]     - HTML has:    []
+[0819/7715]     > Differences between the sets: [MatchOptions, PatternOptions]
 [0820/7715]C:\Qt\Doc\webxml\qregularexpressionmatch.webxml
 [0821/7715]C:\Qt\Doc\webxml\qregularexpressionmatchiterator.webxml
 [0822/7715]C:\Qt\Doc\webxml\qregularexpressionvalidator.webxml
@@ -1836,7 +1967,7 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0831/7715]C:\Qt\Doc\webxml\qscatterdataproxy.webxml
 [0831/7715] Public functions mismatch: 
 [0831/7715]     - DocBook has: [QScatterDataProxy, addItem, addItems, array, insertItem, insertItems, itemAt, itemCount, removeItems, resetArray, series, setItem, setItems, ~QScatterDataProxy]
-[0831/7715]     - HTML has:    [QScatterDataArray, QScatterDataProxy, addItem, addItems, array, arrayReset, insertItem, insertItems, itemAt, itemCount, itemCountChanged, itemsAdded, itemsChanged, itemsInserted, itemsRemoved, removeItems, resetArray, series, seriesChanged, setItem, setItems, ~QScatterDataProxy]
+[0831/7715]     - HTML has:    [QScatterDataProxy, addItem, addItems, array, arrayReset, insertItem, insertItems, itemAt, itemCount, itemCountChanged, itemsAdded, itemsChanged, itemsInserted, itemsRemoved, removeItems, resetArray, series, seriesChanged, setItem, setItems, ~QScatterDataProxy]
 [0831/7715]     > Differences between the sets: []
 [0832/7715]C:\Qt\Doc\webxml\qscatterseries.webxml
 [0832/7715] Public functions mismatch: 
@@ -1909,6 +2040,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0854/7715]     - DocBook has: []
 [0854/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, key_type, pointer, reference, reverse_iterator, size_type, value_type]
 [0854/7715]     > Differences between the sets: []
+[0854/7715] Member Types mismatch: 
+[0854/7715]     - DocBook has: [ConstIterator, Iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, key_type, pointer, reference, reverse_iterator, size_type, value_type]
+[0854/7715]     - HTML has:    []
+[0854/7715]     > Differences between the sets: [ConstIterator, Iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, key_type, pointer, reference, reverse_iterator, size_type, value_type]
 [0854/7715] Properties mismatch: 
 [0854/7715]     - DocBook has: [i]
 [0854/7715]     - HTML has:    []
@@ -1923,6 +2058,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0856/7715]     - DocBook has: [Format, Scope, Status]
 [0856/7715]     - HTML has:    [Format, ReadFunc, Scope, SettingsMap, Status, WriteFunc]
 [0856/7715]     > Differences between the sets: []
+[0856/7715] Member Types mismatch: 
+[0856/7715]     - DocBook has: [ReadFunc, SettingsMap, WriteFunc]
+[0856/7715]     - HTML has:    []
+[0856/7715]     > Differences between the sets: [ReadFunc, SettingsMap, WriteFunc]
 [0857/7715]C:\Qt\Doc\webxml\qsgmaterialtype.webxml
 [0858/7715]C:\Qt\Doc\webxml\qshareddata.webxml
 [0858/7715] Properties mismatch: 
@@ -1934,6 +2073,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0859/7715]     - DocBook has: []
 [0859/7715]     - HTML has:    [Type]
 [0859/7715]     > Differences between the sets: []
+[0859/7715] Member Types mismatch: 
+[0859/7715]     - DocBook has: [Type, pointer]
+[0859/7715]     - HTML has:    []
+[0859/7715]     > Differences between the sets: [Type, pointer]
 [0860/7715]C:\Qt\Doc\webxml\qsharedmemory.webxml
 [0861/7715]C:\Qt\Doc\webxml\qsharedpointer.webxml
 [0861/7715] Public functions mismatch: 
@@ -1976,6 +2119,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0873/7715]     - DocBook has: [QSizePolicy, controlType, expandingDirections, hasHeightForWidth, hasWidthForHeight, horizontalPolicy, horizontalStretch, operator QVariant, operator!=, operator<<, operator==, operator>>, qt_check_for_QGADGET_macro, retainSizeWhenHidden, setControlType, setHeightForWidth, setHorizontalPolicy, setHorizontalStretch, setRetainSizeWhenHidden, setVerticalPolicy, setVerticalStretch, setWidthForHeight, transpose, transposed, verticalPolicy, verticalStretch]
 [0873/7715]     - HTML has:    [QSizePolicy, controlType, expandingDirections, hasHeightForWidth, hasWidthForHeight, horizontalPolicy, horizontalStretch, operator QVariant, operator!=, operator<<, operator==, operator>>, qHash, retainSizeWhenHidden, setControlType, setHeightForWidth, setHorizontalPolicy, setHorizontalStretch, setRetainSizeWhenHidden, setVerticalPolicy, setVerticalStretch, setWidthForHeight, transpose, transposed, verticalPolicy, verticalStretch]
 [0873/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
+[0873/7715] Member Types mismatch: 
+[0873/7715]     - DocBook has: [ControlTypes]
+[0873/7715]     - HTML has:    []
+[0873/7715]     > Differences between the sets: [ControlTypes]
 [0874/7715]C:\Qt\Doc\webxml\qslider.webxml
 [0875/7715]C:\Qt\Doc\webxml\qsocketnotifier.webxml
 [0875/7715] Public functions mismatch: 
@@ -2104,6 +2251,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0917/7715]     - DocBook has: [displayName, enableTestMode, findExecutable, isTestModeEnabled, locate, locateAll, qt_check_for_QGADGET_macro, setTestModeEnabled, standardLocations, writableLocation]
 [0917/7715]     - HTML has:    [displayName, findExecutable, locate, locateAll, setTestModeEnabled, standardLocations, writableLocation]
 [0917/7715]     > Differences between the sets: [enableTestMode, isTestModeEnabled, qt_check_for_QGADGET_macro]
+[0917/7715] Member Types mismatch: 
+[0917/7715]     - DocBook has: [LocateOptions]
+[0917/7715]     - HTML has:    []
+[0917/7715]     > Differences between the sets: [LocateOptions]
 [0918/7715]C:\Qt\Doc\webxml\qstate.webxml
 [0918/7715] Public functions mismatch: 
 [0918/7715]     - DocBook has: [QState, addTransition, assignProperty, childMode, errorState, event, initialState, onEntry, onExit, removeTransition, setChildMode, setErrorState, setInitialState, transitions, ~QState]
@@ -2152,15 +2303,15 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0929/7715]     - DocBook has: [NormalizationForm, SectionFlag, SplitBehavior]
 [0929/7715]     - HTML has:    [ConstIterator, Iterator, NormalizationForm, Null, SectionFlag, SplitBehavior, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [0929/7715]     > Differences between the sets: []
+[0929/7715] Member Types mismatch: 
+[0929/7715]     - DocBook has: [ConstIterator, Iterator, SectionFlags, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
+[0929/7715]     - HTML has:    []
+[0929/7715]     > Differences between the sets: [ConstIterator, Iterator, SectionFlags, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [0929/7715] Properties mismatch: 
 [0929/7715]     - DocBook has: [null]
 [0929/7715]     - HTML has:    []
 [0929/7715]     > Differences between the sets: [null]
 [0930/7715]C:\Qt\Doc\webxml\qstringlist.webxml
-[0930/7715] Public functions mismatch: 
-[0930/7715]     - DocBook has: [QStringList, contains, filter, indexOf, join, lastIndexOf, operator+, operator<<, operator=, removeDuplicates, replaceInStrings, sort]
-[0930/7715]     - HTML has:    [QMutableStringListIterator, QStringList, QStringListIterator, contains, filter, indexOf, join, lastIndexOf, operator+, operator<<, operator=, removeDuplicates, replaceInStrings, sort]
-[0930/7715]     > Differences between the sets: []
 [0931/7715]C:\Qt\Doc\webxml\qstringlistmodel.webxml
 [0932/7715]C:\Qt\Doc\webxml\qstringmatcher.webxml
 [0933/7715]C:\Qt\Doc\webxml\qstringref.webxml
@@ -2172,6 +2323,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0933/7715]     - DocBook has: []
 [0933/7715]     - HTML has:    [const_iterator, const_reverse_iterator]
 [0933/7715]     > Differences between the sets: []
+[0933/7715] Member Types mismatch: 
+[0933/7715]     - DocBook has: [const_iterator, const_pointer, const_reverse_iterator]
+[0933/7715]     - HTML has:    []
+[0933/7715]     > Differences between the sets: [const_iterator, const_pointer, const_reverse_iterator]
 [0934/7715]C:\Qt\Doc\webxml\qstringview.webxml
 [0934/7715] Public functions mismatch: 
 [0934/7715]     - DocBook has: [QStringView, at, back, begin, cbegin, cend, chop, chopped, crbegin, crend, data, empty, end, endsWith, first, front, isEmpty, isNull, isRightToLeft, last, left, length, mid, operator[], rbegin, rend, right, size, startsWith, toLatin1, toLocal8Bit, toString, toUcs4, toUtf8, trimmed, truncate, utf16]
@@ -2181,6 +2336,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0934/7715]     - DocBook has: []
 [0934/7715]     - HTML has:    [const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, storage_type, value_type]
 [0934/7715]     > Differences between the sets: []
+[0934/7715] Member Types mismatch: 
+[0934/7715]     - DocBook has: [const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, storage_type, value_type]
+[0934/7715]     - HTML has:    []
+[0934/7715]     > Differences between the sets: [const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, storage_type, value_type]
 [0935/7715]C:\Qt\Doc\webxml\qstyle.webxml
 [0935/7715] Public functions mismatch: 
 [0935/7715]     - DocBook has: [QStyle, alignedRect, combinedLayoutSpacing, drawComplexControl, drawControl, drawItemPixmap, drawItemText, drawPrimitive, generatedIconPixmap, hitTestComplexControl, itemPixmapRect, itemTextRect, layoutSpacing, pixelMetric, polish, proxy, sizeFromContents, sliderPositionFromValue, sliderValueFromPosition, standardIcon, standardPalette, standardPixmap, styleHint, subControlRect, subElementRect, unpolish, visualAlignment, visualPos, visualRect, ~QStyle]
@@ -2188,8 +2347,12 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0935/7715]     > Differences between the sets: [standardPixmap]
 [0935/7715] Public types mismatch: 
 [0935/7715]     - DocBook has: [ComplexControl, ContentsType, ControlElement, PixelMetric, PrimitiveElement, RequestSoftwareInputPanel, StandardPixmap, StateFlag, StyleHint, SubControl, SubElement]
-[0935/7715]     - HTML has:    [ComplexControl, ContentsType, ControlElement, PixelMetric, PrimitiveElement, RequestSoftwareInputPanel, StandardPixmap, State, StateFlag, StyleHint, SubControl, SubElement]
-[0935/7715]     > Differences between the sets: []
+[0935/7715]     - HTML has:    [ComplexControl, ContentsType, ControlElement, PixelMetric, PrimitiveElement, RequestSoftwareInputPanel, StandardPixmap, State, StyleHint, SubControl, SubElement]
+[0935/7715]     > Differences between the sets: [StateFlag]
+[0935/7715] Member Types mismatch: 
+[0935/7715]     - DocBook has: [State, SubControls]
+[0935/7715]     - HTML has:    []
+[0935/7715]     > Differences between the sets: [State, SubControls]
 [0936/7715]C:\Qt\Doc\webxml\qstyleditemdelegate.webxml
 [0937/7715]C:\Qt\Doc\webxml\qstylefactory.webxml
 [0938/7715]C:\Qt\Doc\webxml\qstylehintreturn.webxml
@@ -2218,6 +2381,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0942/7715]     - HTML has:    []
 [0942/7715]     > Differences between the sets: [direction, fontMetrics, palette, rect, state, styleObject, type, version]
 [0943/7715]C:\Qt\Doc\webxml\qstyleoptionbutton.webxml
+[0943/7715] Member Types mismatch: 
+[0943/7715]     - DocBook has: [ButtonFeatures]
+[0943/7715]     - HTML has:    []
+[0943/7715]     > Differences between the sets: [ButtonFeatures]
 [0943/7715] Properties mismatch: 
 [0943/7715]     - DocBook has: [features, icon, iconSize, text]
 [0943/7715]     - HTML has:    []
@@ -2233,6 +2400,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0945/7715]     - HTML has:    []
 [0945/7715]     > Differences between the sets: [activeSubControls, subControls]
 [0946/7715]C:\Qt\Doc\webxml\qstyleoptiondockwidget.webxml
+[0946/7715] Member Types mismatch: 
+[0946/7715]     - DocBook has: [QStyleOptionDockWidgetV2]
+[0946/7715]     - HTML has:    []
+[0946/7715]     > Differences between the sets: [QStyleOptionDockWidgetV2]
 [0946/7715] Properties mismatch: 
 [0946/7715]     - DocBook has: [closable, floatable, movable, title, verticalTitleBar]
 [0946/7715]     - HTML has:    []
@@ -2243,6 +2414,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0947/7715]     - HTML has:    []
 [0947/7715]     > Differences between the sets: [backgroundColor]
 [0948/7715]C:\Qt\Doc\webxml\qstyleoptionframe.webxml
+[0948/7715] Member Types mismatch: 
+[0948/7715]     - DocBook has: [FrameFeatures, QStyleOptionFrameV2, QStyleOptionFrameV3]
+[0948/7715]     - HTML has:    []
+[0948/7715]     > Differences between the sets: [FrameFeatures, QStyleOptionFrameV2, QStyleOptionFrameV3]
 [0948/7715] Properties mismatch: 
 [0948/7715]     - DocBook has: [features, frameShape, lineWidth, midLineWidth]
 [0948/7715]     - HTML has:    []
@@ -2268,6 +2443,10 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0952/7715]     - HTML has:    []
 [0952/7715]     > Differences between the sets: [checkType, checked, font, icon, maxIconWidth, menuHasCheckableItems, menuItemType, menuRect, tabWidth, text]
 [0953/7715]C:\Qt\Doc\webxml\qstyleoptionprogressbar.webxml
+[0953/7715] Member Types mismatch: 
+[0953/7715]     - DocBook has: [QStyleOptionProgressBarV2]
+[0953/7715]     - HTML has:    []
+[0953/7715]     > Differences between the sets: [QStyleOptionProgressBarV2]
 [0953/7715] Properties mismatch: 
 [0953/7715]     - DocBook has: [bottomToTop, invertedAppearance, maximum, minimum, progress, text, textAlignment, textVisible]
 [0953/7715]     - HTML has:    []
@@ -2293,16 +2472,28 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0957/7715]     - HTML has:    []
 [0957/7715]     > Differences between the sets: [buttonSymbols, frame, stepEnabled]
 [0958/7715]C:\Qt\Doc\webxml\qstyleoptiontab.webxml
+[0958/7715] Member Types mismatch: 
+[0958/7715]     - DocBook has: [CornerWidgets, QStyleOptionTabV2, QStyleOptionTabV3]
+[0958/7715]     - HTML has:    []
+[0958/7715]     > Differences between the sets: [CornerWidgets, QStyleOptionTabV2, QStyleOptionTabV3]
 [0958/7715] Properties mismatch: 
 [0958/7715]     - DocBook has: [cornerWidgets, documentMode, features, icon, iconSize, leftButtonSize, position, rightButtonSize, row, selectedPosition, shape, text]
 [0958/7715]     - HTML has:    []
 [0958/7715]     > Differences between the sets: [cornerWidgets, documentMode, features, icon, iconSize, leftButtonSize, position, rightButtonSize, row, selectedPosition, shape, text]
 [0959/7715]C:\Qt\Doc\webxml\qstyleoptiontabbarbase.webxml
+[0959/7715] Member Types mismatch: 
+[0959/7715]     - DocBook has: [QStyleOptionTabBarBaseV2]
+[0959/7715]     - HTML has:    []
+[0959/7715]     > Differences between the sets: [QStyleOptionTabBarBaseV2]
 [0959/7715] Properties mismatch: 
 [0959/7715]     - DocBook has: [documentMode, selectedTabRect, shape, tabBarRect]
 [0959/7715]     - HTML has:    []
 [0959/7715]     > Differences between the sets: [documentMode, selectedTabRect, shape, tabBarRect]
 [0960/7715]C:\Qt\Doc\webxml\qstyleoptiontabwidgetframe.webxml
+[0960/7715] Member Types mismatch: 
+[0960/7715]     - DocBook has: [QStyleOptionTabWidgetFrameV2]
+[0960/7715]     - HTML has:    []
+[0960/7715]     > Differences between the sets: [QStyleOptionTabWidgetFrameV2]
 [0960/7715] Properties mismatch: 
 [0960/7715]     - DocBook has: [leftCornerWidgetSize, lineWidth, midLineWidth, rightCornerWidgetSize, selectedTabRect, shape, tabBarRect, tabBarSize]
 [0960/7715]     - HTML has:    []
@@ -2313,21 +2504,37 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0961/7715]     - HTML has:    []
 [0961/7715]     > Differences between the sets: [icon, text, titleBarFlags, titleBarState]
 [0962/7715]C:\Qt\Doc\webxml\qstyleoptiontoolbar.webxml
+[0962/7715] Member Types mismatch: 
+[0962/7715]     - DocBook has: [ToolBarFeatures]
+[0962/7715]     - HTML has:    []
+[0962/7715]     > Differences between the sets: [ToolBarFeatures]
 [0962/7715] Properties mismatch: 
 [0962/7715]     - DocBook has: [features, lineWidth, midLineWidth, positionOfLine, positionWithinLine, toolBarArea]
 [0962/7715]     - HTML has:    []
 [0962/7715]     > Differences between the sets: [features, lineWidth, midLineWidth, positionOfLine, positionWithinLine, toolBarArea]
 [0963/7715]C:\Qt\Doc\webxml\qstyleoptiontoolbox.webxml
+[0963/7715] Member Types mismatch: 
+[0963/7715]     - DocBook has: [QStyleOptionToolBoxV2]
+[0963/7715]     - HTML has:    []
+[0963/7715]     > Differences between the sets: [QStyleOptionToolBoxV2]
 [0963/7715] Properties mismatch: 
 [0963/7715]     - DocBook has: [icon, position, selectedPosition, text]
 [0963/7715]     - HTML has:    []
 [0963/7715]     > Differences between the sets: [icon, position, selectedPosition, text]
 [0964/7715]C:\Qt\Doc\webxml\qstyleoptiontoolbutton.webxml
+[0964/7715] Member Types mismatch: 
+[0964/7715]     - DocBook has: [ToolButtonFeatures]
+[0964/7715]     - HTML has:    []
+[0964/7715]     > Differences between the sets: [ToolButtonFeatures]
 [0964/7715] Properties mismatch: 
 [0964/7715]     - DocBook has: [arrowType, features, font, icon, iconSize, pos, text, toolButtonStyle]
 [0964/7715]     - HTML has:    []
 [0964/7715]     > Differences between the sets: [arrowType, features, font, icon, iconSize, pos, text, toolButtonStyle]
 [0965/7715]C:\Qt\Doc\webxml\qstyleoptionviewitem.webxml
+[0965/7715] Member Types mismatch: 
+[0965/7715]     - DocBook has: [QStyleOptionViewItemV2, QStyleOptionViewItemV3, QStyleOptionViewItemV4, ViewItemFeatures]
+[0965/7715]     - HTML has:    []
+[0965/7715]     > Differences between the sets: [QStyleOptionViewItemV2, QStyleOptionViewItemV3, QStyleOptionViewItemV4, ViewItemFeatures]
 [0965/7715] Properties mismatch: 
 [0965/7715]     - DocBook has: [backgroundBrush, checkState, decorationAlignment, decorationPosition, decorationSize, displayAlignment, features, font, icon, index, locale, showDecorationSelected, text, textElideMode, viewItemPosition, widget]
 [0965/7715]     - HTML has:    []
@@ -2341,17 +2548,25 @@ WARNING: The description of staticMetaObject is skipped while it has some conten
 [0970/7715]     - DocBook has: [QSurface3DSeries, dataProxy, drawMode, invalidSelectionPosition, isFlatShadingEnabled, isFlatShadingSupported, selectedPoint, setDataProxy, setDrawMode, setFlatShadingEnabled, setSelectedPoint, setTexture, setTextureFile, texture, textureFile, ~QSurface3DSeries]
 [0970/7715]     - HTML has:    [QSurface3DSeries, dataProxy, dataProxyChanged, drawMode, drawModeChanged, flatShadingEnabledChanged, flatShadingSupportedChanged, invalidSelectionPosition, isFlatShadingEnabled, isFlatShadingSupported, selectedPoint, selectedPointChanged, setDataProxy, setDrawMode, setFlatShadingEnabled, setSelectedPoint, setTexture, setTextureFile, texture, textureChanged, textureFile, textureFileChanged, ~QSurface3DSeries]
 [0970/7715]     > Differences between the sets: []
+[0970/7715] Member Types mismatch: 
+[0970/7715]     - DocBook has: [DrawFlags]
+[0970/7715]     - HTML has:    []
+[0970/7715]     > Differences between the sets: [DrawFlags]
 [0971/7715]C:\Qt\Doc\webxml\qsurfacedataitem.webxml
 [0972/7715]C:\Qt\Doc\webxml\qsurfacedataproxy.webxml
 [0972/7715] Public functions mismatch: 
 [0972/7715]     - DocBook has: [QSurfaceDataProxy, addRow, addRows, array, columnCount, insertRow, insertRows, itemAt, removeRows, resetArray, rowCount, series, setItem, setRow, setRows, ~QSurfaceDataProxy]
-[0972/7715]     - HTML has:    [QSurfaceDataArray, QSurfaceDataProxy, QSurfaceDataRow, addRow, addRows, array, arrayReset, columnCount, columnCountChanged, insertRow, insertRows, itemAt, itemChanged, removeRows, resetArray, rowCount, rowCountChanged, rowsAdded, rowsChanged, rowsInserted, rowsRemoved, series, seriesChanged, setItem, setRow, setRows, ~QSurfaceDataProxy]
+[0972/7715]     - HTML has:    [QSurfaceDataProxy, addRow, addRows, array, arrayReset, columnCount, columnCountChanged, insertRow, insertRows, itemAt, itemChanged, removeRows, resetArray, rowCount, rowCountChanged, rowsAdded, rowsChanged, rowsInserted, rowsRemoved, series, seriesChanged, setItem, setRow, setRows, ~QSurfaceDataProxy]
 [0972/7715]     > Differences between the sets: []
 [0973/7715]C:\Qt\Doc\webxml\qsurfaceformat.webxml
 [0973/7715] Public functions mismatch: 
 [0973/7715]     - DocBook has: [QSurfaceFormat, alphaBufferSize, blueBufferSize, colorSpace, defaultFormat, depthBufferSize, greenBufferSize, hasAlpha, majorVersion, minorVersion, operator!=, operator=, operator==, options, profile, qt_check_for_QGADGET_macro, redBufferSize, renderableType, samples, setAlphaBufferSize, setBlueBufferSize, setColorSpace, setDefaultFormat, setDepthBufferSize, setGreenBufferSize, setMajorVersion, setMinorVersion, setOption, setOptions, setProfile, setRedBufferSize, setRenderableType, setSamples, setStencilBufferSize, setStereo, setSwapBehavior, setSwapInterval, setVersion, stencilBufferSize, stereo, swapBehavior, swapInterval, testOption, version, ~QSurfaceFormat]
 [0973/7715]     - HTML has:    [QSurfaceFormat, alphaBufferSize, blueBufferSize, colorSpace, defaultFormat, depthBufferSize, greenBufferSize, hasAlpha, majorVersion, minorVersion, operator!=, operator=, operator==, options, profile, redBufferSize, renderableType, samples, setAlphaBufferSize, setBlueBufferSize, setColorSpace, setDefaultFormat, setDepthBufferSize, setGreenBufferSize, setMajorVersion, setMinorVersion, setOption, setOptions, setProfile, setRedBufferSize, setRenderableType, setSamples, setStencilBufferSize, setStereo, setSwapBehavior, setSwapInterval, setVersion, stencilBufferSize, stereo, swapBehavior, swapInterval, testOption, version, ~QSurfaceFormat]
 [0973/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
+[0973/7715] Member Types mismatch: 
+[0973/7715]     - DocBook has: [FormatOptions]
+[0973/7715]     - HTML has:    []
+[0973/7715]     > Differences between the sets: [FormatOptions]
 [0974/7715]C:\Qt\Doc\webxml\qsvggenerator.webxml
 [0974/7715] Public functions mismatch: 
 [0974/7715]     - DocBook has: [QSvgGenerator, description, fileName, metric, outputDevice, paintEngine, resolution, setDescription, setFileName, setOutputDevice, setResolution, setSize, setTitle, setViewBox, setViewBox setViewBox, size, title, viewBox, viewBoxF, ~QSvgGenerator]
@@ -2718,10 +2933,6 @@ WARNING: Quote from file with no content.
 [1223/7715]     - HTML has:    [QArmature, setSkeleton, skeleton, skeletonChanged]
 [1223/7715]     > Differences between the sets: []
 [1224/7715]C:\Qt\Doc\webxml\qt3dcore-qaspectengine.webxml
-[1224/7715] Public functions mismatch: 
-[1224/7715]     - DocBook has: [QAspectEngine, aspects, executeCommand, registerAspect, rootEntity, setRootEntity, unregisterAspect, ~QAspectEngine]
-[1224/7715]     - HTML has:    [QAspectEngine, QEntityPtr, aspects, executeCommand, registerAspect, rootEntity, setRootEntity, unregisterAspect, ~QAspectEngine]
-[1224/7715]     > Differences between the sets: []
 [1225/7715]C:\Qt\Doc\webxml\qt3dcore-qaspectjob.webxml
 [1226/7715]C:\Qt\Doc\webxml\qt3dcore-qbackendnode.webxml
 [1227/7715]C:\Qt\Doc\webxml\qt3dcore-qbackendnodemapper.webxml
@@ -2734,10 +2945,6 @@ WARNING: Quote from file with no content.
 [1230/7715]C:\Qt\Doc\webxml\qt3dcore-qcomponentremovedchange.webxml
 [1231/7715]C:\Qt\Doc\webxml\qt3dcore-qdynamicpropertyupdatedchange.webxml
 [1232/7715]C:\Qt\Doc\webxml\qt3dcore-qentity.webxml
-[1232/7715] Public functions mismatch: 
-[1232/7715]     - DocBook has: [QEntity, addComponent, components, parentEntity, removeComponent, ~QEntity]
-[1232/7715]     - HTML has:    [QComponentVector, QEntity, addComponent, components, parentEntity, removeComponent, ~QEntity]
-[1232/7715]     > Differences between the sets: []
 [1233/7715]C:\Qt\Doc\webxml\qt3dcore-qjoint.webxml
 [1233/7715] Public functions mismatch: 
 [1233/7715]     - DocBook has: [QJoint, addChildJoint, childJoints, inverseBindMatrix, name, removeChildJoint, rotation, rotationX, rotationY, rotationZ, scale, setInverseBindMatrix, setName, setRotation, setRotationX, setRotationY, setRotationZ, setScale, setToIdentity, setTranslation, translation]
@@ -2746,21 +2953,21 @@ WARNING: Quote from file with no content.
 [1234/7715]C:\Qt\Doc\webxml\qt3dcore-qnode.webxml
 [1234/7715] Public functions mismatch: 
 [1234/7715]     - DocBook has: [QNode, blockNotifications, childNodes, clearPropertyTracking, clearPropertyTrackings, defaultPropertyTrackingMode, id, isEnabled, notificationsBlocked, notifyObservers, parentNode, propertyTracking, qIdForNode, qIdsForNodes, sceneChangeEvent, sendCommand, sendReply, setDefaultPropertyTrackingMode, setEnabled, setParent, setPropertyTracking]
-[1234/7715]     - HTML has:    [QNode, QNodePtr, QNodeVector, blockNotifications, childNodes, clearPropertyTracking, clearPropertyTrackings, defaultPropertyTrackingMode, defaultPropertyTrackingModeChanged, enabledChanged, id, isEnabled, nodeDestroyed, notificationsBlocked, notifyObservers, parentChanged, parentNode, propertyTracking, qIdForNode, qIdsForNodes, sceneChangeEvent, sendCommand, sendReply, setDefaultPropertyTrackingMode, setEnabled, setParent, setPropertyTracking]
+[1234/7715]     - HTML has:    [QNode, blockNotifications, childNodes, clearPropertyTracking, clearPropertyTrackings, defaultPropertyTrackingMode, defaultPropertyTrackingModeChanged, enabledChanged, id, isEnabled, nodeDestroyed, notificationsBlocked, notifyObservers, parentChanged, parentNode, propertyTracking, qIdForNode, qIdsForNodes, sceneChangeEvent, sendCommand, sendReply, setDefaultPropertyTrackingMode, setEnabled, setParent, setPropertyTracking]
 [1234/7715]     > Differences between the sets: []
 [1234/7715] Public types mismatch: 
 [1234/7715]     - DocBook has: [QNode]
 [1234/7715]     - HTML has:    [PropertyTrackingMode]
 [1234/7715]     > Differences between the sets: [QNode]
 [1235/7715]C:\Qt\Doc\webxml\qt3dcore-qnodecommand.webxml
-[1235/7715] Public functions mismatch: 
-[1235/7715]     - DocBook has: [QNodeCommand, commandId, data, inReplyTo, name, setData, setName, setReplyToCommandId, ~QNodeCommand]
-[1235/7715]     - HTML has:    [QNodeCommand, QNodeCommandPtr, commandId, data, inReplyTo, name, setData, setName, setReplyToCommandId, ~QNodeCommand]
-[1235/7715]     > Differences between the sets: []
 [1235/7715] Public types mismatch: 
 [1235/7715]     - DocBook has: []
 [1235/7715]     - HTML has:    [CommandId]
 [1235/7715]     > Differences between the sets: []
+[1235/7715] Member Types mismatch: 
+[1235/7715]     - DocBook has: [QNodeCommand, QNodeCommandPtr]
+[1235/7715]     - HTML has:    [QNodeCommandPtr]
+[1235/7715]     > Differences between the sets: [QNodeCommand]
 [1236/7715]C:\Qt\Doc\webxml\qt3dcore-qnodecreatedchange.webxml
 [1237/7715]C:\Qt\Doc\webxml\qt3dcore-qnodecreatedchangebase.webxml
 WARNING: The description of metaObject is skipped while it has some content.
@@ -2768,7 +2975,7 @@ WARNING: The description of metaObject is skipped while it has some content.
 WARNING: The description of metaObject is skipped while it has some content.
 [1237/7715] Public functions mismatch: 
 [1237/7715]     - DocBook has: [QNodeCreatedChangeBase, isNodeEnabled, parentId, ~QNodeCreatedChangeBase]
-[1237/7715]     - HTML has:    [QNodeCreatedChangeBase, QNodeCreatedChangeBasePtr, isNodeEnabled, metaObject, parentId, ~QNodeCreatedChangeBase]
+[1237/7715]     - HTML has:    [QNodeCreatedChangeBase, isNodeEnabled, metaObject, parentId, ~QNodeCreatedChangeBase]
 [1237/7715]     > Differences between the sets: []
 [1238/7715]C:\Qt\Doc\webxml\qt3dcore-qnodedestroyedchange.webxml
 [1239/7715]C:\Qt\Doc\webxml\qt3dcore-qnodeid.webxml
@@ -2777,22 +2984,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1242/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertynoderemovedchange.webxml
 [1243/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertyupdatedchange.webxml
 [1244/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertyupdatedchangebase.webxml
-[1244/7715] Public functions mismatch: 
-[1244/7715]     - DocBook has: [QPropertyUpdatedChangeBase, ~QPropertyUpdatedChangeBase]
-[1244/7715]     - HTML has:    [QPropertyUpdatedChangeBase, QPropertyUpdatedChangeBasePtr, ~QPropertyUpdatedChangeBase]
-[1244/7715]     > Differences between the sets: []
 [1245/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertyvalueaddedchange.webxml
 [1246/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertyvalueaddedchangebase.webxml
-[1246/7715] Public functions mismatch: 
-[1246/7715]     - DocBook has: [QPropertyValueAddedChangeBase, ~QPropertyValueAddedChangeBase]
-[1246/7715]     - HTML has:    [QPropertyValueAddedChangeBase, QPropertyValueAddedChangeBasePtr, ~QPropertyValueAddedChangeBase]
-[1246/7715]     > Differences between the sets: []
 [1247/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertyvalueremovedchange.webxml
 [1248/7715]C:\Qt\Doc\webxml\qt3dcore-qpropertyvalueremovedchangebase.webxml
-[1248/7715] Public functions mismatch: 
-[1248/7715]     - DocBook has: [QPropertyValueRemovedChangeBase, ~QPropertyValueRemovedChangeBase]
-[1248/7715]     - HTML has:    [QPropertyValueRemovedChangeBase, QPropertyValueRemovedChangeBasePtr, ~QPropertyValueRemovedChangeBase]
-[1248/7715]     > Differences between the sets: []
 [1249/7715]C:\Qt\Doc\webxml\qt3dcore-qscenechange.webxml
 [1250/7715]C:\Qt\Doc\webxml\qt3dcore-qskeleton.webxml
 [1250/7715] Public functions mismatch: 
@@ -2999,10 +3194,6 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1316/7715]C:\Qt\Doc\webxml\qt3dinput-qkeyboarddevice.webxml
 [1317/7715]C:\Qt\Doc\webxml\qt3dinput-qkeyboardhandler.webxml
 [1318/7715]C:\Qt\Doc\webxml\qt3dinput-qkeyevent.webxml
-[1318/7715] Public functions mismatch: 
-[1318/7715]     - DocBook has: [QKeyEvent, count, isAccepted, isAutoRepeat, key, matches, modifiers, nativeScanCode, setAccepted, text, type]
-[1318/7715]     - HTML has:    [QKeyEvent, QKeyEventPtr, count, isAccepted, isAutoRepeat, key, matches, modifiers, nativeScanCode, setAccepted, text, type]
-[1318/7715]     > Differences between the sets: []
 [1319/7715]C:\Qt\Doc\webxml\qt3dinput-qlogicaldevice.webxml
 [1320/7715]C:\Qt\Doc\webxml\qt3dinput-qmousedevice.webxml
 [1320/7715] Public functions mismatch: 
@@ -3014,10 +3205,6 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1320/7715]     - HTML has:    [Axis]
 [1320/7715]     > Differences between the sets: [QMouseDevice]
 [1321/7715]C:\Qt\Doc\webxml\qt3dinput-qmouseevent.webxml
-[1321/7715] Public functions mismatch: 
-[1321/7715]     - DocBook has: [QMouseEvent, button, buttons, isAccepted, modifiers, setAccepted, type, wasHeld, x, y, ~QMouseEvent]
-[1321/7715]     - HTML has:    [QMouseEvent, QMouseEventPtr, button, buttons, isAccepted, modifiers, setAccepted, type, wasHeld, x, y, ~QMouseEvent]
-[1321/7715]     > Differences between the sets: []
 [1321/7715] Public types mismatch: 
 [1321/7715]     - DocBook has: [QMouseEvent]
 [1321/7715]     - HTML has:    [Buttons, Modifiers]
@@ -3030,10 +3217,6 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1323/7715]C:\Qt\Doc\webxml\qt3dinput-qphysicaldevicecreatedchange.webxml
 [1324/7715]C:\Qt\Doc\webxml\qt3dinput-qphysicaldevicecreatedchangebase.webxml
 [1325/7715]C:\Qt\Doc\webxml\qt3dinput-qwheelevent.webxml
-[1325/7715] Public functions mismatch: 
-[1325/7715]     - DocBook has: [QWheelEvent, angleDelta, buttons, isAccepted, modifiers, setAccepted, type, x, y, ~QWheelEvent]
-[1325/7715]     - HTML has:    [QWheelEvent, QWheelEventPtr, angleDelta, buttons, isAccepted, modifiers, setAccepted, type, x, y, ~QWheelEvent]
-[1325/7715]     > Differences between the sets: []
 [1325/7715] Public types mismatch: 
 [1325/7715]     - DocBook has: [QWheelEvent]
 [1325/7715]     - HTML has:    [Buttons, Modifiers]
@@ -3099,6 +3282,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1359/7715]     - DocBook has: [QAbstractRayCaster]
 [1359/7715]     - HTML has:    [FilterMode, Hits, RunMode]
 [1359/7715]     > Differences between the sets: [QAbstractRayCaster]
+[1359/7715] Member Types mismatch: 
+[1359/7715]     - DocBook has: [QAbstractRayCaster]
+[1359/7715]     - HTML has:    []
+[1359/7715]     > Differences between the sets: [QAbstractRayCaster]
 [1360/7715]C:\Qt\Doc\webxml\qt3drender-qabstracttexture.webxml
 [1360/7715] Public functions mismatch: 
 [1360/7715]     - DocBook has: [QAbstractTexture, addTextureImage, comparisonFunction, comparisonMode, dataGenerator, depth, format, generateMipMaps, height, layers, magnificationFilter, maximumAnisotropy, minificationFilter, removeTextureImage, samples, sceneChangeEvent, setComparisonFunction, setComparisonMode, setDepth, setFormat, setGenerateMipMaps, setHeight, setLayers, setMagnificationFilter, setMaximumAnisotropy, setMinificationFilter, setSamples, setSize, setStatus, setWidth, setWrapMode, status, target, textureImages, width, wrapMode]
@@ -3126,12 +3313,16 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1364/7715]C:\Qt\Doc\webxml\qt3drender-qattribute.webxml
 [1364/7715] Public functions mismatch: 
 [1364/7715]     - DocBook has: [QAttribute, attributeType, buffer, byteOffset, byteStride, count, defaultColorAttributeName, defaultJointIndicesAttributeName, defaultJointWeightsAttributeName, defaultNormalAttributeName, defaultPositionAttributeName, defaultTangentAttributeName, defaultTextureCoordinate1AttributeName, defaultTextureCoordinate2AttributeName, defaultTextureCoordinateAttributeName, divisor, name, setAttributeType, setBuffer, setByteOffset, setByteStride, setCount, setDataSize, setDataType, setDivisor, setName, setVertexBaseType, setVertexSize, vertexBaseType, vertexSize]
-[1364/7715]     - HTML has:    [QAttribute, QBufferPtr, attributeType, attributeTypeChanged, buffer, bufferChanged, byteOffset, byteOffsetChanged, byteStride, byteStrideChanged, count, countChanged, dataSizeChanged, dataTypeChanged, defaultColorAttributeName, defaultJointIndicesAttributeName, defaultJointWeightsAttributeName, defaultNormalAttributeName, defaultPositionAttributeName, defaultTangentAttributeName, defaultTextureCoordinate1AttributeName, defaultTextureCoordinate2AttributeName, defaultTextureCoordinateAttributeName, divisor, divisorChanged, name, nameChanged, setAttributeType, setBuffer, setByteOffset, setByteStride, setCount, setDataSize, setDataType, setDivisor, setName, setVertexBaseType, setVertexSize, vertexBaseType, vertexBaseTypeChanged, vertexSize, vertexSizeChanged]
+[1364/7715]     - HTML has:    [QAttribute, attributeType, attributeTypeChanged, buffer, bufferChanged, byteOffset, byteOffsetChanged, byteStride, byteStrideChanged, count, countChanged, dataSizeChanged, dataTypeChanged, defaultColorAttributeName, defaultJointIndicesAttributeName, defaultJointWeightsAttributeName, defaultNormalAttributeName, defaultPositionAttributeName, defaultTangentAttributeName, defaultTextureCoordinate1AttributeName, defaultTextureCoordinate2AttributeName, defaultTextureCoordinateAttributeName, divisor, divisorChanged, name, nameChanged, setAttributeType, setBuffer, setByteOffset, setByteStride, setCount, setDataSize, setDataType, setDivisor, setName, setVertexBaseType, setVertexSize, vertexBaseType, vertexBaseTypeChanged, vertexSize, vertexSizeChanged]
 [1364/7715]     > Differences between the sets: []
 [1364/7715] Public types mismatch: 
 [1364/7715]     - DocBook has: [QAttribute]
 [1364/7715]     - HTML has:    [AttributeType, VertexBaseType]
 [1364/7715]     > Differences between the sets: [QAttribute]
+[1364/7715] Member Types mismatch: 
+[1364/7715]     - DocBook has: []
+[1364/7715]     - HTML has:    [QBufferPtr]
+[1364/7715]     > Differences between the sets: []
 [1365/7715]C:\Qt\Doc\webxml\qt3drender-qblendequation.webxml
 [1365/7715] Public functions mismatch: 
 [1365/7715]     - DocBook has: [QBlendEquation, blendFunction, setBlendFunction]
@@ -3162,12 +3353,16 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1368/7715]C:\Qt\Doc\webxml\qt3drender-qbuffer.webxml
 [1368/7715] Public functions mismatch: 
 [1368/7715]     - DocBook has: [QBuffer, accessType, data, dataGenerator, isSyncData, setAccessType, setData, setDataGenerator, setSyncData, setType, setUsage, type, updateData, usage]
-[1368/7715]     - HTML has:    [QBuffer, QBufferDataGeneratorPtr, accessType, accessTypeChanged, data, dataAvailable, dataChanged, dataGenerator, isSyncData, setAccessType, setData, setDataGenerator, setSyncData, setUsage, syncDataChanged, updateData, usage, usageChanged]
+[1368/7715]     - HTML has:    [QBuffer, accessType, accessTypeChanged, data, dataAvailable, dataChanged, dataGenerator, isSyncData, setAccessType, setData, setDataGenerator, setSyncData, setUsage, syncDataChanged, updateData, usage, usageChanged]
 [1368/7715]     > Differences between the sets: [setType, type]
 [1368/7715] Public types mismatch: 
 [1368/7715]     - DocBook has: [QBuffer]
 [1368/7715]     - HTML has:    [AccessType, UsageType]
 [1368/7715]     > Differences between the sets: [QBuffer]
+[1368/7715] Member Types mismatch: 
+[1368/7715]     - DocBook has: []
+[1368/7715]     - HTML has:    [QBufferDataGeneratorPtr]
+[1368/7715]     > Differences between the sets: []
 [1368/7715] Signals mismatch: 
 [1368/7715]     - DocBook has: [accessTypeChanged, dataAvailable, dataChanged, syncDataChanged, typeChanged, usageChanged]
 [1368/7715]     - HTML has:    [accessTypeChanged, dataAvailable, dataChanged, syncDataChanged, usageChanged]
@@ -3192,7 +3387,11 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1374/7715]     > Differences between the sets: []
 [1374/7715] Public types mismatch: 
 [1374/7715]     - DocBook has: [QClearBuffers]
-[1374/7715]     - HTML has:    [BufferType, BufferTypeFlags]
+[1374/7715]     - HTML has:    [BufferType]
+[1374/7715]     > Differences between the sets: [QClearBuffers]
+[1374/7715] Member Types mismatch: 
+[1374/7715]     - DocBook has: [QClearBuffers]
+[1374/7715]     - HTML has:    []
 [1374/7715]     > Differences between the sets: [QClearBuffers]
 [1375/7715]C:\Qt\Doc\webxml\qt3drender-qclipplane.webxml
 [1375/7715] Public functions mismatch: 
@@ -3310,6 +3509,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1402/7715]     - DocBook has: [QMemoryBarrier]
 [1402/7715]     - HTML has:    [Operation]
 [1402/7715]     > Differences between the sets: [QMemoryBarrier]
+[1402/7715] Member Types mismatch: 
+[1402/7715]     - DocBook has: [QMemoryBarrier]
+[1402/7715]     - HTML has:    []
+[1402/7715]     > Differences between the sets: [QMemoryBarrier]
 [1403/7715]C:\Qt\Doc\webxml\qt3drender-qmesh.webxml
 [1403/7715] Public functions mismatch: 
 [1403/7715]     - DocBook has: [QMesh, meshName, setMeshName, setSource, source, status]
@@ -3402,7 +3605,7 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1424/7715]C:\Qt\Doc\webxml\qt3drender-qrenderpass.webxml
 [1424/7715] Public functions mismatch: 
 [1424/7715]     - DocBook has: [QRenderPass, addFilterKey, addParameter, addRenderState, filterKeys, parameters, removeFilterKey, removeParameter, removeRenderState, renderStates, setShaderProgram, shaderProgram]
-[1424/7715]     - HTML has:    [ParameterList, QRenderPass, addFilterKey, addParameter, addRenderState, filterKeys, parameters, removeFilterKey, removeParameter, removeRenderState, renderStates, setShaderProgram, shaderProgram, shaderProgramChanged]
+[1424/7715]     - HTML has:    [QRenderPass, addFilterKey, addParameter, addRenderState, filterKeys, parameters, removeFilterKey, removeParameter, removeRenderState, renderStates, setShaderProgram, shaderProgram, shaderProgramChanged]
 [1424/7715]     > Differences between the sets: []
 [1425/7715]C:\Qt\Doc\webxml\qt3drender-qrenderpassfilter.webxml
 [1426/7715]C:\Qt\Doc\webxml\qt3drender-qrendersettings.webxml
@@ -3531,10 +3734,6 @@ WARNING: The description of metaObject is skipped while it has some content.
 [1461/7715]     > Differences between the sets: [QTextureImage]
 [1462/7715]C:\Qt\Doc\webxml\qt3drender-qtextureimagedata.webxml
 [1463/7715]C:\Qt\Doc\webxml\qt3drender-qtextureimagedatagenerator.webxml
-[1463/7715] Public functions mismatch: 
-[1463/7715]     - DocBook has: [operator(), operator==, ~QTextureImageDataGenerator]
-[1463/7715]     - HTML has:    [QTextureImageDataPtr, operator(), operator==, ~QTextureImageDataGenerator]
-[1463/7715]     > Differences between the sets: []
 [1464/7715]C:\Qt\Doc\webxml\qt3drender-qtextureloader.webxml
 [1465/7715]C:\Qt\Doc\webxml\qt3drender-qtexturerectangle.webxml
 [1466/7715]C:\Qt\Doc\webxml\qt3drender-qtexturewrapmode.webxml
@@ -4757,6 +4956,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2482/7715]     - DocBook has: []
 [2482/7715]     - HTML has:    [Iterator, iterator]
 [2482/7715]     > Differences between the sets: []
+[2482/7715] Member Types mismatch: 
+[2482/7715]     - DocBook has: [Iterator]
+[2482/7715]     - HTML has:    []
+[2482/7715]     > Differences between the sets: [Iterator]
 [2482/7715] Properties mismatch: 
 [2482/7715]     - DocBook has: [b, e, n, p]
 [2482/7715]     - HTML has:    []
@@ -4765,6 +4968,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2484/7715]C:\Qt\Doc\webxml\qtextblockgroup.webxml
 [2485/7715]C:\Qt\Doc\webxml\qtextblockuserdata.webxml
 [2486/7715]C:\Qt\Doc\webxml\qtextboundaryfinder.webxml
+[2486/7715] Member Types mismatch: 
+[2486/7715]     - DocBook has: [BoundaryReasons]
+[2486/7715]     - HTML has:    []
+[2486/7715]     > Differences between the sets: [BoundaryReasons]
 [2487/7715]C:\Qt\Doc\webxml\qtextbrowser.webxml
 [2487/7715] Public functions mismatch: 
 [2487/7715]     - DocBook has: [QTextBrowser, backward, backwardHistoryCount, clearHistory, event, focusNextPrevChild, focusOutEvent, forward, forwardHistoryCount, historyTitle, historyUrl, home, isBackwardAvailable, isForwardAvailable, isReadOnly, isUndoRedoEnabled, keyPressEvent, loadResource, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, openExternalLinks, openLinks, paintEvent, reload, searchPaths, setOpenExternalLinks, setOpenLinks, setReadOnly, setSearchPaths, setSource, setUndoRedoEnabled, source]
@@ -4785,6 +4992,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2490/7715]     - DocBook has: [ConversionFlag]
 [2490/7715]     - HTML has:    [ConversionFlag, ConverterState]
 [2490/7715]     > Differences between the sets: []
+[2490/7715] Member Types mismatch: 
+[2490/7715]     - DocBook has: [ConversionFlags]
+[2490/7715]     - HTML has:    []
+[2490/7715]     > Differences between the sets: [ConversionFlags]
 [2490/7715] Properties mismatch: 
 [2490/7715]     - DocBook has: [d, flags, invalidChars, remainingChars, state_data]
 [2490/7715]     - HTML has:    []
@@ -4796,6 +5007,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2493/7715]     - DocBook has: [QTextDocument, addResource, adjustSize, allFormats, availableRedoSteps, availableUndoSteps, baseUrl, begin, blockCount, characterAt, characterCount, clear, clearUndoRedoStacks, clone, createObject, defaultCursorMoveStyle, defaultFont, defaultStyleSheet, defaultTextOption, documentLayout, documentMargin, drawContents, end, find, findBlock, findBlockByLineNumber, findBlockByNumber, firstBlock, idealWidth, indentWidth, isEmpty, isModified, isRedoAvailable, isUndoAvailable, isUndoRedoEnabled, lastBlock, lineCount, loadResource, markContentsDirty, maximumBlockCount, metaInformation, object, objectForFormat, pageCount, pageSize, print, redo, resource, revision, rootFrame, setBaseUrl, setDefaultCursorMoveStyle, setDefaultFont, setDefaultStyleSheet, setDefaultTextOption, setDocumentLayout, setDocumentMargin, setHtml, setIndentWidth, setMaximumBlockCount, setMetaInformation, setModified, setPageSize, setPlainText, setTextWidth, setUndoRedoEnabled, setUseDesignMetrics, size, textWidth, toHtml, toPlainText, toRawText, undo, useDesignMetrics, ~QTextDocument]
 [2493/7715]     - HTML has:    [QTextDocument, addResource, adjustSize, allFormats, availableRedoSteps, availableUndoSteps, baseUrl, baseUrlChanged, begin, blockCount, blockCountChanged, characterAt, characterCount, clear, clearUndoRedoStacks, clone, contentsChange, contentsChanged, createObject, cursorPositionChanged, defaultCursorMoveStyle, defaultFont, defaultStyleSheet, defaultTextOption, documentLayout, documentLayoutChanged, documentMargin, drawContents, end, find, findBlock, findBlockByLineNumber, findBlockByNumber, firstBlock, idealWidth, indentWidth, isEmpty, isModified, isRedoAvailable, isUndoAvailable, isUndoRedoEnabled, lastBlock, lineCount, loadResource, markContentsDirty, maximumBlockCount, metaInformation, modificationChanged, object, objectForFormat, pageCount, pageSize, print, redo, redoAvailable, resource, revision, rootFrame, setBaseUrl, setDefaultCursorMoveStyle, setDefaultFont, setDefaultStyleSheet, setDefaultTextOption, setDocumentLayout, setDocumentMargin, setHtml, setIndentWidth, setMaximumBlockCount, setMetaInformation, setModified, setPageSize, setPlainText, setTextWidth, setUndoRedoEnabled, setUseDesignMetrics, size, textWidth, toHtml, toPlainText, toRawText, undo, undoAvailable, undoCommandAdded, useDesignMetrics, ~QTextDocument]
 [2493/7715]     > Differences between the sets: []
+[2493/7715] Member Types mismatch: 
+[2493/7715]     - DocBook has: [FindFlags]
+[2493/7715]     - HTML has:    []
+[2493/7715]     > Differences between the sets: [FindFlags]
 [2494/7715]C:\Qt\Doc\webxml\qtextdocumentfragment.webxml
 [2495/7715]C:\Qt\Doc\webxml\qtextdocumentwriter.webxml
 [2496/7715]C:\Qt\Doc\webxml\qtextedit-extraselection.webxml
@@ -4806,8 +5021,12 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2497/7715]     > Differences between the sets: [setTabStopWidth, tabStopWidth]
 [2497/7715] Public types mismatch: 
 [2497/7715]     - DocBook has: [AutoFormattingFlag, LineWrapMode]
-[2497/7715]     - HTML has:    [AutoFormatting, AutoFormattingFlag, ExtraSelection, LineWrapMode]
-[2497/7715]     > Differences between the sets: []
+[2497/7715]     - HTML has:    [AutoFormatting, ExtraSelection, LineWrapMode]
+[2497/7715]     > Differences between the sets: [AutoFormattingFlag]
+[2497/7715] Member Types mismatch: 
+[2497/7715]     - DocBook has: [AutoFormatting]
+[2497/7715]     - HTML has:    []
+[2497/7715]     > Differences between the sets: [AutoFormatting]
 [2497/7715] Properties mismatch: 
 [2497/7715]     - DocBook has: [acceptRichText, autoFormatting, cursor, cursorWidth, document, documentTitle, format, html, lineWrapColumnOrWidth, lineWrapMode, overwriteMode, placeholderText, plainText, readOnly, tabChangesFocus, tabStopDistance, tabStopWidth, textInteractionFlags, undoRedoEnabled, wordWrapMode]
 [2497/7715]     - HTML has:    [acceptRichText, autoFormatting, cursorWidth, document, documentTitle, html, lineWrapColumnOrWidth, lineWrapMode, overwriteMode, placeholderText, plainText, readOnly, tabChangesFocus, tabStopDistance, textInteractionFlags, undoRedoEnabled, wordWrapMode]
@@ -4818,6 +5037,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2499/7715]     - DocBook has: [QTextFormat, background, boolProperty, brushProperty, clearBackground, clearForeground, clearProperty, colorProperty, doubleProperty, foreground, hasProperty, intProperty, isBlockFormat, isCharFormat, isEmpty, isFrameFormat, isImageFormat, isListFormat, isTableCellFormat, isTableFormat, isValid, layoutDirection, lengthProperty, lengthVectorProperty, merge, objectIndex, objectType, operator QVariant, operator!=, operator=, operator==, penProperty, properties, property, propertyCount, qt_check_for_QGADGET_macro, setBackground, setForeground, setLayoutDirection, setObjectIndex, setObjectType, setProperty, stringProperty, swap, toBlockFormat, toCharFormat, toFrameFormat, toImageFormat, toListFormat, toTableCellFormat, toTableFormat, type, ~QTextFormat]
 [2499/7715]     - HTML has:    [QTextFormat, background, boolProperty, brushProperty, clearBackground, clearForeground, clearProperty, colorProperty, doubleProperty, foreground, hasProperty, intProperty, isBlockFormat, isCharFormat, isEmpty, isFrameFormat, isImageFormat, isListFormat, isTableCellFormat, isTableFormat, isValid, layoutDirection, lengthProperty, lengthVectorProperty, merge, objectIndex, objectType, operator QVariant, operator!=, operator=, operator==, penProperty, properties, property, propertyCount, setBackground, setForeground, setLayoutDirection, setObjectIndex, setObjectType, setProperty, stringProperty, swap, toBlockFormat, toCharFormat, toFrameFormat, toImageFormat, toListFormat, toTableCellFormat, toTableFormat, type, ~QTextFormat]
 [2499/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
+[2499/7715] Member Types mismatch: 
+[2499/7715]     - DocBook has: [PageBreakFlags]
+[2499/7715]     - HTML has:    []
+[2499/7715]     > Differences between the sets: [PageBreakFlags]
 [2500/7715]C:\Qt\Doc\webxml\qtextfragment.webxml
 [2501/7715]C:\Qt\Doc\webxml\qtextframe-iterator.webxml
 [2502/7715]C:\Qt\Doc\webxml\qtextframe.webxml
@@ -4829,6 +5052,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2502/7715]     - DocBook has: []
 [2502/7715]     - HTML has:    [Iterator, iterator]
 [2502/7715]     > Differences between the sets: []
+[2502/7715] Member Types mismatch: 
+[2502/7715]     - DocBook has: [Iterator]
+[2502/7715]     - HTML has:    []
+[2502/7715]     > Differences between the sets: [Iterator]
 [2502/7715] Properties mismatch: 
 [2502/7715]     - DocBook has: [b, cb, cf, e, f]
 [2502/7715]     - HTML has:    []
@@ -4841,6 +5068,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2505/7715]     - HTML has:    [ascent, descent, format, formatIndex, height, isValid, rect, setAscent, setDescent, setWidth, textDirection, textPosition, width]
 [2505/7715]     > Differences between the sets: [QTextInlineObject]
 [2506/7715]C:\Qt\Doc\webxml\qtextitem.webxml
+[2506/7715] Member Types mismatch: 
+[2506/7715]     - DocBook has: [RenderFlags]
+[2506/7715]     - HTML has:    []
+[2506/7715]     > Differences between the sets: [RenderFlags]
 [2507/7715]C:\Qt\Doc\webxml\qtextlayout-formatrange.webxml
 [2507/7715] Public functions mismatch: 
 [2507/7715]     - DocBook has: []
@@ -4887,6 +5118,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2516/7715]     - DocBook has: [Flag, TabType, WrapMode]
 [2516/7715]     - HTML has:    [Flag, Tab, TabType, WrapMode]
 [2516/7715]     > Differences between the sets: []
+[2516/7715] Member Types mismatch: 
+[2516/7715]     - DocBook has: [Flags]
+[2516/7715]     - HTML has:    []
+[2516/7715]     > Differences between the sets: [Flags]
 [2516/7715] Properties mismatch: 
 [2516/7715]     - DocBook has: [delimiter, position, type]
 [2516/7715]     - HTML has:    []
@@ -4896,6 +5131,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2517/7715]     - DocBook has: [QTextStream, atEnd, autoDetectUnicode, bin, bom, center, codec, dec, device, endl, fieldAlignment, fieldWidth, fixed, flush, forcepoint, forcesign, generateByteOrderMark, hex, integerBase, left, locale, lowercasebase, lowercasedigits, noforcepoint, noforcesign, noshowbase, numberFlags, oct, operator<<, operator>>, padChar, pos, qSetFieldWidth, qSetRealNumberPrecision, read, readAll, readLine, readLineInto, realNumberNotation, realNumberPrecision, reset, resetStatus, right, scientific, seek, setAutoDetectUnicode, setCodec, setDevice, setFieldAlignment, setFieldWidth, setGenerateByteOrderMark, setIntegerBase, setLocale, setNumberFlags, setPadChar, setRealNumberNotation, setRealNumberPrecision, setStatus, setString, showbase, skipWhiteSpace, status, string, uppercasebase, uppercasedigits, ws, ~QTextStream]
 [2517/7715]     - HTML has:    [QTextStream, atEnd, autoDetectUnicode, bin, bom, center, codec, dec, device, endl, fieldAlignment, fieldWidth, fixed, flush, forcepoint, forcesign, generateByteOrderMark, hex, integerBase, left, locale, lowercasebase, lowercasedigits, noforcepoint, noforcesign, noshowbase, numberFlags, oct, operator<<, operator>>, padChar, pos, qSetFieldWidth, qSetPadChar, qSetRealNumberPrecision, read, readAll, readLine, readLineInto, realNumberNotation, realNumberPrecision, reset, resetStatus, right, scientific, seek, setAutoDetectUnicode, setCodec, setDevice, setFieldAlignment, setFieldWidth, setGenerateByteOrderMark, setIntegerBase, setLocale, setNumberFlags, setPadChar, setRealNumberNotation, setRealNumberPrecision, setStatus, setString, showbase, skipWhiteSpace, status, string, uppercasebase, uppercasedigits, ws, ~QTextStream]
 [2517/7715]     > Differences between the sets: []
+[2517/7715] Member Types mismatch: 
+[2517/7715]     - DocBook has: [NumberFlags]
+[2517/7715]     - HTML has:    []
+[2517/7715]     > Differences between the sets: [NumberFlags]
 [2518/7715]C:\Qt\Doc\webxml\qtexttable.webxml
 [2519/7715]C:\Qt\Doc\webxml\qtexttablecell.webxml
 [2520/7715]C:\Qt\Doc\webxml\qtexttablecellformat.webxml
@@ -5209,6 +5448,10 @@ WARNING: The description of metaObject is skipped while it has some content.
 [2712/7715]     - DocBook has: [NameType, TimeType, anonymous]
 [2712/7715]     - HTML has:    [NameType, OffsetData, OffsetDataList, TimeType, anonymous]
 [2712/7715]     > Differences between the sets: []
+[2712/7715] Member Types mismatch: 
+[2712/7715]     - DocBook has: [OffsetDataList]
+[2712/7715]     - HTML has:    []
+[2712/7715]     > Differences between the sets: [OffsetDataList]
 [2712/7715] Properties mismatch: 
 [2712/7715]     - DocBook has: [abbreviation, atUtc, daylightTimeOffset, offsetFromUtc, standardTimeOffset]
 [2712/7715]     - HTML has:    []
@@ -6127,8 +6370,12 @@ WARNING: Quote from file with no content.
 [3472/7715]     > Differences between the sets: [qt_check_for_QGADGET_macro]
 [3472/7715] Public types mismatch: 
 [3472/7715]     - DocBook has: [CapabilityFlag, DeviceType]
-[3472/7715]     - HTML has:    [Capabilities, CapabilityFlag, DeviceType]
-[3472/7715]     > Differences between the sets: []
+[3472/7715]     - HTML has:    [Capabilities, DeviceType]
+[3472/7715]     > Differences between the sets: [CapabilityFlag]
+[3472/7715] Member Types mismatch: 
+[3472/7715]     - DocBook has: [Capabilities]
+[3472/7715]     - HTML has:    []
+[3472/7715]     > Differences between the sets: [Capabilities]
 [3473/7715]C:\Qt\Doc\webxml\qtouchevent-touchpoint.webxml
 [3473/7715] Public functions mismatch: 
 [3473/7715]     - DocBook has: [TouchPoint, ellipseDiameters, flags, id, lastNormalizedPos, lastPos, lastScenePos, lastScreenPos, normalizedPos, operator=, pos, pressure, rawScreenPositions, rect, rotation, scenePos, sceneRect, screenPos, screenRect, startNormalizedPos, startPos, startScenePos, startScreenPos, state, swap, uniqueId, velocity]
@@ -6137,6 +6384,10 @@ WARNING: Quote from file with no content.
 [3473/7715] Public types mismatch: 
 [3473/7715]     - DocBook has: [TouchPoint]
 [3473/7715]     - HTML has:    [InfoFlag]
+[3473/7715]     > Differences between the sets: [TouchPoint]
+[3473/7715] Member Types mismatch: 
+[3473/7715]     - DocBook has: [TouchPoint]
+[3473/7715]     - HTML has:    []
 [3473/7715]     > Differences between the sets: [TouchPoint]
 [3474/7715]C:\Qt\Doc\webxml\qtouchevent.webxml
 [3474/7715] Public functions mismatch: 
@@ -6147,6 +6398,10 @@ WARNING: Quote from file with no content.
 [3474/7715]     - DocBook has: [DeviceType, TouchPoint]
 [3474/7715]     - HTML has:    [TouchPoint]
 [3474/7715]     > Differences between the sets: [DeviceType]
+[3474/7715] Member Types mismatch: 
+[3474/7715]     - DocBook has: [TouchPoint]
+[3474/7715]     - HTML has:    []
+[3474/7715]     > Differences between the sets: [TouchPoint]
 [3474/7715] Properties mismatch: 
 [3474/7715]     - DocBook has: [_device, _target, _touchPointStates, _touchPoints, _window, d]
 [3474/7715]     - HTML has:    []
@@ -7801,6 +8056,10 @@ WARNING: Quote from file with no content.
 [4953/7715]     - HTML has:    [QTreeWidgetItem, addChild, addChildren, background, checkState, child, childCount, childIndicatorPolicy, clone, columnCount, data, emitDataChanged, flags, font, foreground, icon, indexOfChild, insertChild, insertChildren, isDisabled, isExpanded, isFirstColumnSpanned, isHidden, isSelected, operator<, operator<<, operator=, operator>>, parent, read, removeChild, setBackground, setCheckState, setChildIndicatorPolicy, setData, setDisabled, setExpanded, setFirstColumnSpanned, setFlags, setFont, setForeground, setHidden, setIcon, setSelected, setSizeHint, setStatusTip, setText, setTextAlignment, setToolTip, setWhatsThis, sizeHint, sortChildren, statusTip, takeChild, takeChildren, text, textAlignment, toolTip, treeWidget, type, whatsThis, write, ~QTreeWidgetItem]
 [4953/7715]     > Differences between the sets: [backgroundColor, setBackgroundColor, setTextColor, textColor]
 [4954/7715]C:\Qt\Doc\webxml\qtreewidgetitemiterator.webxml
+[4954/7715] Member Types mismatch: 
+[4954/7715]     - DocBook has: [IteratorFlags]
+[4954/7715]     - HTML has:    []
+[4954/7715]     > Differences between the sets: [IteratorFlags]
 [4955/7715]C:\Qt\Doc\webxml\qtremoteobjects-bearermonitor-example.webxml
 [4955/7715] Error while performing the inherited-by class check: 404 when downloading the original class.
 [4956/7715]C:\Qt\Doc\webxml\qtremoteobjects-complexpingpong-example.webxml
@@ -10325,6 +10584,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7156/7715]     - DocBook has: [ComponentFormattingOption, ParsingMode, UrlFormattingOption, UserInputResolutionOption]
 [7156/7715]     - HTML has:    [ComponentFormattingOption, FormattingOptions, ParsingMode, UrlFormattingOption, UserInputResolutionOption]
 [7156/7715]     > Differences between the sets: []
+[7156/7715] Member Types mismatch: 
+[7156/7715]     - DocBook has: [ComponentFormattingOptions, UserInputResolutionOptions]
+[7156/7715]     - HTML has:    []
+[7156/7715]     > Differences between the sets: [ComponentFormattingOptions, UserInputResolutionOptions]
 [7157/7715]C:\Qt\Doc\webxml\qurlquery.webxml
 [7157/7715] Public functions mismatch: 
 [7157/7715]     - DocBook has: [QUrlQuery, addQueryItem, allQueryItemValues, clear, data_ptr, defaultQueryPairDelimiter, defaultQueryValueDelimiter, hasQueryItem, isEmpty, operator!=, operator=, operator==, qHash, query, queryItemValue, queryItems, queryPairDelimiter, queryValueDelimiter, removeAllQueryItems, removeQueryItem, setQuery, setQueryDelimiters, setQueryItems, swap, toString, ~QUrlQuery]
@@ -10362,7 +10625,7 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7167/7715]C:\Qt\Doc\webxml\qvariant.webxml
 [7167/7715] Public functions mismatch: 
 [7167/7715]     - DocBook has: [Private, PrivateShared, QVariant, canConvert, clear, convert, create, data, data_ptr, detach, fromStdVariant, fromValue, isDetached, isNull, isValid, nameToType, operator!=, operator<, operator<=, operator=, operator==, operator>, operator>=, qVariantFromValue, setValue, swap, toBitArray, toBool, toByteArray, toChar, toDate, toDateTime, toDouble, toEasingCurve, toFloat, toHash, toInt, toJsonArray, toJsonDocument, toJsonObject, toJsonValue, toLine, toLineF, toList, toLocale, toLongLong, toMap, toModelIndex, toPersistentModelIndex, toPoint, toPointF, toReal, toRect, toRectF, toRegExp, toRegularExpression, toSize, toSizeF, toString, toStringList, toTime, toUInt, toULongLong, toUrl, toUuid, type, typeName, typeToName, userType, value, ~QVariant]
-[7167/7715]     - HTML has:    [QVariant, QVariantHash, QVariantList, QVariantMap, canConvert, clear, convert, fromStdVariant, fromValue, isNull, isValid, nameToType, operator!=, operator<, operator<=, operator=, operator==, operator>, operator>=, qvariant_cast, setValue, swap, toBitArray, toBool, toByteArray, toChar, toDate, toDateTime, toDouble, toEasingCurve, toFloat, toHash, toInt, toJsonArray, toJsonDocument, toJsonObject, toJsonValue, toLine, toLineF, toList, toLocale, toLongLong, toMap, toModelIndex, toPersistentModelIndex, toPoint, toPointF, toReal, toRect, toRectF, toRegExp, toRegularExpression, toSize, toSizeF, toString, toStringList, toTime, toUInt, toULongLong, toUrl, toUuid, type, typeName, typeToName, userType, value, ~QVariant]
+[7167/7715]     - HTML has:    [QVariant, canConvert, clear, convert, fromStdVariant, fromValue, isNull, isValid, nameToType, operator!=, operator<, operator<=, operator=, operator==, operator>, operator>=, qvariant_cast, setValue, swap, toBitArray, toBool, toByteArray, toChar, toDate, toDateTime, toDouble, toEasingCurve, toFloat, toHash, toInt, toJsonArray, toJsonDocument, toJsonObject, toJsonValue, toLine, toLineF, toList, toLocale, toLongLong, toMap, toModelIndex, toPersistentModelIndex, toPoint, toPointF, toReal, toRect, toRectF, toRegExp, toRegularExpression, toSize, toSizeF, toString, toStringList, toTime, toUInt, toULongLong, toUrl, toUuid, type, typeName, typeToName, userType, value, ~QVariant]
 [7167/7715]     > Differences between the sets: [Private, PrivateShared, create, data, data_ptr, detach, isDetached, qVariantFromValue]
 [7167/7715] Public types mismatch: 
 [7167/7715]     - DocBook has: [Type]
@@ -10379,8 +10642,12 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7168/7715]     > Differences between the sets: []
 [7168/7715] Public types mismatch: 
 [7168/7715]     - DocBook has: []
-[7168/7715]     - HTML has:    [KeyValue]
+[7168/7715]     - HTML has:    [KeyValue, KeyValues]
 [7168/7715]     > Differences between the sets: []
+[7168/7715] Member Types mismatch: 
+[7168/7715]     - DocBook has: [KeyValue, KeyValues]
+[7168/7715]     - HTML has:    []
+[7168/7715]     > Differences between the sets: [KeyValue, KeyValues]
 [7169/7715]C:\Qt\Doc\webxml\qvarlengtharray.webxml
 [7169/7715] Public functions mismatch: 
 [7169/7715]     - DocBook has: [QVarLengthArray, append, at, back, begin, capacity, cbegin, cend, clear, constBegin, constData, constEnd, contains, count, crbegin, crend, data, empty, end, erase, first, front, indexOf, insert, isEmpty, last, lastIndexOf, length, operator+=, operator<<, operator=, operator[], pop_back, prepend, push_back, rbegin, remove, removeLast, rend, replace, reserve, resize, shrink_to_fit, size, squeeze, value, ~QVarLengthArray]
@@ -10390,6 +10657,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7169/7715]     - DocBook has: []
 [7169/7715]     - HTML has:    [const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [7169/7715]     > Differences between the sets: []
+[7169/7715] Member Types mismatch: 
+[7169/7715]     - DocBook has: [const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
+[7169/7715]     - HTML has:    []
+[7169/7715]     > Differences between the sets: [const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [7170/7715]C:\Qt\Doc\webxml\qvbarmodelmapper.webxml
 [7170/7715] Public functions mismatch: 
 [7170/7715]     - DocBook has: [QVBarModelMapper, firstBarSetColumn, firstRow, lastBarSetColumn, model, rowCount, series, setFirstBarSetColumn, setFirstRow, setLastBarSetColumn, setModel, setRowCount, setSeries]
@@ -10415,6 +10686,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7174/7715]     - DocBook has: []
 [7174/7715]     - HTML has:    [ConstIterator, Iterator, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [7174/7715]     > Differences between the sets: []
+[7174/7715] Member Types mismatch: 
+[7174/7715]     - DocBook has: [ConstIterator, Iterator, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
+[7174/7715]     - HTML has:    []
+[7174/7715]     > Differences between the sets: [ConstIterator, Iterator, const_iterator, const_pointer, const_reference, const_reverse_iterator, difference_type, iterator, pointer, reference, reverse_iterator, size_type, value_type]
 [7175/7715]C:\Qt\Doc\webxml\qvector2d.webxml
 [7175/7715] Public functions mismatch: 
 [7175/7715]     - DocBook has: [QVector2D, distanceToLine, distanceToPoint, dotProduct, isNull, length, lengthSquared, normalize, normalized, operator QVariant, operator*=, operator+=, operator-=, operator/=, operator[], setX, setY, toPoint, toPointF, toVector3D, toVector4D, x, y]
@@ -10455,6 +10730,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7184/7715]     > Differences between the sets: []
 [7185/7715]C:\Qt\Doc\webxml\qvulkaninfovector.webxml
 [7186/7715]C:\Qt\Doc\webxml\qvulkaninstance.webxml
+[7186/7715] Member Types mismatch: 
+[7186/7715]     - DocBook has: [Flags]
+[7186/7715]     - HTML has:    []
+[7186/7715]     > Differences between the sets: [Flags]
 [7187/7715]C:\Qt\Doc\webxml\qvulkanlayer.webxml
 [7188/7715]C:\Qt\Doc\webxml\qvxymodelmapper.webxml
 [7188/7715] Public functions mismatch: 
@@ -10485,6 +10764,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7196/7715]     - DocBook has: [QWIDGETSIZE_MAX, QWidget, acceptDrops, accessibleDescription, accessibleName, actionEvent, actions, activateWindow, addAction, addActions, adjustSize, autoFillBackground, backgroundRole, backingStore, baseSize, changeEvent, childAt, childrenRect, childrenRegion, clearFocus, clearMask, close, closeEvent, contentsMargins, contentsRect, contextMenuEvent, contextMenuPolicy, create, createWindowContainer, cursor, destroy, dragEnterEvent, dragLeaveEvent, dragMoveEvent, dropEvent, effectiveWinId, ensurePolished, enterEvent, event, find, focusInEvent, focusNextChild, focusNextPrevChild, focusOutEvent, focusPolicy, focusPreviousChild, focusProxy, focusWidget, font, fontInfo, fontMetrics, foregroundRole, frameGeometry, frameSize, geometry, getContentsMargins, grab, grabGesture, grabKeyboard, grabMouse, grabShortcut, graphicsEffect, graphicsProxyWidget, hasEditFocus, hasFocus, hasHeightForWidth, hasMouseTracking, hasTabletTracking, height, heightForWidth, hide, hideEvent, initPainter, inputMethodEvent, inputMethodHints, inputMethodQuery, insertAction, insertActions, internalWinId, isActiveWindow, isAncestorOf, isEnabled, isEnabledTo, isEnabledToTLW, isFullScreen, isHidden, isLeftToRight, isMaximized, isMinimized, isModal, isRightToLeft, isTopLevel, isVisible, isVisibleTo, isWindow, isWindowModified, keyPressEvent, keyReleaseEvent, keyboardGrabber, layout, layoutDirection, leaveEvent, locale, lower, mapFrom, mapFromGlobal, mapFromParent, mapTo, mapToGlobal, mapToParent, mask, maximumHeight, maximumSize, maximumWidth, metric, minimumHeight, minimumSize, minimumSizeHint, minimumWidth, mouseDoubleClickEvent, mouseGrabber, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, move, move move, moveEvent, nativeEvent, nativeParentWidget, nextInFocusChain, normalGeometry, overrideWindowFlags, paintEngine, paintEvent, palette, parentWidget, pos, previousInFocusChain, raise, rect, releaseKeyboard, releaseMouse, releaseShortcut, removeAction, render, repaint, resize, resize resize, resizeEvent, restoreGeometry, saveGeometry, scroll, setAcceptDrops, setAccessibleDescription, setAccessibleName, setAttribute, setAutoFillBackground, setBackgroundRole, setBaseSize, setBaseSize setBaseSize, setContentsMargins, setContextMenuPolicy, setCursor, setDisabled, setEditFocus, setEnabled, setFixedHeight, setFixedSize, setFixedWidth, setFocus, setFocusPolicy, setFocusProxy, setFont, setForegroundRole, setGeometry, setGeometry setGeometry, setGraphicsEffect, setHidden, setInputMethodHints, setLayout, setLayoutDirection, setLocale, setMask, setMaximumHeight, setMaximumSize, setMaximumSize setMaximumSize, setMaximumWidth, setMinimumHeight, setMinimumSize, setMinimumSize setMinimumSize, setMinimumWidth, setMouseTracking, setPalette, setParent, setShortcutAutoRepeat, setShortcutEnabled, setSizeIncrement, setSizeIncrement setSizeIncrement, setSizePolicy, setSizePolicy setSizePolicy, setStatusTip, setStyle, setStyleSheet, setTabOrder, setTabletTracking, setToolTip, setToolTipDuration, setUpdatesEnabled, setVisible, setWhatsThis, setWindowFilePath, setWindowFlag, setWindowFlags, setWindowIcon, setWindowIconText, setWindowModality, setWindowModified, setWindowOpacity, setWindowRole, setWindowState, setWindowTitle, setupUi, show, showEvent, showFullScreen, showMaximized, showMinimized, showNormal, size, sizeHint, sizeIncrement, sizePolicy, stackUnder, statusTip, style, styleSheet, tabletEvent, testAttribute, toolTip, toolTipDuration, topLevelWidget, underMouse, ungrabGesture, unsetCursor, unsetLayoutDirection, unsetLocale, update, updateGeometry, updateMicroFocus, updatesEnabled, visibleRegion, whatsThis, wheelEvent, width, winId, window, windowFilePath, windowFlags, windowHandle, windowIcon, windowIconText, windowModality, windowOpacity, windowRole, windowState, windowTitle, windowType, x, y, ~QWidget]
 [7196/7715]     - HTML has:    [QWidget, acceptDrops, accessibleDescription, accessibleName, actionEvent, actions, activateWindow, addAction, addActions, adjustSize, autoFillBackground, backgroundRole, backingStore, baseSize, changeEvent, childAt, childrenRect, childrenRegion, clearFocus, clearMask, close, closeEvent, contentsMargins, contentsRect, contextMenuEvent, contextMenuPolicy, create, createWindowContainer, cursor, customContextMenuRequested, destroy, dragEnterEvent, dragLeaveEvent, dragMoveEvent, dropEvent, effectiveWinId, ensurePolished, enterEvent, event, find, focusInEvent, focusNextChild, focusNextPrevChild, focusOutEvent, focusPolicy, focusPreviousChild, focusProxy, focusWidget, font, fontInfo, fontMetrics, foregroundRole, frameGeometry, frameSize, geometry, getContentsMargins, grab, grabGesture, grabKeyboard, grabMouse, grabShortcut, graphicsEffect, graphicsProxyWidget, hasEditFocus, hasFocus, hasHeightForWidth, hasMouseTracking, hasTabletTracking, height, heightForWidth, hide, hideEvent, initPainter, inputMethodEvent, inputMethodHints, inputMethodQuery, insertAction, insertActions, isActiveWindow, isAncestorOf, isEnabled, isEnabledTo, isFullScreen, isHidden, isMaximized, isMinimized, isModal, isVisible, isVisibleTo, isWindow, isWindowModified, keyPressEvent, keyReleaseEvent, keyboardGrabber, layout, layoutDirection, leaveEvent, locale, lower, mapFrom, mapFromGlobal, mapFromParent, mapTo, mapToGlobal, mapToParent, mask, maximumHeight, maximumSize, maximumWidth, metric, minimumHeight, minimumSize, minimumSizeHint, minimumWidth, mouseDoubleClickEvent, mouseGrabber, mouseMoveEvent, mousePressEvent, mouseReleaseEvent, move, moveEvent, nativeEvent, nativeParentWidget, nextInFocusChain, normalGeometry, overrideWindowFlags, paintEngine, paintEvent, palette, parentWidget, pos, previousInFocusChain, raise, rect, releaseKeyboard, releaseMouse, releaseShortcut, removeAction, render, repaint, resize, resizeEvent, restoreGeometry, saveGeometry, scroll, setAcceptDrops, setAccessibleDescription, setAccessibleName, setAttribute, setAutoFillBackground, setBackgroundRole, setBaseSize, setContentsMargins, setContextMenuPolicy, setCursor, setDisabled, setEditFocus, setEnabled, setFixedHeight, setFixedSize, setFixedWidth, setFocus, setFocusPolicy, setFocusProxy, setFont, setForegroundRole, setGeometry, setGraphicsEffect, setHidden, setInputMethodHints, setLayout, setLayoutDirection, setLocale, setMask, setMaximumHeight, setMaximumSize, setMaximumWidth, setMinimumHeight, setMinimumSize, setMinimumWidth, setMouseTracking, setPalette, setParent, setShortcutAutoRepeat, setShortcutEnabled, setSizeIncrement, setSizePolicy, setStatusTip, setStyle, setStyleSheet, setTabOrder, setTabletTracking, setToolTip, setToolTipDuration, setUpdatesEnabled, setVisible, setWhatsThis, setWindowFilePath, setWindowFlag, setWindowFlags, setWindowIcon, setWindowModality, setWindowModified, setWindowOpacity, setWindowRole, setWindowState, setWindowTitle, setupUi, show, showEvent, showFullScreen, showMaximized, showMinimized, showNormal, size, sizeHint, sizeIncrement, sizePolicy, stackUnder, statusTip, style, styleSheet, tabletEvent, testAttribute, toolTip, toolTipDuration, underMouse, ungrabGesture, unsetCursor, unsetLayoutDirection, unsetLocale, update, updateGeometry, updatesEnabled, visibleRegion, whatsThis, wheelEvent, width, winId, window, windowFilePath, windowFlags, windowHandle, windowIcon, windowIconChanged, windowModality, windowOpacity, windowRole, windowState, windowTitle, windowTitleChanged, windowType, x, y, ~QWidget]
 [7196/7715]     > Differences between the sets: [QWIDGETSIZE_MAX, internalWinId, isEnabledToTLW, isLeftToRight, isRightToLeft, isTopLevel, move move, resize resize, setBaseSize setBaseSize, setGeometry setGeometry, setMaximumSize setMaximumSize, setMinimumSize setMinimumSize, setSizeIncrement setSizeIncrement, setSizePolicy setSizePolicy, setWindowIconText, topLevelWidget, updateMicroFocus, windowIconText]
+[7196/7715] Member Types mismatch: 
+[7196/7715]     - DocBook has: [RenderFlags]
+[7196/7715]     - HTML has:    []
+[7196/7715]     > Differences between the sets: [RenderFlags]
 [7196/7715] Signals mismatch: 
 [7196/7715]     - DocBook has: [customContextMenuRequested, windowIconChanged, windowIconTextChanged, windowTitleChanged]
 [7196/7715]     - HTML has:    [customContextMenuRequested, windowIconChanged, windowTitleChanged]
@@ -10535,6 +10818,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7210/7715]     - DocBook has: [QWizard, addPage, back, button, buttonText, cleanupPage, currentId, currentPage, done, event, field, hasVisitedPage, initializePage, nativeEvent, next, nextId, options, page, pageIds, paintEvent, pixmap, removePage, resizeEvent, restart, setButton, setButtonLayout, setButtonText, setDefaultProperty, setField, setOption, setOptions, setPage, setPixmap, setSideWidget, setStartId, setSubTitleFormat, setTitleFormat, setVisible, setWizardStyle, sideWidget, sizeHint, startId, subTitleFormat, testOption, titleFormat, validateCurrentPage, visitedPages, wizardStyle, ~QWizard]
 [7210/7715]     - HTML has:    [QWizard, addPage, back, button, buttonText, cleanupPage, currentId, currentIdChanged, currentPage, customButtonClicked, done, event, field, hasVisitedPage, helpRequested, initializePage, nativeEvent, next, nextId, options, page, pageAdded, pageIds, pageRemoved, paintEvent, pixmap, removePage, resizeEvent, restart, setButton, setButtonLayout, setButtonText, setDefaultProperty, setField, setOption, setOptions, setPage, setPixmap, setSideWidget, setStartId, setSubTitleFormat, setTitleFormat, setVisible, setWizardStyle, sideWidget, sizeHint, startId, subTitleFormat, testOption, titleFormat, validateCurrentPage, visitedPages, wizardStyle, ~QWizard]
 [7210/7715]     > Differences between the sets: []
+[7210/7715] Member Types mismatch: 
+[7210/7715]     - DocBook has: [WizardOptions]
+[7210/7715]     - HTML has:    []
+[7210/7715]     > Differences between the sets: [WizardOptions]
 [7211/7715]C:\Qt\Doc\webxml\qwizardpage.webxml
 [7211/7715] Public functions mismatch: 
 [7211/7715]     - DocBook has: [QWizardPage, buttonText, cleanupPage, field, initializePage, isCommitPage, isComplete, isFinalPage, nextId, pixmap, registerField, setButtonText, setCommitPage, setField, setFinalPage, setPixmap, setSubTitle, setTitle, subTitle, title, validatePage, wizard, ~QWizardPage]
@@ -10559,6 +10846,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7222/7715]     - DocBook has: []
 [7222/7715]     - HTML has:    [Iterator]
 [7222/7715]     > Differences between the sets: []
+[7222/7715] Member Types mismatch: 
+[7222/7715]     - DocBook has: [Iterator]
+[7222/7715]     - HTML has:    []
+[7222/7715]     > Differences between the sets: [Iterator]
 [7223/7715]C:\Qt\Doc\webxml\qxmllexicalhandler.webxml
 [7224/7715]C:\Qt\Doc\webxml\qxmllocator.webxml
 [7225/7715]C:\Qt\Doc\webxml\qxmlname.webxml
@@ -10577,6 +10868,10 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7228/7715]     - DocBook has: [DocumentOrder, NodeKind]
 [7228/7715]     - HTML has:    [DocumentOrder, List, NodeKind]
 [7228/7715]     > Differences between the sets: []
+[7228/7715] Member Types mismatch: 
+[7228/7715]     - DocBook has: [List]
+[7228/7715]     - HTML has:    []
+[7228/7715]     > Differences between the sets: [List]
 [7229/7715]C:\Qt\Doc\webxml\qxmlparseexception.webxml
 [7230/7715]C:\Qt\Doc\webxml\qxmlquery.webxml
 [7231/7715]C:\Qt\Doc\webxml\qxmlreader.webxml
@@ -10588,21 +10883,9 @@ CONSISTENCY CHECK WARNING: printfromfile-print-content returning a line not cont
 [7237/7715]C:\Qt\Doc\webxml\qxmlstreamattribute.webxml
 [7238/7715]C:\Qt\Doc\webxml\qxmlstreamattributes.webxml
 [7239/7715]C:\Qt\Doc\webxml\qxmlstreamentitydeclaration.webxml
-[7239/7715] Public functions mismatch: 
-[7239/7715]     - DocBook has: [QXmlStreamEntityDeclaration, name, notationName, operator!=, operator=, operator==, publicId, systemId, value, ~QXmlStreamEntityDeclaration]
-[7239/7715]     - HTML has:    [QXmlStreamEntityDeclaration, QXmlStreamEntityDeclarations, name, notationName, operator!=, operator=, operator==, publicId, systemId, value, ~QXmlStreamEntityDeclaration]
-[7239/7715]     > Differences between the sets: []
 [7240/7715]C:\Qt\Doc\webxml\qxmlstreamentityresolver.webxml
 [7241/7715]C:\Qt\Doc\webxml\qxmlstreamnamespacedeclaration.webxml
-[7241/7715] Public functions mismatch: 
-[7241/7715]     - DocBook has: [QXmlStreamNamespaceDeclaration, namespaceUri, operator!=, operator=, operator==, prefix, ~QXmlStreamNamespaceDeclaration]
-[7241/7715]     - HTML has:    [QXmlStreamNamespaceDeclaration, QXmlStreamNamespaceDeclarations, namespaceUri, operator!=, operator=, operator==, prefix, ~QXmlStreamNamespaceDeclaration]
-[7241/7715]     > Differences between the sets: []
 [7242/7715]C:\Qt\Doc\webxml\qxmlstreamnotationdeclaration.webxml
-[7242/7715] Public functions mismatch: 
-[7242/7715]     - DocBook has: [QXmlStreamNotationDeclaration, name, operator!=, operator=, operator==, publicId, systemId, ~QXmlStreamNotationDeclaration]
-[7242/7715]     - HTML has:    [QXmlStreamNotationDeclaration, QXmlStreamNotationDeclarations, name, operator!=, operator=, operator==, publicId, systemId, ~QXmlStreamNotationDeclaration]
-[7242/7715]     > Differences between the sets: []
 [7243/7715]C:\Qt\Doc\webxml\qxmlstreamreader.webxml
 [7244/7715]C:\Qt\Doc\webxml\qxmlstreamwriter.webxml
 [7245/7715]C:\Qt\Doc\webxml\qxylegendmarker.webxml
