@@ -166,7 +166,7 @@ public class ConsistencyChecks {
                         toConsider = firstColumn.test(e.parent().parent().previousElementSibling().text());
                     }
 
-                    // Once all
+                    // Once all tests are performed, consider to add this element to the set.
                     if (toConsider) {
                         set.add(e.text());
                     }
@@ -281,9 +281,12 @@ public class ConsistencyChecks {
         }
 
         ItemsResult ir = new ItemsResult();
-        ir.addComparison("Public types",
-                request.xpathToSet("//db:enumsynopsis/db:enumname/text()"),
-                request.htmlToSet("Public Types", "h2", "public-types", true)
+        ir.addComparison("Types",
+                request.xpathToSet("//(db:enumsynopsis/db:enumname union db:typedefsynopsis/db:typedefname)/text()"),
+                union(
+                        request.htmlToSet("Public Types", "h2", "public-types", true),
+                        request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
+                )
         );
         ir.addComparison("Properties",
                 request.xpathToSet("//db:fieldsynopsis/db:varname/text()"),
@@ -305,10 +308,6 @@ public class ConsistencyChecks {
         ir.addComparison("Signals", // TODO: What the heck, signals are also in the public functions?
                 request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
                 request.htmlToSet("Signals", "h2", "signals")
-        );
-        ir.addComparison("Member Types",
-                request.xpathToSet("//db:typedefsynopsis/db:typedefname/text()"),
-                request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
         );
 //        ir.addComparison("Public variables",
 //                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"), // Example: http://doc.qt.io/qt-5/qstyleoptionrubberband.html

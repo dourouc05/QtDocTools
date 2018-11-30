@@ -66,6 +66,8 @@ public class Main {
         for (Path file : webxml) {
             if (! file.getFileName().toString().startsWith("q"))
                 continue;
+//            if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
+//                continue;
 
             Path destination = file.getParent().resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
 
