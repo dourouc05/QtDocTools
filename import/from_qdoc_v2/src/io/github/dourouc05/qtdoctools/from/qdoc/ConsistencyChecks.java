@@ -282,7 +282,7 @@ public class ConsistencyChecks {
 
         ItemsResult ir = new ItemsResult();
         ir.addComparison("Types",
-                request.xpathToSet("//(db:enumsynopsis/db:enumname union db:typedefsynopsis/db:typedefname)/text()"),
+                request.xpathToSet("//(db:enumsynopsis/db:enumname union db:typedefsynopsis[not(preceding-sibling::*[1][self::db:enumsynopsis])]/db:typedefname)/text()"),
                 union(
                         request.htmlToSet("Public Types", "h2", "public-types", true),
                         request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
