@@ -279,7 +279,8 @@
     <!-- Other things not implemented from Shiboken2. -->
     <xsl:variable name="shouldSkipForOtherReasons" as="xs:boolean">
       <xsl:variable name="isInternal" select="boolean($currentNode/@status) and $currentNode/@status='internal'" as="xs:boolean"/>
-      <xsl:value-of select="$isInternal"/>
+      <xsl:variable name="isObsolete" select="boolean($currentNode/@status) and $currentNode/@status='obsolete'" as="xs:boolean"/>
+      <xsl:value-of select="$isInternal or $isObsolete"/>
     </xsl:variable>
     
     <!-- Merge the blocks. -->
