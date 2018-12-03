@@ -170,7 +170,7 @@ public class Main {
                 Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
                         new Pair<>("dialogs", "qtquickdialogs"),
                         new Pair<>("extras", "qtquickextras")),
-                "qtwayland", Arrays.asList(new Pair<>("compositor", "qtwaylandcompositor")),
+                "qtwayland", Collections.singletonList(new Pair<>("compositor", "qtwaylandcompositor")),
                 "qtbase",
                 Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
                         new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific conf file name).

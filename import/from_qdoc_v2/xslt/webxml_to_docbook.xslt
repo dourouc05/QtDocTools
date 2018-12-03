@@ -790,7 +790,7 @@
         
         <db:title>
           <xsl:text>enum </xsl:text><xsl:value-of select="@fullname"/>
-          <xsl:if test="following-sibling::typedef[1]">
+          <xsl:if test="following-sibling::node()[1][self::typedef] and @typedef and @typedef != ''">
             <xsl:text>, flags </xsl:text><xsl:value-of select="@typedef"/>
           </xsl:if>
         </db:title>
