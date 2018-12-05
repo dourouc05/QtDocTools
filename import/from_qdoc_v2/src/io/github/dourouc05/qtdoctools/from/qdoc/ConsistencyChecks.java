@@ -87,9 +87,12 @@ public class ConsistencyChecks {
 
                         Set<String> docbookMinusHTMLSet = items.getXML(name);
                         docbookMinusHTMLSet.removeAll(items.getHTML(name));
-                        Object[] docbookMinusHTML = docbookMinusHTMLSet.toArray();
-                        Arrays.sort(docbookMinusHTML);
-                        System.out.println(prefix + "     > Differences between the sets: " + Arrays.toString(docbookMinusHTML));
+                        Set<String> htmlMinusDocBookSet = items.getHTML(name);
+                        htmlMinusDocBookSet.removeAll(items.getXML(name));
+                        htmlMinusDocBookSet.addAll(docbookMinusHTMLSet);
+                        Object[] differences = htmlMinusDocBookSet.toArray();
+                        Arrays.sort(differences);
+                        System.out.println(prefix + "     > Differences between the sets: " + Arrays.toString(differences));
                     }
                 }
             }
