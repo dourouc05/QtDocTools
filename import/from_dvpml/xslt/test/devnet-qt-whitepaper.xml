@@ -1,0 +1,1117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<entete>
+		<rubrique>65</rubrique>
+		<meta>
+			<description>Le livre blanc Qt</description>
+			<keywords>Le livre blanc Qt</keywords>
+		</meta>
+		<titre>
+			<page>Le livre blanc Qt</page>
+			<article>Le livre blanc Qt</article>
+		</titre>
+		<date>11/02/2011</date>
+		<miseajour>03/08/2012</miseajour>
+		<licauteur>developpez</licauteur>
+		<lictype>3</lictype>
+		<licannee>2011 - 2012</licannee>
+		<serveur>Qt DevNet</serveur>
+		<chemin>tutoriels/qt/livre-blanc</chemin>
+		<urlhttp>http://qt-devnet.developpez.com/tutoriels/qt/livre-blanc/</urlhttp>
+		<serveurftp>Qt DevNet FTP</serveurftp>
+		<cheminftp>tutoriels/qt/livre-blanc</cheminftp>
+		<urlftp>ftp://ftp-developpez.com/qt-devnet/tutoriels/qt/livre-blanc/</urlftp>
+		<pdf>
+			<sautDePageAvantSection>0</sautDePageAvantSection>
+			<notesBasPage>FinDocument</notesBasPage>
+		</pdf>
+		<nopdf/>
+		<nozip/>
+	</entete>
+	<authorDescriptions>
+		<authorDescription name="Aldiemus">
+			<fullname>traducteur : Aldiemus</fullname>
+			<url>http://www.developpez.net/forums/u221328/aldiemus/</url>
+		</authorDescription>
+		<authorDescription name="dourouc05">
+			<fullname>traducteur : Thibaut Cuvelier</fullname>
+			<url>http://www.developpez.net/forums/u254882/dourouc05/</url>
+			<homepage>
+				<title>site Web</title>
+				<url>http://tcuvelier.developpez.com</url>
+			</homepage>
+			<blog>http://blog.developpez.com/?blog=297</blog>
+		</authorDescription>
+		<authorDescription name="dn">
+			<fullname>Qt Developer Network</fullname>
+			<url>http://qt-devnet.developpez.com/</url>
+		</authorDescription>
+	</authorDescriptions>
+	<licence>
+	</licence>
+	<reference></reference>
+	<synopsis>
+		<paragraph>
+			Ce livre blanc décrit le framework C++ Qt. Qt aide au développement d'interfaces graphiques multiplateformes avec son approche &#171;&#160;écrit une fois, compilé n'importe où&#160;&#187;. 
+			Utilisant une seule arborescence de source et une simple recompilation, les applications peuvent être exécutées sous Windows, Mac OS X, Linux, Solaris, HP-UX et bien d'autres versions d'Unix 
+			avec X11. Les applications Qt peuvent également être compilées pour s'exécuter sur des plateformes embarquées comme Linux embarqué, Symbian ou Windows CE. Qt fournit un excellent support 
+			multiplateforme pour le multimédia et les représentations 3D, l'internationalisation, SQL, XML et les tests unitaires, tout en proposant des extensions spécifiques aux plateformes pour les 
+			applications spécialisées.
+		</paragraph>
+		<paragraph>
+			<lien-forum id="1133409" avecnote="1"/>
+		</paragraph>
+	</synopsis>
+	<summary>
+		<section id="I">
+			<title>L'article original</title>
+			<paragraph>
+				Le Qt Developer Network est un réseau de développeurs utilisant Qt afin de partager leur savoir sur ce framework. 
+				<link href="http://developer.qt.nokia.com">Vous pouvez le consulter en anglais.</link>
+			</paragraph>
+			<paragraph>
+				 Nokia, Qt, Qt Quarterly et leurs logos sont des marques déposées de <i>Nokia Corporation</i> en Finlande et/ou dans les autres pays.
+				Les autres marques déposées sont détenues par leurs propriétaires respectifs.
+			</paragraph>
+			<paragraph>
+				Cet article est la traduction de <link href="http://developer.qt.nokia.com/wiki/QtWhitepaper">Qt Whitepaper</link>. 
+			</paragraph>
+		</section>
+		<section id="II">
+			<title>Introduction</title>
+			<paragraph>
+				Les applications Qt peuvent être conçues de manière visuelle en utilisant Qt Designer, un constructeur flexible d'interfaces utilisateur qui peut être intégré aux EDI.
+			</paragraph>
+			<paragraph>
+				La version 4.7 de Qt introduit les fondements de Qt Quick, une série de technologies pour un prototypage rapide et la création d'interfaces utilisateur modernes et intuitives. Elles sont abordées 
+				brièvement dans la section Qt Quick plus loin dans ce livre blanc et sont décrites plus en détail dans le livre blanc <i>Introduction à Qt Quick pour les développeurs C++</i>.
+			</paragraph>
+			<paragraph>
+				<i>Qt est, de fait, le framework C++ standard pour le développement de logiciels multiplateformes de haute performance. En plus d'une bibliothèque de classes complète, Qt inclut des outils qui 
+				rendent l'écriture des applications plus rapide et claire. Les capacités multiplateformes et l'aide en termes d'internationalisation assurent aux applications Qt de toucher le marché le plus large 
+				possible.</i>
+			</paragraph>
+			<paragraph>
+				Le framework C++ Qt est au cœur du développement d'applications commerciales depuis 1995. Qt est utilisé par des compagnies et des organisations aussi diversifiées que Adobe®, Boeing®, Google®, IBM®, 
+				Motorola®, NASA, Skype® et par un grand nombre de compagnies et d'organisations plus petites. Qt 4 est conçu pour être utilisé plus facilement que la précédente version de Qt, tout en ajoutant des 
+				fonctionnalités plus puissantes. Les classes de Qt sont multifonctions et proposent des interfaces cohérentes pour aider à l'apprentissage, réduire la charge de travail du développeur et augmenter 
+				sa productivité. Qt est, et a toujours été, complètement orienté objet.
+			</paragraph>
+			<paragraph>
+				Ce livre blanc donne un aperçu des outils et des fonctionnalités de Qt. Chaque section débute avec une introduction non technique avant de fournir une description plus détaillée des fonctions pertinentes. 
+				Des liens vers les ressources en ligne sont également mis à disposition pour chaque section.
+			</paragraph>
+			<paragraph>
+				Pour évaluer la version commerciale de Qt pendant 30 jours, voir <link href="http://qt.nokia.com/">le site de l'éditeur</link> (Qt est aussi disponible gratuitement sous les termes de la LGPL 2.1). 
+			</paragraph>
+			<section id="II-A">
+				<title>Résumé des points importants</title>
+				<paragraph>
+					Qt inclut une large panoplie de widgets (contrôles dans la terminologie Windows) qui assurent les fonctionnalités standard de l'interface graphique. Qt introduit une alternative innovante pour la 
+					communication interobjet, également connue sous le nom de &#171;&#160;système de signaux et de slots&#160;&#187;, qui remplace l'ancienne fonction de rappel non sécurisée utilisée dans de nombreux 
+					frameworks historiques. Qt propose également un modèle d'événements conventionnels pour gérer les clics de souris, les pressions des touches du clavier et d'autres interactions avec l'utilisateur. 
+					Les applications multiplateformes d'interfaces graphiques avec Qt peuvent gérer toutes les fonctionnalités de l'interface utilisateur requises par une application moderne, comme les menus, les 
+					menus contextuels, le glisser-déposer et les barres d'outils de type dock. Les fonctions d'intégration au bureau fournies par Qt peuvent être utilisées pour étendre les applications dans l'environnement 
+					du bureau, tirant avantage de certains services disponibles sur chacune des plateformes.
+				</paragraph>
+				<paragraph>
+					Qt contient également Qt Designer, un outil pour dessiner graphiquement des interfaces utilisateur. Qt Designer reprend les puissantes fonctionnalités en termes de disposition de Qt en plus d'une 
+					traduction absolue. Qt Designer peut être utilisé simplement pour la conception des interfaces graphiques, ou pour créer des applications entières avec sa capacité à s'intégrer dans des environnements 
+					de développement intégrés (EDI) populaires.
+				</paragraph>
+				<paragraph>
+					Qt est une excellente aide pour le multimédia et les représentations 3D (voir plus loin). Qt est, de fait, le framework d'interfaces graphiques standard pour la programmation indépendamment de la 
+					plateforme OpenGL®. Le système de dessin de Qt offre un rendu de haute qualité à travers toutes les plateformes supportées. Un framework de canevas sophistiqué permet aux développeurs de créer des 
+					applications graphiques interactives qui tirent avantage des fonctionnalités avancées de dessin de Qt.
+				</paragraph>
+				<paragraph>
+					Qt rend possible la création d'applications basées sur des données indépendantes de la plateforme en utilisant des bases de données standard. Qt contient des pilotes natifs pour Oracle®, Microsoft®, 
+					SQL Server, Sybase® Adaptative Server, IBM DB2, PostgreSQL™, MySQL®, Borland® Interbase, SQLite et les bases de données accessibles par ODBC. Qt contient des widgets spécifiques aux bases de données et 
+					tous les widgets intégrés et personnalisés peuvent s'adapter aux données.
+				</paragraph>
+				<paragraph>
+					Les programmes Qt ont une ergonomie native sous toutes les plateformes supportées utilisant les styles et les thèmes acceptés par Qt. À partir d'une seule arborescence de sources, la recompilation 
+					est la seule chose requise pour produire des applications pour Windows® XP®, Windows Vista™ et Windows 7™, Mac OS X®, Linux®, Solaris™, HP-UX™ et bien d'autres versions d'Unix® avec X11. 
+					L'outil de compilation de Qt <inline>qmake</inline> produit des makefiles ou des fichiers <inline>.dsp</inline> selon la nature de la plateforme cible.
+				</paragraph>
+				<paragraph>
+					Comme l'architecture Qt tire avantage de la plateforme sous-jacente, de nombreux clients utilisent Qt pour un développement monoplateforme sous Windows, Mac OS X et Unix car ils préfèrent l'approche 
+					de Qt. Qt inclut une aide pour d'importantes fonctions spécifiques aux plateformes, comme ActiveX® sous Windows et Motif™ sous Unix. Voir la section <renvoi id="architecture">Architecture de Qt</renvoi>  
+					pour plus d'information.
+				</paragraph>
+				<paragraph>
+					Qt utilise dans son ensemble l'Unicode™ et fournit un support considérable pour l'internationalisation. Qt contient Qt Linguist et d'autres outils pour aider les traducteurs. Les applications peuvent 
+					facilement utiliser et mélanger l'arabe, le chinois, l'anglais, l'hébreu, le japonais, le russe et d'autres langues définies par l'Unicode.
+				</paragraph>
+				<paragraph>
+					Qt contient une variété de classes dans des domaines spécifiques. Par exemple, Qt possède un module XML qui inclut des classes SAX et DOM pour lire et manipuler des données stockées en XML. Les objets 
+					peuvent être sauvegardés en mémoire en utilisant les classes de collections compatibles avec STL de Qt et manipulés en utilisant les styles d'itérateurs Java® ainsi que la bibliothèque standard C++ (STL). 
+					La manipulation des fichiers locaux et distants utilisant des protocoles standard est fournie par les classes Qt d'entrée/sortie et de réseau.
+				</paragraph>
+				<paragraph>
+					Les applications Qt peuvent voir leurs fonctionnalités étendues par des plug-ins et des bibliothèques dynamiques. Les plug-ins fournissent des codecs supplémentaires, des pilotes de bases de données, des 
+					formats d'images, des styles et des widgets. Les plug-ins et les bibliothèques peuvent être vendus en tant que produits indépendants.
+				</paragraph>
+				<paragraph>
+					Le module QtScript permet d'écrire des applications avec Qt Script, un langage de script basé sur ECMAScript, lié à JavaScript. Cette technologie permet aux développeurs de définir des restrictions 
+					d'accès pour les utilisateurs pour certaines parties de leurs applications en ce qui concerne l'écriture des scripts.
+				</paragraph>
+				<paragraph>
+					Qt est un framework mature pour C++ qui est largement utilisé de par le monde. En plus des nombreuses utilisations commerciales de Qt, l'édition Open Source de Qt constitue les fondations de KDE, 
+					l'environnement de bureau de Linux. Développer des applications devient un plaisir grâce à Qt, avec son système de construction multiplateforme, la conception graphique des pages et une API élégante.
+				</paragraph>
+			</section>
+			<section id="II-B">
+				<title>Référence en ligne</title>
+				<paragraph>
+					<link href="http://qt.nokia.com/qt-in-use">Qt in Use</link>. 
+				</paragraph>
+			</section>
+		</section>
+		<section id="III">
+			<title>Interfaces graphiques utilisateur</title>
+			<paragraph>
+				Qt offre un ensemble très riche de widgets standard utilisables pour créer des applications composées d'interfaces graphiques. Des gestionnaires de disposition sont utilisés pour 
+				organiser et redimensionner les widgets afin de les adapter à l'écran, à la langue et à la police de l'utilisateur.
+			</paragraph>
+			<paragraph>
+				Les widgets sont des éléments visuels qui sont combinés pour créer des interfaces utilisateur. Les boutons, les menus et les barres de défilement, les boîtes de dialogue et les fenêtres d'application 
+				sont tous des exemples de widgets.
+			</paragraph>
+			<paragraph>
+				Les gestionnaires de disposition organisent les widgets enfants à l'intérieur de la zone de leur widget parent. Ils effectuent le positionnement et le redimensionnement automatique des widgets enfants, 
+				donnent aux widgets de haut niveau des dimensions judicieuses minimales et par défaut et repositionnent automatiquement les widgets lorsque leur contenu change. 
+			</paragraph>
+			<paragraph>
+				Les signaux et slots connectent les composants de l'application les uns avec les autres pour qu'ils communiquent d'une façon simple en assurant la sûreté du typage. Cette forme de communication 
+				interobjet est disponible dans tous les widgets standard et peut être utilisée par les développeurs dans leurs propres widgets personnalisés. 
+			</paragraph>
+			<image src="./images/qml-whitepaper1-widgets.jpg" legende="Une sélection de widgets disponibles avec Qt."/>
+			<section id="III-A">
+				<title>Widgets</title>
+				<paragraph>
+					Les images ci-dessus présentent une sélection de widgets. Ceci inclut des widgets standard de saisie de texte, des cases à cocher, des boutons radio, des curseurs et des boutons d'action, 
+					ainsi que des widgets plus spécialisés pour la saisie de dates ou d'horaires.
+				</paragraph>
+				<paragraph>
+					Les libellés, fenêtres de message, infobulles et autres widgets textuels ne sont pas limités à l'usage d'une seule couleur, police ou langue. Les widgets d'interprétation textuelle peuvent 
+					afficher du texte enrichi multilingue en utilisant un sous-ensemble de HTML. 
+				</paragraph>
+				<paragraph>
+					Les widgets conteneurs comme les widgets d'onglets et les groupes de contrôles sont également disponibles et peuvent être utilisés pour regrouper les composants liés de l'interface utilisateur. 
+					Ces widgets sont gérés spécifiquement dans Qt Designer pour aider les concepteurs d'interfaces à créer de nouvelles interfaces utilisateur. Les widgets plus complexes, comme les vues déroulantes, 
+					sont souvent  utilisés plutôt par les développeurs que par les concepteurs d'interfaces utilisateur, car ils sont utilisés pour afficher du contenu spécialisé ou dynamique.
+				</paragraph>
+				<paragraph>
+					Les développeurs peuvent créer leurs propres widgets et fenêtres de dialogue en héritant de la classe de base QWidget ou de l'une de ses sous-classes. Les widgets spécialisés de ce type peuvent
+					être complètement personnalisés pour présenter leur propre contenu, répondre aux actions de l'utilisateur et produire leurs propres signaux et slots.
+				</paragraph>
+				<paragraph>
+					Qt fournit bien d'autres widgets qui s'additionnent à ceux présentés ici. La plupart des widgets disponibles se présentent avec des liens vers la documentation de leur classe dans 
+					<link href="http://doc.qt.nokia.com/latest/gallery.html">la galerie des widgets de Qt en ligne</link>.
+				</paragraph>
+			</section>
+			<section id="III-B">
+				<title>Gestionnaires de disposition (layouts)</title>
+				<paragraph>
+					Les Gestionnaires de disposition procurent une flexibilité et une réactivité aux interfaces utilisateur, leur permettant de s'adapter lors d'un changement de style, d'orientation 
+					ou de police de caractères.
+				</paragraph>
+				<paragraph>
+					Ils aident les développeurs à maintenir l'internationalisation de leurs applications. Avec des positions et des largeurs fixes, un texte traduit est souvent tronqué ; avec eux, 
+					les widgets enfants sont redimensionnés automatiquement. De plus, le placement d'un widget peut être inversé pour produire une apparence plus naturelle pour les utilisateurs qui travaillent avec 
+					un système d'écriture de droite à gauche.
+				</paragraph>
+				<paragraph>
+					Les dispositions peuvent également aller de droite à gauche et de bas en haut. Celles de droite à gauche sont commodes pour les applications internationalisées qui supportent les systèmes 
+					d'écriture de droite à gauche comme l'arabe ou l'hébreu. Elles sont intégrées complètement dans le système de style de Qt pour procurer une vision pratique et agréable sur les affichages 
+					inversés.
+				</paragraph>
+				<paragraph>
+					Qt Designer est capable d'utiliser les layouts pour les widgets de positionnement.
+				</paragraph>
+			</section>
+			<section id="III-C">
+				<title>Signaux et slots</title>
+				<paragraph>
+					Les widgets émettent des signaux quand des événements ont lieu. Par exemple, un bouton émet le signal <inline>clicked</inline> lorsqu'il est cliqué. Un développeur peut choisir de connecter 
+					un signal en créant une fonction (un &#171;&#160;<i>slot</i>&#160;&#187;) et en appelant la fonction <inline>connect()</inline> pour rapprocher le signal du slot. Les mécanismes des signaux et des 
+					slots de Qt ne nécessitent pas que les classes aient connaissance les unes des autres, ce qui facilite le développement de classes hautement réutilisables. Puisque les signaux et les slots ont un
+					typage sécurisé, les erreurs de type sont reportées en tant qu'avertissements et ne provoquent pas l'apparition de plantages.
+				</paragraph>
+				<paragraph>
+					Par exemple, si le signal <inline>clicked()</inline> d'un bouton de fermeture est connecté au slot quit() de l'application, le clic d'un utilisateur sur Quit termine l'application. En termes 
+					de code, cela s'écrit comme cela :
+				</paragraph>
+<code langage="qt"><![CDATA[connect(button, SIGNAL(clicked()), qApp, SLOT(quit()));]]></code>
+				<paragraph>
+					Les connexions peuvent être ajoutées ou supprimées à n'importe quel moment pendant l'exécution d'une application Qt, elles peuvent être paramétrées pour s'exécuter lorsqu'un signal est émis ou 
+					mises en file d'attente pour une exécution future, elles peuvent aussi impliquer des objets de processus différents.
+				</paragraph>
+				<paragraph>
+					Le mécanisme des signaux et des slots est implémenté en C++ standard. L'implémentation utilise le préprocesseur C++ et moc, le compilateur de métaobjets, inclus dans Qt. La génération de code est
+					effectuée automatiquement par le système de compilation de Qt. Les développeurs n'ont à aucun moment besoin d'éditer ou même de visualiser le code généré.
+				</paragraph>
+				<paragraph>
+					En plus de manipuler les signaux et les slots, le compilateur de métaobjets supporte les mécanismes de traduction de Qt, son système de propriétés et ses informations de type disponibles à 
+					l'exécution. Cela permet également une introspection des programmes C++ lors de l'exécution d'une manière qui fonctionne sur toutes les plateformes supportées. Le système sous-jacent qui procure 
+					ces capacités est connu sous le nom de système de métaobjets de Qt.
+				</paragraph>
+			</section>
+			<section id="III-D">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/latest/exemples.html">Exemples</link>.</element>
+					<element><link href="http://qt.developpez.com/doc/latest/layout.html">Les dispositions</link>.</element>
+					<element><link href="http://qt.developpez.com/doc/latest/object.html">Le modèle objet</link>.</element>
+					<element><link href="http://qt.developpez.com/doc/latest/signalsandslots.html">Les signaux et slots</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="IV">
+			<title>Fonctionnalités de l'application</title>
+			<paragraph>
+				<i>Construire des applications avec des interfaces graphiques modernes avec Qt est rapide et simple et peut se faire par codage manuel ou en utilisant Qt Designer, l'outil de conception visuel de Qt.</i>
+			</paragraph>
+			<paragraph>
+				Qt offre toutes les fonctions nécessaires pour créer des applications avec des interfaces graphiques modernes comprenant menus, barres d'outils et dock Windows. Qt supporte à la fois les SDI 
+				(interface à document simple) mais aussi les MDI (interface à documents multiples). Qt supporte également le glisser/déplacer et le presse-papier.
+			</paragraph>
+			<paragraph>
+				Un ensemble complet de boîtes de dialogue standard sont mises à disposition, incluant celles pour choisir les fichiers, les répertoires, les polices de caractères et les couleurs. En pratique, une 
+				instruction sur une ligne constitue la seule chose nécessaire à la présentation d'une boîte de dialogue standard.
+			</paragraph>
+			<image src="./images/qt-whitep-features1.png" legende="Qt Assistant utilise de nombreuses fonctionnalités de la fenêtre principale de l'application pour afficher la documentation de Qt."/>
+			<paragraph>
+				Qt utilise les actions pour simplifier la programmation des interfaces utilisateur. Par exemple, si un menu d'options, un bouton de barre d'outils et un accélérateur de clavier produisent la même action, 
+				l'action en question ne devra être codée qu'une seule fois.
+			</paragraph>
+			<paragraph>
+				Qt peut sauvegarder les paramètres de l'application d'une façon indépendante de la plateforme, en utilisant le système de registres ou des fichiers texte, permettant à des objets comme les préférences 
+				utilisateur, les fichiers récemment utilisés, les positions et tailles des fenêtres et des barres d'outils d'être sauvegardés pour utilisation future.
+			</paragraph>
+			<paragraph>
+				La possibilité de programmer en multiprocessus est offerte par une collection de classes qui présentent des constructions communes, permettant d'écrire des applications Qt qui tirent avantage des 
+				processus pour effectuer des calculs, des tâches de longue durée ou seulement pour augmenter la réactivité.
+			</paragraph>
+			<paragraph>
+				Les applications peuvent également utiliser les fonctionnalités d'intégration du bureau Qt pour interagir avec les services fournis par l'environnement de bureau de l'utilisateur. 
+			</paragraph>
+			<section id="IV-A">
+				<title>Fonctionnalités de la fenêtre principale</title>
+				<paragraph>
+					La classe <b>QMainWindow</b> offre un framework pour les fenêtres principales des applications usuelles. Une fenêtre principale contient un ensemble de widgets standard. Le haut de la fenêtre 
+					principale est occupé par une barre de menu, sous laquelle les barres d'outils sont disposées dans des zones de barre d'outils autour du centre de la fenêtre. La zone de la fenêtre principale située 
+					sous la barre d'outils du bas est occupée par une barre d'état. Les messages &#171;&#160;Qu'est-ce que c'est ?&#160;&#187; et les infobulles constituent les éléments de l'aide dans 
+					l'interface utilisateur.
+				</paragraph>
+				<paragraph>
+					Le widget <b>QMenu</b> présente les objets du menu à l'utilisateur sous forme d'une liste verticale. Les menus peuvent être isolés (par exemple, un menu contextuel sous forme de pop-up), apparaître 
+					dans une barre de menu ou être des sous-menus d'un autre menu pop-up. Les menus peuvent avoir des poignées de redimensionnement.
+				</paragraph>
+				<paragraph>
+					Chaque objet de menu peut avoir une icône, une case à cocher et un accélérateur. Les objets de menu correspondent habituellement à des actions (comme &#171;&#160;Sauvegarder&#160;&#187;) et provoquent 
+					l'exécution des slots qui leur sont associés lorsqu'ils sont sélectionnés par l'utilisateur. Le gestionnaire de layout de Qt prend en considération chaque barre de menu. Sur Mac OS X, la barre de 
+					menu apparaît en haut de l'écran.
+				</paragraph>
+				<paragraph>
+					Les menus de Qt sont très flexibles et font partie d'un système d'actions intégré (voir Actions). Les actions peuvent être activées ou désactivées, ajoutées dynamiquement aux menus et supprimées à
+					nouveau plus tard.
+				</paragraph>
+				<image src="./images/qt-whitep-features2.png" legende="Le support de barre d'outils unifié sur Mac OS X améliore l'aspect visuel et rend agréable l'utilisation des applications en fusionnant 
+					les barres d'outils adjacentes et les barres de titre des fenêtres."/>
+				<paragraph>
+					Les barres d'outils contiennent des ensembles de boutons ainsi que d'autres widgets auxquels l'utilisateur peut accéder pour effectuer des actions. Elles peuvent être déplacées au choix entre le haut, 
+					la gauche, la droite et le bas de la zone centrale de la fenêtre principale. Chaque barre d'outils peut être glissée hors de sa zone de barre d'outils et flotter comme une palette d'outils indépendante.
+				</paragraph>
+				<paragraph>
+					La classe <b>QToolButton</b> implémente un bouton de barre d'outils avec une icône, un cadre stylisé et un libellé optionnel. Les boutons de basculement de la barre d'outils activent les 
+					fonctionnalités ou les désactivent. D'autres boutons de la barre d'outils exécutent des commandes. Différentes icônes peuvent être fournies pour les modes actif, valide et invalide et les états 
+					démarré et arrêté. Si une seule icône est fournie, Qt distingue automatiquement l'état en utilisant des artifices visuels (par exemple, griser les boutons inactifs). Les boutons de la barre 
+					d'outils peuvent également déclencher des menus pop-up.
+				</paragraph>
+				<paragraph>
+					Les fenêtres dock sont des fenêtres que l'utilisateur peut déplacer à l'intérieur d'une même zone de barre d'outils ou d'une zone de barre d'outils à une autre. L'utilisateur peut détacher une 
+					fenêtre dock et la rendre flottante en haut de l'application ou la réduire. Des animations sont utilisées pour glisser doucement les fenêtres dock dans et hors des zones dock.
+				</paragraph>
+				<paragraph>
+					Les zones dock peuvent également s'emboîter pour empiler les fenêtres dock en plusieurs lignes ou colonnes, les fenêtres dock peuvent être empilées dans des zones partagées - 
+					lorsque c'est le cas, les widgets dock sont contenus dans des onglets.
+				</paragraph>
+				<paragraph>
+					La personnalisation des fenêtres dock est possible également. Elles peuvent être affichées avec une barre de titre verticale et des barres de titres et des contrôles de fenêtres avec un style 
+					particulier donné.
+				</paragraph>
+				<paragraph>
+					Certaines applications, comme Qt Designer et Qt Linguist, utilisant des fenêtres dock de manière intensive, offrent des opérateurs de sauvegarde et restituent la position des fenêtres dock et 
+					des barres d'outils, pour que les applications puissent restituer facilement l'environnement de travail préféré de l'utilisateur.
+				</paragraph>
+			</section>
+			<section id="IV-B">
+				<title>Actions</title>
+				<paragraph>
+					Les applications offrent habituellement à l'utilisateur la possibilité d'effectuer une action particulière de plusieurs façons bien différentes. Par exemple, la plupart des applications mettent 
+					traditionnellement une action &#171;&#160;sauvegarder&#160;&#187; à disposition via le menu, la barre d'outils (un bouton dans la barre d'outils avec une icône appropriée) et un accélérateur. 
+					La classe <b>QAction</b> encapsule ce concept. Il permet aux programmeurs de définir une action à un emplacement.
+				</paragraph>
+				<paragraph>
+					Tout en évitant de faire le même travail plusieurs fois, l'utilisation d'une <b>QAction</b> assure que l'état des objets de menu reste en phase avec les boutons de la barre d'outils correspondants 
+					et que l'aide interactive soit bien affichée quand cela est nécessaire. Désactiver une action va désactiver tous les objets de menu correspondants et les boutons de la barre d'outils. De même, 
+					si l'utilisateur clique sur un bouton de basculement dans la barre d'outils, l'objet de menu correspondant sera basculé lui aussi.
+				</paragraph>
+			</section>
+			<section id="IV-C">
+				<title>Boîtes de dialogue et assistants</title>
+				<paragraph>
+					La plupart des applications GUI utilisent des boîtes de dialogue pour interagir avec l'utilisateur pour certaines opérations. Qt inclut des classes de boîtes de dialogue prêtes à l'emploi offrant 
+					des fonctions commodes pour les tâches les plus communes. Des captures d'écran de certaines boîtes de dialogue standard de Qt sont présentées ci-dessous. Qt propose également des boîtes de 
+					dialogue standard pour la sélection de couleur, l'impression, les indicateurs de progression et les messages d'information. 
+				</paragraph>
+				<image src="./images/qt-whitep-features3.png" legende="Une QFileDialog et une QFontDialog présentées dans le style Plastique. Sur Windows et Mac OS X, les boîtes de dialogue natives sont utilisées à la place."/>
+				<paragraph>
+					Les programmeurs peuvent créer leurs propres boîtes de dialogue par héritage de la classe <b>QDialog</b>. Qt Designer inclut également des modèles de boîtes pour aider les développeurs 
+					à démarrer avec la conception. 
+				</paragraph>
+				<paragraph>
+					Les assistants sont utilisés pour guider les utilisateurs à travers les tâches et les procédures communes, les emmenant étape par étape à travers les options disponibles tout en leur proposant de l'aide 
+					si nécessaire. Qt offre une API flexible et intuitive pour construire des assistants possédant l'aspect natif approprié et une utilisation conforme aux environnements des plateformes supportées.
+				</paragraph>
+				<paragraph>
+					La classe <b>QWizard</b> offre des fonctionnalités pour personnaliser l'apparence de l'assistant au-delà de l'aspect visuel et ergonomique basique, spécifiquement à la plateforme. Les instances de 
+					cette classe contrôlent également l'ordre de présentation des pages à l'utilisateur. <b>QWizardPage</b> est un widget standard qui offre des fonctionnalités pour sauvegarder et valider les saisies 
+					de l'utilisateur.
+				</paragraph>
+			</section>
+			<section id="IV-D">
+				<title>Aide interactive</title>
+				<paragraph>
+					Les applications utilisent souvent des formes variées d'aide interactive pour expliquer le propos d'un élément d'interface et assister l'utilisateur. Qt offre deux mécanismes pour donner des 
+					messages d'erreur brefs : les infobulles pour une aide courte liée au contexte et des aides pop-up du style &#171;&#160;Qu'est-ce que c'est ?&#160;&#187; contenant des messages plus longs et 
+					plus informels. Tous deux sont intégrés dans le système d'action Qt.
+				</paragraph>
+				<paragraph>
+					Les développeurs peuvent déployer l'assistant Qt comme un navigateur d'aide pour leurs propres applications ainsi que l'ensemble de la documentation en utilisant les classes du module d'aide de 
+					Qt. Ce module offre également une API que les développeurs peuvent utiliser pour accéder à la documentation dans le but d'obtenir des affichages personnalisés, peut-être en utilisant les classes 
+					infobulles et &#171;&#160;Qu'est-ce que c'est ?&#160;&#187; pour montrer de petites, mais pertinentes, parties d'information à l'utilisateur. 
+				</paragraph>
+			</section>
+			<section id="IV-E">
+				<title>Paramètres</title>
+				<paragraph>
+					Les paramètres de l'utilisateur et les paramètres d'autres applications peuvent être sauvegardés facilement en utilisant la classe <b>QSettings</b>. Sur les plateformes Windows, 
+					Mac OS X et Linux, les paramètres sont sauvegardés dans un système standard de localisation ; pour les autres plateformes, ils sont sauvegardés dans des fichiers texte.
+				</paragraph>
+				<paragraph>
+					Une variété de types de données Qt peut être utilisée de façon cohérente avec <b>QSettings</b>. Ce type est sérialisé pour être stocké et rendu disponible par la suite pour les applications. Voir 
+					la gestion des fichiers pour plus d'information à propos de la sérialisation des types de données de Qt. 
+				</paragraph>
+			</section>
+			<section id="IV-F">
+				<title>Programmation multiprocessus et concurrente</title>
+				<paragraph>
+					Les applications Qt peuvent utiliser de multiples processus : un processus pour garder l'interface utilisateur active et un ou plus pour s'occuper des activités consommatrices de temps, comme la 
+					lecture de gros fichiers ou des calculs complexes. Qt propose des classes pour représenter les processus, les exclusions mutuelles, les sémaphores, les stockages de processus globaux et les primitives 
+					de verrouillage.
+				</paragraph>
+				<paragraph>
+					Des facilités pour la programmation concurrente sont également fournies, incluant des implémentations des algorithmes bien connus de map-reduce et filter-reduce. Ils sont intégrés dans le modèle objet
+					de Qt, utilisant des classes conteneurs standard pour rendre plus commode l'utilisation des techniques concurrentes dans les applications Qt.
+				</paragraph>
+				<paragraph>
+					Le système de métaobjets de Qt active des objets dans les différents processus pour communiquer en utilisant les signaux et les slots, permettant aux développeurs de créer des applications monoprocessus 
+					qui pourront plus tard être adaptées pour le multiprocessus, sans pour autant revoir massivement la conception.
+				</paragraph>
+			</section>
+			<section id="IV-G">
+				<title>Intégration sur le bureau</title>
+				<paragraph>
+					Les applications peuvent être étendues pour interagir avec des services fournis par l'environnement du bureau de l'utilisateur en utilisant les classes d'intégration du bureau de Qt. Cela va de 
+					<b>QSystemTrayIcon</b>, qui est souvent utilisée par des applications avec un temps d'exécution long pour garder un indicateur persistant dans la barre de notification, à <b>QDesktopServices</b>, 
+					qui permet aux ressources comme des URL <inline>mailto:</inline> et <inline>http://</inline> d'être traitée par les applications les plus appropriées sur chaque plateforme.
+				</paragraph>
+			</section>
+			<section id="IV-H">
+				<title>Référence en ligne</title>
+				<paragraph>
+					<link href="http://qt.developpez.com/doc/latest/qt4-mainwindow.html" title="Les classes de Qt pour la fenêtre principale">Les classes de Qt pour la fenêtre principale</link>. 
+				</paragraph>
+			</section>
+		</section>
+		<section id="V">
+			<title>Qt Designer</title>
+			<paragraph>
+				<i>Qt Designer est un outil de conception d'interfaces graphiques utilisateur pour les applications Qt. Les applications peuvent être écrites intégralement comme du code source ou en utilisant 
+				Qt Designer pour augmenter la vitesse de développement. Une architecture basée sur des composants permet aux développeurs d'étendre Qt Designer avec des widgets et des extensions personnalisés 
+				et même de les intégrer dans des environnements de développement intégrés.</i>
+			</paragraph>
+			<paragraph>
+				Concevoir un formulaire avec Qt Designer est un processus très simple. Les développeurs glissent les widgets d'une barre d'outils vers le formulaire et utilisent les outils d'édition standard pour 
+				les sélectionner, les couper, les coller et les redimensionner. Chaque propriété de widget peut être changée en utilisant l'éditeur de propriétés. Les dimensions et positions précises des widgets 
+				importent peu. Les développeurs sélectionnent les widgets et leur appliquent les layouts. Par exemple, certains widgets bouton peuvent être sélectionnés et disposés l'un à côté de l'autre en 
+				choisissant l'option &#171;&#160;disposition horizontale&#160;&#187;. Cette approche rend la conception très rapide et les formulaires définitifs s'adapteront proprement à la dimension de fenêtre 
+				que l'utilisateur final préfère. Voir la partie Layouts pour plus d'informations à propos des layouts automatiques de Qt.
+			</paragraph>
+			<paragraph>
+				Qt Designer supprime le cycle consommateur de temps &#171;&#160;compilation, édition des liens et exécution&#160;&#187; pour la conception des interfaces utilisateur. Ceci permet de rendre la 
+				modification d'un modèle très facile. Les options d'aperçu de Qt Designer permettent à l'utilisateur de voir ses formulaires avec d'autres styles ; par exemple, un développeur Mac OS X peut voir 
+				le rendu d'un formulaire dans un style Windows. Les formulaires peuvent être prévisualisés en utilisant le mécanisme de &#171;&#160;skins&#160;&#187; pour simuler les contraintes graphiques et 
+				l'apparence de l'objet cible.
+			</paragraph>
+			<paragraph>
+				Les licences commerciales de Windows peuvent bénéficier des facilités qu'offre Qt Designer en termes de conception d'interface utilisateur à partir de Microsoft Visual Studio®. Les frameworks de 
+				développement Qt proposent également un plug-in d'intégration Qt pour l'EDI multiplateforme Eclipse™, qui embarque Qt Designer tout comme d'autres technologies Qt dans le framework de l'EDI.
+			</paragraph>
+			<section id="V-A">
+				<title>Travailler avec Qt Designer</title>
+				<paragraph>
+					Les développeurs peuvent créer à la fois des applications du style &#171;&#160;boîte de dialogue&#160;&#187; ou des applications du style &#171;&#160;fenêtre principale&#160;&#187; avec des menus, 
+					des barres d'outils, des infobulles et d'autres fonctionnalités standard. Plusieurs modèles de formulaires sont proposés et les développeurs peuvent créer leurs propres modèles pour assurer la 
+					cohérence dans une même application ou dans une famille d'applications. Les programmeurs peuvent créer leurs propres widgets personnalisés qui peuvent être intégrés simplement avec Qt Designer. 
+				</paragraph>
+				<paragraph>
+					Qt Designer propose une approche basée sur les formulaires pour le développement d'applications. Un formulaire est représenté par un fichier d'interface utilisateur (<inline>.ui</inline>) qui peut 
+					soit être converti en C++ et compilé dans l'application, soit être traité au moment de l'exécution pour produire des interfaces utilisateur générées dynamiquement. Le système de compilation de Qt 
+					est capable d'automatiser la préparation de l'étape de compilation des interfaces utilisateur pour faciliter le processus de conception.
+				</paragraph>
+				<paragraph>
+					Les outils utilisés pour créer et éditer le code source des applications créées avec Qt Designer vont dépendre des préférences personnelles de chaque développeur ; certains voudront tirer avantage 
+					des fonctionnalités d'intégration offertes avec Qt Designer pour développer à partir de Microsoft Visual Studio ou l'environnement Eclipse.
+				</paragraph>
+				<image src="./images/qt-whitep-qtdesigner1.jpg" legende="Une vue d'ensemble de l'interface utilisateur de Qt Designer."/>
+			</section>
+			<section id="V-B">
+				<title>Extension de Qt Designer</title>
+				<paragraph>
+					L'architecture basée sur les composants utilisée comme fondements de Qt Designer a été spécialement conçue pour permettre aux développeurs d'étendre son interface utilisateur et les outils 
+					d'édition avec des composants personnalisés. En plus, la nature modulaire de l'application permet de rendre accessibles les fonctionnalités de conception d'interface graphique de Qt Designer 
+					à partir des environnements de développement intégrés comme Microsoft Visual Studio et KDevelop.
+				</paragraph>
+				<paragraph>
+					En tout, le module Qt Designer offre plus de vingt classes pour travailler avec les fichiers <inline>.ui</inline> et pour étendre Qt Designer. Beaucoup d'entre elles permettent à des tiers de 
+					personnaliser l'interface utilisateur de l'application elle-même. 
+				</paragraph>
+				<paragraph>
+					Les tiers et les widgets personnalisés pour un travail interne sont facilement intégrés dans Qt Designer. Adapter un widget existant pour l'utiliser dans Qt Designer nécessite uniquement de 
+					compiler le widget en tant que plug-in, en utilisant une classe d'interface pour supporter les propriétés par défaut du widget et construire de nouvelles instances du widget. L'interface du 
+					plug-in est exportée vers Qt Designer en utilisant une macro similaire à celle décrite dans la partie Plug-ins.
+				</paragraph>
+			</section>
+			<section id="V-C">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/latest/designer-manual.html">Le manuel de Qt Designer</link>. </element>
+					<element><link href="http://qt.nokia.com/products/developer-tools">Outils pour développeurs</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/latest/qtdesigner.html">Qt Designer</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/latest/exemples/">Exemples</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="VI">
+			<title>Graphique et multimédia</title>
+			<paragraph>
+				<i>Qt fournit un excellent support pour les graphismes en 2D et 3D. Les classes 2D de Qt supportent les graphismes vectoriel et matriciel, peuvent charger et enregistrer une large gamme extensible de
+				formats d'image et exporter du texte et des graphismes dans des fichiers PDF. Qt peut dessiner du texte riche Unicode transformé, des documents SVG (Scalable Vector Graphics) et fournit un canevas
+				pleinement fonctionnel pour des applications interactives plus poussées. Qt fournit aussi des fonctionnalités pour lire des fichiers et des flux audio et vidéo. </i>
+			</paragraph>
+			<paragraph>
+				Les graphismes sont affichés en utilisant des objets de dessin indépendants du matériel, qui permettent au développeur de réutiliser le même code sur différents types de périphériques, représentés
+				dans Qt par des périphériques de dessin. Cette approche assure qu'une large gamme de puissantes opérations de dessin sont disponibles pour chaque plateforme supportée par Qt et permet également aux
+				développeurs de choisir les périphériques les plus adaptés à leurs besoins. 
+			</paragraph>
+			<image src="./images/demos-boxes.png" legende="La démonstration des boîtes présente une série de fonctionnalités graphiques de Qt. "/>
+			<paragraph>
+				Les applications graphiques qui requièrent un canevas interactif peuvent tirer profit du framework de la vue graphique (<i>graphics view</i>) pour gérer et rendre les scènes avec un grand nombre d'éléments
+				interactifs, en utilisant de multiples vues si nécessaire. 
+			</paragraph>
+			<paragraph>
+				Le support de Qt pour OpenGL et OpenGL ES aide les développeurs à intégrer des graphismes 3D dans leurs applications, en même temps qu'il leur permet de profiter du matériel graphique moderne pour améliorer 
+				les performances de rendu 2D. 
+			</paragraph>
+			<paragraph>
+				Le support des couleurs de manière indépendante du matériel permet de spécifier des couleurs par des valeurs RVBA, HSVA ou CMJNA ou par des noms usuels. Les canaux de couleur utilisés font seize bits de 
+				largeur et un niveau d'opacité optionnel peut être spécifié. Qt alloue automatiquement la couleur demandée dans la palette système ou utilise une couleur similaire sur des affichages limités. 
+			</paragraph>
+			<section id="VI-A">
+				<title>Dessin</title>
+				<paragraph>
+					Qt fournit une API indépendante de la plateforme pour dessiner sur des widgets et d'autres périphériques de dessin. Il fournit des primitives de dessin comme des fonctionnalités avancées (notamment, les 
+					transformations). Tous les widgets de Qt se dessinent à l'aide de QPainter et les programmeurs utilisent cette même classe pour implémenter leurs widgets personnalisés. 
+				</paragraph>
+				<paragraph>
+					QPainter fournit des fonctions standard pour dessiner des points, des lignes, des ellipses, des arcs, des courbes de Bézier et d'autres primitives. Des opérations de dessin plus complexes incluent
+					le support des polygones et des chemins vectoriels, permettant la préparation des dessins détaillés (dessinables alors avec un simple appel de fonction). Le texte peut aussi être affiché
+					directement avec un dessinateur ou incorporé dans un chemin pour utilisation future. 
+				</paragraph>
+				<paragraph>
+					Le système de dessin de Qt fournit aussi un certain nombre de fonctionnalités pour améliorer la qualité globale du rendu, dont des fondus alpha, des modes de composition Porter-Duff, l'anti-aliasing, 
+					des remplissages avec des dégradés linéaires, radiaux et coniques. 
+				</paragraph>
+			</section>
+			<section id="VI-B">
+				<title>Images</title>
+				<paragraph>
+					Qt supporte l'entrée, la sortie et la manipulation d'images dans divers formats, dont BMP, GIF, JPEG, MNG, PNG, PNM, TIFF, XBM et XPM. Les deux classes (QImage et QPixmap) peuvent être utilisées comme 
+					périphériques de dessin et utilisées dans des applications graphiques interactives ou pour préparer les images pour utilisation future dans des composants de l'interface.
+				</paragraph>
+				<paragraph>
+					<b>QImage</b> est utilisée pour la manipulation d'images et peut effectuer des conversions entre diverses profondeurs de couleur et formats de pixel. Les programmeurs peuvent manipuler les pixels et 
+					les données de la palette, appliquer des transformations comme des rotations et réduire la profondeur de couleur avec tramage si désiré. Le support des canaux alpha permet d'utiliser la transparence
+					et les fusions alpha pour la composition d'images et à d'autres fins. 
+				</paragraph>
+				<paragraph>
+					La gamme de formats de fichiers supportés qui peuvent être utilisés avec ces classes peut être étendue avec des plug-ins d'extension. 
+				</paragraph>
+				<image src="./images/graphicsview-map.png" legende="Le framework de la vue graphique permet la création d'applications graphiques qui combinent une haute qualité de rendu à des fonctionnalités 
+					complètes pour l'interaction avec l'utilisateur. "/>
+			</section>
+			<section id="VI-C">
+				<title>Périphériques de dessin et impression</title>
+				<paragraph>
+					QPainter peut être utilisé sur n'importe quel périphérique de dessin. Le code requis pour dessiner sur n'importe quel périphérique supporté est le même, peu importe le périphérique. 
+				</paragraph>
+				<paragraph>
+					Tous les widgets sont des périphériques de dessin. Les fenêtres transparentes avec une forme spécifique peuvent être créées sur des systèmes correctement configurés. 
+				</paragraph>
+				<paragraph>
+					Les surfaces OpenGL utilisées avec QGLWidget sont aussi des périphériques de dessin qui convertissent les appels standard à QPainter en appels OpenGL, ce qui fait que des opérations 2D sont
+					accélérées sur des périphériques avec un matériel supporté. 
+				</paragraph>
+				<paragraph>
+					Des images peuvent aussi être créées en dessinant sur des QImage (indépendants du matériel) et des objets QPixmap, optimisés pour l'affichage. Les formats de fichier standard peuvent être créés
+					en effectuant un rendu dans une image avec la profondeur de couleur et le format de pixels désirés. Les images peuvent être créées avec support de différents niveaux de transparence et dessinées
+					sur des widgets personnalisés pour obtenir certains effets. 
+				</paragraph>
+				<paragraph>
+					Les fichiers vectoriels et les métafichiers sont aussi supportés par le système de dessin. QSvgGenerator crée des images SVG en traduisant les commandes de dessin par les structures correspondantes
+					du format SVG. QPicture est utilisé pour contenir une série de commandes de dessin qui peuvent être rejouées pour dessiner sur un autre périphérique ou pour stockage dans un fichier. 
+				</paragraph>
+				<paragraph>
+					L'impression est effectuée avec un rendu dans un QPrinter, qui représente une imprimante physique. Sur Windows, les commandes de dessin sont envoyées au moteur d'impression de Windows, qui utilise les 
+					pilotes installés. Sur UNIX, les données PostScript ou PDF sont envoyées au démon d'impression - ceci est géré par CUPS (Common Unix Printing System) sur des systèmes récents. 
+				</paragraph>
+				<paragraph>
+					En utilisant l'API de dessin générique de Qt, des applications peuvent créer des fichiers PDF et PS qui peuvent être générés sur toutes les plateformes, donc créer des documents de haute qualité 
+					qui peuvent être visualisés par des applications de lecture appropriées. 
+				</paragraph>
+			</section>
+			<section id="VI-D">
+				<title>Framework de la vue graphique</title>
+				<paragraph>
+					Qt contient un nouveau mais très puissant framework pour les applications graphiques interactives, utilisé pour gérer et afficher un grand nombre d'items dans une scène 2D. La vue graphique fournit
+					une API orientée objet pour ajouter de nouveaux items à une scène et une API plus traditionnelle, semblable à celle du canevas, contenant des fonctions auxiliaires pour créer des items prédéfinis. 
+				</paragraph>
+				<paragraph>
+					Une fois créés, les items peuvent être placés avec les position, orientation et échelle requises dans une scène. Les fonctionnalités d'affichage et de gestion des items sont implémentées séparément
+					dans les classes QGraphicsView et QGraphicsScene, ce qui facilite des fonctionnalités comme les multiples vues sur la même scène et le support de moteurs de rendu échangeables. 
+				</paragraph>
+				<paragraph>
+					Une sélection de types d'item standard est fournie, ceux-ci peuvent être étendus par le biais de sous-classes pour fournir des types d'item personnalisés. Ils peuvent être groupés pour un contrôle de 
+					plus haut niveau de la scène. Chaque scène, vue et item fournit un ensemble complet de fonctions pour transformer les coordonnées entre les différents systèmes. Les items standard et personnalisés 
+					peuvent être rendus sélectionnables et déplaçables, avec un niveau basique d'interactivité et un minimum de code. 
+				</paragraph>
+				<paragraph>
+					La vue graphique a été pensée avec les animations en tête : les items peuvent être utilisés pour créer des objets animés qui sont transformés en fonction d'une série de transformations définies
+					à certains points sur une ligne du temps. 
+				</paragraph>
+				<paragraph>
+					Certains items standard apportent des fonctionnalités trouvables à d'autres endroits de Qt au framework, dont des éditeurs de texte riche, la navigation sur le Web, l'affichage de dessins SVG et 
+					l'utilisation de formes, chemins et images. Les items d'une scène peuvent être rendus indépendamment de la vue attachée, les scènes peuvent donc être rendues dans des images et imprimées dans des
+					fichiers PDF. 
+				</paragraph>
+				<paragraph>
+					Un modèle événementiel complet permet une gestion efficace des événements en les distribuant aux items qui en ont besoin. Puisque la gestion basique des items est effectuée par le framework, 
+					les items doivent seulement répondre aux événements s'ils ont besoin d'une information particulière sur leur environnement. 
+				</paragraph>
+				<paragraph>
+					Les applications qui doivent mélanger des éléments d'interface utilisateur classique avec du contenu interactif peuvent embarquer des widgets directement dans une scène en utilisant QGraphicsProxyWidget
+					ou créer – en partant de rien avec QGraphicsWidget – des éléments ressemblant à des items. Comme pour les interfaces conventionnelles, les gestionnaires de disposition peuvent être utilisés 
+					pour disposer les widgets et les items dans une scène. 
+				</paragraph>
+				<image src="./images/svgviewer-example.png" legende="Les dessins SVG peuvent être rendus sur n'importe quel périphérique de dessin supporté par Qt. "/>
+			</section>
+			<section id="VI-E">
+				<title>SVG</title>
+				<paragraph>
+					<i>Scalable Vector Graphics</i> est un format de fichier basé sur XML et un langage pour décrire des applications graphiques, habituellement associé aux graphismes 2D du Web. Le support SVG
+					dans Qt est basé sur le standard SVG 1.1, une recommandation du W3C (World Wide Web Consortium). Il fournit des fonctionnalités additionnelles pour le support des profils Tiny de SVG 1.1 et 1.2. 
+				</paragraph>
+				<paragraph>
+					Qt peut rendre des dessins SVG sur n'importe quel périphérique de dessin, dont ceux pour les images et les widgets OpenGL. Cette flexibilité laisse les développeurs échanger la qualité pour la rapidité
+					quand cela est nécessaire. Les dessins SVG peuvent aussi être utilisés pour des icônes dans des contrôles d'interface, enlevant ainsi le besoin de générer des bitmaps dans une série de tailles
+					prédéfinies. 
+				</paragraph>
+				<paragraph>
+					Les développeurs peuvent aussi générer des dessins SVG en utilisant les fonctions de QPainter pour dessiner sur un périphérique de dessin spécialisé SVG, les graphiques utilisés dans des applications
+					peuvent donc être exportés comme dessins SVG avec peu d'effort supplémentaire. 
+				</paragraph>
+			</section>
+			<section id="VI-F">
+				<title>Graphismes 3D</title>
+				<paragraph>
+					OpenGL est une API standard pour le rendu de graphismes 3D qui peut être utilisée par les développeurs Qt pour inclure des graphismes 3D dans leurs applications graphiques. Le module OpenGL de Qt est 
+					disponible sur Windows, X11 et Mac OS X et utilise la bibliothèque OpenGL de chaque système. 
+				</paragraph>
+				<paragraph>
+					Pour utiliser OpenGL dans une application Qt, il suffit aux développeurs de sous-classer QGLWidget et de dessiner dessus avec les fonctions standard d'OpenGL. Qt fournit des fonctions pour convertir
+					les valeurs des couleurs dans le format d'OpenGL pour fournir une interface constante pour les applications. 
+				</paragraph>
+				<paragraph>
+					Qt supporte aussi des fonctionnalités et extensions d'OpenGL, avec une utilisation plus pratique à l'intérieur des applications Qt. Des fonctions auxiliaires permettent de créer des textures depuis
+					des images et le support des tampons de pixels et de frames est fourni par des classes appropriées. Le support de fonctionnalités comme les tampons d'échantillons peut être activé si elles sont 
+					disponibles sur le système sous-jacent. 
+				</paragraph>
+				<paragraph>
+					Les applications 2D peuvent utiliser des sous-classes de QGLWidget pour améliorer les performances de rendu sur du matériel approprié. Dans ce cas, les opérations standard de QPainter sont transformées
+					en appels OpenGLCeci rendu aussi possible de recouvrir des contrôles sur des scènes 3D peintes avec seulement OpenGL. Sur des plateformes embarquées, où l'accélération matérielle est souvent limitée,
+					ce moteur de rendu est restreint aux fonctionnalités d'OpenGL ES 2.0, ce qui permet de s'assurer qu'il fonctionne parfaitement sur un grand nombre de périphériques. 
+				</paragraph>
+				<paragraph>
+					Sur du matériel approprié, le support du rendu anti-aliasé peut être activé pour améliorer la rapidité du rendu et la qualité des graphismes produits en utilisant le moteur OpenGL. Sur du matériel 
+					moins puissant, les développeurs peuvent donner le choix à l'utilisateur entre la qualité et la rapidité, en exposant ces options de rendu à l'utilisateur à l'exécution. 
+				</paragraph>
+			</section>
+			<section id="VI-G">
+				<title>Multimédia</title>
+				<paragraph>
+					Qt utilise le framework multimédia Phonon, un projet open source de KDE, pour fournir des fonctionnalités de lecture de médias, à travers une API constante et multiplateforme. Qt s'assure que les 
+					applications sur Linux, Unix, Windows et Mac OS X utilisent de manière transparente le framework multimédia de chaque plateforme - ceci signifie que les applications peuvent aussi profiter du support
+					spécifique à la plateforme pour les codecs et formats audio et vidéo. 
+				</paragraph>
+				<paragraph>
+					Les fonctionnalités de Phonon peuvent être intégrées à d'autres technologies de Qt. Par exemple, des widgets de films peuvent être ajoutés à des pages Web affichées avec le moteur d'affichage WebKit
+					et à des scènes rendues avec le framework de la vue graphique. 
+				</paragraph>
+				<paragraph>
+					Des classes supplémentaires pour le multimédia sont incluses dans le module QtMultimedia. Ces classes sont orientées sur l'accès de bas niveau aux données audio et vidéo. 
+				</paragraph>
+			</section>
+			<section id="VI-H">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/4.7/qpainter">QPainter</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/vue-graphique-graphics-view/">La vue graphique</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/QtOpenGL/">QtOpenGL</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/Qtmultimedia/">QtMultimedia</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/qtsvg/">QtSVG</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/phonon-overview/">Phonon</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="VII">
+			<title>Vues d'items</title>
+			<paragraph>
+				<i>Les widgets de visualisation d'items fournissent des contrôles GUI standard pour afficher et modifier de larges quantités de données. Le framework modèle-vue sous-jacent isole le stockage
+				des données et leur présentation à l'utilisateur, ce qui fait que des fonctionnalités comme le partage de données, le tri et le filtrage, les vues multiples et les multiples représentations
+				peuvent utiliser le même ensemble de données. </i>
+			</paragraph>
+			<paragraph>
+				Lors de l'écriture d'applications qui traitent de grandes quantités de données, les développeurs utilisent généralement des widgets de vue d'items pour afficher les données rapidement et
+				efficacement. Des vues standard que l'on peut trouver dans des boîtes à outils graphiques modernes incluent généralement des vues en liste contenant de simples listes d'items, des vues
+				en arbre avec une liste hiérarchique d'items et des tableaux, qui fournissent des fonctionnalités de positionnement semblables aux tableurs. 
+			</paragraph>
+			<image src="./images/cleanlooks-treeview.png"/>
+			<image src="./images/plastique-listview.png"/>
+			<image src="./images/macintosh-tableview.png" legende="Qt fournit des vues standard pour les arbres, listes et tableaux d'items. "/>
+			<paragraph>
+				Les classes de vue d'items de Qt sont disponibles en deux formats : des widgets classiques et des composants modèle-vue. Les listes, tableaux et arbres classiques sont des widgets autonomes
+				qui gèrent leurs objets d'item, explicitement créés par le développeur. 
+			</paragraph>
+			<paragraph>
+				<inline>QListView</inline>, <inline>QTableView</inline> et <inline>QTreeView</inline> ont les composants modèle-vue équivalents. Ils fournissent une manière plus propre et plus orientée 
+				composant de gérer les ensembles de données. De plus, une série de modèles standard de données sont fournis pour aider les développeurs à organiser leurs données. 
+			</paragraph>
+			<section id="VII-A">
+				<title>Vues d'items standard</title>
+				<paragraph>
+					Les implémentations standard des widgets de vue en liste, en arbre, en tableau et d'icônes sont fournies par Qt. Elles supportent les opérations de glisser-déposer dans la même vue
+					et entre des vues différentes. Comme pour tous les widgets Qt, elles sont aussi complètement intégrées au système de ressources de Qt. 
+				</paragraph>
+				<paragraph>
+					Les classes de vue sont utilisées pour afficher des données de diverses boîtes de dialogue dans Qt et sont utilisées de manière extensive dans Qt Designer, Qt Assistant et 
+					Qt Linguist. 
+				</paragraph>
+				<paragraph>
+					Les vues classiques servent généralement à afficher et gérer quelques centaines d'items, en usant d'une architecture qui utilise des objets individuels pour encapsuler
+					des données. Cette approche devrait être familière à des développeurs Qt et fournit une manière agréable de construire rapidement des interfaces riches pour gérer des quantités
+					raisonnables de données. 
+				</paragraph>
+				<paragraph>
+					Pour la cohérence et la fiabilité, les vues classiques se basent sur le framework modèle-vue de Qt, qui fournit une manière plus adaptée à de grands volumes de données et plus 
+					personnalisable pour gérer ces vues. 
+				</paragraph>
+			</section>
+			<section id="VII-B">
+				<title>Le framework modèle-vue</title>
+				<paragraph>
+					Le framework modèle-vue fourni par Qt est une variation du patron de conception MVC bien connu (<i>Model-View-Controller</i>, modèle-vue-contrôleur), spécifiquement adapté aux
+					vues d'items de Qt. Dans cette approche, les modèles sont utilisés pour fournir des données à d'autres composants, des vues qui affichent des items à l'utilisateur et des délégués
+					qui gèrent le rendu et l'édition. 
+				</paragraph>
+				<image src="./images/modelview-delegates.png" legende="L'architecture orientée composant du framework modèle-vue facilite la personnalisation des vues d'items. "/>
+				<paragraph>
+					Les modèles ne sont que de fins emballages autour des sources de données, écrites conformément à une interface standard fournie par <inline>QAbstractItemModel</inline>. Cette
+					interface autorise les widgets dérivant de <inline>QAbstractItemView</inline> à accéder aux données fournies par le modèle, peu importe la nature de la source des données. 
+				</paragraph>
+				<paragraph>
+					La séparation entre les données et leur représentation dans cette approche fournit un certain nombre d'avantages par rapport aux vues classiques : 
+				</paragraph>
+				<liste sautDePagePdf="0">
+					<element>puisque les modèles fournissent une interface standard pour accéder aux données, ils peuvent être conçus et écrits séparément, même remplacés au besoin ; </element>
+					<element>les données obtenues de modèles peuvent être partagées par les vues ; ainsi, des applications peuvent offrir plusieurs vues des mêmes données, potentiellement avec 
+						plusieurs représentations ; </element>
+					<element>les sélections peuvent être partagées entre les vues ou gardées séparées, en fonction des attentes et demandes de l'utilisateur ; </element>
+					<element>pour les listes, arbres et tableaux standard, le gros du rendu est effectué par les délégués, ce qui facilite la personnalisation des vues sans devoir réécrire beaucoup de code ; </element>
+					<element>en utilisant des <i>modèles proxy</i>, les données fournies par des modèles peuvent être transformées avant d'être passées aux vues ; les applications peuvent donc fournir 
+						des fonctionnalités de tri et de filtrage que l'on peut partager entre les vues. </element>
+				</liste>
+				<paragraph>
+					Le système modèle-vue est aussi utilisé par les modèles SQL de Qt pour rendre l'intégration d'une base de données plus simple pour les développeurs ne les maîtrisant pas. 
+				</paragraph>
+			</section>
+			<section id="VII-C">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/4.7/model-view-programming/">Programmation modèle-vue</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/exemples/">Exemples</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="VIII">
+			<title>Gestion du texte</title>
+			<paragraph>
+				<i>Qt fournit un puissant éditeur de texte dans lequel l'utilisateur peut créer et éditer des documents riches, il peut aussi être utilisé pour préparer des documents pour l'impression. 
+				La structure de document sous-jacente est complètement accessible aux développeurs, ce qui fait que la structure et le contenu du document peuvent être manipulés. </i>
+			</paragraph>
+			<paragraph>
+				Les documents riches contiennent généralement du texte dans plusieurs fontes (police, taille, corps) et couleurs, arrangé dans une série de paragraphes. Il peut aussi être organisé
+				dans des listes et des tableaux, ainsi qu'être visuellement séparé du corps du document avec des cadres. L'apparence de chaque élément du document peut être précisément ajustée 
+				en utilisant les nombreuses fonctionnalités disponibles aux développeurs grâce à l'API de texte riche. 
+			</paragraph>
+			<image src="./images/textedit-demo.png" legende="Les fonctionnalités avancées d'édition de texte riche de Qt permettent la création et l'édition de documents complexes dans QTextEdit. "/>
+			<image src="./images/textedit-OpenOffice.org.png" legende="Les documents peuvent être exportés au format OpenOffice pour utilisation dans un logiciel de traitement de texte. "/>
+			<section id="VIII-A">
+				<title>Édition de texte riche</title>
+				<paragraph>
+					L'affichage interactif de texte riche et son édition sont gérés par Qt dans les widgets <inline>QTextBrowser</inline> et <inline>QTextEdit</inline>. Ils supportent complètement
+					Unicode et sont construits sur une représentation de la structure du document fournie par <inline>QTextDocument</inline>, il n'y a pas besoin d'utiliser des langages de balisage
+					intermédiaires pour créer du texte riche. <inline>QTextDocument</inline> fournit aussi un support de l'import et de l'export d'un sous-ensemble de HTML 4.0, des capacités
+					d'undo-redo (dont les actions groupées) et la gestion des ressources. 
+				</paragraph>
+				<paragraph>
+					Qt fournit une API orientée objet pour les documents qui aide le développeur à obtenir une vue globale de haut niveau sur les structures. Une API basée sur des curseurs est aussi fournie
+					pour faciliter l'exploration, le traitement et la transformation des documents. En plus des classes correspondant à la structure et au contenu, il y a bon nombre d'autres classes pour contrôler 
+					l'apparence du texte et des éléments de document. Ceci fait que les styles de texte pour les tableaux, les listes, les cadres et les paragraphes ordinaires peuvent être personnalisés
+					pour donner aux documents l'apparence désirée. 
+				</paragraph>
+				<paragraph>
+					Les documents créés par le code restent éditables dans les widgets <inline>QTextEdit</inline> et conservent un historique complet d'undo-redo. Les développeurs peuvent 
+					ajouter de nouvelles fonctionnalités à l'éditeur, faisant en sorte que les utilisateurs puissent alors insérer des structures et du contenu personnalisés. 
+				</paragraph>
+			</section>
+			<section id="VIII-B">
+				<title>Personnalisation, impression et export du document</title>
+				<paragraph>
+					Les fonctionnalités de gestion du texte de Qt peuvent être utilisées pour fournir du formatage spécialisé du texte pour des widgets personnalisés et des documents riches. 
+					On peut les écrire avec des classes de bas niveau comme <inline>QTextLayout</inline> pour disposer le texte ligne par ligne, puis les intégrer dans le système de disposition
+					extensible de texte fourni par <inline>QTextDocument</inline> pour utilisation avec <inline>QTextEdit</inline>. 
+				</paragraph>
+				<paragraph>
+					Des règles de coloration syntaxique peuvent aussi être appliquées à des documents riches avec <inline>QSyntaxHighlighter</inline>. Un simple widget <inline>QTextEdit</inline>
+					pourra être utilisé comme base d'un éditeur de code, cela peut aussi servir à des outils de recherche dans le document. 
+				</paragraph>
+				<paragraph>
+					Les documents peuvent aussi être formatés selon les informations obtenues d'une boîte de dialogue <inline>QPrintDialog</inline> dans une série de pages que l'on peut passer à 
+					un <inline>QPrinter</inline>. 
+				</paragraph>
+				<paragraph>
+					La classe <inline>QTextDocumentWriter</inline> fournit un support de l'export de documents en HTML, texte brut et fichiers <i>OpenDocument Format</i> (ODF). Cette classe
+					expose ses fonctionnalités par le biais d'une API générique et est prévue pour être étendue à d'autres formats dans de futures versions. 
+				</paragraph>
+			</section>
+			<section id="VIII-C">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/4.7/qt4-scribe/">Les classes du framework Scribe</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/richtext/">Traitement du texte riche</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/qtextdocumentwriter/">QTextDocumentWriter</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="IX">
+			<title>Intégration Web avec QtWebKit</title>
+			<paragraph>
+				<i>L'intégration de Qt avec le moteur WebKit fait que les développeurs peuvent introduire des fonctionnalités Web dans leurs applications avec des API et paradigmes de la même 
+				veine que Qt pour afficher et interagir avec du contenu Web. </i>
+			</paragraph>
+			<paragraph>
+				Qt inclut un support intégré pour Web Kit, un moteur de rendu Web open source complet, qui se focalise sur la stabilité et les performances. La version de WebKit fournie avec Qt supporte
+				bon nombre de standards du Web, dont HTML 4.01, XHTML 1.1, CSS 2.1 et JavaScript 1.5. Des fonctionnalités plus avancées sont aussi disponibles, elles sont présentées dans le livre blanc
+				dédié. 
+			</paragraph>
+			<paragraph>
+				La gestion du réseau de WebKit est assurée de manière transparente par les classes de Qt, qui donnent aux composants du navigateur une implémentation conforme aux standards HTTP 1.1, 
+				supportant la communication SSL (<i>Secure Sockets Layer</i>) et les proxies. 
+			</paragraph>
+			<image src="./images/webkit-plus-graphics-view.png" legende="Les widgets Qt peuvent être embarqués dans des pages Web affichées par l'intégration WebKit dans Qt ; 
+				ces pages Web peuvent être affichées comme des items avec le framework de la vue graphique. "/>
+			<section id="IX-A">
+				<title>Intégration aux applications natives</title>
+				<paragraph>
+					Le support de Qt pour WebKit dépasse l'affichage de HTML en exposant les fonctionnalités de WebKit aux applications en utilisant les paradigmes Qt. Par exemple, le mécanisme
+					de signaux et de slots pour la communication facilite la connexion de composants Web à des widgets et à d'autres objets de l'application. 
+				</paragraph>
+				<paragraph>
+					Inversement, l'intégration entre Qt et le moteur de rendu permet d'intégrer des contrôles Qt natifs dans les pages Web, ce qui rend possible de combiner du contenu Web avec
+					des interfaces natives hautement dynamiques. 
+				</paragraph>
+				<paragraph>
+					Les applications peuvent aussi profiter de WebKit pour utiliser le stockage natif pour les données persistantes, cette fonctionnalité étant supportée par Qt. Les développeurs
+					peuvent activer le stockage natif pour des applications qui interagissent avec des services distants et prendre appui sur les options de configuration pour définir un 
+					endroit approprié et un quota sur le système utilisateur. 
+				</paragraph>
+			</section>
+			<section id="IX-B">
+				<title>API d'accès à l'arbre DOM</title>
+				<paragraph>
+					La manière standard de manipuler la structure de pages Web est d'utiliser l'API DOM (<i>Document Object Model</i>, modèle objet du document). QtWebKit inclut une implémentation
+					de l'API des sélecteurs du W3C qui fournit un accès très simple à la structure des pages, ainsi que leur modification. 
+				</paragraph>
+				<paragraph>
+					Cette API rend intuitif l'accès au DOM en laissant les développeurs réutiliser leurs connaissances sur les sélecteurs CSS, sans occasionner de surcharge ou de maintenance supplémentaire. 
+				</paragraph>
+			</section>
+			<section id="IX-C">
+				<title>Support des plug-ins Netscape</title>
+				<paragraph>
+					Les plug-ins se conformant à l'API Netscape, un standard <i>de facto</i> pour les composants tiers des navigateurs, peuvent être embarqués et affichés dans des pages Web rendues
+					par QtWebKit. La configuration de cette fonctionnalité est effectuée dans une classe Qt qui est aussi utilisée pour configurer d'autres sortes de plug-ins, comme les plug-ins
+					de widgets exposés par l'application à l'environnement Web. 
+				</paragraph>
+				<image src="./images/webkit-netscape-plugin.png" legende="Les plug-ins tiers sont supportés par QtWebKit via l'API Netscape. "/>
+			</section>
+			<section id="IX-D">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/4.7/qtwebkit/">Le module QtWebKit</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/demos-browser/">Démo : un navigateur Web</link>. </element>
+					<element><link langue="Fr" href="http://qt.developpez.com/tutoriels/integrer-gadgets-logiciels-webkit/">Intégrer des widgets avec QtWebKit</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="X">
+			<title>Bases de données</title>
+			<paragraph>
+				<i>Le module SQL de Qt simplifie la création d'applications GUI avec support des bases de données d'une manière multiplateforme. Les programmeurs peuvent facilement exécuter des requêtes SQL, 
+				utiliser des modèles de base de données pour fournir des informations aux vues d'items pour la visualisation et l'ajout de données, ainsi qu'utiliser des correspondances avec des widgets
+				pour relier des tables à des widgets spécifiques dans des interfaces basées sur des interfaces utilisateur. </i>
+			</paragraph>
+			<paragraph>
+				Le module SQL de Qt fournit une interface multiplateforme pour accéder à des bases de données SQL et inclut des pilotes natifs pour Oracle, Microsoft SQL Server, Sybase Adaptive Server, 
+				IBM DB2, PostgreSQL, MySQL, Borland Interbase, SQLite et ODBC. Les pilotes fonctionnent sur toutes les plateformes supportées par Qt pour lesquelles des bibliothèques clientes sont disponibles. 
+				Les applications peuvent accéder à plusieurs bases de données en utilisant différents pilotes simultanément. Les distributions de Qt incluent le gestionnaire de bases de données SQLite et le module 
+				QtSql est compilé avec son support par défaut. 
+			</paragraph>
+			<paragraph>
+				Les développeurs peuvent facilement exécuter n'importe quelle requête SQL. Qt fournit aussi une interface de haut niveau en C++ qui peut être utilisée pour générer les requêtes SQL appropriées
+				automatiquement. 
+			</paragraph>
+			<paragraph>
+				Qt fournit un ensemble de modèles SQL pour utilisation avec d'autres composants modèle-vue. Ainsi, des widgets de vue peuvent être automatiquement remplis avec les résultats de requêtes en base
+				et simplifient le processus d'édition, tant pour les utilisateurs que les développeurs non orientés vers les bases de données. 
+			</paragraph>
+			<paragraph>
+				Utiliser l'équipement fourni par le module SQL de Qt rend rapide la création d'applications basées sur des bases de données qui utilisent des clés étrangères et présentent des relations maître-détails. 
+			</paragraph>
+			<section id="X-A">
+				<title>Exécuter des requêtes SQL</title>
+				<paragraph>
+					La classe <inline>QSqlQuery</inline> est utilisée pour directement exécuter toute requête SQL et naviguer dans les résultats produits par les requêtes <inline>SELECT</inline>. Les requêtes
+					<inline>INSERT</inline>, <inline>UPDATE</inline> et <inline>DELETE</inline> sont aussi faciles à utiliser. 
+				</paragraph>
+				<paragraph>
+					Le module SQL de Qt supporte aussi le lien de valeurs et les requêtes préparées. On peut lier des valeurs en utilisant des liens nommés et des paramètres fictifs nommés ou avec un lien positionnel
+					avec des paramètres fictifs nommés ou positionnels. La syntaxe de lien de Qt fonctionne aussi bien avec toutes les bases de données supportées, en utilisant soit le support de la part de la base 
+					de données sous-jacente, soit une couche d'émulation. 
+				</paragraph>
+			</section>
+			<section id="X-B">
+				<title>Modèles SQL</title>
+				<paragraph>
+					Qt fournit aussi un nombre de classes de modèle à utiliser avec d'autres composants du framework modèle-vue. Ainsi, les développeurs peuvent assembler des requêtes SQL et créer des vues en table
+					automatiquement, les items provenant de la base. 
+				</paragraph>
+				<paragraph>
+					Utiliser ces modèles avec d'autres composants du framework modèle-vue requiert un minimum de travail de la part des développeurs. Créer un modèle de requête est simplement l'affaire de spécifier
+					une requête, choisir les en-têtes à examiner et définir une vue en table pour afficher les résultats de la requête. 
+				</paragraph>
+				<paragraph>
+					Les modèles sont prévus pour accéder aux tables SQL de différentes manières, dont un modèle en lecture seule pour des ensembles de résultats SQL, un modèle aux données éditables pour une seule
+					table et un modèle relationnel, avec lequel les colonnes peuvent être définies comme clés étrangères d'autres tables. La démo <i>Qt Books</i>, montrée dans la figure ci-dessous, utilise
+					un modèle de base de données relationnelle pour trouver les informations sur chaque livre dans une table. 
+				</paragraph>
+				<paragraph>
+					Le framework modèle-vue contient un bon nombre de fonctionnalités qui se chargent des bases de toute application fondée sur une base de données, dont le support des transactions et l'option
+					d'autoriser ou non l'édition du tableau sur base des colonnes pour éviter des allers-retours inutiles en base. 
+				</paragraph>
+				<image src="./images/books-demo.png" legende="La démo Qt Books montre l'intégration entre les classes de QtSql et le framework modèle-vue. "/>
+			</section>
+			<section id="X-C">
+				<title>Widgets exploitant ces données</title>
+				<paragraph>
+					Qt fournit des commodités aux données obtenues des modèles, comme de l'un des modèles SQL décrits ci-dessus : elles peuvent être liées à des widgets spécifiques dans une fenêtre, l'utilisateur
+					peut alors avoir une coupe transversale des données disponibles depuis plusieurs endroits dans le magasin de données sous-jacent. Ceci rend plus facile la création d'applications d'entrées de données
+					avec des interfaces utilisateur conventionnelles basées sur des formulaires. 
+				</paragraph>
+				<paragraph>
+					La classe <inline>QDataWidgetMapper</inline> est utilisée pour créer la relation entre un modèle et une sélection de widgets. Dans la démo <i>Books</i> fournie avec Qt, une correspondance entre les 
+					données est construite et assignée à un modèle ; ensuite, chaque widget utilisé pour éditer les champs dans la base est lié à une colonne. 
+				</paragraph>
+				<paragraph>
+					Cette correspondance de données peut être utilisée directement pour traverser les colonnes d'un modèle, en faisant correspondre l'item de chaque colonne à un widget spécifique et en l'utilisant
+					pour afficher les données obtenues. Les fonctions de navigation simplifient la connexion des contrôles de navigation faciles à utiliser à la correspondance. 
+				</paragraph>
+				<paragraph>
+					Puisque la classe fournit aussi une API similaire aux classes de vue d'items, les différentes sections transversales d'un modèle peuvent être obtenues en changeant la configuration de la 
+					correspondance. L'utilisation de l'API modèle-vue rend aussi possible pour cette correspondance la réponse aux changements dans le modèle sous-jacent. La démo <i>Books</i> met à jour 
+					cette correspondance à chaque fois que l'utilisateur sélectionne une colonne différente dans la vue en tableau ; ce comportement est défini avec une simple connexion d'un signal à un slot. 
+				</paragraph>
+			</section>
+			<section id="X-D">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/4.7/qtsql/">Le module QtSql. </link></element>
+					<element><link href="http://qt.developpez.com/doc/4.7/qt4-sql">La couche GUI-base de données</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/exemples/">Exemples</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<section id="XI">
+			<title>Internationalisation</title>
+			<paragraph>
+				<i>Qt supporte pleinement Unicode, l'encodage standard international. Les programmeurs peuvent mélanger librement, dans une même application, arabe, anglais, 
+				hébreu, japonais, russe et toutes les autres langues supportées par Unicode. Qt inclut aussi des outils pour aider la traduction et la localisation des applications. </i>
+			</paragraph>
+			<paragraph>
+				Qt supporte l'encodage Unicode en version 5.0 et utilise la classe <inline>QString</inline> pour stocker les chaînes Unicode, tant dans l'API publique qu'en interne. 
+			</paragraph>
+			<paragraph>
+				Un ensemble extensible de codecs de texte supporte différents encodages, dont Big5 et GBK pour le chinois, EUC-JP, JIS et Shift-JIS pour le japonais, 
+				KOI8-R pour le russe, ainsi que la série standard d'encodages ISO-8859. Qt utilise ces codecs pour les polices, les entrées et sorties ainsi que 
+				pour les méthodes d'entrées. 
+			</paragraph>
+			<paragraph>
+				Le support natif des lieux permet l'adaptation des conversions entre nombres et chaînes de caractères aux préférences linguistiques et régionales de l'utilisateur. 
+			</paragraph>
+			<paragraph>
+				Qt fournit un ensemble d'outils pour faciliter le procédé de traduction. Ces outils supportent XLIFF (XML Localization Interchange File Format), 
+				le format PO (GNU Gettext) et le format de fichiers de traduction de Qt, TS (Translation Source). 
+			</paragraph>
+			<section id="XI-A">
+				<title>Entrée de texte et rendu</title>
+				<paragraph>
+					Les systèmes d'écriture d'Asie requièrent beaucoup plus de caractères que le nombre disponible sur un clavier. La conversion d'une séquence d'appuis
+					de touche vers les caractères est effectuée au niveau du système de fenêtrage, par des logiciels appelés <i>méthodes d'entrée</i>. Qt supporte
+					automatiquement les méthodes d'entrée installées sur le système de l'utilisateur. 
+				</paragraph>
+				<paragraph>
+					Qt fournit un moteur de rendu de texte puissant pour tout le texte affiché à l'écran, supportant des fonctionnalités avancées comme des comportements
+					spéciaux de césures, l'écriture bidirectionnelle, les marques diacritiques. Il est capable d'afficher la plupart des systèmes d'écriture existant
+					de par le monde, dont l'arabe, le chinois, le cyrillique, l'anglais, le grec, l'hébreu, le japonais, le coréen, le latin et le vietnamien. 
+					Qt combine automatiquement les polices installées pour afficher un texte en plusieurs langues. 
+				</paragraph>
+			</section>
+			<section id="XI-B">
+				<title>Traduire des applications</title>
+				<paragraph>
+					Qt fournit des outils et des fonctions pour faciliter le support de la traduction des applications. En lui-même, il contient plusieurs centaines
+					de chaînes visibles à l'utilisateur, pour lesquelles des traductions sont fournies en français, allemand et chinois simplifié. 
+				</paragraph>
+				<paragraph>
+					Pour rendre des chaînes traduisibles, il suffit de les entourer d'un appel à la fonction de traduction <inline>tr()</inline>, en spécifiant
+					au besoin des informations supplémentaires pour les traducteurs dans des commentaires spéciaux. 
+				</paragraph>
+<code langage="qt"><![CDATA[//: Ce nom fait référence à un nom d'hôte. 
+hostNameLabel->setText(tr("Name:"));
+
+/*: Ce texte fait référence à un exemple de code C++. */
+QString example = tr("Example");]]></code>
+				<paragraph>
+					Avec le contexte, ces informations aident le traducteur à mieux rendre les nuances dans les chaînes visibles par les utilisateurs. Des arguments optionnels
+					peuvent également être utilisés pour aider la traduction des formes plurielles. 
+				</paragraph>
+				<paragraph>
+					Qt fournit des outils pour extraire le texte des fichiers source, pour les conversions entre les différents formats fréquents de traduction et pour générer
+					des fichiers de messages compressés à utiliser dans les applications. Le processus d'extraction des chaînes et de mise à jour des traductions partielles
+					est totalement intégré dans le système de compilation de Qt et peut être modifié pour s'adapter à différents <i>workflows</i>. 
+				</paragraph>
+				<paragraph>
+					À l'exécution, les applications utilisent des objets <inline>QTranslator</inline> pour charger les fichiers de traduction. Chacun contient les traductions
+					pour une langue particulière, choisie à l'exécution selon les paramètres locaux ou les préférences utilisateur. 
+				</paragraph>
+				<paragraph>
+					Les traducteurs peuvent éditer les fichiers de traduction aisément avec <i>Qt Linguist</i>, une application graphique pour effectuer le travail de traduction. 
+					Les contextes sont listés du côté droit de la fenêtre de l'application, tandis que la liste des textes source est affichée en haut à droite, à côté
+					des traductions et de leur état (non finie, obsolète, effectuée). On peut naviguer dans l'interface utilisateur par le clavier ; ses fenêtres ancrables
+					peuvent être réorganisées pour s'accorder aux préférences du traducteur. 
+				</paragraph>
+				<paragraph>
+					Les applications utilisent souvent les mêmes expressions dans différents contextes. Qt Linguist affiche automatiquement des suggestions utilisant les chaînes
+					déjà traduites et les traductions prédéfinies. Il s'agit généralement de bons points de départ pour de nouvelles traductions. Les traductions les plus fréquentes
+					peuvent également être stockées dans des « manuels de conversation » pour rendre la traduction de futures applications plus efficace. Qt Linguist peut, 
+					optionnellement, valider les traductions pour s'assurer que les raccourcis et ponctuations de fin sont correctement traduits. 
+				</paragraph>
+				<paragraph>
+					Le manuel complet de Qt Linguist fournit des informations pertinentes sur le processus de traduction pour les gestionnaires, traducteurs et programmeurs. 
+				</paragraph>
+				<image src="./images/qt-linguist.png" legende="Travail simultané sur les traductions en français et chinois simplifié avec Qt Linguist. "/>
+			</section>
+			<section id="XI-C">
+				<title>Références en ligne</title>
+				<liste sautDePagePdf="0">
+					<element><link href="http://qt.developpez.com/doc/4.7/i18n/">Classes pour l'internationalisation. </link></element>
+					<element><link href="http://qt.developpez.com/doc/4.7/unicode">Unicode et Qt</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/linguist-manual/">Manuel de Qt Linguist</link>. </element>
+					<element><link href="http://qt.developpez.com/doc/4.7/qtextcodec/">QTextCodec</link>. </element>
+				</liste>
+			</section>
+		</section>
+		<!--<section id="XII">
+			<title>Qt Script</title>
+		</section>
+		<section id="XIII">
+			<title>Styles et thèmes</title>
+		</section>
+		<section id="XIV">
+			<title>Entrées/sorties et réseau</title>
+		</section>
+		<section id="XV">
+			<title>Classes de collection</title>
+		</section>
+		<section id="XVI">
+			<title>Plug-ins et système de métaobjets</title>
+		</section>
+		<section id="XVII">
+			<title>Compilation d'applications Qt</title>
+		</section>
+		<section id="XVIII">
+			<title>Architecture de Qt</title>
+			<signet id="architecture"/>
+		</section>
+		<section id="XIX">
+			<title>Extensions spécifiques aux plateformes et solutions Qt</title>
+		</section>
+		<section id="XX">
+			<title>La communauté de développement Qt</title>
+		</section>-->
+		<section id="XII">
+			<title>Remerciements</title>
+			<paragraph>
+				Merci à <link href="http://www.developpez.net/forums/u124512/claudeleloup/">Claude Leloup</link>, 
+				<link href="http://www.developpez.net/forums/u167428/ram-0000/">ram-0000</link>, 
+				<link href="http://www.developpez.net/forums/u181612/siguillaume/">Guillaume Sigui</link> et 
+				<link href="http://www.developpez.net/forums/u83713/jacques_jean/">Jacques Thery</link>
+				pour leur relecture orthographique approfondie ! 
+			</paragraph>
+		</section>
+	</summary>
+</document>

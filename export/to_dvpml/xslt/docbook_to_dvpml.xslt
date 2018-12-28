@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://dourouc05.github.io"
+  xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   
@@ -77,7 +77,7 @@
         <authorDescriptions>
           <xsl:choose>
             <xsl:when test="db:info/db:authorgroup">
-              <xsl:for-each select="db:info/db:authorgroup/db:othercredit">
+              <xsl:for-each select="db:info/db:authorgroup/(db:othercredit union db:author union db:editor)">
                 <authorDescription name="{db:personname/db:othername[@role='pseudonym']}" role="traducteur">
                   <fullname>
                     <xsl:choose>
@@ -95,11 +95,11 @@
                       </xsl:otherwise>
                     </xsl:choose>
                   </fullname>
-                  <xsl:if test="db:uri">
-                    <url><xsl:value-of select="db:uri"/></url>
+                  <xsl:if test="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]">
+                    <url><xsl:value-of select="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]"/></url>
                   </xsl:if>
-                  <xsl:if test="db:uri">
-                    <xsl:variable name="profileId" select="translate(tokenize(db:uri, '/')[5], 'u', '')"/>
+                  <xsl:if test="db:uri[@type='main-uri']">
+                    <xsl:variable name="profileId" select="translate(tokenize(db:uri[@type='main-uri'], '/')[5], 'u', '')"/>
                     <badge>https://www.developpez.com/ws/badgeimg?user=<xsl:value-of select="$profileId"/>&amp;v=1</badge>
                   </xsl:if>
                 </authorDescription>
@@ -347,11 +347,14 @@
       <xsl:when test="not(parent::node()[self::db:code])">
         <!-- Nesting tags this way is not allowed (just text within <inline>).  -->
         <xsl:choose>
-          <xsl:when test="@role='bold'">
+          <xsl:when test="@role='bold' or @role='strong'">
             <b><xsl:apply-templates mode="content_para"/></b>
           </xsl:when>
           <xsl:when test="@role='underline'">
             <u><xsl:apply-templates mode="content_para"/></u>
+          </xsl:when>
+          <xsl:when test="@role='strike'">
+            <s><xsl:apply-templates mode="content_para"/></s>
           </xsl:when>
           <xsl:otherwise>
             <i><xsl:apply-templates mode="content_para"/></i>
