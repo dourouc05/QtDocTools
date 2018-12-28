@@ -300,13 +300,13 @@
     <!-- Order of elements: namespaces, classes, member types, types, properties, member variables, member functions (first constructors, then others), related non-members, macros. Never forget to sort the items by name. -->
     <xsl:variable name="namespaces" select="$elements/self::namespace[(@access='public' or @access='protected')]" as="node()*"/>
     <xsl:variable name="classes" select="$elements/self::class[(@access='public' or @access='protected')]" as="node()*"/>
-    <xsl:variable name="memberTypes" select="$elements/self::enum[(@access='public' or @access='protected')] | $elements/self::typedef[(@access='public' or @access='protected')]" as="node()*"/>
+    <xsl:variable name="types" select="$elements/self::enum[(@access='public' or @access='protected')] | $elements/self::typedef[(@access='public' or @access='protected')]" as="node()*"/>
     <xsl:variable name="properties" select="$elements/self::property[(@access='public' or @access='protected')]" as="node()*"/>
     <xsl:variable name="memberVariables" select="$elements/self::variable[(@access='public' or @access='protected')]" as="node()*"/>
-    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and not(@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
+    <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and not(@meta='macrowithoutparams' or @meta='macrowithparams') and (not(@associated-property) or @associated-property='')]" as="node()*"/>
     <xsl:variable name="macros" select="$elements/self::function[(@access='public' or @access='protected') and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
-    <xsl:variable name="allTakenIntoAccount" select="($namespaces union $classes union $memberTypes union $properties union $memberVariables union $functions union $macros)"/>
+    <xsl:variable name="allTakenIntoAccount" select="($namespaces union $classes union $types union $properties union $memberVariables union $functions union $macros)"/>
     <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and description/node()]) != count($elements[(@access='public' or @access='protected') and description/node()])">
       <xsl:message>
         <xsl:text>WARNING: Page not fully parsed. Missing tags: </xsl:text>
@@ -328,40 +328,6 @@
         </xsl:for-each>
       </db:section>
     </xsl:if>
-    
-    <xsl:if test="$classes[tc:is-element-included(.)] or $memberTypes[tc:is-element-included(.)]">
-      <db:section>
-        <db:title>Member Types Documentation</db:title>
-        <xsl:for-each select="$classes[tc:is-element-included(.)]/self::class">
-          <xsl:sort select="@fullname"/>
-          <xsl:apply-templates mode="content_class_elements" select="."/>
-        </xsl:for-each>
-        
-        <xsl:for-each select="$memberTypes[tc:is-element-included(.)]/self::enum">
-          <xsl:sort select="@fullname"/>
-          <xsl:apply-templates mode="content_class_elements" select="."/>
-        </xsl:for-each>
-        
-        <!-- Many typedefs are just sets of flags, and thence have no description, but some are real. -->
-        <xsl:for-each select="$memberTypes[tc:is-element-included(.)]/self::typedef[description/node()]">
-          <xsl:sort select="@fullname"/>
-          <xsl:apply-templates mode="content_class_elements" select="."/>
-        </xsl:for-each>
-      </db:section>
-    </xsl:if>
-    
-    <!--<xsl:if test="$types">
-      <db:section>
-        <db:title>Type Documentation</db:title>
-        --><!-- Only happens in namespaces. --><!--
-        
-        <xsl:message>TYPES NOT IMPLEMENTED</xsl:message>
-        
-        <xsl:if test="@since and not(@since='')">
-          <db:para>This type was introduced in Qt <xsl:value-of select="@since"/>.</db:para>
-        </xsl:if>
-      </db:section>
-    </xsl:if>-->
     
     <xsl:if test="$properties[tc:is-element-included(.)]">
       <db:section>
@@ -403,20 +369,29 @@
           <xsl:sort select="@signature"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
-        
-        <!-- TODO: Why doesn't QWidget::paintEngine have documentation in WebXML (but it has some in .cpp)? Also misses in PySide2's doc: https://doc.qt.io/qtforpython/PySide2/QtWidgets/QWidget.html -->
       </db:section>
     </xsl:if>
     
-    <!-- TODO --><!--
-    <xsl:if test="$relatedNonMembers">
+    <xsl:if test="$classes[tc:is-element-included(.)] or $types[tc:is-element-included(.)]">
       <db:section>
-        <db:title>Related Non-Members</db:title>
-        --><!-- TODO: Not generated in WebXML. Example: http://doc.qt.io/qt-5/qpoint.html#related-non-members --><!--
+        <db:title>Types Documentation</db:title>
+        <xsl:for-each select="$classes[tc:is-element-included(.)]/self::class">
+          <xsl:sort select="@fullname"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
         
-        <xsl:message>RELATED NON MEMBERS NOT IMPLEMENTED</xsl:message>
+        <xsl:for-each select="$types[tc:is-element-included(.)]/self::enum">
+          <xsl:sort select="@fullname"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
+        
+        <!-- Many typedefs are just sets of flags, and thence have no description, but some are real. -->
+        <xsl:for-each select="$types[tc:is-element-included(.)]/self::typedef[description/node()]">
+          <xsl:sort select="@fullname"/>
+          <xsl:apply-templates mode="content_class_elements" select="."/>
+        </xsl:for-each>
       </db:section>
-    </xsl:if>-->
+    </xsl:if>
     
     <xsl:if test="$macros[tc:is-element-included(.)]">
       <db:section>
@@ -600,73 +575,7 @@
           </xsl:choose>
         </xsl:attribute>
         
-        <db:title>
-          <!-- For constructors: -->
-          <!-- @name:      QWidget -->
-          <!-- @fullname:  QWidget::QWidget -->
-          <!-- @signature: QWidget(QWidget *parent, Qt::WindowFlags f) -->
-          <!-- For methods: -->
-          <!-- @name:      backingStore -->
-          <!-- @fullname:  QWidget::backingStore -->
-          <!-- @signature: QBackingStore * backingStore() const -->
-          <xsl:variable name="sanitisedName" select="replace(replace(replace(replace(@name, '\+', '\\+'), '\[', '\\['), '\]', '\\]'), '\|', '\\|')" as="xs:string"/>
-          <xsl:variable name="pretitle" select="if(contains(@fullname, '::')) then concat(@type, ' ', replace(@signature, concat('(^.*?)', $sanitisedName), @fullname)) else @signature"/>
-          
-          <!-- Generate the modifiers in the right order. -->
-          <xsl:variable name="posttitle">
-            <xsl:variable name="seq" as="xs:string*">
-              <xsl:if test="@virtual = 'pure'">
-                <xsl:text>pure virtual</xsl:text>
-              </xsl:if>
-              <xsl:if test="@virtual = 'virtual'">
-                <xsl:text>virtual</xsl:text>
-              </xsl:if>
-              
-              <xsl:if test="@access = 'protected'">
-                <xsl:text>protected</xsl:text>
-              </xsl:if>
-              
-              <xsl:if test="@delete = 'true'">
-                <xsl:text>delete</xsl:text>
-              </xsl:if>
-              <xsl:if test="@default = 'true'">
-                <xsl:text>default</xsl:text>
-              </xsl:if>
-              
-              <xsl:if test="@meta = 'signal'">
-                <xsl:text>signal</xsl:text>
-              </xsl:if>
-              <xsl:if test="@meta = 'slot'">
-                <xsl:text>slot</xsl:text>
-              </xsl:if>
-              
-              <xsl:if test="@final = 'true'">
-                <xsl:text>final</xsl:text>
-              </xsl:if>
-              <xsl:if test="@overload = 'true'">
-                <xsl:text>overload</xsl:text>
-              </xsl:if>
-              <xsl:if test="@override = 'true'">
-                <xsl:text>override</xsl:text>
-              </xsl:if>
-              
-              <!-- const is already shown in the signature. -->
-            </xsl:variable>
-            
-            <xsl:choose>
-              <xsl:when test="count($seq) > 0">
-                <!-- Space before [! -->
-                <xsl:value-of select="concat(' [', string-join($seq, ' '), ']')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="''"/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          
-          <!-- Concatenate the two components. -->
-          <xsl:value-of select="concat(normalize-space($pretitle), $posttitle)"/>
-        </db:title>
+        <db:title><xsl:value-of select="@signature"/></db:title>
         
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
         <xsl:apply-templates mode="content" select="description"/>
@@ -768,7 +677,6 @@
               <db:parameter>
                 <xsl:value-of select="@name"/>
               </db:parameter>
-              <!-- TODO: Default value for QWidget constructor is ... instead of Qt::WindowFlags() in WebXML -->
               <xsl:if test="@default and not(@default='')">
                 <db:initializer>
                   <xsl:value-of select="@default"/>
@@ -911,9 +819,16 @@
         <xsl:apply-templates mode="content_class_synopsis" select="."/>
         <xsl:apply-templates mode="content" select="description"/>
         
-        <xsl:if test="getter or setter">
+        <xsl:if test="getter or setter or resetter">
+          <xsl:variable name="plural" as="xs:boolean" select="count(getter or setter or resetter) > 1"/>
+          
           <db:para>
-            <db:emphasis role="bold">Access Functions:</db:emphasis>
+            <db:emphasis role="bold">
+              <xsl:choose>
+                <xsl:when test="$plural">Access functions:</xsl:when>
+                <xsl:otherwise>Access function:</xsl:otherwise>
+              </xsl:choose>
+            </db:emphasis>
             
             <db:informaltable>
               <db:tbody>
@@ -937,6 +852,35 @@
                     </db:td>
                   </db:tr>
                 </xsl:if>
+                <xsl:if test="resetter">
+                  <db:tr>
+                    <db:td>
+                      void
+                    </db:td>
+                    <db:td>
+                      <xsl:value-of select="setter/@name"/>()
+                    </db:td>
+                  </db:tr>
+                </xsl:if>
+              </db:tbody>
+            </db:informaltable>
+          </db:para>
+        </xsl:if>
+        
+        <xsl:if test="notifier">
+          <db:para>
+            <db:emphasis role="bold">Notifier signal:</db:emphasis>
+            
+            <db:informaltable>
+              <db:tbody>
+                <db:tr>
+                  <db:td>
+                    void
+                  </db:td>
+                  <db:td>
+                    <xsl:value-of select="notifier/@name"/>()
+                  </db:td>
+                </db:tr>
               </db:tbody>
             </db:informaltable>
           </db:para>
@@ -1573,7 +1517,7 @@
             </xsl:for-each-group>
           </xsl:when>
           <xsl:when test="$type = 'obsoleteqmlmembers'">
-            <!-- TODO: No example available, so not implemented. -->
+            <xsl:message>WARNING: obsoleteqmlmembers not implemented.</xsl:message>
           </xsl:when>
           <xsl:when test="$type = 'functionindex'">
             <xsl:variable name="functions" as="map(xs:string, xs:string)">
@@ -1705,7 +1649,8 @@
             </xsl:for-each-group>
           </xsl:when>
           <xsl:when test="$type = 'qmlbasictypes' or $type = 'qmltypes' or $type = 'qmltypesbymodule'">
-            <!-- TODO: These files do not seem to get generated... so no way to generate these lists for now. -->
+            <xsl:message>WARNING: <xsl:value-of select="$type"/> not implemented.</xsl:message>
+            <!-- These files do not seem to get generated... so no way to generate these lists for now. -->
           </xsl:when>
           <xsl:when test="$type = 'namespaces'">
             <xsl:variable name="namespaces" as="map(xs:string, xs:string)">
@@ -1898,6 +1843,7 @@
             </db:itemizedlist>
           </xsl:when>
           <xsl:when test="$type = 'groupsbymodule' or $type = 'annotatedattributions'">
+            <xsl:message>WARNING: attributions not implemented.</xsl:message>
             <!-- TODO: Currently not implemented, requires attributions -->
             <!-- Examples:  -->
             <!--   qt3d-index.webxml    <generatedlist contents="groupsbymodule attributions-qt3d"/> -->
