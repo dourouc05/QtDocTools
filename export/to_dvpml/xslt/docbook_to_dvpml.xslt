@@ -58,10 +58,10 @@
         
         <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
         <!-- consider this list has links to linked documents. -->
-        <xsl:if test="db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist]">
+        <xsl:if test="db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
           <voiraussi>
             <!-- First, the linked documents (previous/next). -->
-            <xsl:for-each select="db:info/db:abstract/db:para[2]/db:simplelist/db:member">
+            <xsl:for-each select="db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
               <lien>
                 <texte><xsl:value-of select="db:link/text()"/></texte>
                 <url>
@@ -72,6 +72,12 @@
             </xsl:for-each>
             <!-- Then, anything else? -->
           </voiraussi>
+        </xsl:if>
+        
+        <xsl:if test="db:info/db:bibliomisc[@role='reference']">
+          <reference>
+            <xsl:value-of select="db:info/db:bibliomisc[@role='reference']/text()"/>
+          </reference>
         </xsl:if>
         
         <authorDescriptions>
@@ -180,7 +186,9 @@
   </xsl:template>
   
   <!-- Block elements. -->
-  <xsl:template mode="content" match="db:info"/>
+  <xsl:template mode="content" match="db:info">
+    <!-- Everything is done in <db:article>. -->
+  </xsl:template>
   
   <xsl:template mode="content" match="db:section">
     <xsl:variable name="sectionId">
@@ -249,6 +257,7 @@
   <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
   
   <xsl:template mode="content" match="db:para">
+    <!-- The synopsis is done in <db:article>. -->
     <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or ..[self::db:article] or string-length(name(preceding-sibling::*[1])) = 0">
       <xsl:choose>
         <xsl:when test="db:informaltable | db:note | db:programlisting">
@@ -351,7 +360,7 @@
     </rich-imgtext>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:mediaobject">
+  <xsl:template mode="content" match="db:mediaobject | db:inlinemediaobject">
     <xsl:choose>
       <!-- First child is an image? You've got an image! -->
       <xsl:when test="child::node()[1][self::db:imageobject]">
@@ -388,6 +397,10 @@
         </animation>
       </xsl:when>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template mode="content_para content" match="db:equation | db:inlineequation">
+    <latex id="{@xml:id}"><xsl:value-of select="mathphrase[@role='latex']"/></latex>
   </xsl:template>
   
   <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content" priority="-1">
@@ -441,13 +454,19 @@
     </sup>
   </xsl:template>
   
+  <xsl:template mode="content_para" match="db:phrase[starts-with(@role, 'color:')]">
+    <font color="{substring(@role, 7)}">
+      <xsl:apply-templates mode="content_para"/>
+    </font>
+  </xsl:template>
+  
   <xsl:template mode="content_para" match="db:subscript">
     <sub>
       <xsl:apply-templates mode="content_para"/>
     </sub>
   </xsl:template>
   
-  <xsl:template mode="content_para" match="db:link">
+  <xsl:template mode="content_para" match="db:link[not(starts-with(@role, 'lien-forum'))]">
     <xsl:variable name="translatedLink" as="xs:string">
       <xsl:choose>
         <xsl:when test="ends-with(string(@xlink:href), '.webxml')">
@@ -482,9 +501,21 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_para" match="db:inlinemediaobject">
-    <image src="{imageobject[1]/imagedata/@fileref}"/>
-  </xsl:template>
+  <xsl:template mode="content_para" match="db:link[starts-with(@role, 'lien-forum')]">
+    <xsl:variable name="idpost" select="if (contains(@xlink:href, '#post')) then tokenize(@xlink:href, '#post')[2] else ''"/>
+    <xsl:variable name="id" select="tokenize(replace(@xlink:href, '#post.*', ''), '?t=')[2]"/>
+    
+    <lien-forum id="{$id}">
+      <xsl:if test="@idpost != ''">
+        <xsl:attribute name="idpost" select="$idpost"/>
+      </xsl:if>
+      
+      <xsl:if test="@role != 'lien-forum'">
+        <!-- Should be 'lien-forum-avec-note' -->
+        <xsl:attribute name="avecnote" select="'1'"></xsl:attribute>
+      </xsl:if>
+    </lien-forum>
+  </xsl:template>    
   
   <xsl:template mode="content_para" match="db:footnote">
     <noteBasPage>

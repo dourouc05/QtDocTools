@@ -94,7 +94,7 @@
             
             <xsl:if test="$mainTag/description/relation">
               <db:para>
-                <db:simplelist>
+                <db:simplelist role="see-also">
                   <xsl:for-each select="$mainTag/description/relation">
                     <db:member>
                       <db:link xlink:href="{@href}" xlink:title="{@meta}">
@@ -1059,7 +1059,7 @@
       <xsl:variable name="content">
         <db:para>
           <db:emphasis role="bold">See Also:</db:emphasis>
-          <db:simplelist type="vert">
+          <db:simplelist type="vert" role="see-also">
             <xsl:for-each select="link">
               <db:member>
                 <xsl:apply-templates mode="content_para" select="."/>

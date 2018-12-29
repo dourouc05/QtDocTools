@@ -34,6 +34,16 @@
                 
                 <db:abstract>
                     <xsl:apply-templates mode="content" select="synopsis"/>
+                    
+                    <xsl:if test="voiraussi">
+                        <db:para>
+                            <db:simplelist role="see-also">
+                                <xsl:for-each select="lien">
+                                    <db:link xlink:href="{url}"><xsl:value-of select="texte"/></db:link>
+                                </xsl:for-each>
+                            </db:simplelist>
+                        </db:para>
+                    </xsl:if>
                 </db:abstract>
                 
                 <xsl:if test="entete/date">
@@ -41,6 +51,12 @@
                 </xsl:if>
                 <xsl:if test="entete/miseajour">
                     <db:date><xsl:value-of select="tc:parse-date(entete/miseajour/text())"/></db:date>
+                </xsl:if>
+                
+                <xsl:if test="reference">
+                    <db:bibliomisc role="reference">
+                        <xsl:value-of select="reference/text()"/>
+                    </db:bibliomisc>
                 </xsl:if>
                 
                 <db:authorgroup>
@@ -107,6 +123,16 @@
                 </db:authorgroup>
             </db:info>
             
+            <xsl:if test="lecteur">
+                <xsl:message>WARNING: tag lecteur is not handled. Please propose a way to encode it in DocBook.</xsl:message>
+            </xsl:if>
+            <xsl:if test="multi-page">
+                <xsl:message>WARNING: tag multi-page is not handled. Please propose a way to encode it in DocBook. (Probably in an outside file.)</xsl:message>
+            </xsl:if>
+            <xsl:if test="soustitre">
+                <xsl:message>WARNING: tag soustitre is not handled. Please propose a way to encode it in DocBook.</xsl:message>
+            </xsl:if>
+            
             <xsl:apply-templates select="summary" mode="content"/>
         </db:article>
     </xsl:template>
@@ -144,7 +170,7 @@
         </db:programlisting>
     </xsl:template>
     <xsl:template mode="content" match="image">
-        <db:mediaobject>
+        <xsl:element name="{if (parent::paragraph) then 'db:inlinemediaobject' else 'db:mediaobject'}">
             <db:imageobject>
                 <db:imagedata fileref="{@src}">
                     <xsl:if test="@align">
@@ -178,7 +204,7 @@
                     </db:para>
                 </db:caption>
             </xsl:if>
-        </db:mediaobject>
+        </xsl:element>
     </xsl:template>
     <xsl:template mode="content" match="animation">
         <db:mediaobject>
@@ -242,7 +268,7 @@
             </xsl:if>
         </db:mediaobject>
     </xsl:template>
-   
+    
     <xsl:template mode="content" match="liste">
         <xsl:element name="{if (@type='none' or not(@type)) then 'db:itemizedlist' else 'db:orderedlist'}">
             <!-- Numeration symbol for this ordered list (no if will match for itemizedlist). -->
@@ -297,7 +323,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-
+    
     <xsl:template mode="content" match="i">
         <db:emphasis>
             <xsl:apply-templates mode="content"/>
@@ -333,11 +359,35 @@
             <xsl:apply-templates mode="content"/>
         </db:code>
     </xsl:template>
+    <xsl:template mode="content" match="font">
+        <db:phrase role="{concat('color:', @color)}">
+            <xsl:apply-templates mode="content"/>
+        </db:phrase>
+    </xsl:template>
+    <xsl:template mode="content" match="latex">
+        <xsl:element name="{if (parent::paragraph) then 'inlineequation' else 'equation'}">
+            <xsl:if test="@id">
+                <xsl:attribute name="xml:id" select="@id"></xsl:attribute>
+            </xsl:if>
+            
+            <db:mathphrase role="latex">
+                <xsl:value-of select="."/>
+            </db:mathphrase>
+        </xsl:element>
+    </xsl:template>
     <!-- br intentionnally skipped (no meaning in DocBook). -->
     <xsl:template mode="content" match="link">
         <db:link xlink:href="{@href}">
             <!-- All other attributes are lost (target, onclick, title, langue). -->
-            <xsl:apply-templates mode="content"/>
+            
+            <xsl:choose>
+                <xsl:when test="child::node()">
+                    <xsl:apply-templates mode="content"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="@href"/>
+                </xsl:otherwise>
+            </xsl:choose>
         </db:link>
     </xsl:template>
     <xsl:template mode="content" match="acronyme">
@@ -360,8 +410,20 @@
         <xsl:apply-templates mode="content"/>
     </xsl:template>
     <xsl:template mode="content" match="lien-forum">
-        <!-- Stars will not be shown here. -->
-        <db:link xlink:href="{concat('https://www.developpez.net/forums/showthread.php?t=', @id)}">
+        <xsl:variable name="link">
+            <xsl:choose>
+                <xsl:when test="@idpost">
+                    <xsl:value-of select="concat('https://www.developpez.net/forums/showthread.php?t=', @id, '#post', @idpost)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat('https://www.developpez.net/forums/showthread.php?t=', @id)"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <db:link xlink:href="{$link}" role="lien-forum">
+            <xsl:attribute name="role" select="if (@avecnote and @avecnote='1') then 'lien-forum-avec-note' else 'lien-forum'"></xsl:attribute>
+            
             Commentez&#0160;!
         </db:link>
     </xsl:template>
