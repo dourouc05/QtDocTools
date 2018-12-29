@@ -352,15 +352,42 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:mediaobject">
-    <image src="{db:imageobject[1]/db:imagedata/@fileref}">
-      <xsl:if test="db:textobject">
-        <xsl:attribute name="alt" select="normalize-space(db:textobject)"/>
-      </xsl:if>
-      
-      <xsl:if test="db:caption">
-        <xsl:attribute name="legende" select="normalize-space(db:caption)"/>
-      </xsl:if>
-    </image>
+    <xsl:choose>
+      <!-- First child is an image? You've got an image! -->
+      <xsl:when test="child::node()[1][self::db:imageobject]">
+        <image src="{db:imageobject[1]/db:imagedata/@fileref}">
+          <xsl:if test="db:textobject">
+            <xsl:attribute name="alt" select="normalize-space(db:textobject)"/>
+          </xsl:if>
+          
+          <xsl:if test="db:caption">
+            <xsl:attribute name="legende" select="normalize-space(db:caption)"/>
+          </xsl:if>
+        </image>
+      </xsl:when>
+      <!-- First child is a video? You've got a video! If there is an image, it is alternate content. -->
+      <xsl:when test="child::node()[1][self::db:videoobject]">
+        <animation>
+          <xsl:if test="@role">
+            <xsl:attribute name="type" select="@role"/>
+          </xsl:if>
+          
+          <xsl:if test="@width">
+            <width><xsl:value-of select="@width"/></width>
+          </xsl:if>
+          
+          <xsl:if test="@height">
+            <height><xsl:value-of select="@height"/></height>
+          </xsl:if>
+          
+          <xsl:for-each select="multimediaparam">
+            <xsl:element name="{@name}">
+              <xsl:value-of select="@value"/>
+            </xsl:element>
+          </xsl:for-each>
+        </animation>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content" priority="-1">

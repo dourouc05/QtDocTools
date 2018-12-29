@@ -180,6 +180,68 @@
             </xsl:if>
         </db:mediaobject>
     </xsl:template>
+    <xsl:template mode="content" match="animation">
+        <db:mediaobject>
+            <db:videoobject>
+                <db:videodata fileref="{@src}">
+                    <xsl:if test="width">
+                        <xsl:attribute name="width" select="width"/>
+                    </xsl:if>
+                    <xsl:if test="height">
+                        <xsl:attribute name="height" select="height"/>
+                    </xsl:if>
+                    <xsl:if test="@type">
+                        <xsl:attribute name="role" select="@type"/>
+                    </xsl:if>
+                    
+                    <xsl:if test="param-movie">
+                        <db:multimediaparam name="param-movie" value="{param-movie}"/>
+                    </xsl:if>
+                    <xsl:if test="param-quality">
+                        <db:multimediaparam name="param-quality" value="{param-quality}"/>
+                    </xsl:if>
+                    <xsl:if test="param-loop">
+                        <db:multimediaparam name="param-loop" value="{param-loop}"/>
+                    </xsl:if>
+                    <xsl:if test="param-wmode">
+                        <db:multimediaparam name="param-wmode" value="{param-wmode}"/>
+                    </xsl:if>
+                </db:videodata>
+            </db:videoobject>
+            
+            <xsl:if test="@image">
+                <db:imageobject>
+                    <db:imagedata fileref="{@image}"/>
+                </db:imageobject>
+            </xsl:if>
+            
+            <xsl:if test="@alt">
+                <db:textobject>
+                    <db:para>
+                        <xsl:value-of select="@alt"/>
+                    </db:para>
+                </db:textobject>
+            </xsl:if>
+            
+            <xsl:if test="@legende and @title">
+                <xsl:message>WARNING: both a legend and a title for an image; what should I do with that?</xsl:message>
+            </xsl:if>
+            <xsl:if test="@legende">
+                <db:caption>
+                    <db:para>
+                        <xsl:value-of select="@legende"/>
+                    </db:para>
+                </db:caption>
+            </xsl:if>
+            <xsl:if test="@title">
+                <db:caption>
+                    <db:para>
+                        <xsl:value-of select="@title"/>
+                    </db:para>
+                </db:caption>
+            </xsl:if>
+        </db:mediaobject>
+    </xsl:template>
    
     <xsl:template mode="content" match="liste">
         <xsl:element name="{if (@type='none' or not(@type)) then 'db:itemizedlist' else 'db:orderedlist'}">
