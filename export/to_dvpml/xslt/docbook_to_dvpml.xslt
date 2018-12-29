@@ -223,8 +223,14 @@
     </tableau>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:formaltable">
-    <tableau width="80%" border="1" sautDePagePdf="0" legende="{if (title) then title else info/title}">
+  <xsl:template mode="content" match="db:table">
+    <tableau width="80%" border="1" legende="{if (title) then title else info/title}">
+      <xsl:apply-templates mode="content"/>
+    </tableau>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:informaltable">
+    <tableau width="80%" border="1">
       <xsl:apply-templates mode="content"/>
     </tableau>
   </xsl:template>
@@ -284,6 +290,7 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:blockquote">
+    <!-- Dirty hack, I know. -->
     <tableau width="95%" border="3">
       <ligne>
         <colonne useText="0">
@@ -356,6 +363,24 @@
   
   <xsl:template mode="content" match="db:note">
     <rich-imgtext type="info">
+      <xsl:apply-templates mode="content"/>
+    </rich-imgtext>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:tip">
+    <rich-imgtext type="idea">
+      <xsl:apply-templates mode="content"/>
+    </rich-imgtext>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:warning">
+    <rich-imgtext type="warning">
+      <xsl:apply-templates mode="content"/>
+    </rich-imgtext>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:important">
+    <rich-imgtext type="error">
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>
   </xsl:template>
@@ -466,7 +491,7 @@
     </sub>
   </xsl:template>
   
-  <xsl:template mode="content_para" match="db:link[not(starts-with(@role, 'lien-forum'))]">
+  <xsl:template mode="content_para" match="db:link[not(starts-with(@role, 'lien-forum') or @linkend)]">
     <xsl:variable name="translatedLink" as="xs:string">
       <xsl:choose>
         <xsl:when test="ends-with(string(@xlink:href), '.webxml')">
@@ -515,12 +540,29 @@
         <xsl:attribute name="avecnote" select="'1'"></xsl:attribute>
       </xsl:if>
     </lien-forum>
+  </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:link[@linkend]">
+    <renvoi id="{@linkend}">
+      <xsl:apply-templates mode="content_para"/>
+    </renvoi>
   </xsl:template>    
   
   <xsl:template mode="content_para" match="db:footnote">
     <noteBasPage>
       <xsl:apply-templates mode="content"/>
     </noteBasPage>
+  </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:indexterm">
+    <xsl:choose>
+      <xsl:when test="db:primary and not(db:secondary)">
+        <index><xsl:value-of select="@db:primary"/></index>
+      </xsl:when>
+      <xsl:otherwise>
+        <index id1="{db:primary}" id2="{db:secondary}"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->

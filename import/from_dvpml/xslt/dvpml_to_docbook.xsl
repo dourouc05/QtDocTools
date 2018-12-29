@@ -268,6 +268,73 @@
             </xsl:if>
         </db:mediaobject>
     </xsl:template>
+    <xsl:template mode="content" match="imgtext">
+        <xsl:choose>
+            <xsl:when test="@type='idea'">
+                <db:tip>
+                    <db:para>
+                        <xsl:apply-templates mode="content"/>
+                    </db:para>
+                </db:tip>
+            </xsl:when>
+            <xsl:when test="@type='info'">
+                <db:note>
+                    <db:para>
+                        <xsl:apply-templates mode="content"/>
+                    </db:para>
+                </db:note>
+            </xsl:when>
+            <xsl:when test="@type='warning'">
+                <db:warning>
+                    <db:para>
+                        <xsl:apply-templates mode="content"/>
+                    </db:para>
+                </db:warning>
+            </xsl:when>
+            <xsl:when test="@type='error'">
+                <db:important>
+                    <db:para>
+                        <xsl:apply-templates mode="content"/>
+                    </db:para>
+                </db:important>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message>WARNING: custom imgtexts are not handled. How would you encode them into DocBook?</xsl:message>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template mode="content" match="rich-imgtext">
+        <xsl:choose>
+            <xsl:when test="@type='idea'">
+                <db:tip>
+                    <xsl:apply-templates mode="content"/>
+                </db:tip>
+            </xsl:when>
+            <xsl:when test="@type='info'">
+                <db:note>
+                    <xsl:apply-templates mode="content"/>
+                </db:note>
+            </xsl:when>
+            <xsl:when test="@type='warning'">
+                <db:warning>
+                    <xsl:apply-templates mode="content"/>
+                </db:warning>
+            </xsl:when>
+            <xsl:when test="@type='error'">
+                <db:important>
+                    <xsl:apply-templates mode="content"/>
+                </db:important>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message>WARNING: custom imgtexts are not handled. How would you encode them into DocBook?</xsl:message>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <xsl:template mode="content" match="citation">
+        <db:blockquote>
+            <xsl:apply-templates mode="content"/>
+        </db:blockquote>
+    </xsl:template>
     
     <xsl:template mode="content" match="liste">
         <xsl:element name="{if (@type='none' or not(@type)) then 'db:itemizedlist' else 'db:orderedlist'}">
@@ -322,6 +389,56 @@
                 </db:listitem>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template mode="content" match="tableau">
+        <xsl:element name="{if(@legende) then 'db:table' else 'db:informaltable'}">
+            <xsl:if test="@border">
+                <xsl:attribute name="border" select="@border"/>
+            </xsl:if>
+            <xsl:if test="@width">
+                <xsl:attribute name="width" select="@width"/>
+            </xsl:if>
+            
+            <xsl:if test="@legende">
+                <caption><xsl:value-of select="@legende"/></caption>
+            </xsl:if>
+            
+            <xsl:apply-templates mode="content"/>
+        </xsl:element>
+    </xsl:template>
+    <xsl:template mode="content" match="entete">
+        <db:thead>
+            <xsl:apply-templates mode="content"/>
+        </db:thead>
+    </xsl:template>
+    <xsl:template mode="content" match="ligne">
+        <db:tr>
+            <xsl:apply-templates mode="content"/>
+        </db:tr>
+    </xsl:template>
+    <xsl:template mode="content" match="colonne">
+        <xsl:element name="{if (parent::entete) then 'db:th' else 'db:td'}">
+            <xsl:if test="@align">
+                <xsl:attribute name="align" select="@align"/>
+            </xsl:if>
+            <xsl:if test="@colspan">
+                <xsl:attribute name="colspan" select="@colspan"/>
+            </xsl:if>
+            <!-- color and width are not handled by DocBook. -->
+            
+            <xsl:choose>
+                <xsl:when test="@useText='0'">
+                    <xsl:apply-templates mode="content"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <db:para>
+                        <xsl:apply-templates mode="content"/>
+                    </db:para>
+                </xsl:otherwise>
+            </xsl:choose>
+            
+        </xsl:element>
     </xsl:template>
     
     <xsl:template mode="content" match="i">
@@ -400,12 +517,24 @@
         <db:anchor xml:id="{@id}"/>
         <xsl:apply-templates mode="content"/>
     </xsl:template>
-    <xsl:template mode="content" match="signet">
+    <xsl:template mode="content" match="renvoi">
+        <db:link linkend="{@id}">
+            <xsl:apply-templates mode="content"/>
+        </db:link>
+    </xsl:template>
+    <xsl:template mode="content" match="index">
         <db:indexterm>
-            <db:primary><xsl:value-of select="@id1"/></db:primary>
-            <xsl:if test="@id2">
-                <db:secondary><xsl:value-of select="@id2"/></db:secondary>
-            </xsl:if>
+            <xsl:choose>
+                <xsl:when test="@id1">
+                    <db:primary><xsl:value-of select="@id1"/></db:primary>
+                    <xsl:if test="@id2">
+                        <db:secondary><xsl:value-of select="@id2"/></db:secondary>
+                    </xsl:if>
+                </xsl:when>
+                <xsl:otherwise>
+                    <db:primary><xsl:value-of select="."/></db:primary>
+                </xsl:otherwise>
+            </xsl:choose>
         </db:indexterm>
         <xsl:apply-templates mode="content"/>
     </xsl:template>
