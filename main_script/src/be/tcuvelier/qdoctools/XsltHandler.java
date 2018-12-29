@@ -29,7 +29,7 @@ public class XsltHandler {
         return sel;
     }
 
-    private XsltTransformer createTransformer(File file, Path destination, ByteArrayOutputStream os) throws SaxonApiException {
+    public XsltTransformer createTransformer(File file, Path destination, ByteArrayOutputStream os) throws SaxonApiException {
         XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
         Serializer out = saxonProcessor.newSerializer();
         out.setOutputFile(destination.toFile());
