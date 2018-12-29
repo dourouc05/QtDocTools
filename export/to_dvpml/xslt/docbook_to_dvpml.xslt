@@ -9,7 +9,7 @@
   <!-- TODO: <db:codelisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
   
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
-  <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>   
+  <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
@@ -96,11 +96,25 @@
                     </xsl:choose>
                   </fullname>
                   <xsl:if test="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]">
-                    <url><xsl:value-of select="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]"/></url>
+                    <xsl:variable name="uri" select="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]"/>
+                    <homepage>
+                      <title><xsl:value-of select="$uri/@type"/></title>
+                      <url><xsl:value-of select="$uri/text()"/></url>
+                    </homepage>
                   </xsl:if>
                   <xsl:if test="db:uri[@type='main-uri']">
+                    <url><xsl:value-of select="db:uri[@type='main-uri']"/></url>
                     <xsl:variable name="profileId" select="translate(tokenize(db:uri[@type='main-uri'], '/')[5], 'u', '')"/>
                     <badge>https://www.developpez.com/ws/badgeimg?user=<xsl:value-of select="$profileId"/>&amp;v=1</badge>
+                  </xsl:if>
+                  <xsl:if test="db:uri[@type='blog-uri']">
+                    <blog><xsl:value-of select="db:uri[@type='blog-uri']"/></blog>
+                  </xsl:if>
+                  <xsl:if test="db:uri[@type='google-plus']">
+                    <google-plus><xsl:value-of select="db:uri[@type='google-plus']"/></google-plus>
+                  </xsl:if>
+                  <xsl:if test="db:uri[@type='linkedin']">
+                    <linkedin><xsl:value-of select="db:uri[@type='linkedin']"/></linkedin>
                   </xsl:if>
                 </authorDescription>
               </xsl:for-each>
@@ -119,12 +133,15 @@
             <xsl:choose>
               <xsl:when test="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()) > 0]">
                 <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
+                <!-- Most normal case. -->
+                
                 <!-- Do some checks to ensure that no text is ignored (paragraphs outside sections). -->
                 <xsl:if test="db:info/following-sibling::*[1][self::db:para]">
                   <xsl:message>WARNING: Paragraphs outside sections not being converted!</xsl:message>
                 </xsl:if>
                 
-                <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()) > 0]"/>
+                <!-- <db:simplelist> is already eaten for <voiraussi>. -->
+                <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
               </xsl:when>
               <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
                 <!-- Just links in the DocBook abstract, but something resembling an abstract -->
@@ -145,7 +162,7 @@
         
         <summary>
           <xsl:choose>
-            <xsl:when test="not(child::*[1][self::section])">
+            <xsl:when test="not(child::*[2][self::db:section])">
               <!-- A document must have a section. -->
               <section id="I" noNumber="1">
                 <title><xsl:value-of select="db:info/db:title"/></title>
@@ -335,7 +352,15 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:mediaobject">
-    <image src="{db:imageobject[1]/db:imagedata/@fileref}"/>
+    <image src="{db:imageobject[1]/db:imagedata/@fileref}">
+      <xsl:if test="db:textobject">
+        <xsl:attribute name="alt" select="normalize-space(db:textobject)"/>
+      </xsl:if>
+      
+      <xsl:if test="db:caption">
+        <xsl:attribute name="legende" select="normalize-space(db:caption)"/>
+      </xsl:if>
+    </image>
   </xsl:template>
   
   <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content" priority="-1">

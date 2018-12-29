@@ -13,7 +13,9 @@
 			applications spécialisées.
 		</db:para>
 		       <db:para>
-			         <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1133409"/>
+			         <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1133409">
+            Commentez !
+        </db:link>
 		       </db:para>
 	     </db:abstract>
       <db:pubdate>2011-02-11</db:pubdate>
@@ -23,7 +25,7 @@
             <db:personname>
                <db:othername role="pseudonym">Aldiemus</db:othername>
                <db:firstname>traducteur</db:firstname>
-               <db:lastname>: Aldiemus</db:lastname>
+               <db:surname>: Aldiemus</db:surname>
             </db:personname>
             <db:uri type="main-uri">http://www.developpez.net/forums/u221328/aldiemus/</db:uri>
          </db:othercredit>
@@ -31,7 +33,7 @@
             <db:personname>
                <db:othername role="pseudonym">dourouc05</db:othername>
                <db:firstname>traducteur</db:firstname>
-               <db:lastname>: Thibaut Cuvelier</db:lastname>
+               <db:surname>: Thibaut Cuvelier</db:surname>
             </db:personname>
             <db:uri type="main-uri">http://www.developpez.net/forums/u254882/dourouc05/</db:uri>
             <db:uri type="site Web">http://tcuvelier.developpez.com</db:uri>
@@ -41,7 +43,7 @@
             <db:personname>
                <db:othername role="pseudonym">dn</db:othername>
                <db:firstname>Qt</db:firstname>
-               <db:lastname>Developer Network</db:lastname>
+               <db:surname>Developer Network</db:surname>
             </db:personname>
             <db:uri type="main-uri">http://qt-devnet.developpez.com/</db:uri>
          </db:othercredit>
@@ -170,7 +172,14 @@
 				Les signaux et slots connectent les composants de l'application les uns avec les autres pour qu'ils communiquent d'une façon simple en assurant la sûreté du typage. Cette forme de communication 
 				interobjet est disponible dans tous les widgets standard et peut être utilisée par les développeurs dans leurs propres widgets personnalisés. 
 			</db:para>
-			
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/qml-whitepaper1-widgets.jpg"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>Une sélection de widgets disponibles avec Qt.</db:para>
+         </db:caption>
+      </db:mediaobject>
 			   <db:section>
 				     <db:title>Widgets</db:title>
 				     <db:para>
@@ -277,7 +286,14 @@
 				Un ensemble complet de boîtes de dialogue standard sont mises à disposition, incluant celles pour choisir les fichiers, les répertoires, les polices de caractères et les couleurs. En pratique, une 
 				instruction sur une ligne constitue la seule chose nécessaire à la présentation d'une boîte de dialogue standard.
 			</db:para>
-			
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/qt-whitep-features1.png"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>Qt Assistant utilise de nombreuses fonctionnalités de la fenêtre principale de l'application pour afficher la documentation de Qt.</db:para>
+         </db:caption>
+      </db:mediaobject>
 			   <db:para>
 				Qt utilise les actions pour simplifier la programmation des interfaces utilisateur. Par exemple, si un menu d'options, un bouton de barre d'outils et un accélérateur de clavier produisent la même action, 
 				l'action en question ne devra être codée qu'une seule fois.
@@ -314,7 +330,14 @@
 					Les menus de Qt sont très flexibles et font partie d'un système d'actions intégré (voir Actions). Les actions peuvent être activées ou désactivées, ajoutées dynamiquement aux menus et supprimées à
 					nouveau plus tard.
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/qt-whitep-features2.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Le support de barre d'outils unifié sur Mac OS X améliore l'aspect visuel et rend agréable l'utilisation des applications en fusionnant       les barres d'outils adjacentes et les barres de titre des fenêtres.</db:para>
+            </db:caption>
+         </db:mediaobject>
 				     <db:para>
 					Les barres d'outils contiennent des ensembles de boutons ainsi que d'autres widgets auxquels l'utilisateur peut accéder pour effectuer des actions. Elles peuvent être déplacées au choix entre le haut, 
 					la gauche, la droite et le bas de la zone centrale de la fenêtre principale. Chaque barre d'outils peut être glissée hors de sa zone de barre d'outils et flotter comme une palette d'outils indépendante.
@@ -362,7 +385,14 @@
 					des fonctions commodes pour les tâches les plus communes. Des captures d'écran de certaines boîtes de dialogue standard de Qt sont présentées ci-dessous. Qt propose également des boîtes de 
 					dialogue standard pour la sélection de couleur, l'impression, les indicateurs de progression et les messages d'information. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/qt-whitep-features3.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Une QFileDialog et une QFontDialog présentées dans le style Plastique. Sur Windows et Mac OS X, les boîtes de dialogue natives sont utilisées à la place.</db:para>
+            </db:caption>
+         </db:mediaobject>
 				     <db:para>
 					Les programmeurs peuvent créer leurs propres boîtes de dialogue par héritage de la classe <db:emphasis role="bold">QDialog</db:emphasis>. Qt Designer inclut également des modèles de boîtes pour aider les développeurs 
 					à démarrer avec la conception. 
@@ -472,7 +502,14 @@
 					Les outils utilisés pour créer et éditer le code source des applications créées avec Qt Designer vont dépendre des préférences personnelles de chaque développeur ; certains voudront tirer avantage 
 					des fonctionnalités d'intégration offertes avec Qt Designer pour développer à partir de Microsoft Visual Studio ou l'environnement Eclipse.
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/qt-whitep-qtdesigner1.jpg"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Une vue d'ensemble de l'interface utilisateur de Qt Designer.</db:para>
+            </db:caption>
+         </db:mediaobject>
 			   </db:section>
 			   <db:section>
 				     <db:title>Extension de Qt Designer</db:title>
@@ -525,7 +562,14 @@
 				dans Qt par des périphériques de dessin. Cette approche assure qu'une large gamme de puissantes opérations de dessin sont disponibles pour chaque plateforme supportée par Qt et permet également aux
 				développeurs de choisir les périphériques les plus adaptés à leurs besoins. 
 			</db:para>
-			
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/demos-boxes.png"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>La démonstration des boîtes présente une série de fonctionnalités graphiques de Qt. </db:para>
+         </db:caption>
+      </db:mediaobject>
 			   <db:para>
 				Les applications graphiques qui requièrent un canevas interactif peuvent tirer profit du framework de la vue graphique (<db:emphasis>graphics view</db:emphasis>) pour gérer et rendre les scènes avec un grand nombre d'éléments
 				interactifs, en utilisant de multiples vues si nécessaire. 
@@ -568,7 +612,14 @@
 				     <db:para>
 					La gamme de formats de fichiers supportés qui peuvent être utilisés avec ces classes peut être étendue avec des plug-ins d'extension. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/graphicsview-map.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Le framework de la vue graphique permet la création d'applications graphiques qui combinent une haute qualité de rendu à des fonctionnalités       complètes pour l'interaction avec l'utilisateur. </db:para>
+            </db:caption>
+         </db:mediaobject>
 			   </db:section>
 			   <db:section>
 				     <db:title>Périphériques de dessin et impression</db:title>
@@ -633,7 +684,14 @@
 					ou créer &#x96; en partant de rien avec QGraphicsWidget &#x96; des éléments ressemblant à des items. Comme pour les interfaces conventionnelles, les gestionnaires de disposition peuvent être utilisés 
 					pour disposer les widgets et les items dans une scène. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/svgviewer-example.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Les dessins SVG peuvent être rendus sur n'importe quel périphérique de dessin supporté par Qt. </db:para>
+            </db:caption>
+         </db:mediaobject>
 			   </db:section>
 			   <db:section>
 				     <db:title>SVG</db:title>
@@ -733,9 +791,24 @@
 				efficacement. Des vues standard que l'on peut trouver dans des boîtes à outils graphiques modernes incluent généralement des vues en liste contenant de simples listes d'items, des vues
 				en arbre avec une liste hiérarchique d'items et des tableaux, qui fournissent des fonctionnalités de positionnement semblables aux tableurs. 
 			</db:para>
-			
-			
-			
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/cleanlooks-treeview.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/plastique-listview.png"/>
+         </db:imageobject>
+      </db:mediaobject>
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/macintosh-tableview.png"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>Qt fournit des vues standard pour les arbres, listes et tableaux d'items. </db:para>
+         </db:caption>
+      </db:mediaobject>
 			   <db:para>
 				Les classes de vue d'items de Qt sont disponibles en deux formats : des widgets classiques et des composants modèle-vue. Les listes, tableaux et arbres classiques sont des widgets autonomes
 				qui gèrent leurs objets d'item, explicitement créés par le développeur. 
@@ -771,7 +844,14 @@
 					vues d'items de Qt. Dans cette approche, les modèles sont utilisés pour fournir des données à d'autres composants, des vues qui affichent des items à l'utilisateur et des délégués
 					qui gèrent le rendu et l'édition. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/modelview-delegates.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>L'architecture orientée composant du framework modèle-vue facilite la personnalisation des vues d'items. </db:para>
+            </db:caption>
+         </db:mediaobject>
 				     <db:para>
 					Les modèles ne sont que de fins emballages autour des sources de données, écrites conformément à une interface standard fournie par <db:code>QAbstractItemModel</db:code>. Cette
 					interface autorise les widgets dérivant de <db:code>QAbstractItemView</db:code> à accéder aux données fournies par le modèle, peu importe la nature de la source des données. 
@@ -827,8 +907,22 @@
 				dans des listes et des tableaux, ainsi qu'être visuellement séparé du corps du document avec des cadres. L'apparence de chaque élément du document peut être précisément ajustée 
 				en utilisant les nombreuses fonctionnalités disponibles aux développeurs grâce à l'API de texte riche. 
 			</db:para>
-			
-			
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/textedit-demo.png"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>Les fonctionnalités avancées d'édition de texte riche de Qt permettent la création et l'édition de documents complexes dans QTextEdit. </db:para>
+         </db:caption>
+      </db:mediaobject>
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/textedit-OpenOffice.org.png"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>Les documents peuvent être exportés au format OpenOffice pour utilisation dans un logiciel de traitement de texte. </db:para>
+         </db:caption>
+      </db:mediaobject>
 			   <db:section>
 				     <db:title>Édition de texte riche</db:title>
 				     <db:para>
@@ -901,7 +995,14 @@
 				La gestion du réseau de WebKit est assurée de manière transparente par les classes de Qt, qui donnent aux composants du navigateur une implémentation conforme aux standards HTTP 1.1, 
 				supportant la communication SSL (<db:emphasis>Secure Sockets Layer</db:emphasis>) et les proxies. 
 			</db:para>
-			
+			   <db:mediaobject>
+         <db:imageobject>
+            <db:imagedata fileref="./images/webkit-plus-graphics-view.png"/>
+         </db:imageobject>
+         <db:caption>
+            <db:para>Les widgets Qt peuvent être embarqués dans des pages Web affichées par l'intégration WebKit dans Qt ;      ces pages Web peuvent être affichées comme des items avec le framework de la vue graphique. </db:para>
+         </db:caption>
+      </db:mediaobject>
 			   <db:section>
 				     <db:title>Intégration aux applications natives</db:title>
 				     <db:para>
@@ -935,7 +1036,14 @@
 					par QtWebKit. La configuration de cette fonctionnalité est effectuée dans une classe Qt qui est aussi utilisée pour configurer d'autres sortes de plug-ins, comme les plug-ins
 					de widgets exposés par l'application à l'environnement Web. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/webkit-netscape-plugin.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Les plug-ins tiers sont supportés par QtWebKit via l'API Netscape. </db:para>
+            </db:caption>
+         </db:mediaobject>
 			   </db:section>
 			   <db:section>
 				     <db:title>Références en ligne</db:title>
@@ -1010,7 +1118,14 @@
 					Le framework modèle-vue contient un bon nombre de fonctionnalités qui se chargent des bases de toute application fondée sur une base de données, dont le support des transactions et l'option
 					d'autoriser ou non l'édition du tableau sur base des colonnes pour éviter des allers-retours inutiles en base. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/books-demo.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>La démo Qt Books montre l'intégration entre les classes de QtSql et le framework modèle-vue. </db:para>
+            </db:caption>
+         </db:mediaobject>
 			   </db:section>
 			   <db:section>
 				     <db:title>Widgets exploitant ces données</db:title>
@@ -1130,7 +1245,14 @@ QString example = tr("Example");</db:programlisting>
 				     <db:para>
 					Le manuel complet de Qt Linguist fournit des informations pertinentes sur le processus de traduction pour les gestionnaires, traducteurs et programmeurs. 
 				</db:para>
-				
+				     <db:mediaobject>
+            <db:imageobject>
+               <db:imagedata fileref="./images/qt-linguist.png"/>
+            </db:imageobject>
+            <db:caption>
+               <db:para>Travail simultané sur les traductions en français et chinois simplifié avec Qt Linguist. </db:para>
+            </db:caption>
+         </db:mediaobject>
 			   </db:section>
 			   <db:section>
 				     <db:title>Références en ligne</db:title>

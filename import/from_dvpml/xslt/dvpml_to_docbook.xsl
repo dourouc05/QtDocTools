@@ -66,9 +66,9 @@
                                 <db:firstname>
                                     <xsl:value-of select="tokenize(fullname, ' ')[1]"/>
                                 </db:firstname>
-                                <db:lastname>
+                                <db:surname>
                                     <xsl:value-of select="string-join(for $i in 2 to last() + 1 return tokenize(fullname, ' ')[$i], ' ')"/>
-                                </db:lastname>
+                                </db:surname>
                             </db:personname>
                             
                             <xsl:if test="url">
@@ -143,7 +143,44 @@
             <xsl:apply-templates mode="content"/>
         </db:programlisting>
     </xsl:template>
-    
+    <xsl:template mode="content" match="image">
+        <db:mediaobject>
+            <db:imageobject>
+                <db:imagedata fileref="{@src}">
+                    <xsl:if test="@align">
+                        <xsl:attribute name="align" select="@align"/>
+                    </xsl:if>
+                </db:imagedata>
+            </db:imageobject>
+            
+            <xsl:if test="@alt">
+                <db:textobject>
+                    <db:para>
+                        <xsl:value-of select="@alt"/>
+                    </db:para>
+                </db:textobject>
+            </xsl:if>
+            
+            <xsl:if test="@legende and @titre">
+                <xsl:message>WARNING: both a legend and a title for an image; what should I do with that?</xsl:message>
+            </xsl:if>
+            <xsl:if test="@legende">
+                <db:caption>
+                    <db:para>
+                        <xsl:value-of select="@legende"/>
+                    </db:para>
+                </db:caption>
+            </xsl:if>
+            <xsl:if test="@titre">
+                <db:caption>
+                    <db:para>
+                        <xsl:value-of select="@titre"/>
+                    </db:para>
+                </db:caption>
+            </xsl:if>
+        </db:mediaobject>
+    </xsl:template>
+   
     <xsl:template mode="content" match="liste">
         <xsl:element name="{if (@type='none' or not(@type)) then 'db:itemizedlist' else 'db:orderedlist'}">
             <!-- Numeration symbol for this ordered list (no if will match for itemizedlist). -->
@@ -263,7 +300,7 @@
     <xsl:template mode="content" match="lien-forum">
         <!-- Stars will not be shown here. -->
         <db:link xlink:href="{concat('https://www.developpez.net/forums/showthread.php?t=', @id)}">
-            <xsl:apply-templates mode="content"/>
+            Commentez&#0160;!
         </db:link>
     </xsl:template>
 </xsl:stylesheet>
