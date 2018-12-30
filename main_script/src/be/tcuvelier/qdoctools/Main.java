@@ -1,9 +1,19 @@
 package be.tcuvelier.qdoctools;
 
+import net.sf.saxon.s9api.QName;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XdmAtomicValue;
+import net.sf.saxon.s9api.XsltTransformer;
+import org.xml.sax.SAXException;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
 /**
@@ -73,22 +83,55 @@ public class Main implements Callable<Void> {
     }
 
     @Override
-    public Void call() {
+    public Void call() throws SaxonApiException, IOException, SAXException {
         switch (mode) {
             case normal:
                 // Just one conversion to perform.
+
+                // Create a Saxon object based on the sheet to use.
+                XsltHandler h;
                 if (isDvpML(input) && isDocBook(output)) {
-                    ;
+                    h = new XsltHandler(xsltDvpMLToDocBookPath);
                 } else if (isDocBook(input) && isDvpML(output)) {
-                    ;
+                    h = new XsltHandler(xsltDocBookToDvpMLPath);
                 } else {
                     System.err.println("The input-output pair was not recognised! This mode only allows DvpML <> DocBook.");
                     return null;
                 }
 
-                if (validate) {
-                    ;
+                // Run the transformation (including some variables that are required for qdoc).
+                File file = new File(input);
+                Path destination = Paths.get(output);
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                XsltTransformer trans = h.createTransformer(file, destination, os);
+                trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
+                trans.setParameter(new QName("local-folder"), new XdmAtomicValue(file.getParentFile().toPath().toUri()));
+                trans.transform();
+
+                // If there were errors, print them out.
+                String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+                if (errors.length() > 0) {
+                    System.err.println(errors);
                 }
+
+                // If required, validate the document.
+                if (validate) {
+                    boolean isValid;
+                    if (isDocBook(output)) {
+                        isValid = ValidationHandler.validateRNG(destination.toFile(), docBookRNGPath);
+                    } else if (isDvpML(output)) {
+                        isValid = ValidationHandler.validateXSD(destination.toFile(), dvpMLXSDPath);
+                    } else {
+                        System.err.println("The output format has no validation step defined!");
+                        isValid = true;
+                    }
+
+                    if (! isValid) {
+                        System.err.println("There were validation errors. See the above exception for details.");
+                    }
+                }
+
+                // Done!
                 return null;
             case qdoc:
                 // Perform the complete conversion cycle.
