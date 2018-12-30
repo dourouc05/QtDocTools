@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools;
 
+import be.tcuvelier.qdoctools.utils.Pair;
+import be.tcuvelier.qdoctools.utils.QdocHandler;
 import be.tcuvelier.qdoctools.utils.ValidationHandler;
 import be.tcuvelier.qdoctools.utils.XsltHandler;
 import net.sf.saxon.s9api.QName;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
@@ -28,7 +31,8 @@ import java.util.concurrent.Callable;
  *  - Run qdoc and the associated transformations (for Qt's documentation only)
  *      - Only qdoc to WebXML
  *      - From qdoc to DocBook
- *  - Later on, more documentation-oriented things.
+ *  - Later on, more documentation-oriented things (like seeing what has changed between two versions and applying
+ *    the same changes to a translated copy).
  *
  *  All options to find qdoc and related tools are contained in a configuration file.
  */
@@ -51,13 +55,29 @@ public class Main implements Callable<Void> {
             description = "Whether the output shall be validated against a known XSD or RNG")
     private boolean validate = true;
 
+    @Option(names = "--no-rewrite-qdocconf", description = "Disables the rewriting of the .qdocconf files " +
+            "(the new ones have already been generated)")
+    private boolean rewriteQdocconf = true;
 
-    @Option(names = { "-V", "--consistency-checks" },
-            description = "In qdoc mode, run deeper validation tests (consistency checks)")
-    private boolean consistencyCheck = false;
+    @Option(names = "--no-convert-webxml", description = "Disables the generation of the WebXML files. " +
+            "This operation is time-consuming, as it relies on qdoc, and requires the prior generation of the qdocconf files")
+    private boolean convertToWebXML = true;
+
+    @Option(names = "--no-convert-docbook", description = "Disables the generation of the DocBook files. " +
+            "This operation requires the prior generation of the WebXML files")
+    private boolean convertToDocBook = true;
+
+    @Option(names = "--no-convert-dvpml", description = "Disables the generation of the DvpML files. " +
+            "This operation requires the prior generation of the DocBook files")
+    private boolean convertToDvpML = true;
+
+    @Option(names = "--no-consistency-checks", description = "Disables advanced consistency checks. " +
+            "They require an Internet connectio")
+    private boolean consistencyChecks = true;
 
     @Option(names = { "-c", "--configuration-file" },
             description = "Configuration file, only useful in qdoc mode (default: ${DEFAULT-VALUE})")
+    // TODO: What about kitunix' location?
     private String configurationFile = "config.json";
 
     private final String xsltWebXMLToDocBookPath = "../import/from_qdoc_v2/xslt/webxml_to_docbook.xslt"; // Path to the XSLT sheet WebXML to DocBook.
@@ -85,7 +105,7 @@ public class Main implements Callable<Void> {
     }
 
     @Override
-    public Void call() throws SaxonApiException, IOException, SAXException {
+    public Void call() throws SaxonApiException, IOException, SAXException, InterruptedException {
         switch (mode) {
             case normal:
                 // Just one conversion to perform.
@@ -102,7 +122,7 @@ public class Main implements Callable<Void> {
                 }
 
                 // Run the transformation (including some variables that are required for qdoc).
-                File file = new File(input);
+                File file = new File(input); // TODO: make createTransformer take Strings as input.
                 Path destination = Paths.get(output);
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 XsltTransformer trans = h.createTransformer(file, destination, os);
@@ -136,7 +156,49 @@ public class Main implements Callable<Void> {
                 // Done!
                 return null;
             case qdoc:
-                // Perform the complete conversion cycle.
+                // Perform the conversion cycle, as complete as required.
+                QdocHandler q = new QdocHandler(input, output);
+
+                // Ensure the output folder exists.
+                q.ensureOutputFolderExists();
+
+                // Explore the source directory for the qdocconf files.
+                List<Pair<String, Path>> modules = q.findModules();
+                System.out.println("::> " + modules.size() + " modules found");
+
+                // Rewrite the needed qdocconf files (one per module, may be multiple times per folder).
+                if (rewriteQdocconf) {
+                    for (Pair<String, Path> module : modules) {
+                        q.rewriteQdocconf(module.first, module.second);
+                        System.out.println("++> Module qdocconf rewritten: " + module.first);
+                    }
+
+                    Path mainQdocconfPath = q.makeMainQdocconf(modules);
+                    System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+                }
+
+                // Run qdoc to get the WebXML output.
+                if (convertToWebXML) {
+                    System.out.println("++> Running qdoc.");
+                    q.runQdoc();
+                    System.out.println("++> Qdoc done.");
+                }
+
+                // Run Saxon to get the DocBook output.
+                if (convertToDocBook) {
+                    ;
+                }
+
+                // Run Saxon to get the DvpML output.
+                if (convertToDvpML) {
+                    ;
+                }
+
+                // Perform advanced consistency checks (requires Internet connectivity).
+                if (consistencyChecks) {
+                    ;
+                }
+
                 return null;
             default:
                 // This is strictly impossible.
