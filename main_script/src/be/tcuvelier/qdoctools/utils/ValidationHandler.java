@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools;
+package be.tcuvelier.qdoctools.utils;
 
 import com.thaiopensource.relaxng.jaxp.CompactSyntaxSchemaFactory;
 import org.xml.sax.SAXException;

@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools;
 
+import be.tcuvelier.qdoctools.utils.ValidationHandler;
+import be.tcuvelier.qdoctools.utils.XsltHandler;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
