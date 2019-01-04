@@ -1,7 +1,7 @@
 package be.tcuvelier.qdoctools.utils;
 
-import be.tcuvelier.qdoctools.ReadQdocconfException;
-import be.tcuvelier.qdoctools.WriteQdocconfException;
+import be.tcuvelier.qdoctools.exceptions.ReadQdocconfException;
+import be.tcuvelier.qdoctools.exceptions.WriteQdocconfException;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
@@ -26,6 +27,10 @@ public class QdocHandler {
         if (! outputFolder.toFile().isDirectory()) {
             Files.createDirectories(outputFolder);
         }
+    }
+
+    public Path getOutputFolder() {
+        return outputFolder;
     }
 
     /**
@@ -229,5 +234,22 @@ public class QdocHandler {
 
         // Run qdoc and wait until it is done.
         pb.start().waitFor();
+    }
+
+    private List<Path> findWithExtension(String extension, String typeName) throws IOException {
+        String[] fileNames = outputFolder.resolve("webxml").toFile().list((current, name) -> name.endsWith(extension));
+        if (fileNames == null || fileNames.length == 0) {
+            throw new IOException("No " + typeName + " files found!");
+        }
+
+        return Arrays.stream(fileNames).map(s -> outputFolder.resolve("webxml").resolve(s)).collect(Collectors.toList());
+    }
+
+    public List<Path> findWebXML() throws IOException {
+        return findWithExtension(".webxml", "WebXML");
+    }
+
+    public List<Path> findDocBook() throws IOException {
+        return findWithExtension(".qdt", "DocBook");
     }
 }

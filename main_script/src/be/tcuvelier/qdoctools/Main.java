@@ -1,9 +1,6 @@
 package be.tcuvelier.qdoctools;
 
-import be.tcuvelier.qdoctools.utils.Pair;
-import be.tcuvelier.qdoctools.utils.QdocHandler;
-import be.tcuvelier.qdoctools.utils.ValidationHandler;
-import be.tcuvelier.qdoctools.utils.XsltHandler;
+import be.tcuvelier.qdoctools.utils.*;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
@@ -17,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -104,12 +100,31 @@ public class Main implements Callable<Void> {
         return path.endsWith(".webxml");
     }
 
+    private boolean validateDvpML(String file) throws IOException, SAXException {
+        return ValidationHandler.validateXSD(new File(file), dvpMLXSDPath);
+    }
+
+    private boolean validateDvpML(Path file) throws IOException, SAXException {
+        return ValidationHandler.validateXSD(file.toFile(), dvpMLXSDPath);
+    }
+
+    private boolean validateDocBook(String file) throws IOException, SAXException {
+        return validateDocBook(new File(file));
+    }
+
+    private boolean validateDocBook(Path file) throws IOException, SAXException {
+        return validateDocBook(file.toFile());
+    }
+
+    private boolean validateDocBook(File file) throws IOException, SAXException {
+        return ValidationHandler.validateRNG(file, docBookRNGPath);
+    }
+
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InterruptedException {
         switch (mode) {
-            case normal:
+            case normal: {
                 // Just one conversion to perform.
-
                 // Create a Saxon object based on the sheet to use.
                 XsltHandler h;
                 if (isDvpML(input) && isDocBook(output)) {
@@ -122,13 +137,8 @@ public class Main implements Callable<Void> {
                 }
 
                 // Run the transformation (including some variables that are required for qdoc).
-                File file = new File(input); // TODO: make createTransformer take Strings as input.
-                Path destination = Paths.get(output);
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
-                XsltTransformer trans = h.createTransformer(file, destination, os);
-                trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11"));
-                trans.setParameter(new QName("local-folder"), new XdmAtomicValue(file.getParentFile().toPath().toUri()));
-                trans.transform();
+                h.createTransformer(input, output, os).transform();
 
                 // If there were errors, print them out.
                 String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
@@ -140,22 +150,23 @@ public class Main implements Callable<Void> {
                 if (validate) {
                     boolean isValid;
                     if (isDocBook(output)) {
-                        isValid = ValidationHandler.validateRNG(destination.toFile(), docBookRNGPath);
+                        isValid = validateDocBook(output);
                     } else if (isDvpML(output)) {
-                        isValid = ValidationHandler.validateXSD(destination.toFile(), dvpMLXSDPath);
+                        isValid = validateDvpML(output);
                     } else {
                         System.err.println("The output format has no validation step defined!");
                         isValid = true;
                     }
 
-                    if (! isValid) {
+                    if (!isValid) {
                         System.err.println("There were validation errors. See the above exception for details.");
                     }
                 }
 
                 // Done!
                 return null;
-            case qdoc:
+            }
+            case qdoc: {
                 // Perform the conversion cycle, as complete as required.
                 QdocHandler q = new QdocHandler(input, output);
 
@@ -186,23 +197,113 @@ public class Main implements Callable<Void> {
 
                 // Run Saxon to get the DocBook output.
                 if (convertToDocBook) {
-                    ;
+                    Path root = q.getOutputFolder();
+
+                    // First, generate the list of classes (may take a bit of time).
+                    XsltTransformer utilities = new XsltHandler(xsltWebXMLToDocBookUtilPath)
+                            .createTransformer(root.resolve("qdt_classes.xml"), "main");
+                    utilities.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
+                    utilities.transform();
+
+                    // Second, iterate through the files.
+                    List<Path> webxml = q.findWebXML();
+                    XsltHandler h = new XsltHandler(xsltWebXMLToDocBookPath);
+
+                    int i = 0;
+                    String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
+                    for (Path file : webxml) {
+//                        if (! file.getFileName().toString().startsWith("q"))
+//                            continue;
+//                        if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
+//                            continue;
+
+                        // Output the result in the same folder as before, with the same file name, just replace
+                        // the extension (.webxml becomes .qdt).
+                        Path destination = root.resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+
+                        // Print the name of the file to process to ease debugging.
+                        System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]" + file.toString());
+
+                        // Actually convert the WebXML into DocBook. This may print errors directly to stderr.
+                        ByteArrayOutputStream os = new ByteArrayOutputStream();
+                        XsltTransformer trans = h.createTransformer(file, destination, os);
+                        trans.setParameter(new QName("qt-version"), new XdmAtomicValue("5.11")); // TODO: The version number really must come from outside.
+                        trans.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
+                        trans.transform();
+
+                        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+                        if (errors.length() > 0) {
+                            System.out.println(errors);
+                        }
+
+                        // Handle validation.
+                        if (validate) {
+                            try {
+                                validateDocBook(destination);
+                            } catch (SAXException e) {
+                                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
+                                e.printStackTrace();
+                            }
+                        }
+
+                        // Perform advanced consistency checks (requires Internet connectivity).
+                        if (consistencyChecks) {
+                            QdocConsistencyChecks.check(destination, "[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]");
+                        }
+
+                        // Go to the next file.
+                        ++i;
+                    }
                 }
 
                 // Run Saxon to get the DvpML output.
                 if (convertToDvpML) {
-                    ;
-                }
+                    Path root = q.getOutputFolder();
 
-                // Perform advanced consistency checks (requires Internet connectivity).
-                if (consistencyChecks) {
-                    ;
+                    // Iterate through all the files.
+                    List<Path> qdt = q.findDocBook();
+                    XsltHandler h = new XsltHandler(xsltDocBookToDvpMLPath);
+
+                    int i = 0;
+                    String iFormat = "%0" + Integer.toString(qdt.size()).length() + "d";
+                    for (Path file : qdt) {
+                        // Output the result in the same folder as before, with the same file name, just replace
+                        // the extension (.qdt becomes .xml).
+                        Path destination = root.resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
+
+                        // Print the name of the file to process to ease debugging.
+                        System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]" + file.toString());
+
+                        // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
+                        ByteArrayOutputStream os = new ByteArrayOutputStream();
+                        h.createTransformer(file, destination, os).transform();
+
+                        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+                        if (errors.length() > 0) {
+                            System.out.println(errors);
+                        }
+
+                        // Handle validation.
+                        if (validate) {
+                            try {
+                                validateDvpML(destination);
+                            } catch (SAXException e) {
+                                System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "] Validation error!");
+                                e.printStackTrace();
+                            }
+                        }
+
+                        // Go to the next file.
+                        ++i;
+                    }
                 }
 
                 return null;
-            default:
+            }
+            default: {
                 // This is strictly impossible.
                 return null;
+            }
         }
     }
 }

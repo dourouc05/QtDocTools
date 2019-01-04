@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools;
+package be.tcuvelier.qdoctools.exceptions;
 
 import java.io.IOException;
 import java.nio.file.Path;

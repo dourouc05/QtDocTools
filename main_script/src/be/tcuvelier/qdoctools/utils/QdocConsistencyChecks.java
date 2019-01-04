@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools;
+package be.tcuvelier.qdoctools.utils;
 
 import net.sf.saxon.s9api.*;
 import org.jsoup.HttpStatusException;
@@ -317,6 +317,8 @@ public class QdocConsistencyChecks {
 //                request.htmlToSet("Public Types", "h2", "public-variables")
 //        );
         // TODO: Public functions, like https://doc.qt.io/qt-5.11/qopenglfunctions-1-0.html
+        // TODO: Static public members, like http://doc.qt.io/qt-5/qxmlinputsource.html#static-public-members
+        // TODO: Protected slots, like http://doc.qt.io/qt-5/qmdiarea.html#protected-slots
 
         return ir;
     }

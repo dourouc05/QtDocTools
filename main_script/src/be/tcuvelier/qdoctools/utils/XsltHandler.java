@@ -10,11 +10,12 @@ import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class XsltHandler {
-    private Processor saxonProcessor;
-    private XsltCompiler saxonCompiler;
-    private XsltExecutable saxonExecutable;
+    private final Processor saxonProcessor;
+    private final XsltCompiler saxonCompiler;
+    private final XsltExecutable saxonExecutable;
 
     public XsltHandler(String sheet) throws SaxonApiException {
         saxonProcessor = new Processor(false);
@@ -29,15 +30,34 @@ public class XsltHandler {
         return sel;
     }
 
-    public XsltTransformer createTransformer(File file, Path destination, ByteArrayOutputStream os) throws SaxonApiException {
-        XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
+    public XsltTransformer createTransformer(String file, String destination, ByteArrayOutputStream os) throws SaxonApiException {
+        return createTransformer(new File(file), new File(destination), os);
+    }
+
+    public XsltTransformer createTransformer(Path file, Path destination, ByteArrayOutputStream os) throws SaxonApiException {
+        return createTransformer(file.toFile(), destination.toFile(), os);
+    }
+
+    private XsltTransformer createTransformer(File file, File destination, ByteArrayOutputStream os) throws SaxonApiException {
         Serializer out = saxonProcessor.newSerializer();
-        out.setOutputFile(destination.toFile());
+        out.setOutputFile(destination);
         saxonCompiler.setErrorListener(createLogger(os));
+
+        XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
 
         XsltTransformer trans = saxonExecutable.load();
         trans.setInitialContextNode(source);
         trans.setDestination(out);
+        return trans;
+    }
+
+    public XsltTransformer createTransformer(Path destination, String initialTemplate) throws SaxonApiException {
+        Serializer out = saxonProcessor.newSerializer();
+        out.setOutputFile(destination.toFile());
+
+        XsltTransformer trans = saxonExecutable.load();
+        trans.setDestination(out);
+        trans.setInitialTemplate(new QName(initialTemplate));
         return trans;
     }
 }
