@@ -1,23 +1,17 @@
 package be.tcuvelier.qdoctools.utils;
 
-import be.tcuvelier.qdoctools.utils.consistency.InheritedByResult;
+import be.tcuvelier.qdoctools.utils.consistency.CheckRequest;
+import be.tcuvelier.qdoctools.utils.consistency.Items;
 import be.tcuvelier.qdoctools.utils.consistency.ItemsResult;
-import net.sf.saxon.s9api.*;
+import net.sf.saxon.s9api.SaxonApiException;
 import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
-import javax.xml.transform.stream.StreamSource;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.Arrays;
+import java.util.Set;
 
 public class QdocConsistencyChecks {
-
     public static void check(Path fileName, String prefix) {
         // Performs all checks and prints the results.
 
@@ -49,7 +43,7 @@ public class QdocConsistencyChecks {
 //        }
 
         try {
-            ItemsResult items = checkItems(r);
+            ItemsResult items = Items.checkItems(r);
             if (! items.result()) {
                 for (String name: items.tests()) {
                     if (! items.getResult(name)) {
@@ -81,165 +75,5 @@ public class QdocConsistencyChecks {
             System.out.println(prefix + " Error while performing the items class check: ");
             e.printStackTrace();
         }
-    }
-
-    private static class CheckRequest {
-        Processor processor;
-        XdmNode xdm;
-        XPathCompiler compiler;
-        Document html;
-
-        CheckRequest(Path fileName) throws IOException, SaxonApiException {
-            processor = new Processor(false);
-            xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(fileName.toFile())));
-            compiler = processor.newXPathCompiler();
-            compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
-            compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
-
-            String otherFile = fileName.getFileName().toString().replace(".qdt", "") + ".html";
-            html = Jsoup.connect("http://doc.qt.io/qt-5/" + otherFile).get();
-        }
-
-        XdmValue xpath(String expression) throws SaxonApiException {
-            return compiler.evaluate(expression, xdm);
-        }
-
-        Set<String> xpathToSet(String expression) throws SaxonApiException {
-            XdmValue xml = xpath(expression);
-            Set<String> set = new HashSet<>();
-            for (int i = 0; i < xml.size(); ++i) {
-                String element = xml.itemAt(i).getStringValue();
-                if (! element.contains("::")) {
-                    set.add(element);
-                } else {
-                    set.add(element.split("::")[1]);
-                }
-            }
-            return set;
-        }
-
-        Set<String> htmlToSet(String expression, String tag, String anchor) {
-            return htmlToSet(expression, tag, anchor, false);
-        }
-
-        Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode) {
-            return htmlToSet(expression, tag, anchor, enumMode, (s) -> true);
-        }
-
-        Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode, Predicate<String> firstColumn) {
-            Elements html = this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty()? "" : ("#" + anchor)));
-            Set<String> set = new HashSet<>();
-            if (html.size() > 0) {
-                // For flags: one enumeration is followed by flags (same name, just in the plural; more robust test:
-                // same links), but only one documentation entry for the two.
-                String previousLink = "";
-                Elements propertiesListHTML = html.get(0).nextElementSibling().getElementsByTag("a");
-                for (Element e : propertiesListHTML) {
-                    boolean toConsider = true;
-
-                    // If there is a previous element and this one just adds an s (enum then flags), skip; otherwise, keep.
-                    if (enumMode) {
-                        if (!previousLink.isEmpty() && e.attr("href").equals(previousLink)) {
-                            toConsider = false;
-                        }
-                        previousLink = e.attr("href");
-                    }
-
-                    // Imposed first column content.
-                    if (toConsider && e.parent().parent().previousElementSibling() != null) {
-                        toConsider = firstColumn.test(e.parent().parent().previousElementSibling().text());
-                    }
-
-                    // Once all tests are performed, consider to add this element to the set.
-                    if (toConsider) {
-                        set.add(e.text());
-                    }
-                }
-            }
-            return set;
-        }
-
-        boolean isClass() throws SaxonApiException {
-            return xpath("//db:classsynopsis").size() > 0;
-        }
-    }
-
-    public static InheritedByResult checkInheritedBy(CheckRequest request) throws SaxonApiException {
-        // If the local file is not a class, the test is passed (only for classes).
-        if (! request.isClass()) {
-            return new InheritedByResult(true);
-        }
-
-        // Find the inherited-by classes.
-        XdmValue inheritedByListXML = request.xpath("//db:classsynopsisinfo[@role='inheritedBy']/text()");
-
-        Set<String> inheritedBySetXML = new HashSet<>();
-        for (int i = 0; i < inheritedByListXML.size(); ++i) {
-            inheritedBySetXML.add(inheritedByListXML.itemAt(i).getStringValue());
-        }
-
-        // Load the remote HTML.
-        Elements inheritedByTagHTML = request.html.getElementsContainingText("Inherited By:");
-        Set<String> inheritedBySetHTML = new HashSet<>();
-
-        if (inheritedByTagHTML.size() > 0) {
-            // inheritedByTagHTML contains all tags that contain a tag that has "Inherited by": take the last one,
-            // the most precise of this collection.
-            Elements inheritedByListHTML = inheritedByTagHTML.get(inheritedByTagHTML.size() - 1).siblingElements().get(0).getElementsByTag("a");
-            //                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
-            //                                                                                   Differences with htmlToSet()
-            for (Element e : inheritedByListHTML) {
-                inheritedBySetHTML.add(e.text());
-            }
-        }
-
-        // Compare.
-        return new InheritedByResult(inheritedBySetXML, inheritedBySetHTML);
-    }
-
-    public static ItemsResult checkItems(CheckRequest request) throws SaxonApiException {
-        // If the local file is not a class, the test is passed (only for classes).
-        if (! request.isClass()) {
-            return new ItemsResult();
-        }
-
-        ItemsResult ir = new ItemsResult();
-        ir.addComparison("Types",
-                request.xpathToSet("//(db:enumsynopsis/db:enumname union db:typedefsynopsis[not(preceding-sibling::*[1][self::db:enumsynopsis])]/db:typedefname)/text()"),
-                SetUtils.union(
-                        request.htmlToSet("Public Types", "h2", "public-types", true),
-                        request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
-                )
-        );
-        ir.addComparison("Properties",
-                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"),
-                request.htmlToSet("Properties", "h2", "properties")
-        );
-        ir.addComparison("Public functions",
-                request.xpathToSet("//(db:methodsynopsis[not(db:modifier[text() = 'signal'])] union db:constructorsynopsis union db:destructorsynopsis)/db:methodname/text()"), // Methods, constructors, destructors.
-                SetUtils.union(
-                        request.htmlToSet("Public Functions", "h2", "public-functions"),
-                        request.htmlToSet("Public Slots", "h2", "public-slots"),
-                        request.htmlToSet("Signals", "h2", "signals"),
-                        request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions"), // Example: http://doc.qt.io/qt-5/q3dcamera.html
-                        request.htmlToSet("Reimplemented Protected Functions", "h2", "reimplemented-protected-functions"), // Example: http://doc.qt.io/qt-5/qabstractanimation.html#event
-                        request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
-                        request.htmlToSet("Protected Functions", "h2", "protected-functions"), // Example: https://doc.qt.io/qt-5.11/q3dobject.html
-                        request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> ! s.equals("typedef")) // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html http://doc.qt.io/qt-5/qxmlstreamnotationdeclaration.html
-                )
-        );
-        ir.addComparison("Signals", // TODO: What the heck, signals are also in the public functions?
-                request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
-                request.htmlToSet("Signals", "h2", "signals")
-        );
-//        ir.addComparison("Public variables",
-//                request.xpathToSet("//db:fieldsynopsis/db:varname/text()"), // Example: http://doc.qt.io/qt-5/qstyleoptionrubberband.html
-//                request.htmlToSet("Public Types", "h2", "public-variables")
-//        );
-        // TODO: Public functions, like https://doc.qt.io/qt-5.11/qopenglfunctions-1-0.html
-        // TODO: Static public members, like http://doc.qt.io/qt-5/qxmlinputsource.html#static-public-members
-        // TODO: Protected slots, like http://doc.qt.io/qt-5/qmdiarea.html#protected-slots
-
-        return ir;
     }
 }
