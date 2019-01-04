@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 /**
- * Goals of téhis package?
+ * Goals of this package?
  *  - Transform documents, either one by one OR by batch (for Qt's documentation only)
  *      - DvpML <> DocBook (configuration: a JSON along the document)
  *    File types are guessed from extensions (.xml for DvpML, .db, .dbk, or .qdt for DocBook, .webxml for WebXML).
@@ -103,6 +103,11 @@ public class Main implements Callable<Void> {
         }
     }
 
+    private String prefix(int i, List list) {
+        String iFormat = "%0" + Integer.toString(list.size()).length() + "d";
+        return "[" + String.format(iFormat, i + 1) + "/" + list.size() + "]";
+    }
+
     private void callQdoc() throws SaxonApiException, IOException, InterruptedException {
         // Perform the conversion cycle, as complete as required.
 
@@ -120,7 +125,7 @@ public class Main implements Callable<Void> {
 
         // Explore the source directory for the qdocconf files.
         List<Pair<String, Path>> modules = q.findModules();
-        System.out.println("::> " + modules.size() + " modules found");
+        System.out.println("++> " + modules.size() + " modules found");
 
         // Rewrite the needed qdocconf files (one per module, may be multiple times per folder).
         if (rewriteQdocconf) {
@@ -160,21 +165,18 @@ public class Main implements Callable<Void> {
             }
 
             int i = 0;
-            String iFormat = "%0" + Integer.toString(webxml.size()).length() + "d";
             for (Path file : webxml) {
 //                        if (! file.getFileName().toString().startsWith("q"))
 //                            continue;
 //                        if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
 //                            continue;
 
-                String prefix = "[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]";
-
                 // Output the result in the same folder as before, with the same file name, just replace
                 // the extension (.webxml becomes .qdt).
                 Path destination = root.resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
 
                 // Print the name of the file to process to ease debugging.
-                System.out.println(prefix + " " + file.toString());
+                System.out.println(prefix(i, webxml) + " " + file.toString());
 
                 // Actually convert the WebXML into DocBook. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -195,23 +197,23 @@ public class Main implements Callable<Void> {
                     try {
                         isValid = ValidationHelper.validateDocBook(destination);
                     } catch (SAXException e) {
-                        System.out.println(prefix + " Validation error!");
+                        System.out.println(prefix(i, webxml) + " Validation error!");
                         e.printStackTrace();
                     }
 
                     if (! isValid) {
-                        System.err.println(prefix + " There were validation errors. See the above exception for details.");
+                        System.err.println(prefix(i, webxml) + " There were validation errors. See the above exception for details.");
                     }
                 }
 
                 // Perform advanced consistency checks (requires Internet connectivity).
                 if (consistencyChecks) {
-                    QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, prefix);
+                    QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, prefix(i, webxml));
                     boolean result = qc.checkInheritedBy();
                     result &= qc.checkItems();
 
                     if (! result) {
-                        System.out.println(prefix + " Check error!");
+                        System.out.println(prefix(i, webxml) + " Check error!");
                     }
                 }
 
@@ -234,16 +236,13 @@ public class Main implements Callable<Void> {
             }
 
             int i = 0;
-            String iFormat = "%0" + Integer.toString(qdt.size()).length() + "d";
             for (Path file : qdt) {
-                String prefix = "[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "]";
-
                 // Output the result in the same folder as before, with the same file name, just replace
                 // the extension (.qdt becomes .xml).
                 Path destination = root.resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
 
                 // Print the name of the file to process to ease debugging.
-                System.out.println(prefix + " " + file.toString());
+                System.out.println(prefix(i, qdt) + " " + file.toString());
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -261,12 +260,12 @@ public class Main implements Callable<Void> {
                     try {
                         isValid = ValidationHelper.validateDvpML(destination);
                     } catch (SAXException e) {
-                        System.out.println(prefix + " Validation error!");
+                        System.out.println(prefix(i, qdt) + " Validation error!");
                         e.printStackTrace();
                     }
 
                     if (! isValid) {
-                        System.err.println(prefix + "There were validation errors. See the above exception for details.");
+                        System.err.println(prefix(i, qdt) + "There were validation errors. See the above exception for details.");
                     }
                 }
 
