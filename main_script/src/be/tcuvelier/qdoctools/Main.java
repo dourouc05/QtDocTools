@@ -248,7 +248,13 @@ public class Main implements Callable<Void> {
 
                         // Perform advanced consistency checks (requires Internet connectivity).
                         if (consistencyChecks) {
-                            QdocConsistencyChecks.check(destination, "[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]");
+                            QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, "[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "]");
+                            boolean result = qc.checkInheritedBy();
+                            result &= qc.checkItems();
+
+                            if (! result) {
+                                System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Check error!");
+                            }
                         }
 
                         // Go to the next file.

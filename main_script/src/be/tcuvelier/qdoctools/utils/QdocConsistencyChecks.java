@@ -1,8 +1,6 @@
 package be.tcuvelier.qdoctools.utils;
 
-import be.tcuvelier.qdoctools.utils.consistency.CheckRequest;
-import be.tcuvelier.qdoctools.utils.consistency.Items;
-import be.tcuvelier.qdoctools.utils.consistency.ItemsResult;
+import be.tcuvelier.qdoctools.utils.consistency.*;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.jsoup.HttpStatusException;
 
@@ -12,36 +10,46 @@ import java.util.Arrays;
 import java.util.Set;
 
 public class QdocConsistencyChecks {
-    public static void check(Path fileName, String prefix) {
-        // Performs all checks and prints the results.
+    private final Path fileName;
+    private final String prefix;
+    private final CheckRequest r;
 
-        CheckRequest r;
+    public QdocConsistencyChecks(Path fileName, String prefix) throws IOException, SaxonApiException {
+        this.fileName = fileName;
+        this.prefix = prefix;
+
         try {
             r = new CheckRequest(fileName);
         } catch (HttpStatusException e) {
             System.out.println(prefix + " Error while performing consistency checks: 404 when downloading the original class.");
             // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html exists,
             // but not http://doc.qt.io/qt-5/qabstractxmlreceiver.html.
-            return; // Cannot continue for this file.
+            throw e; // Cannot continue for this file.
         } catch (IOException | SaxonApiException e) {
             System.out.println(prefix + " Error while performing consistency checks: ");
             e.printStackTrace();
-            return; // Cannot continue.
+            throw e; // Cannot continue.
         }
+    }
 
-//        try {
-//            InheritedByResult inheritedBy = checkInheritedBy(r);
-//            if (! inheritedBy.result) {
-//                System.out.println(prefix + " File: " + fileName.toString());
-//                System.out.println(prefix + " Inherited-by classes mismatch: ");
-//                System.out.println(prefix + "     - DocBook has: " + Arrays.toString(inheritedBy.xml.toArray()));
-//                System.out.println(prefix + "     - HTML has: " + Arrays.toString(inheritedBy.html.toArray()));
-//            }
-//        } catch (SaxonApiException e) {
-//            System.out.println(prefix + " Error while performing the inherited-by class check: ");
-//            e.printStackTrace();
-//        }
+    public boolean checkInheritedBy() {
+        try {
+            InheritedByResult inheritedBy = InheritedBy.checkInheritedBy(r);
+            if (! inheritedBy.result) {
+                System.out.println(prefix + " File: " + fileName.toString());
+                System.out.println(prefix + " Inherited-by classes mismatch: ");
+                System.out.println(prefix + "     - DocBook has: " + Arrays.toString(inheritedBy.xml.toArray()));
+                System.out.println(prefix + "     - HTML has: " + Arrays.toString(inheritedBy.html.toArray()));
+            }
+            return inheritedBy.result;
+        } catch (SaxonApiException e) {
+            System.out.println(prefix + " Error while performing the inherited-by class check: ");
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean checkItems() {
         try {
             ItemsResult items = Items.checkItems(r);
             if (! items.result()) {
@@ -71,9 +79,11 @@ public class QdocConsistencyChecks {
                     }
                 }
             }
+            return items.result();
         } catch (SaxonApiException e) {
             System.out.println(prefix + " Error while performing the items class check: ");
             e.printStackTrace();
+            return false;
         }
     }
 }
