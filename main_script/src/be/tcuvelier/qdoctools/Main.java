@@ -95,8 +95,10 @@ public class Main implements Callable<Void> {
         switch (mode) {
             case normal:
                 callNormal();
+                return null;
             case qdoc:
                 callQdoc();
+                return null;
             default:
                 // This is strictly impossible.
                 return null;
@@ -173,7 +175,7 @@ public class Main implements Callable<Void> {
 
                 // Output the result in the same folder as before, with the same file name, just replace
                 // the extension (.webxml becomes .qdt).
-                Path destination = root.resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".qdt");
+                Path destination = root.resolve(FileHelpers.changeExtension(file, ".qdt"));
 
                 // Print the name of the file to process to ease debugging.
                 System.out.println(prefix(i, webxml) + " " + file.toString());
@@ -192,17 +194,14 @@ public class Main implements Callable<Void> {
 
                 // Handle validation.
                 if (validate) {
-                    boolean isValid = true;
-
                     try {
-                        isValid = ValidationHelper.validateDocBook(destination);
+                        boolean isValid = ValidationHelper.validateDocBook(destination);
+                        if (! isValid) {
+                            System.err.println(prefix(i, webxml) + " There were validation errors. See the above exception for details.");
+                        }
                     } catch (SAXException e) {
                         System.out.println(prefix(i, webxml) + " Validation error!");
                         e.printStackTrace();
-                    }
-
-                    if (! isValid) {
-                        System.err.println(prefix(i, webxml) + " There were validation errors. See the above exception for details.");
                     }
                 }
 
@@ -239,7 +238,7 @@ public class Main implements Callable<Void> {
             for (Path file : qdt) {
                 // Output the result in the same folder as before, with the same file name, just replace
                 // the extension (.qdt becomes .xml).
-                Path destination = root.resolve(file.getFileName().toString().replaceFirst("[.][^.]+$", "") + ".xml");
+                Path destination = root.resolve(FileHelpers.changeExtension(file, ".xml"));
 
                 // Print the name of the file to process to ease debugging.
                 System.out.println(prefix(i, qdt) + " " + file.toString());
@@ -255,17 +254,14 @@ public class Main implements Callable<Void> {
 
                 // Handle validation.
                 if (validate) {
-                    boolean isValid = true;
-
                     try {
-                        isValid = ValidationHelper.validateDvpML(destination);
+                        boolean isValid = ValidationHelper.validateDvpML(destination);
+                        if (! isValid) {
+                            System.err.println(prefix(i, qdt) + "There were validation errors. See the above exception for details.");
+                        }
                     } catch (SAXException e) {
                         System.out.println(prefix(i, qdt) + " Validation error!");
                         e.printStackTrace();
-                    }
-
-                    if (! isValid) {
-                        System.err.println(prefix(i, qdt) + "There were validation errors. See the above exception for details.");
                     }
                 }
 

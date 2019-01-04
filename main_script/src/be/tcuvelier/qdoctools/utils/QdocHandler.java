@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.utils;
 
 import be.tcuvelier.qdoctools.exceptions.ReadQdocconfException;
 import be.tcuvelier.qdoctools.exceptions.WriteQdocconfException;
+import be.tcuvelier.qdoctools.helpers.QtModules;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.helpers;
 
+import java.nio.file.Path;
+
 public class FileHelpers {
     public static boolean isDvpML(String path) {
         return path.endsWith(".xml");
@@ -11,5 +13,13 @@ public class FileHelpers {
 
     public static boolean isWebXML(String path) {
         return path.endsWith(".webxml");
+    }
+
+    public static String changeExtension(Path file, String extension) {
+        return changeExtension(file.getFileName().toString(), extension);
+    }
+
+    public static String changeExtension(String file, String extension) {
+        return file.replaceFirst("[.][^.]+$", "") + extension;
     }
 }
