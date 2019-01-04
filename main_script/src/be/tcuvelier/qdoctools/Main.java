@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools;
 
+import be.tcuvelier.qdoctools.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.utils.*;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -10,7 +12,6 @@ import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -76,48 +77,16 @@ public class Main implements Callable<Void> {
     // TODO: What about kitunix' location?
     private String configurationFile = "config.json";
 
-    private final String xsltWebXMLToDocBookPath = "../import/from_qdoc_v2/xslt/webxml_to_docbook.xslt"; // Path to the XSLT sheet WebXML to DocBook.
-    private final String xsltWebXMLToDocBookUtilPath = "../import/from_qdoc_v2/xslt/class_parser.xslt"; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.
-    private final String xsltDvpMLToDocBookPath = "../import/from_dvpml/xslt/dvpml_to_docbook.xslt"; // Path to the XSLT sheet DvpML to DocBook.
-    private final String xsltDocBookToDvpMLPath = "../export/to_dvpml/xslt/docbook_to_dvpml.xslt"; // Path to the XSLT sheet DocBook to DvpML.
-    private final String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
-    private final String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";
+    public final static String xsltWebXMLToDocBookPath = "../import/from_qdoc_v2/xslt/webxml_to_docbook.xslt"; // Path to the XSLT sheet WebXML to DocBook.
+    public final static String xsltWebXMLToDocBookUtilPath = "../import/from_qdoc_v2/xslt/class_parser.xslt"; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.
+    public final static String xsltDvpMLToDocBookPath = "../import/from_dvpml/xslt/dvpml_to_docbook.xslt"; // Path to the XSLT sheet DvpML to DocBook.
+    public final static String xsltDocBookToDvpMLPath = "../export/to_dvpml/xslt/docbook_to_dvpml.xslt"; // Path to the XSLT sheet DocBook to DvpML.
+    public final static String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
+    public final static String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";
 
     public static void main(String[] args) {
         String[] argv = {"-i", "/", "-o", "/"};
         CommandLine.call(new Main(), argv);
-    }
-
-    private boolean isDvpML(String path) {
-        return path.endsWith(".xml");
-    }
-
-    private boolean isDocBook(String path) {
-        return path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(".qdt");
-    }
-
-    private boolean isWebXML(String path) {
-        return path.endsWith(".webxml");
-    }
-
-    private boolean validateDvpML(String file) throws IOException, SAXException {
-        return ValidationHandler.validateXSD(new File(file), dvpMLXSDPath);
-    }
-
-    private boolean validateDvpML(Path file) throws IOException, SAXException {
-        return ValidationHandler.validateXSD(file.toFile(), dvpMLXSDPath);
-    }
-
-    private boolean validateDocBook(String file) throws IOException, SAXException {
-        return validateDocBook(new File(file));
-    }
-
-    private boolean validateDocBook(Path file) throws IOException, SAXException {
-        return validateDocBook(file.toFile());
-    }
-
-    private boolean validateDocBook(File file) throws IOException, SAXException {
-        return ValidationHandler.validateRNG(file, docBookRNGPath);
     }
 
     @Override
@@ -127,9 +96,9 @@ public class Main implements Callable<Void> {
                 // Just one conversion to perform.
                 // Create a Saxon object based on the sheet to use.
                 XsltHandler h;
-                if (isDvpML(input) && isDocBook(output)) {
+                if (FileHelpers.isDvpML(input) && FileHelpers.isDocBook(output)) {
                     h = new XsltHandler(xsltDvpMLToDocBookPath);
-                } else if (isDocBook(input) && isDvpML(output)) {
+                } else if (FileHelpers.isDocBook(input) && FileHelpers.isDvpML(output)) {
                     h = new XsltHandler(xsltDocBookToDvpMLPath);
                 } else {
                     System.err.println("The input-output pair was not recognised! This mode only allows DvpML <> DocBook.");
@@ -149,10 +118,10 @@ public class Main implements Callable<Void> {
                 // If required, validate the document.
                 if (validate) {
                     boolean isValid;
-                    if (isDocBook(output)) {
-                        isValid = validateDocBook(output);
-                    } else if (isDvpML(output)) {
-                        isValid = validateDvpML(output);
+                    if (FileHelpers.isDocBook(output)) {
+                        isValid = ValidationHelper.validateDocBook(output);
+                    } else if (FileHelpers.isDvpML(output)) {
+                        isValid = ValidationHelper.validateDvpML(output);
                     } else {
                         System.err.println("The output format has no validation step defined!");
                         isValid = true;
@@ -238,11 +207,17 @@ public class Main implements Callable<Void> {
 
                         // Handle validation.
                         if (validate) {
+                            boolean isValid = true;
+
                             try {
-                                validateDocBook(destination);
+                                isValid = ValidationHelper.validateDocBook(destination);
                             } catch (SAXException e) {
                                 System.out.println("[" + String.format(iFormat, i + 1) + "/" + webxml.size() + "] Validation error!");
                                 e.printStackTrace();
+                            }
+
+                            if (! isValid) {
+                                System.err.println("There were validation errors. See the above exception for details.");
                             }
                         }
 
@@ -291,11 +266,17 @@ public class Main implements Callable<Void> {
 
                         // Handle validation.
                         if (validate) {
+                            boolean isValid = true;
+
                             try {
-                                validateDvpML(destination);
+                                isValid = ValidationHelper.validateDvpML(destination);
                             } catch (SAXException e) {
                                 System.out.println("[" + String.format(iFormat, i + 1) + "/" + qdt.size() + "] Validation error!");
                                 e.printStackTrace();
+                            }
+
+                            if (! isValid) {
+                                System.err.println("There were validation errors. See the above exception for details.");
                             }
                         }
 
