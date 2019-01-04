@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.utils;
 
+import be.tcuvelier.qdoctools.utils.consistency.InheritedByResult;
+import be.tcuvelier.qdoctools.utils.consistency.ItemsResult;
 import net.sf.saxon.s9api.*;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -15,44 +17,20 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class QdocConsistencyChecks {
-    private static <T> Set<T> setDifference(Set<T> a, Set<T> b) {
-        Set<T> difference = new HashSet<>(a);
-        difference.removeAll(b);
-        return difference;
-    }
 
-    private static <T> Set<T> difference(Set<T> a, Set<T> b) {
-        Set<T> forward = setDifference(a, b);
-        forward.addAll(setDifference(b, a));
-        return forward;
-    }
-
-    @SafeVarargs
-    private static <T> Set<T> union(Set<T> a, Set<T>... lb) {
-        Set<T> result = new HashSet<>(a);
-        for (Set<T> b: lb) {
-            result.addAll(b);
-        }
-        return result;
-    }
-
-    private static <T> boolean compareSets(Set<T> a, Set<T> b) {
-        return a.size() == b.size() && difference(a, b).size() == 0;
-    }
-
-    public static void check(Path fileName, String prefix) throws IOException, SaxonApiException {
+    public static void check(Path fileName, String prefix) {
         // Performs all checks and prints the results.
 
         CheckRequest r;
         try {
             r = new CheckRequest(fileName);
         } catch (HttpStatusException e) {
-            System.out.println(prefix + " Error while performing the inherited-by class check: 404 when downloading the original class.");
+            System.out.println(prefix + " Error while performing consistency checks: 404 when downloading the original class.");
             // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html exists,
             // but not http://doc.qt.io/qt-5/qabstractxmlreceiver.html.
-            return; // Cannot continue.
+            return; // Cannot continue for this file.
         } catch (IOException | SaxonApiException e) {
-            System.out.println(prefix + " Error while performing the inherited-by class check: ");
+            System.out.println(prefix + " Error while performing consistency checks: ");
             e.printStackTrace();
             return; // Cannot continue.
         }
@@ -85,12 +63,15 @@ public class QdocConsistencyChecks {
                         Arrays.sort(html);
                         System.out.println(prefix + "     - HTML has:    " + Arrays.toString(html));
 
+                        // Compute XML \ HTML and HTML \ XML (i.e. all differences, items in one set but not the other),
+                        // their union (XML \ HTML) u (HTML \ XML), and output it.
                         Set<String> docbookMinusHTMLSet = items.getXML(name);
                         docbookMinusHTMLSet.removeAll(items.getHTML(name));
                         Set<String> htmlMinusDocBookSet = items.getHTML(name);
                         htmlMinusDocBookSet.removeAll(items.getXML(name));
                         htmlMinusDocBookSet.addAll(docbookMinusHTMLSet);
                         Object[] differences = htmlMinusDocBookSet.toArray();
+
                         Arrays.sort(differences);
                         System.out.println(prefix + "     > Differences between the sets: " + Arrays.toString(differences));
                     }
@@ -183,24 +164,6 @@ public class QdocConsistencyChecks {
         }
     }
 
-    public static class InheritedByResult {
-        public final boolean result;
-        public final Set<String> xml;
-        public final Set<String> html;
-
-        InheritedByResult(boolean result) {
-            xml = new HashSet<>();
-            html = new HashSet<>();
-            this.result = result;
-        }
-
-        InheritedByResult(Set<String> xml, Set<String> html) {
-            this.xml = xml;
-            this.html = html;
-            result = compareSets(xml, html);
-        }
-    }
-
     public static InheritedByResult checkInheritedBy(CheckRequest request) throws SaxonApiException {
         // If the local file is not a class, the test is passed (only for classes).
         if (! request.isClass()) {
@@ -234,49 +197,6 @@ public class QdocConsistencyChecks {
         return new InheritedByResult(inheritedBySetXML, inheritedBySetHTML);
     }
 
-    public static class ItemsResult {
-        private final Map<String, Set<String>> xmls;
-        private final Map<String, Set<String>> htmls;
-        private final Map<String, Boolean> results;
-
-        ItemsResult() {
-            xmls = new HashMap<>();
-            htmls = new HashMap<>();
-            results = new HashMap<>();
-        }
-
-        void addComparison(String name, Set<String> xml, Set<String> html) {
-            xmls.put(name, xml);
-            htmls.put(name, html);
-            results.put(name,compareSets(xml, html));
-        }
-
-        public boolean result() {
-            for (Boolean v: results.values()) {
-                if (! v) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public Set<String> tests() {
-            return results.keySet();
-        }
-
-        public Set<String> getXML(String name) {
-            return xmls.get(name);
-        }
-
-        public Set<String> getHTML(String name) {
-            return htmls.get(name);
-        }
-
-        public boolean getResult(String name) {
-            return results.get(name);
-        }
-    }
-
     public static ItemsResult checkItems(CheckRequest request) throws SaxonApiException {
         // If the local file is not a class, the test is passed (only for classes).
         if (! request.isClass()) {
@@ -286,7 +206,7 @@ public class QdocConsistencyChecks {
         ItemsResult ir = new ItemsResult();
         ir.addComparison("Types",
                 request.xpathToSet("//(db:enumsynopsis/db:enumname union db:typedefsynopsis[not(preceding-sibling::*[1][self::db:enumsynopsis])]/db:typedefname)/text()"),
-                union(
+                SetUtils.union(
                         request.htmlToSet("Public Types", "h2", "public-types", true),
                         request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
                 )
@@ -297,7 +217,7 @@ public class QdocConsistencyChecks {
         );
         ir.addComparison("Public functions",
                 request.xpathToSet("//(db:methodsynopsis[not(db:modifier[text() = 'signal'])] union db:constructorsynopsis union db:destructorsynopsis)/db:methodname/text()"), // Methods, constructors, destructors.
-                union(
+                SetUtils.union(
                         request.htmlToSet("Public Functions", "h2", "public-functions"),
                         request.htmlToSet("Public Slots", "h2", "public-slots"),
                         request.htmlToSet("Signals", "h2", "signals"),
