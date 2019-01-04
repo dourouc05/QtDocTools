@@ -15,12 +15,13 @@ public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path outputFolder; // Where all the generated files should be put.
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
-    private final String qdocPath = "C:\\Qt\\5.12.0\\msvc2017_64\\bin\\qdoc.exe"; // TODO: Read this from configuration.
+    private final String qdocPath;
 
-    public QdocHandler(String input, String output) {
+    public QdocHandler(String input, String output, String qdocPath) {
         sourceFolder = Paths.get(input);
         outputFolder = Paths.get(output);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
+        this.qdocPath = qdocPath;
     }
 
     public void ensureOutputFolderExists() throws IOException {
