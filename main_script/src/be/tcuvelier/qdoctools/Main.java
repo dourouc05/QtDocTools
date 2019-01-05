@@ -90,7 +90,8 @@ public class Main implements Callable<Void> {
     public final static String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";
 
     public static void main(String[] args) {
-        String[] argv = {"-m", "qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11"};
+//        String[] argv = {"-m", "qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11"};
+        String[] argv = {"-m", "qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11", "--no-rewrite-qdocconf", "--no-convert-webxml"};
 
         CommandLine cl = new CommandLine(new Main());
         cl.registerConverter(QtVersion.class, QtVersion::new);
@@ -159,12 +160,14 @@ public class Main implements Callable<Void> {
             Path root = q.getOutputFolder();
 
             // First, generate the list of classes (may take a bit of time).
+            System.out.println("++> Generating utilities for WebXML-to-DocBook transformation.");
             XsltTransformer utilities = new XsltHandler(xsltWebXMLToDocBookUtilPath)
                     .createTransformer(root.resolve("qdt_classes.xml"), "main");
             utilities.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
             utilities.transform();
 
             // Second, iterate through the files.
+            System.out.println("++> Starting WebXML-to-DocBook transformation.");
             List<Path> webxml = q.findWebXML();
             XsltHandler h = new XsltHandler(xsltWebXMLToDocBookPath);
 
@@ -214,9 +217,15 @@ public class Main implements Callable<Void> {
 
                 // Perform advanced consistency checks (requires Internet connectivity).
                 if (consistencyChecks) {
-                    QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, prefix(i, webxml));
-                    boolean result = qc.checkInheritedBy();
-                    result &= qc.checkItems();
+                    boolean result;
+
+                    try {
+                        QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, prefix(i, webxml));
+                        result = qc.checkInheritedBy();
+                        result &= qc.checkItems();
+                    } catch (Exception e) {
+                        result = false;
+                    }
 
                     if (! result) {
                         System.out.println(prefix(i, webxml) + " Check error!");
@@ -226,6 +235,7 @@ public class Main implements Callable<Void> {
                 // Go to the next file.
                 ++i;
             }
+            System.out.println("++> WebXML-to-DocBook transformation done.");
         }
 
         // Run Saxon to get the DvpML output.
@@ -233,6 +243,7 @@ public class Main implements Callable<Void> {
             Path root = q.getOutputFolder();
 
             // Iterate through all the files.
+            System.out.println("++> Starting DocBook-to-DvpML transformation.");
             List<Path> qdt = q.findDocBook();
             XsltHandler h = new XsltHandler(xsltDocBookToDvpMLPath);
 
@@ -275,6 +286,7 @@ public class Main implements Callable<Void> {
                 // Go to the next file.
                 ++i;
             }
+            System.out.println("++> DocBook-to-DvpML transformation done.");
         }
     }
 

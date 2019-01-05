@@ -186,7 +186,6 @@ public class QdocHandler {
         qdocconf += "outputformats             = WebXML\n";
         qdocconf += "WebXML.quotinginformation = true\n";
         qdocconf += "WebXML.nosubdirs          = true\n";
-        qdocconf += "WebXML.outputsubdir       = webxml\n";
 
         Path destinationFile = originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf");
         try {
@@ -231,7 +230,7 @@ public class QdocHandler {
             firstLine = false;
         }
 
-        // Qdoc requires a series of environment variables, with no real impact on the WebXML files that get generated.
+        // Qdoc requires a series of environment variables.
         Map<String, String> env = pb.environment();
         env.put("QT_INSTALL_DOCS", sourceFolder.resolve("qtbase").resolve("doc").toString());
         env.put("BUILDDIR", sourceFolder.resolve("qtbase").resolve("doc").toString());
@@ -246,20 +245,20 @@ public class QdocHandler {
         pb.start().waitFor();
     }
 
-    private List<Path> findWithExtension(String extension, String typeName) throws IOException {
-        String[] fileNames = outputFolder.resolve("webxml").toFile().list((current, name) -> name.endsWith(extension));
+    private List<Path> findWithExtension(String extension) {
+        String[] fileNames = outputFolder.toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {
-            throw new IOException("No " + typeName + " files found!");
+            return Collections.emptyList();
+        } else {
+            return Arrays.stream(fileNames).map(outputFolder::resolve).collect(Collectors.toList());
         }
-
-        return Arrays.stream(fileNames).map(s -> outputFolder.resolve("webxml").resolve(s)).collect(Collectors.toList());
     }
 
-    public List<Path> findWebXML() throws IOException {
-        return findWithExtension(".webxml", "WebXML");
+    public List<Path> findWebXML() {
+        return findWithExtension(".webxml");
     }
 
-    public List<Path> findDocBook() throws IOException {
-        return findWithExtension(".qdt", "DocBook");
+    public List<Path> findDocBook() {
+        return findWithExtension(".qdt");
     }
 }

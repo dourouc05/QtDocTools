@@ -21,7 +21,7 @@ public class QdocConsistencyChecks {
         try {
             r = new CheckRequest(fileName);
         } catch (HttpStatusException e) {
-            System.out.println(prefix + " Error while performing consistency checks: 404 when downloading the original class.");
+            System.out.println(prefix + " Error while performing consistency checks: 404 when downloading the original file.");
             // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html exists,
             // but not http://doc.qt.io/qt-5/qabstractxmlreceiver.html.
             throw e; // Cannot continue for this file.

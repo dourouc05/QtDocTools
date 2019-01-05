@@ -15,13 +15,12 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class CheckRequest {
-    Processor processor;
-    XdmNode xdm;
-    XPathCompiler compiler;
-    Document html;
+    private final XdmNode xdm;
+    private final XPathCompiler compiler;
+    final Document html;
 
     public CheckRequest(Path fileName) throws IOException, SaxonApiException {
-        processor = new Processor(false);
+        Processor processor = new Processor(false);
         xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(fileName.toFile())));
         compiler = processor.newXPathCompiler();
         compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
