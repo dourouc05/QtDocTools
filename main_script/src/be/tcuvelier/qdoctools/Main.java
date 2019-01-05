@@ -178,6 +178,8 @@ public class Main implements Callable<Void> {
 
             int i = 0;
             for (Path file : webxml) {
+                if (file.getFileName().toString().charAt(0) < 'o')
+                    continue;
 //                        if (! file.getFileName().toString().startsWith("q"))
 //                            continue;
 //                        if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
@@ -220,7 +222,7 @@ public class Main implements Callable<Void> {
                     boolean result;
 
                     try {
-                        QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, prefix(i, webxml));
+                        QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, prefix(i, webxml), qtVersion);
                         result = qc.checkInheritedBy();
                         result &= qc.checkItems();
                     } catch (Exception e) {

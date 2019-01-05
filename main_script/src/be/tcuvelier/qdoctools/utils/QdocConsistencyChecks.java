@@ -14,12 +14,12 @@ public class QdocConsistencyChecks {
     private final String prefix;
     private final CheckRequest r;
 
-    public QdocConsistencyChecks(Path fileName, String prefix) throws IOException, SaxonApiException {
+    public QdocConsistencyChecks(Path fileName, String prefix, QtVersion qtVersion) throws IOException, SaxonApiException {
         this.fileName = fileName;
         this.prefix = prefix;
 
         try {
-            r = new CheckRequest(fileName);
+            r = new CheckRequest(fileName, qtVersion);
         } catch (HttpStatusException e) {
             System.out.println(prefix + " Error while performing consistency checks: 404 when downloading the original file.");
             // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html exists,

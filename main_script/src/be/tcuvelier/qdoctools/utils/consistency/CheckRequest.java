@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.utils.consistency;
 
+import be.tcuvelier.qdoctools.utils.QtVersion;
 import net.sf.saxon.s9api.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +20,7 @@ public class CheckRequest {
     private final XPathCompiler compiler;
     final Document html;
 
-    public CheckRequest(Path fileName) throws IOException, SaxonApiException {
+    public CheckRequest(Path fileName, QtVersion qtVersion) throws IOException, SaxonApiException {
         Processor processor = new Processor(false);
         xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(fileName.toFile())));
         compiler = processor.newXPathCompiler();
@@ -27,7 +28,7 @@ public class CheckRequest {
         compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
 
         String otherFile = fileName.getFileName().toString().replace(".qdt", "") + ".html";
-        html = Jsoup.connect("http://doc.qt.io/qt-5/" + otherFile).get();
+        html = Jsoup.connect("http://doc.qt.io/qt-" + qtVersion.QT_VER() + "/" + otherFile).get();
     }
 
     XdmValue xpath(String expression) throws SaxonApiException {
