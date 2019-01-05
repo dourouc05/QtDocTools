@@ -50,37 +50,37 @@ public class Main implements Callable<Void> {
             description = "Output file (normal mode) or folder (qdoc mode)", required = true)
     private String output;
 
-    @Option(names = { "-v", "--validate" },
-            description = "Whether the output shall be validated against a known XSD or RNG")
-    private boolean validate = true;
-
-    @Option(names = "--no-rewrite-qdocconf", description = "Disables the rewriting of the .qdocconf files " +
-            "(the new ones have already been generated)")
-    private boolean rewriteQdocconf = true;
-
-    @Option(names = "--no-convert-webxml", description = "Disables the generation of the WebXML files. " +
-            "This operation is time-consuming, as it relies on qdoc, and requires the prior generation of the qdocconf files")
-    private boolean convertToWebXML = true;
-
-    @Option(names = "--no-convert-docbook", description = "Disables the generation of the DocBook files. " +
-            "This operation requires the prior generation of the WebXML files")
-    private boolean convertToDocBook = true;
-
-    @Option(names = "--no-convert-dvpml", description = "Disables the generation of the DvpML files. " +
-            "This operation requires the prior generation of the DocBook files")
-    private boolean convertToDvpML = true;
-
-    @Option(names = "--no-consistency-checks", description = "Disables advanced consistency checks. " +
-            "They require an Internet connection")
-    private boolean consistencyChecks = true;
-
     @Option(names = { "-c", "--configuration-file" },
             description = "Configuration file, mostly useful in qdoc mode (default: ${DEFAULT-VALUE})")
     private String configurationFile = "config.json";
 
     @Option(names = "--qt-version",
-            description = "Version of Qt that is being processed; only useful in qdoc mode")
-    private String qtVersion = "1.0";
+            description = "[Qdoc only] Version of Qt that is being processed")
+    private QtVersion qtVersion = new QtVersion("1.0");
+
+    @Option(names = "--no-validation",
+            description = "Disables the validation of the output against a known XSD or RNG")
+    private boolean validate = true;
+
+    @Option(names = "--no-rewrite-qdocconf", description = "[Qdoc only] Disables the rewriting of the .qdocconf files " +
+            "(the new ones have already been generated)")
+    private boolean rewriteQdocconf = true;
+
+    @Option(names = "--no-convert-webxml", description = "[Qdoc only] Disables the generation of the WebXML files. " +
+            "This operation is time-consuming, as it relies on qdoc, and requires the prior generation of the qdocconf files")
+    private boolean convertToWebXML = true;
+
+    @Option(names = "--no-convert-docbook", description = "[Qdoc only] Disables the generation of the DocBook files. " +
+            "This operation requires the prior generation of the WebXML files")
+    private boolean convertToDocBook = true;
+
+    @Option(names = "--no-convert-dvpml", description = "[Qdoc only] Disables the generation of the DvpML files. " +
+            "This operation requires the prior generation of the DocBook files")
+    private boolean convertToDvpML = true;
+
+    @Option(names = "--no-consistency-checks", description = "[Qdoc only] Disables advanced consistency checks. " +
+            "They require an Internet connection")
+    private boolean consistencyChecks = true;
 
     public final static String xsltWebXMLToDocBookPath = "../import/from_qdoc_v2/xslt/webxml_to_docbook.xslt"; // Path to the XSLT sheet WebXML to DocBook.
     public final static String xsltWebXMLToDocBookUtilPath = "../import/from_qdoc_v2/xslt/class_parser.xslt"; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.
@@ -90,8 +90,11 @@ public class Main implements Callable<Void> {
     public final static String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";
 
     public static void main(String[] args) {
-        String[] argv = {"-i", "/", "-o", "/"};
-        CommandLine.call(new Main(), argv);
+        String[] argv = {"-m", "qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11"};
+
+        CommandLine cl = new CommandLine(new Main());
+        cl.registerConverter(QtVersion.class, QtVersion::new);
+        cl.parseWithHandler(new CommandLine.RunAll(), argv);
     }
 
     @Override
@@ -126,7 +129,7 @@ public class Main implements Callable<Void> {
             return;
         }
 
-        QdocHandler q = new QdocHandler(input, output, config.getQdocLocation());
+        QdocHandler q = new QdocHandler(input, output, config.getQdocLocation(), qtVersion);
         q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
@@ -187,7 +190,7 @@ public class Main implements Callable<Void> {
                 // Actually convert the WebXML into DocBook. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 XsltTransformer trans = h.createTransformer(file, destination, os);
-                trans.setParameter(new QName("qt-version"), new XdmAtomicValue(qtVersion));
+                trans.setParameter(new QName("qt-version"), new XdmAtomicValue(qtVersion.QT_VER()));
                 trans.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
                 trans.transform();
 

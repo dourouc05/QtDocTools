@@ -17,12 +17,14 @@ public class QdocHandler {
     private final Path outputFolder; // Where all the generated files should be put.
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
+    private final QtVersion qtVersion;
 
-    public QdocHandler(String input, String output, String qdocPath) {
+    public QdocHandler(String input, String output, String qdocPath, QtVersion qtVersion) {
         sourceFolder = Paths.get(input);
         outputFolder = Paths.get(output);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
         this.qdocPath = qdocPath;
+        this.qtVersion = qtVersion;
     }
 
     public void ensureOutputFolderExists() throws IOException {
@@ -219,17 +221,23 @@ public class QdocHandler {
                 "--log-progress");
 
         System.out.println("::> Running qdoc with the following arguments: ");
+        boolean firstLine = true;
         for (String command : pb.command()) {
-            System.out.println("        " + command);
+            if (firstLine) {
+                System.out.println("        " + command);
+            } else {
+                System.out.println("            " + command);
+            }
+            firstLine = false;
         }
 
         // Qdoc requires a series of environment variables, with no real impact on the WebXML files that get generated.
         Map<String, String> env = pb.environment();
         env.put("QT_INSTALL_DOCS", sourceFolder.resolve("qtbase").resolve("doc").toString());
         env.put("BUILDDIR", sourceFolder.resolve("qtbase").resolve("doc").toString());
-        env.put("QT_VERSION_TAG", "100");
-        env.put("QT_VER", "1.0");
-        env.put("QT_VERSION", "1.0.0");
+        env.put("QT_VERSION_TAG", qtVersion.QT_VERSION_TAG());
+        env.put("QT_VER", qtVersion.QT_VER());
+        env.put("QT_VERSION", qtVersion.QT_VERSION());
 
         // Let qdoc write to this process' stdout.
         pb.inheritIO();
