@@ -22,10 +22,6 @@ public class Configuration {
         return node.getAsString();
     }
 
-    public String getQtVersion() throws BadConfigurationFile {
-        return getStringAttribute("qt_version");
-    }
-
     public String getQdocLocation() throws BadConfigurationFile {
         return getStringAttribute("qdoc");
     }

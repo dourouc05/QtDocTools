@@ -78,6 +78,10 @@ public class Main implements Callable<Void> {
             description = "Configuration file, mostly useful in qdoc mode (default: ${DEFAULT-VALUE})")
     private String configurationFile = "config.json";
 
+    @Option(names = "--qt-version",
+            description = "Version of Qt that is being processed; only useful in qdoc mode")
+    private String qtVersion = "1.0";
+
     public final static String xsltWebXMLToDocBookPath = "../import/from_qdoc_v2/xslt/webxml_to_docbook.xslt"; // Path to the XSLT sheet WebXML to DocBook.
     public final static String xsltWebXMLToDocBookUtilPath = "../import/from_qdoc_v2/xslt/class_parser.xslt"; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.
     public final static String xsltDvpMLToDocBookPath = "../import/from_dvpml/xslt/dvpml_to_docbook.xslt"; // Path to the XSLT sheet DvpML to DocBook.
@@ -183,7 +187,7 @@ public class Main implements Callable<Void> {
                 // Actually convert the WebXML into DocBook. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 XsltTransformer trans = h.createTransformer(file, destination, os);
-                trans.setParameter(new QName("qt-version"), new XdmAtomicValue(config.getQtVersion()));
+                trans.setParameter(new QName("qt-version"), new XdmAtomicValue(qtVersion));
                 trans.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
                 trans.transform();
 
@@ -273,6 +277,7 @@ public class Main implements Callable<Void> {
 
     private void callNormal() throws SaxonApiException, IOException, SAXException {
         // Just one conversion to perform.
+
         // Create a Saxon object based on the sheet to use.
         XsltHandler h;
         if (FileHelpers.isDvpML(input) && FileHelpers.isDocBook(output)) {
@@ -310,7 +315,5 @@ public class Main implements Callable<Void> {
                 System.err.println("There were validation errors. See the above exception for details.");
             }
         }
-
-        // Done!
     }
 }
