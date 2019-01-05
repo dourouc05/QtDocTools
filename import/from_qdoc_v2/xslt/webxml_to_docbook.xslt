@@ -306,19 +306,6 @@
     <xsl:variable name="functions" select="$elements/self::function[(@access='public' or @access='protected') and not(@meta='macrowithoutparams' or @meta='macrowithparams') and (not(@associated-property) or @associated-property='')]" as="node()*"/>
     <xsl:variable name="macros" select="$elements/self::function[(@access='public' or @access='protected') and (@meta='macrowithoutparams' or @meta='macrowithparams')]" as="node()*"/>
     
-    <xsl:variable name="allTakenIntoAccount" select="($namespaces union $classes union $types union $properties union $memberVariables union $functions union $macros)"/>
-    <xsl:if test="count($allTakenIntoAccount[(@access='public' or @access='protected') and description/node()]) != count($elements[(@access='public' or @access='protected') and description/node()])">
-      <xsl:message>
-        <xsl:text>WARNING: Page not fully parsed. Missing tags: </xsl:text>
-        <xsl:for-each select="$elements[(@access='public' or @access='protected') and (description/brief or description/para)] except $allTakenIntoAccount[(@access='public' or @access='protected') and (description/brief or description/para)]">
-          <xsl:value-of select="name()"/>
-          <xsl:if test="position() &lt; last()">
-            <xsl:text>,</xsl:text>
-          </xsl:if>
-        </xsl:for-each>
-      </xsl:message>
-    </xsl:if>
-    
     <xsl:if test="$namespaces[tc:is-element-included(.)]">
       <db:section>
         <db:title>Namespaces</db:title>
