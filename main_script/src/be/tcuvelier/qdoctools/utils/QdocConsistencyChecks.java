@@ -7,6 +7,7 @@ import org.jsoup.HttpStatusException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 public class QdocConsistencyChecks {
@@ -67,9 +68,9 @@ public class QdocConsistencyChecks {
 
                         // Compute XML \ HTML and HTML \ XML (i.e. all differences, items in one set but not the other),
                         // their union (XML \ HTML) u (HTML \ XML), and output it.
-                        Set<String> docbookMinusHTMLSet = items.getXML(name);
+                        Set<String> docbookMinusHTMLSet = new HashSet<>(items.getXML(name));
                         docbookMinusHTMLSet.removeAll(items.getHTML(name));
-                        Set<String> htmlMinusDocBookSet = items.getHTML(name);
+                        Set<String> htmlMinusDocBookSet = new HashSet<>(items.getHTML(name));
                         htmlMinusDocBookSet.removeAll(items.getXML(name));
                         htmlMinusDocBookSet.addAll(docbookMinusHTMLSet);
                         Object[] differences = htmlMinusDocBookSet.toArray();

@@ -11,13 +11,17 @@ public class ItemsResult {
     private final Map<String, Set<String>> htmls;
     private final Map<String, Boolean> results;
 
-    public ItemsResult() {
+    ItemsResult() {
         xmls = new HashMap<>();
         htmls = new HashMap<>();
         results = new HashMap<>();
     }
 
-    public void addComparison(String name, Set<String> xml, Set<String> html) {
+    void addComparison(String name, Set<String> xml, Set<String> html) {
+        if (xmls.containsKey(name) || htmls.containsKey(name) || results.containsKey(name)) {
+            throw new IllegalStateException("A comparison with the name " + name + " has already been added!");
+        }
+
         xmls.put(name, xml);
         htmls.put(name, html);
         results.put(name, SetUtils.compareSets(xml, html));
