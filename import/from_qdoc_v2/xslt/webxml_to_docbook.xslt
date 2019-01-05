@@ -1265,7 +1265,7 @@
                   
                   <db:tr>
                     <db:td>
-                      <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                      <db:link xlink:href="{concat(replace(lower-case(.), '::', '-'), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
                         <xsl:value-of select="."/>
                       </db:link>
                     </db:td>
@@ -1338,7 +1338,7 @@
                       
                       <db:tr>
                         <db:td>
-                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                          <db:link xlink:href="{concat(replace(lower-case(.), '::', '-'), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
                             <xsl:value-of select="."/>
                           </db:link>
                         </db:td>
@@ -1552,7 +1552,7 @@
                         <xsl:text>: </xsl:text>
                         <xsl:for-each select="current-group()">
                           <xsl:variable name="containingClass" select="map:get($functions, .)"/>
-                          <db:link xlink:href="{concat(lower-case($containingClass), '.webxml')}" xlink:title="{$containingClass}" xrefstyle="class" annotations="{$containingClass}">
+                          <db:link xlink:href="{concat(replace(lower-case($containingClass), '::', '-'), '.webxml')}" xlink:title="{$containingClass}" xrefstyle="class" annotations="{$containingClass}">
                             <xsl:value-of select="$containingClass"/>
                           </db:link>
                           <xsl:if test="position() &lt; last()">
@@ -1679,7 +1679,7 @@
                       
                       <db:tr>
                         <db:td>
-                          <db:link xlink:href="{concat(lower-case(.), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
+                          <db:link xlink:href="{concat(replace(lower-case(.), '::', '-'), '.webxml')}" xlink:title="{.}" xrefstyle="class" annotations="{.}">
                             <xsl:value-of select="substring-before(., '___')"/>
                           </db:link>
                         </db:td>
