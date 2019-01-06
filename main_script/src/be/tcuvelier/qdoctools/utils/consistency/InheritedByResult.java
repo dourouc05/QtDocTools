@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.utils.consistency;
 
-import be.tcuvelier.qdoctools.utils.SetUtils;
+import be.tcuvelier.qdoctools.helpers.SetHelpers;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,6 +19,6 @@ public class InheritedByResult {
     public InheritedByResult(Set<String> xml, Set<String> html) {
         this.xml = xml;
         this.html = html;
-        result = SetUtils.compareSets(xml, html);
+        result = SetHelpers.compareSets(xml, html);
     }
 }

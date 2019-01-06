@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.utils.consistency;
 
-import be.tcuvelier.qdoctools.utils.SetUtils;
+import be.tcuvelier.qdoctools.helpers.SetHelpers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class ItemsResult {
 
         xmls.put(name, xml);
         htmls.put(name, html);
-        results.put(name, SetUtils.compareSets(xml, html));
+        results.put(name, SetHelpers.compareSets(xml, html));
     }
 
     public boolean result() {

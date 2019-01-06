@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.utils.consistency;
 
-import be.tcuvelier.qdoctools.utils.SetUtils;
+import be.tcuvelier.qdoctools.helpers.SetHelpers;
 import net.sf.saxon.s9api.SaxonApiException;
 
 public class Items {
@@ -13,7 +13,7 @@ public class Items {
         ItemsResult ir = new ItemsResult();
         ir.addComparison("Types",
                 request.xpathToSet("//(db:enumsynopsis/db:enumname union db:typedefsynopsis[not(preceding-sibling::*[1][self::db:enumsynopsis])]/db:typedefname)/text()"),
-                SetUtils.union(
+                SetHelpers.union(
                         request.htmlToSet("Public Types", "h2", "public-types", true),
                         request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> s.equals("typedef"))
                 )
@@ -24,7 +24,7 @@ public class Items {
         );
         ir.addComparison("Public functions",
                 request.xpathToSet("//(db:methodsynopsis[not(db:modifier[text() = 'signal'])] union db:constructorsynopsis union db:destructorsynopsis)/db:methodname/text()"), // Methods, constructors, destructors.
-                SetUtils.union(
+                SetHelpers.union(
                         request.htmlToSet("Public Functions", "h2", "public-functions"),
                         request.htmlToSet("Public Slots", "h2", "public-slots"),
                         request.htmlToSet("Signals", "h2", "signals"),

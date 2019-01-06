@@ -1,9 +1,9 @@
-package be.tcuvelier.qdoctools.utils;
+package be.tcuvelier.qdoctools.helpers;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class SetUtils {
+public class SetHelpers {
     public static <T> Set<T> setDifference(Set<T> a, Set<T> b) {
         Set<T> difference = new HashSet<>(a);
         difference.removeAll(b);

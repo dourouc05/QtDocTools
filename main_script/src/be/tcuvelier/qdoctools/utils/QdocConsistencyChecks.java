@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.utils;
 
+import be.tcuvelier.qdoctools.helpers.SetHelpers;
 import be.tcuvelier.qdoctools.utils.consistency.*;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.jsoup.HttpStatusException;
@@ -68,12 +69,7 @@ public class QdocConsistencyChecks {
 
                         // Compute XML \ HTML and HTML \ XML (i.e. all differences, items in one set but not the other),
                         // their union (XML \ HTML) u (HTML \ XML), and output it.
-                        Set<String> docbookMinusHTMLSet = new HashSet<>(items.getXML(name));
-                        docbookMinusHTMLSet.removeAll(items.getHTML(name));
-                        Set<String> htmlMinusDocBookSet = new HashSet<>(items.getHTML(name));
-                        htmlMinusDocBookSet.removeAll(items.getXML(name));
-                        htmlMinusDocBookSet.addAll(docbookMinusHTMLSet);
-                        Object[] differences = htmlMinusDocBookSet.toArray();
+                        Object[] differences = SetHelpers.difference(items.getXML(name), items.getHTML(name)).toArray();
 
                         Arrays.sort(differences);
                         System.out.println(prefix + "     > Differences between the sets: " + Arrays.toString(differences));
