@@ -27,7 +27,6 @@ public class Items {
                 SetHelpers.union(
                         request.htmlToSet("Public Functions", "h2", "public-functions"),
                         request.htmlToSet("Public Slots", "h2", "public-slots"),
-                        request.htmlToSet("Signals", "h2", "signals"),
                         request.htmlToSet("Reimplemented Public Functions", "h2", "reimplemented-public-functions"), // Example: http://doc.qt.io/qt-5/q3dcamera.html
                         request.htmlToSet("Reimplemented Protected Functions", "h2", "reimplemented-protected-functions"), // Example: http://doc.qt.io/qt-5/qabstractanimation.html#event
                         request.htmlToSet("Static Public Members", "h2", "static-public-members"), // Example: https://doc.qt.io/qt-5.11/q3dscene.html
@@ -35,7 +34,7 @@ public class Items {
                         request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> ! s.equals("typedef")) // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html http://doc.qt.io/qt-5/qxmlstreamnotationdeclaration.html
                 )
         );
-        ir.addComparison("Signals", // TODO: What the heck, signals are also in the public functions?
+        ir.addComparison("Signals", 
                 request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
                 request.htmlToSet("Signals", "h2", "signals")
         );

@@ -321,7 +321,7 @@
         <db:title>Properties</db:title>
         
         <xsl:for-each select="$properties[tc:is-element-included(.)]">
-          <xsl:sort select="@signature"/>
+          <xsl:sort select="@name"/>
           <xsl:apply-templates mode="content_class_elements" select="."/>
         </xsl:for-each>
       </db:section>
@@ -821,32 +821,20 @@
               <db:tbody>
                 <xsl:if test="getter">
                   <db:tr>
-                    <db:td>
-                      <xsl:value-of select="@type"/>
-                    </db:td>
-                    <db:td>
-                      <xsl:value-of select="getter/@name"/>() const
-                    </db:td>
+                    <db:td><xsl:value-of select="@type"/></db:td>
+                    <db:td><xsl:value-of select="getter/@name"/>() const</db:td>
                   </db:tr>
                 </xsl:if>
                 <xsl:if test="setter">
                   <db:tr>
-                    <db:td>
-                      void
-                    </db:td>
-                    <db:td>
-                      <xsl:value-of select="setter/@name"/>(<xsl:value-of select="@type"/> <xsl:value-of select="@name"/>)
-                    </db:td>
+                    <db:td>void</db:td>
+                    <db:td><xsl:value-of select="concat(setter/@name, '(const ', @type, ' &amp; ', @name, ')')"/></db:td>
                   </db:tr>
                 </xsl:if>
                 <xsl:if test="resetter">
                   <db:tr>
-                    <db:td>
-                      void
-                    </db:td>
-                    <db:td>
-                      <xsl:value-of select="setter/@name"/>()
-                    </db:td>
+                    <db:td>void</db:td>
+                    <db:td><xsl:value-of select="setter/@name"/>()</db:td>
                   </db:tr>
                 </xsl:if>
               </db:tbody>
@@ -861,12 +849,8 @@
             <db:informaltable>
               <db:tbody>
                 <db:tr>
-                  <db:td>
-                    void
-                  </db:td>
-                  <db:td>
-                    <xsl:value-of select="notifier/@name"/>()
-                  </db:td>
+                  <db:td>void</db:td>
+                  <db:td><xsl:value-of select="concat(notifier/@name, '(const ', @type, ' &amp; ', @name, ')')"/></db:td>
                 </db:tr>
               </db:tbody>
             </db:informaltable>
@@ -908,9 +892,7 @@
           <xsl:value-of select="@type"/>
         </db:type>
         
-        <db:methodname>
-          <xsl:value-of select="getter/@name"/>
-        </db:methodname>
+        <db:methodname><xsl:value-of select="getter/@name"/></db:methodname>
         
         <db:void/>
         
@@ -922,12 +904,28 @@
       <db:methodsynopsis>
         <db:void/>
         
-        <db:methodname>
-          <xsl:value-of select="setter/@name"/>
-        </db:methodname>
+        <db:methodname><xsl:value-of select="setter/@name"/></db:methodname>
         
         <db:methodparam>
-          <db:type><xsl:value-of select="@type"/></db:type>
+          <db:type><xsl:value-of select="concat('const ', @type, ' &amp;')"/></db:type>
+          <db:parameter><xsl:value-of select="@name"/></db:parameter>
+        </db:methodparam>
+      </db:methodsynopsis>
+    </xsl:if>
+    
+    <xsl:if test="resetter">
+      <xsl:message>TO BE IMPLEMENTED: resetter</xsl:message>
+    </xsl:if>
+    
+    <xsl:if test="notifier">
+      <db:methodsynopsis>
+        <db:modifier>signal</db:modifier>
+        <db:void/>
+        
+        <db:methodname><xsl:value-of select="notifier/@name"/></db:methodname>
+        
+        <db:methodparam>
+          <db:type><xsl:value-of select="concat('const ', @type, ' &amp;')"/></db:type>
           <db:parameter><xsl:value-of select="@name"/></db:parameter>
         </db:methodparam>
       </db:methodsynopsis>
