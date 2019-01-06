@@ -287,7 +287,7 @@
     <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery) and not($shouldSkipForQObject) and not($shouldSkipForOtherReasons)"/>
     
     <!-- Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
-    <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0">
+    <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0 and $currentNode/@status != 'obsolete'">
       <xsl:message>WARNING: The description of <xsl:value-of select="$currentNode/@name"/> is skipped while it has some content.</xsl:message>
     </xsl:if>
     
@@ -888,14 +888,9 @@
     
     <xsl:if test="getter">
       <db:methodsynopsis>
-        <db:type>
-          <xsl:value-of select="@type"/>
-        </db:type>
-        
+        <db:type><xsl:value-of select="@type"/></db:type>
         <db:methodname><xsl:value-of select="getter/@name"/></db:methodname>
-        
         <db:void/>
-        
         <db:modifier>const</db:modifier>
       </db:methodsynopsis>
     </xsl:if>
@@ -903,9 +898,7 @@
     <xsl:if test="setter">
       <db:methodsynopsis>
         <db:void/>
-        
         <db:methodname><xsl:value-of select="setter/@name"/></db:methodname>
-        
         <db:methodparam>
           <db:type><xsl:value-of select="concat('const ', @type, ' &amp;')"/></db:type>
           <db:parameter><xsl:value-of select="@name"/></db:parameter>
@@ -914,16 +907,19 @@
     </xsl:if>
     
     <xsl:if test="resetter">
-      <xsl:message>TO BE IMPLEMENTED: resetter</xsl:message>
+      <db:methodsynopsis>
+        <db:void/>
+        <db:methodname><xsl:value-of select="resetter/@name"/></db:methodname>
+        <db:void/>
+        <db:modifier>const</db:modifier>
+      </db:methodsynopsis>
     </xsl:if>
     
     <xsl:if test="notifier">
       <db:methodsynopsis>
         <db:modifier>signal</db:modifier>
         <db:void/>
-        
         <db:methodname><xsl:value-of select="notifier/@name"/></db:methodname>
-        
         <db:methodparam>
           <db:type><xsl:value-of select="concat('const ', @type, ' &amp;')"/></db:type>
           <db:parameter><xsl:value-of select="@name"/></db:parameter>

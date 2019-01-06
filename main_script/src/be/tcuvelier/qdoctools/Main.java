@@ -178,12 +178,12 @@ public class Main implements Callable<Void> {
 
             int i = 0;
             for (Path file : webxml) {
-                if (file.getFileName().toString().charAt(0) < 'q')
+//                if (file.getFileName().toString().charAt(0) < 'r')
+//                    continue;
+                if (! file.getFileName().toString().startsWith("q"))
                     continue;
-//                        if (! file.getFileName().toString().startsWith("q"))
-//                            continue;
-//                        if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
-//                            continue;
+//                if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
+//                    continue;
 
                 // Output the result in the same folder as before, with the same file name, just replace
                 // the extension (.webxml becomes .qdt).

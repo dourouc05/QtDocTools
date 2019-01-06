@@ -34,7 +34,7 @@ public class Items {
                         request.htmlToSet("Related Non-Members", "h2", "related-non-members", false, s -> ! s.equals("typedef")) // Example: http://doc.qt.io/qt-5/qopengldebugmessage.html http://doc.qt.io/qt-5/qxmlstreamnotationdeclaration.html
                 )
         );
-        ir.addComparison("Signals", 
+        ir.addComparison("Signals",
                 request.xpathToSet("//db:methodsynopsis[db:modifier[text() = 'signal']]/db:methodname/text()"),
                 request.htmlToSet("Signals", "h2", "signals")
         );
