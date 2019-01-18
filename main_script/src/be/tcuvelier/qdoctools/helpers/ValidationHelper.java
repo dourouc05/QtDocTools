@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.helpers;
 
 import be.tcuvelier.qdoctools.Main;
+import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.utils.ValidationHandler;
 import org.xml.sax.SAXException;
 
@@ -10,11 +11,11 @@ import java.nio.file.Path;
 
 public class ValidationHelper {
     public static boolean validateDvpML(String file) throws IOException, SAXException {
-        return ValidationHandler.validateXSD(new File(file), Main.dvpMLXSDPath);
+        return ValidationHandler.validateXSD(new File(file), MainCommand.dvpMLXSDPath);
     }
 
     public static boolean validateDvpML(Path file) throws IOException, SAXException {
-        return ValidationHandler.validateXSD(file.toFile(), Main.dvpMLXSDPath);
+        return ValidationHandler.validateXSD(file.toFile(), MainCommand.dvpMLXSDPath);
     }
 
     public static boolean validateDocBook(String file) throws IOException, SAXException {
@@ -26,6 +27,6 @@ public class ValidationHelper {
     }
 
     public static boolean validateDocBook(File file) throws IOException, SAXException {
-        return ValidationHandler.validateRNG(file, Main.docBookRNGPath);
+        return ValidationHandler.validateRNG(file, MainCommand.docBookRNGPath);
     }
 }
