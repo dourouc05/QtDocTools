@@ -15,6 +15,10 @@ public class FileHelpers {
         return path.endsWith(".webxml");
     }
 
+    public static boolean isDocX(String path) {
+        return path.endsWith(".docx");
+    }
+
     public static String changeExtension(Path file, String extension) {
         return changeExtension(file.getFileName().toString(), extension);
     }
