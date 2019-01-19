@@ -16,9 +16,12 @@ public class ProofreadCommand implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        String output = FileHelpers.changeExtension(input, ".qdt");
         if (FileHelpers.isDocX(input)) {
+            String output = FileHelpers.changeExtension(input, ".qdt");
             fromDocXToDocBook(input, output);
+        } else if (FileHelpers.isDocBook(input)) {
+            String output = FileHelpers.changeExtension(input, ".docx");
+            fromDocBookToDocX(input, output);
         } else {
             throw new RuntimeException("File format not recognised for input file!");
         }
@@ -27,10 +30,20 @@ public class ProofreadCommand implements Callable<Void> {
     }
 
     private static void fromDocXToDocBook(String input, String output) throws Exception {
+        // http://www.xmlmind.com/w2x/what_is_w2x.html
         Processor processor = new Processor();
-        processor.configure(new String[]{ "-o", "docbook5" });
+        processor.configure(new String[]{
+                "-o", "docbook5",
+                "-p", "transform.hierarchy-name", "article",
+                "-p", "transform.pre-element-name", "programlisting"
+        });
         File inFile = new File(input);
         File outFile = new File(output);
         processor.process(inFile, outFile, null);
+    }
+
+    private static void fromDocBookToDocX(String input, String output) throws Exception {
+        // http://www.xmlmind.com/foconverter/what_is_xfc.html -> XSL Utility
+        // TODO: have a look at C:\Program Files (x86)\XMLmind_XSL_Utility\addon\config\docbook5\xslutil.conversions to know what to implement
     }
 }
