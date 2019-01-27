@@ -79,26 +79,26 @@ public class ProofreadCommand implements Callable<Void> {
         String temporary = FileHelpers.changeExtension(output, ".fo");
         // Inspired by XMLmind_XSL_Utility\addon\config\docbook5\xslutil.conversions.
 
-        Path xslfo = Paths.get(MainCommand.xsltDocBookToFO);
+        Path xslfo = Paths.get(MainCommand.xsltDocBookToFO).toAbsolutePath();
 
         // First, transform the DocBook files into XSL/FO.
+        System.out.println(">>> Generating the XSL/FO...");
         XsltHandler h = new XsltHandler(MainCommand.xsltDocBookToFO);
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         XsltTransformer trans = h.createTransformer(input, temporary, os);
         trans.setParameter(new QName("paper.type"), new XdmAtomicValue("A4"));
+        trans.setParameter(new QName("draft.mode"), new XdmAtomicValue("no"));
         trans.setParameter(new QName("section.autolabel"), new XdmAtomicValue("1"));
-        trans.setParameter(new QName("toc.section.depth"), new XdmAtomicValue("4"));
-        trans.setParameter(new QName("callout.graphics"), new XdmAtomicValue("0"));
-        trans.setParameter(new QName("shade.verbatim"), new XdmAtomicValue("1"));
+        trans.setParameter(new QName("toc.section.depth"), new XdmAtomicValue("6"));
+        trans.setParameter(new QName("callout.graphics"), new XdmAtomicValue("1"));
         trans.setParameter(new QName("variablelist.as.blocks"), new XdmAtomicValue("1"));
-        trans.setParameter(new QName("ulink.show"), new XdmAtomicValue("0"));
-        trans.setParameter(new QName("use.extensions"), new XdmAtomicValue("1"));
-        trans.setParameter(new QName("graphicsize.extension"), new XdmAtomicValue("0"));
+        trans.setParameter(new QName("ulink.show"), new XdmAtomicValue(false));
+//        trans.setParameter(new QName("use.extensions"), new XdmAtomicValue("0")); // true
+//        trans.setParameter(new QName("graphicsize.extension"), new XdmAtomicValue("0"));
 //        trans.setParameter(new QName("xfc.extensions"), new XdmAtomicValue("1"));
 //        trans.setParameter(new QName("img.src.path"), new XdmAtomicValue("%~pi"));
-        trans.setParameter(new QName("admon.graphics.path"), new XdmAtomicValue(xslfo.getParent().resolve("images").toString()));
-        trans.setParameter(new QName("callout.graphics.path"), new XdmAtomicValue(xslfo.getParent().resolve("images/callouts").toString()));
-        trans.setParameter(new QName("draft.watermark.image"), new XdmAtomicValue(xslfo.getParent().resolve("images/draft.png").toString()));
+//        trans.setParameter(new QName("admon.graphics.path"), new XdmAtomicValue(xslfo.getParent().resolve("images").toString()));
+//        trans.setParameter(new QName("callout.graphics.path"), new XdmAtomicValue(xslfo.getParent().resolve("images/callouts").toString()));
         trans.transform();
 
         // If there were errors, print them out.
@@ -108,6 +108,8 @@ public class ProofreadCommand implements Callable<Void> {
         }
 
         // Second, run XFC to get DOCX (only part to be changed to output ODT, for instance).
+        System.out.println(">>> Generating the DOCX...");
+
         Converter converter = new Converter();
         converter.setProperty("outputFormat", "docx");
         converter.setProperty("outputEncoding", "UTF-8");
@@ -118,5 +120,7 @@ public class ProofreadCommand implements Callable<Void> {
         InputSource src = new InputSource(temporary);
         OutputDestination dst = new OutputDestination(output);
         converter.convert(src, dst);
+
+        System.out.println(">>> Done!");
     }
 }
