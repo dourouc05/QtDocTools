@@ -23,9 +23,9 @@ import picocli.CommandLine;
 public class Main {
 
     public static void main(String[] args) {
-//        String[] argv = {"-m", "qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11"};
-//        String[] argv = {"-m", "qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11", "--no-rewrite-qdocconf", "--no-convert-webxml"};
-        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11", "--no-rewrite-qdocconf", "--no-convert-webxml"};
+//        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11", "--no-rewrite-qdocconf", "--no-convert-webxml"};
+
+        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\tests\\proofread_todocx\\CPLEX.db"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);

@@ -46,7 +46,7 @@ public class GenerateCommand implements Callable<Void> {
             return null;
         }
 
-        // Run the transformation (including some variables that are required for qdoc).
+        // Run the transformation.
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         h.createTransformer(input, output, os).transform();
 

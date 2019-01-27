@@ -10,7 +10,7 @@ public class MainCommand implements Callable<Void> {
     public final static String xsltWebXMLToDocBookUtilPath = "../import/from_qdoc_v2/xslt/class_parser.xslt"; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.
     public final static String xsltDvpMLToDocBookPath = "../import/from_dvpml/xslt/dvpml_to_docbook.xslt"; // Path to the XSLT sheet DvpML to DocBook.
     public final static String xsltDocBookToDvpMLPath = "../export/to_dvpml/xslt/docbook_to_dvpml.xslt"; // Path to the XSLT sheet DocBook to DvpML.
-    public final static String xsltDocBookToFO = "C:/Program%20Files%20(x86)/XMLmind_XSL_Utility/addon/config/docbook5/xsl/fo/profile-docbook.xsl"; // TODO: replace by a DocBook XSL installation.
+    public final static String xsltDocBookToFO = "../docbook_xsl/fo/profile-docbook.xsl";
     public final static String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
     public final static String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";
 
