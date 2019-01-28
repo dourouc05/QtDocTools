@@ -68,7 +68,9 @@ public class ProofreadCommand implements Callable<Void> {
         processor.configure(new String[]{
                 "-o", "docbook5",
                 "-p", "transform.hierarchy-name", "article",
-                "-p", "transform.pre-element-name", "programlisting"
+                "-p", "transform.pre-element-name", "programlisting",
+                "-p", "edit.prune.preserve", "\"p-ProgramListing\"",
+                "-p", "edit.blocks.convert", "\"p-ProgramListing span g:id='pre' g:container='pre'\""
         });
         processor.process(new File(input), new File(temporary), null);
 

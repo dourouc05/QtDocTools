@@ -12,8 +12,13 @@
     
     <xsl:import href="docbook_xsl2/fo/final-pass.xsl"/>
     
-    <!-- For sections: titlepage-mode.xsl -->
+    <xsl:attribute-set name="monospace.verbatim.properties" use-attribute-sets="verbatim.properties monospace.properties">
+        <xsl:attribute name="text-align">start</xsl:attribute>
+        <xsl:attribute name="wrap-option">no-wrap</xsl:attribute>
+        <xsl:attribute name="xfc:user-style">ProgramListing</xsl:attribute>
+    </xsl:attribute-set>
     
+    <!-- For sections: titlepage-mode.xsl -->
     <xsl:template match="db:title" mode="m:titlepage-mode">
         <xsl:variable name="xfcStyle">
             <xsl:variable name="isSect" select="self::sect1 or self::sect2 or self::sect3 or self::sect4 or self::sect5 or self::sect6"/>
