@@ -1,0 +1,111 @@
+<styles xmlns="http://www.xmlmind.com/foconverter/xsl/extensions"
+        xmlns:xfc="http://www.xmlmind.com/foconverter/xsl/extensions">
+
+  <text-style name="Plain" abstract="true"
+              font-family="serif" font-size="10pt" />
+
+  <text-style name="Code" base-style="Plain"
+              font-family="monospace" font-size="smaller"
+              background-color="#F0F0F0" />
+
+  <text-style name="Cite" base-style="Plain"
+              font-style="italic" />
+
+  <paragraph-style name="Paragraph" text-align="justify"
+                   font-size="10pt" line-height="1.3em"
+                   space-before="1.3em" space-after="1.3em" />
+
+  <paragraph-style name="Preformatted"
+                   font-family="monospace" font-size="8pt" line-height="1.63em" 
+                   background-color="#F0F0F0" 
+                   padding="0.5em" border="0.25pt solid #C0C0C0"
+                   space-before="1.63em" space-after="1.63em" />
+
+  <numbering name="Heading Numbering" show-all-levels="true">
+    <level format="%{decimal}." 
+           provisional-distance-between-starts="0" 
+           provisional-label-separation="8pt"/>
+    <level format="%{decimal}." 
+           provisional-distance-between-starts="0" 
+           provisional-label-separation="7pt" />
+    <level format="%{decimal}." 
+           provisional-distance-between-starts="0" 
+           provisional-label-separation="6pt" />
+  </numbering>
+
+  <paragraph-style name="Title" abstract="true" next-style="Paragraph"
+                   numbering="Heading Numbering"
+                   keep-with-next="always"
+                   font-family="sans-serif" font-weight="bold" 
+                   color="#004080" />
+
+  <paragraph-style name="Heading 1" base-style="Title" 
+                   outline-level="1" numbering-level="1"
+                   font-size="16pt" line-height="0.82em" 
+                   space-before="0.82em" space-after="0.82em"/>
+
+  <paragraph-style name="Heading 2" base-style="Title" 
+                   outline-level="2" numbering-level="2"
+                   font-size="14pt" line-height="0.93em" 
+                   space-before="0.93em" space-after="0.93em" />
+
+  <paragraph-style name="Heading 3" base-style="Title" 
+                   outline-level="3" numbering-level="3"
+                   font-size="12pt" line-height="1.09em" 
+                   space-before="1.09em" space-after="1.09em" />
+
+  <numbering name="Item Bullets">
+    <level format="&#x2022;" 
+           provisional-distance-between-starts="20pt" 
+           provisional-label-separation="0"
+           font-family="serif" font-size="10pt" color="#004080" />
+    <level format="-" 
+           provisional-distance-between-starts="20pt" 
+           provisional-label-separation="0"
+           font-family="serif" font-size="10pt" color="#004080" />
+    <level format="&#x2022;" 
+           provisional-distance-between-starts="20pt" 
+           provisional-label-separation="0"
+           font-family="serif" font-size="10pt" color="#004080" />
+  </numbering>
+
+  <paragraph-style name="Item" abstract="true" base-style="Paragraph" 
+                   numbering="Item Bullets" />
+
+  <paragraph-style name="Item 1" base-style="Item"
+                   numbering-level="1" start-indent="2em" />
+
+  <paragraph-style name="Item 2"  base-style="Item"
+                   numbering-level="2" start-indent="2em + 20pt" />
+
+  <paragraph-style name="Item 3"  base-style="Item"
+                   numbering-level="3" start-indent="2em + 2*20pt" />
+
+  <numbering name="Item Numbers" show-all-levels="true">
+    <level format="%{decimal}." 
+           provisional-distance-between-starts="20pt" 
+           provisional-label-separation="0"
+           font-family="serif" font-size="10pt" color="#004080" />
+    <level format="%{upper-alpha}." 
+           provisional-distance-between-starts="30pt" 
+           provisional-label-separation="0"
+           font-family="serif" font-size="10pt" color="#004080" />
+    <level format="%{lower-alpha}." 
+           provisional-distance-between-starts="40pt" 
+           provisional-label-separation="0"
+           font-family="serif" font-size="10pt" color="#004080" />
+  </numbering>
+
+  <paragraph-style name="Numbered Item" abstract="true" base-style="Paragraph" 
+                   numbering="Item Numbers" />
+
+  <paragraph-style name="Numbered Item 1" base-style="Numbered Item"
+                   numbering-level="1" start-indent="2em" />
+
+  <paragraph-style name="Numbered Item 2" base-style="Numbered Item"
+                   numbering-level="2" start-indent="2em + 20pt" />
+
+  <paragraph-style name="Numbered Item 3" base-style="Numbered Item"
+                   numbering-level="3" start-indent="2em + 20pt + 30pt" />
+
+</styles>

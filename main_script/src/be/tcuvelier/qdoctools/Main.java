@@ -25,8 +25,8 @@ public class Main {
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11", "--no-rewrite-qdocconf", "--no-convert-webxml"};
 
-//        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
-        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db"};
+        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
+//        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);

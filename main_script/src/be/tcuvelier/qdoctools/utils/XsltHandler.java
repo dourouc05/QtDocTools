@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class XsltHandler {
     private final Processor saxonProcessor;
@@ -41,7 +40,10 @@ public class XsltHandler {
     private XsltTransformer createTransformer(File file, File destination, ByteArrayOutputStream os) throws SaxonApiException {
         Serializer out = saxonProcessor.newSerializer();
         out.setOutputFile(destination);
-        saxonCompiler.setErrorListener(createLogger(os));
+
+        if (os != null) {
+            saxonCompiler.setErrorListener(createLogger(os));
+        }
 
         XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
 

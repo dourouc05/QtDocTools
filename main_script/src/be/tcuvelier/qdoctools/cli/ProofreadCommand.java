@@ -1,6 +1,5 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.Main;
 import be.tcuvelier.qdoctools.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.XsltHandler;
 import com.xmlmind.fo.converter.Converter;
@@ -16,8 +15,6 @@ import picocli.CommandLine.Option;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
 @Command(name = "proofread", description = "Perform transformations pertaining to proofreading")
@@ -63,24 +60,32 @@ public class ProofreadCommand implements Callable<Void> {
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {
         // http://www.xmlmind.com/w2x/what_is_w2x.html
+
+        String temporary = FileHelpers.changeExtension(output, ".tmp");
+
+        System.out.println(">>> Generating the DocBook...");
         Processor processor = new Processor();
         processor.configure(new String[]{
                 "-o", "docbook5",
                 "-p", "transform.hierarchy-name", "article",
                 "-p", "transform.pre-element-name", "programlisting"
         });
-        File inFile = new File(input);
-        File outFile = new File(output);
-        processor.process(inFile, outFile, null);
+        processor.process(new File(input), new File(temporary), null);
+
+        // Finalise by some postprocessing (w2x does zero pretty printing, what a shame...).
+        System.out.println(">>> Performing pretty printing...");
+        XsltHandler h = new XsltHandler(MainCommand.xsltPrettyPrint);
+        h.createTransformer(temporary, output, null).transform();
+
+        System.out.println(">>> Done!");
     }
 
     private static void fromDocBookToDOCX(String input, String output) throws Exception {
         // http://www.xmlmind.com/foconverter/what_is_xfc.html -> XSL Utility
 
         String temporary = FileHelpers.changeExtension(output, ".fo");
-        // Inspired by XMLmind_XSL_Utility\addon\config\docbook5\xslutil.conversions.
 
-        Path xslfo = Paths.get(MainCommand.xsltDocBookToFO).toAbsolutePath();
+//        Path xslfo = Paths.get(MainCommand.xsltDocBookToFO).toAbsolutePath();
 
         // First, transform the DocBook files into XSL/FO.
         System.out.println(">>> Generating the XSL/FO...");
@@ -95,12 +100,6 @@ public class ProofreadCommand implements Callable<Void> {
         trans.setParameter(new QName("callout.graphics"), new XdmAtomicValue("1"));
         trans.setParameter(new QName("variablelist.as.blocks"), new XdmAtomicValue("1"));
         trans.setParameter(new QName("ulink.show"), new XdmAtomicValue(false));
-//        trans.setParameter(new QName("use.extensions"), new XdmAtomicValue("0")); // true
-//        trans.setParameter(new QName("graphicsize.extension"), new XdmAtomicValue("0"));
-//        trans.setParameter(new QName("xfc.extensions"), new XdmAtomicValue("1"));
-//        trans.setParameter(new QName("img.src.path"), new XdmAtomicValue("%~pi"));
-//        trans.setParameter(new QName("admon.graphics.path"), new XdmAtomicValue(xslfo.getParent().resolve("images").toString()));
-//        trans.setParameter(new QName("callout.graphics.path"), new XdmAtomicValue(xslfo.getParent().resolve("images/callouts").toString()));
         trans.transform();
 
         // If there were errors, print them out.
@@ -115,7 +114,6 @@ public class ProofreadCommand implements Callable<Void> {
         Converter converter = new Converter();
         converter.setProperty("outputFormat", "docx");
         converter.setProperty("outputEncoding", "UTF-8");
-//        converter.setProperty("imageResolution", "120");
         converter.setProperty("prescaleImages", "false");
         converter.setProperty("genericFontFamilies", "serif=Times New Roman,sans-serif=Arial,monospace=Courier New");
         converter.setProperty("styles", MainCommand.xfcDocBookToFO);
