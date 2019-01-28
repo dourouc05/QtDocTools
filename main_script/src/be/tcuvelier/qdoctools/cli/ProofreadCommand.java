@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
+import be.tcuvelier.qdoctools.Main;
 import be.tcuvelier.qdoctools.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.XsltHandler;
 import com.xmlmind.fo.converter.Converter;
@@ -88,7 +89,8 @@ public class ProofreadCommand implements Callable<Void> {
         XsltTransformer trans = h.createTransformer(input, temporary, os);
         trans.setParameter(new QName("paper.type"), new XdmAtomicValue("A4"));
         trans.setParameter(new QName("draft.mode"), new XdmAtomicValue("no"));
-        trans.setParameter(new QName("section.autolabel"), new XdmAtomicValue("1"));
+        trans.setParameter(new QName("section.autolabel"), new XdmAtomicValue("0"));
+        trans.setParameter(new QName("section.autolabel.max.depth"), new XdmAtomicValue(0));
         trans.setParameter(new QName("toc.section.depth"), new XdmAtomicValue("6"));
         trans.setParameter(new QName("callout.graphics"), new XdmAtomicValue("1"));
         trans.setParameter(new QName("variablelist.as.blocks"), new XdmAtomicValue("1"));
@@ -116,6 +118,7 @@ public class ProofreadCommand implements Callable<Void> {
 //        converter.setProperty("imageResolution", "120");
         converter.setProperty("prescaleImages", "false");
         converter.setProperty("genericFontFamilies", "serif=Times New Roman,sans-serif=Arial,monospace=Courier New");
+        converter.setProperty("styles", MainCommand.xfcDocBookToFO);
 
         InputSource src = new InputSource(temporary);
         OutputDestination dst = new OutputDestination(output);

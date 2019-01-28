@@ -1,6 +1,5 @@
 package be.tcuvelier.qdoctools.helpers;
 
-import be.tcuvelier.qdoctools.Main;
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.utils.ValidationHandler;
 import org.xml.sax.SAXException;
