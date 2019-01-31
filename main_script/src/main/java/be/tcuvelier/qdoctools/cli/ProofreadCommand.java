@@ -1,10 +1,11 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.utils.DocxToDocBook;
 import be.tcuvelier.qdoctools.utils.XsltHandler;
 import com.xmlmind.fo.converter.Converter;
 import com.xmlmind.fo.converter.OutputDestination;
+import com.xmlmind.util.Console;
+import com.xmlmind.util.ProgressMonitor;
 import com.xmlmind.w2x.processor.Processor;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmAtomicValue;
@@ -15,15 +16,9 @@ import picocli.CommandLine.Option;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 @Command(name = "proofread", description = "Perform transformations pertaining to proofreading")
 public class ProofreadCommand implements Callable<Void> {
@@ -67,8 +62,64 @@ public class ProofreadCommand implements Callable<Void> {
     }
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {
+        // http://www.xmlmind.com/w2x/what_is_w2x.html
+        String temporary = FileHelpers.changeExtension(output, ".tmp");
+
+        // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xhtml"
+        // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv -p edit.prune.preserve "p-XFC_P_ProgramListing" -p edit.blocks.convert "p-XFC_P_ProgramListing pre" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xhtml"
+        // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv -o docbook5 -p edit.prune.preserve "p-XFC_P_ProgramListing" -p edit.blocks.convert "p-XFC_P_ProgramListing pre" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xml"
+        // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv -o docbook5 -p edit.prune.preserve "^p-.*ProgramListing.*$" -p edit.blocks.convert "^p-.*ProgramListing.*$ pre" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xml"
+        // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv -o docbook5 -t file:///D:/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/xslt/custom_docbook5.xsl -pu edit.after.blocks file:///D:/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/xslt/custom_docbook5.xed -p edit.prune.preserve "^p-.*ProgramListing.*$" -p edit.blocks.convert "^p-.*ProgramListing.*$ pre" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xml"
+
         System.out.println(">>> Generating the DocBook...");
-        DocxToDocBook.convertDOCXToDocBook(input, output);
+        Processor processor = new Processor();
+        processor.configure(new String[]{
+                "-o", "docbook5",
+                "-t", "file:///" + Paths.get(MainCommand.xsltXEDTransform).toRealPath().toString().replace('\\', '/'),
+                "-pu", "edit.before.init-styles", "file:///" + Paths.get(MainCommand.xsltXEDScript).toRealPath().toString().replace('\\', '/'),
+                "-p", "transform.hierarchy-name", "article",
+                "-p", "transform.pre-element-name", "programlisting",
+                "-p", "transform.media-alt", "yes",
+                "-p", "edit.prune.preserve", "^p-.*ProgramListing.*$",
+                "-p", "edit.blocks.convert", "^p-.*ProgramListing.*$ span g:id='pre' g:container='pre'",
+        });
+        ProgressMonitor pm = new ProgressMonitor() {
+            @Override
+            public void start() {
+                System.out.println(">>> Start");
+            }
+
+            @Override
+            public boolean message(String s, Console.MessageType messageType) {
+                System.out.println(">>> Message: ");
+                System.out.println("||| " + s);
+                return false;
+            }
+
+            @Override
+            public boolean stepCount(int i) {
+                System.out.println(">>> Step count: " + i);
+                return false;
+            }
+
+            @Override
+            public boolean step(int i) {
+                System.out.println(">>> Step: #" + i);
+                return false;
+            }
+
+            @Override
+            public void stop() {
+                System.out.println(">>> Stop");
+            }
+        };
+        processor.process(new File(input), new File(temporary), null);
+
+        // Finalise by some postprocessing (w2x does zero pretty printing, what a shame...).
+        System.out.println(">>> Performing pretty printing...");
+        XsltHandler h = new XsltHandler(MainCommand.xsltXEDPrettyPrint);
+        h.createTransformer(temporary, output, null).transform();
+
         System.out.println(">>> Done!");
     }
 
