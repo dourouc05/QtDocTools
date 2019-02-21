@@ -29,17 +29,18 @@
             représentation interne du solveur CPLEX de ces variables et contraintes : le
             fonctionnement interne de CPLEX n'est pas montré, seule une version abstraite est
             disponible – et largement suffisante pour la plupart des besoins. </para>
-        <para>Une application se déroulera donc en trois phases : <itemizedlist>
-                <listitem>
-                    <para>la création du modèle ; </para>
-                </listitem>
-                <listitem>
-                    <para>sa résolution ; </para>
-                </listitem>
-                <listitem>
-                    <para>l'utilisation de la solution. </para>
-                </listitem>
-            </itemizedlist></para>
+        <para>Une application se déroulera donc en trois phases : </para>
+		<itemizedlist>
+			<listitem>
+				<para>la création du modèle ; </para>
+			</listitem>
+			<listitem>
+				<para>sa résolution ; </para>
+			</listitem>
+			<listitem>
+				<para>l'utilisation de la solution. </para>
+			</listitem>
+		</itemizedlist>
         <para>Pour de petits modèles, il est envisageable de n'utiliser qu'une fonction qui gère
             l'entièreté du modèle, mais cette solution n'est pas applicable à grande échelle. Pour
             un modèle de taille plus conséquente, le paradigme objet, utilisé pour la conception de
@@ -53,50 +54,65 @@
         <title>Création d'un modèle</title>
         <para>La première étape est d'instancier CPLEX. En C++, il s'agira de créer un objet
                 <classname>IloEnv</classname>, puis un modèle <classname>IloModel</classname> ; en
-            Java, une instance de <classname>IloCplex</classname> gère l'entièreté du processus.
+            Java, une instance de <classname>IloCplex</classname> gère l'entièreté du processus.</para>
             <programlisting language="c++">IloEnv env;
-IloModel model(env);</programlisting><programlisting language="java">IloCplex cplex = new IloCplex();</programlisting></para>
+IloModel model(env);</programlisting>
+			<programlisting language="java">IloCplex cplex = new IloCplex();</programlisting>
         <para>De là, il est possible de créer une variable, par exemple entière, qui prend ses
             valeurs entre zéro et quarante-deux, avec un nom <code>"x"</code> (il sera utile pour le
-            débogage).
-            <programlisting language="c++">IloNumVar x(env, 0, 42, IloNumVar::Int, "x");</programlisting><programlisting language="java">IloNumVar x = cplex.intVar(0, 42, "x");</programlisting>Il
+            débogage).</para>
+		<programlisting language="c++">IloNumVar x(env, 0, 42, IloNumVar::Int, "x");</programlisting>
+		<programlisting language="java">IloNumVar x = cplex.intVar(0, 42, "x");</programlisting>
+        <para>Il
             est également possible de créer des tableaux de variables, par exemple booléennes, dont
             les noms sont donnés par un tableau de chaînes de caractères (en Java).
-            <programlisting language="c++">IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);</programlisting><programlisting language="java">String[] namesY = new String[] { "y1", "y2" };
-IloNumVar[] y = cplex.boolVarArray(2, namesY);</programlisting></para>
+            </para>
+		<programlisting language="c++">IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);</programlisting>
+		<programlisting language="java">String[] namesY = new String[] { "y1", "y2" };
+IloNumVar[] y = cplex.boolVarArray(2, namesY);</programlisting>
         <para>De là, l'API permet d'exprimer des contraintes entre ces variables, chacune avec un
             nom
-            donné.<programlisting language="c++">model.add(y[0] &lt;= y[1], "c1");
-model.add(x &lt;= 1000 * y[1], "c2");</programlisting><programlisting language="java">cplex.addLe(y[0], y[1], "c1");
-cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</programlisting></para>
-        <para> La dernière étape est de créer un objectif.
-            <programlisting language="c++">model.add(IloMinimize(env, x));</programlisting><programlisting language="java">cplex.addMinimize(x);</programlisting></para>
+            donné.</para>
+		<programlisting language="c++">model.add(y[0] &lt;= y[1], "c1");
+model.add(x &lt;= 1000 * y[1], "c2");</programlisting>
+		<programlisting language="java">cplex.addLe(y[0], y[1], "c1");
+cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</programlisting>
+        <para> La dernière étape est de créer un objectif.</para>
+		<programlisting language="c++">model.add(IloMinimize(env, x));</programlisting>
+		<programlisting language="java">cplex.addMinimize(x);</programlisting>
     </section>
     <section>
         <title>Optimisation d'un modèle</title>
-        <para>La résolution du modèle se réduit ensuite à l'appel d'une fonction.
-            <programlisting language="c++">IloCplex cplex(model);
-cplex.solve();</programlisting><programlisting language="java">cplex.solve();</programlisting>La
+        <para>La résolution du modèle se réduit ensuite à l'appel d'une fonction.</para>
+		<programlisting language="c++">IloCplex cplex(model);
+cplex.solve();</programlisting>
+		<programlisting language="java">cplex.solve();</programlisting>
+		<para>La
             méthode <methodname>solve()</methodname> retourne un booléen vrai si l'optimisation
             s'est déroulée sans problème (si une solution a été trouvée).
                 <methodname>getStatus()</methodname> donne plus de détail (solution optimale
             trouvée, solution faisable mais non optimale trouvée, modèle infaisable, etc.). </para>
         <para>La valeur de l'objectif est accessible par la méthode
-                <methodname>getObjValue()</methodname>.
-            <programlisting>double objective = cplex.getObjValue(); </programlisting>La valeur d'une
+                <methodname>getObjValue()</methodname>.</para>
+		<programlisting>double objective = cplex.getObjValue(); </programlisting>
+		<para>La valeur d'une
             variable particulière s'obtient en passant son objet <classname>IloNumVar</classname> en
-            paramètre à <methodname>getValue()</methodname>.
-            <programlisting>double xV = cplex.getValue(x);</programlisting>Pour récupérer les
+            paramètre à <methodname>getValue()</methodname>.</para>
+		<programlisting>double xV = cplex.getValue(x);</programlisting>
+		<para>Pour récupérer les
             valeurs de plusieurs variables, <methodname>getValues()</methodname> prend en paramètre
-            un tableau.
-            <programlisting language="c++">double yV[] = cplex.getValues(y);</programlisting><programlisting language="java">double[] yV = cplex.getValues(y);</programlisting></para>
+            un tableau.</para>
+        <programlisting language="c++">double yV[] = cplex.getValues(y);</programlisting>
+		<programlisting language="java">double[] yV = cplex.getValues(y);</programlisting>
     </section>
     <section>
         <title>Résolution d'infaisabilité</title>
         <para>En cas de problème dans la résolution (pas de solution faisable, loin de l'optimalité,
             etc.), il est bien souvent utile d'exporter le modèle créé. CPLEX permet de créer très
             facilement des fichiers LP contenant toutes les contraintes et objectifs, contenant
-            notamment leur nom. <programlisting>cplex.exportModel("model.lp");</programlisting>Ce
+            notamment leur nom. </para>
+		<programlisting>cplex.exportModel("model.lp");</programlisting>
+		<para>Ce
             fichier peut alors être chargé dans l'interface interactive, où <link
                 xlink:href="http://pic.dhe.ibm.com/infocenter/cosinfoc/v12r6/index.jsp?topic=%2Filog.odms.ide.help%2Frefcppopl%2Fhtml%2Fconflict.html"
                 >un outil de détection de conflits</link> peut se révéler précieux (il est également
@@ -180,22 +196,24 @@ Binaries
         <title>Exemple complet</title>
         <para>Soit un problème de sac à dos. Le sac à dos sera un objet (ce qui permettra de
             généraliser le modèle à de l'assignation, par exemple, en imposant que chaque objet est
-            au plus dans un sac à dos), il n'aura comme attribut que sa capacité.
-            <programlisting language="c++">class KnapSack {
+            au plus dans un sac à dos), il n'aura comme attribut que sa capacité.</para>
+		<programlisting language="c++">class KnapSack {
 private: 
     const int capacity; 
 
 public:
     KnapSack(int c) : capacity(c) {}
-};</programlisting><programlisting language="java">public class KnapSack {
+};</programlisting>
+		<programlisting language="java">public class KnapSack {
     private final int capacity;
 
     public KnapSack(int c) {
         capacity = c;
     }
-}</programlisting>Chaque
-            objet sera également un objet, avec son poids, sa valeur et un identifiant.
-            <programlisting language="c++">class Object {
+}</programlisting>
+		<para>Chaque
+            objet sera également un objet, avec son poids, sa valeur et un identifiant.</para>
+		<programlisting language="c++">class Object {
 private:
     const int id, weight, value;
 
@@ -204,7 +222,8 @@ public:
     int getId()      { return id;     }
     int getWeight()  { return weight; }
     int getValue()   { return value;  }
-};</programlisting><programlisting language="java">public class Object {
+};</programlisting>
+		<programlisting language="java">public class Object {
     private final int id, weight, value;
 
     public Object(int i, int w, int v) {
@@ -214,10 +233,10 @@ public:
     public int getId()      { return id;     }
     public int getWeight()  { return weight; }
     public int getValue()   { return value;  }md
-}</programlisting></para>
+}</programlisting>
         <para>Il faut alors créer une variable dans le modèle mathématique par objet. Il est commode
-            d'effectuer cette opération dans une méthode et de stocker la valeur dans l'objet.
-            <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+            d'effectuer cette opération dans une méthode et de stocker la valeur dans l'objet.</para>
+		<programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
 
 class Object {
 private:
@@ -229,7 +248,8 @@ public:
     void createVariables(IloEnv&amp; env) {
         x = new IloNumVar(env, 0, 1, IloNumVar::Bool, "x" + id);
     }
-};</programlisting><programlisting language="java">import ilog.concert.IloException;
+};</programlisting>
+		<programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 
@@ -240,10 +260,11 @@ public class Object {
     public void createVariables(IloCplex solver) throws IloException {
         x = solver.boolVar("x" + id);
     }
-}</programlisting>Côté
+}</programlisting>
+		<para>Côté
             sac à dos, il faudra imposer que les objets pris ne dépassent pas la capacité. Pour ce
-            faire, une méthode imposera cette contrainte, elle prendra en argument tous les objets.
-            <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+            faire, une méthode imposera cette contrainte, elle prendra en argument tous les objets.</para>
+		<programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
 #include &lt;vector>
 
 class KnapSack {
@@ -258,7 +279,8 @@ public:
 
         model.add(IloScalProd(weights, xs) &lt;= capacity);
     }
-};</programlisting><programlisting language="java">import ilog.concert.IloException;
+};</programlisting>
+		<programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 
@@ -273,11 +295,11 @@ public class KnapSack {
 
         solver.addLe(solver.scalProd(weights, xs), capacity);
     }
-}</programlisting></para>
+}</programlisting>
         <para>La fonction principale se chargera de créer ces objets, d'instancier le solveur,
             d'appeler les méthodes pour créer un modèle, puis de le résoudre et d'afficher la
-            solution.
-            <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+            solution.</para>
+		<programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
 #include &lt;ilconcert/iloexpression.h>
 #include &lt;ilconcert/ilolinear.h>
 #include &lt;vector>
@@ -325,7 +347,8 @@ int main(int argc, char* argv[]) {
         cout &lt;&lt; "Object " &lt;&lt; object->getId() &lt;&lt; ": " &lt;&lt; ((solver.getValue(object->getX()) > 0.75) ? "taken" : "left");
     }
     cout &lt;&lt; "Value: " &lt;&lt; solver.getObjValue();
-}</programlisting><programlisting language="java">import ilog.concert.IloException;
+}</programlisting>
+		<programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 
@@ -371,7 +394,7 @@ public class Main {
         }
         System.out.println("Value: " + solver.getObjValue());
     }
-}</programlisting></para>
+}</programlisting>
         <note>
             <para>La méthode <methodname>addMIPStart()</methodname> n'est utile que pour la
                 résolution de problèmes impliquant des nombres entiers (d'où son nom). Elle fournit

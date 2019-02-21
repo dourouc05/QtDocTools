@@ -26,17 +26,35 @@ public class SanityCheckHandler {
     }
 
     public boolean performSanityCheck() throws SaxonApiException {
+        // Accumulate the results and show as many things as possible.
+        boolean result = true;
+
         // No list within a paragraph (Word-to-XML outputs them outside the paragraph).
-        XdmValue listInPara = xpath("//db:para/db:itemizedlist union //para/itemizedlist");
-        if (listInPara.size() > 0) {
-            System.out.println("SANITY CHECK: found " + listInPara.size() + " list(s) within paragraphs: ");
-            for (XdmValue v: listInPara) {
-                System.out.println("- at line " + ((XdmNode) v).getLineNumber() + ", " +
-                        "column " + ((XdmNode) v).getColumnNumber());
+        {
+            XdmValue listInPara = xpath("//db:para/db:itemizedlist union //para/itemizedlist");
+            if (listInPara.size() > 0) {
+                System.out.println("SANITY CHECK: found " + listInPara.size() + " list(s) within paragraphs: ");
+                for (XdmValue v : listInPara) {
+                    System.out.println("- at line " + ((XdmNode) v).getLineNumber() + ", " +
+                            "column " + ((XdmNode) v).getColumnNumber());
+                }
+                result = false;
             }
-            return false;
         }
 
-        return true;
+        // No block of code within a paragraph (Word-to-XML outputs them outside the paragraph).
+        {
+            XdmValue codeInPara = xpath("//db:para/db:programlisting union //para/programlisting");
+            if (codeInPara.size() > 0) {
+                System.out.println("SANITY CHECK: found " + codeInPara.size() + " code blocks(s) within paragraphs: ");
+                for (XdmValue v : codeInPara) {
+                    System.out.println("- at line " + ((XdmNode) v).getLineNumber() + ", " +
+                            "column " + ((XdmNode) v).getColumnNumber());
+                }
+                result = false;
+            }
+        }
+
+        return result;
     }
 }

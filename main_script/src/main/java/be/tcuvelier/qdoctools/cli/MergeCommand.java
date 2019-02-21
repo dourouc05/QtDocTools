@@ -145,7 +145,8 @@ public class MergeCommand implements Callable<Void> {
         System.out.println("ERROR! Tag mismatch! Left side has \"" + left.getNodeName().toString() + "\" " +
                 "while the right side has \"" + right.getNodeName().toString() + "\". " +
                 "Left line: " + left.getLineNumber() + "; left column: " + left.getColumnNumber() + "\n" +
-                "Right line: " + right.getLineNumber() + "; Right column: " + right.getColumnNumber());
+                "Right line: " + right.getLineNumber() + "; Right column: " + right.getColumnNumber() + "\n" +
+                "Make sure the documents pass the sanity checks (performed before any transformation toward ODT or DOCX).");
     }
 
     private void printNumberChildrenMismatch(XdmNode left, XdmNode right) {
@@ -153,7 +154,8 @@ public class MergeCommand implements Callable<Void> {
                 "Left side has \"" + iteratorSize(left.children()) + "\" " +
                 "while the right side has \"" + iteratorSize(right.children()) + "\". \n" +
                 "Left line: " + left.getLineNumber() + "; left column: " + left.getColumnNumber() + "\n" +
-                "Right line: " + right.getLineNumber() + "; right column: " + right.getColumnNumber());
+                "Right line: " + right.getLineNumber() + "; right column: " + right.getColumnNumber() + "\n" +
+                "Make sure the documents pass the sanity checks (performed before any transformation toward ODT or DOCX).");
     }
 
     private int iteratorSize(Iterable i) {
@@ -177,11 +179,13 @@ public class MergeCommand implements Callable<Void> {
         else if (left.getNodeName().toString().contains("article")) {
             if (! right.getNodeName().toString().contains("article")) {
                 printTagMismatch(left, right);
+                throw new RuntimeException();
             }
 
             // There should be no difference in tags here.
             if (iteratorSize(left.children()) != iteratorSize(right.children())) {
                 printNumberChildrenMismatch(left, right);
+                throw new RuntimeException();
             }
 
             // Recurse within root.
@@ -201,11 +205,13 @@ public class MergeCommand implements Callable<Void> {
         else if (left.getNodeName().toString().contains("section")) {
             if (! right.getNodeName().toString().contains("section")) {
                 printTagMismatch(left, right);
+                throw new RuntimeException();
             }
 
             // There should be no difference in tags here.
             if (iteratorSize(left.children()) != iteratorSize(right.children())) {
                 printNumberChildrenMismatch(left, right);
+                throw new RuntimeException();
             }
 
             // Recurse within sections.
