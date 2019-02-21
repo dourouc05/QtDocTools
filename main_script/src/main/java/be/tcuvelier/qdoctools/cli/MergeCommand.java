@@ -116,6 +116,8 @@ public class MergeCommand implements Callable<Void> {
             if (! v.getPrefix().equals("xml")) {
                 out.startPrefixMapping(v.getPrefix(), v.getStringValue());
             }
+
+            // TODO: What about the other nodes in the tree? The XML produced by Word-to-XML has namespaces all over the place...
         }
 
         // Run the transformation (works recursively).

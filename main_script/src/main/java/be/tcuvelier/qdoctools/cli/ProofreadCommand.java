@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
+import be.tcuvelier.qdoctools.utils.handlers.SanityCheckHandler;
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import com.xmlmind.fo.converter.Converter;
@@ -7,15 +8,15 @@ import com.xmlmind.fo.converter.OutputDestination;
 import com.xmlmind.util.Console;
 import com.xmlmind.util.ProgressMonitor;
 import com.xmlmind.w2x.processor.Processor;
-import net.sf.saxon.s9api.QName;
-import net.sf.saxon.s9api.XdmAtomicValue;
-import net.sf.saxon.s9api.XsltTransformer;
+import net.sf.saxon.s9api.*;
 import org.xml.sax.InputSource;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
@@ -45,6 +46,10 @@ public class ProofreadCommand implements Callable<Void> {
         } else if (FileHelpers.isODT(input)) {
             System.out.println("NOT YET IMPLEMENYED");
         } else if (FileHelpers.isDocBook(input)) {
+            if (! checkSanity(input)) {
+                throw new RuntimeException("Input DocBook file does not pass the sanity checks! ");
+            }
+
             if (outputFormat == OutputFormat.DOCX) {
                 String output = FileHelpers.changeExtension(input, ".docx");
                 fromDocBookToDOCX(input, output);
@@ -59,6 +64,10 @@ public class ProofreadCommand implements Callable<Void> {
         // TODO: If XFC is not good enough, can use Pandoc for DocBook > DocX & ODT.
 
         return null;
+    }
+
+    private static boolean checkSanity(String input) throws SaxonApiException, FileNotFoundException {
+        return new SanityCheckHandler(input).performSanityCheck();
     }
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {

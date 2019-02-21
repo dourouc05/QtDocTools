@@ -4,7 +4,7 @@ import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
-@Command(description = "Version control", subcommands = {
+@Command(description = "QDocTools", subcommands = {
         GenerateCommand.class,
         ProofreadCommand.class,
         QdocCommand.class,
