@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.helpers;
+package be.tcuvelier.qdoctools.utils.helpers;
 
 import be.tcuvelier.qdoctools.utils.Pair;
 

@@ -1,8 +1,8 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.helpers.ValidationHelper;
-import be.tcuvelier.qdoctools.utils.XsltHandler;
+import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.utils.helpers.ValidationHelper;
+import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 import picocli.CommandLine.Option;

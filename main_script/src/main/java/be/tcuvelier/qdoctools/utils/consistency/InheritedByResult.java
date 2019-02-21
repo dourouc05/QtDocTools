@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.utils.consistency;
 
-import be.tcuvelier.qdoctools.helpers.SetHelpers;
+import be.tcuvelier.qdoctools.utils.helpers.SetHelpers;
 
 import java.util.HashSet;
 import java.util.Set;

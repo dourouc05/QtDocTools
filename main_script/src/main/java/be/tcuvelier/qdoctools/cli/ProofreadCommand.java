@@ -1,7 +1,7 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.utils.XsltHandler;
+import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import com.xmlmind.fo.converter.Converter;
 import com.xmlmind.fo.converter.OutputDestination;
 import com.xmlmind.util.Console;
@@ -26,7 +26,7 @@ public class ProofreadCommand implements Callable<Void> {
             description = "File to process", required = true)
     private String input;
 
-    public enum OutputFormat { DOCX, ODT };
+    public enum OutputFormat { DOCX, ODT }
 
     @Option(names = { "-of", "--output-format" },
             description = "Requested output format. Allowed values: ${COMPLETION-CANDIDATES}. " +
@@ -36,7 +36,7 @@ public class ProofreadCommand implements Callable<Void> {
     @Override
     public Void call() throws Exception {
         if (! new File(input).exists()) {
-            throw new RuntimeException("Input file does not exist!");
+            throw new RuntimeException("Input file " + input + " does not exist!");
         }
 
         if (FileHelpers.isDOCX(input)) {
@@ -48,8 +48,8 @@ public class ProofreadCommand implements Callable<Void> {
             if (outputFormat == OutputFormat.DOCX) {
                 String output = FileHelpers.changeExtension(input, ".docx");
                 fromDocBookToDOCX(input, output);
-            } else {
-                System.out.println("NOT YET IMPLEMENYED");
+            } else if (outputFormat == OutputFormat.ODT) {
+                System.out.println("ODT NOT YET IMPLEMENTED");
             }
         } else {
             throw new RuntimeException("File format not recognised for input file!");
@@ -128,8 +128,6 @@ public class ProofreadCommand implements Callable<Void> {
         // http://www.xmlmind.com/foconverter/what_is_xfc.html -> XSL Utility
 
         String temporary = FileHelpers.changeExtension(output, ".fo");
-
-//        Path xslfo = Paths.get(MainCommand.xsltDocBookToFO).toAbsolutePath();
 
         // First, transform the DocBook files into XSL/FO.
         System.out.println(">>> Generating the XSL/FO...");

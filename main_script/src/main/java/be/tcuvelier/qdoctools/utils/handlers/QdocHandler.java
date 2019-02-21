@@ -1,8 +1,10 @@
-package be.tcuvelier.qdoctools.utils;
+package be.tcuvelier.qdoctools.utils.handlers;
 
 import be.tcuvelier.qdoctools.exceptions.ReadQdocconfException;
 import be.tcuvelier.qdoctools.exceptions.WriteQdocconfException;
-import be.tcuvelier.qdoctools.helpers.QtModules;
+import be.tcuvelier.qdoctools.utils.helpers.QtModules;
+import be.tcuvelier.qdoctools.utils.Pair;
+import be.tcuvelier.qdoctools.utils.QtVersion;
 
 import java.io.File;
 import java.io.IOException;

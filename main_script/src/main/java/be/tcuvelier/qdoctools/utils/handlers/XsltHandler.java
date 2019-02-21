@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.utils;
+package be.tcuvelier.qdoctools.utils.handlers;
 
 import net.sf.saxon.lib.StandardErrorListener;
 import net.sf.saxon.lib.StandardLogger;

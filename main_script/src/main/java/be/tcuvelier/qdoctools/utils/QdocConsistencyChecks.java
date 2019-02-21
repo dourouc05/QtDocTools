@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.utils;
 
-import be.tcuvelier.qdoctools.helpers.SetHelpers;
+import be.tcuvelier.qdoctools.utils.helpers.SetHelpers;
 import be.tcuvelier.qdoctools.utils.consistency.*;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.jsoup.HttpStatusException;
@@ -8,8 +8,6 @@ import org.jsoup.HttpStatusException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 public class QdocConsistencyChecks {
     private final Path fileName;

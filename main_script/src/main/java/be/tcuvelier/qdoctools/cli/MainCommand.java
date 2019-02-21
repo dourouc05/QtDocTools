@@ -4,7 +4,12 @@ import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
-@Command(description = "Version control", subcommands = {GenerateCommand.class, ProofreadCommand.class, QdocCommand.class})
+@Command(description = "Version control", subcommands = {
+        GenerateCommand.class,
+        ProofreadCommand.class,
+        QdocCommand.class,
+        MergeCommand.class
+})
 public class MainCommand implements Callable<Void> {
     public final static String xsltWebXMLToDocBookPath = "../import/from_qdoc_v2/xslt/webxml_to_docbook.xslt"; // Path to the XSLT sheet WebXML to DocBook.
     public final static String xsltWebXMLToDocBookUtilPath = "../import/from_qdoc_v2/xslt/class_parser.xslt"; // Path to the XSLT sheet that contains utilities for the WebXML to DocBook transformation.

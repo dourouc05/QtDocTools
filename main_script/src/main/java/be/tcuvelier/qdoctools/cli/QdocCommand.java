@@ -1,8 +1,10 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.helpers.ValidationHelper;
+import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.utils.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.utils.*;
+import be.tcuvelier.qdoctools.utils.handlers.QdocHandler;
+import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
