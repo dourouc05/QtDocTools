@@ -50,4 +50,74 @@
             </xsl:choose>
         </fo:block>
     </xsl:template>
+    
+    <!-- For blocks of code, to output the language: verbatim.xsl -->
+    <xsl:template match="db:programlisting|db:screen|db:synopsis|db:literallayout[@class='monospaced']" mode="m:verbatim">
+        <xsl:param name="suppress-numbers" select="'0'"/>
+        <xsl:variable name="id" select="f:node-id(.)"/>
+        
+        <xsl:variable name="pygments-pi" as="xs:string?" select="f:pi(/processing-instruction('dbhtml'), 'pygments')"/>
+        <xsl:variable name="use-pygments" as="xs:boolean" select="$pygments-pi = 'true' or $pygments-pi = 'yes' or $pygments-pi = '1' or (contains(@role,'pygments') and not(contains(@role,'nopygments')))"/>
+        
+        <xsl:variable name="verbatim" as="node()*">
+            <!-- n.b. look below where the class attribute is computed -->
+            <xsl:choose>
+                <xsl:when test="contains(@role,'nopygments') or string-length(.) &gt; 9000 or self::db:literallayout or exists(*)">
+                    <xsl:sequence select="node()"/>
+                </xsl:when>
+                <xsl:when test="$pygments-default = 0 and not($use-pygments)">
+                    <xsl:sequence select="node()"/>
+                </xsl:when>
+                <!-- Only for MarkLogic -->
+                <!--
+                <xsl:when use-when="function-available('xdmp:http-post')" test="$pygmenter-uri != ''">
+                    <xsl:sequence select="ext:highlight(string(.), string(@language))"/>
+                </xsl:when>
+                -->
+                <!-- Not using DocBook Java extensions -->
+                <!--
+                <xsl:when use-when="function-available('ext:highlight')" test="true()">
+                    <xsl:sequence select="ext:highlight(string(.), string(@language))"/>
+                </xsl:when>
+                -->
+                <xsl:otherwise>
+                    <xsl:sequence select="node()"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:variable name="qdoctoolsPrefix" as="text()">
+            <xsl:choose>
+                <xsl:when test="@language and not(@language = '')">
+                    <xsl:value-of select="concat('//&lt;QDOCTOOLS&gt; Programming language: ', @language)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>//&lt;QDOCTOOLS&gt; No programming language</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:choose>
+            <xsl:when test="$shade.verbatim != 0">
+                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties shade.verbatim.style">
+                    <fo:block>
+                        <xsl:value-of select="$qdoctoolsPrefix"/>
+                    </fo:block>
+                    <fo:block>
+                        <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
+                    </fo:block>
+                </fo:block>
+            </xsl:when>
+            <xsl:otherwise>
+                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties">
+                    <fo:block>
+                        <xsl:value-of select="$qdoctoolsPrefix"/>
+                    </fo:block>
+                    <fo:block>
+                        <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
+                   </fo:block>
+                </fo:block>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 </xsl:stylesheet>

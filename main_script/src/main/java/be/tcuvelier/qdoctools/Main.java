@@ -17,20 +17,19 @@ import picocli.CommandLine;
  *  - More documentation-oriented things (like seeing what has changed between two versions and applying the same
  *    changes to a translated copy).
  *
- *  All options to find qdoc and related tools are contained in a configuration file.
+ *  All options to find qdoc and related tools are contained in a configuration file (config.json).
  */
 
 public class Main {
-
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.0\\Src", "-o", "D:\\Qt\\Doc511v2", "--qt-version", "5.12", "--no-rewrite-qdocconf", "--no-convert-webxml"};
 
-        String[] argv = {"merge",
-                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_before.xml",
-                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_after.xml",
-                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_merged.xml"};
+//        String[] argv = {"merge",
+//                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_before.xml",
+//                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_after.xml",
+//                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_merged.xml"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
-//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db"};
+        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db", "--disable-sanity-checks"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);

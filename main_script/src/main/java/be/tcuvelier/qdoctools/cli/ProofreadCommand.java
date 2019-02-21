@@ -1,19 +1,21 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.utils.handlers.SanityCheckHandler;
-import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
+import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
 import com.xmlmind.fo.converter.Converter;
 import com.xmlmind.fo.converter.OutputDestination;
 import com.xmlmind.util.Console;
 import com.xmlmind.util.ProgressMonitor;
 import com.xmlmind.w2x.processor.Processor;
-import net.sf.saxon.s9api.*;
+import net.sf.saxon.s9api.QName;
+import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XdmAtomicValue;
+import net.sf.saxon.s9api.XsltTransformer;
 import org.xml.sax.InputSource;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,6 +35,10 @@ public class ProofreadCommand implements Callable<Void> {
             description = "Requested output format. Allowed values: ${COMPLETION-CANDIDATES}. " +
                     "Default value: ${DEFAULT-VALUE}")
     private OutputFormat outputFormat = OutputFormat.DOCX;
+
+    @Option(names = { "--disable-sanity-checks" },
+            description = "Perform the sanity checks, but continue with generation even in case of failure")
+    private boolean disableSanityChecks = false;
 
     @Override
     public Void call() throws Exception {
@@ -66,8 +72,12 @@ public class ProofreadCommand implements Callable<Void> {
         return null;
     }
 
-    private static boolean checkSanity(String input) throws SaxonApiException, FileNotFoundException {
-        return new SanityCheckHandler(input).performSanityCheck();
+    private boolean checkSanity(String input) throws SaxonApiException, FileNotFoundException {
+        if (! disableSanityChecks) {
+            return new SanityCheckHandler(input).performSanityCheck();
+        } else {
+            return true;
+        }
     }
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {
