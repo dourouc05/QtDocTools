@@ -1,10 +1,16 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import net.sf.saxon.s9api.*;
+import net.sf.saxon.tree.NamespaceNode;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import javax.xml.transform.stream.StreamSource;
 import java.io.File;
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 @Command(name = "merge", description = "Perform merges between files, especially after proofreading")
@@ -13,7 +19,7 @@ public class MergeCommand implements Callable<Void> {
             description = "Original file, i.e. before proofreading", required = true)
     private String original;
 
-    @Option(names = { "-a", "--right", "--altered-file" },
+    @Option(names = { "-r", "--right", "--altered-file" },
             description = "Altered file, i.e. after proofreading", required = true)
     private String altered;
 
@@ -43,7 +49,7 @@ public class MergeCommand implements Callable<Void> {
     private MergeType type = MergeType.AFTER_PROOFREADING;
 
     @Override
-    public Void call() {
+    public Void call() throws SaxonApiException, SAXException {
         // Check whether the required files exist.
         if (! new File(original).exists()) {
             throw new RuntimeException("Original file " + original + " does not exist!");
@@ -51,9 +57,7 @@ public class MergeCommand implements Callable<Void> {
         if (! new File(altered).exists()) {
             throw new RuntimeException("Altered file " + altered + " does not exist!");
         }
-        if (merged != null && ! new File(merged).exists()) {
-            throw new RuntimeException("Merged file " + merged + " does not exist!");
-        }
+        // No need to check whether the merged file exists: it will be overwritten.
 
         // Check that all files have the required file format.
         if (FileHelpers.isDocBook(original)) {
@@ -87,7 +91,135 @@ public class MergeCommand implements Callable<Void> {
         }
     }
 
-    private void mergeAfterProofreading() {
+    private void mergeAfterProofreading() throws SaxonApiException, SAXException {
+        // Load the documents.
+        Processor saxonProcessor = new Processor(false);
+        DocumentBuilder leftDB = saxonProcessor.newDocumentBuilder();
+        leftDB.setLineNumbering(true);
+        XdmNode left = leftDB.build(new StreamSource(original));
+        DocumentBuilder rightDB = saxonProcessor.newDocumentBuilder();
+        rightDB.setLineNumbering(true);
+        XdmNode right = rightDB.build(new StreamSource(altered));
+
+        XdmNode leftRoot = left.children().iterator().next();
+        XdmNode rightRoot = right.children().iterator().next();
+
+        // Prepare a stream for the output.
+        BuildingContentHandler out = saxonProcessor.newDocumentBuilder().newBuildingContentHandler();
+
+        // Start the document, deal with namespaces.
+        out.startDocument();
+        for (XdmSequenceIterator<XdmNode> it = rightRoot.axisIterator(Axis.NAMESPACE); it.hasNext(); ) {
+            XdmNode ns = it.next();
+            NamespaceNode v = (NamespaceNode) ns.getUnderlyingNode();
+            System.out.println(v.getPrefix());
+            if (! v.getPrefix().equals("xml")) {
+                out.startPrefixMapping(v.getPrefix(), v.getStringValue());
+            }
+        }
+
+        // Run the transformation (works recursively).
+//        out.startElement(right.getBaseURI().toString(), "article", "article", new AttributesImpl());
+        mergeAfterProofreadingImplementation(leftRoot, rightRoot, out);
+//        out.endElement(right.getBaseURI().toString(), "article", "article");
+
+        // Finish the document.
+        for (XdmSequenceIterator<XdmNode> it = rightRoot.axisIterator(Axis.NAMESPACE); it.hasNext(); ) {
+            XdmNode ns = it.next();
+            NamespaceNode v = (NamespaceNode) ns.getUnderlyingNode();
+            if (! v.getPrefix().equals("xml")) {
+                out.endPrefixMapping(v.getPrefix());
+            }
+        }
+        out.endDocument();
+
+        // Write.
+        Serializer result = saxonProcessor.newSerializer();
+        result.setOutputFile(new File(merged));
+        result.serializeNode(out.getDocumentNode());
+    }
+
+    private void printTagMismatch(XdmNode left, XdmNode right) {
+        System.out.println("ERROR! Tag mismatch! Left side has \"" + left.getNodeName().toString() + "\" " +
+                "while the right side has \"" + right.getNodeName().toString() + "\". " +
+                "Left line: " + left.getLineNumber() + "; left column: " + left.getColumnNumber() + "\n" +
+                "Right line: " + right.getLineNumber() + "; Right column: " + right.getColumnNumber());
+    }
+
+    private void printNumberChildrenMismatch(XdmNode left, XdmNode right) {
+        System.out.println("ERROR! Mismatch in the number of children! " +
+                "Left side has \"" + iteratorSize(left.children()) + "\" " +
+                "while the right side has \"" + iteratorSize(right.children()) + "\". \n" +
+                "Left line: " + left.getLineNumber() + "; left column: " + left.getColumnNumber() + "\n" +
+                "Right line: " + right.getLineNumber() + "; right column: " + right.getColumnNumber());
+    }
+
+    private int iteratorSize(Iterable i) {
+        Iterator iterator = i.iterator();
+
+        int n = 0;
+        while(iterator.hasNext()) {
+            n++;
+            iterator.next();
+        }
+        return n;
+    }
+
+    private void mergeAfterProofreadingImplementation(XdmNode left, XdmNode right, BuildingContentHandler out)
+            throws SaxonApiException, SAXException {
+        if (right.getNodeKind() == XdmNodeKind.TEXT) {
+            // Text is written as-is.
+            String str = right.getTypedValue().toString();
+            out.characters(str.toCharArray(), 0, str.length());
+        }
+        else if (left.getNodeName().toString().contains("article")) {
+            if (! right.getNodeName().toString().contains("article")) {
+                printTagMismatch(left, right);
+            }
+
+            // There should be no difference in tags here.
+            if (iteratorSize(left.children()) != iteratorSize(right.children())) {
+                printNumberChildrenMismatch(left, right);
+            }
+
+            // Recurse within root.
+            out.characters("\n".toCharArray(), 0, 1);
+            out.startElement(right.getBaseURI().toString(), right.getNodeName().getLocalName(), right.getNodeName().toString(), new AttributesImpl());
+
+            XdmSequenceIterator<XdmNode> itR = right.axisIterator(Axis.CHILD);
+            XdmSequenceIterator<XdmNode> itL = left.axisIterator(Axis.CHILD);
+            while (itR.hasNext()) {
+                XdmNode leftNext = itL.next();
+                XdmNode rightNext = itR.next();
+                mergeAfterProofreadingImplementation(leftNext, rightNext, out);
+            }
+
+            out.endElement(right.getBaseURI().toString(), right.getNodeName().getLocalName(), right.getNodeName().getEQName());
+        }
+        else if (left.getNodeName().toString().contains("section")) {
+            if (! right.getNodeName().toString().contains("section")) {
+                printTagMismatch(left, right);
+            }
+
+            // There should be no difference in tags here.
+            if (iteratorSize(left.children()) != iteratorSize(right.children())) {
+                printNumberChildrenMismatch(left, right);
+            }
+
+            // Recurse within sections.
+            out.characters("\n".toCharArray(), 0, 1);
+            out.startElement(right.getBaseURI().toString(), right.getNodeName().getLocalName(), right.getNodeName().toString(), new AttributesImpl());
+
+            XdmSequenceIterator<XdmNode> itR = right.axisIterator(Axis.CHILD);
+            XdmSequenceIterator<XdmNode> itL = left.axisIterator(Axis.CHILD);
+            while (itR.hasNext()) {
+                XdmNode leftNext = itL.next();
+                XdmNode rightNext = itR.next();
+                mergeAfterProofreadingImplementation(leftNext, rightNext, out);
+            }
+
+            out.endElement(right.getBaseURI().toString(), right.getNodeName().getLocalName(), right.getNodeName().getEQName());
+        }
     }
 
     private void mergeUpdateQt() {

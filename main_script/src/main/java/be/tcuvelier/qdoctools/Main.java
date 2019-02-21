@@ -25,7 +25,10 @@ public class Main {
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.0\\Src", "-o", "D:\\Qt\\Doc511v2", "--qt-version", "5.12", "--no-rewrite-qdocconf", "--no-convert-webxml"};
 
-        String[] argv = {"merge"};
+        String[] argv = {"merge",
+                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_before.xml",
+                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_after.xml",
+                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_merged.xml"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db"};
 
