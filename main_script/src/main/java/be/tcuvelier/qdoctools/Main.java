@@ -14,8 +14,8 @@ import picocli.CommandLine;
  *  - Run qdoc and the associated transformations (for Qt's documentation only)
  *      - Only qdoc to WebXML
  *      - From qdoc to DocBook
- *  - Later on, more documentation-oriented things (like seeing what has changed between two versions and applying
- *    the same changes to a translated copy).
+ *  - More documentation-oriented things (like seeing what has changed between two versions and applying the same
+ *    changes to a translated copy).
  *
  *  All options to find qdoc and related tools are contained in a configuration file.
  */
@@ -23,10 +23,10 @@ import picocli.CommandLine;
 public class Main {
 
     public static void main(String[] args) {
-//        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.11.1\\Src", "-o", "C:\\Qt\\Doc511v2", "--qt-version", "5.11", "--no-rewrite-qdocconf", "--no-convert-webxml"};
+//        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.0\\Src", "-o", "D:\\Qt\\Doc511v2", "--qt-version", "5.12", "--no-rewrite-qdocconf", "--no-convert-webxml"};
 
-        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
-//        String[] argv = {"proofread", "-i", "D:\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db"};
+        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
+//        String[] argv = {"proofread", "-i", "D:\\Thibaut\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);
