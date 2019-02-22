@@ -82,8 +82,7 @@ public class ProofreadCommand implements Callable<Void> {
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {
         // http://www.xmlmind.com/w2x/what_is_w2x.html
-        String temporaryBeforePostProcessing = FileHelpers.changeExtension(output, ".post.tmp");
-        String temporaryBeforePrettyPrinting = FileHelpers.changeExtension(output, ".pretty.tmp");
+        String temporary = FileHelpers.changeExtension(output, ".post.tmp");
 
         // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xhtml"
         // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv -p edit.prune.preserve "p-XFC_P_ProgramListing" -p edit.blocks.convert "p-XFC_P_ProgramListing pre" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xhtml"
@@ -135,19 +134,13 @@ public class ProofreadCommand implements Callable<Void> {
                 System.out.println(">>> Stop");
             }
         };
-        processor.process(new File(input), new File(temporaryBeforePostProcessing), null);
+        processor.process(new File(input), new File(temporary), null);
 
         // Finalise by some postprocessing (w2x does zero pretty printing, what a shame...).
         System.out.println(">>> Performing post-processing...");
         new XsltHandler(MainCommand.xsltXEDPostProcess)
-                .createTransformer(temporaryBeforePostProcessing, output, null)
-//                .createTransformer(temporaryBeforePostProcessing, temporaryBeforePrettyPrinting, null)
+                .createTransformer(temporary, output, null)
                 .transform();
-
-//        System.out.println(">>> Performing pretty printing...");
-//        new XsltHandler(MainCommand.xsltXEDPrettyPrint)
-//                .createTransformer(temporaryBeforePrettyPrinting, output, null)
-//                .transform();
 
         System.out.println(">>> Done!");
     }
