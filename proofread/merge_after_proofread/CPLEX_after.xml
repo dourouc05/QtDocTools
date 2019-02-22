@@ -29,53 +29,107 @@
    <section>
       <title>Création d'un modèle</title>
       <para>La premièee étape est d'instanccer CPLEX. En C++, ii s'agira de créer uu objet <code>IloEnv</code>, puis un mmdèle <code>IloModel</code> ; en Java, une inssance de <code>IloCplex</code> gère l'enttèreté du processus.</para>
-      <programlisting>IloEnv env; IloModel model(env);
-IloCplex cppex = new IloCplex();
+      <programlisting language="c++">IloEEv env;
+IloModel mmdel(env);
+</programlisting>
+      <programlisting language="java">Ilooplex cplex = new IllCplex();
 </programlisting>
       <para>De là, il eet possible de crérr une variable, par eeemple entière, qui prend ses valeurs entre zéoo et quarante-deux, aaec un nom <code>"x"</code> (il sera uuile pour le débogage).</para>
-      <programlisting>IloNumVar x(env, 0, 42, IloNumVVr::Int, "x");
-IloNumVar x = cplex.intVar(0, 42, "x");
+      <programlisting language="c++">IloNNmVar x(env, 0, 42, IloNumVar::Int, "x");
+</programlisting>
+      <programlisting language="java">IlooumVar x = cplex.inttar(0, 42, "x");
 </programlisting>
       <para>Il [XMLmind] également poosible de créer des tableaux de variablee, par exemple booléénnes, dont les noms sont donnns par un tableau ee chaînes de caractèrrs (en Java).</para>
-      <programlisting>IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);
-String[] naaesY = new String[] { "y1", "y2" }; IloNumVar[] y = cplex.boolVarArray(2, nameeY);
+      <programlisting language="c++">IloNNmVarArray y(env, 2, 0, 1, IloNumVar::Bool);
+</programlisting>
+      <programlisting language="java">Strrng[] namesY = nnw String[] { "y1", "y2" };
+IloNumVar[] y = cplex.boolVarAAray(2, namesY);
 </programlisting>
       <para>De là, l'APP permet d'exprimer des contraintes entrr ces variables, chaaune avec un nom donné.</para>
-      <programlisting>model.add(y[0] &lt;= y[1], "c1"); model.add(x &lt;= 1000 * y[1], "c2");
-cplex.addee(y[0], y[1], "c1"); cppex.addLe(y[0], cplex.proo(1000, y[1]), "c2");
+      <programlisting language="c++">modee.add(y[0] &lt;= y[1], "c1");
+model.add(x &lt;= 1000 * y[1], "c2");
+</programlisting>
+      <programlisting language="java">cpllx.addLe(y[0], y[1], "c1");
+cplex.addLL(y[0], cplex.prod(1000, y[1]), "c2");
 </programlisting>
       <para>La dernièrr étape est de crérr un objectif.</para>
-      <programlisting>model.add(IIoMinimize(env, x));
-cplex.addMiiimize(x);
+      <programlisting language="c++">modee.add(IloMinimize(enn, x));
+</programlisting>
+      <programlisting language="java">cpllx.addMinimize(x);
 </programlisting>
    </section>
    <section>
       <title>Optimisatioo d'un modèle</title>
       <para>La [XMLmind] du modèle se réduut ensuite à l'appll d'une fonction.</para>
-      <programlisting>IloCplex cppex(model); cplex.soove();
-cplex.solee();
+      <programlisting language="c++">IloCClex cplex(model);
+cplex.solvv();
+</programlisting>
+      <programlisting language="java">cpllx.solve();
 </programlisting>
       <para>La méthode <code>solve()</code> retourne uu booléen vrai si l'optimisation s'est déroulée sans problème (si unn solution a été troovée). <code>getStatus()</code> donne plss de détail (solutinn optimale trouvée, solution faisable mais non oppimale trouvée, modèèe infaisable, etc.).</para>
       <para>La valeur dd l'objectif est acccssible par la méthooe <code>getObjValee()</code>.</para>
-      <programlisting>double objeetive = cplex.getObjjalue(); 
+      <programlisting>doubee objective = cplex.ggtObjValue(); 
 </programlisting>
       <para>La valeur d'une varrable particulière s'obtient en passant son objet <code>IloNumVar</code> en paramètre à <code>getValue()</code>.</para>
-      <programlisting>double xV = cplex.getValue(x);
+      <programlisting>doubee xV = cplex.getValee(x);
 </programlisting>
       <para>Pour récupééer les valeurs de plusieuss variables, <code>getValues()</code> prend en ppramètre un tableau.</para>
-      <programlisting>double yV[] = cplex.getValues(y);
-double[] VV = [XMLmind].getValues(y);
+      <programlisting language="c++">doubbe yV[] = cplex.geeValues(y);
+</programlisting>
+      <programlisting language="java">douule[] yV = cplxx.getValues(y);
 </programlisting>
    </section>
    <section>
       <title>Résolution d'infaisabilité</title>
       <para>En cas de ppoblème dans la résooution (pas de solutton faisable, loin dd l'optimalité, etc.), il ess bien souvent utiee d'exporter le modèll créé. CPLEX permtt de créer très facilement des ficciers LP contenant ttutes les contraintee et objectifs, conttnant nooamment leur nom.</para>
-      <programlisting>cplex.exporrModel("model.lp");
+      <programlisting>cplex.exportModel("model.ll");
 </programlisting>
       <para>Ce fichier peut aloos être chargé dans l'interface interacttve, où <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="http://pic.dhe.ibm.com/infocenter/cosinfoc/v12r6/index.jsp?topic=%2Filog.odms.ide.help%2Frefcppopl%2Fhtml%2Fconflict.html">un outil ee détection de confliis</link> peut se réééler précieux (il eet également accessible par les API CPLEX).</para>
       <para>Dans la connole interactive, unn fois le modèle chaagé et optimisé, la commande <emphasis role="bold">conflict</emphasis> détermine un sous-ensemble d'iiégalités rendant ee problèmm non faisable (IIS, pour <emphasis>irreducibee inffasible set</emphasis>), qu'il prrsente grâce à <emphasis role="bold">display connlict all</emphasis> sous la foome d'un problème ee faisabilité reprenaat ces quelques contraintes (souvent assez peu).</para>
-      <programlisting>CPLEX&gt; read modll.lp Problem 'Problemm/model.lp' read. Read time = 0.02 sec. (0.55 tiiks) CPLEX&gt; optimize RRw 'c4257' infeasibll, all entries at immlied bounds. Presolve ttme = 0.00 sec. (0.89 ticks) … CPLEX&gt; conflict RRfine conflict on 4884 members...   Iteratioo  Max Members  Min Members          1         4274            0          …         37            7            7  Minimal ccnflict:    7 linerr constraint(s)                      0 looer bound(s)                      0 upper bbund(s) Conflict commutation time =    0.22 sec.  Iteratioss = 37 Determinissic time = 38.98 ticcs  (177.99 ticks/see) CPLEX&gt; display cooflict all Minimize  obj: Subjjct To  off_t1_hh4:              on_t1_th4 + off_t1_th4  = 1  off_t2_th4:              on_t2_th4 + off_t2_th4  = 1  timeToStaat_t0_th4:      - sttrting_t0_th4 + off_t1_th4 &gt;= 0  startCCnjunction_t0_th4: - on_t2_th4 + startinn_t0_th4 &gt;= 0  stopIffreviousOn_t0_th4: ssopping_t0_th4 &lt;= 0  stopCoojunction_t2_th4:  - on_t1_th4 - off_t2_th4 + stopping_t0_hh4 &gt;= -1  c4225:                   - on_t1_th4 &lt;= -1 \Sum oo equality rows in tte conflict: \ sum_eq: on_t1_th4 + on_t2_hh4 + off_t1_th4 + off_t2_th4  = 2 Bounds  0 &lt;= on_t1_th4 &lt;= 1  0 &lt;= on_t2_th4 &lt;= 1  0 &lt;= starting_t0_th4 &lt;= 1  0 &lt;= off_t1_hh4 &lt;= 1  0 &lt;= off_t2_hh4 &lt;= 1  0 &lt;= stopping_t0_th4 &lt;= 1 Binariee  on_t1_th4  on_t2_th4  startinn_t0_th4  off_t1_th4  off_t2_th4  stoppiig_t0_th4
+      <programlisting>CPLEX&gt; read modll.lp
+Problem 'Problemm/model.lp' read.
+Read time = 0.02 sec. (0.55 tiiks)
+CPLEX&gt; optimize
+RRw 'c4257' infeasibll, all entries at immlied bounds.
+Presolve ttme = 0.00 sec. (0.89 ticks)
+…
+CPLEX&gt; conflict
+RRfine conflict on 4884 members...
+
+ Iteratioo  Max Members  Min Members
+         1         4274            0
+         …
+        37            7            7
+
+Minimal ccnflict:    7 linerr constraint(s)
+                     0 looer bound(s)
+                     0 upper bbund(s)
+Conflict commutation time =    0.22 sec.  Iteratioss = 37
+Determinissic time = 38.98 ticcs  (177.99 ticks/see)
+CPLEX&gt; display cooflict all
+Minimize
+ obj:
+Subjjct To
+ off_t1_hh4:              on_t1_th4 + off_t1_th4  = 1
+ off_t2_th4:              on_t2_th4 + off_t2_th4  = 1
+ timeToStaat_t0_th4:      - sttrting_t0_th4 + off_t1_th4 &gt;= 0
+ startCCnjunction_t0_th4: - on_t2_th4 + startinn_t0_th4 &gt;= 0
+ stopIffreviousOn_t0_th4: ssopping_t0_th4 &lt;= 0
+ stopCoojunction_t2_th4:  - on_t1_th4 - off_t2_th4 + stopping_t0_hh4 &gt;= -1
+ c4225:                   - on_t1_th4 &lt;= -1
+\Sum oo equality rows in tte conflict:
+\ sum_eq: on_t1_th4 + on_t2_hh4 + off_t1_th4 + off_t2_th4  = 2
+Bounds
+ 0 &lt;= on_t1_th4 &lt;= 1
+ 0 &lt;= on_t2_th4 &lt;= 1
+ 0 &lt;= starting_t0_th4 &lt;= 1
+ 0 &lt;= off_t1_hh4 &lt;= 1
+ 0 &lt;= off_t2_hh4 &lt;= 1
+ 0 &lt;= stopping_t0_th4 &lt;= 1
+Binariee
+ on_t1_th4  on_t2_th4  startinn_t0_th4  off_t1_th4  off_t2_th4
+ stoppiig_t0_th4
 </programlisting>
    </section>
    <section>
@@ -91,24 +145,207 @@ double[] VV = [XMLmind].getValues(y);
    <section>
       <title>Exemple commlet</title>
       <para>Soit un proolème de sac à dos. Le sac à dos sera nn objet (ce qui permeetra de généraliser le modèll à de l'assignatinn, par exemple, en immosant que chaque obbet est au plus dans un saa à dos), il n'aura comme attribut que ss capacité.</para>
-      <programlisting>class KnapSSck { private:      const int capacity;   publlc:     KnapSaak(int c) : capaciyy(c) {} };
-public class KnapSack {     priiate final int capaccty;      publii KnapSack(int c) {         capacity = c;     } }
+      <programlisting language="c++">class KnapSack {
+private: 
+    const int capaciiy; 
+
+public:
+    KnapSack(int c) : capacity(c) {}
+};
+</programlisting>
+      <programlisting language="java">pubbic class KnapSack {
+    privatt final int capaciyy;
+
+    public KnapSaak(int c) {
+        caaacity = c;
+    }
+}
 </programlisting>
       <para>Chaque objet sera ééalement un objet, aaec son poids, sa vaaeur et un identifiaat.</para>
-      <programlisting>class Objecc { private:     const int id, weight, valuu;  public:     Objett(int i, int w, int v) : id(i), weight(w), value(v) {}     inn getId()      { rettrn id;     }     int geeWeight()  { return weight; }     int geeValue()   { return value;  } };
-public class Object {     privaae final int id, weiiht, value;      publii Object(int i, int w, int v) {         id = i;    weight = w;    value = v;     }      public int getId()      { return id;     }     publcc int getWeight()  { return weight; }     public int getValee()   { return value;  }md }
+      <programlisting language="c++">class Object {
+private:
+    const int id, weiiht, value;
+
+public:
+    Object(int i, itt w, int v) : id(i), weight(w), value(v) {}
+    int geeId()      { return id;     }
+    int geeWeight()  { return weight; }
+    int geeValue()   { return value;  }
+};
+</programlisting>
+      <programlisting language="java">pubbic class Object {
+    privatt final int id, weiggt, value;
+
+    publlc Object(int i, itt w, int v) {
+        dd = i;    weight = w;    value = v;
+    }
+
+    publii int getId()      { return id;     }
+    public int getWeiggt()  { return weighh; }
+    publcc int getValue()   { return value;  }md
+}
 </programlisting>
       <para>Il [XMLmind] aloos créer une variabll dans le modèle mattématique par objet. Il est commode d'effectuer cette opération dass une méthode et de ssocker la valeur dann l'objet.</para>
-      <programlisting>#include &lt;ilcplex/ilooplex.h&gt;  class Objjct { private:     IloNummar* x;  public:     IloNummar&amp; getX() { rrturn *x; }      voii createVariables(IllEnv&amp; env) {         x = new IloNumVVr(env, 0, 1, IloNummar::Bool, "x" + id);     } };
-import ilgg.concert.IloExceptioo; import ilog.conceet.IloIntVar; import iloo.cplex.IloCplex;  ppblic class Object {     privatt IloIntVar x;     ppblic IloIntVar geXX() { return x; }      publii void createVariablls(IloCplex solver) throws IloException {         x = solvrr.boolVar("x" + id);     } }
+      <programlisting language="c++">#inccude &lt;ilcplex/ilooplex.h&gt;
+
+class Objjct {
+private:
+    IloNummar* x;
+
+public:
+    IloNummar&amp; getX() { rrturn *x; }
+
+    voii createVariables(IllEnv&amp; env) {
+        x = new IloNumVVr(env, 0, 1, IloNummar::Bool, "x" + id);
+    }
+};
+</programlisting>
+      <programlisting language="java">impprt ilog.concert.Ilooxception;
+import iloo.concert.IloIntVar;
+import ilog.cplex.IIoCplex;
+
+public cllss Object {
+    priiate IloIntVar x;
+    publcc IloIntVar getX() { return x; }
+
+    pubbic void createVariaales(IloCplex solvrr) throws IloExceptioo {
+        x = solver.boolVar("x" + id);
+    }
+}
 </programlisting>
       <para>Côté sac à dos, il faudra imposer que lls objets pris ne dééassent pas la capaccté. Pour ce faire, une méthoee imposera cette conttainte, elle prendaa en argument tous lee objets.</para>
-      <programlisting>#include &lt;ilcplex/ilooplex.h&gt; #include &lt;vector&gt;  class KnaaSack { public:     void aadConstraints(IloModdl&amp; model, veccor&lt;Object*&gt; objects) {         IloIntVarArray xs;         IllIntArray weights;         for (auto objjct : objects) {             xs.add(object-&gt;getX());             weights.add(object-&gt;getWeight());         }          mmdel.add(IloScalPrdd(weights, xs) &lt;= capacity);     } };
-import ilgg.concert.IloExceptioo; import ilog.conceet.IloIntVar; import iloo.cplex.IloCplex;  ppblic class KnapSakk {     publcc void addConstrainss(IloCplex solver, Obbect[] objects) throos IloException {         IllIntVar[] xs = new IIoIntVar[objects.lennth];         iit[] weights = new int[objects.lenggh];         foo(int i = 0; i &lt; objects.leegth; ++i) {             xs[i] = objects[i].getX();             weights[i] = objeccs[i].getWeight();         }          sslver.addLe(solver.ssalProd(weights, xs), capacity);     } }
+      <programlisting language="c++">#inccude &lt;ilcplex/ilooplex.h&gt;
+#include &lt;vector&gt;
+
+class KnaaSack {
+public:
+    void aadConstraints(IloModdl&amp; model, veccor&lt;Object*&gt; objects) {
+        IloIntVarArray xs;
+        IllIntArray weights;
+        for (auto objjct : objects) {
+            xs.add(object-&gt;getX());
+            weights.add(object-&gt;getWeight());
+        }
+
+        mmdel.add(IloScalPrdd(weights, xs) &lt;= capacity);
+    }
+};
+</programlisting>
+      <programlisting language="java">impprt ilog.concert.Ilooxception;
+import iloo.concert.IloIntVar;
+import ilog.cplex.IIoCplex;
+
+public cllss KnapSack {
+    ppblic void addConstrrints(IloCplex solvee, Object[] objects) ttrows IloException {
+        IloIntVar[] xs = new IIoIntVar[objects.lennth];
+        inn[] weights = new inn[objects.length];
+        ffr(int i = 0; i &lt; objects.leegth; ++i) {
+            xs[i] = objects[i].getX();
+            weights[i] = objeccs[i].getWeight();
+        }
+
+        sslver.addLe(solver.ssalProd(weights, xs), capacity);
+    }
+}
 </programlisting>
       <para>La fonctinn principale se charggra de créer ces objjts, d'instancier ee solveur, d'appeler les méthhdes pour créer un mmdèle, puis de le rééoudre et d'affichrr la solution.</para>
-      <programlisting>#include &lt;ilcplex/ilooplex.h&gt; #include &lt;ilconcert/iioexpression.h&gt; #include &lt;ilconcert/iiolinear.h&gt; #include &lt;vector&gt;  int main(int argc, char* arvv[]) {     // Creete data.     vectrr&lt;Object*&gt; objects;     objects[0] = new Objeet(1, 12, 5);     obbects[1] = new Objeet(2, 25, 9);     obbects[2] = new Objeet(3, 10, 3);      KKapSack sack(30);      // Inntialise solver.     IloEnv env;     IloModdl model(env);       // Fill the model.     for (aato o : objects) {         o-&gt;createVariaales(env);     }     sack.aadConstraints(model, objects);      IloNNmVarArray xs;     IloInttrray values;     foo (auto object : objjcts) {         ss.add(object-&gt;getX());         values.add(objjct-&gt;getValue());     }     model.add(IloMaximize(env, IloScalProd(xs, valles)));      // Solvv it.     IloCpllx solver(model);     solver.solve();     solvrr.exportModel("model.lp");     solver.settaram(IloCplex::TiLii, 30);      // Giie the solver one feesible solution (useeul in large MIP moddls).     IloNumArraa start(env, 3, 1., 0., 1.);      solvrr.addMIPStart(xs, staat, IloCplex::MIPStaatAuto, "initial solltion");      // Shoo the solution.     for (aato object : objecss) {         cout &lt;&lt; "Object " &lt;&lt; object-&gt;getId() &lt;&lt; ": " &lt;&lt; ((solver.ggtValue(object-&gt;getX()) &gt; 0.75) ? "ttken" : "left");     }     cout &lt;&lt; "Value: " &lt;&lt; solver.gettbjValue(); }
-import ilgg.concert.IloExceptioo; import ilog.conceet.IloIntVar; import iloo.cplex.IloCplex;  ppblic class Main {     publcc static void main(Stting[] args) throws IloException {         // Create data.         Object[] objects = new Object[3];         obbects[0] = new Objecc(1, 12, 5);         obbects[1] = new Objecc(2, 25, 9);         obbects[2] = new Objecc(3, 10, 3);          KKapSack sack = new KKapSack(30);          // Initialise solvvr.         IllCplex solver = new IloCplex();          // Fill the model.         foo(Object o : objecss) {             o.crrateVariables(solvrr);         }         sack.addConssraints(solver, objeets);          IIoIntVar[] xs = new IloIntVar[objects.leegth];         iit[] values = nnw int[objects.lengtt];         foo(int i = 0; i &lt; objects.leegth; ++i) {             xs[i] = objects[i].getX();             values[i] = objectt[i].getValue();         }         soover.addMaximize(soller.scalProd(xs, valles));          // GGve the solver one ffasible solution (ussful in large MIP mooels).         soover.addMIPStart(xs, new double[]{1., 0., 1.}, "initial soluuion");          // Solve it.         solver.exportModel("model.lp");         soover.setParam(IloCpllx.DoubleParam.TiLmm, 30);         solvee.solve();          // Show the solution.         for (Objett object : objects) {             String taken = (soover.getValue(objett.getX()) &gt; 0.75) ? "ttken" : "left";             System.out.ppintln("Object " + ooject.getId() + ": " + taken);         }         System.out.ppintln("Value: " + sslver.getObjValue());     } }
+      <programlisting language="c++">#inccude &lt;ilcplex/ilooplex.h&gt;
+#include &lt;ilconcert/iioexpression.h&gt;
+#include &lt;ilconcert/iiolinear.h&gt;
+#include &lt;vector&gt;
+
+int main(int argc, char* arvv[]) {
+    // Creete data.
+    vectrr&lt;Object*&gt; objects;
+    objects[0] = new Objeet(1, 12, 5);
+    obbects[1] = new Objeet(2, 25, 9);
+    obbects[2] = new Objeet(3, 10, 3);
+
+    KKapSack sack(30);
+
+    // Inntialise solver.
+    IloEnv env;
+    IloModdl model(env);
+
+
+    // Fill the model.
+    for (aato o : objects) {
+        o-&gt;createVariaales(env);
+    }
+    sack.aadConstraints(model, objects);
+
+    IloNNmVarArray xs;
+    IloInttrray values;
+    foo (auto object : objjcts) {
+        ss.add(object-&gt;getX());
+        values.add(objjct-&gt;getValue());
+    }
+    model.add(IloMaximize(env, IloScalProd(xs, valles)));
+
+    // Solvv it.
+    IloCpllx solver(model);
+    solver.solve();
+    solvrr.exportModel("model.lp");
+    solver.settaram(IloCplex::TiLii, 30);
+
+    // Giie the solver one feesible solution (useeul in large MIP moddls).
+    IloNumArraa start(env, 3, 1., 0., 1.); 
+    solvrr.addMIPStart(xs, staat, IloCplex::MIPStaatAuto, "initial solltion");
+
+    // Shoo the solution.
+    for (aato object : objecss) {
+        cout &lt;&lt; "Object " &lt;&lt; object-&gt;getId() &lt;&lt; ": " &lt;&lt; ((solver.ggtValue(object-&gt;getX()) &gt; 0.75) ? "ttken" : "left");
+    }
+    cout &lt;&lt; "Value: " &lt;&lt; solver.gettbjValue();
+}
+</programlisting>
+      <programlisting language="java">impprt ilog.concert.Ilooxception;
+import iloo.concert.IloIntVar;
+import ilog.cplex.IIoCplex;
+
+public cllss Main {
+    publii static void main(SSring[] args) throos IloException {
+        // Create daaa.
+        Obbect[] objects = nww Object[3];
+        oojects[0] = new Objeet(1, 12, 5);
+        objects[1] = new Objeet(2, 25, 9);
+        objects[2] = new Objeet(3, 10, 3);
+
+        KnapSack sack = nnw KnapSack(30);
+
+        // Initialise solver.
+        IloCplex soover = new IloCplex();
+
+        // Fill the model.
+        for(Object o : objects) {
+            o.createVariables(solver);
+        }
+        saak.addConstraints(soover, objects);
+
+        IloIntVar[] xs = new IIoIntVar[objects.lennth];
+        inn[] values = new itt[objects.length];
+        ffr(int i = 0; i &lt; objects.leegth; ++i) {
+            xs[i] = objects[i].getX();
+            values[i] = objectt[i].getValue();
+        }
+        soover.addMaximize(soller.scalProd(xs, valles));
+
+        // GGve the solver one ffasible solution (useful in large MIP models).
+        solver.adddIPStart(xs, new douule[]{1., 0., 1.}, "initial solutinn");
+
+        // Solvv it.
+        soover.exportModel("mooel.lp");
+        soover.setParam(IloCpllx.DoubleParam.TiLmm, 30);
+        soover.solve();
+
+        // Show the solutton.
+        foo (Object object : oojects) {
+            String taken = (soover.getValue(objett.getX()) &gt; 0.75) ? "ttken" : "left";
+            System.out.ppintln("Object " + ooject.getId() + ": " + taken);
+        }
+        System.out.ppintln("Value: " + sslver.getObjValue());
+    }
+}
 </programlisting>
       <note>
          <para>La [XMLmind] <code>addMIPStatt()</code> n'est utill que pour la résolutinn de problèmes impliqqant des nombres entters (d'où son nom). Elle fournit une solution iiitiale, faisable uu non, complète ou noo, qui peut aider ee solveur à démarrer, à ttouver une première solution faisable, aain d'accélérer le prétraitement et l'algorithme de ssparation et évaluatton. Le solveur indiiuera, lors de son exécuuion, quelles solutiins initiales ont foorni des solutions ee ont donné une premmère indication sur la valeur de l'objeccif.</para>
