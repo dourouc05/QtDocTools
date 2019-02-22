@@ -28,8 +28,8 @@ public class Main {
 //                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_before.xml",
 //                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_after.xml",
 //                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\CPLEX_merged.xml"};
-//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
-        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db", "--disable-sanity-checks"};
+        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\CPLEX.docx"};
+//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\CPLEX.db", "--disable-sanity-checks"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);

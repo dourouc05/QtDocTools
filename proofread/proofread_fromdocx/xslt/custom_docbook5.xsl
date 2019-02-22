@@ -24,6 +24,10 @@
     </note>
   </xsl:template>
   
+  <xsl:template match="h:br">
+    <xsl:text>&#xA;</xsl:text>
+  </xsl:template>
+  
   <!--
   <xsl:template match="h:div[@class = 'role-note']">
     <note>

@@ -17,6 +17,7 @@ public class MainCommand implements Callable<Void> {
     public final static String xsltDocBookToDvpMLPath = "../export/to_dvpml/xslt/docbook_to_dvpml.xslt"; // Path to the XSLT sheet DocBook to DvpML.
     public final static String xsltXEDTransform = "../proofread/proofread_fromdocx/xslt/custom_docbook5.xsl";
     public final static String xsltXEDScript = "../proofread/proofread_fromdocx/xslt/custom_docbook5.xed";
+    public final static String xsltXEDPostProcess = "../proofread/proofread_fromdocx/xslt/post_processing.xsl";
     public final static String xsltXEDPrettyPrint = "../proofread/proofread_fromdocx/xslt/pretty_print.xsl";
     public final static String xsltDocBookToFO = "../proofread/proofread_todocx/xslt/main.xsl";
     public final static String xfcDocBookToFO = "../proofread/proofread_todocx/xslt/styles.xfc"; // http://www.xmlmind.com/foconverter/samples/styles.xfc

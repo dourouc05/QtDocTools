@@ -87,12 +87,13 @@
         </xsl:variable>
         
         <xsl:variable name="qdoctoolsPrefix" as="text()">
+            <!-- &#xa; is a new line -->
             <xsl:choose>
                 <xsl:when test="@language and not(@language = '')">
-                    <xsl:value-of select="concat('//&lt;QDOCTOOLS&gt; Programming language: ', @language)"/>
+                    <xsl:value-of select="concat('//&lt;QDOCTOOLS&gt; Programming language: ', @language, '&#xa;')"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:text>//&lt;QDOCTOOLS&gt; No programming language</xsl:text>
+                    <xsl:value-of select="'//&lt;QDOCTOOLS&gt; No programming language&#xa;'"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -100,22 +101,14 @@
         <xsl:choose>
             <xsl:when test="$shade.verbatim != 0">
                 <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties shade.verbatim.style">
-                    <fo:block>
-                        <xsl:value-of select="$qdoctoolsPrefix"/>
-                    </fo:block>
-                    <fo:block>
-                        <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
-                    </fo:block>
+                    <xsl:value-of select="$qdoctoolsPrefix"/>
+                    <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
                 </fo:block>
             </xsl:when>
             <xsl:otherwise>
                 <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties">
-                    <fo:block>
-                        <xsl:value-of select="$qdoctoolsPrefix"/>
-                    </fo:block>
-                    <fo:block>
-                        <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
-                   </fo:block>
+                    <xsl:value-of select="$qdoctoolsPrefix"/>
+                    <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
                 </fo:block>
             </xsl:otherwise>
         </xsl:choose>

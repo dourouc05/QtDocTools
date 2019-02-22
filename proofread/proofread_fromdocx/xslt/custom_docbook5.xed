@@ -16,3 +16,5 @@ for-each //p[span/text() = 'Note'] {
 }
 
 group();
+
+save-document("out.xml");
