@@ -122,8 +122,8 @@ cplex.solve();</programlisting>
             problème non faisable (<acronym>IIS</acronym>, pour <foreignphrase>irreducible
                 infeasible set</foreignphrase>), qu'il présente grâce à <command>display conflict
                 all</command> sous la forme d'un problème de faisabilité reprenant ces quelques
-            contraintes (souvent assez peu).
-            <screen><prompt>CPLEX> </prompt>read model.lp
+            contraintes (souvent assez peu).</para>
+        <screen><prompt>CPLEX> </prompt>read model.lp
 <computeroutput>Problem 'Problems/model.lp' read.
 Read time = 0.02 sec. (0.55 ticks)</computeroutput>
 <prompt>CPLEX> </prompt>optimize
@@ -165,20 +165,22 @@ Bounds
  0 &lt;= stopping_t0_th4 &lt;= 1
 Binaries
  on_t1_th4  on_t2_th4  starting_t0_th4  off_t1_th4  off_t2_th4
- stopping_t0_th4</computeroutput></screen></para>
+ stopping_t0_th4</computeroutput></screen>
     </section>
     <section>
         <title>Compilation</title>
         <para>Pour Java, à la compilation, il suffit d'ajouter le fichier JAR de CPLEX. Par exemple,
             sous Windows, en notant <envar>%CPLEX%</envar> le dossier d'installation de CPLEX (par
             exemple, <filename>C:\Program Files (x86)\IBM\ILOG\CPLEX_Studio_126</filename>)
-            :<screen><prompt>> </prompt>javac… -classpath "%CPLEX%\cplex\lib"</screen>Lors de
+            :</para>
+        <screen><prompt>> </prompt>javac… -classpath "%CPLEX%\cplex\lib"</screen>
+        <para>Lors de
             l'exécution, il faudra, en plus, spécifier l'emplacement de la bibliothèque partagée
             native CPLEX. Puisque l'interaction se fait par JNI, la plateforme de CPLEX utilisée
             doit parfaitement correspondre avec celle de la machine virtuelle Java (si la machine
             virtuelle est en 32 bits, la version 32 bits de CPLEX devra être utilisée). Par exemple
-            :
-            <screen><prompt>> </prompt>java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen></para>
+            :</para>
+        <screen><prompt>> </prompt>java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen>
         <para>En C++, la situation est similaire : il faut indiquer au compilateur le chemin des
             en-têtes (par exemple, <filename>%CPLEX%\cplex\include</filename> et
                 <filename>%CPLEX%\concert\include</filename>) et des fichiers d'import (par exemple,

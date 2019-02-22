@@ -20,7 +20,7 @@
     
     <!-- For sections: titlepage-mode.xsl -->
     <xsl:template match="db:title" mode="m:titlepage-mode">
-        <xsl:variable name="xfcStyle">
+        <xsl:variable name="xfcStyle" as="xs:string">
             <xsl:variable name="isSect" select="self::sect1 or self::sect2 or self::sect3 or self::sect4 or self::sect5 or self::sect6"/>
             <xsl:choose>
                 <xsl:when test="count(ancestor::db:section) = 0 and not($isSect)"><xsl:value-of select="'Title'"/></xsl:when>
@@ -98,15 +98,26 @@
             </xsl:choose>
         </xsl:variable>
         
+        <xsl:variable name="xfcStyle" as="xs:string">
+            <xsl:choose>
+                <xsl:when test="db:screen">
+                    <xsl:value-of select="'Screen'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'ProgramListing'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
         <xsl:choose>
             <xsl:when test="$shade.verbatim != 0">
-                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties shade.verbatim.style">
+                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties shade.verbatim.style" xfc:user-style="{$xfcStyle}">
                     <xsl:value-of select="$qdoctoolsPrefix"/>
                     <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
                 </fo:block>
             </xsl:when>
             <xsl:otherwise>
-                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties">
+                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties" xfc:user-style="{name()}">
                     <xsl:value-of select="$qdoctoolsPrefix"/>
                     <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
                 </fo:block>

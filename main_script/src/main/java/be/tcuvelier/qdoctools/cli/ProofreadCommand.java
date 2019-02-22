@@ -1,5 +1,10 @@
 package be.tcuvelier.qdoctools.cli;
 
+/*
+ * TODO: How to encode/retrieve block <screen> vs. <programlisting>? screen/prompt?
+ * TODO: How to encode/retrieve inline <filename>? filename/replaceable?
+ */
+
 import be.tcuvelier.qdoctools.utils.handlers.SanityCheckHandler;
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;

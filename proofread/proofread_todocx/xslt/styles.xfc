@@ -33,11 +33,13 @@
            provisional-label-separation="6pt" />
   </numbering>
 
-  <paragraph-style name="ProgramListing" next-style="ProgramListing"
+  <paragraph-style name="programlisting" next-style="programlisting"
                    keep-with-next="always"
                    font-family="monospace" font-size="8pt"
                    color="#000000"
                    background-color="#F2F2F2" border="dotted 1px #020202" border-top-width="1px" />
+
+  <paragraph-style name="screen" next-style="screen" base-style="programlisting" />
 
   <paragraph-style name="Title" abstract="true" next-style="Paragraph"
                    numbering="Heading Numbering"
