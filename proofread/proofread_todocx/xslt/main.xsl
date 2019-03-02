@@ -101,10 +101,10 @@
         <xsl:variable name="xfcStyle" as="xs:string">
             <xsl:choose>
                 <xsl:when test="db:screen">
-                    <xsl:value-of select="'Screen'"/>
+                    <xsl:value-of select="'screen'"/>
                 </xsl:when>
                 <xsl:otherwise>
-                    <xsl:value-of select="'ProgramListing'"/>
+                    <xsl:value-of select="'programlisting'"/>
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -117,7 +117,7 @@
                 </fo:block>
             </xsl:when>
             <xsl:otherwise>
-                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties" xfc:user-style="{name()}">
+                <fo:block id="{$id}" xsl:use-attribute-sets="monospace.verbatim.properties" xfc:user-style="{$xfcStyle}">
                     <xsl:value-of select="$qdoctoolsPrefix"/>
                     <xsl:apply-templates select="$verbatim" mode="m:verbatim"/>
                 </fo:block>
