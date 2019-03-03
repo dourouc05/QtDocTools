@@ -87,7 +87,7 @@ public class ProofreadCommand implements Callable<Void> {
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {
         // http://www.xmlmind.com/w2x/what_is_w2x.html
-        String temporary = FileHelpers.changeExtension(output, ".post.tmp");
+        String temporary = FileHelpers.changeExtension(output, ".tmp");
 
         // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xhtml"
         // "C:\Program Files (x86)\XMLmind_Word_To_XML\bin\w2x" -vvv -p edit.prune.preserve "p-XFC_P_ProgramListing" -p edit.blocks.convert "p-XFC_P_ProgramListing pre" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.docx" "D:\Dvp\QtDoc\QtDocTools\proofread\proofread_fromdocx\tests\CPLEX.xhtml"

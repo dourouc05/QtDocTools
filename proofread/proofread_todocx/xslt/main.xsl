@@ -6,8 +6,9 @@
     xmlns:t="http://docbook.org/xslt/ns/template"
     xmlns:f="http://docbook.org/xslt/ns/extension"
     xmlns:m="http://docbook.org/xslt/ns/mode"
+    xmlns:mp="http://docbook.org/xslt/ns/mode/private"
     xmlns:db="http://docbook.org/ns/docbook"
-    exclude-result-prefixes="xs"
+    exclude-result-prefixes="xs t f m mp"
     version="3.0">
     
     <xsl:import href="docbook_xsl2/fo/final-pass.xsl"/>
@@ -123,5 +124,31 @@
                 </fo:block>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:template>
+    
+    <!-- For abstract, clearly delimitate it by a box: titlepage-mode.xsl. -->
+    <xsl:template match="db:abstract" mode="m:titlepage-mode">
+        <fo:table-and-caption>
+            <fo:table border="thin dotted black" table-layout="auto" space-before="1em">
+                <fo:table-column column-number="1" column-width="proportional-column-width(1)"/>
+                <fo:table-body>
+                    <fo:table-row>
+                        <fo:table-cell>
+                            <!-- Original code. -->
+                            <fo:block font-family="{$body.font.family}" space-before="1em">
+                                <!-- Display the "abstract" title. -->
+                                <xsl:call-template name="t:titlepage"/>
+                                
+                                <!-- Abstract content. -->
+                                <xsl:variable name="dir" select="f:dir(.)"/>
+                                <fo:block text-align="{if ($dir='ltr' or $dir='lro') then 'right' else 'left'}" line-height="1" border="thick solid black">
+                                    <xsl:apply-templates/>
+                                </fo:block>
+                            </fo:block>
+                        </fo:table-cell>
+                    </fo:table-row>
+                </fo:table-body>
+            </fo:table>
+        </fo:table-and-caption>
     </xsl:template>
 </xsl:stylesheet>
