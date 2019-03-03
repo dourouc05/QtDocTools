@@ -24,16 +24,16 @@ public class Main {
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.0\\Src", "-o", "D:\\Qt\\Doc511v2", "--qt-version", "5.12", "--no-rewrite-qdocconf", "--no-convert-webxml"};
 
-//        String doc = "CPLEX";
-        String doc = "07-0-qdoc-commands-includingexternalcode";
+        String doc = "CPLEX";
+//        String doc = "07-0-qdoc-commands-includingexternalcode";
 
-//        String[] argv = {"merge",
-//                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_before.xml",
-//                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_after.xml",
-//                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_merged.xml"};
+        String[] argv = {"merge",
+                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_before.xml",
+                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_after.xml",
+                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_merged.xml"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
-        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
+//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);

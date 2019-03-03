@@ -143,7 +143,7 @@ public class ProofreadCommand implements Callable<Void> {
         };
         processor.process(new File(input), new File(temporary), null);
 
-        // Finalise by some postprocessing (w2x does zero pretty printing, what a shame...).
+        // Finalise by some postprocessing (w2x does zero pretty printing...).
         System.out.println(">>> Performing post-processing...");
         new XsltHandler(MainCommand.xsltXEDPostProcess)
                 .createTransformer(temporary, output, null)
