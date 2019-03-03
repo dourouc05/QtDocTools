@@ -126,7 +126,7 @@
         </xsl:choose>
     </xsl:template>
     
-    <!-- For abstract, clearly delimitate it by a box: titlepage-mode.xsl. -->
+    <!-- For abstract, clearly delimitate it by a box: titlepage-mode.xsl (mostly calls parent). -->
     <xsl:template match="db:abstract" mode="m:titlepage-mode">
         <fo:table-and-caption>
             <fo:table border="thin dotted black" table-layout="auto" space-before="1em">
@@ -134,17 +134,30 @@
                 <fo:table-body>
                     <fo:table-row>
                         <fo:table-cell>
-                            <!-- Original code. -->
-                            <fo:block font-family="{$body.font.family}" space-before="1em">
-                                <!-- Display the "abstract" title. -->
-                                <xsl:call-template name="t:titlepage"/>
-                                
-                                <!-- Abstract content. -->
-                                <xsl:variable name="dir" select="f:dir(.)"/>
-                                <fo:block text-align="{if ($dir='ltr' or $dir='lro') then 'right' else 'left'}" line-height="1" border="thick solid black">
-                                    <xsl:apply-templates/>
-                                </fo:block>
+                            <xsl:apply-imports/>
+                        </fo:table-cell>
+                    </fo:table-row>
+                </fo:table-body>
+            </fo:table>
+        </fo:table-and-caption>
+    </xsl:template>
+    
+    <!-- Clearly indicate blockquotes by a line to the left: blocks.xsl (mostly calls parent). -->
+    <xsl:template match="db:blockquote">
+        <fo:table-and-caption>
+            <fo:table border-left="thin solid black" table-layout="auto" space-before="1em">
+                <fo:table-column column-number="1" column-width="proportional-column-width(1)"/>
+                <fo:table-body>
+                    <fo:table-row>
+                        <fo:table-cell padding-left="5em">
+                            <fo:block font-family="{$title.fontset}" font-weight="bold" xfc:user-style="Title">
+                                Quote
                             </fo:block>
+                        </fo:table-cell>
+                    </fo:table-row>
+                    <fo:table-row>
+                        <fo:table-cell padding-left="5em">
+                            <xsl:apply-imports/>
                         </fo:table-cell>
                     </fo:table-row>
                 </fo:table-body>
