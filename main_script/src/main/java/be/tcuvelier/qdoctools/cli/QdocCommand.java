@@ -97,7 +97,7 @@ public class QdocCommand implements Callable<Void> {
         // Run qdoc to get the WebXML output.
         if (convertToWebXML) {
             System.out.println("++> Running qdoc.");
-            q.runQdoc();
+//            q.runQdoc();
             System.out.println("++> Qdoc done.");
         }
 
@@ -107,10 +107,10 @@ public class QdocCommand implements Callable<Void> {
 
             // First, generate the list of classes (may take a bit of time).
             System.out.println("++> Generating utilities for WebXML-to-DocBook transformation.");
-//            XsltTransformer utilities = new XsltHandler(MainCommand.xsltWebXMLToDocBookUtilPath)
-//                    .createTransformer(root.resolve("qdt_classes.xml"), "main");
-//            utilities.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
-//            utilities.transform();
+            XsltTransformer utilities = new XsltHandler(MainCommand.xsltWebXMLToDocBookUtilPath)
+                    .createTransformer(root.resolve("qdt_classes.xml"), "main");
+            utilities.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
+            utilities.transform();
 
             // Second, iterate through the files.
             System.out.println("++> Starting WebXML-to-DocBook transformation.");
@@ -126,8 +126,8 @@ public class QdocCommand implements Callable<Void> {
             for (Path file : webxml) {
 //                if (file.getFileName().toString().charAt(0) < 'r')
 //                    continue;
-                if (! file.getFileName().toString().startsWith("q"))
-                    continue;
+//                if (! file.getFileName().toString().startsWith("q"))
+//                    continue;
 //                if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
 //                    continue;
 

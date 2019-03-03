@@ -2,16 +2,12 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
-import net.sf.saxon.s9api.*;
-import net.sf.saxon.tree.NamespaceNode;
+import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributesImpl;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import javax.xml.transform.stream.StreamSource;
 import java.io.File;
-import java.util.Iterator;
 import java.util.concurrent.Callable;
 
 @Command(name = "merge", description = "Perform merges between files, especially after proofreading")

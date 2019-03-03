@@ -248,11 +248,22 @@ public class QdocHandler {
     }
 
     private List<Path> findWithExtension(String extension) {
-        String[] fileNames = outputFolder.toFile().list((current, name) -> name.endsWith(extension));
+        for (Path folder : new Path[]{outputFolder, outputFolder.resolve("html")}) {
+            List<Path> test = findWithExtension(extension, folder);
+            if (! test.isEmpty()) {
+                return test;
+            }
+        }
+
+        return Collections.emptyList();
+    }
+
+    private List<Path> findWithExtension(String extension, Path path) {
+        String[] fileNames = path.toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {
             return Collections.emptyList();
         } else {
-            return Arrays.stream(fileNames).map(outputFolder::resolve).collect(Collectors.toList());
+            return Arrays.stream(fileNames).map(path::resolve).collect(Collectors.toList());
         }
     }
 
