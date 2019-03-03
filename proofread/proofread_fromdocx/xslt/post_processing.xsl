@@ -10,6 +10,7 @@
     
     <xsl:output method="xml" indent="yes"/>
     <xsl:strip-space elements="*"/>
+    <xsl:preserve-space elements="db:screen db:literallayout db:programlisting db:address"/>
     
     <!-- This style sheet could not be merged into custom_docbook5, as this one is executed within w2x and must use XSLT 1. Most processing is done there, though. -->
     <!-- Some transformations could also be performed in custom_docbook5, but are much simpler to express as operations on DocBook content. -->
