@@ -32,8 +32,8 @@ public class Main {
 //                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_after.xml",
 //                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_merged.xml"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
-        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
-//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
+//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
+        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);

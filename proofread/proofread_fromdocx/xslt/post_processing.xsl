@@ -68,29 +68,40 @@
     
     <xsl:template match="db:informaltable[preceding-sibling::*[1]/self::db:info and db:tbody/db:tr/db:td/child::*[1]/self::db:para and normalize-space(db:tbody/db:tr/db:td/db:para[1]/text()) = 'Abstract']" priority="42"/>
     
-    <!-- Informal tables that only have one column (for all their rows) are converted to simplelists. -->
+    <!-- Informal tables that only have one column (for all their rows) are converted to simplelists, blockquotes, etc. -->
     <xsl:template match="db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]">
         <xsl:param name="wrapWithPara" as="xs:boolean" select="false()"/>
         
-        <xsl:variable name="simplelist">
-            <simplelist>
-                <xsl:for-each select="db:tbody/db:tr/db:td">
-                    <member>
-                        <xsl:apply-templates></xsl:apply-templates>
-                    </member>
-                </xsl:for-each>
-            </simplelist>
+        <xsl:variable name="content">
+            <xsl:choose>
+                <xsl:when test="normalize-space(db:tbody/db:tr[1]/db:td/db:para[1]/text()) = 'Quote'">
+                    <blockquote>
+                        <xsl:for-each select="db:tbody/db:tr/db:td">
+                            <xsl:apply-templates/>
+                        </xsl:for-each>
+                    </blockquote>
+                </xsl:when>
+                <xsl:otherwise>
+                    <simplelist>
+                        <xsl:for-each select="db:tbody/db:tr/db:td[position() > 1]">
+                            <member>
+                                <xsl:apply-templates/>
+                            </member>
+                        </xsl:for-each>
+                    </simplelist>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:variable>
         
         <!-- In the abstract, this list must be within a paragraph. -->
         <xsl:choose>
             <xsl:when test="$wrapWithPara">
                 <para>
-                    <xsl:copy-of select="$simplelist"/>
+                    <xsl:copy-of select="$content"/>
                 </para>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy-of select="$simplelist"/>
+                <xsl:copy-of select="$content"/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
