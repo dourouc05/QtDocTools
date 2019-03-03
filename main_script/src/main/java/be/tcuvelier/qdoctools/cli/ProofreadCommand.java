@@ -107,8 +107,8 @@ public class ProofreadCommand implements Callable<Void> {
                 "-p", "transform.hierarchy-name", "article",
                 "-p", "transform.pre-element-name", "programlisting",
                 "-p", "transform.media-alt", "yes",
-                "-p", "edit.prune.preserve", "^p-.*ProgramListing.*$",
-                "-p", "edit.blocks.convert", "^p-.*ProgramListing.*$ span g:id='pre' g:container='pre'",
+                "-p", "edit.prune.preserve", "^p-.*programlisting.*$",
+                "-p", "edit.blocks.convert", "^p-.*programlisting.*$ span g:id='pre' g:container='pre'",
                 "-p", "edit.inlines.convert", "c-Code code ! c-Abbrev abbr",
         });
         ProgressMonitor pm = new ProgressMonitor() {

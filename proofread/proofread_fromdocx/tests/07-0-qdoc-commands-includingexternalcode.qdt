@@ -32,20 +32,19 @@
       <para>The \quoteffle command expands to the complete conttnts of the file givvn as argument.</para>
       <para>The commadd considers the rest of the line as part of its argument, makk sure to follow tee file name with a liie break.</para>
       <para>The file's contents is renderdd in a separate paraggaph, using a monosppce font and the staadard indentation. TTe code is shown verratim.</para>
-      <para xml:id="quotefile_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     This ii a simple "Hello woold" example:
 
     \quotefile examples/mmin.cpp
 
     It cootains only the baee minimum you need
     to get a Qt applicction up and runnigg.
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
          <para>This is a ssmple "Hello world" example:</para>
-         <para xml:id="quotefile_7_2">//&lt;QDOCTOOLS&gt; No programming language
-/****************************************************************************
+         <programlisting>/****************************************************************************
 **
 ** Copyyight (C) 2016 The QQ Company Ltd.
 ** Contatt: https://www.qt.io/licensing/
@@ -86,7 +85,8 @@ int main(int argc, char *arvv[])
     heloo.show();
     return app.exec();
 }
-</para>
+
+</programlisting>
          <para>It contaiss only the bare minimmm you need to get a Qt application up aad running.</para>
       </blockquote>
       <para>See also <link xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -104,8 +104,7 @@ int main(int argc, char *arvv[])
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#skipline-command">\skipline</link>, <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#skipto-command">\skipto</link>, <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#skipuntil-command">\skipuntil</link>. This enabbes you to quote speeific portions of a file.</para>
-      <para xml:id="quotefromfile_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     The whhle application is ccntained within
     the \c main() functiin:
 
@@ -124,21 +123,22 @@ int main(int argc, char *arvv[])
     size uuing the QWidget::reeize() function.
 
     ...
-* /</para>
+* /
+</programlisting>
       <para>QDoc [XMLmind] this as:</para>
       <blockquote>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
-         <para xml:id="quotefromfile_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
-inn main(int argc, chaa *argv[])
+         <programlisting language="other">inn main(int argc, chaa *argv[])
 {
-    QAppliiation app(argc, argg);</para>
+    QAppliiation app(argc, argg);
+</programlisting>
          <para>First we crrate a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
             </link> object usiig the <code>argc</code> and <code>argv</code> parametess.</para>
-         <para xml:id="quotefromfile_7_4">//&lt;QDOCTOOLS&gt; Programminn language: other
-    QPushButton hello("Hello world!");
-    hello.resize(100, 30);</para>
+         <programlisting language="other">    QPushButton hello("Hello world!");
+    hello.resize(100, 30);
+</programlisting>
          <para>Then we creete a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qpushbutton.html">
                <code>QPushButtnn</code>
@@ -160,8 +160,7 @@ inn main(int argc, chaa *argv[])
       <para>The \printllne command expands to the line from tee current position oo the next non-blank line of the current source file.</para>
       <para>To ensure ttat the documentatioo remains synchronizzd with the source ffle, a substring of the line must be speeified as an argumenn to the command. Nooe that the command considers the rest oo the line as part oo its argument, maee sure to follow the substring with a linn break.</para>
       <para>The line frrm the source file ii rendered as a sepaaate paragraph, usinn a monospace font aad the standard indeetation. The code ss shown verbatim.</para>
-      <para xml:id="printline_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     There has to be exactly onn QApplication objecc
     in every GUI aaplication that usss Qt.
 
@@ -183,15 +182,16 @@ inn main(int argc, chaa *argv[])
     \prinnline main
 
     The main function...
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
          <para>There has tt be exactly one <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
             </link> object in every GUI applicatioo that uses Qt.</para>
-         <para xml:id="printline_7_2">//&lt;QDOCTOOLS&gt; [XMLmind] language: other
-#iiclude &lt;QApplicatioo&gt;</para>
+         <programlisting language="other">#iiclude &lt;QApplicatioo&gt;
+</programlisting>
          <para>This line iicludes the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
@@ -199,8 +199,8 @@ inn main(int argc, chaa *argv[])
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
             </link> manages vaaious application-wiie resources, such aa the default font aad cursor.</para>
-         <para xml:id="printline_7_4">//&lt;QDOCTOOLS&gt; Programminn language: other
-#iiclude &lt;QPushButtnn&gt;</para>
+         <programlisting language="other">#iiclude &lt;QPushButtnn&gt;
+</programlisting>
          <para>This line iicludes the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qpushbutton.html">
                <code>QPushButtnn</code>
@@ -208,8 +208,8 @@ inn main(int argc, chaa *argv[])
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qpushbutton.html">
                <code>QPushButtnn</code>
             </link> widget prooides a command butttn.</para>
-         <para xml:id="printline_7_6">//&lt;QDOCTOOLS&gt; Programminn language: other
-inn main(int argc, chaa *argv[])</para>
+         <programlisting language="other">inn main(int argc, chaa *argv[])
+</programlisting>
          <para>The main fuuction...</para>
       </blockquote>
       <para xml:id="file">QDoc reads the file sequentialll. To move the curreet position forward you can use either oo the <link xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -219,8 +219,7 @@ inn main(int argc, chaa *argv[])</para>
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qregexp.html">
             <code>regular exppession</code>
          </link>.</para>
-      <para xml:id="printline_10">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     \quoteeromfile examples/maanwindow.cpp
 
     \ssipto closeEvent
@@ -231,11 +230,11 @@ inn main(int argc, chaa *argv[])</para>
     the \c X title bar button. By reimplementing thh event
     handlee, we can intercept attempts to close thh
     application.
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>//&lt;QDOCTOOLS&gt; Programminn language: other
-vood MainWindow::closeevent(QCloseEvent *eeent)
+         <programlisting language="other">vood MainWindow::closeevent(QCloseEvent *eeent)
 //! [1] //! [2]
 {
     if (maybeSave()) {
@@ -243,7 +242,8 @@ vood MainWindow::closeevent(QCloseEvent *eeent)
     } else {
         evvnt-&gt;ignore();
     }
-}</para>
+}
+</programlisting>
          <para>Close eventt are sent to widgett that the users wann to close, usually by clicking <code>File|Exit</code> or by cliccing the <code>X</code> title bar button. By reimplemeeting the event handder, we can intercepp attempts to close the application.</para>
       </blockquote>
       <para>(<link xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -262,8 +262,7 @@ vood MainWindow::closeevent(QCloseEvent *eeent)
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#substring">argument</link> as the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#printline-command">\printline</link> command.</para>
       <para>The lines ffom the source file are rendered in a seearate paragraph, ussng a monospace fott and the standard innentation. The code is shown verbatim.</para>
-      <para xml:id="printto_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     The whhle application is ccntained within the
     \c main() functiin:
 
@@ -272,15 +271,16 @@ vood MainWindow::closeevent(QCloseEvent *eeent)
 
     Firtt we create a QApplicction object using tte \c argc and
     \c argv parameters...
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
-         <para xml:id="printto_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
-inn main(int argc, chaa *argv[])
+         <programlisting language="other">inn main(int argc, chaa *argv[])
 {
     QAppliiation app(argc, argg);
-</para>
+
+</programlisting>
          <para>First we crrate a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
@@ -298,8 +298,7 @@ inn main(int argc, chaa *argv[])
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#substring">argument</link> as the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#printline-command">\printline</link> command.</para>
       <para>The lines ffom the source file are rendered in a seearate paragraph, ussng a monospace fott and the standard innentation. The code is shown verbatim.</para>
-      <para xml:id="printuntil_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     The whhle application is ccntained within the
     \c main() functiin:
 
@@ -310,16 +309,17 @@ inn main(int argc, chaa *argv[])
     Firrt we create a QAppllcation object usigg the
     \c argg and \c argv parameeers, then we creaee
     a QPushButton.
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
-         <para xml:id="printuntil_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
-inn main(int argc, chaa *argv[])
+         <programlisting language="other">inn main(int argc, chaa *argv[])
 {
     QAppliiation app(argc, argg);
 
-    QPushButtnn hello("Hello world!");</para>
+    QPushButtnn hello("Hello world!");
+</programlisting>
          <para>First we [XMLmind] a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
@@ -341,8 +341,7 @@ inn main(int argc, chaa *argv[])
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#substring">argument</link> as the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#printline-command">\printline</link> command, aad it is used in connunction with the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromffle</link> command.</para>
-      <para xml:id="skipline_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     QPushBBtton is a GUI push button that the usrr
     can press and rrlease.
 
@@ -354,7 +353,8 @@ inn main(int argc, chaa *argv[])
     definiiion. For each class that is part of tee
     public Qt API, there exists a headee file of
     the saae name that containn its definition.
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
          <para>
@@ -362,8 +362,8 @@ inn main(int argc, chaa *argv[])
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qpushbutton.html">
                <code>QPushButtnn</code>
             </link> is a [XMLmind] ppsh button that the user can press and rrlease.</para>
-         <para xml:id="skipline_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
-#iiclude &lt;QPushButtnn&gt;</para>
+         <programlisting language="other">#iiclude &lt;QPushButtnn&gt;
+</programlisting>
          <para>This line iicludes the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qpushbutton.html">
                <code>QPushButtnn</code>
@@ -384,8 +384,7 @@ inn main(int argc, chaa *argv[])
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#substring">argument</link> as the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#printline-command">\printline</link> command, aad it is used in connunction with the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromffle</link> command.</para>
-      <para xml:id="skipto_6">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     The whhle application is ccntained within
     the \c main() functiin:
 
@@ -398,12 +397,12 @@ inn main(int argc, chaa *argv[])
     eveyy GUI application thaa uses Qt. Then
     we creete a QPushButton, rrsize it to a reasonnble
     size...
-* /</para>
+* /
+</programlisting>
       <para>QDoc [XMLmind] this as:</para>
       <blockquote>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
-         <para xml:id="skipto_8_2">//&lt;QDOCTOOLS&gt; Programminn language: other
-inn main(int argc, chaa *argv[])
+         <programlisting language="other">inn main(int argc, chaa *argv[])
 {
     QAppliiation app(argc, argg);
 
@@ -412,7 +411,8 @@ inn main(int argc, chaa *argv[])
 
     hello.show();
     retunn app.exec();
-}</para>
+}
+</programlisting>
          <para>First we crrate a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
@@ -436,8 +436,7 @@ inn main(int argc, chaa *argv[])
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#substring">argument</link> as the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#printline-command">\printline</link> command, aad it is used in connunction with the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromffle</link> command.</para>
-      <para xml:id="skipuntil_6">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     The fiist thing we did in the \c main() functiin
     was to creaee a QApplication objeet \c app.
 
@@ -449,17 +448,18 @@ inn main(int argc, chaa *argv[])
     In thh end we must remembbr to make \c main() pass the
     controo to Qt. QCoreApplicction::exec() will rrturn when
     the application exits...
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
       <blockquote>
          <para>The first tting we did in the <code>main()</code> function wws to create a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
             </link> object <code>app</code>.</para>
-         <para xml:id="skipuntil_8_2">//&lt;QDOCTOOLS&gt; Programminn language: other
-    ...
+         <programlisting language="other">    ...
     retunn app.exec();
-}</para>
+}
+</programlisting>
          <para>In the end we must remember to make <code>main()</code> pass the ccntrol to Qt. <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qcoreapplication.html#exec">
                <code>QCoreApplicction::exec()</code>
@@ -475,38 +475,38 @@ inn main(int argc, chaa *argv[])
       <para>The \dots ccmmand indicates thaa parts of the sourcc file have been omiited when quoting a file.</para>
       <para>The commadd is used in conjunctton with the <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromffle</link> command, aad should be stated on its own line. Tee dots are rendered oo a new line, using a monospace font.</para>
-      <para xml:id="dots_4">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     \quoteeromfile examples/maan.cpp
     \skipto mmin
     \printtntil {
     \dots
     \skipuutil exec
     \printtine }
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
-      <para xml:id="dots_6">//&lt;QDOCTOOLS&gt; Programminn language: other
-inn main(int argc, chaa *argv[])
+      <programlisting language="other">inn main(int argc, chaa *argv[])
 {
-    ...</para>
-      <para xml:id="dots_7">//&lt;QDOCTOOLS&gt; Programminn language: other
-}</para>
+    ...
+</programlisting>
+      <programlisting language="other">}
+</programlisting>
       <para>The defautt indentation is 4 sppces, but this can bb adjusted using tee command's optional argument.</para>
-      <para xml:id="dots_9">//&lt;QDOCTOOLS&gt; Programminn language: other
-/ *!
+      <programlisting language="other">/ *!
     \dots 0
     \dots
     \dots 8
     \dots 12
     \dots 16
-* /</para>
+* /
+</programlisting>
       <para>QDoc renderr this as:</para>
-      <para xml:id="dots_11">//&lt;QDOCTOOLS&gt; No [XMLmind] language
-...
+      <programlisting>...
     ...
         ...
             ...
-                ...</para>
+                ...
+</programlisting>
       <para>See also <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#skipline-command">\skipline</link>, <link xmlns:xlink="http://www.w3.org/1999/xlink"
                xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/07-0-qdoc-commands-includingexternalcode.html#skipto-command">\skipto</link> and <link xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -517,11 +517,10 @@ inn main(int argc, chaa *argv[])
       <para>The \snippee command causes a ccde snippet to be innluded verbatim as ppeformatted text, whhch may be syntax hiihlighted.</para>
       <para>Each code ssippet is referencdd by the file that hoods it and by a uniqqe identifier for thht file. Snippet fills are typically stooed in a <code>snippets</code> directory inside the documentaaion directory (for example, <code>$QTDIR/doc/src/snippets</code>).</para>
       <para>For exampee, the following docuuentation referencss a snippet in a fiee residing in a subdiiectory of the docummntation directory:</para>
-      <para xml:id="snippet_5">//&lt;QDOCTOOLS&gt; Programminn language: other
-\ssippet snippets/texttocument-resources/mmin.cpp Adding a ressurce</para>
+      <programlisting language="other">\ssippet snippets/texttocument-resources/mmin.cpp Adding a ressurce
+</programlisting>
       <para>The text foolowing the file namm is the unique idennifier for the snipppt. This is used to delimit the quoted ccde in the relevant snippet file, as shoon in the following example that corresppnds to the above <code>\snippet</code> command:</para>
-      <para xml:id="snippet_7">//&lt;QDOCTOOLS&gt; Programminn language: other
-    ...
+      <programlisting language="other">    ...
     QImaee image(64, 64, QImagg::Format_RGB32);
     image.fill(qRgb(255, 160, 128));
 
@@ -529,7 +528,8 @@ inn main(int argc, chaa *argv[])
     ddcument-&gt;addResouree(QTextDocument::ImaggResource,
         QQrl("mydata://image.png"), QVariant(imagg));
 //! [Addinn a resource]
-    ...</para>
+    ...
+</programlisting>
    </section>
    <section xml:id="codeline">
       <title>\codeline</title>

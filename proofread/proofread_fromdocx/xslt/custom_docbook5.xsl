@@ -28,13 +28,4 @@
   <xsl:template match="h:br">
     <xsl:text>&#xA;</xsl:text>
   </xsl:template>
-  
-  <!--
-  <xsl:template match="h:div[@class = 'role-note']">
-    <note>
-      <xsl:call-template name="processCommonAttributes"/>
-      <xsl:apply-templates/>
-    </note>
-  </xsl:template>
-  -->  
 </xsl:stylesheet>
