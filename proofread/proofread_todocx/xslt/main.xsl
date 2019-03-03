@@ -3,12 +3,12 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:fo="http://www.w3.org/1999/XSL/Format"
     xmlns:xfc="http://www.xmlmind.com/foconverter/xsl/extensions"
+    xmlns:db="http://docbook.org/ns/docbook"
     xmlns:t="http://docbook.org/xslt/ns/template"
     xmlns:f="http://docbook.org/xslt/ns/extension"
     xmlns:m="http://docbook.org/xslt/ns/mode"
     xmlns:mp="http://docbook.org/xslt/ns/mode/private"
-    xmlns:db="http://docbook.org/ns/docbook"
-    exclude-result-prefixes="xs t f m mp"
+    exclude-result-prefixes="xs db t f m mp"
     version="3.0">
     
     <xsl:import href="docbook_xsl2/fo/final-pass.xsl"/>

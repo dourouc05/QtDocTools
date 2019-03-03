@@ -12,6 +12,7 @@
     <xsl:strip-space elements="*"/>
     
     <!-- This style sheet could not be merged into custom_docbook5, as this one is executed within w2x and must use XSLT 1. Most processing is done there, though. -->
+    <!-- Some transformations could also be performed in custom_docbook5, but are much simpler to express as operations on DocBook content. -->
     
     <!-- Apply the //<QDOCTOOLS> comments. They indicate a programming language, but may also show that two code blocks were merged together. -->
     <xsl:template match="db:programlisting">
@@ -48,4 +49,27 @@
     </xsl:template>
     
     <xsl:template match="tc:annotation" mode="split_pre_phase_2"/>
+    
+    <!-- The abstract, if there is one, is in a table after <info>. It must be brought back into <info>. -->
+    <xsl:template match="db:info">
+        <info>
+            <xsl:copy-of select="./*"/>
+            
+            <xsl:if test="following-sibling::*[1]/self::db:informaltable and following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/child::*[1]/self::db:para 
+                          and normalize-space(following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/child::db:para[1]/text()) = 'Abstract'">
+                <abstract>
+                    <xsl:copy-of select="following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/db:para[1]/following-sibling::node()"/>
+                </abstract>
+            </xsl:if>
+        </info>
+    </xsl:template>
+    
+    <xsl:template match="db:informaltable">
+        <xsl:if test="not(preceding-sibling::*[1]/self::db:info and db:tbody/db:tr/db:td/child::*[1]/self::db:para and normalize-space(db:tbody/db:tr/db:td/db:para[1]/text()) = 'Abstract')">
+            <!-- ) -->
+            <xsl:copy>
+                <xsl:apply-templates select="@*|node()" mode="#current"/>
+            </xsl:copy>
+        </xsl:if>
+    </xsl:template>
 </xsl:stylesheet>

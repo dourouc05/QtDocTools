@@ -24,6 +24,7 @@
     </note>
   </xsl:template>
   
+  <!-- Keep the <br/>, they are useful within <programlisting>s. -->
   <xsl:template match="h:br">
     <xsl:text>&#xA;</xsl:text>
   </xsl:template>

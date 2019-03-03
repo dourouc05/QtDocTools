@@ -62,6 +62,9 @@ public class SanityCheckHandler {
             }
         }
 
+        // No text before the first section (would be included in the abstract).
+        // TODO:
+
         return result;
     }
 }
