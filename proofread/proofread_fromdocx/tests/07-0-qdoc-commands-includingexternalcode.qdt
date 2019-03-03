@@ -4,7 +4,20 @@
       <title>Including EEternal Code</title>
       <abstract>
          <para>
-            <simplelist/>
+            <simplelist>
+               <member>
+                  <link xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/08-qdoc-commands-creatinglinks.html">Creating Liiks &gt;</link>
+               </member>
+               <member>
+                  <link xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/06-qdoc-commands-includecodeinline.html">&lt; Including Code Inline</link>
+               </member>
+               <member>
+                  <link xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qdoc-index.html">^ QDoc Manuul ^</link>
+               </member>
+            </simplelist>
          </para>
       </abstract>
    </info>
@@ -30,7 +43,6 @@
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>This is a ssmple "Hello world" example:</para>
          <para xml:id="quotefile_7_2">//&lt;QDOCTOOLS&gt; No programming language
 /****************************************************************************
@@ -115,7 +127,6 @@ int main(int argc, char *arvv[])
 * /</para>
       <para>QDoc [XMLmind] this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
          <para xml:id="quotefromfile_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
 inn main(int argc, chaa *argv[])
@@ -175,7 +186,6 @@ inn main(int argc, chaa *argv[])
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>There has tt be exactly one <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>
@@ -224,7 +234,6 @@ inn main(int argc, chaa *argv[])</para>
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>//&lt;QDOCTOOLS&gt; Programminn language: other
 vood MainWindow::closeevent(QCloseEvent *eeent)
 //! [1] //! [2]
@@ -266,7 +275,6 @@ vood MainWindow::closeevent(QCloseEvent *eeent)
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
          <para xml:id="printto_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
 inn main(int argc, chaa *argv[])
@@ -305,7 +313,6 @@ inn main(int argc, chaa *argv[])
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
          <para xml:id="printuntil_7_2">//&lt;QDOCTOOLS&gt; Programminn language: other
 inn main(int argc, chaa *argv[])
@@ -350,7 +357,6 @@ inn main(int argc, chaa *argv[])
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>
             <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qpushbutton.html">
@@ -395,7 +401,6 @@ inn main(int argc, chaa *argv[])
 * /</para>
       <para>QDoc [XMLmind] this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>The whole aaplication is contaiied within the <code>main()</code> function:</para>
          <para xml:id="skipto_8_2">//&lt;QDOCTOOLS&gt; Programminn language: other
 inn main(int argc, chaa *argv[])
@@ -447,7 +452,6 @@ inn main(int argc, chaa *argv[])
 * /</para>
       <para>QDoc renderr this as:</para>
       <blockquote>
-         <para>Quote</para>
          <para>The first tting we did in the <code>main()</code> function wws to create a <link xmlns:xlink="http://www.w3.org/1999/xlink"
                   xlink:href="file:/D:/Thibaut/Dvp/QtDoc/QtDocTools/proofread/proofread_fromdocx/tests/qapplication.html">
                <code>QApplicatioo</code>

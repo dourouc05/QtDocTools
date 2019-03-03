@@ -76,16 +76,21 @@
             <xsl:choose>
                 <xsl:when test="normalize-space(db:tbody/db:tr[1]/db:td/db:para[1]/text()) = 'Quote'">
                     <blockquote>
-                        <xsl:for-each select="db:tbody/db:tr/db:td">
+                        <xsl:for-each select="db:tbody/db:tr[position() > 1]/db:td">
                             <xsl:apply-templates/>
                         </xsl:for-each>
                     </blockquote>
                 </xsl:when>
                 <xsl:otherwise>
                     <simplelist>
-                        <xsl:for-each select="db:tbody/db:tr/db:td[position() > 1]">
+                        <xsl:for-each select="db:tbody/db:tr/db:td">
                             <member>
-                                <xsl:apply-templates/>
+                                <!-- Simply applying the templates will generate paras, which are not allowed in a simplelist. -->
+                                <!-- Only one such paragraph should appear in a simplelist. -->
+                                <xsl:variable name="member">
+                                    <xsl:apply-templates/>
+                                </xsl:variable>
+                                <xsl:copy-of select="$member/db:para[1]/*"/>
                             </member>
                         </xsl:for-each>
                     </simplelist>
