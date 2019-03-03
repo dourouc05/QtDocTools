@@ -66,7 +66,6 @@
     
     <xsl:template match="db:informaltable">
         <xsl:if test="not(preceding-sibling::*[1]/self::db:info and db:tbody/db:tr/db:td/child::*[1]/self::db:para and normalize-space(db:tbody/db:tr/db:td/db:para[1]/text()) = 'Abstract')">
-            <!-- ) -->
             <xsl:copy>
                 <xsl:apply-templates select="@*|node()" mode="#current"/>
             </xsl:copy>
