@@ -58,6 +58,8 @@ public class ProofreadCommand implements Callable<Void> {
             System.out.println("NOT YET IMPLEMENYED");
         } else if (FileHelpers.isDocBook(input)) {
             if (! checkSanity(input)) {
+                System.out.println("SANITY CHECK: one or more sanity checks did not pass. It is better if you correct" +
+                        "these problems now; otherwise, you may use the option --disable-sanity-checks to ignore them.");
                 throw new RuntimeException("Input DocBook file does not pass the sanity checks! ");
             }
 

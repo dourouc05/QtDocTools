@@ -111,8 +111,8 @@ public class SanityCheckHandler {
 
         // Tables with just one column are understood as <simplelist>s.
         {
-            XdmValue nColumns = xpath("//informaltable[not(//tr/count(td) > 1)]");
-            XdmValue nColumnsNS = xpath("//db:informaltable[not(//db:tr/count(db:td) > 1)]");
+            XdmValue nColumns = xpath("//informaltable[not(/tbody/tr/count(td) > 1)]");
+            XdmValue nColumnsNS = xpath("//db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]");
 
             try {
                 boolean printedIntro = false;

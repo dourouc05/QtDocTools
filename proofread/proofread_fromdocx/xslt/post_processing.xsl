@@ -58,17 +58,40 @@
             <xsl:if test="following-sibling::*[1]/self::db:informaltable and following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/child::*[1]/self::db:para 
                           and normalize-space(following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/child::db:para[1]/text()) = 'Abstract'">
                 <abstract>
-                    <xsl:copy-of select="following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/db:para[1]/following-sibling::node()"/>
+                    <xsl:apply-templates select="following-sibling::db:informaltable[1]/db:tbody/db:tr/db:td/db:para[1]/following-sibling::node()">
+                        <xsl:with-param name="wrapWithPara" select="true()"/>
+                    </xsl:apply-templates>
                 </abstract>
             </xsl:if>
         </info>
     </xsl:template>
     
-    <xsl:template match="db:informaltable">
-        <xsl:if test="not(preceding-sibling::*[1]/self::db:info and db:tbody/db:tr/db:td/child::*[1]/self::db:para and normalize-space(db:tbody/db:tr/db:td/db:para[1]/text()) = 'Abstract')">
-            <xsl:copy>
-                <xsl:apply-templates select="@*|node()" mode="#current"/>
-            </xsl:copy>
-        </xsl:if>
+    <xsl:template match="db:informaltable[preceding-sibling::*[1]/self::db:info and db:tbody/db:tr/db:td/child::*[1]/self::db:para and normalize-space(db:tbody/db:tr/db:td/db:para[1]/text()) = 'Abstract']" priority="42"/>
+    
+    <!-- Informal tables that only have one column (for all their rows) are converted to simplelists. -->
+    <xsl:template match="db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]">
+        <xsl:param name="wrapWithPara" as="xs:boolean" select="false()"/>
+        
+        <xsl:variable name="simplelist">
+            <simplelist>
+                <xsl:for-each select="db:tbody/db:tr/db:td">
+                    <member>
+                        <xsl:apply-templates></xsl:apply-templates>
+                    </member>
+                </xsl:for-each>
+            </simplelist>
+        </xsl:variable>
+        
+        <!-- In the abstract, this list must be within a paragraph. -->
+        <xsl:choose>
+            <xsl:when test="$wrapWithPara">
+                <para>
+                    <xsl:copy-of select="$simplelist"/>
+                </para>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="$simplelist"/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 </xsl:stylesheet>
