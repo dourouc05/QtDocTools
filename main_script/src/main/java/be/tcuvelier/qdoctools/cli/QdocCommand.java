@@ -14,10 +14,14 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Command;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -99,6 +103,28 @@ public class QdocCommand implements Callable<Void> {
             System.out.println("++> Running qdoc.");
 //            q.runQdoc();
             System.out.println("++> Qdoc done.");
+
+            // Sometimes, qdoc outputs things in a strange folder. Ahoy!
+            Path normalPath = new File(output).toPath();
+            Path abnormalPath = normalPath.resolve("html");
+            if (Files.exists(abnormalPath)) {
+                String[] webxmlFiles = abnormalPath.toFile().list((dir, name) -> name.endsWith(".webxml"));
+                if (webxmlFiles != null && webxmlFiles.length > 0) {
+                    System.out.println("++> Moving qdoc's result to the expected folder");
+
+                    if (Arrays.stream(webxmlFiles)
+                            .map(abnormalPath::resolve)
+                            .map(Path::toFile)
+                            .map(file -> file.renameTo(normalPath.resolve(file.getName()).toFile()))
+                            .anyMatch(val -> ! val)) {
+                        System.out.println("++> Moving some files was not possible!");
+                    }
+
+                    if (! abnormalPath.resolve("images").toFile().renameTo(normalPath.resolve("images").toFile())) {
+                        System.out.println("++> Moving the images folder was not possible!");
+                    }
+                }
+            }
         }
 
         // Run Saxon to get the DocBook output.

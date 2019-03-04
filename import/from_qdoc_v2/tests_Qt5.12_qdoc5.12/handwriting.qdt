@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Handwriting Recognition</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist role="see-also">
+               <db:member>
+                  <db:link xlink:href="{Handwriting Recognition} {Contents}" xlink:title="contents">^ {Handwriting Recognition} {Contents} ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2019-03-04+01:00</db:pubdate>
+      <db:date>2019-03-04+01:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.12</db:productnumber>
+   </db:info>
+   <db:para>Qt Virtual Keyboard supports handwriting recognition through open source and commercially-licensed engines.</db:para>
+   <db:mediaobject>
+      <db:imageobject>
+         <db:imagedata fileref="images/handwriting.gif"/>
+      </db:imageobject>
+   </db:mediaobject>
+   <db:para>There are two modes in which to write: using the more compact handwriting panel (as shown above), or <db:link xlink:href="qml-qtquick-virtualkeyboard-handwritinginputpanel.html" xrefstyle="" annotations="HandwritingInputPanel">fullscreen</db:link>.</db:para>
+   <db:para>For instructions on how to activate and use the handwriting input mode, see the <db:link xlink:href="qtvirtualkeyboard-user-guide.html#user-guide-handwriting" xrefstyle="page" annotations="user-guide-handwriting">User Guide</db:link>.</db:para>
+   <db:para>For information about building Qt Virtual Keyboard with a particular handwriting engine, see <db:link xlink:href="qtvirtualkeyboard-build.html#configuration-options" xrefstyle="page" annotations="Configuration Options">Configuration Options</db:link>.</db:para>
+   <db:section xml:id="lipi-toolkit">
+      <db:title>Lipi Toolkit</db:title>
+      <db:para>Lipi Toolkit is an open source handwriting recognition engine.</db:para>
+      <db:para>Lipi Toolkit only supports handwriting written in the English language.</db:para>
+   </db:section>
+   <db:section xml:id="t9-write">
+      <db:title>T9 Write</db:title>
+      <db:para>T9 Write is a commercial handwriting recognition engine.</db:para>
+      <db:para>T9 Write supports handwriting written in the following languages:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Arabic</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Bulgarian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Croatian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Czech</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Danish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Dutch</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>English</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Estonian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Finnish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>French</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>German</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Greek</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Hebrew</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Hungarian</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Italian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Japanese</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Korean</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Norwegian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Persian/Farsi</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Polish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Portugese</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Romanian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Russian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Serbian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Simplified Chinese</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Spanish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Swedish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Traditional Chinese</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+   </db:section>
+   <db:section xml:id="myscript">
+      <db:title>MyScript</db:title>
+      <db:para>
+         <db:link xlink:href="handwriting.html#myscript" xrefstyle="page" annotations="MyScript">MyScript</db:link> SDK is a commercial handwriting recognition engine.</db:para>
+      <db:para>SDK supports 71 handwriting recognition languages:</db:para>
+      <db:informaltable>
+         <db:tr>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Afrikaans</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Albanian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Arabic</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Armenian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Azeri, Azerbaijani</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Basque</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Belarusian (Cyrillic)</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Bosnian (Latin)</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Bulgarian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Catalan</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Cebuano</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Chinese Simplified</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Chinese Traditional - Hong Kong</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Chinese Traditional - Taiwan</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Croatian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Czech</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Danish</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Dutch, Flemish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Dutch</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>English - Canada</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>English - Philippines</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>English - United Kingdom</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>English - United States</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Estonian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Farsi, Persian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Filipino, Pilipino, Tagalog</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Finnish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>French - Canada</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>French - France</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Galician</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Georgian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>German - Austria</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>German - Germany</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Greek</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Hebrew</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Hindi</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Hungarian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Icelandic</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Indonesian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Irish, Ireland Gaelic</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Italian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Japanese</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Kazakh</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Korean</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Latvian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Lithuanian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Macedonian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Malagasy</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Malay</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Mongolian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Norwegian, Nordic Bokmal</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Polish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Portuguese - Brazil</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+            <db:td>
+               <db:itemizedlist>
+                  <db:listitem>
+                     <db:para>Portuguese - Portugal</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Romanian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Russian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Serbian (Cyrillic)</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Serbian (Latin)</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Slovak</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Slovenian, Slovene</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Spanish - Colombia</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Spanish - Spain</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Spanish - Mexico</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Swahili (Latin)</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Swedish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Tatar (Cyrillic)</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Thai</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Turkish</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Ukrainian</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Urdu</db:para>
+                  </db:listitem>
+                  <db:listitem>
+                     <db:para>Vietnamese</db:para>
+                  </db:listitem>
+               </db:itemizedlist>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>is integrated into Qt Virtual Keyboard with identical coverage of supported languages.</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>
+               <db:link xlink:href="qtvirtualkeyboard-index.html#supported-languages" xrefstyle="page" annotations="Qt Virtual Keyboard#Supported Languages">Supported Languages</db:link>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>However, with minor modifications to the Qt Virtual Keyboard source code, it is easy to add handwriting panels for other languages supported by MyScript.</db:para>
+      <db:para>To get the MyScript SDK or additional information, please contact MyScript at qt@myscript.com.</db:para>
+      <db:para>
+         <db:emphasis role="bold">See also</db:emphasis>: <db:link xlink:href="qtvirtualkeyboard-build.html#myscript-text-sdk-integration" xrefstyle="page" annotations="MyScript Text SDK Integration">MyScript Text SDK Integration</db:link>
+      </db:para>
+   </db:section>
+</db:article>

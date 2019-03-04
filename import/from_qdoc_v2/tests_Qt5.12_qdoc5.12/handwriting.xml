@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebXML>
+    <document>
+        <page name="handwriting.html" href="handwriting.html" status="active" location="handwriting.qdoc" filepath="D:/Qt/5.12.1/Src/qtvirtualkeyboard/src/virtualkeyboard/doc/src/handwriting.qdoc" lineno="28" subtype="page" title="Handwriting Recognition" fulltitle="Handwriting Recognition" subtitle="" module="QtVirtualKeyboard">
+            <contents name="lipi-toolkit" title="Lipi Toolkit" level="1"/>
+            <contents name="t9-write" title="T9 Write" level="1"/>
+            <contents name="myscript" title="MyScript" level="1"/>
+            <description path="D:/Qt/5.12.1/Src/qtvirtualkeyboard/src/virtualkeyboard/doc/src/handwriting.qdoc" line="28" column="4">
+                <relation href="{Handwriting Recognition} {Contents}" type="page" meta="contents" description="{Handwriting Recognition} {Contents}"/>
+                <para>Qt Virtual Keyboard supports handwriting recognition through open source and commercially-licensed engines.</para>
+                <image href="images/handwriting.gif"/>
+                <para>There are two modes in which to write: using the more compact handwriting panel (as shown above), or <link raw="HandwritingInputPanel" href="qml-qtquick-virtualkeyboard-handwritinginputpanel.html" type="">fullscreen</link>.</para>
+                <para>For instructions on how to activate and use the handwriting input mode, see the <link raw="user-guide-handwriting" href="qtvirtualkeyboard-user-guide.html#user-guide-handwriting" type="page" page="User Guide">User Guide</link>.</para>
+                <para>For information about building Qt Virtual Keyboard with a particular handwriting engine, see <link raw="Configuration Options" href="qtvirtualkeyboard-build.html#configuration-options" type="page" page="Building Qt Virtual Keyboard">Configuration Options</link>.</para>
+                <section id="lipi-toolkit">
+                    <heading level="1">Lipi Toolkit</heading>
+                    <para>Lipi Toolkit is an open source handwriting recognition engine.</para>
+                    <para>Lipi Toolkit only supports handwriting written in the English language.</para>
+                </section>
+                <section id="t9-write">
+                    <heading level="1">T9 Write</heading>
+                    <para>T9 Write is a commercial handwriting recognition engine.</para>
+                    <para>T9 Write supports handwriting written in the following languages:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Arabic</para>
+                                    </item>
+                                    <item>
+                                        <para>Bulgarian</para>
+                                    </item>
+                                    <item>
+                                        <para>Croatian</para>
+                                    </item>
+                                    <item>
+                                        <para>Czech</para>
+                                    </item>
+                                    <item>
+                                        <para>Danish</para>
+                                    </item>
+                                    <item>
+                                        <para>Dutch</para>
+                                    </item>
+                                    <item>
+                                        <para>English</para>
+                                    </item>
+                                </list>
+                            </item>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Estonian</para>
+                                    </item>
+                                    <item>
+                                        <para>Finnish</para>
+                                    </item>
+                                    <item>
+                                        <para>French</para>
+                                    </item>
+                                    <item>
+                                        <para>German</para>
+                                    </item>
+                                    <item>
+                                        <para>Greek</para>
+                                    </item>
+                                    <item>
+                                        <para>Hebrew</para>
+                                    </item>
+                                    <item>
+                                        <para>Hungarian</para>
+                                    </item>
+                                </list>
+                            </item>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Italian</para>
+                                    </item>
+                                    <item>
+                                        <para>Japanese</para>
+                                    </item>
+                                    <item>
+                                        <para>Korean</para>
+                                    </item>
+                                    <item>
+                                        <para>Norwegian</para>
+                                    </item>
+                                    <item>
+                                        <para>Persian/Farsi</para>
+                                    </item>
+                                    <item>
+                                        <para>Polish</para>
+                                    </item>
+                                    <item>
+                                        <para>Portugese</para>
+                                    </item>
+                                </list>
+                            </item>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Romanian</para>
+                                    </item>
+                                    <item>
+                                        <para>Russian</para>
+                                    </item>
+                                    <item>
+                                        <para>Serbian</para>
+                                    </item>
+                                    <item>
+                                        <para>Simplified Chinese</para>
+                                    </item>
+                                    <item>
+                                        <para>Spanish</para>
+                                    </item>
+                                    <item>
+                                        <para>Swedish</para>
+                                    </item>
+                                    <item>
+                                        <para>Traditional Chinese</para>
+                                    </item>
+                                </list>
+                            </item>
+                        </row>
+                    </table>
+                </section>
+                <section id="myscript">
+                    <heading level="1">MyScript</heading>
+                    <para>
+                        <link raw="MyScript" href="handwriting.html#myscript" type="page" page="Handwriting Recognition">MyScript</link> SDK is a commercial handwriting recognition engine.</para>MyScript<para>SDK supports 71 handwriting recognition languages:</para>
+                    <table>
+                        <row>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Afrikaans</para>
+                                    </item>
+                                    <item>
+                                        <para>Albanian</para>
+                                    </item>
+                                    <item>
+                                        <para>Arabic</para>
+                                    </item>
+                                    <item>
+                                        <para>Armenian</para>
+                                    </item>
+                                    <item>
+                                        <para>Azeri, Azerbaijani</para>
+                                    </item>
+                                    <item>
+                                        <para>Basque</para>
+                                    </item>
+                                    <item>
+                                        <para>Belarusian (Cyrillic)</para>
+                                    </item>
+                                    <item>
+                                        <para>Bosnian (Latin)</para>
+                                    </item>
+                                    <item>
+                                        <para>Bulgarian</para>
+                                    </item>
+                                    <item>
+                                        <para>Catalan</para>
+                                    </item>
+                                    <item>
+                                        <para>Cebuano</para>
+                                    </item>
+                                    <item>
+                                        <para>Chinese Simplified</para>
+                                    </item>
+                                    <item>
+                                        <para>Chinese Traditional - Hong Kong</para>
+                                    </item>
+                                    <item>
+                                        <para>Chinese Traditional - Taiwan</para>
+                                    </item>
+                                    <item>
+                                        <para>Croatian</para>
+                                    </item>
+                                    <item>
+                                        <para>Czech</para>
+                                    </item>
+                                    <item>
+                                        <para>Danish</para>
+                                    </item>
+                                </list>
+                            </item>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Dutch, Flemish</para>
+                                    </item>
+                                    <item>
+                                        <para>Dutch</para>
+                                    </item>
+                                    <item>
+                                        <para>English - Canada</para>
+                                    </item>
+                                    <item>
+                                        <para>English - Philippines</para>
+                                    </item>
+                                    <item>
+                                        <para>English - United Kingdom</para>
+                                    </item>
+                                    <item>
+                                        <para>English - United States</para>
+                                    </item>
+                                    <item>
+                                        <para>Estonian</para>
+                                    </item>
+                                    <item>
+                                        <para>Farsi, Persian</para>
+                                    </item>
+                                    <item>
+                                        <para>Filipino, Pilipino, Tagalog</para>
+                                    </item>
+                                    <item>
+                                        <para>Finnish</para>
+                                    </item>
+                                    <item>
+                                        <para>French - Canada</para>
+                                    </item>
+                                    <item>
+                                        <para>French - France</para>
+                                    </item>
+                                    <item>
+                                        <para>Galician</para>
+                                    </item>
+                                    <item>
+                                        <para>Georgian</para>
+                                    </item>
+                                    <item>
+                                        <para>German - Austria</para>
+                                    </item>
+                                    <item>
+                                        <para>German - Germany</para>
+                                    </item>
+                                    <item>
+                                        <para>Greek</para>
+                                    </item>
+                                    <item>
+                                        <para>Hebrew</para>
+                                    </item>
+                                </list>
+                            </item>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Hindi</para>
+                                    </item>
+                                    <item>
+                                        <para>Hungarian</para>
+                                    </item>
+                                    <item>
+                                        <para>Icelandic</para>
+                                    </item>
+                                    <item>
+                                        <para>Indonesian</para>
+                                    </item>
+                                    <item>
+                                        <para>Irish, Ireland Gaelic</para>
+                                    </item>
+                                    <item>
+                                        <para>Italian</para>
+                                    </item>
+                                    <item>
+                                        <para>Japanese</para>
+                                    </item>
+                                    <item>
+                                        <para>Kazakh</para>
+                                    </item>
+                                    <item>
+                                        <para>Korean</para>
+                                    </item>
+                                    <item>
+                                        <para>Latvian</para>
+                                    </item>
+                                    <item>
+                                        <para>Lithuanian</para>
+                                    </item>
+                                    <item>
+                                        <para>Macedonian</para>
+                                    </item>
+                                    <item>
+                                        <para>Malagasy</para>
+                                    </item>
+                                    <item>
+                                        <para>Malay</para>
+                                    </item>
+                                    <item>
+                                        <para>Mongolian</para>
+                                    </item>
+                                    <item>
+                                        <para>Norwegian, Nordic Bokmal</para>
+                                    </item>
+                                    <item>
+                                        <para>Polish</para>
+                                    </item>
+                                    <item>
+                                        <para>Portuguese - Brazil</para>
+                                    </item>
+                                </list>
+                            </item>
+                            <item>
+                                <list type="bullet">
+                                    <item>
+                                        <para>Portuguese - Portugal</para>
+                                    </item>
+                                    <item>
+                                        <para>Romanian</para>
+                                    </item>
+                                    <item>
+                                        <para>Russian</para>
+                                    </item>
+                                    <item>
+                                        <para>Serbian (Cyrillic)</para>
+                                    </item>
+                                    <item>
+                                        <para>Serbian (Latin)</para>
+                                    </item>
+                                    <item>
+                                        <para>Slovak</para>
+                                    </item>
+                                    <item>
+                                        <para>Slovenian, Slovene</para>
+                                    </item>
+                                    <item>
+                                        <para>Spanish - Colombia</para>
+                                    </item>
+                                    <item>
+                                        <para>Spanish - Spain</para>
+                                    </item>
+                                    <item>
+                                        <para>Spanish - Mexico</para>
+                                    </item>
+                                    <item>
+                                        <para>Swahili (Latin)</para>
+                                    </item>
+                                    <item>
+                                        <para>Swedish</para>
+                                    </item>
+                                    <item>
+                                        <para>Tatar (Cyrillic)</para>
+                                    </item>
+                                    <item>
+                                        <para>Thai</para>
+                                    </item>
+                                    <item>
+                                        <para>Turkish</para>
+                                    </item>
+                                    <item>
+                                        <para>Ukrainian</para>
+                                    </item>
+                                    <item>
+                                        <para>Urdu</para>
+                                    </item>
+                                    <item>
+                                        <para>Vietnamese</para>
+                                    </item>
+                                </list>
+                            </item>
+                        </row>
+                    </table>MyScript<para>is integrated into Qt Virtual Keyboard with identical coverage of supported languages.</para>
+                    <list type="bullet">
+                        <item>
+                            <para>
+                                <link raw="Qt Virtual Keyboard#Supported Languages" href="qtvirtualkeyboard-index.html#supported-languages" type="page" page="Qt Virtual Keyboard">Supported Languages</link></para>
+                        </item>
+                    </list>
+                    <para>However, with minor modifications to the Qt Virtual Keyboard source code, it is easy to add handwriting panels for other languages supported by MyScript.</para>
+                    <para>To get the MyScript SDK or additional information, please contact MyScript at qt@myscript.com.</para>
+                    <para>
+                        <bold>See also</bold>: <link raw="MyScript Text SDK Integration" href="qtvirtualkeyboard-build.html#myscript-text-sdk-integration" type="page" page="Building Qt Virtual Keyboard">MyScript Text SDK Integration</link></para>
+                </section>
+            </description>
+        </page>
+    </document>
+</WebXML>
