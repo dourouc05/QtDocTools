@@ -131,9 +131,6 @@ public class QdocCommand implements Callable<Void> {
         if (convertToDocBook) {
             Path root = q.getOutputFolder();
 
-            // Ensure that outputFolder is correct and determine the list of WebXML first.
-            List<Path> webxml = q.findWebXML();
-
             // First, generate the list of classes (may take a bit of time).
             System.out.println("++> Generating utilities for WebXML-to-DocBook transformation.");
             XsltTransformer utilities = new XsltHandler(MainCommand.xsltWebXMLToDocBookUtilPath)
@@ -143,6 +140,7 @@ public class QdocCommand implements Callable<Void> {
 
             // Second, iterate through the files.
             System.out.println("++> Starting WebXML-to-DocBook transformation.");
+            List<Path> webxml = q.findWebXML();
             XsltHandler h = new XsltHandler(MainCommand.xsltWebXMLToDocBookPath);
 
             if (webxml.size() == 0) {
