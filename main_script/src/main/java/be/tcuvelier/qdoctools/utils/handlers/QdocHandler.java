@@ -199,6 +199,8 @@ public class QdocHandler {
     }
 
     public Path makeMainQdocconf(List<Pair<String, Path>> modules) throws WriteQdocconfException {
+        modules.sort(Comparator.comparing(a -> a.first));
+
         StringBuilder b = new StringBuilder();
         for (Pair<String, Path> module : modules) {
             b.append(module.second.getParent().resolve("qtdoctools-" + module.first + ".qdocconf").toString());
