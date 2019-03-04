@@ -19,7 +19,7 @@
   
   <xsl:param name="qt-version" as="xs:string" select="'1.2'"/>
   <!--<xsl:param name="qt-version" as="xs:string" required="true"/>-->
-  <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc/webxml/'"/>
+  <xsl:param name="local-folder" as="xs:string" select="'file:///D:/Qt/Doc512v2/'"/>
   <!--<xsl:param name="local-folder" as="xs:string" required="true"/>-->
   <xsl:variable name="list-classes" as="node()+" select="document(concat($local-folder, '/qdt_classes.xml'))/classes"/>
   
@@ -1900,7 +1900,7 @@
   
   <xsl:function name="tc:file-exists" as="xs:boolean">
     <xsl:param name="filename" as="xs:string"/>
-    <xsl:value-of select="unparsed-text-available(concat('file:///', $filename))" />
+    <xsl:sequence select="unparsed-text-available(concat('file:///', $filename))" />
   </xsl:function>
   <xsl:function name="tc:find-file-path">
     <xsl:param name="sourceFilePath" as="xs:string"/>
@@ -2117,22 +2117,19 @@
   </xsl:function>
   <xsl:function name="tc:printfromfile-is-skip" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
-    <xsl:value-of select="$currentNode[self::skipline] or $currentNode[self::skipto] or $currentNode[self::skipuntil]"/>
+    <xsl:sequence select="$currentNode/self::skipline or $currentNode/self::skipto or $currentNode/self::skipuntil"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-is-print" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
-    
-    <xsl:value-of select="$currentNode/self::printline or $currentNode/self::printto or $currentNode/self::printuntil"/>
+    <xsl:sequence select="$currentNode/self::printline or $currentNode/self::printto or $currentNode/self::printuntil"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-is-dots" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
-    
-    <xsl:value-of select="boolean($currentNode/self::dots)"/>
+    <xsl:sequence select="boolean($currentNode/self::dots)"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-is-codeline" as="xs:boolean">
     <xsl:param name="currentNode" as="node()"/>
-    
-    <xsl:value-of select="boolean($currentNode/self::codeline)"/>
+    <xsl:sequence select="boolean($currentNode/self::codeline)"/>
   </xsl:function>
   <xsl:function name="tc:printfromfile-find-all-previous-nodes-until-printfromfile" as="node()*">
     <xsl:param name="currentNode" as="node()?"/>

@@ -16,7 +16,8 @@ import java.util.stream.Collectors;
 
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
-    private final Path outputFolder; // Where all the generated files should be put.
+    private Path outputFolder; // Where all the generated files should be put. Not final, can be updated when looking
+    // for WebXML files (qdoc may also output in a subfolder).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
     private final QtVersion qtVersion;
@@ -248,9 +249,10 @@ public class QdocHandler {
     }
 
     private List<Path> findWithExtension(String extension) {
-        for (Path folder : new Path[]{outputFolder, outputFolder.resolve("html")}) {
+        for (Path folder : new Path[]{outputFolder, outputFolder.resolve("html"), outputFolder.getParent()}) {
             List<Path> test = findWithExtension(extension, folder);
             if (! test.isEmpty()) {
+                outputFolder = folder;
                 return test;
             }
         }

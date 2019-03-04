@@ -6,8 +6,8 @@
     
     <xsl:output indent="yes"></xsl:output>
     
-    <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc/webxml/'"/>
-    <!--<xsl:param name="local-folder" as="xs:string" required="true"/>-->
+    <!--<xsl:param name="local-folder" as="xs:string" select="'file:///D:/Qt/Doc512v2/html/'"/>-->
+    <xsl:param name="local-folder" as="xs:string" required="true"/>
     
     <xsl:function name="tc:normalise-name">
         <xsl:param name="name" as="xs:string"/>
