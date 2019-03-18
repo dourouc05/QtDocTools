@@ -19,7 +19,7 @@
         <xsl:attribute name="xfc:user-style">ProgramListing</xsl:attribute>
     </xsl:attribute-set>
     
-    <!-- For sections: titlepage-mode.xsl -->
+    <!-- For sections, use XFC's named style: titlepage-mode.xsl -->
     <xsl:template match="db:title" mode="m:titlepage-mode">
         <xsl:variable name="xfcStyle" as="xs:string">
             <xsl:variable name="isSect" select="self::sect1 or self::sect2 or self::sect3 or self::sect4 or self::sect5 or self::sect6"/>
@@ -164,4 +164,7 @@
             </fo:table>
         </fo:table-and-caption>
     </xsl:template>
+    
+    <!-- For code synopses, avoid their outputting in red, just suppress them: final-pass.xsl -->
+    <xsl:template match="db:classsynopsis|db:constructorsynopsis|db:destructorsynopsis|db:methodsynopsis|db:namespacesynopsis|db:fieldsynopsis|db:enumsynopsis|db:typedefsynopsis"/>
 </xsl:stylesheet>

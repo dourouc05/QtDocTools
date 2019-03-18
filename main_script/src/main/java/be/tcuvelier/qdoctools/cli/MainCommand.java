@@ -4,6 +4,7 @@ import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
 
+@SuppressWarnings("WeakerAccess")
 @Command(description = "QDocTools", subcommands = {
         GenerateCommand.class,
         ProofreadCommand.class,
@@ -18,7 +19,8 @@ public class MainCommand implements Callable<Void> {
     public final static String xsltXEDTransform = "../proofread/proofread_fromdocx/xslt/custom_docbook5.xsl";
     public final static String xsltXEDScript = "../proofread/proofread_fromdocx/xslt/custom_docbook5.xed";
     public final static String xsltXEDPostProcess = "../proofread/proofread_fromdocx/xslt/post_processing.xsl";
-    public final static String xsltDocBookToFO = "../proofread/proofread_todocx/xslt/main.xsl";
+    public final static String xsltDocBookToFO = "../proofread/proofread_todocx/xslt/main.xsl"; // TODO: Avoid copying things within this repo to use
+    // https://mvnrepository.com/artifact/org.docbook/docbook-xslt2 instead?
     public final static String xfcDocBookToFO = "../proofread/proofread_todocx/xslt/styles.xfc"; // Partially based on http://www.xmlmind.com/foconverter/samples/styles.xfc
     public final static String xsltMergeAfterProofreading = "../proofread/merge_after_proofread/xslt/after_proofreading.xsl";
     public final static String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
