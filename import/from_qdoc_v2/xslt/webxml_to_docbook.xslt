@@ -160,36 +160,25 @@
           <db:classname><xsl:value-of select="@name"/></db:classname>
         </db:ooclass>
         <xsl:if test="not(@threadsafety='unspecified')">
-          <db:classsynopsisinfo role="threadsafety">
-            <xsl:value-of select="@threadsafety"/>
-          </db:classsynopsisinfo>
+          <db:classsynopsisinfo role="threadsafety"><xsl:value-of select="@threadsafety"/></db:classsynopsisinfo>
         </xsl:if>
-        <db:classsynopsisinfo role="module">
-          <xsl:value-of select="@module"/>
-        </db:classsynopsisinfo> 
-        <db:classsynopsisinfo role="headers">#include &lt;<xsl:value-of select="@location"/>&gt;</db:classsynopsisinfo>
+        <db:classsynopsisinfo role="module"><xsl:value-of select="@module"/></db:classsynopsisinfo> 
+        <db:classsynopsisinfo role="headers">#include &lt;<xsl:value-of select="@name"/>&gt;</db:classsynopsisinfo>
+        <db:classsynopsisinfo role="definedin"><xsl:value-of select="@location"/></db:classsynopsisinfo>
         <xsl:if test="@since">
-          <db:classsynopsisinfo role="since">
-            <xsl:value-of select="@since"/>
-          </db:classsynopsisinfo>
+          <db:classsynopsisinfo role="since"><xsl:value-of select="@since"/></db:classsynopsisinfo>
         </xsl:if>
         
         <xsl:for-each select="tokenize(@bases, ',')">
-          <db:classsynopsisinfo role="inherits">
-            <xsl:value-of select="."/>
-          </db:classsynopsisinfo>
+          <db:classsynopsisinfo role="inherits"><xsl:value-of select="."/></db:classsynopsisinfo>
         </xsl:for-each>
         
         <xsl:for-each select="$list-classes/class[active/text() = 'active' and contains(bases, @name)]">
-          <db:classsynopsisinfo role="inheritedBy">
-            <xsl:value-of select="name"/>
-          </db:classsynopsisinfo>
+          <db:classsynopsisinfo role="inheritedby"><xsl:value-of select="name"/></db:classsynopsisinfo>
         </xsl:for-each>
         
         <xsl:for-each select="tokenize(@groups, ',')">
-          <db:classsynopsisinfo role="group">
-            <xsl:value-of select="."/>
-          </db:classsynopsisinfo>
+          <db:classsynopsisinfo role="group"><xsl:value-of select="."/></db:classsynopsisinfo>
         </xsl:for-each>
       </db:classsynopsis>
     </xsl:if>
@@ -1632,6 +1621,8 @@
           <xsl:when test="$type = 'qmlbasictypes' or $type = 'qmltypes' or $type = 'qmltypesbymodule'">
             <xsl:message>WARNING: <xsl:value-of select="$type"/> not implemented.</xsl:message>
             <!-- These files do not seem to get generated... so no way to generate these lists for now. -->
+            <!-- TODO: Submit an issue for this -->
+            <!-- Found in: qmlbasictypes.webxml qmltypes.webxml qt3d-qml.webxml -->
           </xsl:when>
           <xsl:when test="$type = 'namespaces'">
             <xsl:variable name="namespaces" as="map(xs:string, xs:string)">
