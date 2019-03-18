@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>Status</db:title>
+      <db:abstract>
+         <db:para/>
+         <db:para>
+            <db:simplelist role="see-also">
+               <db:member>
+                  <db:link xlink:href="17-qdoc-commands-thread.html" xlink:title="next">Thread Support &gt;</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="15-qdoc-commands-navigation.html" xlink:title="previous">&lt; Document Navigation</db:link>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="qdoc-index.html" xlink:title="contents">^ QDoc Manual ^</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:abstract>
+      <db:pubdate>2019-03-04+01:00</db:pubdate>
+      <db:date>2019-03-04+01:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.12</db:productnumber>
+   </db:info>
+   <db:para xml:id="abstract-command">These commands are for indicating that a documented element has some special status. The element could be marked as about to be made obsolete, or that it is simply not to be included in the public interface. The <db:link xlink:href="16-qdoc-commands-status.html#since-command" xrefstyle="page" annotations="since-command">\since</db:link> command is for specifying the version number in which a function or class first appeared. The <db:link xlink:href="16-qdoc-commands-status.html#qmlabstract-command" xrefstyle="page" annotations="qmlabstract-command">\qmlabstract</db:link> command is for marking a QML type as an abstract base class.</db:para>
+   <db:section xml:id="abstract-and-qmlabstract">
+      <db:title>\abstract and \qmlabstract</db:title>
+      <db:para>\abstract is a synonym for the \qmlabstract command. Add this command to the <db:link xlink:href="13-qdoc-commands-topics.html#qmltype-command" xrefstyle="page" annotations="qmltype-command">\qmltype</db:link> comment for a QML type when that type is meant to be used <db:emphasis>only</db:emphasis> as an abstract base type. When a QML type is abstract, it means that the QML type that can't be instantiated. Instead, the properties in its public API are included in the public properties list on the reference page for each QML type that inherits the abstract QML type. The properties are documented as if they are properties of the inheriting QML type.</db:para>
+      <db:para xml:id="default-command">Normally, when a QML type is marked with <db:emphasis>\qmlabstract</db:emphasis>, it is also marked with <db:emphasis>\internal</db:emphasis> so that its reference page is not generated. It the abstract QML type is not marked internal, it will have a reference page in the documentation.</db:para>
+   </db:section>
+   <db:section xml:id="default">
+      <db:title>\default</db:title>
+      <db:para>The \default command is for marking a QML property as the <db:link xlink:href="qtqml-syntax-objectattributes.html#default-properties" xrefstyle="page" annotations="default-properties">default property</db:link>. The word <db:code>default</db:code> is displayed in the documentation of the property.</db:para>
+      <db:programlisting language="other">/ *!
+    \qmlproperty list&lt;Change&gt; State::changes
+    This property holds the changes to apply for this state.
+    \default
+
+    By default these changes are applied against the default state. If the state
+    extends another state, then the changes are applied against the state being
+    extended.
+* /</db:programlisting>
+      <db:para xml:id="obsolete-command">See how QDoc renders this property on the reference page for the <db:link xlink:href="qml-qtquick-state.html#changes-prop" xrefstyle="" annotations="State::changes">State</db:link> type.</db:para>
+   </db:section>
+   <db:section xml:id="obsolete">
+      <db:title>\obsolete</db:title>
+      <db:para>The \obsolete command is for indicating that a function is being deprecated, and it should no longer be used in new code. There is no guarantee for how long it will remain in the library.</db:para>
+      <db:para>The command must stand on its own line.</db:para>
+      <db:para>When generating the reference documentation for a class, QDoc will create and link to a separate page documenting its obsolete functions. Usually an equivalent function is provided as an alternative.</db:para>
+      <db:programlisting language="other">/ *!
+    \fn MyClass::MyObsoleteFunction
+    \obsolete
+
+    Use MyNewFunction() instead.
+* /</db:programlisting>
+      <db:para>QDoc renders this in <db:code>myclass-obsolete.html</db:code> as:</db:para>
+      <db:blockquote>
+         <db:programlisting>        &lt;h1&gt;Obsolete Members for MyClass&lt;/h1&gt;
+        </db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">The following class members are obsolete.</db:emphasis> They are provided to keep old source code working. We strongly advise against using them in new code.</db:para>
+         <db:para>...</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>void MyObsoleteFunction() <db:code>(obsolete)</db:code>
+               </db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>...</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:programlisting>        &lt;hr /&gt;
+        &lt;h2&gt;Member Function Documentation&lt;/h2&gt;
+        &lt;h3&gt;void MyObsoleteFunction ()&lt;/h3&gt;
+        &lt;p&gt;Use MyNewFunction() instead.&lt;/p&gt;
+        </db:programlisting>
+         <db:para>...</db:para>
+      </db:blockquote>
+   </db:section>
+   <db:section xml:id="internal">
+      <db:title>\internal</db:title>
+      <db:para>The \internal command indicates that the referenced function is not part of the public interface.</db:para>
+      <db:para>The command must stand on its own line.</db:para>
+      <db:para>QDoc ignores the documentation as well as the documented item, when generating the associated class reference documentation.</db:para>
+      <db:programlisting language="other">/ *!
+    \internal
+
+    Tries to find the decimal separator. If it can't find
+    it and the thousand delimiter is != '.' it will try to
+    find a '.';
+* /
+int QDoubleSpinBoxPrivate::findDelimiter
+        (const QString &amp;str, int index) const
+{
+    int dotindex = str.indexOf(delimiter, index);
+    if (dotindex == -1 &amp;&amp; thousand != dot &amp;&amp; delimiter != dot)
+        dotindex = str.indexOf(dot, index);
+    return dotindex;
+}</db:programlisting>
+      <db:para xml:id="preliminary-command">This function will not be included in the documentation.</db:para>
+   </db:section>
+   <db:section xml:id="preliminary">
+      <db:title>\preliminary</db:title>
+      <db:para>The \preliminary command is for indicating that a referenced function is still under development.</db:para>
+      <db:para>The command must stand on its own line.</db:para>
+      <db:para>The \preliminary command expands to a notification in the function documentation, and marks the function as preliminary when it appears in lists.</db:para>
+      <db:programlisting language="other">/ *!
+    \preliminary
+
+    Returns information about the joining type attributes of the
+    character (needed for certain languages such as Arabic or
+    Syriac).
+
+* /
+QChar::JoiningType QChar::joiningType() const
+{
+    return QChar::joiningType(ucs);
+}</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:programlisting>        &lt;h3&gt;
+        &lt;a href="http://doc.qt.io/qt-5/qchar.html#JoiningType-enum"&gt;JoiningType&lt;/a&gt;
+        QChar::joiningType() const&lt;/h3&gt;
+        </db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">This function is under development and subject to change.</db:emphasis>
+         </db:para>
+         <db:para>Returns information about the joining type attributes of the character (needed for certain languages such as Arabic or Syriac).</db:para>
+      </db:blockquote>
+      <db:para>And the function's entry in QChar's list of public functions will be rendered as:</db:para>
+      <db:blockquote>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>...</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>JoiningType joiningType() const <db:code>(preliminary)</db:code>
+               </db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>...</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+      </db:blockquote>
+   </db:section>
+   <db:section xml:id="since">
+      <db:title>\since</db:title>
+      <db:para>The \since command tells in which minor release the associated functionality was added.</db:para>
+      <db:programlisting language="other">/ *!
+    \since 4.1
+
+    Returns an icon for \a standardIcon.
+
+    ...
+
+    \sa standardPixmap()
+* /
+QIcon QStyle::standardIcon(StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const
+{
+}</db:programlisting>
+      <db:para>QDoc renders this as:</db:para>
+      <db:blockquote>
+         <db:programlisting>        &lt;h3&gt;QIcon QStyle::standardIcon(StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const&lt;/h3&gt;
+        </db:programlisting>
+         <db:para>This function was introduced in Qt version 4.1</db:para>
+         <db:para>Returns an icon for <db:code role="argument">standardIcon</db:code>.</db:para>
+         <db:para>...</db:para>
+         <db:para>See also standardPixmap().</db:para>
+      </db:blockquote>
+      <db:para>QDoc generates the "Qt" reference from the <db:link xlink:href="25-qdoc-configuration-derivedprojects.html#project" xrefstyle="page" annotations="25-qdoc-configuration-derivedprojects.html#project"><db:code>project</db:code></db:link> configuration variable. For that reason this reference will change according to the current documentation project.</db:para>
+      <db:para>See also <db:link xlink:href="25-qdoc-configuration-derivedprojects.html#project" xrefstyle="page" annotations="project"><db:code>project</db:code></db:link>.</db:para>
+   </db:section>
+</db:article>

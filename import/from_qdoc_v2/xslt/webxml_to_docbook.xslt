@@ -69,9 +69,14 @@
         
         <xsl:if test="child::node()[1]/@brief or child::node()[1]/description/relation">
           <db:abstract>
-            <db:para>
-              <xsl:value-of select="child::node()[1]/@brief"/>
-            </db:para>
+            <!-- If there is a @brief, use it. -->
+            <xsl:if test="child::node()[1]/@brief">
+              <db:para>
+                <xsl:value-of select="child::node()[1]/@brief"/>
+              </db:para>
+            </xsl:if>
+            
+            <!-- TODO: If there is no @brief, use the first few paragraphs (if there is at least a section in the page). -->
             
             <!-- Generate some paragraphs for classes. -->
             <xsl:if test="$mainTag/@threadsafety = 'reentrant'">

@@ -27,7 +27,8 @@ public class Main {
 
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
-        String doc = "qmodbusrequest";
+        String doc = "16-qdoc-commands-status";
+//        String doc = "qmodbusrequest";
 
 //        String[] argv = {"merge",
 //                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_before.xml",
