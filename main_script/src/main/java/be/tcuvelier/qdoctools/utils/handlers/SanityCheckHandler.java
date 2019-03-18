@@ -7,6 +7,9 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SanityCheckHandler {
     private final XdmNode xdm;
@@ -27,9 +30,25 @@ public class SanityCheckHandler {
     }
 
     private static void signalElement(XdmValue v) {
-        System.out.println("- at line " + ((XdmNode) v).getLineNumber() + ", " +
+        signalElement(v, false);
+    }
+
+    private static void signalElement(XdmValue v, boolean exceptCodeSynopsis) {
+        System.out.print("- at line " + ((XdmNode) v).getLineNumber() + ", " +
                 "column " + ((XdmNode) v).getColumnNumber() + ": " +
                 "the culprit is a " + ((XdmNode) v).getNodeName() + " tag");
+
+        if (exceptCodeSynopsis) {
+            String nodeName = ((XdmNode) v).getNodeName().getLocalName();
+            Set<String> codeSynopsisNames = Stream.of("classsynopsis", "b").collect(Collectors.toSet());
+
+            if (codeSynopsisNames.contains(nodeName)) {
+                System.out.print(", but this tag may be recovered by post-processing (merge subcommand, " +
+                        "AFTER_PROOFREADING mode)");
+            }
+        }
+
+        System.out.print("\n");
     }
 
     public boolean performSanityCheck() throws SaxonApiException {
@@ -45,7 +64,7 @@ public class SanityCheckHandler {
                 System.out.println("SANITY CHECK: books are not yet implemented");
                 result = false;
             } else if (! rootName.contains("article")) {
-                System.out.println("SANITY CHECK: unknown root tag: " + rootName);
+                System.out.println("SANITY CHECK: unknown root tag: " + rootName + ". Is this file DocBook?");
                 result = false;
             }
         }
@@ -78,6 +97,7 @@ public class SanityCheckHandler {
         }
 
         // No text before the first section (would be included in the abstract).
+        // Code synopses will be lost, but can easily be retrieved.
         {
             XdmValue textAfterInfo = xpath(
                     "/*/info[1]/following-sibling::*[not(self::section)] " +
@@ -87,7 +107,7 @@ public class SanityCheckHandler {
                 System.out.println("SANITY CHECK: found " + textAfterInfo.size() + " block elements between the title " +
                         "and the main content (all content should be either in the abstract or in a section): ");
                 for (XdmValue v : textAfterInfo) {
-                    signalElement(v);
+                    signalElement(v, true);
                 }
                 result = false;
             }
