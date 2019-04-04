@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>QModbusRequest</db:title>
+      <db:abstract>
+         <db:para>Container class containing the function code and payload that is stored inside a Modbus ADU</db:para>
+      </db:abstract>
+      <db:pubdate>2019-03-04+01:00</db:pubdate>
+      <db:date>2019-03-04+01:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>5.12</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QModbusRequest</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="module">QtSerialBus</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="headers">#include &lt;qmodbuspdu.h&gt;</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="since">5.8</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>
+         <db:code><db:link xlink:href="qmodbusrequest.html" xrefstyle="class" annotations="QModbusRequest">QModbusRequest</db:link></db:code> is a container class containing the function code and payload that is stored inside a Modbus ADU.</db:para>
+      <db:para>A Modbus request usually consists of a single byte describing the <db:code>FunctionCode</db:code> and N bytes of payload</db:para>
+      <db:para>A typical Modbus request can looks like this:</db:para>
+      <db:programlisting language="other">QModbusRequest request(QModbusRequest::WriteMultipleCoils,
+    QByteArray::fromHex("0013000a02cd01"));</db:programlisting>
+      <db:note>
+         <db:para> When using the constructor taking the <db:code>QByteArray</db:code>, please make sure to convert the containing data to big-endian byte order before creating the request.</db:para>
+      </db:note>
+      <db:para>The same request can be created like this, if the values are know at compile time:</db:para>
+      <db:programlisting language="other">quint16 startAddress = 19, numberOfCoils = 10;
+quint8 payloadInBytes = 2, outputHigh = 0xcd, outputLow = 0x01;
+QModbusRequest request(QModbusRequest::WriteMultipleCoils, startAddress, numberOfCoils,
+    payloadInBytes, outputHigh, outputLow);</db:programlisting>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section xml:id="QModbusRequest">
+         <db:title>QModbusRequest()</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QModbusRequest</db:methodname>
+            <db:void/>
+         </db:constructorsynopsis>
+      </db:section>
+      <db:section xml:id="QModbusRequest-1">
+         <db:title>QModbusRequest(const int &amp;pdu)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QModbusRequest</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>pdu</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+      </db:section>
+      <db:section xml:id="QModbusRequest-3">
+         <db:title>QModbusRequest(int code, Args... newData)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QModbusRequest</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>code</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>Args...</db:type>
+               <db:parameter>newData</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+      </db:section>
+      <db:section xml:id="QModbusRequest-2">
+         <db:title>QModbusRequest(int code, const int &amp;newData)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier>public</db:modifier>
+            <db:methodname>QModbusRequest</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>code</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>newData</db:parameter>
+               <db:initializer>...</db:initializer>
+            </db:methodparam>
+         </db:constructorsynopsis>
+      </db:section>
+   </db:section>
+</db:article>

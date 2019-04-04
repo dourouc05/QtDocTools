@@ -2,12 +2,17 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
+import net.sf.saxon.s9api.XdmAtomicValue;
+import net.sf.saxon.s9api.XsltTransformer;
 import org.xml.sax.SAXException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.concurrent.Callable;
 
 @Command(name = "merge", description = "Perform merges between files, especially after proofreading")
@@ -46,7 +51,7 @@ public class MergeCommand implements Callable<Void> {
     private MergeType type = MergeType.AFTER_PROOFREADING;
 
     @Override
-    public Void call() throws SaxonApiException, SAXException {
+    public Void call() throws SaxonApiException, MalformedURLException {
         // Check whether the required files exist.
         if (! new File(original).exists()) {
             throw new RuntimeException("Original file " + original + " does not exist!");
@@ -88,10 +93,12 @@ public class MergeCommand implements Callable<Void> {
         }
     }
 
-    private void mergeAfterProofreading() throws SaxonApiException {
-        new XsltHandler(MainCommand.xsltMergeAfterProofreading)
-                .createTransformer(original, merged, null)
-                .transform();
+    private void mergeAfterProofreading() throws SaxonApiException, MalformedURLException {
+        XsltTransformer trans = new XsltHandler(MainCommand.xsltMergeAfterProofreading)
+                .createTransformer(altered, merged, null);
+        trans.setParameter(new QName("originalDocument"),
+                new XdmAtomicValue(new File(original).toURI().toURL().toString()));
+        trans.transform();
     }
 
     private void mergeUpdateQt() {

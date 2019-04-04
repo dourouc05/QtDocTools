@@ -27,14 +27,14 @@ public class Main {
 
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
-        String doc = "16-qdoc-commands-status";
-//        String doc = "qmodbusrequest";
+//        String doc = "16-qdoc-commands-status";
+        String doc = "qmodbusrequest";
 
-//        String[] argv = {"merge",
-//                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_before.xml",
-//                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_after.xml",
-//                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\" + doc + "_merged.xml"};
-        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
+        String[] argv = {"merge",
+                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_before.xml",
+                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_after.xml",
+                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_merged.xml"};
+//        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
