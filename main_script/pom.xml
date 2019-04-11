@@ -48,6 +48,17 @@
             <artifactId>Saxon-HE</artifactId>
             <version>9.9.1-1</version>
         </dependency>
+        <!-- Import-export for proofreading -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.0</version>
+        </dependency>
         <!-- Import-export with Word (local copies) -->
         <dependency>
             <groupId>com.xmlmind</groupId>
