@@ -32,7 +32,7 @@ public class DocxInput {
         StringWriter stringWriter = new StringWriter();
         xmlStream = XMLOutputFactory.newInstance().createXMLStreamWriter(stringWriter);
 
-        // Generate the document.
+        // Generate the document: root, prefixes, content, then close the sections that should be.
         xmlStream.writeStartDocument();
         xmlStream.writeStartElement("db", "article", docbookNS);
 
@@ -44,6 +44,11 @@ public class DocxInput {
         currentLevel = 0;
         for (IBodyElement b: doc.getBodyElements()) {
             visit(b);
+        }
+
+        while (1 >= currentLevel) {
+            xmlStream.writeEndElement(); // </db:section>
+            currentLevel -= 1;
         }
 
         xmlStream.writeEndElement();
@@ -96,26 +101,33 @@ public class DocxInput {
     }
 
     private void visitDocumentTitle(XWPFParagraph p) throws XMLStreamException {
+        // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
+        // <db:info> tag.
         currentLevel = 0;
         xmlStream.writeStartElement(docbookNS, "info");
         xmlStream.writeStartElement(docbookNS, "title");
         visitRuns(p.getRuns());
         xmlStream.writeEndElement(); // </db:title>
+        // TODO: What about the abstract?
         xmlStream.writeEndElement(); // </db:info>
     }
 
     private void visitSectionTitle(XWPFParagraph p) throws XMLStreamException {
+        // Pop sections until the current level is reached.
         int level = Integer.parseInt(p.getStyleID().replace("Heading", ""));
-        while (level <= currentLevel) {
+        while (level >= currentLevel) {
             xmlStream.writeEndElement(); // </db:section>
             currentLevel -= 1;
         }
 
+        // Deal with this section.
         currentLevel += 1;
         xmlStream.writeStartElement(docbookNS, "section");
         xmlStream.writeStartElement(docbookNS, "title");
         visitRuns(p.getRuns());
         xmlStream.writeEndElement(); // </db:title>
+
+        // TODO: Implement a check on the currentLevel and the level (in case someone missed a level in the headings).
     }
 
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
