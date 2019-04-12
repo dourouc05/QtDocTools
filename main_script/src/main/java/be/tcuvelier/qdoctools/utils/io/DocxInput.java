@@ -5,17 +5,14 @@ import org.apache.poi.xwpf.usermodel.*;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.List;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
         System.out.println(new DocxInput("test.docx").toDocBook());
-//        XWPFDocument doc = new XWPFDocument(new FileInputStream("test.docx"));
-//
-//        for (IBodyElement b: doc.getBodyElements()) {
-//            System.out.println(b.getPartType());
-//        }
     }
 
     private XWPFDocument doc;
@@ -122,8 +119,64 @@ public class DocxInput {
     }
 
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
+        // TODO: maybe implement simplifications if two runs have the same set of formattings.
+
+        // Copied from STVerticalAlignRun.Enum. TODO: Better way?
+        int INT_SUPERSCRIPT = 2;
+        int INT_SUBSCRIPT = 3;
+
         for (XWPFRun r: runs) {
+            // Formatting tags (maybe several ones to add!).
+            if (r.isBold()) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+                xmlStream.writeAttribute(docbookNS, "role", "bold"); // TODO: Check if bold is used everywhere else
+            }
+            if (r.isItalic()) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+            }
+            if (r.getUnderline() != UnderlinePatterns.NONE) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+                xmlStream.writeAttribute(docbookNS, "role", "underline"); // TODO: Check if underline is used everywhere else
+            }
+            if (r.isStrikeThrough() || r.isDoubleStrikeThrough()) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+                xmlStream.writeAttribute(docbookNS, "role", "strikethrough");
+            }
+            if (r.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
+                xmlStream.writeStartElement(docbookNS, "superscript");
+            }
+            if (r.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
+                xmlStream.writeStartElement(docbookNS, "subscript");
+            }
+            if (r.getFontFamily() != null) {
+                // TODO: Font family (if code).
+            }
+
+            // Actual text for this run.
             xmlStream.writeCharacters(r.text());
+
+            // Close the tags if needed (strictly the reverse order from opening tags).
+            if (r.getUnderline() != UnderlinePatterns.NONE) {
+                xmlStream.writeEndElement(); // </db:emphasis> for underline
+            }
+            if (r.isItalic()) {
+                xmlStream.writeEndElement(); // </db:emphasis> for italics
+            }
+            if (r.isBold()) {
+                xmlStream.writeEndElement(); // </db:emphasis> for bold
+            }
+            if (r.isStrikeThrough() || r.isDoubleStrikeThrough()) {
+                xmlStream.writeEndElement(); // </db:emphasis> for strikethrough
+            }
+            if (r.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
+                xmlStream.writeEndElement(); // </db:superscript>
+            }
+            if (r.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
+                xmlStream.writeEndElement(); // </db:subscript>
+            }
+            if (r.getFontFamily() != null) {
+                // TODO: Font family (if code).
+            }
         }
     }
 
