@@ -8,7 +8,12 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
@@ -32,24 +37,34 @@ public class DocxInput {
         StringWriter stringWriter = new StringWriter();
         xmlStream = XMLOutputFactory.newInstance().createXMLStreamWriter(stringWriter);
 
+        // Wrap the writer inside an indenting proxy.
+        // Copied from https://ewernli.wordpress.com/2009/06/18/stax-pretty-printer/.
+        xmlStream = (XMLStreamWriter) Proxy.newProxyInstance(
+                XMLStreamWriter.class.getClassLoader(),
+                new Class[] {XMLStreamWriter.class},
+                new PrettyPrintHandler(xmlStream)
+        );
+
         // Generate the document: root, prefixes, content, then close the sections that should be.
         xmlStream.writeStartDocument();
+        xmlStream.writeCharacters("\n");
         xmlStream.writeStartElement("db", "article", docbookNS);
 
         xmlStream.setPrefix("db", docbookNS);
         xmlStream.writeNamespace("db", docbookNS);
         xmlStream.setPrefix("xlink", xlinkNS);
         xmlStream.writeNamespace("xlink", xlinkNS);
+        xmlStream.writeCharacters("\n");
 
         currentLevel = 0;
         for (IBodyElement b: doc.getBodyElements()) {
             visit(b);
         }
 
-        while (1 >= currentLevel) {
-            xmlStream.writeEndElement(); // </db:section>
-            currentLevel -= 1;
-        }
+//        while (1 >= currentLevel) {
+//            xmlStream.writeEndElement(); // </db:section>
+//            currentLevel -= 1;
+//        }
 
         xmlStream.writeEndElement();
         xmlStream.writeEndDocument();
@@ -107,8 +122,15 @@ public class DocxInput {
         xmlStream.writeStartElement(docbookNS, "info");
         xmlStream.writeStartElement(docbookNS, "title");
         visitRuns(p.getRuns());
-        xmlStream.writeEndElement(); // </db:title>
+//        xmlStream.writeEndElement(); // </db:title>
         // TODO: What about the abstract?
+
+
+        xmlStream.writeStartElement(docbookNS, "emphasis");
+        xmlStream.writeCharacters("bold");
+        xmlStream.writeEndElement();
+        xmlStream.writeEndElement();
+
         xmlStream.writeEndElement(); // </db:info>
     }
 
@@ -126,6 +148,7 @@ public class DocxInput {
         xmlStream.writeStartElement(docbookNS, "title");
         visitRuns(p.getRuns());
         xmlStream.writeEndElement(); // </db:title>
+        xmlStream.writeCharacters("\n");
 
         // TODO: Implement a check on the currentLevel and the level (in case someone missed a level in the headings).
     }
@@ -193,7 +216,75 @@ public class DocxInput {
     }
 
     private void visitTable(XWPFTable t) throws XMLStreamException {
-        xmlStream.writeStartElement(docbookNS, "table");
-        xmlStream.writeEndElement(); // </db:table>
+        xmlStream.writeStartElement(docbookNS, "informaltable");
+
+        // Output the table row per row, in HTML format.
+        for (XWPFTableRow row: t.getRows()) {
+            xmlStream.writeStartElement(docbookNS, "tr");
+
+            for (XWPFTableCell cell: row.getTableCells()) {
+                xmlStream.writeStartElement(docbookNS, "td");
+                xmlStream.writeEndElement(); // </db:td>
+            }
+
+            xmlStream.writeEndElement(); // </db:tr>
+        }
+
+        xmlStream.writeEndElement(); // </db:informaltable>
+    }
+
+    // Copied from https://ewernli.wordpress.com/2009/06/18/stax-pretty-printer/
+    private static class PrettyPrintHandler implements InvocationHandler {
+        private final XMLStreamWriter target;
+        private int depth = 0;
+        private final Map<Integer, Boolean> hasChildElement = new HashMap<>();
+        private static final String INDENT = " ";
+        private static final String LINEFEED = "\n";
+
+        public PrettyPrintHandler(XMLStreamWriter t) {
+            target = t;
+        }
+
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            String m = method.getName();
+
+            // Needs to be BEFORE the actual event, so that for instance the
+            // sequence writeStartElem, writeAttr, writeStartElem, writeEndElem, writeEndElem
+            // is correctly handled
+            if ("writeStartElement".equals(m)) {
+                // update state of parent node
+                if (depth > 0) {
+                    hasChildElement.put(depth - 1, true);
+                }
+                // reset state of current node
+                hasChildElement.put(depth, false);
+                // indent for current depth
+                target.writeCharacters(LINEFEED);
+                target.writeCharacters(repeat(depth));
+                depth++;
+            }
+            else if ("writeEndElement".equals(m)) {
+                depth--;
+                if (hasChildElement.get(depth)) {
+                    target.writeCharacters(LINEFEED);
+                    target.writeCharacters(repeat(depth));
+                }
+            }
+            else if ("writeEmptyElement".equals(m)) {
+                // update state of parent node
+                if (depth > 0) {
+                    hasChildElement.put(depth - 1, true);
+                }
+                // indent for current depth
+                target.writeCharacters(LINEFEED);
+                target.writeCharacters(repeat(depth));
+            }
+            method.invoke(target, args);
+            return null;
+        }
+
+        private static String repeat(int d) {
+            return PrettyPrintHandler.INDENT.repeat(d);
+        }
     }
 }
