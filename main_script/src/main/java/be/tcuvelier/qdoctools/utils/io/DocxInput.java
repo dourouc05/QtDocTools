@@ -18,7 +18,8 @@ public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
 //        String test = "basic";
 //        String test = "sections";
-        String test = "sections_bogus";
+//        String test = "sections_bogus";
+        String test = "images";
 
         String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 
@@ -147,11 +148,22 @@ public class DocxInput {
     }
 
     private void visitNormalParagraph(XWPFParagraph p) throws XMLStreamException {
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "para");
-        visitRuns(p.getRuns());
-        xmlStream.writeEndElement(); // </db:para>
-        writeNewLine();
+        if (p.getRuns().size() == 1 && p.getRuns().get(0).getEmbeddedPictures().size() == 1) { // TODO: Several pictures per run? Seems unlikely.
+            // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "mediaobject");
+            visitRuns(p.getRuns());
+            // TODO: What about the caption? It may even be in another paragraph!
+            xmlStream.writeEndElement(); // </db:mediaobject>
+            writeNewLine();
+        } else {
+            // Normal case for a paragraph.
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "para");
+            visitRuns(p.getRuns());
+            xmlStream.writeEndElement(); // </db:para>
+            writeNewLine();
+        }
     }
 
     private void visitDocumentTitle(XWPFParagraph p) throws XMLStreamException {
@@ -221,6 +233,17 @@ public class DocxInput {
         int INT_SUBSCRIPT = 3;
 
         for (XWPFRun r: runs) {
+            // Maybe this run contains an inline image. Output a <db:inlinemediaobject> (whose beginning is on the same
+            // line as the rest of the text; the inside part is indented normally; the closing tag is directly followed
+            // by the rest of the text, if any).
+            xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
+            writeNewLine();
+            increaseIndent();
+            visitPictureRun(r);
+            decreaseIndent();
+            writeNewLine();
+            xmlStream.writeEndElement(); // </inlinemediaobject>
+
             // Formatting tags (maybe several ones to add!).
             if (r.isBold()) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
@@ -273,6 +296,23 @@ public class DocxInput {
                 // TODO: Font family (if code).
             }
         }
+    }
+
+    private void visitPictureRun(XWPFRun r) throws XMLStreamException {
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "imageobject");
+        writeNewLine();
+        increaseIndent();
+
+        writeIndent();
+        xmlStream.writeEmptyElement(docbookNS, "imagedata");
+        xmlStream.writeAttribute(docbookNS, "fileref", "http://shit.com/image/not/found");
+        writeNewLine();
+
+        decreaseIndent();
+
+        xmlStream.writeEndElement(); // </db:imageobject>
+        writeNewLine();
     }
 
     private void visitTable(XWPFTable t) throws XMLStreamException {
