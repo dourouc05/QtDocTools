@@ -1,20 +1,27 @@
 package be.tcuvelier.qdoctools.utils.io;
 
+import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.xwpf.usermodel.*;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
-        System.out.println(new DocxInput("test.docx").toDocBook());
+        String test = "basic";
+
+        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
+
+//        System.out.println(docBook);
+        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
     }
 
     private XWPFDocument doc;
@@ -48,7 +55,7 @@ public class DocxInput {
 
     public String toDocBook() throws IOException, XMLStreamException {
         // Initialise the XML stream.
-        ByteArrayOutputStream writer = new ByteArrayOutputStream();
+        OutputStream writer = new ByteArrayOutputStream();
         xmlStream = XMLOutputFactory.newInstance().createXMLStreamWriter(writer, "UTF-8");
 
         // Initialise counters.
@@ -101,7 +108,7 @@ public class DocxInput {
             visitTable((XWPFTable) b);
         } else {
             System.out.println(b.getElementType());
-//        throw new RuntimeException("An element has not been caught by a visit() method.");
+            throw new RuntimeException("An element has not been caught by a visit() method.");
         }
     }
 
