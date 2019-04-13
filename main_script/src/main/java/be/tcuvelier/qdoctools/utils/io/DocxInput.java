@@ -16,12 +16,13 @@ import java.util.List;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
-        String test = "basic";
+//        String test = "basic";
+        String test = "sections";
 
         String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 
-//        System.out.println(docBook);
-        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
+        System.out.println(docBook);
+//        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
     }
 
     private XWPFDocument doc;
@@ -79,13 +80,15 @@ public class DocxInput {
             visit(b);
         }
 
-//        while (1 >= currentSectionLevel) {
-//            xmlStream.writeEndElement(); // </db:section>
-//            currentSectionLevel -= 1;
-//        }
+        while (0 < currentSectionLevel) {
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:section>
+            writeNewLine();
+            currentSectionLevel -= 1;
+        }
 
         decreaseIndent(); // For consistency: this has no impact on the produced XML.
-        writeNewLine();
         xmlStream.writeEndElement();
         xmlStream.writeEndDocument();
 
@@ -178,20 +181,27 @@ public class DocxInput {
     private void visitSectionTitle(XWPFParagraph p) throws XMLStreamException {
         // Pop sections until the current level is reached.
         int level = Integer.parseInt(p.getStyleID().replace("Heading", ""));
-        while (level >= currentSectionLevel) {
+        while (level <= currentSectionLevel) {
+            writeIndent();
             xmlStream.writeEndElement(); // </db:section>
+            decreaseIndent();
+            writeNewLine();
             currentSectionLevel -= 1;
         }
 
-        // TODO: Indent.
-
         // Deal with this section.
         currentSectionLevel += 1;
+
+        writeIndent();
         xmlStream.writeStartElement(docbookNS, "section");
+        increaseIndent();
+        writeNewLine();
+
+        writeIndent();
         xmlStream.writeStartElement(docbookNS, "title");
         visitRuns(p.getRuns());
         xmlStream.writeEndElement(); // </db:title>
-        xmlStream.writeCharacters("\n");
+        writeNewLine();
 
         // TODO: Implement a check on the currentSectionLevel and the level (in case someone missed a level in the headings).
     }
@@ -307,5 +317,6 @@ public class DocxInput {
         decreaseIndent();
         writeIndent();
         xmlStream.writeEndElement(); // </db:informaltable>
+        writeNewLine();
     }
 }

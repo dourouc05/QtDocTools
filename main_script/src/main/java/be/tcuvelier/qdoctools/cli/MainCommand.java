@@ -25,6 +25,7 @@ public class MainCommand implements Callable<Void> {
     public final static String xsltDocBookToDvpMLPath = "../export/to_dvpml/xslt/docbook_to_dvpml.xslt"; // Path to the XSLT sheet DocBook to DvpML.
 
     // Between DocBook and DOCX.
+    public final static String toDocxTemplate = "../proofread/proofread_todocx/template/template.docx";
     public final static String fromDocxTests = "../proofread/proofread_fromdocx/tests/";
 
     // Merge operations.
