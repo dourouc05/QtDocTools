@@ -182,9 +182,9 @@ public class DocxInput {
         // Pop sections until the current level is reached.
         int level = Integer.parseInt(p.getStyleID().replace("Heading", ""));
         while (level <= currentSectionLevel) {
+            decreaseIndent();
             writeIndent();
             xmlStream.writeEndElement(); // </db:section>
-            decreaseIndent();
             writeNewLine();
             currentSectionLevel -= 1;
         }
