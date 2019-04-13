@@ -17,7 +17,8 @@ import java.util.List;
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
 //        String test = "basic";
-        String test = "sections";
+//        String test = "sections";
+        String test = "sections_bogus";
 
         String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 
@@ -181,6 +182,12 @@ public class DocxInput {
     private void visitSectionTitle(XWPFParagraph p) throws XMLStreamException {
         // Pop sections until the current level is reached.
         int level = Integer.parseInt(p.getStyleID().replace("Heading", ""));
+        if (level > currentSectionLevel + 1) {
+            System.err.println("A section of level " + level + " was found within a section of level " +
+                    currentSectionLevel + " (for instance, a subsubsection within a section): it seems there is " +
+                    "a bad of use section levels in the input document. " +
+                    "You could get a bad output (invalid XML and/or exceptions) in some cases.");
+        }
         while (level <= currentSectionLevel) {
             decreaseIndent();
             writeIndent();
