@@ -59,20 +59,5 @@
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.0</version>
         </dependency>
-        <!-- Import-export with Word (local copies) -->
-        <dependency>
-            <groupId>com.xmlmind</groupId>
-            <artifactId>xfc</artifactId>
-            <version>6.0.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/deps/xfc-6.0.0-trial.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.xmlmind</groupId>
-            <artifactId>w2c</artifactId>
-            <version>1.6.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/deps/w2x_all-1.6.0-trial.jar</systemPath>
-        </dependency>
     </dependencies>
 </project>
