@@ -3,7 +3,6 @@ package be.tcuvelier.qdoctools.utils.io;
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
-import org.w3c.dom.Attr;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -442,10 +441,15 @@ public class DocxOutput {
                 warnUnknownAttributes(attr, Stream.of("align"));
                 run = paragraph.createRun();
             } else if (SAXHelpers.isImageDataTag(qName)) {
-                createImage(attributes);
+                createImage(attributes); // Already warns about unknown attributes.
             } else if (SAXHelpers.isImageObjectTag(qName)) {
                 // Nothing to do, as everything is under <db:imagedata>.
                 // TODO: check if there is only one imagedata per imageobject?
+                warnUnknownAttributes(attributes);
+            } else if (SAXHelpers.isCaptionTag(qName)) {
+                paragraph = doc.createParagraph();
+                paragraph.setStyle("Caption");
+                run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
             } else {
                 throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
@@ -573,6 +577,8 @@ public class DocxOutput {
             } else if (SAXHelpers.isImageDataTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isImageObjectTag(qName)) {
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isCaptionTag(qName)) {
                 ensureNoTextAllowed();
             } else {
                 throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
