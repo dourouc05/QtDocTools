@@ -3,6 +3,9 @@ package be.tcuvelier.qdoctools.utils.io;
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHyperlink;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTText;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -54,7 +57,8 @@ public class DocxOutput {
     private enum Level {
         ROOT, ROOT_INFO,
         SECTION, SECTION_INFO,
-        TABLE
+        TABLE,
+        IN_LINK
     }
 
     private enum Formatting {
@@ -194,6 +198,11 @@ public class DocxOutput {
             return isEmphasisTag(qName) || isSubscriptTag(qName) || isSuperscriptTag(qName);
         }
 
+        private static boolean isLinkTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("link");
+        }
+
         private static boolean isTableTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("informaltable")
@@ -272,6 +281,7 @@ public class DocxOutput {
         private int tableRowNumber = -1;
         private XWPFTableCell tableColumn;
         private int tableColumnNumber = -1;
+        private CTHyperlink link;
 
         private Deque<Level> currentLevel = new ArrayDeque<>();
         private int currentSectionDepth = 0; // 0: root; >0: sections.
@@ -335,7 +345,7 @@ public class DocxOutput {
             if (SAXHelpers.isRootTag(qName)) {
                 currentLevel.push(Level.ROOT);
                 ensureNoTextAllowed();
-                warnUnknownAttributes(attributes);
+                // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
             } else if (SAXHelpers.isInfoTag(qName)) {
                 currentLevel.push((currentLevel.peek() == Level.ROOT) ? Level.ROOT_INFO : Level.SECTION_INFO);
                 ensureNoTextAllowed();
@@ -385,6 +395,19 @@ public class DocxOutput {
                 run = paragraph.createRun();
                 setRunFormatting();
                 warnUnknownAttributes(attributes);
+            } else if (SAXHelpers.isLinkTag(qName)) {
+                // Always create a new run, due to the complexities of what is to come.
+                run = paragraph.createRun();
+
+                Map<String, String> attr = attributes(attributes);
+                warnUnknownAttributes(attr, Stream.of("href"));
+
+                // https://stackoverflow.com/questions/7007810/how-to-create-a-email-link-in-poi-word-format
+                String id = paragraph.getDocument().getPackagePart()
+                        .addExternalRelationship(attr.get("href"), XWPFRelation.HYPERLINK.getRelation()).getId();
+                link = paragraph.getCTP().addNewHyperlink();
+                link.setId(id);
+                currentLevel.push(Level.IN_LINK);
             } else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.push(Level.TABLE);
 
@@ -548,6 +571,8 @@ public class DocxOutput {
                 }
 
                 currentFormatting.remove(currentFormatting.size() - 1);
+            } else if (SAXHelpers.isLinkTag(qName)) {
+                link.setRArray(new CTR[]{run.getCTR()});
             } else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.pop();
                 tableRowNumber = -1;
