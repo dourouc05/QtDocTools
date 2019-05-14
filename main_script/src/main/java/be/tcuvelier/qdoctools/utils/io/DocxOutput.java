@@ -231,27 +231,27 @@ public class DocxOutput {
                     || localName.equalsIgnoreCase("entry");
         }
 
-        private static boolean isInlineMedia(String qName) {
+        private static boolean isInlineMediaObjectTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("inlinemediaobject");
         }
 
-        private static boolean isMedia(String qName) {
+        private static boolean isMediaObjectTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("mediaobject");
         }
 
-        private static boolean isImageData(String qName) {
+        private static boolean isImageDataTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("imagedata");
         }
 
-        private static boolean isImageObject(String qName) {
+        private static boolean isImageObjectTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("imageobject");
         }
 
-        private static boolean isCaption(String qName) {
+        private static boolean isCaptionTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("caption");
         }
@@ -417,9 +417,9 @@ public class DocxOutput {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
-            } else if (SAXHelpers.isInlineMedia(qName)) {
+            } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
 //                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
-            } else if (SAXHelpers.isMedia(qName)) {
+            } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 paragraph = doc.createParagraph();
                 for (int i = 0; i < attributes.getLength(); ++i) {
                     if (attributes.getLocalName(i).equalsIgnoreCase("align")) {
@@ -430,9 +430,9 @@ public class DocxOutput {
                     }
                 }
                 run = paragraph.createRun();
-            } else if (SAXHelpers.isImageData(qName)) {
+            } else if (SAXHelpers.isImageDataTag(qName)) {
                 createImage(attributes);
-            } else if (SAXHelpers.isImageObject(qName)) {
+            } else if (SAXHelpers.isImageObjectTag(qName)) {
                 // Nothing to do, as everything is under <db:imagedata>.
                 // TODO: check if there is only one imagedata per imageobject?
             } else {
@@ -544,13 +544,13 @@ public class DocxOutput {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
-            } else if (SAXHelpers.isInlineMedia(qName)) {
+            } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
 //                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
-            } else if (SAXHelpers.isMedia(qName)) {
+            } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isImageData(qName)) {
+            } else if (SAXHelpers.isImageDataTag(qName)) {
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isImageObject(qName)) {
+            } else if (SAXHelpers.isImageObjectTag(qName)) {
                 ensureNoTextAllowed();
             } else {
                 throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
