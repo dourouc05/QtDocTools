@@ -3,6 +3,7 @@ package be.tcuvelier.qdoctools.utils.io;
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.w3c.dom.Attr;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DocxOutput {
     public static void main(String[] args) throws Exception {
@@ -333,14 +336,17 @@ public class DocxOutput {
             if (SAXHelpers.isRootTag(qName)) {
                 currentLevel.push(Level.ROOT);
                 ensureNoTextAllowed();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isInfoTag(qName)) {
                 currentLevel.push((currentLevel.peek() == Level.ROOT) ? Level.ROOT_INFO : Level.SECTION_INFO);
                 ensureNoTextAllowed();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isSectionTag(qName)) {
                 currentLevel.push(Level.SECTION);
                 currentSectionDepth += 1;
                 paragraphNumber = 0;
                 ensureNoTextAllowed();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTitleTag(qName)) {
                 paragraph = doc.createParagraph();
                 if (currentSectionDepth == 0) {
@@ -349,6 +355,7 @@ public class DocxOutput {
                     paragraph.setStyle("Heading" + currentSectionDepth);
                 }
                 run = paragraph.createRun();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isParagraphTag(qName)) {
                 // For tables, the paragraph is automatically created within a table cell.
                 if (currentLevel.peek() == Level.TABLE && paragraphNumber == 0) {
@@ -366,6 +373,7 @@ public class DocxOutput {
                     paragraph = doc.createParagraph();
                 }
                 run = paragraph.createRun();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isFormatting(qName)) {
                 currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
 
@@ -377,14 +385,17 @@ public class DocxOutput {
                 paragraph = doc.createParagraph();
                 run = paragraph.createRun();
                 setRunFormatting();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.push(Level.TABLE);
 
                 table = doc.createTable();
                 tableRowNumber = 0;
                 tableColumnNumber = 0;
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableBodyTag(qName)) {
                 // Nothing to do, just go inside the table.
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableRowTag(qName)) {
                 if (table == null || tableRowNumber < 0) {
                     throw new SAXException(getLocationString() + "unexpected table row.");
@@ -397,6 +408,7 @@ public class DocxOutput {
                     tableRow = table.createRow();
                 }
                 tableColumnNumber = 0;
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableColumnTag(qName)) {
                 if (table == null || tableRowNumber < 0 || tableColumnNumber < 0) {
                     throw new SAXException(getLocationString() + "unexpected table column.");
@@ -413,28 +425,28 @@ public class DocxOutput {
                 }
                 paragraph = tableColumn.getParagraphs().get(0);
                 run = paragraph.createRun();
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
             } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
 //                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
+                warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 paragraph = doc.createParagraph();
-                for (int i = 0; i < attributes.getLength(); ++i) {
-                    if (attributes.getLocalName(i).equalsIgnoreCase("align")) {
-                        paragraph.setAlignment(attributeToAlignment(attributes.getValue(i).toLowerCase()));
-                        break;
-                    } else {
-                        System.out.println(getLocationString() + "unknown attribute " + attributes.getLocalName(i) + ".");
-                    }
+                Map<String, String> attr = attributes(attributes);
+                if (attr.containsKey("align")) {
+                    paragraph.setAlignment(attributeToAlignment(attr.get("align").toLowerCase()));
                 }
+                warnUnknownAttributes(attr, Stream.of("align"));
                 run = paragraph.createRun();
             } else if (SAXHelpers.isImageDataTag(qName)) {
                 createImage(attributes);
             } else if (SAXHelpers.isImageObjectTag(qName)) {
                 // Nothing to do, as everything is under <db:imagedata>.
                 // TODO: check if there is only one imagedata per imageobject?
+                warnUnknownAttributes(attributes);
             } else {
                 throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
             }
@@ -448,6 +460,24 @@ public class DocxOutput {
                 d.put(SAXHelpers.qNameToTagName(attributes.getLocalName(i)), attributes.getValue(i));
             }
             return d;
+        }
+
+        private void warnUnknownAttributes(Map<String, String> attr) {
+            for (String key: attr.keySet()) {
+                System.out.println(getLocationString() + "unknown attribute " + key + ".");
+            }
+        }
+
+        private void warnUnknownAttributes(Attributes attr) {
+            warnUnknownAttributes(attributes(attr));
+        }
+
+        private void warnUnknownAttributes(Map<String, String> attr, Stream<String> recognised) {
+            Map<String, String> unknown = new HashMap<>(attr);
+            for (String s: recognised.collect(Collectors.toCollection(Vector::new))) {
+                unknown.remove(s);
+            }
+            warnUnknownAttributes(unknown);
         }
 
         private int parseMeasurementAsEMU(String m) throws SAXException {
@@ -474,15 +504,7 @@ public class DocxOutput {
             Path filePath = Paths.get(filename);
             int width = 1;//parseMeasurementAsEMU(attr.get("width"));
             int height = 1;//parseMeasurementAsEMU(attr.get("height"));
-
-            attr.remove("fileref");
-            attr.remove("width");
-            attr.remove("height");
-            if (attr.size() > 0) {
-                for (String key: attr.keySet()) {
-                    System.out.println(getLocationString() + "unknown attribute " + key + ".");
-                }
-            }
+            warnUnknownAttributes(attr, Stream.of("fileref", "width", "height"));
 
             int format = filenameToWordFormat(filename);
             if (format < 0) {
@@ -545,7 +567,7 @@ public class DocxOutput {
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
             } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
-//                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
+                ensureNoTextAllowed();
             } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isImageDataTag(qName)) {
