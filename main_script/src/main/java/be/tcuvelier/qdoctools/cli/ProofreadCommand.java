@@ -8,13 +8,13 @@ package be.tcuvelier.qdoctools.cli;
 import be.tcuvelier.qdoctools.utils.handlers.SanityCheckHandler;
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.io.DocxInput;
+import be.tcuvelier.qdoctools.utils.io.DocxOutput;
 import net.sf.saxon.s9api.SaxonApiException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.concurrent.Callable;
 
 @Command(name = "proofread", description = "Perform transformations pertaining to proofreading")
@@ -79,12 +79,10 @@ public class ProofreadCommand implements Callable<Void> {
     }
 
     private static void fromDOCXToDocBook(String input, String output) throws Exception {
-        String db = new DocxInput(input).toDocBook();
-        try (PrintWriter out = new PrintWriter(output)) {
-            out.println(db);
-        }
+        new DocxInput(input).toDocBook(output);
     }
 
     private static void fromDocBookToDOCX(String input, String output) throws Exception {
+        new DocxOutput(input).toDocx(output);
     }
 }

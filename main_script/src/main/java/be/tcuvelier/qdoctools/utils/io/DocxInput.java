@@ -33,6 +33,7 @@ public class DocxInput {
     private int currentDepth;
     private int currentSectionLevel;
 
+    private static String indentation = "  ";
     private static String docbookNS = "http://docbook.org/ns/docbook";
     private static String xlinkNS = "http://www.w3.org/1999/xlink";
 
@@ -41,7 +42,7 @@ public class DocxInput {
     }
 
     private void writeIndent() throws XMLStreamException {
-        xmlStream.writeCharacters("  ".repeat(currentDepth));
+        xmlStream.writeCharacters(indentation.repeat(currentDepth));
     }
 
     private void increaseIndent() {
@@ -56,6 +57,11 @@ public class DocxInput {
         xmlStream.writeCharacters("\n");
     }
 
+    public void toDocBook(String output) throws IOException, XMLStreamException {
+        Files.write(Paths.get(output), toDocBook().getBytes());
+    }
+
+    @SuppressWarnings("WeakerAccess")
     public String toDocBook() throws IOException, XMLStreamException {
         // Initialise the XML stream.
         OutputStream writer = new ByteArrayOutputStream();
