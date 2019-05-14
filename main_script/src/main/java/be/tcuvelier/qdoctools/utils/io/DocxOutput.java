@@ -50,7 +50,7 @@ public class DocxOutput {
     }
 
     private enum Formatting {
-        EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH;
+        EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT;
 
         static Formatting tagToFormatting(String localName, Attributes attributes) {
             String role = "";
@@ -71,6 +71,10 @@ public class DocxOutput {
                 return Formatting.EMPHASIS_UNDERLINE;
             } else if (SAXHelpers.isEmphasisTag(localName) && role.equals("strikethrough")) {
                 return Formatting.EMPHASIS_STRIKETHROUGH;
+            } else if (SAXHelpers.isSuperscriptTag(localName)) {
+                return Formatting.SUPERSCRIPT;
+            } else if (SAXHelpers.isSubscriptTag(localName)) {
+                return Formatting.SUBSCRIPT;
             } else {
                 return Formatting.EMPHASIS;
             }
@@ -123,6 +127,20 @@ public class DocxOutput {
         private static boolean isEmphasisTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("emphasis");
+        }
+
+        private static boolean isSuperscriptTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("superscript");
+        }
+
+        private static boolean isSubscriptTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("subscript");
+        }
+
+        private static boolean isFormatting(String qName) {
+            return isEmphasisTag(qName) || isSubscriptTag(qName) || isSuperscriptTag(qName);
         }
 
         private static boolean isTableTag(String qName) {
@@ -265,7 +283,7 @@ public class DocxOutput {
 
                 paragraph = doc.createParagraph();
                 run = paragraph.createRun();
-            } else if (SAXHelpers.isEmphasisTag(qName)) {
+            } else if (SAXHelpers.isFormatting(qName)) {
                 currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
 
                 // Create a new run if this one is already started.
@@ -338,7 +356,7 @@ public class DocxOutput {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isParagraphTag(qName)) {
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isEmphasisTag(qName)) {
+            } else if (SAXHelpers.isFormatting(qName)) {
                 // Remove the last formatting tag found. Throw an exception if it should not have been added by emphasis.
                 Formatting f = currentFormatting.get(currentFormatting.size() - 1);
                 if (f != Formatting.EMPHASIS && f != Formatting.EMPHASIS_BOLD && f != Formatting.EMPHASIS_UNDERLINE &&
@@ -356,9 +374,12 @@ public class DocxOutput {
                 // Nothing to do, just go outside the table.
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableRowTag(qName)) {
+                tableRow = null;
+                tableColumn = null;
                 tableRowNumber += 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableColumnTag(qName)) {
+                tableColumn = null;
                 tableColumnNumber += 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {

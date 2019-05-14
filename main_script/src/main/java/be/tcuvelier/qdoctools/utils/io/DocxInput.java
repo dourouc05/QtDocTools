@@ -11,8 +11,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.*;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
@@ -26,6 +27,8 @@ public class DocxInput {
         System.out.println(docBook);
 //        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
     }
+
+    private Map<String, byte[]> images = new HashMap<>();
 
     private XWPFDocument doc;
     private XMLStreamWriter xmlStream;
@@ -58,7 +61,21 @@ public class DocxInput {
     }
 
     public void toDocBook(String output) throws IOException, XMLStreamException {
-        Files.write(Paths.get(output), toDocBook().getBytes());
+        Path outputPath = Paths.get(output);
+
+        // Deal with XML.
+        Files.write(outputPath, toDocBook().getBytes());
+
+        // Deal with images.
+        Path folder = outputPath.getParent();
+        for (Map.Entry<String, byte[]> entry: images.entrySet()) {
+            Files.write(folder.resolve(entry.getKey()), entry.getValue());
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public Map<String, byte[]> getImages() {
+        return images;
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -158,16 +175,19 @@ public class DocxInput {
             // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
             writeIndent();
             xmlStream.writeStartElement(docbookNS, "mediaobject");
+
             visitRuns(p.getRuns());
-            // TODO: What about the caption? It may even be in another paragraph!
-            xmlStream.writeEndElement(); // </db:mediaobject>
+            // TODO: What about the caption? It may even be in another paragraph! To be studied...
+
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:mediaobject> must be indented.
             writeNewLine();
         } else {
             // Normal case for a paragraph.
             writeIndent();
             xmlStream.writeStartElement(docbookNS, "para");
             visitRuns(p.getRuns());
-            xmlStream.writeEndElement(); // </db:para>
+            xmlStream.writeEndElement(); // </db:para> should not be indented.
             writeNewLine();
         }
     }
@@ -242,13 +262,15 @@ public class DocxInput {
             // Maybe this run contains an inline image. Output a <db:inlinemediaobject> (whose beginning is on the same
             // line as the rest of the text; the inside part is indented normally; the closing tag is directly followed
             // by the rest of the text, if any).
-            xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
-            writeNewLine();
-            increaseIndent();
-            visitPictureRun(r);
-            decreaseIndent();
-            writeNewLine();
-            xmlStream.writeEndElement(); // </inlinemediaobject>
+            if (r.getEmbeddedPictures().size() >= 1) {
+                // TODO: Implement a way of detecting inline images.
+//                xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
+                writeNewLine();
+                increaseIndent();
+                visitPictureRun(r);
+                decreaseIndent();
+//                xmlStream.writeEndElement(); // </inlinemediaobject>
+            }
 
             // Formatting tags (maybe several ones to add!).
             if (r.isBold()) {
@@ -298,13 +320,27 @@ public class DocxInput {
             if (r.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
                 xmlStream.writeEndElement(); // </db:subscript>
             }
-            if (r.getFontFamily() != null) {
-                // TODO: Font family (if code).
-            }
+//            if (r.getFontFamily() != null) {
+//                // TODO: Font family (if code).
+//            }
         }
     }
 
     private void visitPictureRun(XWPFRun r) throws XMLStreamException {
+        if (r.getEmbeddedPictures().size() == 0) {
+            throw new XMLStreamException("Supposed to get a picture run, with no picture.");
+        }
+
+        if (r.getEmbeddedPictures().size() > 1) {
+            throw new XMLStreamException("More than one image in a run, which is not supported.");
+        }
+
+        // Output the image in a separate file.
+        byte[] image = r.getEmbeddedPictures().get(0).getPictureData().getData();
+        String imageName  = r.getEmbeddedPictures().get(0).getPictureData().getFileName();
+        images.put(imageName, image);
+
+        // Do the XML part.
         writeIndent();
         xmlStream.writeStartElement(docbookNS, "imageobject");
         writeNewLine();
@@ -312,11 +348,12 @@ public class DocxInput {
 
         writeIndent();
         xmlStream.writeEmptyElement(docbookNS, "imagedata");
-        xmlStream.writeAttribute(docbookNS, "fileref", "http://shit.com/image/not/found");
+        xmlStream.writeAttribute(docbookNS, "fileref", imageName);
         writeNewLine();
 
         decreaseIndent();
 
+        writeIndent();
         xmlStream.writeEndElement(); // </db:imageobject>
         writeNewLine();
     }
