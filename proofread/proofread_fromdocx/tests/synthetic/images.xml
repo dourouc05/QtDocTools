@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <db:info>
+    <db:title>Document title</db:title>
+  </db:info>
+  <db:para>The following image has no caption and is inline. <db:inlinemediaobject>
+    <db:imageobject>
+      <db:imagedata db:fileref="image1.jpeg"/>
+    </db:imageobject>
+  </db:inlinemediaobject></db:para>
+  <db:para>The following image has no caption and lives in its own paragraph. </db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata db:fileref="image1.jpeg"/>
+    </db:imageobject>
+  </db:mediaobject>
+  <db:para>The following image has a caption. </db:para>
+  <db:mediaobject>
+    <db:imageobject>
+      <db:imagedata db:fileref="image1.jpeg"/>
+    </db:imageobject>
+    <db:caption>Figure 1This image comes from https://pixabay.com/photos/image-statue-brass-child-art-1465348/ and is free to use, even for commercial purposes, even without attribution.</db:caption>
+  </db:mediaobject>
+</db:article>

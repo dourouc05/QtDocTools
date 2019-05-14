@@ -23,9 +23,10 @@ public class DocxInput {
         String test = "images";
 
         String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
-
         System.out.println(docBook);
 //        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
+
+//        new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook(MainCommand.fromDocxTests + "synthetic/" + test + ".xml");
     }
 
     private Map<String, byte[]> images = new HashMap<>();
