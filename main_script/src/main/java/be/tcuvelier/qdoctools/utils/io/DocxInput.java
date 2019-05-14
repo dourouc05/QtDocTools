@@ -35,6 +35,7 @@ public class DocxInput {
 
     private int currentDepth;
     private int currentSectionLevel;
+    private boolean isDisplayedFigure;
 
     private static String indentation = "  ";
     private static String docbookNS = "http://docbook.org/ns/docbook";
@@ -173,6 +174,8 @@ public class DocxInput {
     private void visitNormalParagraph(XWPFParagraph p) throws XMLStreamException {
         if (p.getRuns().size() == 1 && p.getRuns().get(0).getEmbeddedPictures().size() == 1) { // TODO: Several pictures per run? Seems unlikely.
             // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
+            isDisplayedFigure = true;
+
             writeIndent();
             xmlStream.writeStartElement(docbookNS, "mediaobject");
 
@@ -182,6 +185,8 @@ public class DocxInput {
             writeIndent();
             xmlStream.writeEndElement(); // </db:mediaobject> must be indented.
             writeNewLine();
+
+            isDisplayedFigure = false;
         } else {
             // Normal case for a paragraph.
             writeIndent();
@@ -263,13 +268,17 @@ public class DocxInput {
             // line as the rest of the text; the inside part is indented normally; the closing tag is directly followed
             // by the rest of the text, if any).
             if (r.getEmbeddedPictures().size() >= 1) {
-                // TODO: Implement a way of detecting inline images.
-//                xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
+                if (! isDisplayedFigure) {
+                    xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
+                }
                 writeNewLine();
                 increaseIndent();
                 visitPictureRun(r);
                 decreaseIndent();
-//                xmlStream.writeEndElement(); // </inlinemediaobject>
+                if (! isDisplayedFigure) {
+                    writeIndent();
+                    xmlStream.writeEndElement(); // </inlinemediaobject>, no line feed as within a paragraph.
+                }
             }
 
             // Formatting tags (maybe several ones to add!).
