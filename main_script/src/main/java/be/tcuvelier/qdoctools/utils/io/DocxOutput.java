@@ -316,6 +316,8 @@ public class DocxOutput {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
+            } else {
+                throw new SAXException(getLocationString() + "unknown tag" + qName + ".");
             }
 
             // There might be return instructions in the long switch.
@@ -363,6 +365,8 @@ public class DocxOutput {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
+            } else {
+                throw new SAXException(getLocationString() + "unknown tag" + qName + ".");
             }
 
             // There might be return instructions in the long switch.
