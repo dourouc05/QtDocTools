@@ -66,6 +66,11 @@ public class DocxOutput {
             if (SAXHelpers.isEmphasisTag(localName) && (role.equals("") || role.equals("italics"))) {
                 return Formatting.EMPHASIS;
             } else if (SAXHelpers.isEmphasisTag(localName) && (role.equals("bold") || role.equals("strong"))) {
+                if (role.equals("strong")) {
+                    System.out.println("Warning: an emphasis tag has a 'strong' role, which will be replaced by 'bold' " +
+                            "after round-tripping back to DocBook.");
+                }
+
                 return Formatting.EMPHASIS_BOLD;
             } else if (SAXHelpers.isEmphasisTag(localName) && role.equals("underline")) {
                 return Formatting.EMPHASIS_UNDERLINE;

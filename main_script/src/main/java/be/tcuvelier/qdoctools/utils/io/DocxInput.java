@@ -37,6 +37,9 @@ public class DocxInput {
     private int currentSectionLevel;
     private boolean isDisplayedFigure;
 
+    private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
+    // as captions: find those that have not been, so the user can be warned.
+
     private static String indentation = "  ";
     private static String docbookNS = "http://docbook.org/ns/docbook";
     private static String xlinkNS = "http://www.w3.org/1999/xlink";
@@ -172,6 +175,15 @@ public class DocxInput {
     }
 
     private void visitNormalParagraph(XWPFParagraph p) throws XMLStreamException {
+        // Ignore captions, as they are handled directly within mediaobjects/tables.
+        if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
+            if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
+                throw new XMLStreamException("Caption not expected.");
+            } else {
+                return;
+            }
+        }
+
         if (p.getRuns().size() == 1 && p.getRuns().get(0).getEmbeddedPictures().size() == 1) { // TODO: Several pictures per run? Seems unlikely.
             // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
             isDisplayedFigure = true;
@@ -180,7 +192,22 @@ public class DocxInput {
             xmlStream.writeStartElement(docbookNS, "mediaobject");
 
             visitRuns(p.getRuns());
-            // TODO: What about the caption? It may even be in another paragraph! To be studied...
+
+            // Write the caption (if it corresponds to the next paragraph.
+            int pos = doc.getPosOfParagraph(p);
+            if (pos + 1 < doc.getParagraphs().size()
+                    && doc.getParagraphs().get(pos + 1).getStyleID() != null
+                    && doc.getParagraphs().get(pos + 1).getStyleID().equals("Caption")) {
+                increaseIndent();
+                writeIndent();
+                decreaseIndent();
+                xmlStream.writeStartElement(docbookNS, "caption");
+                visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
+                xmlStream.writeEndElement(); // <db:caption>
+                writeNewLine();
+
+                captionPositions.add(pos + 1);
+            }
 
             writeIndent();
             xmlStream.writeEndElement(); // </db:mediaobject> must be indented.
@@ -284,14 +311,16 @@ public class DocxInput {
             // Formatting tags (maybe several ones to add!).
             if (r.isBold()) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "bold"); // TODO: Check if bold is used everywhere else
+                xmlStream.writeAttribute(docbookNS, "role", "bold"); // TODO: Check if bold is used
+                // everywhere else (or is strong preferred in other parts of the tool suite like QDoc import?).
+                // Also adapt DocxOutput.Formatting.tagToFormatting().
             }
             if (r.isItalic()) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
             }
             if (r.getUnderline() != UnderlinePatterns.NONE) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "underline"); // TODO: Check if underline is used everywhere else
+                xmlStream.writeAttribute(docbookNS, "role", "underline");
             }
             if (r.isStrikeThrough() || r.isDoubleStrikeThrough()) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
@@ -303,9 +332,9 @@ public class DocxInput {
             if (r.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
                 xmlStream.writeStartElement(docbookNS, "subscript");
             }
-            if (r.getFontFamily() != null) {
-                // TODO: Font family (if code).
-            }
+//            if (r.getFontFamily() != null) {
+//                // TODO: Font family (if code).
+//            }
 
             // Actual text for this run.
             xmlStream.writeCharacters(r.text());
@@ -337,7 +366,7 @@ public class DocxInput {
 
     private void visitPictureRun(XWPFRun r) throws XMLStreamException {
         if (r.getEmbeddedPictures().size() == 0) {
-            throw new XMLStreamException("Supposed to get a picture run, with no picture.");
+            throw new XMLStreamException("Supposed to get a picture run, but it has no picture.");
         }
 
         if (r.getEmbeddedPictures().size() > 1) {
