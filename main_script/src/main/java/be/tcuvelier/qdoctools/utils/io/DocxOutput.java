@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.utils.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -10,14 +11,19 @@ import org.xml.sax.helpers.DefaultHandler;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class DocxOutput {
     public static void main(String[] args) throws Exception {
-        String test = "basic";
+//        String test = "basic";
 //        String test = "sections";
-//        String test = "images";
+        String test = "images";
 
         new DocxOutput(MainCommand.toDocxTests + "synthetic/" + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + "synthetic/" + test + ".docx");
@@ -38,7 +44,7 @@ public class DocxOutput {
     @SuppressWarnings("WeakerAccess")
     public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException {
         SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-        SAXHandler handler = new SAXHandler();
+        SAXHandler handler = new SAXHandler(Paths.get(input).getParent());
         saxParser.parse(new File(input), handler);
         return handler.doc;
     }
@@ -84,6 +90,44 @@ public class DocxOutput {
                 return Formatting.EMPHASIS;
             }
         }
+    }
+
+    private static ParagraphAlignment attributeToAlignment(String attribute) {
+        // See also DocxInput.paragraphAlignmentToDocBookAttribute.
+        switch (attribute) {
+            case "center":
+                return ParagraphAlignment.CENTER;
+            case "right":
+                return ParagraphAlignment.RIGHT;
+            case "justified":
+                return ParagraphAlignment.BOTH;
+            case "left":
+            default:
+                return ParagraphAlignment.LEFT;
+        }
+    }
+
+    private static int filenameToWordFormat(String filename) {
+        // See org.apache.poi.xwpf.usermodel.Document.
+        String[] parts = filename.split("\\.");
+        String extension = parts[parts.length - 1].toLowerCase();
+
+        switch (extension) {
+            case "emf":  return 2;
+            case "wmf":  return 3;
+            case "pict": return 4;
+            case "jpg":
+            case "jpeg": return 5;
+            case "png":  return 6;
+            case "dib":  return 7;
+            case "gif":  return 8;
+            case "tif":
+            case "tiff": return 9;
+            case "eps":  return 10;
+            case "bmp":  return 11;
+            case "wpg":  return 12;
+        }
+        return -1;
     }
 
     private static class SAXHelpers {
@@ -186,10 +230,31 @@ public class DocxOutput {
                     || localName.equalsIgnoreCase("row")
                     || localName.equalsIgnoreCase("entry");
         }
+
+        private static boolean isInlineMedia(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("inlinemediaobject");
+        }
+
+        private static boolean isMedia(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("mediaobject");
+        }
+
+        private static boolean isImageData(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("imagedata");
+        }
+
+        private static boolean isImageObject(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("imageobject");
+        }
     }
 
     private static class SAXHandler extends DefaultHandler {
         private Locator locator;
+        private Path folder;
 
         private XWPFDocument doc;
         private XWPFParagraph paragraph;
@@ -205,7 +270,9 @@ public class DocxOutput {
         private List<Formatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
         // the document is the first one in the vector. TODO: migrate to Deque?
 
-        SAXHandler() throws IOException {
+        SAXHandler(Path folder) throws IOException {
+            this.folder = folder;
+
             // Start a document with the template that defines all needed styles.
             doc = new XWPFDocument(new FileInputStream(MainCommand.toDocxTemplate));
 
@@ -339,11 +406,84 @@ public class DocxOutput {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
+            } else if (SAXHelpers.isInlineMedia(qName)) {
+//                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
+            } else if (SAXHelpers.isMedia(qName)) {
+                paragraph = doc.createParagraph();
+                for (int i = 0; i < attributes.getLength(); ++i) {
+                    if (attributes.getLocalName(i).equalsIgnoreCase("align")) {
+                        paragraph.setAlignment(attributeToAlignment(attributes.getValue(i).toLowerCase()));
+                        break;
+                    } else {
+                        System.out.println(getLocationString() + "unknown attribute " + attributes.getLocalName(i) + ".");
+                    }
+                }
+                run = paragraph.createRun();
+            } else if (SAXHelpers.isImageData(qName)) {
+                createImage(attributes);
+            } else if (SAXHelpers.isImageObject(qName)) {
+                // Nothing to do, as everything is under <db:imagedata>.
+                // TODO: check if there is only one imagedata per imageobject?
             } else {
-                throw new SAXException(getLocationString() + "unknown tag" + qName + ".");
+                throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
             }
 
             // There might be return instructions in the long switch.
+        }
+
+        private Map<String, String> attributes(Attributes attributes) {
+            Map<String, String> d = new HashMap<>();
+            for (int i = 0; i < attributes.getLength(); ++i) {
+                d.put(SAXHelpers.qNameToTagName(attributes.getLocalName(i)), attributes.getValue(i));
+            }
+            return d;
+        }
+
+        private int parseMeasurementAsEMU(String m) throws SAXException {
+            if (m == null) {
+                throw new SAXException(getLocationString() + "invalid measured quantity.");
+            }
+
+            if (m.endsWith("in")) {
+                return Integer.parseInt(m.replace("in", "")) * 914_400;
+            } else if (m.endsWith("pt")) {
+                return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
+            } else if (m.endsWith("cm")) {
+                return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
+            } else if (m.endsWith("mm")) {
+                return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
+            } else {
+                throw new SAXException(getLocationString() + "unknown measurement unit in " + m + ".");
+            }
+        }
+
+        private void createImage(Attributes attributes) throws SAXException {
+            Map<String, String> attr = attributes(attributes);
+            String filename = attr.get("fileref");
+            Path filePath = Paths.get(filename);
+            int width = 1;//parseMeasurementAsEMU(attr.get("width"));
+            int height = 1;//parseMeasurementAsEMU(attr.get("height"));
+
+            attr.remove("fileref");
+            attr.remove("width");
+            attr.remove("height");
+            if (attr.size() > 0) {
+                for (String key: attr.keySet()) {
+                    System.out.println(getLocationString() + "unknown attribute " + key + ".");
+                }
+            }
+
+            int format = filenameToWordFormat(filename);
+            if (format < 0) {
+                throw new SAXException(getLocationString() + "unknown image extension " + filename + ".");
+            }
+
+            try {
+                run.addPicture(new FileInputStream(folder.resolve(filePath).toFile()), format,
+                        filePath.getFileName().toString(), width, height);
+            } catch (Exception e) {
+                throw new SAXException(e);
+            }
         }
 
         @Override
@@ -391,8 +531,16 @@ public class DocxOutput {
                 throw new SAXException(getLocationString() + "table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new SAXException(getLocationString() + "CALS tables are not handled.");
+            } else if (SAXHelpers.isInlineMedia(qName)) {
+//                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
+            } else if (SAXHelpers.isMedia(qName)) {
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isImageData(qName)) {
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isImageObject(qName)) {
+                ensureNoTextAllowed();
             } else {
-                throw new SAXException(getLocationString() + "unknown tag" + qName + ".");
+                throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
             }
 
             // There might be return instructions in the long switch.

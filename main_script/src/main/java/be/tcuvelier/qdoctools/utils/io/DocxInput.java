@@ -285,6 +285,22 @@ public class DocxInput {
         // TODO: Implement a check on the currentSectionLevel and the level (in case someone missed a level in the headings).
     }
 
+    private String paragraphAlignmentToDocBookAttribute(ParagraphAlignment align) {
+        // See also DocxOutput.attributeToAlignment.
+        switch (align.name()) {
+            case "LEFT":
+                return "left";
+            case "CENTER":
+                return "center";
+            case "RIGHT":
+                return "right";
+            case "BOTH":
+                return "justified";
+            default:
+                return "";
+        }
+    }
+
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
         for (XWPFRun r: runs) {
             if (r instanceof XWPFHyperlinkRun) {
@@ -369,8 +385,9 @@ public class DocxInput {
         }
 
         // Output the image in a separate file.
-        byte[] image = r.getEmbeddedPictures().get(0).getPictureData().getData();
-        String imageName  = r.getEmbeddedPictures().get(0).getPictureData().getFileName();
+        XWPFPicture picture = r.getEmbeddedPictures().get(0);
+        byte[] image = picture.getPictureData().getData();
+        String imageName = picture.getPictureData().getFileName();
         images.put(imageName, image);
 
         // Do the XML part: output a <db:inlinemediaobject> (whose beginning is on the same line as the rest
@@ -390,6 +407,17 @@ public class DocxInput {
         writeIndent();
         xmlStream.writeEmptyElement(docbookNS, "imagedata");
         xmlStream.writeAttribute(docbookNS, "fileref", imageName);
+        // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
+        // Cx/Cx return values in EMUs (very different from EM).
+        xmlStream.writeAttribute(docbookNS, "width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in");
+        xmlStream.writeAttribute(docbookNS, "depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
+        if (isDisplayedFigure) {
+            XWPFParagraph parent = ((XWPFParagraph) r.getParent());
+            String dbAlign = paragraphAlignmentToDocBookAttribute(parent.getAlignment());
+            if (dbAlign.length() > 0) {
+                xmlStream.writeAttribute(docbookNS, "align", dbAlign);
+            }
+        }
         writeNewLine();
 
         decreaseIndent();
