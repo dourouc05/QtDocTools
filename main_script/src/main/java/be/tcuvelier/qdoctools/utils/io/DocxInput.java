@@ -22,11 +22,11 @@ public class DocxInput {
 //        String test = "sections_bogus";
         String test = "images";
 
-        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
-        System.out.println(docBook);
-//        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
+//        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
+//        System.out.println(docBook);
+////        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
 
-//        new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook(MainCommand.fromDocxTests + "synthetic/" + test + ".xml");
+        new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook(MainCommand.fromDocxTests + "synthetic/" + test + ".xml");
     }
 
     private Map<String, byte[]> images = new HashMap<>();
@@ -41,6 +41,7 @@ public class DocxInput {
     private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
     // as captions: find those that have not been, so the user can be warned.
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static String indentation = "  ";
     private static String docbookNS = "http://docbook.org/ns/docbook";
     private static String xlinkNS = "http://www.w3.org/1999/xlink";
@@ -285,84 +286,77 @@ public class DocxInput {
     }
 
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
+        for (XWPFRun r: runs) {
+            if (r instanceof XWPFHyperlinkRun) {
+                visitHyperlinkRun((XWPFHyperlinkRun) r);
+            } else if (r.getEmbeddedPictures().size() >= 1) {
+                visitPictureRun(r);
+            } else {
+                visitRun(r);
+            }
+        }
+    }
+
+    private void visitRun(XWPFRun run) throws XMLStreamException {
         // TODO: maybe implement simplifications if two runs have the same set of formattings.
 
         // Copied from STVerticalAlignRun.Enum. TODO: Better way?
         int INT_SUPERSCRIPT = 2;
         int INT_SUBSCRIPT = 3;
 
-        for (XWPFRun r: runs) {
-            // Maybe this run contains an inline image. Output a <db:inlinemediaobject> (whose beginning is on the same
-            // line as the rest of the text; the inside part is indented normally; the closing tag is directly followed
-            // by the rest of the text, if any).
-            if (r.getEmbeddedPictures().size() >= 1) {
-                if (! isDisplayedFigure) {
-                    xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
-                }
-                writeNewLine();
-                increaseIndent();
-                visitPictureRun(r);
-                decreaseIndent();
-                if (! isDisplayedFigure) {
-                    writeIndent();
-                    xmlStream.writeEndElement(); // </inlinemediaobject>, no line feed as within a paragraph.
-                }
-            }
-
-            // Formatting tags (maybe several ones to add!).
-            if (r.isBold()) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "bold"); // TODO: Check if bold is used
-                // everywhere else (or is strong preferred in other parts of the tool suite like QDoc import?).
-                // Also adapt DocxOutput.Formatting.tagToFormatting().
-            }
-            if (r.isItalic()) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-            }
-            if (r.getUnderline() != UnderlinePatterns.NONE) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "underline");
-            }
-            if (r.isStrikeThrough() || r.isDoubleStrikeThrough()) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "strikethrough");
-            }
-            if (r.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
-                xmlStream.writeStartElement(docbookNS, "superscript");
-            }
-            if (r.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
-                xmlStream.writeStartElement(docbookNS, "subscript");
-            }
-//            if (r.getFontFamily() != null) {
-//                // TODO: Font family (if code).
-//            }
-
-            // Actual text for this run.
-            xmlStream.writeCharacters(r.text());
-
-            // Close the tags if needed (strictly the reverse order from opening tags).
-            if (r.getUnderline() != UnderlinePatterns.NONE) {
-                xmlStream.writeEndElement(); // </db:emphasis> for underline
-            }
-            if (r.isItalic()) {
-                xmlStream.writeEndElement(); // </db:emphasis> for italics
-            }
-            if (r.isBold()) {
-                xmlStream.writeEndElement(); // </db:emphasis> for bold
-            }
-            if (r.isStrikeThrough() || r.isDoubleStrikeThrough()) {
-                xmlStream.writeEndElement(); // </db:emphasis> for strikethrough
-            }
-            if (r.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
-                xmlStream.writeEndElement(); // </db:superscript>
-            }
-            if (r.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
-                xmlStream.writeEndElement(); // </db:subscript>
-            }
-//            if (r.getFontFamily() != null) {
-//                // TODO: Font family (if code).
-//            }
+        // Formatting tags (maybe several ones to add!).
+        if (run.isBold()) {
+            xmlStream.writeStartElement(docbookNS, "emphasis");
+            xmlStream.writeAttribute(docbookNS, "role", "bold"); // TODO: Check if bold is used
+            // everywhere else (or is strong preferred in other parts of the tool suite like QDoc import?).
+            // Also adapt DocxOutput.Formatting.tagToFormatting().
         }
+        if (run.isItalic()) {
+            xmlStream.writeStartElement(docbookNS, "emphasis");
+        }
+        if (run.getUnderline() != UnderlinePatterns.NONE) {
+            xmlStream.writeStartElement(docbookNS, "emphasis");
+            xmlStream.writeAttribute(docbookNS, "role", "underline");
+        }
+        if (run.isStrikeThrough() || run.isDoubleStrikeThrough()) {
+            xmlStream.writeStartElement(docbookNS, "emphasis");
+            xmlStream.writeAttribute(docbookNS, "role", "strikethrough");
+        }
+        if (run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
+            xmlStream.writeStartElement(docbookNS, "superscript");
+        }
+        if (run.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
+            xmlStream.writeStartElement(docbookNS, "subscript");
+        }
+//            if (run.getFontFamily() != null) {
+//                // TODO: Font family (if code).
+//            }
+
+        // Actual text for this run.
+        xmlStream.writeCharacters(run.text());
+
+        // Close the tags if needed (strictly the reverse order from opening tags).
+        if (run.getUnderline() != UnderlinePatterns.NONE) {
+            xmlStream.writeEndElement(); // </db:emphasis> for underline
+        }
+        if (run.isItalic()) {
+            xmlStream.writeEndElement(); // </db:emphasis> for italics
+        }
+        if (run.isBold()) {
+            xmlStream.writeEndElement(); // </db:emphasis> for bold
+        }
+        if (run.isStrikeThrough() || run.isDoubleStrikeThrough()) {
+            xmlStream.writeEndElement(); // </db:emphasis> for strikethrough
+        }
+        if (run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
+            xmlStream.writeEndElement(); // </db:superscript>
+        }
+        if (run.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
+            xmlStream.writeEndElement(); // </db:subscript>
+        }
+//            if (run.getFontFamily() != null) {
+//                // TODO: Font family (if code).
+//            }
     }
 
     private void visitPictureRun(XWPFRun r) throws XMLStreamException {
@@ -379,7 +373,15 @@ public class DocxInput {
         String imageName  = r.getEmbeddedPictures().get(0).getPictureData().getFileName();
         images.put(imageName, image);
 
-        // Do the XML part.
+        // Do the XML part: output a <db:inlinemediaobject> (whose beginning is on the same line as the rest
+        // of the text; the inside part is indented normally; the closing tag is directly followed by the rest
+        // of the text, if any).
+        if (! isDisplayedFigure) {
+            xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
+        }
+        writeNewLine();
+        increaseIndent();
+
         writeIndent();
         xmlStream.writeStartElement(docbookNS, "imageobject");
         writeNewLine();
@@ -395,6 +397,21 @@ public class DocxInput {
         writeIndent();
         xmlStream.writeEndElement(); // </db:imageobject>
         writeNewLine();
+
+        decreaseIndent();
+        if (! isDisplayedFigure) {
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:inlinemediaobject>, no line feed as within a paragraph.
+        }
+    }
+
+    private void visitHyperlinkRun(XWPFHyperlinkRun r) throws XMLStreamException {
+        XWPFHyperlink link = r.getHyperlink(doc);
+
+        xmlStream.writeStartElement(docbookNS, "link");
+        xmlStream.writeAttribute(xlinkNS, "href", link.getURL());
+        visitRun(r); // Text and formatting attributes are inherited for XWPFHyperlinkRun.
+        xmlStream.writeEndElement(); // </db:link>
     }
 
     private void visitTable(XWPFTable t) throws XMLStreamException {
