@@ -250,6 +250,11 @@ public class DocxOutput {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("imageobject");
         }
+
+        private static boolean isCaption(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("caption");
+        }
     }
 
     private static class SAXHandler extends DefaultHandler {
@@ -258,6 +263,7 @@ public class DocxOutput {
 
         private XWPFDocument doc;
         private XWPFParagraph paragraph;
+        private int paragraphNumber = -1;
         private XWPFRun run;
         private XWPFTable table; // TODO: What about nested tables? Really care about this case? Would need to stack them...
         private XWPFTableRow tableRow;
@@ -333,6 +339,7 @@ public class DocxOutput {
             } else if (SAXHelpers.isSectionTag(qName)) {
                 currentLevel.push(Level.SECTION);
                 currentSectionDepth += 1;
+                paragraphNumber = 0;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTitleTag(qName)) {
                 paragraph = doc.createParagraph();
@@ -344,7 +351,7 @@ public class DocxOutput {
                 run = paragraph.createRun();
             } else if (SAXHelpers.isParagraphTag(qName)) {
                 // For tables, the paragraph is automatically created within a table cell.
-                if (currentLevel.peek() == Level.TABLE) {
+                if (currentLevel.peek() == Level.TABLE && paragraphNumber == 0) {
                     return;
                 }
 
@@ -353,7 +360,11 @@ public class DocxOutput {
                             "already being filled.");
                 }
 
-                paragraph = doc.createParagraph();
+                if (currentLevel.peek() == Level.TABLE) {
+                    paragraph = tableColumn.addParagraph();
+                } else {
+                    paragraph = doc.createParagraph();
+                }
                 run = paragraph.createRun();
             } else if (SAXHelpers.isFormatting(qName)) {
                 currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
@@ -500,6 +511,7 @@ public class DocxOutput {
             } else if (SAXHelpers.isTitleTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isParagraphTag(qName)) {
+                paragraphNumber += 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isFormatting(qName)) {
                 // Remove the last formatting tag found. Throw an exception if it should not have been added by emphasis.
@@ -514,6 +526,7 @@ public class DocxOutput {
                 currentLevel.pop();
                 tableRowNumber = -1;
                 tableColumnNumber = -1;
+                paragraphNumber = 0;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableBodyTag(qName)) {
                 // Nothing to do, just go outside the table.
