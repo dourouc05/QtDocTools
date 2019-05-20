@@ -1,19 +1,20 @@
 package be.tcuvelier.qdoctools.utils.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHyperlink;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTText;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -57,8 +58,7 @@ public class DocxOutput {
     private enum Level {
         ROOT, ROOT_INFO,
         SECTION, SECTION_INFO,
-        TABLE,
-        IN_LINK
+        TABLE
     }
 
     private enum Formatting {
@@ -119,19 +119,19 @@ public class DocxOutput {
         String extension = parts[parts.length - 1].toLowerCase();
 
         switch (extension) {
-            case "emf":  return 2;
-            case "wmf":  return 3;
-            case "pict": return 4;
+            case "emf":  return XWPFDocument.PICTURE_TYPE_EMF;
+            case "wmf":  return XWPFDocument.PICTURE_TYPE_WMF;
+            case "pict": return XWPFDocument.PICTURE_TYPE_PICT;
             case "jpg":
-            case "jpeg": return 5;
-            case "png":  return 6;
-            case "dib":  return 7;
-            case "gif":  return 8;
+            case "jpeg": return XWPFDocument.PICTURE_TYPE_JPEG;
+            case "png":  return XWPFDocument.PICTURE_TYPE_PNG;
+            case "dib":  return XWPFDocument.PICTURE_TYPE_DIB;
+            case "gif":  return XWPFDocument.PICTURE_TYPE_GIF;
             case "tif":
-            case "tiff": return 9;
-            case "eps":  return 10;
-            case "bmp":  return 11;
-            case "wpg":  return 12;
+            case "tiff": return XWPFDocument.PICTURE_TYPE_TIFF;
+            case "eps":  return XWPFDocument.PICTURE_TYPE_EPS;
+            case "bmp":  return XWPFDocument.PICTURE_TYPE_BMP;
+            case "wpg":  return XWPFDocument.PICTURE_TYPE_WPG;
         }
         return -1;
     }
@@ -318,6 +318,15 @@ public class DocxOutput {
                     "column " + locator.getColumnNumber() + ": ";
         }
 
+        private class DocxException extends SAXException {
+            DocxException(String message) {
+                super(getLocationString() + message);
+            }
+            DocxException (String message, Exception e) {
+                super(getLocationString() + message, e);
+            }
+        }
+
         private void setRunFormatting() throws SAXException {
             for (Formatting f: currentFormatting) {
                 switch (f) {
@@ -334,9 +343,27 @@ public class DocxOutput {
                         run.setStrikeThrough(true);
                         break;
                     default:
-                        throw new SAXException("Formatting not recognised by setRunFormatting: " + f);
+                        throw new DocxException("formatting not recognised by setRunFormatting: " + f);
                 }
             }
+        }
+
+        private static XWPFHyperlinkRun createHyperlinkRun(XWPFParagraph paragraph, String uri) {
+            // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
+            String rId = paragraph.getPart().getPackagePart().addExternalRelationship(
+                    uri,
+                    XWPFRelation.HYPERLINK.getRelation()
+            ).getId();
+
+            CTHyperlink cthyperLink=paragraph.getCTP().addNewHyperlink();
+            cthyperLink.setId(rId);
+            cthyperLink.addNewR();
+
+            return new XWPFHyperlinkRun(
+                    cthyperLink,
+                    cthyperLink.getRArray(0),
+                    paragraph
+            );
         }
 
         @SuppressWarnings("StatementWithEmptyBody")
@@ -372,8 +399,7 @@ public class DocxOutput {
                 }
 
                 if (paragraph != null || run != null) {
-                    throw new SAXException(getLocationString() + "tried to create a new paragraph, but one was " +
-                            "already being filled.");
+                    throw new DocxException("tried to create a new paragraph, but one was already being filled.");
                 }
 
                 if (currentLevel.peek() == Level.TABLE) {
@@ -396,18 +422,15 @@ public class DocxOutput {
                 setRunFormatting();
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isLinkTag(qName)) {
-                // Always create a new run, due to the complexities of what is to come.
-                run = paragraph.createRun();
-
                 Map<String, String> attr = attributes(attributes);
                 warnUnknownAttributes(attr, Stream.of("href"));
 
-                // https://stackoverflow.com/questions/7007810/how-to-create-a-email-link-in-poi-word-format
-                String id = paragraph.getDocument().getPackagePart()
-                        .addExternalRelationship(attr.get("href"), XWPFRelation.HYPERLINK.getRelation()).getId();
-                link = paragraph.getCTP().addNewHyperlink();
-                link.setId(id);
-                currentLevel.push(Level.IN_LINK);
+                // Always create a new run, as it is much easier than to replace a run within the paragraph.
+                run = createHyperlinkRun(paragraph, attr.get("href"));
+
+                // Set formatting for the link.
+                run.setUnderline(UnderlinePatterns.SINGLE);
+                run.setColor("0563c1");
             } else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.push(Level.TABLE);
 
@@ -420,7 +443,7 @@ public class DocxOutput {
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableRowTag(qName)) {
                 if (table == null || tableRowNumber < 0) {
-                    throw new SAXException(getLocationString() + "unexpected table row.");
+                    throw new DocxException("unexpected table row.");
                 }
 
                 // If this is the first row, exploit the one automatically created by the table.
@@ -433,7 +456,7 @@ public class DocxOutput {
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableColumnTag(qName)) {
                 if (table == null || tableRowNumber < 0 || tableColumnNumber < 0) {
-                    throw new SAXException(getLocationString() + "unexpected table column.");
+                    throw new DocxException("unexpected table column.");
                 }
 
                 // If this is the first column of the row, exploit the one automatically created by the row.
@@ -449,9 +472,9 @@ public class DocxOutput {
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
-                throw new SAXException(getLocationString() + "table headers/footers are not handled.");
+                throw new DocxException("table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
-                throw new SAXException(getLocationString() + "CALS tables are not handled.");
+                throw new DocxException("CALS tables are not handled.");
             } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
 //                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
                 warnUnknownAttributes(attributes);
@@ -475,7 +498,7 @@ public class DocxOutput {
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
             } else {
-                throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
+                throw new DocxException("unknown tag " + qName + ".");
             }
 
             // There might be return instructions in the long switch.
@@ -509,7 +532,7 @@ public class DocxOutput {
 
         private int parseMeasurementAsEMU(String m) throws SAXException {
             if (m == null) {
-                throw new SAXException(getLocationString() + "invalid measured quantity.");
+                throw new DocxException("invalid measured quantity.");
             }
 
             if (m.endsWith("in")) {
@@ -520,29 +543,56 @@ public class DocxOutput {
                 return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
             } else if (m.endsWith("mm")) {
                 return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
+            } else if (m.endsWith("px")) {
+                return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
             } else {
-                throw new SAXException(getLocationString() + "unknown measurement unit in " + m + ".");
+                throw new DocxException("unknown measurement unit in " + m + ".");
             }
         }
 
         private void createImage(Attributes attributes) throws SAXException {
             Map<String, String> attr = attributes(attributes);
+
+            if (! attr.containsKey("fileref")) {
+                throw new DocxException("the image tag has no fileref attribute.");
+            }
+
             String filename = attr.get("fileref");
             Path filePath = Paths.get(filename);
-            int width = 1;//parseMeasurementAsEMU(attr.get("width"));
-            int height = 1;//parseMeasurementAsEMU(attr.get("height"));
+            int width;
+            int height;
+
+            // Get the image width and height: either from the XML or from the image itself.
+            // Avoid loading the image if both dimensions are known from the XML.
+            {
+                String imageWidth = null;
+                String imageHeight = null;
+                if (!attr.containsKey("width") && attr.containsKey("height")) {
+                    try {
+                        BufferedImage img = ImageIO.read(new File(filename));
+                        imageWidth = img.getWidth() + "px";
+                        imageHeight = img.getHeight() + "px";
+                    } catch (IOException e) {
+                        throw new DocxException("there was a problem reading the image", e);
+                    }
+                }
+
+                width = parseMeasurementAsEMU(attr.getOrDefault("width", imageWidth));
+                height = parseMeasurementAsEMU(attr.getOrDefault("height", imageHeight));
+            }
+
             warnUnknownAttributes(attr, Stream.of("fileref", "width", "height"));
 
             int format = filenameToWordFormat(filename);
             if (format < 0) {
-                throw new SAXException(getLocationString() + "unknown image extension " + filename + ".");
+                throw new DocxException("unknown image extension " + filename + ".");
             }
 
             try {
                 run.addPicture(new FileInputStream(folder.resolve(filePath).toFile()), format,
                         filePath.getFileName().toString(), width, height);
-            } catch (Exception e) {
-                throw new SAXException(e);
+            } catch (IOException | InvalidFormatException e) {
+                throw new DocxException("there was a problem reading the image", e);
             }
         }
 
@@ -567,12 +617,13 @@ public class DocxOutput {
                 Formatting f = currentFormatting.get(currentFormatting.size() - 1);
                 if (f != Formatting.EMPHASIS && f != Formatting.EMPHASIS_BOLD && f != Formatting.EMPHASIS_UNDERLINE &&
                         f != Formatting.EMPHASIS_STRIKETHROUGH) {
-                    throw new SAXException("Formatting " + f + " should not have been added by an emphasis tag.");
+                    throw new DocxException("formatting " + f + " should not have been added by an emphasis tag.");
                 }
 
                 currentFormatting.remove(currentFormatting.size() - 1);
             } else if (SAXHelpers.isLinkTag(qName)) {
-                link.setRArray(new CTR[]{run.getCTR()});
+                // Create a new run, so that the new text is not within the same run.
+                run = paragraph.createRun();
             } else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.pop();
                 tableRowNumber = -1;
@@ -592,9 +643,9 @@ public class DocxOutput {
                 tableColumnNumber += 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
-                throw new SAXException(getLocationString() + "table headers/footers are not handled.");
+                throw new DocxException("table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
-                throw new SAXException(getLocationString() + "CALS tables are not handled.");
+                throw new DocxException("CALS tables are not handled.");
             } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isMediaObjectTag(qName)) {
@@ -606,7 +657,7 @@ public class DocxOutput {
             } else if (SAXHelpers.isCaptionTag(qName)) {
                 ensureNoTextAllowed();
             } else {
-                throw new SAXException(getLocationString() + "unknown tag " + qName + ".");
+                throw new DocxException("unknown tag " + qName + ".");
             }
 
             // There might be return instructions in the long switch.
@@ -621,7 +672,7 @@ public class DocxOutput {
             }
 
             if (run == null) {
-                throw new SAXException(getLocationString() + "document invalid, text not expected here.");
+                throw new DocxException("invalid document, text not expected here.");
             }
 
             run.setText(content);
