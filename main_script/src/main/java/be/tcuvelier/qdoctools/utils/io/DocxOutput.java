@@ -29,7 +29,8 @@ public class DocxOutput {
     public static void main(String[] args) throws Exception {
 //        String test = "basic";
 //        String test = "sections";
-        String test = "images";
+//        String test = "images";
+        String test = "lists";
 
         new DocxOutput(MainCommand.toDocxTests + "synthetic/" + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + "synthetic/" + test + ".docx");
@@ -266,6 +267,16 @@ public class DocxOutput {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("caption");
         }
+
+        private static boolean isItemizedListTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("itemizedlist");
+        }
+
+        private static boolean isOrderedListTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("orderedlist");
+        }
     }
 
     private static class SAXHandler extends DefaultHandler {
@@ -495,6 +506,14 @@ public class DocxOutput {
                 paragraph.setStyle("Caption");
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
+            } else if (SAXHelpers.isItemizedListTag(qName)) {
+                paragraph = doc.createParagraph();
+                run = paragraph.createRun();
+                warnUnknownAttributes(attributes);
+            } else if (SAXHelpers.isOrderedListTag(qName)) {
+                paragraph = doc.createParagraph();
+                run = paragraph.createRun();
+                warnUnknownAttributes(attributes);
             } else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
@@ -653,6 +672,10 @@ public class DocxOutput {
             } else if (SAXHelpers.isImageObjectTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isCaptionTag(qName)) {
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isItemizedListTag(qName)) {
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isOrderedListTag(qName)) {
                 ensureNoTextAllowed();
             } else {
                 throw new DocxException("unknown tag " + qName + ".");
