@@ -138,6 +138,14 @@ public class DocxOutput {
     }
 
     private static class SAXHelpers {
+        private static Map<String, String> attributes(Attributes attributes) {
+            Map<String, String> d = new HashMap<>();
+            for (int i = 0; i < attributes.getLength(); ++i) {
+                d.put(SAXHelpers.qNameToTagName(attributes.getLocalName(i)), attributes.getValue(i));
+            }
+            return d;
+        }
+
         private static String qNameToTagName(String qName) {
             // SAX returns a localName that is zero-length... Hence this function: go from db:article to article.
             // But maybe a specific DocBook document has no defined namespace, or DocBook is the default namespace.
@@ -313,14 +321,11 @@ public class DocxOutput {
             }
         }
 
+        /** Error and warning management **/
+
         @Override
         public void setDocumentLocator(Locator locator) {
             this.locator = locator;
-        }
-
-        private void ensureNoTextAllowed() {
-            paragraph = null;
-            run = null;
         }
 
         private String getLocationString() {
@@ -336,6 +341,48 @@ public class DocxOutput {
                 super(getLocationString() + message, e);
             }
         }
+
+        private void warnUnknownAttributes(Map<String, String> attr) {
+            for (String key: attr.keySet()) {
+                System.out.println(getLocationString() + "unknown attribute " + key + ".");
+            }
+        }
+
+        private void warnUnknownAttributes(Attributes attr) {
+            warnUnknownAttributes(SAXHelpers.attributes(attr));
+        }
+
+        private void warnUnknownAttributes(Map<String, String> attr, Stream<String> recognised) {
+            Map<String, String> unknown = new HashMap<>(attr);
+            for (String s: recognised.collect(Collectors.toCollection(Vector::new))) {
+                unknown.remove(s);
+            }
+            warnUnknownAttributes(unknown);
+        }
+
+        /** Miscellaneous helpers that must reside within SAXHandler **/
+
+        private int parseMeasurementAsEMU(String m) throws SAXException {
+            if (m == null) {
+                throw new DocxException("invalid measured quantity.");
+            }
+
+            if (m.endsWith("in")) {
+                return Integer.parseInt(m.replace("in", "")) * 914_400;
+            } else if (m.endsWith("pt")) {
+                return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
+            } else if (m.endsWith("cm")) {
+                return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
+            } else if (m.endsWith("mm")) {
+                return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
+            } else if (m.endsWith("px")) {
+                return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
+            } else {
+                throw new DocxException("unknown measurement unit in " + m + ".");
+            }
+        }
+
+        /** POI helpers **/
 
         private void setRunFormatting() throws SAXException {
             for (Formatting f: currentFormatting) {
@@ -358,23 +405,71 @@ public class DocxOutput {
             }
         }
 
-        private static XWPFHyperlinkRun createHyperlinkRun(XWPFParagraph paragraph, String uri) {
+        private void ensureNoTextAllowed() {
+            paragraph = null;
+            run = null;
+        }
+
+        private XWPFHyperlinkRun createHyperlinkRun(String uri) {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
             String rId = paragraph.getPart().getPackagePart().addExternalRelationship(
-                    uri,
-                    XWPFRelation.HYPERLINK.getRelation()
+                    uri, XWPFRelation.HYPERLINK.getRelation()
             ).getId();
 
-            CTHyperlink cthyperLink=paragraph.getCTP().addNewHyperlink();
-            cthyperLink.setId(rId);
-            cthyperLink.addNewR();
+            CTHyperlink ctHyperLink = paragraph.getCTP().addNewHyperlink();
+            ctHyperLink.setId(rId);
+            ctHyperLink.addNewR();
 
-            return new XWPFHyperlinkRun(
-                    cthyperLink,
-                    cthyperLink.getRArray(0),
-                    paragraph
-            );
+            return new XWPFHyperlinkRun(ctHyperLink, ctHyperLink.getRArray(0), paragraph);
         }
+
+        private void createImage(Attributes attributes) throws SAXException {
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
+
+            if (! attr.containsKey("fileref")) {
+                throw new DocxException("the image tag has no fileref attribute.");
+            }
+
+            String filename = attr.get("fileref");
+            Path filePath = folder.resolve(filename);
+            int width;
+            int height;
+
+            // Get the image width and height: either from the XML or from the image itself.
+            // Avoid loading the image if both dimensions are known from the XML.
+            {
+                String imageWidth = null;
+                String imageHeight = null;
+                if (! attr.containsKey("width") && ! attr.containsKey("height")) {
+                    try {
+                        BufferedImage img = ImageIO.read(filePath.toFile());
+                        imageWidth = img.getWidth() + "px";
+                        imageHeight = img.getHeight() + "px";
+                    } catch (IOException e) {
+                        throw new DocxException("there was a problem reading the image", e);
+                    }
+                }
+
+                width = parseMeasurementAsEMU(attr.getOrDefault("width", imageWidth));
+                height = parseMeasurementAsEMU(attr.getOrDefault("height", imageHeight));
+            }
+
+            warnUnknownAttributes(attr, Stream.of("fileref", "width", "height"));
+
+            int format = filenameToWordFormat(filename);
+            if (format < 0) {
+                throw new DocxException("unknown image extension " + filename + ".");
+            }
+
+            try {
+                run.addPicture(new FileInputStream(filePath.toFile()), format,
+                        filePath.getFileName().toString(), width, height);
+            } catch (IOException | InvalidFormatException e) {
+                throw new DocxException("there was a problem reading the image", e);
+            }
+        }
+
+        /** Actual SAX handler **/
 
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -431,11 +526,11 @@ public class DocxOutput {
                 setRunFormatting();
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isLinkTag(qName)) {
-                Map<String, String> attr = attributes(attributes);
+                Map<String, String> attr = SAXHelpers.attributes(attributes);
                 warnUnknownAttributes(attr, Stream.of("href"));
 
                 // Always create a new run, as it is much easier than to replace a run within the paragraph.
-                run = createHyperlinkRun(paragraph, attr.get("href"));
+                run = createHyperlinkRun(attr.get("href"));
 
                 // Set formatting for the link.
                 run.setUnderline(UnderlinePatterns.SINGLE);
@@ -489,7 +584,7 @@ public class DocxOutput {
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 paragraph = doc.createParagraph();
-                Map<String, String> attr = attributes(attributes);
+                Map<String, String> attr = SAXHelpers.attributes(attributes);
                 if (attr.containsKey("align")) {
                     paragraph.setAlignment(attributeToAlignment(attr.get("align").toLowerCase()));
                 }
@@ -519,98 +614,6 @@ public class DocxOutput {
             }
 
             // There might be return instructions in the long switch.
-        }
-
-        private Map<String, String> attributes(Attributes attributes) {
-            Map<String, String> d = new HashMap<>();
-            for (int i = 0; i < attributes.getLength(); ++i) {
-                d.put(SAXHelpers.qNameToTagName(attributes.getLocalName(i)), attributes.getValue(i));
-            }
-            return d;
-        }
-
-        private void warnUnknownAttributes(Map<String, String> attr) {
-            for (String key: attr.keySet()) {
-                System.out.println(getLocationString() + "unknown attribute " + key + ".");
-            }
-        }
-
-        private void warnUnknownAttributes(Attributes attr) {
-            warnUnknownAttributes(attributes(attr));
-        }
-
-        private void warnUnknownAttributes(Map<String, String> attr, Stream<String> recognised) {
-            Map<String, String> unknown = new HashMap<>(attr);
-            for (String s: recognised.collect(Collectors.toCollection(Vector::new))) {
-                unknown.remove(s);
-            }
-            warnUnknownAttributes(unknown);
-        }
-
-        private int parseMeasurementAsEMU(String m) throws SAXException {
-            if (m == null) {
-                throw new DocxException("invalid measured quantity.");
-            }
-
-            if (m.endsWith("in")) {
-                return Integer.parseInt(m.replace("in", "")) * 914_400;
-            } else if (m.endsWith("pt")) {
-                return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
-            } else if (m.endsWith("cm")) {
-                return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
-            } else if (m.endsWith("mm")) {
-                return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
-            } else if (m.endsWith("px")) {
-                return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
-            } else {
-                throw new DocxException("unknown measurement unit in " + m + ".");
-            }
-        }
-
-        private void createImage(Attributes attributes) throws SAXException {
-            Map<String, String> attr = attributes(attributes);
-
-            if (! attr.containsKey("fileref")) {
-                throw new DocxException("the image tag has no fileref attribute.");
-            }
-
-            String filename = attr.get("fileref");
-            Path filePath = folder.resolve(filename);
-            int width;
-            int height;
-
-            // Get the image width and height: either from the XML or from the image itself.
-            // Avoid loading the image if both dimensions are known from the XML.
-            {
-                String imageWidth = null;
-                String imageHeight = null;
-                if (! attr.containsKey("width") && ! attr.containsKey("height")) {
-                    try {
-                        BufferedImage img = ImageIO.read(filePath.toFile());
-                        imageWidth = img.getWidth() + "px";
-                        imageHeight = img.getHeight() + "px";
-                    } catch (IOException e) {
-                        throw new DocxException("there was a problem reading the image", e);
-                    }
-                }
-
-                width = parseMeasurementAsEMU(attr.getOrDefault("width", imageWidth));
-                height = parseMeasurementAsEMU(attr.getOrDefault("height", imageHeight));
-            }
-
-            warnUnknownAttributes(attr, Stream.of("fileref", "width", "height"));
-
-            int format = filenameToWordFormat(filename);
-            if (format < 0) {
-                throw new DocxException("unknown image extension " + filename + ".");
-            }
-
-            try {
-                run.addPicture(new FileInputStream(filePath.toFile()), format,
-                        filePath.getFileName().toString(), width, height);
-            } catch (IOException | InvalidFormatException e) {
-                throw new DocxException("there was a problem reading the image", e);
-            }
         }
 
         @Override
