@@ -281,7 +281,6 @@ public class DocxOutput {
         private int tableRowNumber = -1;
         private XWPFTableCell tableColumn;
         private int tableColumnNumber = -1;
-        private CTHyperlink link;
 
         private Deque<Level> currentLevel = new ArrayDeque<>();
         private int currentSectionDepth = 0; // 0: root; >0: sections.
@@ -366,7 +365,6 @@ public class DocxOutput {
             );
         }
 
-        @SuppressWarnings("StatementWithEmptyBody")
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             if (SAXHelpers.isRootTag(qName)) {
@@ -558,7 +556,7 @@ public class DocxOutput {
             }
 
             String filename = attr.get("fileref");
-            Path filePath = Paths.get(filename);
+            Path filePath = folder.resolve(filename);
             int width;
             int height;
 
@@ -567,9 +565,9 @@ public class DocxOutput {
             {
                 String imageWidth = null;
                 String imageHeight = null;
-                if (!attr.containsKey("width") && attr.containsKey("height")) {
+                if (! attr.containsKey("width") && ! attr.containsKey("height")) {
                     try {
-                        BufferedImage img = ImageIO.read(new File(filename));
+                        BufferedImage img = ImageIO.read(filePath.toFile());
                         imageWidth = img.getWidth() + "px";
                         imageHeight = img.getHeight() + "px";
                     } catch (IOException e) {
@@ -589,7 +587,7 @@ public class DocxOutput {
             }
 
             try {
-                run.addPicture(new FileInputStream(folder.resolve(filePath).toFile()), format,
+                run.addPicture(new FileInputStream(filePath.toFile()), format,
                         filePath.getFileName().toString(), width, height);
             } catch (IOException | InvalidFormatException e) {
                 throw new DocxException("there was a problem reading the image", e);
