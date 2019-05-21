@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -467,6 +468,26 @@ public class DocxOutput {
             } catch (IOException | InvalidFormatException e) {
                 throw new DocxException("there was a problem reading the image", e);
             }
+        }
+
+        private BigInteger createNumbering() {
+            // Based on https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
+            // A bit of inspiration from https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
+
+            // Create a numbering identifier (find the first empty).
+            // TODO: Perform this search when reading the template? Afterwards, the first available id should be known (still check if it's not used in the template).
+            XWPFNumbering numbering = doc.createNumbering();
+            BigInteger abstractNumId = BigInteger.valueOf(0);
+            {
+                // First, test id == 1 (start at zero, increase, check if 1 exists: if not, loop).
+                Object o;
+                do {
+                    abstractNumId = abstractNumId.add(BigInteger.ONE);
+                    o = numbering.getAbstractNum(abstractNumId);
+                } while (o != null);
+            }
+
+            return numbering.addNum(abstractNumId);
         }
 
         /** Actual SAX handler **/
