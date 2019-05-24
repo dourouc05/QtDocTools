@@ -196,6 +196,28 @@ public class DocxOutput {
         return -1;
     }
 
+    private static class POIHelpers {
+        static CTLevelText createText(String t) {
+            CTLevelText ct = CTLevelText.Factory.newInstance();
+            ct.setVal(t);
+            return ct;
+        }
+
+        static CTRPr createFont(String name, boolean withCs) {
+            CTFonts fonts = CTFonts.Factory.newInstance();
+            fonts.setAscii(name);
+            fonts.setHAnsi(name);
+            if (withCs) {
+                fonts.setCs(name);
+            }
+            fonts.setHint(STHint.DEFAULT);
+
+            CTRPr font = CTRPr.Factory.newInstance();
+            font.setRFonts(fonts);
+            return font;
+        }
+    }
+
     private static class SAXHelpers {
         private static Map<String, String> attributes(Attributes attributes) {
             Map<String, String> d = new HashMap<>();
@@ -573,45 +595,17 @@ public class DocxOutput {
                 CTNumFmt bullet = CTNumFmt.Factory.newInstance();
                 bullet.setVal(STNumberFormat.BULLET);
 
-                CTLevelText charFullBullet = CTLevelText.Factory.newInstance();
-                charFullBullet.setVal("\uF0B7"); // Not working in all fonts!
-                CTLevelText charEmptyBullet = CTLevelText.Factory.newInstance();
-                charEmptyBullet.setVal("o"); // Just an o.
-                CTLevelText charFullSquare = CTLevelText.Factory.newInstance();
-                charFullSquare.setVal("\uF0A7"); // Not working in all fonts!
-//                CTLevelText charMiddlePoint = CTLevelText.Factory.newInstance();
-//                charMiddlePoint.setVal("·");
+                CTLevelText charFullBullet = POIHelpers.createText("\uF0B7"); // Not working in all fonts!
+                CTLevelText charEmptyBullet = POIHelpers.createText("o"); // Just an o.
+                CTLevelText charFullSquare = POIHelpers.createText("\uF0A7"); // Not working in all fonts!
+//                CTLevelText charMiddlePoint = POIHelpers.createText("·");
 
                 CTJc left = CTJc.Factory.newInstance();
                 left.setVal(STJc.LEFT);
 
-                CTRPr symbolFont = CTRPr.Factory.newInstance();
-                {
-                    CTFonts fonts = CTFonts.Factory.newInstance();
-                    fonts.setAscii("Symbol");
-                    fonts.setHAnsi("Symbol");
-                    fonts.setHint(STHint.DEFAULT);
-                    symbolFont.setRFonts(fonts);
-                }
-
-                CTRPr courierNewFont = CTRPr.Factory.newInstance();
-                {
-                    CTFonts fonts = CTFonts.Factory.newInstance();
-                    fonts.setAscii("Courier New");
-                    fonts.setHAnsi("Courier New");
-                    fonts.setCs("Courier New");
-                    fonts.setHint(STHint.DEFAULT);
-                    courierNewFont.setRFonts(fonts);
-                }
-
-                CTRPr wingdingsFont = CTRPr.Factory.newInstance();
-                {
-                    CTFonts fonts = CTFonts.Factory.newInstance();
-                    fonts.setAscii("Wingdings");
-                    fonts.setHAnsi("Wingdings");
-                    fonts.setHint(STHint.DEFAULT);
-                    wingdingsFont.setRFonts(fonts);
-                }
+                CTRPr symbolFont = POIHelpers.createFont("Symbol", false);
+                CTRPr courierNewFont = POIHelpers.createFont("Courier New", true);
+                CTRPr wingdingsFont = POIHelpers.createFont("Wingdings", false);
 
                 for (int i = 0; i < 9; ++i) {
                     CTLvl lvl = ctAbstractNum.addNewLvl();
