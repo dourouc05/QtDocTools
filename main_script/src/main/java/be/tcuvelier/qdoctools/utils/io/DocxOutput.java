@@ -4,9 +4,7 @@ import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
-import org.apache.xmlbeans.XmlException;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHyperlink;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
@@ -557,27 +555,99 @@ public class DocxOutput {
             }
             lastFilledNumbering = abstractNumId;
 
-            // Actually create the numbering.
-            BigInteger numId = numbering.addNum(abstractNumId);
-
-            CTAbstractNum ctAbstractNum;
-            try {
-                // FileInputStream is necessary, otherwise Xerces gets mixed up with encoding.
-                ctAbstractNum = CTAbstractNum.Factory.parse(new FileInputStream(MainCommand.toDocxTemplateNumberingBullet));
-            } catch (XmlException | IOException e) {
-                throw new DocxException("parsing the template numbering " + MainCommand.toDocxTemplateNumberingBullet, e);
+            // Create the abstract numbering from scratch.
+            // Inspired by
+            // https://stackoverflow.com/questions/1940911/openxml-2-sdk-word-document-create-bulleted-list-programmatically
+            // http://officeopenxml.com/WPnumbering.php
+            CTAbstractNum ctAbstractNum = CTAbstractNum.Factory.newInstance();
+            ctAbstractNum.setAbstractNumId(abstractNumId);
+            {
+                CTMultiLevelType ctMultiLevelType = CTMultiLevelType.Factory.newInstance();
+                ctMultiLevelType.setVal(STMultiLevelType.HYBRID_MULTILEVEL);
+                ctAbstractNum.setMultiLevelType(ctMultiLevelType);
             }
+            {
+                CTDecimalNumber one = CTDecimalNumber.Factory.newInstance();
+                one.setVal(BigInteger.ONE);
+
+                CTNumFmt bullet = CTNumFmt.Factory.newInstance();
+                bullet.setVal(STNumberFormat.BULLET);
+
+                CTLevelText charFullBullet = CTLevelText.Factory.newInstance();
+                charFullBullet.setVal("\uF0B7"); // Not working in all fonts!
+                CTLevelText charEmptyBullet = CTLevelText.Factory.newInstance();
+                charEmptyBullet.setVal("o"); // Just an o.
+                CTLevelText charFullSquare = CTLevelText.Factory.newInstance();
+                charFullSquare.setVal("\uF0A7"); // Not working in all fonts!
+//                CTLevelText charMiddlePoint = CTLevelText.Factory.newInstance();
+//                charMiddlePoint.setVal("·");
+
+                CTJc left = CTJc.Factory.newInstance();
+                left.setVal(STJc.LEFT);
+
+                CTRPr symbolFont = CTRPr.Factory.newInstance();
+                {
+                    CTFonts fonts = CTFonts.Factory.newInstance();
+                    fonts.setAscii("Symbol");
+                    fonts.setHAnsi("Symbol");
+                    fonts.setHint(STHint.DEFAULT);
+                    symbolFont.setRFonts(fonts);
+                }
+
+                CTRPr courierNewFont = CTRPr.Factory.newInstance();
+                {
+                    CTFonts fonts = CTFonts.Factory.newInstance();
+                    fonts.setAscii("Courier New");
+                    fonts.setHAnsi("Courier New");
+                    fonts.setCs("Courier New");
+                    fonts.setHint(STHint.DEFAULT);
+                    courierNewFont.setRFonts(fonts);
+                }
+
+                CTRPr wingdingsFont = CTRPr.Factory.newInstance();
+                {
+                    CTFonts fonts = CTFonts.Factory.newInstance();
+                    fonts.setAscii("Wingdings");
+                    fonts.setHAnsi("Wingdings");
+                    fonts.setHint(STHint.DEFAULT);
+                    wingdingsFont.setRFonts(fonts);
+                }
+
+                for (int i = 0; i < 9; ++i) {
+                    CTLvl lvl = ctAbstractNum.addNewLvl();
+                    lvl.setIlvl(BigInteger.valueOf(i));
+                    lvl.setStart(one);
+                    lvl.setNumFmt(bullet);
+//                    lvl.setLvlText(charMiddlePoint);
+                    if (i % 3 == 0) {
+                        lvl.setLvlText(charFullBullet);
+                        lvl.setRPr(symbolFont);
+                    } else if (i % 3 == 1) {
+                        lvl.setLvlText(charEmptyBullet);
+                        lvl.setRPr(courierNewFont);
+                    } else {
+                        lvl.setLvlText(charFullSquare);
+                        lvl.setRPr(wingdingsFont);
+                    }
+                    lvl.setLvlJc(left);
+
+                    // Indentation values taken from Word 2019 (major difference: left vs start, see
+                    // http://officeopenxml.com/WPindentation.php).
+                    CTInd levelIndent = CTInd.Factory.newInstance();
+                    levelIndent.setLeft(BigInteger.valueOf(720 * (i + 1)));
+                    levelIndent.setHanging(BigInteger.valueOf(360));
+                    CTPPr indent = CTPPr.Factory.newInstance();
+                    indent.setInd(levelIndent);
+                    lvl.setPPr(indent);
+                }
+            }
+
+            // Actually create the (concrete) numbering.
+            BigInteger numId = numbering.addNum(abstractNumId);
             XWPFAbstractNum abstractNum = new XWPFAbstractNum(ctAbstractNum, numbering);
-            abstractNum.getAbstractNum().setAbstractNumId(abstractNumId);
             numbering.addAbstractNum(abstractNum);
 
             return numId;
-
-            // TODO: distinction between bullets and numbers? For now, just numbers...
-            // https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
-            // https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
-            // https://stackoverflow.com/questions/43155172/how-can-i-add-list-in-poi-word-ordered-number-or-other-symbol-for-list-symbol
-            // http://mail-archives.apache.org/mod_mbox/poi-user/201209.mbox/%3C1346490025472-5710829.post@n5.nabble.com%3E
         }
 
         /** Actual SAX handler **/
@@ -660,8 +730,7 @@ public class DocxOutput {
                 currentLevel.push(Level.TABLE);
 
                 table = doc.createTable();
-                tableRowNumber = 0;
-                tableColumnNumber = 0;
+                tableRowNumber = 0;tableColumnNumber = 0;
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableBodyTag(qName)) {
                 // Nothing to do, just go inside the table.
