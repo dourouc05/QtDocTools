@@ -60,7 +60,68 @@ public class DocxOutput {
     private enum Level {
         ROOT, ROOT_INFO,
         SECTION, SECTION_INFO,
-        TABLE
+        TABLE,
+        ITEMIZED_LIST, ORDERED_LIST
+    }
+
+    private static class LevelStack {
+        // Slight interface on top of a stack (internally, a Deque) to provide some facilities when peeking, based on
+        // the values of Level.
+
+        private Deque<Level> levels = new ArrayDeque<>();
+
+        void push(Level l) {
+            levels.push(l);
+        }
+
+        void pop() {
+            levels.pop();
+        }
+
+        boolean pop(Level l) {
+            return pop(Stream.of(l));
+        }
+
+        boolean pop(Stream<Level> ls) {
+            return pop(ls.collect(Collectors.toSet()));
+        }
+
+        boolean pop(Set<Level> ls) {
+            if (! ls.contains(levels.peek())) {
+                return false;
+            }
+
+            pop();
+            return true;
+        }
+
+        void pop(Level l, SAXException t) throws SAXException {
+            if (! pop(l)) {
+                throw t;
+            }
+        }
+
+        void pop(Stream<Level> l, SAXException t) throws SAXException {
+            if (! pop(l)) {
+                throw t;
+            }
+        }
+
+        Level peek() {
+            return levels.peek();
+        }
+
+        boolean peekRoot() {
+            return peek() == Level.ROOT;
+        }
+
+        boolean peekTable() {
+            return peek() == Level.TABLE;
+        }
+
+        boolean peekList() {
+            return peek() == Level.ITEMIZED_LIST || peek() == Level.ORDERED_LIST;
+        }
     }
 
     private enum Formatting {
@@ -286,6 +347,11 @@ public class DocxOutput {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("orderedlist");
         }
+
+        private static boolean isListItemTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("listitem");
+        }
     }
 
     private static class SAXHandler extends DefaultHandler {
@@ -296,13 +362,16 @@ public class DocxOutput {
         private XWPFParagraph paragraph;
         private int paragraphNumber = -1;
         private XWPFRun run;
+        private BigInteger numbering;
+        private int numberingItemNumber = -1;
+        private int numberingItemParagraphNumber = -1;
         private XWPFTable table; // TODO: What about nested tables? Really care about this case? Would need to stack them...
         private XWPFTableRow tableRow;
         private int tableRowNumber = -1;
         private XWPFTableCell tableColumn;
         private int tableColumnNumber = -1;
 
-        private Deque<Level> currentLevel = new ArrayDeque<>();
+        private LevelStack currentLevel = new LevelStack();
         private int currentSectionDepth = 0; // 0: root; >0: sections.
         private List<Formatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
         // the document is the first one in the vector. TODO: migrate to Deque?
@@ -499,7 +568,7 @@ public class DocxOutput {
                 ensureNoTextAllowed();
                 // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
             } else if (SAXHelpers.isInfoTag(qName)) {
-                currentLevel.push((currentLevel.peek() == Level.ROOT) ? Level.ROOT_INFO : Level.SECTION_INFO);
+                currentLevel.push(currentLevel.peekRoot() ? Level.ROOT_INFO : Level.SECTION_INFO);
                 ensureNoTextAllowed();
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isSectionTag(qName)) {
@@ -519,7 +588,7 @@ public class DocxOutput {
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isParagraphTag(qName)) {
                 // For tables, the paragraph is automatically created within a table cell.
-                if (currentLevel.peek() == Level.TABLE && paragraphNumber == 0) {
+                if (currentLevel.peekTable() && paragraphNumber == 0) {
                     return;
                 }
 
@@ -527,10 +596,20 @@ public class DocxOutput {
                     throw new DocxException("tried to create a new paragraph, but one was already being filled.");
                 }
 
-                if (currentLevel.peek() == Level.TABLE) {
+                if (currentLevel.peekTable()) {
                     paragraph = tableColumn.addParagraph();
                 } else {
                     paragraph = doc.createParagraph();
+
+                    if (currentLevel.peekList()) {
+                        paragraph.setNumID(numbering);
+
+                        if (numberingItemParagraphNumber > 0) {
+                            throw new DocxException("more than one paragraph in a list item, this is not supported.");
+                            // How to make the difference when decoding this back? For implementation, maybe hack
+                            // something based on https://stackoverflow.com/a/43164999/1066843.
+                        }
+                    }
                 }
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
@@ -622,14 +701,37 @@ public class DocxOutput {
                 paragraph.setStyle("Caption");
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
-            } else if (SAXHelpers.isItemizedListTag(qName)) {
-                paragraph = doc.createParagraph();
-                run = paragraph.createRun();
+            } else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
+                if (currentLevel.peekList()) {
+                    throw new DocxException("list within list not yet implemented.");
+                }
+
+                numbering = createNumbering();
+                if (SAXHelpers.isItemizedListTag(qName)) {
+                    currentLevel.push(Level.ITEMIZED_LIST);
+                } else if (SAXHelpers.isOrderedListTag(qName)) {
+                    currentLevel.push(Level.ORDERED_LIST);
+                }
+
+                numberingItemNumber = 0;
+                numberingItemParagraphNumber = -1;
+
+//                paragraph = doc.createParagraph();
+//                paragraph.setNumID(numbering);
+//
+//                run = paragraph.createRun();
+
+                ensureNoTextAllowed();
                 warnUnknownAttributes(attributes);
-            } else if (SAXHelpers.isOrderedListTag(qName)) {
-                paragraph = doc.createParagraph();
-                run = paragraph.createRun();
+            } else if (SAXHelpers.isListItemTag(qName)) {
+                if (! currentLevel.peekList()) {
+                    throw new DocxException("unexpected listitem.");
+                }
+                ensureNoTextAllowed();
                 warnUnknownAttributes(attributes);
+                // listitem is just a container for para, so barely nothing to do here.
+                numberingItemNumber = -1;
+                numberingItemParagraphNumber = 0;
             } else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
@@ -642,16 +744,21 @@ public class DocxOutput {
             if (SAXHelpers.isRootTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isInfoTag(qName)) {
-                currentLevel.pop();
+                currentLevel.pop(Stream.of(Level.ROOT_INFO, Level.SECTION_INFO), new DocxException("unexpected end of info"));
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isSectionTag(qName)) {
-                currentLevel.pop();
+                currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
                 currentSectionDepth -= 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTitleTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isParagraphTag(qName)) {
                 paragraphNumber += 1;
+
+                if (currentLevel.peekList()) {
+                    numberingItemParagraphNumber += 1;
+                }
+
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isFormatting(qName)) {
                 // Remove the last formatting tag found. Throw an exception if it should not have been added by emphasis.
@@ -666,7 +773,7 @@ public class DocxOutput {
                 // Create a new run, so that the new text is not within the same run.
                 run = paragraph.createRun();
             } else if (SAXHelpers.isTableTag(qName)) {
-                currentLevel.pop();
+                currentLevel.pop(Level.TABLE, new DocxException("unexpected end of table"));
                 tableRowNumber = -1;
                 tableColumnNumber = -1;
                 paragraphNumber = 0;
@@ -697,10 +804,26 @@ public class DocxOutput {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isCaptionTag(qName)) {
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isItemizedListTag(qName)) {
+            } else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
+                currentLevel.pop(Stream.of(Level.ORDERED_LIST, Level.ITEMIZED_LIST), new DocxException("unexpected end of list"));
+
+                if (SAXHelpers.isItemizedListTag(qName)) {
+                    currentLevel.push(Level.ITEMIZED_LIST);
+                } else if (SAXHelpers.isOrderedListTag(qName)) {
+                    currentLevel.push(Level.ORDERED_LIST);
+                }
+
+                numberingItemNumber = -1;
+                numberingItemParagraphNumber = -1;
+
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isOrderedListTag(qName)) {
+            } else if (SAXHelpers.isListItemTag(qName)) {
+                if (currentLevel.peek() != Level.ORDERED_LIST && currentLevel.peek() != Level.ITEMIZED_LIST) {
+                    throw new DocxException("unexpected end of listitem.");
+                }
                 ensureNoTextAllowed();
+                numberingItemNumber += 1;
+                numberingItemParagraphNumber = -1;
             } else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
