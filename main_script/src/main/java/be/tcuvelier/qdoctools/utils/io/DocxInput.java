@@ -314,9 +314,9 @@ public class DocxInput {
     }
 
     private void visitRun(XWPFRun run) throws XMLStreamException {
-        // TODO: maybe implement simplifications if two runs have the same set of formattings.
+        // TODO: maybe implement simplifications if two runs have the same set of formattings (compute the difference between sets of formatting).
 
-        // Copied from STVerticalAlignRun.Enum. TODO: Better way?
+        // Copied from STVerticalAlignRun.Enum. TODO: Better way to have these constants?
         int INT_SUPERSCRIPT = 2;
         int INT_SUBSCRIPT = 3;
 

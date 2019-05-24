@@ -4,6 +4,8 @@ import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.apache.xmlbeans.XmlException;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTHyperlink;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -15,10 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -540,7 +539,7 @@ public class DocxOutput {
             }
         }
 
-        private BigInteger createNumbering() {
+        private BigInteger createNumbering() throws DocxException {
             // Based on https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
             // A bit of inspiration from https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
 
@@ -558,7 +557,21 @@ public class DocxOutput {
             }
             lastFilledNumbering = abstractNumId;
 
-            return numbering.addNum(abstractNumId);
+            // Actually create the numbering.
+            BigInteger numId = numbering.addNum(abstractNumId);
+
+            CTAbstractNum ctAbstractNum;
+            try {
+                // FileInputStream is necessary, otherwise Xerces gets mixed up with encoding.
+                ctAbstractNum = CTAbstractNum.Factory.parse(new FileInputStream(MainCommand.toDocxTemplateNumberingBullet));
+            } catch (XmlException | IOException e) {
+                throw new DocxException("parsing the template numbering " + MainCommand.toDocxTemplateNumberingBullet, e);
+            }
+            XWPFAbstractNum abstractNum = new XWPFAbstractNum(ctAbstractNum, numbering);
+            abstractNum.getAbstractNum().setAbstractNumId(abstractNumId);
+            numbering.addAbstractNum(abstractNum);
+
+            return numId;
 
             // TODO: distinction between bullets and numbers? For now, just numbers...
             // https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
@@ -724,11 +737,6 @@ public class DocxOutput {
                 numberingItemNumber = 0;
                 numberingItemParagraphNumber = -1;
 
-//                paragraph = doc.createParagraph();
-//                paragraph.setNumID(numbering);
-//
-//                run = paragraph.createRun();
-
                 ensureNoTextAllowed();
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isListItemTag(qName)) {
@@ -826,7 +834,7 @@ public class DocxOutput {
 
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isListItemTag(qName)) {
-                if (currentLevel.peek() != Level.ORDERED_LIST && currentLevel.peek() != Level.ITEMIZED_LIST) {
+                if (! currentLevel.peekList()) {
                     throw new DocxException("unexpected end of listitem.");
                 }
                 ensureNoTextAllowed();

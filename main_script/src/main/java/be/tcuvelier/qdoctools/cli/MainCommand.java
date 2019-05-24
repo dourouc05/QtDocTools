@@ -26,6 +26,7 @@ public class MainCommand implements Callable<Void> {
 
     // Between DocBook and DOCX.
     public final static String toDocxTemplate = "../proofread/proofread_todocx/template/template.docx";
+    public final static String toDocxTemplateNumberingBullet = "../proofread/proofread_todocx/template/numbering_bullet.xml";
     public final static String fromDocxTests = "../proofread/proofread_fromdocx/tests/";
     public final static String toDocxTests = "../proofread/proofread_todocx/tests/";
 
