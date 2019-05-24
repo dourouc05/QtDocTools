@@ -363,6 +363,7 @@ public class DocxOutput {
         private int paragraphNumber = -1;
         private XWPFRun run;
         private BigInteger numbering;
+        private BigInteger lastFilledNumbering = BigInteger.ZERO;
         private int numberingItemNumber = -1;
         private int numberingItemParagraphNumber = -1;
         private XWPFTable table; // TODO: What about nested tables? Really care about this case? Would need to stack them...
@@ -544,9 +545,9 @@ public class DocxOutput {
             // A bit of inspiration from https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
 
             // Create a numbering identifier (find the first empty).
-            // TODO: Perform this search when reading the template? Afterwards, the first available id should be known (still check if it's not used in the template).
+            // lastFilledNumbering is only used to speed up the computations.
             XWPFNumbering numbering = doc.createNumbering();
-            BigInteger abstractNumId = BigInteger.valueOf(0);
+            BigInteger abstractNumId = lastFilledNumbering;
             {
                 // First, test id == 1 (start at zero, increase, check if 1 exists: if not, loop).
                 Object o;
@@ -555,8 +556,15 @@ public class DocxOutput {
                     o = numbering.getAbstractNum(abstractNumId);
                 } while (o != null);
             }
+            lastFilledNumbering = abstractNumId;
 
             return numbering.addNum(abstractNumId);
+
+            // TODO: distinction between bullets and numbers? For now, just numbers...
+            // https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
+            // https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
+            // https://stackoverflow.com/questions/43155172/how-can-i-add-list-in-poi-word-ordered-number-or-other-symbol-for-list-symbol
+            // http://mail-archives.apache.org/mod_mbox/poi-user/201209.mbox/%3C1346490025472-5710829.post@n5.nabble.com%3E
         }
 
         /** Actual SAX handler **/
