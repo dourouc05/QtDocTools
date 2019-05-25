@@ -203,13 +203,11 @@ public class DocxOutput {
             return ct;
         }
 
-        static CTRPr createFont(String name, boolean withCs) {
+        static CTRPr createFont(String name) {
             CTFonts fonts = CTFonts.Factory.newInstance();
             fonts.setAscii(name);
             fonts.setHAnsi(name);
-            if (withCs) {
-                fonts.setCs(name);
-            }
+            fonts.setCs(name);
             fonts.setHint(STHint.DEFAULT);
 
             CTRPr font = CTRPr.Factory.newInstance();
@@ -559,7 +557,7 @@ public class DocxOutput {
             }
         }
 
-        private BigInteger createNumbering() throws DocxException {
+        private BigInteger createNumbering(boolean isOrdered) {
             // Based on https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
             // A bit of inspiration from https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
 
@@ -589,44 +587,63 @@ public class DocxOutput {
                 ctAbstractNum.setMultiLevelType(ctMultiLevelType);
             }
             {
+                // Define many useful values that will be used several times later on (only in this scope).
                 CTDecimalNumber one = CTDecimalNumber.Factory.newInstance();
                 one.setVal(BigInteger.ONE);
 
                 CTNumFmt bullet = CTNumFmt.Factory.newInstance();
                 bullet.setVal(STNumberFormat.BULLET);
+                CTNumFmt decimal = CTNumFmt.Factory.newInstance();
+                decimal.setVal(STNumberFormat.DECIMAL);
+                CTNumFmt lowerLetter = CTNumFmt.Factory.newInstance();
+                lowerLetter.setVal(STNumberFormat.LOWER_LETTER);
+                CTNumFmt lowerRoman = CTNumFmt.Factory.newInstance();
+                lowerRoman.setVal(STNumberFormat.LOWER_ROMAN);
 
                 CTLevelText charFullBullet = POIHelpers.createText("\uF0B7"); // Not working in all fonts!
                 CTLevelText charEmptyBullet = POIHelpers.createText("o"); // Just an o.
                 CTLevelText charFullSquare = POIHelpers.createText("\uF0A7"); // Not working in all fonts!
-//                CTLevelText charMiddlePoint = POIHelpers.createText("·");
 
                 CTJc left = CTJc.Factory.newInstance();
                 left.setVal(STJc.LEFT);
 
-                CTRPr symbolFont = POIHelpers.createFont("Symbol", false);
-                CTRPr courierNewFont = POIHelpers.createFont("Courier New", true);
-                CTRPr wingdingsFont = POIHelpers.createFont("Wingdings", false);
+                CTRPr symbolFont = POIHelpers.createFont("Symbol");
+                CTRPr courierNewFont = POIHelpers.createFont("Courier New");
+                CTRPr wingdingsFont = POIHelpers.createFont("Wingdings");
 
+                // Create the various levels of this abstract numbering.
                 for (int i = 0; i < 9; ++i) {
                     CTLvl lvl = ctAbstractNum.addNewLvl();
                     lvl.setIlvl(BigInteger.valueOf(i));
                     lvl.setStart(one);
-                    lvl.setNumFmt(bullet);
-//                    lvl.setLvlText(charMiddlePoint);
-                    if (i % 3 == 0) {
-                        lvl.setLvlText(charFullBullet);
-                        lvl.setRPr(symbolFont);
-                    } else if (i % 3 == 1) {
-                        lvl.setLvlText(charEmptyBullet);
-                        lvl.setRPr(courierNewFont);
-                    } else {
-                        lvl.setLvlText(charFullSquare);
-                        lvl.setRPr(wingdingsFont);
-                    }
                     lvl.setLvlJc(left);
 
-                    // Indentation values taken from Word 2019 (major difference: left vs start, see
-                    // http://officeopenxml.com/WPindentation.php).
+                    // Actually define the bullets: either a real bullet, or a number (following what Word 2019 does).
+                    if (! isOrdered) {
+                        lvl.setNumFmt(bullet);
+                        if (i % 3 == 0) {
+                            lvl.setLvlText(charFullBullet);
+                            lvl.setRPr(symbolFont);
+                        } else if (i % 3 == 1) {
+                            lvl.setLvlText(charEmptyBullet);
+                            lvl.setRPr(courierNewFont);
+                        } else {
+                            lvl.setLvlText(charFullSquare);
+                            lvl.setRPr(wingdingsFont);
+                        }
+                    } else {
+                        if (i % 3 == 0) {
+                            lvl.setNumFmt(decimal);
+                        } else if (i % 3 == 1) {
+                            lvl.setNumFmt(lowerLetter);
+                        } else {
+                            lvl.setNumFmt(lowerRoman);
+                        }
+                        lvl.setLvlText(POIHelpers.createText("%" + i + "."));
+                    }
+
+                    // Indentation values taken from Word 2019 (major difference with that reference: left vs start,
+                    // see http://officeopenxml.com/WPindentation.php).
                     CTInd levelIndent = CTInd.Factory.newInstance();
                     levelIndent.setLeft(BigInteger.valueOf(720 * (i + 1)));
                     levelIndent.setHanging(BigInteger.valueOf(360));
@@ -790,7 +807,7 @@ public class DocxOutput {
                     throw new DocxException("list within list not yet implemented.");
                 }
 
-                numbering = createNumbering();
+                numbering = createNumbering(SAXHelpers.isOrderedListTag(qName));
                 if (SAXHelpers.isItemizedListTag(qName)) {
                     currentLevel.push(Level.ITEMIZED_LIST);
                 } else if (SAXHelpers.isOrderedListTag(qName)) {
