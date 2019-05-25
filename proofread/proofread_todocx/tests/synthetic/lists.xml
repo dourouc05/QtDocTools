@@ -12,10 +12,13 @@
   <db:orderedlist>
     <db:listitem><para>Item 1.</para></db:listitem>
     <db:listitem><para>Item 2.</para></db:listitem>
-  </db:orderedlist><!--
+  </db:orderedlist>
   <db:para>Segmented list:</db:para>
   <db:segmentedlist>
-    <db:listitem><para>Item 1.</para></db:listitem>
-    <db:listitem><para>Item 2.</para></db:listitem>
-  </db:segmentedlist>-->
+    <db:segtitle>State</db:segtitle>
+    <db:segtitle>Capital</db:segtitle>
+    <db:seglistitem><db:seg>Alabama</db:seg><db:seg>Montgomery</db:seg></db:seglistitem>
+    <db:seglistitem><db:seg>Alaska</db:seg><db:seg>Juneau</db:seg></db:seglistitem>
+    <db:seglistitem><db:seg>Arkansas</db:seg><db:seg>Little Rock</db:seg></db:seglistitem>
+  </db:segmentedlist>
 </db:article>

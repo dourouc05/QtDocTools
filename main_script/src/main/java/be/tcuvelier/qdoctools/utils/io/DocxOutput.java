@@ -24,6 +24,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DocxOutput {
+    /*
+    * How to make a new template? Basically, use every style available in Word. This ensures that no style that is
+    * used by this script remains "latent", in OpenXML terminology.
+    * You must also define some new styles:
+    *   - for segmented lists (which will always be shown as textual lists!): "Definition List Title" and
+    *     "Definition List Item"
+    *   - for variable lists (which will always be shown as textual lists): "Variable List Title" and
+    *     "Variable List Item". Graphically, those styles should resemble segmented lists (they are distinct so that
+    *     round-tripping is possible)
+    */
+
     public static void main(String[] args) throws Exception {
 //        String test = "basic";
 //        String test = "sections";
@@ -58,7 +69,7 @@ public class DocxOutput {
         ROOT, ROOT_INFO,
         SECTION, SECTION_INFO,
         TABLE,
-        ITEMIZED_LIST, ORDERED_LIST
+        ITEMIZED_LIST, ORDERED_LIST, SEGMENTED_LIST, SEGMENTED_LIST_TITLE, VARIABLE_LIST
     }
 
     private static class LevelStack {
@@ -118,6 +129,14 @@ public class DocxOutput {
 
         boolean peekList() {
             return peek() == Level.ITEMIZED_LIST || peek() == Level.ORDERED_LIST;
+        }
+
+        boolean peekSegmentedList() {
+            return peek() == Level.SEGMENTED_LIST;
+        }
+
+        boolean peekSegmentedListTitle() {
+            return peek() == Level.SEGMENTED_LIST_TITLE;
         }
     }
 
@@ -369,20 +388,44 @@ public class DocxOutput {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("listitem");
         }
+
+        private static boolean isSegmentedListTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("segmentedlist");
+        }
+
+        private static boolean isSegmentedListTitleTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("segtitle");
+        }
+
+        private static boolean isSegmentedListItemTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("seglistitem");
+        }
+
+        private static boolean isSegmentedListItemValueTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("seg");
+        }
     }
 
     private static class SAXHandler extends DefaultHandler {
         private Locator locator;
         private Path folder;
-
         private XWPFDocument doc;
+
         private XWPFParagraph paragraph;
         private int paragraphNumber = -1;
         private XWPFRun run;
+
         private BigInteger numbering;
         private BigInteger lastFilledNumbering = BigInteger.ZERO;
         private int numberingItemNumber = -1;
         private int numberingItemParagraphNumber = -1;
+        private List<String> segmentedListHeaders; // TODO: Limitation for ease of implementation: no styling stored in this list, just raw headers.
+        private int segmentNumber = -1;
+
         private XWPFTable table; // TODO: What about nested tables? Really care about this case? Would need to stack them...
         private XWPFTableRow tableRow;
         private int tableRowNumber = -1;
@@ -639,7 +682,7 @@ public class DocxOutput {
                         } else {
                             lvl.setNumFmt(lowerRoman);
                         }
-                        lvl.setLvlText(POIHelpers.createText("%" + i + "."));
+                        lvl.setLvlText(POIHelpers.createText("%" + (i + 1) + "."));
                     }
 
                     // Indentation values taken from Word 2019 (major difference with that reference: left vs start,
@@ -828,6 +871,60 @@ public class DocxOutput {
                 // listitem is just a container for para, so barely nothing to do here.
                 numberingItemNumber = -1;
                 numberingItemParagraphNumber = 0;
+            } else if (SAXHelpers.isSegmentedListTag(qName)) {
+                currentLevel.push(Level.SEGMENTED_LIST);
+
+                numberingItemNumber = 0;
+                numberingItemParagraphNumber = -1;
+                segmentedListHeaders = new ArrayList<>();
+                segmentNumber = -1;
+
+                // Principles for handling segmented lists: buffer the titles in segmentedListHeaders, then spit them
+                // out as necessary for each seglistitem.
+                // Thus, characters() will need a mode to write to the buffer only if SAX is within a title right now;
+                // afterwards, it should just print text normally to the current run.
+
+                ensureNoTextAllowed();
+                warnUnknownAttributes(attributes);
+            } else if (SAXHelpers.isSegmentedListTitleTag(qName)) {
+                if (! currentLevel.peekSegmentedList()) {
+                    throw new DocxException("unexpected segmented list header");
+                }
+
+                currentLevel.push(Level.SEGMENTED_LIST_TITLE);
+
+                ensureNoTextAllowed(); // No text written to the document right now, it must be buffered
+                // (done in characters).
+                warnUnknownAttributes(attributes);
+            } else if (SAXHelpers.isSegmentedListItemTag(qName)) {
+                if (! currentLevel.peekSegmentedList()) {
+                    throw new DocxException("unexpected segmented list content");
+                }
+
+                if (segmentedListHeaders.size() == 0) {
+                    throw new DocxException("segmented list has no header");
+                }
+
+                segmentNumber = 0;
+            } else if (SAXHelpers.isSegmentedListItemValueTag(qName)) {
+                if (segmentNumber < 0 || ! currentLevel.peekSegmentedList()) {
+                    throw new DocxException("unexpected segmented list content");
+                }
+
+                if (segmentNumber >= segmentedListHeaders.size()) {
+                    throw new DocxException("more values than allowed by the header; " +
+                            "did you use any formatting for the header?");
+                }
+
+                // Print the header for this segment, then prepare for the value.
+                paragraph = doc.createParagraph();
+                paragraph.setStyle("DefinitionListTitle");
+                run = paragraph.createRun();
+                run.setText(segmentedListHeaders.get(segmentNumber));
+
+                paragraph = doc.createParagraph();
+                paragraph.setStyle("DefinitionListItem");
+                run = paragraph.createRun();
             } else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
@@ -912,9 +1009,34 @@ public class DocxOutput {
                 if (! currentLevel.peekList()) {
                     throw new DocxException("unexpected end of listitem.");
                 }
-                ensureNoTextAllowed();
+
                 numberingItemNumber += 1;
                 numberingItemParagraphNumber = -1;
+
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isSegmentedListTag(qName)) {
+                currentLevel.pop(Level.SEGMENTED_LIST, new DocxException("unexpected end of segmented list"));
+
+                numberingItemNumber = -1;
+                numberingItemParagraphNumber = -1;
+                segmentedListHeaders = null;
+
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isSegmentedListTitleTag(qName)) {
+                currentLevel.pop(Level.SEGMENTED_LIST_TITLE,
+                        new DocxException("unexpected end of segmented list header"));
+
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isSegmentedListItemTag(qName)) {
+                // End of a list item: no more value is expected.
+                segmentNumber = -1;
+
+                ensureNoTextAllowed();
+            } else if (SAXHelpers.isSegmentedListItemValueTag(qName)) {
+                // End of a value: go to the next one.
+                segmentNumber += 1;
+
+                ensureNoTextAllowed();
             } else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
@@ -924,9 +1046,16 @@ public class DocxOutput {
 
         @Override
         public void characters(char[] ch, int start, int length) throws SAXException {
-            String content = new String(ch, start, length);
+            String content = new String(ch, start, length).trim();
 
-            if (content.replaceAll("(\\s|\n)+", "").length() == 0) {
+            if (content.length() == 0 || content.replaceAll("(\\s|\n)+", "").length() == 0) {
+                return;
+            }
+
+            if (currentLevel.peekSegmentedListTitle()) {
+                // Store the run in segmentedListTitles, as it should be rewritten for each item in the segmented list.
+                // Formatting is ignored; this is a known limitation.
+                segmentedListHeaders.add(content);
                 return;
             }
 
