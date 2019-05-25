@@ -901,13 +901,8 @@ public class DocxOutput {
             } else if (SAXHelpers.isCaptionTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
-                currentLevel.pop(Stream.of(Level.ORDERED_LIST, Level.ITEMIZED_LIST), new DocxException("unexpected end of list"));
-
-                if (SAXHelpers.isItemizedListTag(qName)) {
-                    currentLevel.push(Level.ITEMIZED_LIST);
-                } else if (SAXHelpers.isOrderedListTag(qName)) {
-                    currentLevel.push(Level.ORDERED_LIST);
-                }
+                currentLevel.pop(Stream.of(Level.ORDERED_LIST, Level.ITEMIZED_LIST),
+                        new DocxException("unexpected end of list"));
 
                 numberingItemNumber = -1;
                 numberingItemParagraphNumber = -1;
