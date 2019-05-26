@@ -71,7 +71,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
         }
 
-        private Level peek() {
+        Level peek() {
             return levels.peek();
         }
 
@@ -95,10 +95,16 @@ public class DocxOutputImpl extends DefaultHandler {
         boolean peekSegmentedListTitle() {
             return peek() == Level.SEGMENTED_LIST_TITLE;
         }
+
+        boolean peekVariableList() {
+            return peek() == Level.VARIABLE_LIST;
+        }
     }
 
     private enum Formatting {
-        EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT;
+        EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT,
+        CLASS_NAME, EXCEPTION_NAME, INTERFACE_NAME, METHOD_NAME, COMPUTER_OUTPUT, CONSTANT, ENVIRONMENT_VARIABLE,
+        FILE_NAME, LITERAL, CODE, OPTION, PROMPT, SYSTEM_ITEM, VARIABLE_NAME, EMAIL, URI;
 
         static Formatting tagToFormatting(String localName, Attributes attributes) {
             String role = "";
@@ -128,8 +134,45 @@ public class DocxOutputImpl extends DefaultHandler {
                 return Formatting.SUPERSCRIPT;
             } else if (SAXHelpers.isSubscriptTag(localName)) {
                 return Formatting.SUBSCRIPT;
-            } else {
-                return Formatting.EMPHASIS;
+            }
+            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl
+            else if (SAXHelpers.isClassNameTag(localName)) {
+                return Formatting.CLASS_NAME;
+            } else if (SAXHelpers.isExceptionNameTag(localName)) {
+                return Formatting.EXCEPTION_NAME;
+            } else if (SAXHelpers.isInterfaceNameTag(localName)) {
+                return Formatting.INTERFACE_NAME;
+            } else if (SAXHelpers.isMethodNameTag(localName)) {
+                return Formatting.METHOD_NAME;
+            } else if (SAXHelpers.isComputerOutputTag(localName)) {
+                return Formatting.COMPUTER_OUTPUT;
+            } else if (SAXHelpers.isConstantTag(localName)) {
+                return Formatting.CONSTANT;
+            } else if (SAXHelpers.isEnvironmentVariableTag(localName)) {
+                return Formatting.ENVIRONMENT_VARIABLE;
+            } else if (SAXHelpers.isFileNameTag(localName)) {
+                return Formatting.FILE_NAME;
+            } else if (SAXHelpers.isLiteralTag(localName)) {
+                return Formatting.LITERAL;
+            } else if (SAXHelpers.isCodeTag(localName)) {
+                return Formatting.CODE;
+            } else if (SAXHelpers.isCodeTag(localName)) {
+                return Formatting.OPTION;
+            } else if (SAXHelpers.isPromptTag(localName)) {
+                return Formatting.PROMPT;
+            } else if (SAXHelpers.isSystemItemTag(localName)) {
+                return Formatting.SYSTEM_ITEM;
+            } else if (SAXHelpers.isVariableNameTag(localName)) {
+                return Formatting.VARIABLE_NAME;
+            } else if (SAXHelpers.isEmailTag(localName)) {
+                return Formatting.EMAIL;
+            } else if (SAXHelpers.isURITag(localName)) {
+                return Formatting.URI;
+            }
+            // Catch-all.
+            else {
+                throw new IllegalArgumentException("Unknown formatting tag for tagToFormatting, " +
+                        "but recognised as formatting: " + localName);
             }
         }
     }
@@ -217,8 +260,105 @@ public class DocxOutputImpl extends DefaultHandler {
             return localName.equalsIgnoreCase("subscript");
         }
 
+        private static boolean isClassNameTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("classname");
+        }
+
+        private static boolean isExceptionNameTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("exceptionname");
+        }
+
+        private static boolean isInterfaceNameTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("interfacename");
+        }
+
+        private static boolean isMethodNameTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("methodname");
+        }
+
+        private static boolean isComputerOutputTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("computeroutput");
+        }
+
+        private static boolean isConstantTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("constant");
+        }
+
+        private static boolean isEnvironmentVariableTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("envar");
+        }
+
+        private static boolean isFileNameTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("filename");
+        }
+
+        private static boolean isLiteralTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("literal");
+        }
+
+        private static boolean isCodeTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("code");
+        }
+
+        private static boolean isOptionTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("option");
+        }
+
+        private static boolean isPromptTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("prompt");
+        }
+
+        private static boolean isSystemItemTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("systemitem");
+        }
+
+        private static boolean isVariableNameTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("varname");
+        }
+
+        private static boolean isEmailTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("email");
+        }
+
+        private static boolean isURITag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("uri");
+        }
+
         private static boolean isFormatting(String qName) {
-            return isEmphasisTag(qName) || isSubscriptTag(qName) || isSuperscriptTag(qName);
+            return isRunFormatting(qName) || isInlineFormatting(qName);
+        }
+
+        private static boolean isRunFormatting(String qName) {
+            return isEmphasisTag(qName) || isSubscriptTag(qName) || isSuperscriptTag(qName) || isInlineFormatting(qName);
+        }
+
+        private static boolean isInlineFormatting(String qName) {
+            // Corresponding Word styles:
+            // Class Name, Exception Name, Interface Name, Method Name, Computer Output, Constant, Environment Variable,
+            // File Name, Literal, Code, Option, Prompt, System Item, Variable Name, Email, URI
+            // Order from https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl
+            // TODO: What to do with function? To be studied further...
+            return isClassNameTag(qName) || isExceptionNameTag(qName) || isMethodNameTag(qName)
+                    || isComputerOutputTag(qName) || isConstantTag(qName) || isEnvironmentVariableTag(qName)
+                    || isFileNameTag(qName) || isLiteralTag(qName) || isConstantTag(qName) || isOptionTag(qName)
+                    || isPromptTag(qName) || isSystemItemTag(qName) || isVariableNameTag(qName)
+                    || isEmailTag(qName) || isURITag(qName);
         }
 
         private static boolean isLinkTag(String qName) {
@@ -324,7 +464,24 @@ public class DocxOutputImpl extends DefaultHandler {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("seg");
         }
+
+        private static boolean isVariableListTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("variablelist");
+        }
+
+        private static boolean isVariableListItemTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("varlistentry");
+        }
+
+        private static boolean isVariableListItemDefinitionTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("term");
+        }
     }
+
+    /** Internal variables. **/
 
     private Locator locator;
     private Path folder;
@@ -334,6 +491,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private XWPFParagraph paragraph;
     private int paragraphNumber = -1;
     private XWPFRun run;
+    private String paragraphStyle = "Normal";
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
@@ -597,7 +755,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
     }
 
-    /** Error and warning management **/
+    /** Error and warning management. **/
 
     @Override
     public void setDocumentLocator(Locator locator) {
@@ -653,6 +811,60 @@ public class DocxOutputImpl extends DefaultHandler {
                 case EMPHASIS_STRIKETHROUGH:
                     run.setStrikeThrough(true);
                     break;
+                case SUBSCRIPT:
+                    run.setSubscript(VerticalAlign.SUBSCRIPT);
+                    break;
+                case SUPERSCRIPT:
+                    run.setSubscript(VerticalAlign.SUPERSCRIPT);
+                    break;
+                case CLASS_NAME:
+                    run.setStyle("ClassName");
+                    break;
+                case EXCEPTION_NAME:
+                    run.setStyle("ExceptionName");
+                    break;
+                case INTERFACE_NAME:
+                    run.setStyle("InterfaceName");
+                    break;
+                case METHOD_NAME:
+                    run.setStyle("MethodName");
+                    break;
+                case COMPUTER_OUTPUT:
+                    run.setStyle("ComputerOutput");
+                    break;
+                case CONSTANT:
+                    run.setStyle("Constant");
+                    break;
+                case ENVIRONMENT_VARIABLE:
+                    run.setStyle("EnvironmentVariable");
+                    break;
+                case FILE_NAME:
+                    run.setStyle("FileName");
+                    break;
+                case LITERAL:
+                    run.setStyle("Literal");
+                    break;
+                case CODE:
+                    run.setStyle("Code");
+                    break;
+                case OPTION:
+                    run.setStyle("Option");
+                    break;
+                case PROMPT:
+                    run.setStyle("Prompt");
+                    break;
+                case SYSTEM_ITEM:
+                    run.setStyle("SystemItem");
+                    break;
+                case VARIABLE_NAME:
+                    run.setStyle("VariableName");
+                    break;
+                case EMAIL:
+                    run.setStyle("Email");
+                    break;
+                case URI:
+                    run.setStyle("URI");
+                    break;
                 default:
                     throw new DocxException("formatting not recognised by setRunFormatting: " + f);
             }
@@ -664,7 +876,11 @@ public class DocxOutputImpl extends DefaultHandler {
         run = null;
     }
 
-    /** Actual SAX handler **/
+    private void restoreParagraphStyle() {
+        paragraphStyle = "Normal";
+    }
+
+    /** Actual SAX handler. **/
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -712,23 +928,32 @@ public class DocxOutputImpl extends DefaultHandler {
                 paragraph = doc.createParagraph();
 
                 if (currentLevel.peekList()) {
-                    // If within a list, this must be a new item (only one paragraph allowed per item).
                     paragraph.setNumID(numbering);
 
+                    // If within a list, this must be a new item (only one paragraph allowed per item).
+                    // This is just allowed for variable lists.
                     if (numberingItemParagraphNumber > 0) {
                         throw new DocxException("more than one paragraph in a list item, this is not supported.");
                         // How to make the difference when decoding this back? For implementation, maybe hack
                         // something based on https://stackoverflow.com/a/43164999/1066843.
+                        // However, easy to do for variable list: new items are indicated with a title.
                     }
                 }
             }
+
+            paragraph.setStyle(paragraphStyle);
+
             run = paragraph.createRun();
             warnUnknownAttributes(attributes);
         }
 
         // Inline tags.
         else if (SAXHelpers.isFormatting(qName)) {
-            currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
+            try {
+                currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
+            } catch (IllegalArgumentException e) {
+                throw new DocxException("formatting not recognised", e);
+            }
 
             // Create a new run if this one is already started.
             if (run.text().length() > 0) {
@@ -839,14 +1064,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isListItemTag(qName)) {
-            if (! currentLevel.peekList()) {
-                throw new DocxException("unexpected listitem.");
-            }
+        } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekList()) {
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
+
             // listitem is just a container for para, so barely nothing to do here.
-            numberingItemNumber = -1;
+            numberingItemNumber += 1;
             numberingItemParagraphNumber = 0;
         }
 
@@ -906,10 +1129,44 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Variable lists: quite similar to segmented lists, but a completely different content model.
+        else if (SAXHelpers.isVariableListTag(qName)) {
+            currentLevel.push(Level.VARIABLE_LIST);
+
+            numberingItemNumber = 0;
+            numberingItemParagraphNumber = -1;
+
+            ensureNoTextAllowed();
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isVariableListItemTag(qName)) {
+            if (! currentLevel.peekVariableList()) {
+                throw new DocxException("unexpected segmented list content");
+            }
+
+            ensureNoTextAllowed();
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isVariableListItemDefinitionTag(qName)) {
+            if (! currentLevel.peekVariableList()) {
+                throw new DocxException("unexpected segmented list content");
+            }
+
+            paragraph = doc.createParagraph();
+            paragraph.setStyle("VariableListTitle");
+            run = paragraph.createRun();
+            // Then directly inline content.
+
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekList()) {
+            ensureNoTextAllowed();
+            warnUnknownAttributes(attributes);
+
+            // listitem is just a container for para, so barely nothing to do here.
+            numberingItemNumber += 1;
+            numberingItemParagraphNumber = 0;
+        }
 
         // Catch-all for the remaining tags.
         else {
-            throw new DocxException("unknown tag " + qName + ".");
+            throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek());
         }
 
         // There might be return instructions in the long switch.
@@ -942,7 +1199,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Inline tags: ensure the formatting is no more included in the next runs.
-        else if (SAXHelpers.isFormatting(qName)) {
+        else if (SAXHelpers.isRunFormatting(qName)) {
             // Remove the last formatting tag found. Throw an exception if it should not have been added by emphasis.
             Formatting f = currentFormatting.get(currentFormatting.size() - 1);
             if (f != Formatting.EMPHASIS && f != Formatting.EMPHASIS_BOLD && f != Formatting.EMPHASIS_UNDERLINE &&
