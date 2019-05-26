@@ -902,8 +902,10 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph = doc.createParagraph();
             if (currentSectionDepth == 0) {
                 paragraph.setStyle("Title");
-            } else {
+            } else if (currentLevel.peekRoot()) {
                 paragraph.setStyle("Heading" + currentSectionDepth);
+            } else {
+                throw new DocxException("title not expected");
             }
             run = paragraph.createRun();
             warnUnknownAttributes(attributes);
@@ -960,8 +962,6 @@ public class DocxOutputImpl extends DefaultHandler {
                 run = paragraph.createRun();
             }
 
-            paragraph = doc.createParagraph();
-            run = paragraph.createRun();
             setRunFormatting();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isLinkTag(qName)) {
@@ -1155,13 +1155,15 @@ public class DocxOutputImpl extends DefaultHandler {
             // Then directly inline content.
 
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekList()) {
+        } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekVariableList()) {
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
 
             // listitem is just a container for para, so barely nothing to do here.
             numberingItemNumber += 1;
             numberingItemParagraphNumber = 0;
+
+            paragraphStyle = "VariableListItem";
         }
 
         // Catch-all for the remaining tags.
@@ -1185,6 +1187,7 @@ public class DocxOutputImpl extends DefaultHandler {
             ensureNoTextAllowed();
         } else if (SAXHelpers.isTitleTag(qName)) {
             ensureNoTextAllowed();
+            restoreParagraphStyle();
         }
 
         // Paragraph: mostly, update counters.
@@ -1200,13 +1203,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Inline tags: ensure the formatting is no more included in the next runs.
         else if (SAXHelpers.isRunFormatting(qName)) {
-            // Remove the last formatting tag found. Throw an exception if it should not have been added by emphasis.
-            Formatting f = currentFormatting.get(currentFormatting.size() - 1);
-            if (f != Formatting.EMPHASIS && f != Formatting.EMPHASIS_BOLD && f != Formatting.EMPHASIS_UNDERLINE &&
-                    f != Formatting.EMPHASIS_STRIKETHROUGH) {
-                throw new DocxException("formatting " + f + " should not have been added by an emphasis tag.");
-            }
-
             currentFormatting.remove(currentFormatting.size() - 1);
             run = paragraph.createRun();
         } else if (SAXHelpers.isLinkTag(qName)) {
@@ -1249,6 +1245,7 @@ public class DocxOutputImpl extends DefaultHandler {
         } else if (SAXHelpers.isImageObjectTag(qName)) {
             ensureNoTextAllowed();
         } else if (SAXHelpers.isCaptionTag(qName)) {
+            restoreParagraphStyle();
             ensureNoTextAllowed();
         }
 
@@ -1261,11 +1258,7 @@ public class DocxOutputImpl extends DefaultHandler {
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
-        } else if (SAXHelpers.isListItemTag(qName)) {
-            if (! currentLevel.peekList()) {
-                throw new DocxException("unexpected end of listitem.");
-            }
-
+        } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekList()) {
             numberingItemNumber += 1;
             numberingItemParagraphNumber = -1;
 
@@ -1295,14 +1288,41 @@ public class DocxOutputImpl extends DefaultHandler {
             // End of a value: go to the next one.
             segmentNumber += 1;
 
+            restoreParagraphStyle();
             ensureNoTextAllowed();
         }
 
         // Variable lists: update counters.
+        else if (SAXHelpers.isVariableListTag(qName)) {
+            currentLevel.pop(Level.VARIABLE_LIST, new DocxException("unexpected end of variable list"));
+
+            numberingItemNumber = -1;
+            numberingItemParagraphNumber = -1;
+
+            ensureNoTextAllowed();
+        } else if (SAXHelpers.isVariableListItemTag(qName)) {
+            if (! currentLevel.peekVariableList()) {
+                throw new DocxException("unexpected variable list content");
+            }
+
+            ensureNoTextAllowed();
+        } else if (SAXHelpers.isVariableListItemDefinitionTag(qName)) {
+            if (! currentLevel.peekVariableList()) {
+                throw new DocxException("unexpected variable list content");
+            }
+            restoreParagraphStyle();
+        } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekVariableList()) {
+            ensureNoTextAllowed();
+            restoreParagraphStyle();
+
+            // listitem is just a container for para, so barely nothing to do here.
+            numberingItemNumber += 1;
+            numberingItemParagraphNumber = 0;
+        }
 
         // Catch-all.
         else {
-            throw new DocxException("unknown tag " + qName + ".");
+            throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek());
         }
 
         // There might be return instructions in the long switch.
