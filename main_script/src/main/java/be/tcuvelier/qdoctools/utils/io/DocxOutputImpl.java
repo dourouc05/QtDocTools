@@ -38,7 +38,7 @@ public class DocxOutputImpl extends DefaultHandler {
             levels.push(l);
         }
 
-        void pop() {
+        private void pop() {
             levels.pop();
         }
 
@@ -71,7 +71,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
         }
 
-        Level peek() {
+        private Level peek() {
             return levels.peek();
         }
 
@@ -87,6 +87,7 @@ public class DocxOutputImpl extends DefaultHandler {
             return peek() == Level.ITEMIZED_LIST || peek() == Level.ORDERED_LIST;
         }
 
+        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
         boolean peekSegmentedList() {
             return peek() == Level.SEGMENTED_LIST;
         }
@@ -133,42 +134,21 @@ public class DocxOutputImpl extends DefaultHandler {
         }
     }
 
-    private static ParagraphAlignment attributeToAlignment(String attribute) {
-        // See also DocxInput.paragraphAlignmentToDocBookAttribute.
-        switch (attribute) {
-            case "center":
-                return ParagraphAlignment.CENTER;
-            case "right":
-                return ParagraphAlignment.RIGHT;
-            case "justified":
-                return ParagraphAlignment.BOTH;
-            case "left":
-            default:
-                return ParagraphAlignment.LEFT;
+    private static class DocBookHelpers {
+        private static ParagraphAlignment attributeToAlignment(String attribute) {
+            // See also DocxInput.paragraphAlignmentToDocBookAttribute.
+            switch (attribute) {
+                case "center":
+                    return ParagraphAlignment.CENTER;
+                case "right":
+                    return ParagraphAlignment.RIGHT;
+                case "justified":
+                    return ParagraphAlignment.BOTH;
+                case "left":
+                default:
+                    return ParagraphAlignment.LEFT;
+            }
         }
-    }
-
-    private static int filenameToWordFormat(String filename) {
-        // See org.apache.poi.xwpf.usermodel.Document.
-        String[] parts = filename.split("\\.");
-        String extension = parts[parts.length - 1].toLowerCase();
-
-        switch (extension) {
-            case "emf":  return XWPFDocument.PICTURE_TYPE_EMF;
-            case "wmf":  return XWPFDocument.PICTURE_TYPE_WMF;
-            case "pict": return XWPFDocument.PICTURE_TYPE_PICT;
-            case "jpg":
-            case "jpeg": return XWPFDocument.PICTURE_TYPE_JPEG;
-            case "png":  return XWPFDocument.PICTURE_TYPE_PNG;
-            case "dib":  return XWPFDocument.PICTURE_TYPE_DIB;
-            case "gif":  return XWPFDocument.PICTURE_TYPE_GIF;
-            case "tif":
-            case "tiff": return XWPFDocument.PICTURE_TYPE_TIFF;
-            case "eps":  return XWPFDocument.PICTURE_TYPE_EPS;
-            case "bmp":  return XWPFDocument.PICTURE_TYPE_BMP;
-            case "wpg":  return XWPFDocument.PICTURE_TYPE_WPG;
-        }
-        return -1;
     }
 
     private static class SAXHelpers {
@@ -389,8 +369,52 @@ public class DocxOutputImpl extends DefaultHandler {
     }
 
     /** POI-level helpers. These functions are not really specific to this project and could be upstreamed. **/
+    // Cannot be a static class, as some methods require access to the current document.
 
     private class POIHelpers {
+        private int filenameToWordFormat(String filename) {
+            // See org.apache.poi.xwpf.usermodel.Document.
+            String[] parts = filename.split("\\.");
+            String extension = parts[parts.length - 1].toLowerCase();
+
+            switch (extension) {
+                case "emf":  return XWPFDocument.PICTURE_TYPE_EMF;
+                case "wmf":  return XWPFDocument.PICTURE_TYPE_WMF;
+                case "pict": return XWPFDocument.PICTURE_TYPE_PICT;
+                case "jpg":
+                case "jpeg": return XWPFDocument.PICTURE_TYPE_JPEG;
+                case "png":  return XWPFDocument.PICTURE_TYPE_PNG;
+                case "dib":  return XWPFDocument.PICTURE_TYPE_DIB;
+                case "gif":  return XWPFDocument.PICTURE_TYPE_GIF;
+                case "tif":
+                case "tiff": return XWPFDocument.PICTURE_TYPE_TIFF;
+                case "eps":  return XWPFDocument.PICTURE_TYPE_EPS;
+                case "bmp":  return XWPFDocument.PICTURE_TYPE_BMP;
+                case "wpg":  return XWPFDocument.PICTURE_TYPE_WPG;
+            }
+            return -1;
+        }
+
+        private int parseMeasurementAsEMU(String m) throws SAXException {
+            if (m == null) {
+                throw new DocxException("invalid measured quantity.");
+            }
+
+            if (m.endsWith("in")) {
+                return Integer.parseInt(m.replace("in", "")) * 914_400;
+            } else if (m.endsWith("pt")) {
+                return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
+            } else if (m.endsWith("cm")) {
+                return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
+            } else if (m.endsWith("mm")) {
+                return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
+            } else if (m.endsWith("px")) {
+                return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
+            } else {
+                throw new DocxException("unknown measurement unit in " + m + ".");
+            }
+        }
+
         private CTLevelText createText(String t) {
             CTLevelText ct = CTLevelText.Factory.newInstance();
             ct.setVal(t);
@@ -612,29 +636,7 @@ public class DocxOutputImpl extends DefaultHandler {
         warnUnknownAttributes(unknown);
     }
 
-    /** Miscellaneous helpers that must reside within SAXHandler **/
-
-    private int parseMeasurementAsEMU(String m) throws SAXException {
-        if (m == null) {
-            throw new DocxException("invalid measured quantity.");
-        }
-
-        if (m.endsWith("in")) {
-            return Integer.parseInt(m.replace("in", "")) * 914_400;
-        } else if (m.endsWith("pt")) {
-            return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
-        } else if (m.endsWith("cm")) {
-            return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
-        } else if (m.endsWith("mm")) {
-            return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
-        } else if (m.endsWith("px")) {
-            return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
-        } else {
-            throw new DocxException("unknown measurement unit in " + m + ".");
-        }
-    }
-
-    /** POI helpers **/
+    /** Remaining POI helpers, really specific to this class. **/
 
     private void setRunFormatting() throws SAXException {
         for (Formatting f: currentFormatting) {
@@ -802,7 +804,7 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph = doc.createParagraph();
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
-                paragraph.setAlignment(attributeToAlignment(attr.get("align").toLowerCase()));
+                paragraph.setAlignment(DocBookHelpers.attributeToAlignment(attr.get("align").toLowerCase()));
             }
             warnUnknownAttributes(attr, Stream.of("align"));
             run = paragraph.createRun();
