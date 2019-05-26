@@ -20,7 +20,8 @@ public class DocxInput {
 //        String test = "basic";
 //        String test = "sections";
 //        String test = "sections_bogus";
-        String test = "images";
+//        String test = "images";
+        String test = "lists";
 
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 //        System.out.println(docBook);
