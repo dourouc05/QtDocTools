@@ -429,7 +429,7 @@ public class DocxOutput {
         private XWPFTable table; // TODO: What about nested tables? Really care about this case? Would need to stack them...
         private XWPFTableRow tableRow;
         private int tableRowNumber = -1;
-        private XWPFTableCell tableColumn;
+        private XWPFTableCell tableCell;
         private int tableColumnNumber = -1;
 
         private LevelStack currentLevel = new LevelStack();
@@ -731,7 +731,10 @@ public class DocxOutput {
                 }
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
-            } else if (SAXHelpers.isParagraphTag(qName)) {
+            }
+
+            // Paragraphs: lots of special cases...
+            else if (SAXHelpers.isParagraphTag(qName)) {
                 // For tables, the paragraph is automatically created within a table cell.
                 if (currentLevel.peekTable() && paragraphNumber == 0) {
                     return;
@@ -742,11 +745,14 @@ public class DocxOutput {
                 }
 
                 if (currentLevel.peekTable()) {
-                    paragraph = tableColumn.addParagraph();
+                    // In tables, add the new paragraph to the current cell.
+                    paragraph = tableCell.addParagraph();
                 } else {
+                    // Otherwise, create a new paragraph at the end of the document.
                     paragraph = doc.createParagraph();
 
                     if (currentLevel.peekList()) {
+                        // If within a list, this must be a new item (only one paragraph allowed per item).
                         paragraph.setNumID(numbering);
 
                         if (numberingItemParagraphNumber > 0) {
@@ -758,7 +764,10 @@ public class DocxOutput {
                 }
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
-            } else if (SAXHelpers.isFormatting(qName)) {
+            }
+
+            // Inline tags.
+            else if (SAXHelpers.isFormatting(qName)) {
                 currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
 
                 // Create a new run if this one is already started.
@@ -780,7 +789,10 @@ public class DocxOutput {
                 // Set formatting for the link.
                 run.setUnderline(UnderlinePatterns.SINGLE);
                 run.setColor("0563c1");
-            } else if (SAXHelpers.isTableTag(qName)) {
+            }
+
+            // Tables: only HTML implemented.
+            else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.push(Level.TABLE);
 
                 table = doc.createTable();
@@ -810,21 +822,23 @@ public class DocxOutput {
                 // If this is the first column of the row, exploit the one automatically created by the row.
                 // If there has already been a complete row, several columns have already been generated.
                 if (tableColumnNumber == 0) {
-                    tableColumn = tableRow.getCell(0);
+                    tableCell = tableRow.getCell(0);
                 } else if (tableRowNumber > 0 && tableRow.getTableCells().size() >= tableColumnNumber) {
-                    tableColumn = tableRow.getCell(tableRowNumber);
+                    tableCell = tableRow.getCell(tableRowNumber);
                 } else {
-                    tableColumn = tableRow.createCell();
+                    tableCell = tableRow.createCell();
                 }
-                paragraph = tableColumn.getParagraphs().get(0);
+                paragraph = tableCell.getParagraphs().get(0);
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
                 throw new DocxException("table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new DocxException("CALS tables are not handled.");
-            } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
-//                run.addPicture(new FileInputStream(imgFile), XWPFDocument.PICTURE_TYPE_PNG, imgFile, Units.toEMU(50), Units.toEMU(50));
+            }
+
+            // Media tags: for now, only images are implemented.
+            else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
                 warnUnknownAttributes(attributes);
             } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 paragraph = doc.createParagraph();
@@ -840,12 +854,15 @@ public class DocxOutput {
                 // Nothing to do, as everything is under <db:imagedata>.
                 // TODO: check if there is only one imagedata per imageobject?
                 warnUnknownAttributes(attributes);
-            } else if (SAXHelpers.isCaptionTag(qName)) {
+            } else if (SAXHelpers.isCaptionTag(qName)) { // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
                 paragraph = doc.createParagraph();
                 paragraph.setStyle("Caption");
                 run = paragraph.createRun();
                 warnUnknownAttributes(attributes);
-            } else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
+            }
+
+            // Standard lists: same treatment, except for creating the abstract numbering.
+            else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
                 if (currentLevel.peekList()) {
                     throw new DocxException("list within list not yet implemented.");
                 }
@@ -871,18 +888,19 @@ public class DocxOutput {
                 // listitem is just a container for para, so barely nothing to do here.
                 numberingItemNumber = -1;
                 numberingItemParagraphNumber = 0;
-            } else if (SAXHelpers.isSegmentedListTag(qName)) {
+            }
+
+            // Principles for handling segmented lists: buffer the titles in segmentedListHeaders, then spit them
+            // out as necessary for each seglistitem.
+            // Thus, characters() will need a mode to write to the buffer only if SAX is within a title right now;
+            // afterwards, it should just print text normally to the current run.
+            else if (SAXHelpers.isSegmentedListTag(qName)) {
                 currentLevel.push(Level.SEGMENTED_LIST);
 
                 numberingItemNumber = 0;
                 numberingItemParagraphNumber = -1;
                 segmentedListHeaders = new ArrayList<>();
                 segmentNumber = -1;
-
-                // Principles for handling segmented lists: buffer the titles in segmentedListHeaders, then spit them
-                // out as necessary for each seglistitem.
-                // Thus, characters() will need a mode to write to the buffer only if SAX is within a title right now;
-                // afterwards, it should just print text normally to the current run.
 
                 ensureNoTextAllowed();
                 warnUnknownAttributes(attributes);
@@ -925,7 +943,12 @@ public class DocxOutput {
                 paragraph = doc.createParagraph();
                 paragraph.setStyle("DefinitionListItem");
                 run = paragraph.createRun();
-            } else {
+            }
+
+            // Variable lists: quite similar to segmented lists, but a completely different content model.
+
+            // Catch-all for the remaining tags.
+            else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
 
@@ -976,11 +999,11 @@ public class DocxOutput {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableRowTag(qName)) {
                 tableRow = null;
-                tableColumn = null;
+                tableCell = null;
                 tableRowNumber += 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableColumnTag(qName)) {
-                tableColumn = null;
+                tableCell = null;
                 tableColumnNumber += 1;
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
