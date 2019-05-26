@@ -968,7 +968,10 @@ public class DocxOutput {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isTitleTag(qName)) {
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isParagraphTag(qName)) {
+            }
+
+            // Paragraph: mostly, update counters.
+            else if (SAXHelpers.isParagraphTag(qName)) {
                 paragraphNumber += 1;
 
                 if (currentLevel.peekList()) {
@@ -976,7 +979,10 @@ public class DocxOutput {
                 }
 
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isFormatting(qName)) {
+            }
+
+            // Inline tags: ensure the formatting is no more included in the next runs.
+            else if (SAXHelpers.isFormatting(qName)) {
                 // Remove the last formatting tag found. Throw an exception if it should not have been added by emphasis.
                 Formatting f = currentFormatting.get(currentFormatting.size() - 1);
                 if (f != Formatting.EMPHASIS && f != Formatting.EMPHASIS_BOLD && f != Formatting.EMPHASIS_UNDERLINE &&
@@ -985,10 +991,14 @@ public class DocxOutput {
                 }
 
                 currentFormatting.remove(currentFormatting.size() - 1);
+                run = paragraph.createRun();
             } else if (SAXHelpers.isLinkTag(qName)) {
                 // Create a new run, so that the new text is not within the same run.
                 run = paragraph.createRun();
-            } else if (SAXHelpers.isTableTag(qName)) {
+            }
+
+            // Tables: update counters.
+            else if (SAXHelpers.isTableTag(qName)) {
                 currentLevel.pop(Level.TABLE, new DocxException("unexpected end of table"));
                 tableRowNumber = -1;
                 tableColumnNumber = -1;
@@ -1010,7 +1020,10 @@ public class DocxOutput {
                 throw new DocxException("table headers/footers are not handled.");
             } else if (SAXHelpers.isCALSTag(qName)) {
                 throw new DocxException("CALS tables are not handled.");
-            } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
+            }
+
+            // Media: nothing to do.
+            else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isMediaObjectTag(qName)) {
                 ensureNoTextAllowed();
@@ -1020,7 +1033,10 @@ public class DocxOutput {
                 ensureNoTextAllowed();
             } else if (SAXHelpers.isCaptionTag(qName)) {
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
+            }
+
+            // Standard lists: update counters.
+            else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
                 currentLevel.pop(Stream.of(Level.ORDERED_LIST, Level.ITEMIZED_LIST),
                         new DocxException("unexpected end of list"));
 
@@ -1037,7 +1053,10 @@ public class DocxOutput {
                 numberingItemParagraphNumber = -1;
 
                 ensureNoTextAllowed();
-            } else if (SAXHelpers.isSegmentedListTag(qName)) {
+            }
+
+            // Segmented lists: update counters.
+            else if (SAXHelpers.isSegmentedListTag(qName)) {
                 currentLevel.pop(Level.SEGMENTED_LIST, new DocxException("unexpected end of segmented list"));
 
                 numberingItemNumber = -1;
@@ -1060,7 +1079,12 @@ public class DocxOutput {
                 segmentNumber += 1;
 
                 ensureNoTextAllowed();
-            } else {
+            }
+
+            // Variable lists: update counters.
+
+            // Catch-all.
+            else {
                 throw new DocxException("unknown tag " + qName + ".");
             }
 
@@ -1071,10 +1095,13 @@ public class DocxOutput {
         public void characters(char[] ch, int start, int length) throws SAXException {
             String content = new String(ch, start, length).trim();
 
+            // This function is called for anything that is not a tag, including whitespace (nothing to do on it).
             if (content.length() == 0 || content.replaceAll("(\\s|\n)+", "").length() == 0) {
                 return;
             }
 
+            // Special cases: the text should not be written in the current run.
+            // Just segmented lists, for now.
             if (currentLevel.peekSegmentedListTitle()) {
                 // Store the run in segmentedListTitles, as it should be rewritten for each item in the segmented list.
                 // Formatting is ignored; this is a known limitation.
@@ -1082,6 +1109,8 @@ public class DocxOutput {
                 return;
             }
 
+            // Generic case: try to write inside the current run. If there is none open, it means text is not expected
+            // here (also see ensureNoTextAllowed method).
             if (run == null) {
                 throw new DocxException("invalid document, text not expected here.");
             }
