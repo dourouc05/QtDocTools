@@ -931,6 +931,10 @@ public class DocxOutputImpl extends DefaultHandler {
 
                 if (currentLevel.peekList()) {
                     paragraph.setNumID(numbering);
+                    CTDecimalNumber zero = CTDecimalNumber.Factory.newInstance();
+                    zero.setVal(BigInteger.ZERO);
+                    paragraph.getCTP().getPPr().getNumPr().setIlvl(zero);
+                    // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465
 
                     // If within a list, this must be a new item (only one paragraph allowed per item).
                     // This is just allowed for variable lists.

@@ -30,17 +30,17 @@ public class DocxInput {
         new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook(MainCommand.fromDocxTests + "synthetic/" + test + ".xml");
     }
 
-    private Map<String, byte[]> images = new HashMap<>();
-
     private XWPFDocument doc;
     private XMLStreamWriter xmlStream;
+    private Map<String, byte[]> images = new HashMap<>();
 
     private int currentDepth;
     private int currentSectionLevel;
-    private boolean isDisplayedFigure;
+    private boolean isDisplayedFigure = false;
+    private boolean isWithinList = false;
 
     private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
-    // as captions: find those that have not been, so the user can be warned.
+    // as captions: find those that have not been, so the user can be warned when one of them is visited.
 
     @SuppressWarnings("FieldCanBeLocal")
     private static String indentation = "  ";
@@ -143,89 +143,67 @@ public class DocxInput {
             visitTable((XWPFTable) b);
         } else {
             System.out.println(b.getElementType());
-            throw new RuntimeException("An element has not been caught by a visit() method.");
+            throw new RuntimeException("An element of type " + b.getClass().getName() + " has not been caught " +
+                    "by a visit() method.");
         }
     }
+
+    /** Dispatcher code, when information available in the body element is not enough. **/
 
     private void visitParagraph(XWPFParagraph p) throws XMLStreamException {
-        if (p.getRuns().size() > 0) {
-            if (p.getStyleID() == null) {
-                visitNormalParagraph(p);
-            } else {
-                switch (p.getStyleID()) {
-                    case "Title":
-                        visitDocumentTitle(p);
-                        break;
-                    case "Heading1":
-                    case "Heading2":
-                    case "Heading3":
-                    case "Heading4":
-                    case "Heading5":
-                    case "Heading6":
-                    case "Heading7":
-                    case "Heading8":
-                    case "Heading9":
-                    // TODO: Part, Chapter?
-                        visitSectionTitle(p);
-                        break;
-                    // TODO: Note, etc.?
-                    default:
-                        visitNormalParagraph(p);
-                        break;
-                }
-            }
-        }
-    }
+        // Only deal with paragraphs having some content (i.e. at least one non-empty run).
+        if (p.getRuns().size() > 0 && p.getRuns().stream().anyMatch(r -> r.text().length() > 0)) {
+            // Once a paragraph has found its visitor, return from this function. This way, if a paragraph only
+            // partially matches the conditions for a visitor, it can be handled by the generic ones.
+            // (Just for robustness and ability to import external Word documents into the system.)
 
-    private void visitNormalParagraph(XWPFParagraph p) throws XMLStreamException {
-        // Ignore captions, as they are handled directly within mediaobjects/tables.
-        if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
-            if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
-                throw new XMLStreamException("Caption not expected.");
-            } else {
+            // First, handle numbered paragraphs. They mostly indicate lists (or this is an external document, and no
+            // assumption should be made -- it could very well be a heading).
+            if (p.getNumID() != null && (p.getStyleID() == null || p.getStyleID().equals("Normal"))) {
+                visitListItem(p);
                 return;
             }
-        }
 
-        if (p.getRuns().size() == 1 && p.getRuns().get(0).getEmbeddedPictures().size() == 1) { // TODO: Several pictures per run? Seems unlikely.
-            // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
-            isDisplayedFigure = true;
-
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "mediaobject");
-
-            visitRuns(p.getRuns());
-
-            // Write the caption (if it corresponds to the next paragraph.
-            int pos = doc.getPosOfParagraph(p);
-            if (pos + 1 < doc.getParagraphs().size()
-                    && doc.getParagraphs().get(pos + 1).getStyleID() != null
-                    && doc.getParagraphs().get(pos + 1).getStyleID().equals("Caption")) {
-                increaseIndent();
-                writeIndent();
-                decreaseIndent();
-                xmlStream.writeStartElement(docbookNS, "caption");
-                visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
-                xmlStream.writeEndElement(); // <db:caption>
-                writeNewLine();
-
-                captionPositions.add(pos + 1);
+            // Then, dispatch along the style.
+            if (p.getStyleID() == null) {
+                visitNormalParagraph(p);
+                return;
             }
 
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:mediaobject> must be indented.
-            writeNewLine();
+            switch (p.getStyleID()) {
+                case "Title":
+                    visitDocumentTitle(p);
+                    return;
+                case "Heading1":
+                case "Heading2":
+                case "Heading3":
+                case "Heading4":
+                case "Heading5":
+                case "Heading6":
+                case "Heading7":
+                case "Heading8":
+                case "Heading9":
+                // TODO: Part, Chapter?
+                    visitSectionTitle(p);
+                    return;
+                case "DefinitionListTitle":
+                    visitDefinitionListTitle(p);
+                    return;
+                // TODO: Note, etc.?
+                case "Normal": // The case with no style ID is already handled.
+                    visitNormalParagraph(p);
+                    return;
+                default:
+                    // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
+                    System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
+                    throw new XMLStreamException("Found a paragraph with an unsupported style: " + p.getStyleID());
+            }
 
-            isDisplayedFigure = false;
-        } else {
-            // Normal case for a paragraph.
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "para");
-            visitRuns(p.getRuns());
-            xmlStream.writeEndElement(); // </db:para> should not be indented.
-            writeNewLine();
+            // The last switch returned from the function.
         }
     }
+
+    /** Structure elements. **/
 
     private void visitDocumentTitle(XWPFParagraph p) throws XMLStreamException {
         // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
@@ -286,6 +264,58 @@ public class DocxInput {
         // TODO: Implement a check on the currentSectionLevel and the level (in case someone missed a level in the headings).
     }
 
+    /** Paragraphs. **/
+
+    private void visitNormalParagraph(XWPFParagraph p) throws XMLStreamException {
+        // Ignore captions, as they are handled directly within mediaobjects/tables.
+        if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
+            if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
+                throw new XMLStreamException("Caption not expected.");
+            } else {
+                return;
+            }
+        }
+
+        if (p.getRuns().size() == 1 && p.getRuns().get(0).getEmbeddedPictures().size() == 1) { // TODO: Several pictures per run? Seems unlikely.
+            // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
+            isDisplayedFigure = true;
+
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "mediaobject");
+
+            visitRuns(p.getRuns());
+
+            // Write the caption (if it corresponds to the next paragraph.
+            int pos = doc.getPosOfParagraph(p);
+            if (pos + 1 < doc.getParagraphs().size()
+                    && doc.getParagraphs().get(pos + 1).getStyleID() != null
+                    && doc.getParagraphs().get(pos + 1).getStyleID().equals("Caption")) {
+                increaseIndent();
+                writeIndent();
+                decreaseIndent();
+                xmlStream.writeStartElement(docbookNS, "caption");
+                visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
+                xmlStream.writeEndElement(); // <db:caption>
+                writeNewLine();
+
+                captionPositions.add(pos + 1);
+            }
+
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:mediaobject> must be indented.
+            writeNewLine();
+
+            isDisplayedFigure = false;
+        } else {
+            // Normal case for a paragraph.
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "para");
+            visitRuns(p.getRuns());
+            xmlStream.writeEndElement(); // </db:para> should not be indented.
+            writeNewLine();
+        }
+    }
+
     private String paragraphAlignmentToDocBookAttribute(ParagraphAlignment align) {
         // See also DocxOutput.attributeToAlignment.
         switch (align.name()) {
@@ -301,6 +331,184 @@ public class DocxInput {
                 return "";
         }
     }
+
+    private void visitPictureRun(XWPFRun r) throws XMLStreamException {
+        if (r.getEmbeddedPictures().size() == 0) {
+            throw new XMLStreamException("Supposed to get a picture run, but it has no picture.");
+        }
+
+        if (r.getEmbeddedPictures().size() > 1) {
+            throw new XMLStreamException("More than one image in a run, which is not supported.");
+        }
+
+        // Output the image in a separate file.
+        XWPFPicture picture = r.getEmbeddedPictures().get(0);
+        byte[] image = picture.getPictureData().getData();
+        String imageName = picture.getPictureData().getFileName();
+        images.put(imageName, image);
+
+        // Do the XML part: output a <db:inlinemediaobject> (whose beginning is on the same line as the rest
+        // of the text; the inside part is indented normally; the closing tag is directly followed by the rest
+        // of the text, if any).
+        if (! isDisplayedFigure) {
+            xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
+        }
+        writeNewLine();
+        increaseIndent();
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "imageobject");
+        writeNewLine();
+        increaseIndent();
+
+        writeIndent();
+        xmlStream.writeEmptyElement(docbookNS, "imagedata");
+        xmlStream.writeAttribute(docbookNS, "fileref", imageName);
+        // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
+        // Cx/Cx return values in EMUs (very different from EM).
+//        https://github.com/apache/poi/pull/150
+        xmlStream.writeAttribute(docbookNS, "width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in");
+        xmlStream.writeAttribute(docbookNS, "depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
+        if (isDisplayedFigure) {
+            XWPFParagraph parent = ((XWPFParagraph) r.getParent());
+            String dbAlign = paragraphAlignmentToDocBookAttribute(parent.getAlignment());
+            if (dbAlign.length() > 0) {
+                xmlStream.writeAttribute(docbookNS, "align", dbAlign);
+            }
+        }
+        writeNewLine();
+        decreaseIndent();
+
+        writeIndent();
+        xmlStream.writeEndElement(); // </db:imageobject>
+        writeNewLine();
+        decreaseIndent();
+
+        if (! isDisplayedFigure) {
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:inlinemediaobject>
+            // No line feed as within a paragraph.
+        }
+    }
+
+    /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
+
+    private void visitListItem(XWPFParagraph p) throws XMLStreamException {
+        boolean isOrderedList = false;
+        if (p.getNumFmt() != null) { // Bullet lists do not seem to always have that field.
+            isOrderedList = p.getNumFmt().matches("%\\d"); // If there is a % followed by a digit, assume
+            // this is an ordered list (default configuration of Word for Western languages).
+        }
+
+        // At the beginning of the list (i.e. if not within a list right now), write the begin tag.
+        if (! isWithinList) {
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, isOrderedList? "orderedlist" : "itemizedlist");
+            writeNewLine();
+            increaseIndent();
+
+            isWithinList = true;
+        }
+
+        // Write the list item (wrapped in a paragraph).
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "listitem");
+        writeNewLine();
+        increaseIndent();
+
+        visitNormalParagraph(p);
+
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement(); // <db:listitem>
+        writeNewLine();
+
+        // If the next paragraph is not within *this* list (compare their numbering ID), close it right now.
+        int pos = p.getDocument().getPosOfParagraph(p);
+        List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
+
+        boolean isLastItem = false;
+        if (pos >= paragraphs.size()) {
+            isLastItem = true;
+        } else {
+            XWPFParagraph nextP = paragraphs.get(pos + 1);
+
+            if (nextP.getNumID() != null && nextP.getNumID().equals(p.getNumID())) {
+                isLastItem = true;
+            }
+        }
+
+        if (isLastItem) {
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:orderedlist> or </db:itemizedlist>
+            writeNewLine();
+            decreaseIndent();
+        }
+    }
+
+    /** Definition lists. **/
+
+    private void visitDefinitionListTitle(XWPFParagraph p) throws XMLStreamException {}
+
+    /** Variable lists. **/
+
+    private void visitVariableListTitle(XWPFParagraph p) throws XMLStreamException {}
+
+    /** Tables. **/
+
+    private void visitTable(XWPFTable t) throws XMLStreamException {
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "informaltable");
+        increaseIndent();
+        writeNewLine();
+
+        // Output the table row per row, in HTML format.
+        for (XWPFTableRow row: t.getRows()) {
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "tr");
+            increaseIndent();
+            writeNewLine();
+
+            for (XWPFTableCell cell: row.getTableCells()) {
+                // Special case: an empty cell. One paragraph with zero runs.
+                if (cell.getParagraphs().size() == 0 ||
+                        (cell.getParagraphs().size() == 1 && cell.getParagraphs().get(0).getRuns().size() == 0)) {
+                    writeIndent();
+                    xmlStream.writeEmptyElement(docbookNS, "td");
+                    writeNewLine();
+
+                    continue;
+                }
+
+                // Normal case.
+                writeIndent();
+                xmlStream.writeStartElement(docbookNS, "td");
+                increaseIndent();
+                writeNewLine();
+
+                for (XWPFParagraph p: cell.getParagraphs()){
+                    visitParagraph(p);
+                }
+
+                decreaseIndent();
+                writeIndent();
+                xmlStream.writeEndElement(); // </db:td>
+                writeNewLine();
+            }
+
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:tr>
+            writeNewLine();
+        }
+
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement(); // </db:informaltable>
+        writeNewLine();
+    }
+
+    /** Inline elements (runs, in Word parlance). **/
 
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
         for (XWPFRun r: runs) {
@@ -376,64 +584,6 @@ public class DocxInput {
 //            }
     }
 
-    private void visitPictureRun(XWPFRun r) throws XMLStreamException {
-        if (r.getEmbeddedPictures().size() == 0) {
-            throw new XMLStreamException("Supposed to get a picture run, but it has no picture.");
-        }
-
-        if (r.getEmbeddedPictures().size() > 1) {
-            throw new XMLStreamException("More than one image in a run, which is not supported.");
-        }
-
-        // Output the image in a separate file.
-        XWPFPicture picture = r.getEmbeddedPictures().get(0);
-        byte[] image = picture.getPictureData().getData();
-        String imageName = picture.getPictureData().getFileName();
-        images.put(imageName, image);
-
-        // Do the XML part: output a <db:inlinemediaobject> (whose beginning is on the same line as the rest
-        // of the text; the inside part is indented normally; the closing tag is directly followed by the rest
-        // of the text, if any).
-        if (! isDisplayedFigure) {
-            xmlStream.writeStartElement(docbookNS, "inlinemediaobject");
-        }
-        writeNewLine();
-        increaseIndent();
-
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "imageobject");
-        writeNewLine();
-        increaseIndent();
-
-        writeIndent();
-        xmlStream.writeEmptyElement(docbookNS, "imagedata");
-        xmlStream.writeAttribute(docbookNS, "fileref", imageName);
-        // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
-        // Cx/Cx return values in EMUs (very different from EM).
-        xmlStream.writeAttribute(docbookNS, "width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in");
-        xmlStream.writeAttribute(docbookNS, "depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
-        if (isDisplayedFigure) {
-            XWPFParagraph parent = ((XWPFParagraph) r.getParent());
-            String dbAlign = paragraphAlignmentToDocBookAttribute(parent.getAlignment());
-            if (dbAlign.length() > 0) {
-                xmlStream.writeAttribute(docbookNS, "align", dbAlign);
-            }
-        }
-        writeNewLine();
-
-        decreaseIndent();
-
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:imageobject>
-        writeNewLine();
-
-        decreaseIndent();
-        if (! isDisplayedFigure) {
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:inlinemediaobject>, no line feed as within a paragraph.
-        }
-    }
-
     private void visitHyperlinkRun(XWPFHyperlinkRun r) throws XMLStreamException {
         XWPFHyperlink link = r.getHyperlink(doc);
 
@@ -441,57 +591,5 @@ public class DocxInput {
         xmlStream.writeAttribute(xlinkNS, "href", link.getURL());
         visitRun(r); // Text and formatting attributes are inherited for XWPFHyperlinkRun.
         xmlStream.writeEndElement(); // </db:link>
-    }
-
-    private void visitTable(XWPFTable t) throws XMLStreamException {
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "informaltable");
-        increaseIndent();
-        writeNewLine();
-
-        // Output the table row per row, in HTML format.
-        for (XWPFTableRow row: t.getRows()) {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "tr");
-            increaseIndent();
-            writeNewLine();
-
-            for (XWPFTableCell cell: row.getTableCells()) {
-                // Special case: an empty cell. One paragraph with zero runs.
-                if (cell.getParagraphs().size() == 0 ||
-                        (cell.getParagraphs().size() == 1 && cell.getParagraphs().get(0).getRuns().size() == 0)) {
-                    writeIndent();
-                    xmlStream.writeEmptyElement(docbookNS, "td");
-                    writeNewLine();
-
-                    continue;
-                }
-
-                // Normal case.
-                writeIndent();
-                xmlStream.writeStartElement(docbookNS, "td");
-                increaseIndent();
-                writeNewLine();
-
-                for (XWPFParagraph p: cell.getParagraphs()){
-                    visitParagraph(p);
-                }
-
-                decreaseIndent();
-                writeIndent();
-                xmlStream.writeEndElement(); // </db:td>
-                writeNewLine();
-            }
-
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:tr>
-            writeNewLine();
-        }
-
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:informaltable>
-        writeNewLine();
     }
 }
