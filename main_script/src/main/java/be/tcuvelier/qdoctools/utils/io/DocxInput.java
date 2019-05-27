@@ -333,6 +333,11 @@ public class DocxInput {
     }
 
     private void visitPictureRun(XWPFRun r) throws XMLStreamException {
+        // TODO: saner implementation based on
+        //  https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java#L361?
+        // TODO: the current implementation might miss some images, it seems:
+        //  https://stackoverflow.com/questions/47923079/apache-poi-xwpf-check-if-a-run-contains-a-picture
+
         if (r.getEmbeddedPictures().size() == 0) {
             throw new XMLStreamException("Supposed to get a picture run, but it has no picture.");
         }
@@ -394,6 +399,8 @@ public class DocxInput {
     /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
 
     private void visitListItem(XWPFParagraph p) throws XMLStreamException {
+        // https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java
+
         boolean isOrderedList = false;
         if (p.getNumFmt() != null) { // Bullet lists do not seem to always have that field.
             isOrderedList = p.getNumFmt().matches("%\\d"); // If there is a % followed by a digit, assume
