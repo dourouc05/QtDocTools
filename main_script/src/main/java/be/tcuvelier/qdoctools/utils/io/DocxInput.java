@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
@@ -38,6 +39,10 @@ public class DocxInput {
     private int currentSectionLevel;
     private boolean isDisplayedFigure = false;
     private boolean isWithinList = false;
+    private int currentDefinitionListItemNumber = -1;
+    private int currentDefinitionListItemSegmentNumber = -1;
+    private List<XWPFParagraph> currentDefinitionListTitles = null;
+    private List<List<XWPFParagraph>> currentDefinitionListContents = null;
 
     private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
@@ -288,7 +293,7 @@ public class DocxInput {
 
             visitRuns(p.getRuns());
 
-            // Write the caption (if it corresponds to the next paragraph.
+            // Write the caption (if it corresponds to the next paragraph).
             int pos = doc.getPosOfParagraph(p);
             if (pos + 1 < doc.getParagraphs().size()
                     && doc.getParagraphs().get(pos + 1).getStyleID() != null
@@ -404,6 +409,8 @@ public class DocxInput {
     private void visitListItem(XWPFParagraph p) throws XMLStreamException {
         // https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java
 
+        // TODO: Check if list open (otherwise, throw exception: invalid document or implementation bug).
+
         boolean isOrderedList = false;
         if (p.getNumFmt() != null) { // Bullet lists do not seem to always have that field.
             isOrderedList = p.getNumFmt().matches("%\\d"); // If there is a % followed by a digit, assume
@@ -458,7 +465,122 @@ public class DocxInput {
 
     /** Definition lists. **/
 
-    private void visitDefinitionListTitle(XWPFParagraph p) throws XMLStreamException {}
+    private static String toString(List<XWPFRun> r) {
+        return r.stream().map(XWPFRun::text).collect(Collectors.joining(""));
+    }
+
+    private void visitDefinitionListTitle(XWPFParagraph p) throws XMLStreamException {
+        // If a list is not being treated, initialise what is required.
+        // currentDefinitionListTitles: store all the titles that have been found so far, so that the we can check
+        // for each item whether it still uses exactly the same segtitle; otherwise, report an error.
+        // currentDefinitionListItemNumber: indicates the position within the elements of a segmented list.
+        // currentDefinitionListItemSegmentNumber: current position within an item of a segmented list (i.e. a segment).
+        if (currentDefinitionListTitles == null) {
+            currentDefinitionListItemNumber = 0;
+            currentDefinitionListItemSegmentNumber = 0;
+            currentDefinitionListTitles = new ArrayList<>();
+            currentDefinitionListContents = new ArrayList<>();
+        }
+
+        if (currentDefinitionListItemNumber == 0) {
+            // Build the list of titles.
+            currentDefinitionListTitles.add(p);
+        } else {
+            // Check if this title is at the right position in the title list. Otherwise, it may be data corruption
+            // or a new segmented list -- no way to know for sure.
+            String str1 = toString(p.getRuns());
+            String str2 = toString(currentDefinitionListTitles.get(0).getRuns());
+            String str3 = toString(currentDefinitionListTitles.get(currentDefinitionListItemSegmentNumber).getRuns());
+            if (str2.equals(str1)) {
+                // Looping: found the first title.
+                currentDefinitionListItemSegmentNumber = 0;
+                currentDefinitionListItemNumber += 1;
+            } else if (! str3.equals(str1)) {
+                throw new XMLStreamException("Mismatch within a definition list: expected to have " +
+                        "a title " + str1 + ", but got " + str2 + " instead.");
+            }
+        }
+
+        // currentDefinitionListItemSegmentNumber increased when the item is seen.
+    }
+
+    private void visitDefinitionListItem(XWPFParagraph p) throws XMLStreamException {
+        if (currentDefinitionListTitles == null) {
+            throw new XMLStreamException("Unexpected definition list item; at least one title line must be present " +
+                    "beforehand.");
+        }
+
+        // First item in the item: initialise a new list to store the segments of the item.
+        if (currentDefinitionListItemSegmentNumber == 0) {
+            currentDefinitionListContents.add(new ArrayList<>(currentDefinitionListTitles.size()));
+        }
+
+        // Buffer the paragraph at the right place.
+        currentDefinitionListContents.get(currentDefinitionListItemNumber).add(p);
+
+        currentDefinitionListItemSegmentNumber += 1;
+
+        // If the next item is no more within a segmented list, serialise it all and forbid adding elements to the list.
+        int pos = doc.getPosOfParagraph(p);
+        if (pos + 1 < doc.getParagraphs().size()
+                && doc.getParagraphs().get(pos + 1).getStyleID() != null
+                && ! doc.getParagraphs().get(pos + 1).getStyleID().equals("DefinitionListTitle")) {
+            serialiseDefinitionList();
+
+            currentDefinitionListItemNumber = -1;
+            currentDefinitionListItemSegmentNumber = -1;
+            currentDefinitionListTitles = null;
+            currentDefinitionListContents = null;
+        }
+    }
+
+    private void serialiseDefinitionList() throws XMLStreamException {
+        // Once the whole definition list is built in currentDefinitionListTitles and currentDefinitionListContents,
+        // serialise it as DocBook.
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "segmentedlist");
+        increaseIndent();
+        writeNewLine();
+
+        for (XWPFParagraph title: currentDefinitionListTitles) {
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "segtitle");
+
+            // No indentation, inline content.
+            visitRuns(title.getRuns());
+
+            xmlStream.writeEndElement(); // </db:segtitle>
+            writeNewLine();
+        }
+
+        for (List<XWPFParagraph> item: currentDefinitionListContents) {
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "seglistitem");
+            increaseIndent();
+            writeNewLine();
+
+            for (XWPFParagraph value: item) {
+                writeIndent();
+                xmlStream.writeStartElement(docbookNS, "seg");
+
+                // No indentation, inline content.
+                visitRuns(value.getRuns());
+
+                xmlStream.writeEndElement(); // </db:seg>
+                writeNewLine();
+            }
+
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:seglistitem>
+            writeNewLine();
+        }
+
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement(); // </db:segmentedlist>
+        writeNewLine();
+    }
 
     /** Variable lists. **/
 
