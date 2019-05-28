@@ -482,22 +482,32 @@ public class DocxInput {
             currentDefinitionListContents = new ArrayList<>();
         }
 
-        if (currentDefinitionListItemNumber == 0) {
-            // Build the list of titles.
+        // Check whether this title is new or has already been seen before.
+        String thisTitle = toString(p.getRuns());
+        int position = -1;
+        for (int i = 0; i < currentDefinitionListTitles.size(); i++) {
+            XWPFParagraph title = currentDefinitionListTitles.get(i);
+            if (toString(title.getRuns()).equals(thisTitle)) {
+                position = i;
+                break;
+            }
+        }
+
+        if (position == -1) {
+            // Never seen before: add to the list of titles.
             currentDefinitionListTitles.add(p);
         } else {
-            // Check if this title is at the right position in the title list. Otherwise, it may be data corruption
-            // or a new segmented list -- no way to know for sure.
-            String str1 = toString(p.getRuns());
-            String str2 = toString(currentDefinitionListTitles.get(0).getRuns());
-            String str3 = toString(currentDefinitionListTitles.get(currentDefinitionListItemSegmentNumber).getRuns());
-            if (str2.equals(str1)) {
-                // Looping: found the first title.
-                currentDefinitionListItemSegmentNumber = 0;
+            // Already seen: either this is normal (i.e. at the right place) or completely unexpected (e.g., one title
+            // has been skipped in the input document).
+            if (position == 0) {
+                // New item.
                 currentDefinitionListItemNumber += 1;
-            } else if (! str3.equals(str1)) {
+                currentDefinitionListItemSegmentNumber = 0;
+            } else if (position != currentDefinitionListItemSegmentNumber) {
+                // Error!
                 throw new XMLStreamException("Mismatch within a definition list: expected to have " +
-                        "a title " + str1 + ", but got " + str2 + " instead.");
+                        "a title '" + toString(currentDefinitionListTitles.get(position).getRuns()) + "', " +
+                        "but got '" + thisTitle + "' instead.");
             }
         }
 
