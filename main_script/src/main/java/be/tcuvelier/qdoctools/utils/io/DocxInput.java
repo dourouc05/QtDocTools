@@ -189,6 +189,9 @@ public class DocxInput {
                 case "DefinitionListTitle":
                     visitDefinitionListTitle(p);
                     return;
+                case "DefinitionListItem":
+                    visitDefinitionListItem(p);
+                    return;
                 // TODO: Note, etc.?
                 case "Normal": // The case with no style ID is already handled.
                     visitNormalParagraph(p);
@@ -440,16 +443,16 @@ public class DocxInput {
         } else {
             XWPFParagraph nextP = paragraphs.get(pos + 1);
 
-            if (nextP.getNumID() != null && nextP.getNumID().equals(p.getNumID())) {
+            if (nextP.getNumID() != null && ! nextP.getNumID().equals(p.getNumID())) {
                 isLastItem = true;
             }
         }
 
         if (isLastItem) {
+            decreaseIndent();
             writeIndent();
             xmlStream.writeEndElement(); // </db:orderedlist> or </db:itemizedlist>
             writeNewLine();
-            decreaseIndent();
         }
     }
 
