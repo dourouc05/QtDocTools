@@ -2,6 +2,9 @@ package be.tcuvelier.qdoctools.utils.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumFmt;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STNumberFormat;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -10,6 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -409,12 +413,22 @@ public class DocxInput {
     private void visitListItem(XWPFParagraph p) throws XMLStreamException {
         // https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java
 
-        // TODO: Check if list open (otherwise, throw exception: invalid document or implementation bug).
-
         boolean isOrderedList = false;
-        if (p.getNumFmt() != null) { // Bullet lists do not seem to always have that field.
-            isOrderedList = p.getNumFmt().matches("%\\d"); // If there is a % followed by a digit, assume
-            // this is an ordered list (default configuration of Word for Western languages).
+        {
+            // What would be best to write...
+//            if (p.getNumFmt() != null) {
+//                isOrderedList = p.getNumFmt().matches("%\\d");
+
+            // Instead, we have to dig deeper.
+            XWPFNumbering numbering = p.getDocument().getNumbering();
+            BigInteger abstractNumID = numbering.getAbstractNumID(p.getNumID());
+            XWPFAbstractNum abstractNum = numbering.getAbstractNum(abstractNumID);
+            CTAbstractNum ctAbstractNum = abstractNum.getCTAbstractNum();
+
+            if (ctAbstractNum.getLvlList().get(0).getNumFmt() != null) {
+                CTNumFmt ctNumFmt = ctAbstractNum.getLvlList().get(0).getNumFmt();
+                isOrderedList = ! ctNumFmt.getVal().equals(STNumberFormat.BULLET);
+            }
         }
 
         // At the beginning of the list (i.e. if not within a list right now), write the begin tag.
@@ -450,7 +464,7 @@ public class DocxInput {
         } else {
             XWPFParagraph nextP = paragraphs.get(pos + 1);
 
-            if (nextP.getNumID() != null && ! nextP.getNumID().equals(p.getNumID())) {
+            if (nextP.getNumID() == null || ! nextP.getNumID().equals(p.getNumID())) {
                 isLastItem = true;
             }
         }
@@ -460,6 +474,8 @@ public class DocxInput {
             writeIndent();
             xmlStream.writeEndElement(); // </db:orderedlist> or </db:itemizedlist>
             writeNewLine();
+
+            isWithinList = false;
         }
     }
 
