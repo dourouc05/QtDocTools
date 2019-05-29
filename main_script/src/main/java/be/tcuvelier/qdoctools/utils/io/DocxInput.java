@@ -308,7 +308,7 @@ public class DocxInput {
             visitRuns(p.getRuns());
 
             // Write the caption (if it corresponds to the next paragraph).
-            if (isLastParagraphOrHasNextParagraphWithStyle(p, "Caption")) {
+            if (! isLastParagraph(p) && hasFollowingParagraphWithStyle(p, "Caption")) {
                 int pos = doc.getPosOfParagraph(p);
 
                 increaseIndent();
@@ -554,7 +554,7 @@ public class DocxInput {
         currentDefinitionListItemSegmentNumber += 1;
 
         // If the next item is no more within a segmented list, serialise it all and forbid adding elements to the list.
-        if (isLastParagraphOrHasNextParagraphWithStyle(p, "DefinitionListTitle")) {
+        if (isLastParagraph(p) || ! hasFollowingParagraphWithStyle(p, "DefinitionListTitle")) {
             serialiseDefinitionList();
 
             currentDefinitionListItemNumber = -1;
@@ -634,12 +634,12 @@ public class DocxInput {
         }
 
         writeIndent();
-        xmlStream.writeStartElement(docbookNS, "varlistentry");
+        xmlStream.writeStartElement(docbookNS, "term");
 
         // Inline content!
         visitRuns(p.getRuns());
 
-        xmlStream.writeEndElement(); // </db:varlistentry>
+        xmlStream.writeEndElement(); // </db:term>
         writeNewLine();
     }
 
@@ -653,11 +653,6 @@ public class DocxInput {
         }
 
         isWithinVariableListEntry = false;
-
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:varlistentry>
-        writeNewLine();
 
         writeIndent();
         xmlStream.writeStartElement(docbookNS, "listitem");
@@ -678,25 +673,30 @@ public class DocxInput {
         writeNewLine();
 
         // If the next item is no more within a variable list, end the fight.
-        if (isLastParagraphOrHasNextParagraphWithStyle(p, "VariableListTitle")) {
+        if (isLastParagraph(p) || ! hasFollowingParagraphWithStyle(p, "VariableListTitle")) {
             decreaseIndent();
             writeIndent();
             xmlStream.writeEndElement(); // </db:variablelist>
             writeNewLine();
+
+            isWithinVariableList = false;
         }
     }
 
-    private boolean isLastParagraphOrHasNextParagraphWithStyle(XWPFParagraph p, String styleID) {
+    private boolean isLastParagraph(XWPFParagraph p) {
+        int pos = doc.getPosOfParagraph(p);
+        return pos == doc.getParagraphs().size() - 1;
+    }
+
+    private boolean hasFollowingParagraphWithStyle(XWPFParagraph p, String styleID) {
         int pos = doc.getPosOfParagraph(p);
 
-        // Last paragraph?
-        if (pos == doc.getParagraphs().size() - 1) {
-            return true;
+        if (isLastParagraph(p)) {
+            throw new AssertionError("Called hasFollowingParagraphWithStyle when this is the last paragraph; always call isLastParagraph first");
         }
 
-        // Followed by a paragraph of the right style?
         return doc.getParagraphs().get(pos + 1).getStyleID() != null
-                && !doc.getParagraphs().get(pos + 1).getStyleID().equals("VariableListTitle");
+                && doc.getParagraphs().get(pos + 1).getStyleID().equals(styleID);
     }
 
     /** Tables. **/
