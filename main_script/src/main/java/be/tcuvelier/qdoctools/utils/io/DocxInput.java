@@ -42,11 +42,15 @@ public class DocxInput {
     private int currentDepth;
     private int currentSectionLevel;
     private boolean isDisplayedFigure = false;
-    private boolean isWithinList = false;
+    private boolean isWithinList = false; // TODO: Introduce a stack, like DocxOutput? Could merge in isWithinVariableList.
+
     private int currentDefinitionListItemNumber = -1;
     private int currentDefinitionListItemSegmentNumber = -1;
     private List<XWPFParagraph> currentDefinitionListTitles = null;
     private List<List<XWPFParagraph>> currentDefinitionListContents = null;
+
+    private boolean isWithinVariableList = false;
+    private boolean isWithinVariableListEntry = false;
 
     private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
@@ -201,6 +205,12 @@ public class DocxInput {
                 case "DefinitionListItem":
                     visitDefinitionListItem(p);
                     return;
+                case "VariableListTitle":
+                    visitVariableListTitle(p);
+                    return;
+                case "VariableListItem":
+                    visitVariableListItem(p);
+                    return;
                 // TODO: Note, etc.?
                 case "Normal": // The case with no style ID is already handled.
                     visitNormalParagraph(p);
@@ -298,10 +308,9 @@ public class DocxInput {
             visitRuns(p.getRuns());
 
             // Write the caption (if it corresponds to the next paragraph).
-            int pos = doc.getPosOfParagraph(p);
-            if (pos + 1 < doc.getParagraphs().size()
-                    && doc.getParagraphs().get(pos + 1).getStyleID() != null
-                    && doc.getParagraphs().get(pos + 1).getStyleID().equals("Caption")) {
+            if (isLastParagraphOrHasNextParagraphWithStyle(p, "Caption")) {
+                int pos = doc.getPosOfParagraph(p);
+
                 increaseIndent();
                 writeIndent();
                 decreaseIndent();
@@ -328,7 +337,7 @@ public class DocxInput {
         }
     }
 
-    private String paragraphAlignmentToDocBookAttribute(ParagraphAlignment align) {
+    private static String paragraphAlignmentToDocBookAttribute(ParagraphAlignment align) {
         // See also DocxOutput.attributeToAlignment.
         switch (align.name()) {
             case "LEFT":
@@ -411,15 +420,13 @@ public class DocxInput {
     /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
 
     private void visitListItem(XWPFParagraph p) throws XMLStreamException {
-        // https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java
-
         boolean isOrderedList = false;
         {
             // What would be best to write...
 //            if (p.getNumFmt() != null) {
 //                isOrderedList = p.getNumFmt().matches("%\\d");
 
-            // Instead, we have to dig deeper.
+            // Instead, we have to dig deeper (have a look at what is done in DocxOutputImpl::createNumbering).
             XWPFNumbering numbering = p.getDocument().getNumbering();
             BigInteger abstractNumID = numbering.getAbstractNumID(p.getNumID());
             XWPFAbstractNum abstractNum = numbering.getAbstractNum(abstractNumID);
@@ -547,10 +554,7 @@ public class DocxInput {
         currentDefinitionListItemSegmentNumber += 1;
 
         // If the next item is no more within a segmented list, serialise it all and forbid adding elements to the list.
-        int pos = doc.getPosOfParagraph(p);
-        if (pos + 1 < doc.getParagraphs().size()
-                && doc.getParagraphs().get(pos + 1).getStyleID() != null
-                && ! doc.getParagraphs().get(pos + 1).getStyleID().equals("DefinitionListTitle")) {
+        if (isLastParagraphOrHasNextParagraphWithStyle(p, "DefinitionListTitle")) {
             serialiseDefinitionList();
 
             currentDefinitionListItemNumber = -1;
@@ -610,7 +614,90 @@ public class DocxInput {
 
     /** Variable lists. **/
 
-    private void visitVariableListTitle(XWPFParagraph p) throws XMLStreamException {}
+    private void visitVariableListTitle(XWPFParagraph p) throws XMLStreamException {
+        if (! isWithinVariableList) {
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "variablelist");
+            increaseIndent();
+            writeNewLine();
+
+            isWithinVariableList = true;
+        }
+
+        if (! isWithinVariableListEntry) {
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, "varlistentry");
+            increaseIndent();
+            writeNewLine();
+
+            isWithinVariableListEntry = true;
+        }
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "varlistentry");
+
+        // Inline content!
+        visitRuns(p.getRuns());
+
+        xmlStream.writeEndElement(); // </db:varlistentry>
+        writeNewLine();
+    }
+
+    private void visitVariableListItem(XWPFParagraph p) throws XMLStreamException {
+        if (! isWithinVariableList) {
+            throw new XMLStreamException("Unexpected variable list item: must have a variable list title beforehand.");
+        }
+
+        if (! isWithinVariableListEntry) {
+            throw new XMLStreamException("Inconsistent state when dealing with a variable list.");
+        }
+
+        isWithinVariableListEntry = false;
+
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement(); // </db:varlistentry>
+        writeNewLine();
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "listitem");
+        increaseIndent();
+        writeNewLine();
+
+        // Container for paragraphs.
+        visitNormalParagraph(p);
+
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement(); // </db:listitem>
+        writeNewLine();
+
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement(); // </db:varlistentry>
+        writeNewLine();
+
+        // If the next item is no more within a variable list, end the fight.
+        if (isLastParagraphOrHasNextParagraphWithStyle(p, "VariableListTitle")) {
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:variablelist>
+            writeNewLine();
+        }
+    }
+
+    private boolean isLastParagraphOrHasNextParagraphWithStyle(XWPFParagraph p, String styleID) {
+        int pos = doc.getPosOfParagraph(p);
+
+        // Last paragraph?
+        if (pos == doc.getParagraphs().size() - 1) {
+            return true;
+        }
+
+        // Followed by a paragraph of the right style?
+        return doc.getParagraphs().get(pos + 1).getStyleID() != null
+                && !doc.getParagraphs().get(pos + 1).getStyleID().equals("VariableListTitle");
+    }
 
     /** Tables. **/
 
