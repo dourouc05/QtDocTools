@@ -2,9 +2,7 @@ package be.tcuvelier.qdoctools.utils.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.xwpf.usermodel.*;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumFmt;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.STNumberFormat;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -798,14 +796,80 @@ public class DocxInput {
         if (run.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
             xmlStream.writeStartElement(docbookNS, "subscript");
         }
-//            if (run.getFontFamily() != null) {
-//                // TODO: Font family (if code).
-//            }
+
+        String styleID = "";
+        {
+            // https://github.com/apache/poi/pull/151
+            CTRPr pr = run.getCTR().getRPr();
+            if (pr != null) {
+                CTString style = pr.getRStyle();
+                if (style != null) {
+                    styleID = style.getVal();
+                }
+            }
+        }
+        switch (styleID) {
+            // This switch should be on par with DocxOutputImpl::setRunFormatting.
+            case "ClassName":
+                xmlStream.writeStartElement(docbookNS, "classname");
+                break;
+            case "ExceptionName":
+                xmlStream.writeStartElement(docbookNS, "exceptionname");
+                break;
+            case "InterfaceName":
+                xmlStream.writeStartElement(docbookNS, "interfacename");
+                break;
+            case "MethodName":
+                xmlStream.writeStartElement(docbookNS, "methodname");
+                break;
+            case "ComputerOutput":
+                xmlStream.writeStartElement(docbookNS, "computeroutput");
+                break;
+            case "Constant":
+                xmlStream.writeStartElement(docbookNS, "constant");
+                break;
+            case "EnvironmentVariable":
+                xmlStream.writeStartElement(docbookNS, "envar");
+                break;
+            case "FileName":
+                xmlStream.writeStartElement(docbookNS, "filename");
+                break;
+            case "Literal":
+                xmlStream.writeStartElement(docbookNS, "literal");
+                break;
+            case "Code":
+                xmlStream.writeStartElement(docbookNS, "code");
+                break;
+            case "Option":
+                xmlStream.writeStartElement(docbookNS, "option");
+                break;
+            case "Prompt":
+                xmlStream.writeStartElement(docbookNS, "prompt");
+                break;
+            case "SystemItem":
+                xmlStream.writeStartElement(docbookNS, "systemitem");
+                break;
+            case "VariableName":
+                xmlStream.writeStartElement(docbookNS, "varname");
+                break;
+            case "Email":
+                xmlStream.writeStartElement(docbookNS, "email");
+                break;
+            case "URI":
+                xmlStream.writeStartElement(docbookNS, "uri");
+                break;
+            case "":
+                // No style, nothing to do.
+                break;
+            default:
+                throw new XMLStreamException("Unrecognised run style: " + styleID);
+        }
 
         // Actual text for this run.
         xmlStream.writeCharacters(run.text());
 
         // Close the tags if needed (strictly the reverse order from opening tags).
+        // No need to respect order in the tests, as every thing here is just closing a DocBook tag.
         if (run.getUnderline() != UnderlinePatterns.NONE) {
             xmlStream.writeEndElement(); // </db:emphasis> for underline
         }
@@ -824,9 +888,9 @@ public class DocxInput {
         if (run.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
             xmlStream.writeEndElement(); // </db:subscript>
         }
-//            if (run.getFontFamily() != null) {
-//                // TODO: Font family (if code).
-//            }
+        if (! styleID.equals("")) {
+            xmlStream.writeEndElement(); // </db:something in the switch above>
+        }
     }
 
     private void visitHyperlinkRun(XWPFHyperlinkRun r) throws XMLStreamException {

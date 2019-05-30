@@ -4,27 +4,53 @@
     <db:title>Document title</db:title>
   </db:info>
   <db:para>Itemized list:</db:para>
-  <db:para>Item 1.</db:para>
-  <db:para>Item 2.</db:para>
+  <db:itemizedlist>
+    <db:listitem>
+      <db:para>Item 1.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>Item 2.</db:para>
+    </db:listitem>
+  </db:itemizedlist>
   <db:para>Ordered list:</db:para>
-  <db:para>Item 1.</db:para>
-  <db:para>Item 2.</db:para>
+  <db:orderedlist>
+    <db:listitem>
+      <db:para>Item 1.</db:para>
+    </db:listitem>
+    <db:listitem>
+      <db:para>Item 2.</db:para>
+    </db:listitem>
+  </db:orderedlist>
   <db:para>Segmented list:</db:para>
-  <db:para>State</db:para>
-  <db:para>Alabama</db:para>
-  <db:para>Capital</db:para>
-  <db:para>Montgomery</db:para>
-  <db:para>State</db:para>
-  <db:para>Alaska</db:para>
-  <db:para>Capital</db:para>
-  <db:para>Juneau</db:para>
-  <db:para>State</db:para>
-  <db:para>Arkansas</db:para>
-  <db:para>Capital</db:para>
-  <db:para>Little Rock</db:para>
-  <db:para>TTF</db:para>
-  <db:para>TrueType fonts.</db:para>
-  <db:para>PFA</db:para>
-  <db:para>PFB</db:para>
-  <db:para>PostScript fonts.</db:para>
+  <db:segmentedlist>
+    <db:segtitle>State</db:segtitle>
+    <db:segtitle>Capital</db:segtitle>
+    <db:seglistitem>
+      <db:seg>Alabama</db:seg>
+      <db:seg>Montgomery</db:seg>
+    </db:seglistitem>
+    <db:seglistitem>
+      <db:seg>Alaska</db:seg>
+      <db:seg>Juneau</db:seg>
+    </db:seglistitem>
+    <db:seglistitem>
+      <db:seg>Arkansas</db:seg>
+      <db:seg>Little Rock</db:seg>
+    </db:seglistitem>
+  </db:segmentedlist>
+  <db:variablelist>
+    <db:varlistentry>
+      <db:term><db:filename>TTF</db:filename></db:term>
+      <db:listitem>
+        <db:para>TrueType fonts.</db:para>
+      </db:listitem>
+    </db:varlistentry>
+    <db:varlistentry>
+      <db:term><db:filename>PFA</db:filename></db:term>
+      <db:term><db:filename>PFB</db:filename></db:term>
+      <db:listitem>
+        <db:para>PostScript fonts.</db:para>
+      </db:listitem>
+    </db:varlistentry>
+  </db:variablelist>
 </db:article>
