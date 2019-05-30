@@ -50,20 +50,25 @@ public enum DocBookFormatting {
 
     public static Map<DocBookFormatting, String> docbookTagToStyleID = Map.ofEntries();
 
+    public static Map<String, String> styleIDToDocBookTag = Map.ofEntries();
+
     static {
         // Make the fields mutable temporarily.
         predicateToFormatting = new HashMap<>(predicateToFormatting);
         docbookTagToStyleID = new HashMap<>(docbookTagToStyleID);
+        styleIDToDocBookTag = new HashMap<>(styleIDToDocBookTag);
 
         // Fill them.
         for (Triplet<DocBookFormatting, String, String> t: formattings) {
             predicateToFormatting.put(tagRecogniser(t.second), t.first);
             docbookTagToStyleID.put(t.first, t.third);
+            styleIDToDocBookTag.put(t.third, t.second);
         }
 
         // Make them immutable again.
         predicateToFormatting = Map.copyOf(predicateToFormatting);
         docbookTagToStyleID = Map.copyOf(docbookTagToStyleID);
+        styleIDToDocBookTag = Map.copyOf(styleIDToDocBookTag);
     }
 
     private static Predicate<String> tagRecogniser(String tag) {

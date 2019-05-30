@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
@@ -765,26 +766,6 @@ public class DocxInput {
         }
     }
 
-    // This hash map should be on par with DocxOutputImpl.docbookTagToStyleID.
-    private static Map<String, String> styleIDToDocBookTag = Map.ofEntries(
-            new AbstractMap.SimpleEntry<>("ClassName", "classname"),
-            new AbstractMap.SimpleEntry<>("ExceptionName", "exceptionname"),
-            new AbstractMap.SimpleEntry<>("InterfaceName", "interfacename"),
-            new AbstractMap.SimpleEntry<>("MethodName", "methodname"),
-            new AbstractMap.SimpleEntry<>("ComputerOutput", "computeroutput"),
-            new AbstractMap.SimpleEntry<>("Constant", "constant"),
-            new AbstractMap.SimpleEntry<>("EnvironmentVariable", "envar"),
-            new AbstractMap.SimpleEntry<>("FileName", "filename"),
-            new AbstractMap.SimpleEntry<>("Literal", "literal"),
-            new AbstractMap.SimpleEntry<>("Code", "code"),
-            new AbstractMap.SimpleEntry<>("Option", "option"),
-            new AbstractMap.SimpleEntry<>("Prompt", "prompt"),
-            new AbstractMap.SimpleEntry<>("SystemItem", "systemitem"),
-            new AbstractMap.SimpleEntry<>("VariableName", "varname"),
-            new AbstractMap.SimpleEntry<>("Email", "email"),
-            new AbstractMap.SimpleEntry<>("URI", "uri")
-    );
-
     private static String getStyle(XWPFRun r) {
         // https://github.com/apache/poi/pull/151
         CTRPr pr = r.getCTR().getRPr();
@@ -833,8 +814,8 @@ public class DocxInput {
         }
 
         String styleID = getStyle(run);
-        if (styleIDToDocBookTag.containsKey(styleID)) {
-            xmlStream.writeStartElement(docbookNS, styleIDToDocBookTag.get(styleID));
+        if (DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
+            xmlStream.writeStartElement(docbookNS, DocBookFormatting.styleIDToDocBookTag.get(styleID));
         } else if (! styleID.equals("")) {
             throw new XMLStreamException("Unrecognised run style: " + styleID);
         }
