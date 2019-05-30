@@ -823,10 +823,12 @@ public class DocxInput {
 
             // Cannot make a test on the font family, as it does not support monospaced information:
             // https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.fontfamily?view=openxml-2.8.1
-            if (run.getFontName().equals("Consolas") || run.getFontName().equals("Courier New")) {
-                System.out.println("Warning: text in a monospaced font (" + run.getFontName() + ") but not marked " +
-                        "with a style to indicate its meaning. By default, it will be wrapped in <code>.");
-                xmlStream.writeStartElement(docbookNS, "code");
+            if (run.getFontName() != null) {
+                if (run.getFontName().equals("Consolas") || run.getFontName().equals("Courier New")) {
+                    System.out.println("Warning: text in a monospaced font (" + run.getFontName() + ") but not marked " +
+                            "with a style to indicate its meaning. By default, it will be wrapped in <code>.");
+                    xmlStream.writeStartElement(docbookNS, "code");
+                }
             }
         }
 
