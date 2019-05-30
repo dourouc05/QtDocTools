@@ -796,6 +796,25 @@ public class DocxOutputImpl extends DefaultHandler {
 
     /** Remaining POI helpers, really specific to this class. **/
 
+    private static Map<Formatting, String> docbookTagToStyleID = Map.ofEntries(
+            new AbstractMap.SimpleEntry<>(Formatting.CLASS_NAME, "ClassName"),
+            new AbstractMap.SimpleEntry<>(Formatting.EXCEPTION_NAME, "ExceptionName"),
+            new AbstractMap.SimpleEntry<>(Formatting.INTERFACE_NAME, "InterfaceName"),
+            new AbstractMap.SimpleEntry<>(Formatting.METHOD_NAME, "MethodName"),
+            new AbstractMap.SimpleEntry<>(Formatting.COMPUTER_OUTPUT, "ComputerOutput"),
+            new AbstractMap.SimpleEntry<>(Formatting.CONSTANT, "Constant"),
+            new AbstractMap.SimpleEntry<>(Formatting.ENVIRONMENT_VARIABLE, "EnvironmentVariable"),
+            new AbstractMap.SimpleEntry<>(Formatting.FILE_NAME, "FileName"),
+            new AbstractMap.SimpleEntry<>(Formatting.LITERAL, "Literal"),
+            new AbstractMap.SimpleEntry<>(Formatting.CODE, "Code"),
+            new AbstractMap.SimpleEntry<>(Formatting.OPTION, "Option"),
+            new AbstractMap.SimpleEntry<>(Formatting.PROMPT, "Prompt"),
+            new AbstractMap.SimpleEntry<>(Formatting.SYSTEM_ITEM, "SystemItem"),
+            new AbstractMap.SimpleEntry<>(Formatting.VARIABLE_NAME, "VariableName"),
+            new AbstractMap.SimpleEntry<>(Formatting.EMAIL, "Email"),
+            new AbstractMap.SimpleEntry<>(Formatting.URI, "URI")
+    );
+
     private void setRunFormatting() throws SAXException {
         for (Formatting f: currentFormatting) {
             switch (f) {
@@ -817,56 +836,13 @@ public class DocxOutputImpl extends DefaultHandler {
                 case SUPERSCRIPT:
                     run.setSubscript(VerticalAlign.SUPERSCRIPT);
                     break;
-                case CLASS_NAME:
-                    run.setStyle("ClassName");
-                    break;
-                case EXCEPTION_NAME:
-                    run.setStyle("ExceptionName");
-                    break;
-                case INTERFACE_NAME:
-                    run.setStyle("InterfaceName");
-                    break;
-                case METHOD_NAME:
-                    run.setStyle("MethodName");
-                    break;
-                case COMPUTER_OUTPUT:
-                    run.setStyle("ComputerOutput");
-                    break;
-                case CONSTANT:
-                    run.setStyle("Constant");
-                    break;
-                case ENVIRONMENT_VARIABLE:
-                    run.setStyle("EnvironmentVariable");
-                    break;
-                case FILE_NAME:
-                    run.setStyle("FileName");
-                    break;
-                case LITERAL:
-                    run.setStyle("Literal");
-                    break;
-                case CODE:
-                    run.setStyle("Code");
-                    break;
-                case OPTION:
-                    run.setStyle("Option");
-                    break;
-                case PROMPT:
-                    run.setStyle("Prompt");
-                    break;
-                case SYSTEM_ITEM:
-                    run.setStyle("SystemItem");
-                    break;
-                case VARIABLE_NAME:
-                    run.setStyle("VariableName");
-                    break;
-                case EMAIL:
-                    run.setStyle("Email");
-                    break;
-                case URI:
-                    run.setStyle("URI");
-                    break;
                 default:
-                    throw new DocxException("formatting not recognised by setRunFormatting: " + f);
+                    if (docbookTagToStyleID.containsKey(f)) {
+                        run.setStyle(docbookTagToStyleID.get(f));
+                    } else {
+                        throw new DocxException("formatting not recognised by setRunFormatting: " + f);
+                    }
+                    break;
             }
         }
     }

@@ -765,7 +765,7 @@ public class DocxInput {
         }
     }
 
-    // This hash map should be on par with DocxOutputImpl::setRunFormatting.
+    // This hash map should be on par with DocxOutputImpl.docbookTagToStyleID.
     private static Map<String, String> styleIDToDocBookTag = Map.ofEntries(
             new AbstractMap.SimpleEntry<>("ClassName", "classname"),
             new AbstractMap.SimpleEntry<>("ExceptionName", "exceptionname"),
