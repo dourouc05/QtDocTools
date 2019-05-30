@@ -1,12 +1,12 @@
 package be.tcuvelier.qdoctools.io.helpers;
 
-import be.tcuvelier.qdoctools.io.DocxOutputImpl;
 import org.xml.sax.Attributes;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public enum DocBookFormatting {
     EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT,
@@ -18,7 +18,7 @@ public enum DocBookFormatting {
     // Thus, the maps predicateToFormatting and docbookTagToStyleID (directly useful) are filled with two sources:
     // the list formattings, and special cases.
 
-    private static List<Triplet<DocBookFormatting, String, String>> formattings = List.of(
+    public static List<Triplet<DocBookFormatting, String, String>> formattings = List.of(
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: inline style
             new Triplet<>(DocBookFormatting.CLASS_NAME, "classname", "ClassName"),
             new Triplet<>(DocBookFormatting.EXCEPTION_NAME, "exceptionname", "ExceptionName"),
@@ -44,6 +44,10 @@ public enum DocBookFormatting {
             Map.entry(tagRecogniser("subscript"), DocBookFormatting.SUBSCRIPT)
     );
 
+    public static Map<DocBookFormatting, Predicate<String>> formattingToPredicate =
+            predicateToFormatting.entrySet().stream()
+            .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+
     public static Map<DocBookFormatting, String> docbookTagToStyleID = Map.ofEntries();
 
     static {
@@ -66,7 +70,7 @@ public enum DocBookFormatting {
         return qName -> recogniseTag(tag, qName);
     }
 
-    private static boolean recogniseTag(String tag, String qName) {
+    public static boolean recogniseTag(String tag, String qName) {
         // SAX returns a localName that is zero-length... Hence this function: go from db:article to article.
         // But maybe a specific DocBook document has no defined namespace, or DocBook is the default namespace.
         String localName;
@@ -90,21 +94,24 @@ public enum DocBookFormatting {
 
         // Based on current XSLT sheets.
         // https://github.com/docbook/xslt10-stylesheets/blob/c50f1cd7afc9a5b8ecee25dc1a46d62cdcd4917c/xsl/fo/inline.xsl#L745
-        if (recogniseTag("emphasis", localName) && (role.equals("") || role.equals("italics"))) {
-            return DocBookFormatting.EMPHASIS;
-        } else if (recogniseTag("emphasis", localName) && (role.equals("bold") || role.equals("strong"))) {
-            if (role.equals("strong")) {
-                System.out.println("Warning: an emphasis tag has a 'strong' role, which will be replaced by 'bold' " +
-                        "after round-tripping back to DocBook.");
+        if (recogniseTag("emphasis", localName)) {
+            switch (role) {
+                case "strong":
+                    System.out.println("Warning: an emphasis tag has a 'strong' role, which will be replaced " +
+                            "by 'bold' after round-tripping back to DocBook.");
+                    // Slip through.
+                case "bold":
+                    return DocBookFormatting.EMPHASIS_BOLD;
+                case "underline":
+                    return DocBookFormatting.EMPHASIS_UNDERLINE;
+                case "strikethrough":
+                    return DocBookFormatting.EMPHASIS_STRIKETHROUGH;
+                case "":
+                case "italics":
+                default:
+                    return DocBookFormatting.EMPHASIS;
             }
-
-            return DocBookFormatting.EMPHASIS_BOLD;
-        } else if (recogniseTag("emphasis", localName) && role.equals("underline")) {
-            return DocBookFormatting.EMPHASIS_UNDERLINE;
-        } else if (recogniseTag("emphasis", localName) && role.equals("strikethrough")) {
-            return DocBookFormatting.EMPHASIS_STRIKETHROUGH;
-        }
-        else {
+        } else {
             // Many cases are really simple: just a function to call to decide which formatting it is.
             for (Map.Entry<Predicate<String>, DocBookFormatting> e: predicateToFormatting.entrySet()) {
                 if (e.getKey().test(localName)) {
@@ -116,5 +123,24 @@ public enum DocBookFormatting {
             throw new IllegalArgumentException("Unknown formatting tag for tagToFormatting, " +
                     "but recognised as formatting: " + localName);
         }
+    }
+
+    public static boolean isRunFormatting(String qName) {
+        // Formattings that are set through run parameters.
+        return recogniseTag("emphasis", qName)
+                || formattingToPredicate.get(SUBSCRIPT).test(qName)
+                || formattingToPredicate.get(SUPERSCRIPT).test(qName)
+                || isInlineFormatting(qName);
+    }
+
+    public static boolean isInlineFormatting(String qName) {
+        // Formattings that require a style.
+        // TODO: What to do with function? To be studied further...
+        for (Triplet<DocBookFormatting, String, String> t: formattings) {
+            if (formattingToPredicate.get(t.first).test(qName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

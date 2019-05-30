@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
+import be.tcuvelier.qdoctools.io.helpers.Triplet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
@@ -170,120 +171,8 @@ public class DocxOutputImpl extends DefaultHandler {
                     || localName.equalsIgnoreCase("simpara");
         }
 
-        private static boolean isEmphasisTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("emphasis");
-        }
-
-        private static boolean isSuperscriptTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("superscript");
-        }
-
-        private static boolean isSubscriptTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("subscript");
-        }
-
-        private static boolean isClassNameTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("classname");
-        }
-
-        private static boolean isExceptionNameTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("exceptionname");
-        }
-
-        private static boolean isInterfaceNameTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("interfacename");
-        }
-
-        private static boolean isMethodNameTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("methodname");
-        }
-
-        private static boolean isComputerOutputTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("computeroutput");
-        }
-
-        private static boolean isConstantTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("constant");
-        }
-
-        private static boolean isEnvironmentVariableTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("envar");
-        }
-
-        private static boolean isFileNameTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("filename");
-        }
-
-        private static boolean isLiteralTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("literal");
-        }
-
-        private static boolean isCodeTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("code");
-        }
-
-        private static boolean isOptionTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("option");
-        }
-
-        private static boolean isPromptTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("prompt");
-        }
-
-        private static boolean isSystemItemTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("systemitem");
-        }
-
-        private static boolean isVariableNameTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("varname");
-        }
-
-        private static boolean isEmailTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("email");
-        }
-
-        private static boolean isURITag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("uri");
-        }
-
         private static boolean isFormatting(String qName) {
-            return isRunFormatting(qName) || isInlineFormatting(qName);
-        }
-
-        private static boolean isRunFormatting(String qName) {
-            return isEmphasisTag(qName) || isSubscriptTag(qName) || isSuperscriptTag(qName) || isInlineFormatting(qName);
-        }
-
-        private static boolean isInlineFormatting(String qName) {
-            // Corresponding Word styles:
-            // Class Name, Exception Name, Interface Name, Method Name, Computer Output, Constant, Environment Variable,
-            // File Name, Literal, Code, Option, Prompt, System Item, Variable Name, Email, URI
-            // Order from https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl
-            // TODO: What to do with function? To be studied further...
-            return isClassNameTag(qName) || isExceptionNameTag(qName) || isInterfaceNameTag(qName)
-                    || isMethodNameTag(qName) || isComputerOutputTag(qName) || isConstantTag(qName)
-                    || isEnvironmentVariableTag(qName) || isFileNameTag(qName) || isLiteralTag(qName)
-                    || isCodeTag(qName) || isConstantTag(qName) || isOptionTag(qName) || isPromptTag(qName)
-                    || isSystemItemTag(qName) || isVariableNameTag(qName) || isEmailTag(qName) || isURITag(qName);
+            return DocBookFormatting.isRunFormatting(qName) || DocBookFormatting.isInlineFormatting(qName);
         }
 
         private static boolean isLinkTag(String qName) {
@@ -1088,7 +977,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Inline tags: ensure the formatting is no more included in the next runs.
-        else if (SAXHelpers.isRunFormatting(qName)) {
+        else if (DocBookFormatting.isRunFormatting(qName)) {
             currentFormatting.remove(currentFormatting.size() - 1);
             run = paragraph.createRun();
         } else if (SAXHelpers.isLinkTag(qName)) {
