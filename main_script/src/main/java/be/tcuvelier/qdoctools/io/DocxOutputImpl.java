@@ -2,7 +2,6 @@ package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
-import be.tcuvelier.qdoctools.io.helpers.Triplet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
