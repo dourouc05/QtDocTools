@@ -818,6 +818,16 @@ public class DocxInput {
             xmlStream.writeStartElement(docbookNS, DocBookFormatting.styleIDToDocBookTag.get(styleID));
         } else if (! styleID.equals("")) {
             throw new XMLStreamException("Unrecognised run style: " + styleID);
+        } else {
+            // No style, but maybe the user wants to tell the software something.
+
+            // Cannot make a test on the font family, as it does not support monospaced information:
+            // https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.fontfamily?view=openxml-2.8.1
+            if (run.getFontName().equals("Consolas") || run.getFontName().equals("Courier New")) {
+                System.out.println("Warning: text in a monospaced font (" + run.getFontName() + ") but not marked " +
+                        "with a style to indicate its meaning. By default, it will be wrapped in <code>.");
+                xmlStream.writeStartElement(docbookNS, "code");
+            }
         }
 
         // Actual text for this run.
