@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.utils.io;
+package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import org.apache.poi.xwpf.usermodel.*;
