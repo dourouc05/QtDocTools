@@ -765,6 +765,41 @@ public class DocxInput {
         }
     }
 
+    // This hash map should be on par with DocxOutputImpl::setRunFormatting.
+    private static Map<String, String> styleIDToDocBookTag = Map.ofEntries(
+            new AbstractMap.SimpleEntry<>("ClassName", "classname"),
+            new AbstractMap.SimpleEntry<>("ExceptionName", "exceptionname"),
+            new AbstractMap.SimpleEntry<>("InterfaceName", "interfacename"),
+            new AbstractMap.SimpleEntry<>("MethodName", "methodname"),
+            new AbstractMap.SimpleEntry<>("ComputerOutput", "computeroutput"),
+            new AbstractMap.SimpleEntry<>("Constant", "constant"),
+            new AbstractMap.SimpleEntry<>("EnvironmentVariable", "envar"),
+            new AbstractMap.SimpleEntry<>("FileName", "filename"),
+            new AbstractMap.SimpleEntry<>("Literal", "literal"),
+            new AbstractMap.SimpleEntry<>("Code", "code"),
+            new AbstractMap.SimpleEntry<>("Option", "option"),
+            new AbstractMap.SimpleEntry<>("Prompt", "prompt"),
+            new AbstractMap.SimpleEntry<>("SystemItem", "systemitem"),
+            new AbstractMap.SimpleEntry<>("VariableName", "varname"),
+            new AbstractMap.SimpleEntry<>("Email", "email"),
+            new AbstractMap.SimpleEntry<>("URI", "uri")
+    );
+
+    private static String getStyle(XWPFRun r) {
+        // https://github.com/apache/poi/pull/151
+        CTRPr pr = r.getCTR().getRPr();
+        if (pr == null) {
+            return "";
+        }
+
+        CTString style = pr.getRStyle();
+        if (style == null) {
+            return "";
+        }
+
+        return style.getVal();
+    }
+
     private void visitRun(XWPFRun run) throws XMLStreamException {
         // TODO: maybe implement simplifications if two runs have the same set of formattings (compute the difference between sets of formatting).
 
@@ -797,72 +832,11 @@ public class DocxInput {
             xmlStream.writeStartElement(docbookNS, "subscript");
         }
 
-        String styleID = "";
-        {
-            // https://github.com/apache/poi/pull/151
-            CTRPr pr = run.getCTR().getRPr();
-            if (pr != null) {
-                CTString style = pr.getRStyle();
-                if (style != null) {
-                    styleID = style.getVal();
-                }
-            }
-        }
-        switch (styleID) {
-            // This switch should be on par with DocxOutputImpl::setRunFormatting.
-            case "ClassName":
-                xmlStream.writeStartElement(docbookNS, "classname");
-                break;
-            case "ExceptionName":
-                xmlStream.writeStartElement(docbookNS, "exceptionname");
-                break;
-            case "InterfaceName":
-                xmlStream.writeStartElement(docbookNS, "interfacename");
-                break;
-            case "MethodName":
-                xmlStream.writeStartElement(docbookNS, "methodname");
-                break;
-            case "ComputerOutput":
-                xmlStream.writeStartElement(docbookNS, "computeroutput");
-                break;
-            case "Constant":
-                xmlStream.writeStartElement(docbookNS, "constant");
-                break;
-            case "EnvironmentVariable":
-                xmlStream.writeStartElement(docbookNS, "envar");
-                break;
-            case "FileName":
-                xmlStream.writeStartElement(docbookNS, "filename");
-                break;
-            case "Literal":
-                xmlStream.writeStartElement(docbookNS, "literal");
-                break;
-            case "Code":
-                xmlStream.writeStartElement(docbookNS, "code");
-                break;
-            case "Option":
-                xmlStream.writeStartElement(docbookNS, "option");
-                break;
-            case "Prompt":
-                xmlStream.writeStartElement(docbookNS, "prompt");
-                break;
-            case "SystemItem":
-                xmlStream.writeStartElement(docbookNS, "systemitem");
-                break;
-            case "VariableName":
-                xmlStream.writeStartElement(docbookNS, "varname");
-                break;
-            case "Email":
-                xmlStream.writeStartElement(docbookNS, "email");
-                break;
-            case "URI":
-                xmlStream.writeStartElement(docbookNS, "uri");
-                break;
-            case "":
-                // No style, nothing to do.
-                break;
-            default:
-                throw new XMLStreamException("Unrecognised run style: " + styleID);
+        String styleID = getStyle(run);
+        if (styleIDToDocBookTag.containsKey(styleID)) {
+            xmlStream.writeStartElement(docbookNS, styleIDToDocBookTag.get(styleID));
+        } else if (! styleID.equals("")) {
+            throw new XMLStreamException("Unrecognised run style: " + styleID);
         }
 
         // Actual text for this run.
