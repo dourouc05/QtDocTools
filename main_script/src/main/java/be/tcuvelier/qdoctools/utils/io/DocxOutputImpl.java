@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -106,6 +108,48 @@ public class DocxOutputImpl extends DefaultHandler {
         CLASS_NAME, EXCEPTION_NAME, INTERFACE_NAME, METHOD_NAME, COMPUTER_OUTPUT, CONSTANT, ENVIRONMENT_VARIABLE,
         FILE_NAME, LITERAL, CODE, OPTION, PROMPT, SYSTEM_ITEM, VARIABLE_NAME, EMAIL, URI;
 
+        private static Map<Predicate<String>, Formatting> predicateToFormatting = Map.ofEntries(
+                // https://github.com/docbook/xslt10-stylesheets/blob/c50f1cd7afc9a5b8ecee25dc1a46d62cdcd4917c/xsl/fo/inline.xsl#L745
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isSuperscriptTag, Formatting.SUPERSCRIPT),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isSubscriptTag, Formatting.SUBSCRIPT),
+                // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: inline style
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isClassNameTag, Formatting.CLASS_NAME),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isExceptionNameTag, Formatting.EXCEPTION_NAME),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isInterfaceNameTag, Formatting.INTERFACE_NAME),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isMethodNameTag, Formatting.METHOD_NAME),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isComputerOutputTag, Formatting.COMPUTER_OUTPUT),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isConstantTag, Formatting.CONSTANT),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isEnvironmentVariableTag, Formatting.ENVIRONMENT_VARIABLE),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isFileNameTag, Formatting.FILE_NAME),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isLiteralTag, Formatting.LITERAL),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isCodeTag, Formatting.CODE),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isCodeTag, Formatting.OPTION),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isPromptTag, Formatting.PROMPT),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isSystemItemTag, Formatting.SYSTEM_ITEM),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isVariableNameTag, Formatting.VARIABLE_NAME),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isEmailTag, Formatting.EMAIL),
+                new AbstractMap.SimpleEntry<>(SAXHelpers::isURITag, Formatting.URI)
+        );
+
+        private static Map<Formatting, String> docbookTagToStyleID = Map.ofEntries(
+                new AbstractMap.SimpleEntry<>(Formatting.CLASS_NAME, "ClassName"),
+                new AbstractMap.SimpleEntry<>(Formatting.EXCEPTION_NAME, "ExceptionName"),
+                new AbstractMap.SimpleEntry<>(Formatting.INTERFACE_NAME, "InterfaceName"),
+                new AbstractMap.SimpleEntry<>(Formatting.METHOD_NAME, "MethodName"),
+                new AbstractMap.SimpleEntry<>(Formatting.COMPUTER_OUTPUT, "ComputerOutput"),
+                new AbstractMap.SimpleEntry<>(Formatting.CONSTANT, "Constant"),
+                new AbstractMap.SimpleEntry<>(Formatting.ENVIRONMENT_VARIABLE, "EnvironmentVariable"),
+                new AbstractMap.SimpleEntry<>(Formatting.FILE_NAME, "FileName"),
+                new AbstractMap.SimpleEntry<>(Formatting.LITERAL, "Literal"),
+                new AbstractMap.SimpleEntry<>(Formatting.CODE, "Code"),
+                new AbstractMap.SimpleEntry<>(Formatting.OPTION, "Option"),
+                new AbstractMap.SimpleEntry<>(Formatting.PROMPT, "Prompt"),
+                new AbstractMap.SimpleEntry<>(Formatting.SYSTEM_ITEM, "SystemItem"),
+                new AbstractMap.SimpleEntry<>(Formatting.VARIABLE_NAME, "VariableName"),
+                new AbstractMap.SimpleEntry<>(Formatting.EMAIL, "Email"),
+                new AbstractMap.SimpleEntry<>(Formatting.URI, "URI")
+        );
+
         static Formatting tagToFormatting(String localName, Attributes attributes) {
             String role = "";
             for (int i = 0; i < attributes.getLength(); ++i) {
@@ -130,47 +174,16 @@ public class DocxOutputImpl extends DefaultHandler {
                 return Formatting.EMPHASIS_UNDERLINE;
             } else if (SAXHelpers.isEmphasisTag(localName) && role.equals("strikethrough")) {
                 return Formatting.EMPHASIS_STRIKETHROUGH;
-            } else if (SAXHelpers.isSuperscriptTag(localName)) {
-                return Formatting.SUPERSCRIPT;
-            } else if (SAXHelpers.isSubscriptTag(localName)) {
-                return Formatting.SUBSCRIPT;
             }
-            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl
-            else if (SAXHelpers.isClassNameTag(localName)) {
-                return Formatting.CLASS_NAME;
-            } else if (SAXHelpers.isExceptionNameTag(localName)) {
-                return Formatting.EXCEPTION_NAME;
-            } else if (SAXHelpers.isInterfaceNameTag(localName)) {
-                return Formatting.INTERFACE_NAME;
-            } else if (SAXHelpers.isMethodNameTag(localName)) {
-                return Formatting.METHOD_NAME;
-            } else if (SAXHelpers.isComputerOutputTag(localName)) {
-                return Formatting.COMPUTER_OUTPUT;
-            } else if (SAXHelpers.isConstantTag(localName)) {
-                return Formatting.CONSTANT;
-            } else if (SAXHelpers.isEnvironmentVariableTag(localName)) {
-                return Formatting.ENVIRONMENT_VARIABLE;
-            } else if (SAXHelpers.isFileNameTag(localName)) {
-                return Formatting.FILE_NAME;
-            } else if (SAXHelpers.isLiteralTag(localName)) {
-                return Formatting.LITERAL;
-            } else if (SAXHelpers.isCodeTag(localName)) {
-                return Formatting.CODE;
-            } else if (SAXHelpers.isCodeTag(localName)) {
-                return Formatting.OPTION;
-            } else if (SAXHelpers.isPromptTag(localName)) {
-                return Formatting.PROMPT;
-            } else if (SAXHelpers.isSystemItemTag(localName)) {
-                return Formatting.SYSTEM_ITEM;
-            } else if (SAXHelpers.isVariableNameTag(localName)) {
-                return Formatting.VARIABLE_NAME;
-            } else if (SAXHelpers.isEmailTag(localName)) {
-                return Formatting.EMAIL;
-            } else if (SAXHelpers.isURITag(localName)) {
-                return Formatting.URI;
-            }
-            // Catch-all.
             else {
+                // Many cases are really simple: just a function to call to decide which formatting it is.
+                for (Map.Entry<Predicate<String>, Formatting> e: predicateToFormatting.entrySet()) {
+                    if (e.getKey().test(localName)) {
+                        return e.getValue();
+                    }
+                }
+
+                // Catch-all.
                 throw new IllegalArgumentException("Unknown formatting tag for tagToFormatting, " +
                         "but recognised as formatting: " + localName);
             }
@@ -796,25 +809,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
     /** Remaining POI helpers, really specific to this class. **/
 
-    private static Map<Formatting, String> docbookTagToStyleID = Map.ofEntries(
-            new AbstractMap.SimpleEntry<>(Formatting.CLASS_NAME, "ClassName"),
-            new AbstractMap.SimpleEntry<>(Formatting.EXCEPTION_NAME, "ExceptionName"),
-            new AbstractMap.SimpleEntry<>(Formatting.INTERFACE_NAME, "InterfaceName"),
-            new AbstractMap.SimpleEntry<>(Formatting.METHOD_NAME, "MethodName"),
-            new AbstractMap.SimpleEntry<>(Formatting.COMPUTER_OUTPUT, "ComputerOutput"),
-            new AbstractMap.SimpleEntry<>(Formatting.CONSTANT, "Constant"),
-            new AbstractMap.SimpleEntry<>(Formatting.ENVIRONMENT_VARIABLE, "EnvironmentVariable"),
-            new AbstractMap.SimpleEntry<>(Formatting.FILE_NAME, "FileName"),
-            new AbstractMap.SimpleEntry<>(Formatting.LITERAL, "Literal"),
-            new AbstractMap.SimpleEntry<>(Formatting.CODE, "Code"),
-            new AbstractMap.SimpleEntry<>(Formatting.OPTION, "Option"),
-            new AbstractMap.SimpleEntry<>(Formatting.PROMPT, "Prompt"),
-            new AbstractMap.SimpleEntry<>(Formatting.SYSTEM_ITEM, "SystemItem"),
-            new AbstractMap.SimpleEntry<>(Formatting.VARIABLE_NAME, "VariableName"),
-            new AbstractMap.SimpleEntry<>(Formatting.EMAIL, "Email"),
-            new AbstractMap.SimpleEntry<>(Formatting.URI, "URI")
-    );
-
     private void setRunFormatting() throws SAXException {
         for (Formatting f: currentFormatting) {
             switch (f) {
@@ -837,8 +831,8 @@ public class DocxOutputImpl extends DefaultHandler {
                     run.setSubscript(VerticalAlign.SUPERSCRIPT);
                     break;
                 default:
-                    if (docbookTagToStyleID.containsKey(f)) {
-                        run.setStyle(docbookTagToStyleID.get(f));
+                    if (Formatting.docbookTagToStyleID.containsKey(f)) {
+                        run.setStyle(Formatting.docbookTagToStyleID.get(f));
                     } else {
                         throw new DocxException("formatting not recognised by setRunFormatting: " + f);
                     }
