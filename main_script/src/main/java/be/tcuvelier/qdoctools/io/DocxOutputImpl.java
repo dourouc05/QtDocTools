@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
@@ -17,7 +18,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -99,112 +99,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
         boolean peekVariableList() {
             return peek() == Level.VARIABLE_LIST;
-        }
-    }
-
-    private static class Triplet<T, U, V> {
-        T first;
-        U second;
-        V third;
-
-        Triplet (T t, U u, V v) {
-            first = t;
-            second = u;
-            third = v;
-        }
-    }
-
-    private enum Formatting {
-        EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT,
-        CLASS_NAME, EXCEPTION_NAME, INTERFACE_NAME, METHOD_NAME, COMPUTER_OUTPUT, CONSTANT, ENVIRONMENT_VARIABLE,
-        FILE_NAME, LITERAL, CODE, OPTION, PROMPT, SYSTEM_ITEM, VARIABLE_NAME, EMAIL, URI;
-
-        // For code readability, store in a list all elements that are interesting for formattings:
-        // how to recognise one, its Word style ID, etc. Of course, not all of this makes sense for all formattings.
-        // Thus, the maps predicateToFormatting and docbookTagToStyleID (directly useful) are filled with two sources:
-        // the list formattings, and special cases.
-
-        private static List<Triplet<Formatting, Predicate<String>, String>> formattings = List.of(
-                // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: inline style
-                new Triplet<>(Formatting.CLASS_NAME, SAXHelpers::isClassNameTag, "ClassName"),
-                new Triplet<>(Formatting.EXCEPTION_NAME, SAXHelpers::isExceptionNameTag, "ExceptionName"),
-                new Triplet<>(Formatting.INTERFACE_NAME, SAXHelpers::isInterfaceNameTag, "InterfaceName"),
-                new Triplet<>(Formatting.METHOD_NAME, SAXHelpers::isMethodNameTag, "MethodName"),
-                new Triplet<>(Formatting.COMPUTER_OUTPUT, SAXHelpers::isComputerOutputTag, "ComputerOutput"),
-                new Triplet<>(Formatting.CONSTANT, SAXHelpers::isConstantTag, "Constant"),
-                new Triplet<>(Formatting.ENVIRONMENT_VARIABLE, SAXHelpers::isEnvironmentVariableTag, "EnvironmentVariable"),
-                new Triplet<>(Formatting.FILE_NAME, SAXHelpers::isFileNameTag, "FileName"),
-                new Triplet<>(Formatting.LITERAL, SAXHelpers::isLiteralTag, "Literal"),
-                new Triplet<>(Formatting.CODE, SAXHelpers::isCodeTag, "Code"),
-                new Triplet<>(Formatting.OPTION, SAXHelpers::isCodeTag, "Option"),
-                new Triplet<>(Formatting.PROMPT, SAXHelpers::isPromptTag, "Prompt"),
-                new Triplet<>(Formatting.SYSTEM_ITEM, SAXHelpers::isSystemItemTag, "SystemItem"),
-                new Triplet<>(Formatting.VARIABLE_NAME, SAXHelpers::isVariableNameTag, "VariableName"),
-                new Triplet<>(Formatting.EMAIL, SAXHelpers::isEmailTag, "Email"),
-                new Triplet<>(Formatting.URI, SAXHelpers::isURITag, "URI")
-        );
-
-        private static Map<Predicate<String>, Formatting> predicateToFormatting = Map.ofEntries(
-                // https://github.com/docbook/xslt10-stylesheets/blob/c50f1cd7afc9a5b8ecee25dc1a46d62cdcd4917c/xsl/fo/inline.xsl#L745
-                Map.entry(SAXHelpers::isSuperscriptTag, Formatting.SUPERSCRIPT),
-                Map.entry(SAXHelpers::isSubscriptTag, Formatting.SUBSCRIPT)
-        );
-
-        private static Map<Formatting, String> docbookTagToStyleID = Map.ofEntries();
-
-        static {
-            // Make the fields mutable temporarily.
-            predicateToFormatting = new HashMap<>(predicateToFormatting);
-            docbookTagToStyleID = new HashMap<>(docbookTagToStyleID);
-
-            // Fill them.
-            for (Triplet<Formatting, Predicate<String>, String> t: formattings) {
-                predicateToFormatting.put(t.second, t.first);
-                docbookTagToStyleID.put(t.first, t.third);
-            }
-
-            // Make them immutable again.
-            predicateToFormatting = Map.copyOf(predicateToFormatting);
-            docbookTagToStyleID = Map.copyOf(docbookTagToStyleID);
-        }
-
-        static Formatting tagToFormatting(String localName, Attributes attributes) {
-            String role = "";
-            for (int i = 0; i < attributes.getLength(); ++i) {
-                if (attributes.getLocalName(i).equalsIgnoreCase("role")) {
-                    role = attributes.getValue(i).toLowerCase();
-                    break;
-                }
-            }
-
-            // Based on current XSLT sheets.
-            // https://github.com/docbook/xslt10-stylesheets/blob/c50f1cd7afc9a5b8ecee25dc1a46d62cdcd4917c/xsl/fo/inline.xsl#L745
-            if (SAXHelpers.isEmphasisTag(localName) && (role.equals("") || role.equals("italics"))) {
-                return Formatting.EMPHASIS;
-            } else if (SAXHelpers.isEmphasisTag(localName) && (role.equals("bold") || role.equals("strong"))) {
-                if (role.equals("strong")) {
-                    System.out.println("Warning: an emphasis tag has a 'strong' role, which will be replaced by 'bold' " +
-                            "after round-tripping back to DocBook.");
-                }
-
-                return Formatting.EMPHASIS_BOLD;
-            } else if (SAXHelpers.isEmphasisTag(localName) && role.equals("underline")) {
-                return Formatting.EMPHASIS_UNDERLINE;
-            } else if (SAXHelpers.isEmphasisTag(localName) && role.equals("strikethrough")) {
-                return Formatting.EMPHASIS_STRIKETHROUGH;
-            }
-            else {
-                // Many cases are really simple: just a function to call to decide which formatting it is.
-                for (Map.Entry<Predicate<String>, Formatting> e: predicateToFormatting.entrySet()) {
-                    if (e.getKey().test(localName)) {
-                        return e.getValue();
-                    }
-                }
-
-                // Catch-all.
-                throw new IllegalArgumentException("Unknown formatting tag for tagToFormatting, " +
-                        "but recognised as formatting: " + localName);
-            }
         }
     }
 
@@ -385,11 +279,11 @@ public class DocxOutputImpl extends DefaultHandler {
             // File Name, Literal, Code, Option, Prompt, System Item, Variable Name, Email, URI
             // Order from https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl
             // TODO: What to do with function? To be studied further...
-            return isClassNameTag(qName) || isExceptionNameTag(qName) || isMethodNameTag(qName)
-                    || isComputerOutputTag(qName) || isConstantTag(qName) || isEnvironmentVariableTag(qName)
-                    || isFileNameTag(qName) || isLiteralTag(qName) || isConstantTag(qName) || isOptionTag(qName)
-                    || isPromptTag(qName) || isSystemItemTag(qName) || isVariableNameTag(qName)
-                    || isEmailTag(qName) || isURITag(qName);
+            return isClassNameTag(qName) || isExceptionNameTag(qName) || isInterfaceNameTag(qName)
+                    || isMethodNameTag(qName) || isComputerOutputTag(qName) || isConstantTag(qName)
+                    || isEnvironmentVariableTag(qName) || isFileNameTag(qName) || isLiteralTag(qName)
+                    || isCodeTag(qName) || isConstantTag(qName) || isOptionTag(qName) || isPromptTag(qName)
+                    || isSystemItemTag(qName) || isVariableNameTag(qName) || isEmailTag(qName) || isURITag(qName);
         }
 
         private static boolean isLinkTag(String qName) {
@@ -539,7 +433,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private LevelStack currentLevel = new LevelStack();
     private int currentSectionDepth = 0; // 0: root; >0: sections.
-    private List<Formatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
+    private List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
 
     DocxOutputImpl(Path folder) throws IOException {
@@ -828,7 +722,7 @@ public class DocxOutputImpl extends DefaultHandler {
     /** Remaining POI helpers, really specific to this class. **/
 
     private void setRunFormatting() throws SAXException {
-        for (Formatting f: currentFormatting) {
+        for (DocBookFormatting f: currentFormatting) {
             switch (f) {
                 case EMPHASIS:
                     run.setItalic(true);
@@ -849,8 +743,8 @@ public class DocxOutputImpl extends DefaultHandler {
                     run.setSubscript(VerticalAlign.SUPERSCRIPT);
                     break;
                 default:
-                    if (Formatting.docbookTagToStyleID.containsKey(f)) {
-                        run.setStyle(Formatting.docbookTagToStyleID.get(f));
+                    if (DocBookFormatting.docbookTagToStyleID.containsKey(f)) {
+                        run.setStyle(DocBookFormatting.docbookTagToStyleID.get(f));
                     } else {
                         throw new DocxException("formatting not recognised by setRunFormatting: " + f);
                     }
@@ -944,7 +838,7 @@ public class DocxOutputImpl extends DefaultHandler {
         // Inline tags.
         else if (SAXHelpers.isFormatting(qName)) {
             try {
-                currentFormatting.add(Formatting.tagToFormatting(qName, attributes));
+                currentFormatting.add(DocBookFormatting.tagToFormatting(qName, attributes));
             } catch (IllegalArgumentException e) {
                 throw new DocxException("formatting not recognised", e);
             }
