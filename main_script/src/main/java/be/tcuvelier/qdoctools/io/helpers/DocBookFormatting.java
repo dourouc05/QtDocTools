@@ -20,28 +20,28 @@ public enum DocBookFormatting {
 
     public static final List<Triple<DocBookFormatting, String, String>> formattings = List.of(
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: inline style
-            new Triple<>(DocBookFormatting.CLASS_NAME, "classname", "ClassName"),
-            new Triple<>(DocBookFormatting.EXCEPTION_NAME, "exceptionname", "ExceptionName"),
-            new Triple<>(DocBookFormatting.INTERFACE_NAME, "interfacename", "InterfaceName"),
-            new Triple<>(DocBookFormatting.METHOD_NAME, "methodname", "MethodName"),
-            new Triple<>(DocBookFormatting.COMPUTER_OUTPUT, "computeroutput", "ComputerOutput"),
-            new Triple<>(DocBookFormatting.CONSTANT, "constant", "Constant"),
-            new Triple<>(DocBookFormatting.ENVIRONMENT_VARIABLE, "envar", "EnvironmentVariable"),
-            new Triple<>(DocBookFormatting.FILE_NAME, "filename", "FileName"),
-            new Triple<>(DocBookFormatting.LITERAL, "literal", "Literal"),
-            new Triple<>(DocBookFormatting.CODE, "code", "Code"),
-            new Triple<>(DocBookFormatting.OPTION, "option", "Option"),
-            new Triple<>(DocBookFormatting.PROMPT, "option", "Prompt"),
-            new Triple<>(DocBookFormatting.SYSTEM_ITEM, "systemitem", "SystemItem"),
-            new Triple<>(DocBookFormatting.VARIABLE_NAME, "varname", "VariableName"),
-            new Triple<>(DocBookFormatting.EMAIL, "email", "Email"),
-            new Triple<>(DocBookFormatting.URI, "uri", "URI")
+            new Triple<>(CLASS_NAME, "classname", "ClassName"),
+            new Triple<>(EXCEPTION_NAME, "exceptionname", "ExceptionName"),
+            new Triple<>(INTERFACE_NAME, "interfacename", "InterfaceName"),
+            new Triple<>(METHOD_NAME, "methodname", "MethodName"),
+            new Triple<>(COMPUTER_OUTPUT, "computeroutput", "ComputerOutput"),
+            new Triple<>(CONSTANT, "constant", "Constant"),
+            new Triple<>(ENVIRONMENT_VARIABLE, "envar", "EnvironmentVariable"),
+            new Triple<>(FILE_NAME, "filename", "FileName"),
+            new Triple<>(LITERAL, "literal", "Literal"),
+            new Triple<>(CODE, "code", "Code"),
+            new Triple<>(OPTION, "option", "Option"),
+            new Triple<>(PROMPT, "option", "Prompt"),
+            new Triple<>(SYSTEM_ITEM, "systemitem", "SystemItem"),
+            new Triple<>(VARIABLE_NAME, "varname", "VariableName"),
+            new Triple<>(EMAIL, "email", "Email"),
+            new Triple<>(URI, "uri", "URI")
     );
 
     public static Map<Predicate<String>, DocBookFormatting> predicateToFormatting = Map.ofEntries(
             // https://github.com/docbook/xslt10-stylesheets/blob/c50f1cd7afc9a5b8ecee25dc1a46d62cdcd4917c/xsl/fo/inline.xsl#L745
-            Map.entry(tagRecogniser("superscript"), DocBookFormatting.SUPERSCRIPT),
-            Map.entry(tagRecogniser("subscript"), DocBookFormatting.SUBSCRIPT)
+            Map.entry(DocBook.tagRecogniser("superscript"), DocBookFormatting.SUPERSCRIPT),
+            Map.entry(DocBook.tagRecogniser("subscript"), DocBookFormatting.SUBSCRIPT)
     );
 
     public static Map<DocBookFormatting, Predicate<String>> formattingToPredicate; // Filled in the static block.
@@ -58,7 +58,7 @@ public enum DocBookFormatting {
 
         // Fill them.
         for (Triple<DocBookFormatting, String, String> t: formattings) {
-            predicateToFormatting.put(tagRecogniser(t.second), t.first);
+            predicateToFormatting.put(DocBook.tagRecogniser(t.second), t.first);
             docbookTagToStyleID.put(t.first, t.third);
             styleIDToDocBookTag.put(t.third, t.second);
         }
@@ -73,23 +73,6 @@ public enum DocBookFormatting {
                 .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
-    private static Predicate<String> tagRecogniser(String tag) {
-        return qName -> recogniseTag(tag, qName);
-    }
-
-    public static boolean recogniseTag(String tag, String qName) {
-        // SAX returns a localName that is zero-length... Hence this function: go from db:article to article.
-        // But maybe a specific DocBook document has no defined namespace, or DocBook is the default namespace.
-        String localName;
-        if (! qName.contains(":")) {
-            localName = qName;
-        } else {
-            localName = qName.split(":")[1];
-        }
-
-        return localName.equalsIgnoreCase(tag);
-    }
-
     public static DocBookFormatting tagToFormatting(String localName, Attributes attributes) {
         String role = "";
         for (int i = 0; i < attributes.getLength(); ++i) {
@@ -101,7 +84,7 @@ public enum DocBookFormatting {
 
         // Based on current XSLT sheets.
         // https://github.com/docbook/xslt10-stylesheets/blob/c50f1cd7afc9a5b8ecee25dc1a46d62cdcd4917c/xsl/fo/inline.xsl#L745
-        if (recogniseTag("emphasis", localName)) {
+        if (DocBook.recogniseTag("emphasis", localName)) {
             switch (role) {
                 case "strong":
                     System.out.println("Warning: an emphasis tag has a 'strong' role, which will be replaced " +
@@ -134,7 +117,7 @@ public enum DocBookFormatting {
 
     public static boolean isRunFormatting(String qName) {
         // Formattings that are set through run parameters.
-        return recogniseTag("emphasis", qName)
+        return DocBook.recogniseTag("emphasis", qName)
                 || formattingToPredicate.get(SUBSCRIPT).test(qName)
                 || formattingToPredicate.get(SUPERSCRIPT).test(qName)
                 || isInlineFormatting(qName);

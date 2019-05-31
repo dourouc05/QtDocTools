@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
@@ -818,27 +819,9 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Preformatted areas.
-        else if (SAXHelpers.isProgramListingTag(qName)) {
+        else if (DocBookBlock.isPreformatted(qName)) {
             paragraph = doc.createParagraph();
-            paragraph.setStyle("ProgramListing");
-            run = paragraph.createRun();
-
-            isLineFeedImportant = true;
-        } else if (SAXHelpers.isScreenTag(qName)) {
-            paragraph = doc.createParagraph();
-            paragraph.setStyle("Screen");
-            run = paragraph.createRun();
-
-            isLineFeedImportant = true;
-        } else if (SAXHelpers.isSynopsisTag(qName)) {
-            paragraph = doc.createParagraph();
-            paragraph.setStyle("Synopsis");
-            run = paragraph.createRun();
-
-            isLineFeedImportant = true;
-        } else if (SAXHelpers.isLiteralLayoutTag(qName)) {
-            paragraph = doc.createParagraph();
-            paragraph.setStyle("LiteralLayout");
+            paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
             run = paragraph.createRun();
 
             isLineFeedImportant = true;
