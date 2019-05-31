@@ -143,24 +143,25 @@ public class DocxOutputImpl extends DefaultHandler {
             }
         }
 
-        private static boolean isInfoTag(String qName) {
+        private static boolean compare(String qName, String reference) {
             String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("info");
+            return localName.equalsIgnoreCase(reference);
+        }
+
+        private static boolean isInfoTag(String qName) {
+            return compare(qName, "info");
         }
 
         private static boolean isAbstractTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("abstract");
+            return compare(qName, "abstract");
         }
 
         private static boolean isPartIntroTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("partintro");
+            return compare(qName, "partintro");
         }
 
         private static boolean isTitleTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("title");
+            return compare(qName, "title");
         }
 
         private static boolean isSectionTag(String qName) {
@@ -185,8 +186,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         private static boolean isLinkTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("link");
+            return compare(qName, "link");
         }
 
         private static boolean isTableTag(String qName) {
@@ -196,28 +196,23 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         private static boolean isTableHeaderTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("thead");
+            return compare(qName, "thead");
         }
 
         private static boolean isTableBodyTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("tbody");
+            return compare(qName, "tbody");
         }
 
         private static boolean isTableFooterTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("tfoot");
+            return compare(qName, "tfoot");
         }
 
         private static boolean isTableRowTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("tr");
+            return compare(qName, "tr");
         }
 
         private static boolean isTableColumnTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("td");
+            return compare(qName, "td");
         }
 
         private static boolean isCALSTag(String qName) {
@@ -229,98 +224,79 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         private static boolean isProgramListingTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("programlisting");
+            return compare(qName, "programlisting");
         }
 
         private static boolean isScreenTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("screen");
+            return compare(qName, "screen");
         }
 
         private static boolean isSynopsisTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("synopsis");
+            return compare(qName, "synopsis");
         }
 
         private static boolean isLiteralLayoutTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("literallayout");
+            return compare(qName, "literallayout");
         }
 
         private static boolean isInlineMediaObjectTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("inlinemediaobject");
+            return compare(qName, "inlinemediaobject");
         }
 
         private static boolean isMediaObjectTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("mediaobject");
+            return compare(qName, "mediaobject");
         }
 
         private static boolean isImageDataTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("imagedata");
+            return compare(qName, "imagedata");
         }
 
         private static boolean isImageObjectTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("imageobject");
+            return compare(qName, "imageobject");
         }
 
         private static boolean isCaptionTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("caption");
+            return compare(qName, "caption");
         }
 
         private static boolean isItemizedListTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("itemizedlist");
+            return compare(qName, "itemizedlist");
         }
 
         private static boolean isOrderedListTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("orderedlist");
+            return compare(qName, "orderedlist");
         }
 
         private static boolean isListItemTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("listitem");
+            return compare(qName, "listitem");
         }
 
         private static boolean isSegmentedListTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("segmentedlist");
+            return compare(qName, "segmentedlist");
         }
 
         private static boolean isSegmentedListTitleTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("segtitle");
+            return compare(qName, "segtitle");
         }
 
         private static boolean isSegmentedListItemTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("seglistitem");
+            return compare(qName, "seglistitem");
         }
 
         private static boolean isSegmentedListItemValueTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("seg");
+            return compare(qName, "seg");
         }
 
         private static boolean isVariableListTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("variablelist");
+            return compare(qName, "variablelist");
         }
 
         private static boolean isVariableListItemTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("varlistentry");
+            return compare(qName, "varlistentry");
         }
 
         private static boolean isVariableListItemDefinitionTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("term");
+            return compare(qName, "term");
         }
     }
 
@@ -1154,13 +1130,8 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Media: nothing to do.
-        else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
-            ensureNoTextAllowed();
-        } else if (SAXHelpers.isMediaObjectTag(qName)) {
-            ensureNoTextAllowed();
-        } else if (SAXHelpers.isImageDataTag(qName)) {
-            ensureNoTextAllowed();
-        } else if (SAXHelpers.isImageObjectTag(qName)) {
+        else if (SAXHelpers.isInlineMediaObjectTag(qName) || SAXHelpers.isMediaObjectTag(qName)
+                || SAXHelpers.isImageDataTag(qName) || SAXHelpers.isImageObjectTag(qName)) {
             ensureNoTextAllowed();
         } else if (SAXHelpers.isCaptionTag(qName)) {
             restoreParagraphStyle();
