@@ -25,16 +25,18 @@ public class DocxOutput {
     */
 
     public static void main(String[] args) throws Exception {
-//        String test = "basic";
-//        String test = "sections";
-//        String test = "images";
-//        String test = "lists";
-//        String test = "preformatted";
-//        String test = "book";
-        String test = "book_abstract";
+//        String test = "synthetic/basic";
+//        String test = "synthetic/sections";
+//        String test = "synthetic/images";
+//        String test = "synthetic/lists";
+//        String test = "synthetic/preformatted";
+//        String test = "synthetic/book";
+//        String test = "synthetic/book_abstract";
 
-        new DocxOutput(MainCommand.toDocxTests + "synthetic/" + test + ".xml")
-                .toDocx(MainCommand.toDocxTests + "synthetic/" + test + ".docx");
+        String test = "CPLEX";
+
+        new DocxOutput(MainCommand.toDocxTests + test + ".xml")
+                .toDocx(MainCommand.toDocxTests + test + ".docx");
     }
 
     private String input;
