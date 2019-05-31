@@ -233,6 +233,11 @@ public class DocxOutputImpl extends DefaultHandler {
             return localName.equalsIgnoreCase("synopsis");
         }
 
+        private static boolean isLiteralLayoutTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("literallayout");
+        }
+
         private static boolean isInlineMediaObjectTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("inlinemediaobject");
@@ -831,6 +836,12 @@ public class DocxOutputImpl extends DefaultHandler {
             run = paragraph.createRun();
 
             isLineFeedImportant = true;
+        } else if (SAXHelpers.isLiteralLayoutTag(qName)) {
+            paragraph = doc.createParagraph();
+            paragraph.setStyle("LiteralLayout");
+            run = paragraph.createRun();
+
+            isLineFeedImportant = true;
         }
 
         // Media tags: for now, only images are implemented.
@@ -1047,17 +1058,8 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Preformatted areas.
-        else if (SAXHelpers.isProgramListingTag(qName)) {
-            restoreParagraphStyle();
-            ensureNoTextAllowed();
-
-            isLineFeedImportant = false;
-        } else if (SAXHelpers.isScreenTag(qName)) {
-            restoreParagraphStyle();
-            ensureNoTextAllowed();
-
-            isLineFeedImportant = false;
-        } else if (SAXHelpers.isSynopsisTag(qName)) {
+        else if (SAXHelpers.isProgramListingTag(qName) || SAXHelpers.isScreenTag(qName)
+                || SAXHelpers.isSynopsisTag(qName) || SAXHelpers.isLiteralLayoutTag(qName)) {
             restoreParagraphStyle();
             ensureNoTextAllowed();
 
