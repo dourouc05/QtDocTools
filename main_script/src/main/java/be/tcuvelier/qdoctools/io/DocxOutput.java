@@ -30,7 +30,8 @@ public class DocxOutput {
 //        String test = "images";
 //        String test = "lists";
 //        String test = "preformatted";
-        String test = "book";
+//        String test = "book";
+        String test = "book_abstract";
 
         new DocxOutput(MainCommand.toDocxTests + "synthetic/" + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + "synthetic/" + test + ".docx");

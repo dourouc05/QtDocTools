@@ -148,6 +148,11 @@ public class DocxOutputImpl extends DefaultHandler {
             return localName.equalsIgnoreCase("info");
         }
 
+        private static boolean isAbstractTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("abstract");
+        }
+
         private static boolean isTitleTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("title");
@@ -329,7 +334,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
-    private int numberingItemNumber = -1;
+    private int numberingItemNumber = -1; // TODO: remove this field? Is it really useful? Or keep it "just in case"?
     private int numberingItemParagraphNumber = -1;
     private List<String> segmentedListHeaders; // TODO: Limitation for ease of implementation: no styling stored in this list, just raw headers.
     private int segmentNumber = -1;
@@ -701,18 +706,20 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             currentLevel.push(Level.PART);
-            currentSectionDepth += 1;
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
+            // Don't increase section depth: it is only meant to be used with real sections (direct mapping to
+            // the style to be used).
         } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.CHAPTER).test(qName)) {
             if (! currentLevel.peekRootBook() && ! currentLevel.peekPart()) {
                 throw new DocxException("unexpected chapter outside a book or a part.");
             }
 
             currentLevel.push(Level.CHAPTER);
-            currentSectionDepth += 1;
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
+            // Don't increase section depth: it is only meant to be used with real sections (direct mapping to
+            // the style to be used).
         } else if (SAXHelpers.isInfoTag(qName)) {
             switch (currentLevel.peek()) {
                 case ROOT_ARTICLE:
@@ -750,22 +757,31 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph = doc.createParagraph();
             if (currentSectionDepth == 0) {
                 if (currentLevel.peekRootArticle() || currentLevel.peekRootArticleInfo()) {
-                    paragraph.setStyle("Title");
+                    paragraph.setStyle(DocBookBlock.tagToStyleID("article", attributes));
                 } else if (currentLevel.peekRootBook() || currentLevel.peekRootBookInfo()) {
-                    paragraph.setStyle("Titlebook");
+                    paragraph.setStyle(DocBookBlock.tagToStyleID("book", attributes));
+                } else if (currentLevel.peekPart()) {
+                    paragraph.setStyle(DocBookBlock.tagToStyleID("part", attributes));
+                } else if (currentLevel.peekChapter()) {
+                    paragraph.setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
                 } else {
                     throw new DocxException("unexpected root title");
                 }
             } else if (currentLevel.peekPart()) {
-                paragraph.setStyle("Titlepart");
+                paragraph.setStyle(DocBookBlock.tagToStyleID("part", attributes));
             } else if (currentLevel.peekChapter()) {
-                paragraph.setStyle("Titlechapter");
+                paragraph.setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
             } else if (currentLevel.peekRootArticle()) {
                 paragraph.setStyle("Heading" + currentSectionDepth);
             } else {
                 throw new DocxException("title not expected");
             }
             run = paragraph.createRun();
+            warnUnknownAttributes(attributes);
+        }
+
+        else if (SAXHelpers.isAbstractTag(qName)) {
+            paragraphStyle = "Abstract";
             warnUnknownAttributes(attributes);
         }
 
@@ -1069,6 +1085,11 @@ public class DocxOutputImpl extends DefaultHandler {
             currentSectionDepth -= 1;
             ensureNoTextAllowed();
         } else if (SAXHelpers.isTitleTag(qName)) {
+            ensureNoTextAllowed();
+            restoreParagraphStyle();
+        }
+
+        else if (SAXHelpers.isAbstractTag(qName)) {
             ensureNoTextAllowed();
             restoreParagraphStyle();
         }
