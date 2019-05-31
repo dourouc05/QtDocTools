@@ -2,19 +2,28 @@ package be.tcuvelier.qdoctools.io.helpers;
 
 import org.xml.sax.Attributes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public enum DocBookBlock {
-    PROGRAM_LISTING, SCREEN, SYNOPSIS, LITERAL_LAYOUT;
+    PROGRAM_LISTING, SCREEN, SYNOPSIS, LITERAL_LAYOUT,
+    ARTICLE, BOOK, PART, CHAPTER;
 
     private static final List<Triple<DocBookBlock, String, String>> preformatted = List.of(
             new Triple<>(PROGRAM_LISTING, "programlisting", "ProgramListing"),
             new Triple<>(SCREEN, "screen", "Screen"),
             new Triple<>(SYNOPSIS, "synopsis", "Synopsis"),
             new Triple<>(LITERAL_LAYOUT, "literallayout", "LiteralLayout")
+    );
+
+    private static final List<Triple<DocBookBlock, String, String>> roots = List.of(
+            new Triple<>(ARTICLE, "article", "Title"),
+            new Triple<>(BOOK, "book", "Titlebook"),
+            new Triple<>(PART, "part", "Titlepart"),
+            new Triple<>(CHAPTER, "chapter", "Titlechapter")
     );
 
     public static Map<DocBookBlock, Predicate<String>> blockToPredicate = Map.ofEntries();
@@ -30,7 +39,10 @@ public enum DocBookBlock {
         styleIDToDocBookTag = new HashMap<>(styleIDToDocBookTag);
 
         // Fill them.
-        for (Triple<DocBookBlock, String, String> t: preformatted) {
+        List<Triple<DocBookBlock, String, String>> whole = new ArrayList<>(preformatted);
+        whole.addAll(roots);
+
+        for (Triple<DocBookBlock, String, String> t: whole) {
             blockToPredicate.put(t.first, DocBook.tagRecogniser(t.second));
             predicateToStyleID.put(DocBook.tagRecogniser(t.second), t.third);
             styleIDToDocBookTag.put(t.third, t.second);

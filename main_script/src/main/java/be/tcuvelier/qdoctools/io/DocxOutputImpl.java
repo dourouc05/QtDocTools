@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 
 public class DocxOutputImpl extends DefaultHandler {
     private enum Level {
-        ROOT, ROOT_INFO,
+        ROOT_ARTICLE, ROOT_ARTICLE_INFO, ROOT_BOOK, ROOT_BOOK_INFO, PART, PART_INFO, CHAPTER, CHAPTER_INFO,
         SECTION, SECTION_INFO,
         TABLE,
         ITEMIZED_LIST, ORDERED_LIST, SEGMENTED_LIST, SEGMENTED_LIST_TITLE, VARIABLE_LIST
@@ -78,8 +78,28 @@ public class DocxOutputImpl extends DefaultHandler {
             return levels.peek();
         }
 
-        boolean peekRoot() {
-            return peek() == Level.ROOT;
+        boolean peekRootArticle() {
+            return peek() == Level.ROOT_ARTICLE;
+        }
+
+        boolean peekRootArticleInfo() {
+            return peek() == Level.ROOT_ARTICLE_INFO;
+        }
+
+        boolean peekRootBook() {
+            return peek() == Level.ROOT_BOOK;
+        }
+
+        boolean peekRootBookInfo() {
+            return peek() == Level.ROOT_BOOK_INFO;
+        }
+
+        boolean peekPart() {
+            return peek() == Level.PART;
+        }
+
+        boolean peekChapter() {
+            return peek() == Level.CHAPTER;
         }
 
         boolean peekTable() {
@@ -121,11 +141,6 @@ public class DocxOutputImpl extends DefaultHandler {
             } else {
                 return qName.split(":")[1];
             }
-        }
-
-        private static boolean isRootTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("article") || localName.equalsIgnoreCase("book");
         }
 
         private static boolean isInfoTag(String qName) {
@@ -597,7 +612,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private void warnUnknownAttributes(Map<String, String> attr) {
         for (String key: attr.keySet()) {
-            System.out.println(getLocationString() + "unknown attribute " + key + ".");
+            System.err.println(getLocationString() + "unknown attribute " + key + ".");
         }
     }
 
@@ -660,25 +675,92 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        if (SAXHelpers.isRootTag(qName)) {
-            currentLevel.push(Level.ROOT);
+        // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
+        // much harder. TODO at a later point. Maybe use SDT? (Standard way of having controls in Word documents.)
+
+        if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName)) {
+            if (currentLevel.peekRootBook()) {
+                throw new DocxException("unexpected article within a book (use articles).");
+                // TODO: Maybe this is too conservative? Articles in books are allowed by the standard (equivalent to chapters).
+            }
+
+            currentLevel.push(Level.ROOT_ARTICLE);
             ensureNoTextAllowed();
             // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
-        } else if (SAXHelpers.isInfoTag(qName)) {
-            currentLevel.push(currentLevel.peekRoot() ? Level.ROOT_INFO : Level.SECTION_INFO);
+        } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.BOOK).test(qName)) {
+            if (currentLevel.peekRootArticle()) {
+                throw new DocxException("unexpected book within an article (the other direction works).");
+            }
+
+            currentLevel.push(Level.ROOT_BOOK);
+            ensureNoTextAllowed();
+            // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
+        } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.PART).test(qName)) {
+            if (! currentLevel.peekRootBook()) {
+                throw new DocxException("unexpected part outside a book.");
+            }
+
+            currentLevel.push(Level.PART);
+            currentSectionDepth += 1;
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isSectionTag(qName)) {
+        } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.CHAPTER).test(qName)) {
+            if (! currentLevel.peekRootBook() && ! currentLevel.peekPart()) {
+                throw new DocxException("unexpected chapter outside a book or a part.");
+            }
+
+            currentLevel.push(Level.CHAPTER);
+            currentSectionDepth += 1;
+            ensureNoTextAllowed();
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isInfoTag(qName)) {
+            switch (currentLevel.peek()) {
+                case ROOT_ARTICLE:
+                    currentLevel.push(Level.ROOT_ARTICLE_INFO);
+                    break;
+                case ROOT_BOOK:
+                    currentLevel.push(Level.ROOT_BOOK_INFO);
+                    break;
+                case PART:
+                    currentLevel.push(Level.PART_INFO);
+                    break;
+                case CHAPTER:
+                    currentLevel.push(Level.CHAPTER_INFO);
+                    break;
+                case SECTION:
+                    currentLevel.push(Level.SECTION_INFO);
+                    break;
+                default:
+                    throw new DocxException("unexpected info tag in " + localName);
+            }
+
+            ensureNoTextAllowed();
+            warnUnknownAttributes(attributes);
+        }
+
+        else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.push(Level.SECTION);
             currentSectionDepth += 1;
             paragraphNumber = 0;
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isTitleTag(qName)) {
+        }
+
+        else if (SAXHelpers.isTitleTag(qName)) {
             paragraph = doc.createParagraph();
             if (currentSectionDepth == 0) {
-                paragraph.setStyle("Title");
-            } else if (currentLevel.peekRoot()) {
+                if (currentLevel.peekRootArticle() || currentLevel.peekRootArticleInfo()) {
+                    paragraph.setStyle("Title");
+                } else if (currentLevel.peekRootBook() || currentLevel.peekRootBookInfo()) {
+                    paragraph.setStyle("Titlebook");
+                } else {
+                    throw new DocxException("unexpected root title");
+                }
+            } else if (currentLevel.peekPart()) {
+                paragraph.setStyle("Titlepart");
+            } else if (currentLevel.peekChapter()) {
+                paragraph.setStyle("Titlechapter");
+            } else if (currentLevel.peekRootArticle()) {
                 paragraph.setStyle("Heading" + currentSectionDepth);
             } else {
                 throw new DocxException("title not expected");
@@ -965,10 +1047,22 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        if (SAXHelpers.isRootTag(qName)) {
+        if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName) || DocBookBlock.blockToPredicate.get(DocBookBlock.BOOK).test(qName)) {
+            ensureNoTextAllowed();
+        } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.PART).test(qName)) {
+            currentLevel.pop(Level.PART, new DocxException("unexpected end of part"));
+            ensureNoTextAllowed();
+        } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.CHAPTER).test(qName)) {
+            currentLevel.pop(Level.CHAPTER, new DocxException("unexpected end of chapter"));
             ensureNoTextAllowed();
         } else if (SAXHelpers.isInfoTag(qName)) {
-            currentLevel.pop(Stream.of(Level.ROOT_INFO, Level.SECTION_INFO), new DocxException("unexpected end of info"));
+            currentLevel.pop(
+                    Stream.of(
+                            Level.ROOT_ARTICLE_INFO, Level.ROOT_BOOK_INFO, Level.PART_INFO, Level.CHAPTER_INFO,
+                            Level.SECTION_INFO
+                    ),
+                    new DocxException("unexpected end of info")
+            );
             ensureNoTextAllowed();
         } else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));

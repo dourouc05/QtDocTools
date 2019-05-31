@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:book xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <db:info>
+    <db:title>Book title</db:title>
+  </db:info>
+  <db:chapter>
+    <db:title>Chapter 1</db:title>
+    <db:para>Para</db:para>
+  </db:chapter>
+  <db:part>
+    <db:title>Part 1</db:title>
+    <db:chapter>
+      <db:title>Chapter 2</db:title>
+      <db:para>Para</db:para>
+    </db:chapter>
+  </db:part>
+</db:book>

@@ -29,7 +29,8 @@ public class DocxOutput {
 //        String test = "sections";
 //        String test = "images";
 //        String test = "lists";
-        String test = "preformatted";
+//        String test = "preformatted";
+        String test = "book";
 
         new DocxOutput(MainCommand.toDocxTests + "synthetic/" + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + "synthetic/" + test + ".docx");
