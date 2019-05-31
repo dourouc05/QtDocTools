@@ -11,8 +11,16 @@ import java.util.stream.Collectors;
 
 public enum DocBookFormatting {
     EMPHASIS, EMPHASIS_BOLD, EMPHASIS_UNDERLINE, EMPHASIS_STRIKETHROUGH, SUPERSCRIPT, SUBSCRIPT,
+    // Monospaced.
     CLASS_NAME, EXCEPTION_NAME, INTERFACE_NAME, METHOD_NAME, COMPUTER_OUTPUT, CONSTANT, ENVIRONMENT_VARIABLE,
-    FILE_NAME, LITERAL, CODE, OPTION, PROMPT, SYSTEM_ITEM, VARIABLE_NAME, EMAIL, URI;
+    FILE_NAME, LITERAL, CODE, OPTION, PROMPT, SYSTEM_ITEM, VARIABLE_NAME, EMAIL, URI,
+    // No specific formatting.
+    AUTHOR_INITIALS, ACCEL, ACTION, APPLICATION, DATABASE, DATE, ERROR_CODE, ERROR_NAME, ERROR_TYPE, ERROR_TEXT,
+    GUI_BUTTON, GUI_ICON, GUI_LABEL, GUI_MENU, GUI_MENU_ITEM, GUI_SUBMENU, HARDWARE, INTERFACE, INTERFACE_DEFINITION,
+    KEY_CODE, KEY_SYMBOL, MOUSE_BUTTON, PACKAGE, PROPERTY, RETURN_VALUE, STRUCTURE_NAME, SYMBOL, TOKEN, TYPE,
+    ABBREVIATION, ACRONYM, MARKUP, PRODUCT_NUMBER, POB, STREET, CITY, STATE, POST_CODE, COUNTRY, OTHER_ADDRESS,
+    PHONE, FAX, HONORIFIC, FIRST_NAME, GIVEN_NAME, SURNAME, LINEAGE, OTHER_NAME
+    ;
 
     // For code readability, store in a list all elements that are interesting for formattings:
     // how to recognise one, its Word style ID, etc. Of course, not all of this makes sense for all formattings.
@@ -20,7 +28,7 @@ public enum DocBookFormatting {
     // the list formattings, and special cases.
 
     public static final List<Triple<DocBookFormatting, String, String>> formattings = List.of(
-            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: inline style
+            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: monospaced style.
             new Triple<>(CLASS_NAME, "classname", "ClassName"),
             new Triple<>(EXCEPTION_NAME, "exceptionname", "ExceptionName"),
             new Triple<>(INTERFACE_NAME, "interfacename", "InterfaceName"),
@@ -36,7 +44,58 @@ public enum DocBookFormatting {
             new Triple<>(SYSTEM_ITEM, "systemitem", "SystemItem"),
             new Triple<>(VARIABLE_NAME, "varname", "VariableName"),
             new Triple<>(EMAIL, "email", "Email"),
-            new Triple<>(URI, "uri", "URI")
+            new Triple<>(URI, "uri", "URI"),
+            // TODO: What to do with function?
+            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: normal style.
+            new Triple<>(AUTHOR_INITIALS, "authorinitials", "Author Initials"),
+            new Triple<>(ACCEL, "accel", "Accel"),
+            new Triple<>(ACTION, "action", "Action"),
+            new Triple<>(APPLICATION, "application", "Application"),
+            new Triple<>(DATABASE, "database", "Database"),
+            new Triple<>(DATE, "date", "Date"),
+            new Triple<>(ERROR_CODE, "errorcode", "ErrorCode"),
+            new Triple<>(ERROR_NAME, "errorname", "ErrorName"),
+            new Triple<>(ERROR_TYPE, "errortype", "ErrorType"),
+            new Triple<>(ERROR_TEXT, "errortext", "ErrorText"),
+            new Triple<>(GUI_BUTTON, "guibutton", "GUIButton"),
+            new Triple<>(GUI_ICON, "guiicon", "GUIIcon"),
+            new Triple<>(GUI_LABEL, "guilabel", "GUILabel"),
+            new Triple<>(GUI_MENU, "guimenu", "GUIMenu"),
+            new Triple<>(GUI_MENU_ITEM, "guimenuitem", "GUIMenuItem"),
+            new Triple<>(GUI_SUBMENU, "guisubmenu", "GUISubmenu"),
+            new Triple<>(HARDWARE, "hardware", "Hardware"),
+            new Triple<>(INTERFACE, "interface", "Interface"),
+            new Triple<>(INTERFACE_DEFINITION, "interfacedefinition", "InterfaceDefinition"),
+            new Triple<>(KEY_CODE, "keycode", "KeyCode"),
+            new Triple<>(KEY_SYMBOL, "keysym", "KeySymbol"),
+            new Triple<>(MOUSE_BUTTON, "mousebutton", "MouseButton"),
+            new Triple<>(PACKAGE, "package", "Package"),
+            new Triple<>(PROPERTY, "property", "Property"),
+            new Triple<>(RETURN_VALUE, "returnvalue", "ReturnValue"),
+            new Triple<>(STRUCTURE_NAME, "structname", "StructureName"),
+            new Triple<>(SYMBOL, "symbol", "Symbol"),
+            new Triple<>(TOKEN, "token", "Token"),
+            new Triple<>(TYPE, "type", "Type"),
+            new Triple<>(ABBREVIATION, "abbrev", "Abbreviation"),
+            new Triple<>(ACRONYM, "acronym", "Acronym"),
+            new Triple<>(MARKUP, "markup", "Markup"),
+            new Triple<>(PRODUCT_NUMBER, "productnumber", "ProductNumber"),
+            new Triple<>(POB, "pob", "POB"),
+            new Triple<>(STREET, "street", "Street"),
+            new Triple<>(CITY, "city", "City"),
+            new Triple<>(STATE, "state", "State"),
+            new Triple<>(POST_CODE, "postcode", "PostCode"),
+            new Triple<>(COUNTRY, "country", "Country"),
+            new Triple<>(OTHER_ADDRESS, "otheraddr", "OtherAddress"),
+            new Triple<>(PHONE, "phone", "Phone"),
+            new Triple<>(FAX, "fax", "Fax"),
+            new Triple<>(HONORIFIC, "honorific", "Honorific"),
+            new Triple<>(FIRST_NAME, "firstname", "FirstName"),
+            new Triple<>(GIVEN_NAME, "givenname", "GivenName"),
+            new Triple<>(SURNAME, "surname", "Surname"),
+            new Triple<>(LINEAGE, "lineage", "Lineage"),
+            new Triple<>(OTHER_NAME, "othername", "OtherName")
+            // TODO: What to do with citerefentry, citetitle, quote, lineannotation, trademark, optional, citation, citebiblioid, comment, remark, productname?
     );
 
     public static Map<Predicate<String>, DocBookFormatting> predicateToFormatting = Map.ofEntries(

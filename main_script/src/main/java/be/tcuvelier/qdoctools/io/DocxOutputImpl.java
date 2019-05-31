@@ -789,7 +789,7 @@ public class DocxOutputImpl extends DefaultHandler {
                     CTDecimalNumber zero = CTDecimalNumber.Factory.newInstance();
                     zero.setVal(BigInteger.ZERO);
                     paragraph.getCTP().getPPr().getNumPr().setIlvl(zero);
-                    // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465
+                    // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on GitHub too?
 
                     // If within a list, this must be a new item (only one paragraph allowed per item).
                     // This is just allowed for variable lists.
