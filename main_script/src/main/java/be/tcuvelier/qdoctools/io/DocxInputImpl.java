@@ -165,6 +165,11 @@ public class DocxInputImpl {
                     // TODO: Part, Chapter?
                     visitSectionTitle(p);
                     return;
+                case "ProgramListing":
+                case "Screen":
+                case "Synopsis":
+                    visitPreformatted(p);
+                    return;
                 case "DefinitionListTitle":
                     visitDefinitionListTitle(p);
                     return;
@@ -301,6 +306,28 @@ public class DocxInputImpl {
             xmlStream.writeEndElement(); // </db:para> should not be indented.
             writeNewLine();
         }
+    }
+
+    private void visitPreformatted(XWPFParagraph p) throws XMLStreamException {
+        // Indentation must NOT be increased here: the content of such a tag, in particular the line feeds, must be
+        // respected to the letter.
+        writeIndent();
+        switch (p.getStyleID()) {
+            case "ProgramListing":
+                xmlStream.writeStartElement(docbookNS, "programlisting");
+                break;
+            case "Screen":
+                xmlStream.writeStartElement(docbookNS, "screen");
+                break;
+            case "Synopsis":
+                xmlStream.writeStartElement(docbookNS, "synopsis");
+                break;
+        }
+
+        visitRuns(p.getRuns());
+
+        xmlStream.writeEndElement(); // </db:programlisting> or something else.
+        writeNewLine();
     }
 
     private static String paragraphAlignmentToDocBookAttribute(ParagraphAlignment align) {
