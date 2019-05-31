@@ -153,6 +153,11 @@ public class DocxOutputImpl extends DefaultHandler {
             return localName.equalsIgnoreCase("abstract");
         }
 
+        private static boolean isPartIntroTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("partintro");
+        }
+
         private static boolean isTitleTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("title");
@@ -780,7 +785,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         }
 
-        else if (SAXHelpers.isAbstractTag(qName)) {
+        else if (SAXHelpers.isAbstractTag(qName) || SAXHelpers.isPartIntroTag(qName)) {
             paragraphStyle = "Abstract";
             warnUnknownAttributes(attributes);
         }
@@ -1089,7 +1094,7 @@ public class DocxOutputImpl extends DefaultHandler {
             restoreParagraphStyle();
         }
 
-        else if (SAXHelpers.isAbstractTag(qName)) {
+        else if (SAXHelpers.isAbstractTag(qName) || SAXHelpers.isPartIntroTag(qName)) {
             ensureNoTextAllowed();
             restoreParagraphStyle();
         }
