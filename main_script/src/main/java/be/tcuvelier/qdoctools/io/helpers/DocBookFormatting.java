@@ -44,9 +44,7 @@ public enum DocBookFormatting {
             Map.entry(tagRecogniser("subscript"), DocBookFormatting.SUBSCRIPT)
     );
 
-    public static Map<DocBookFormatting, Predicate<String>> formattingToPredicate =
-            predicateToFormatting.entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+    public static Map<DocBookFormatting, Predicate<String>> formattingToPredicate; // Filled in the static block.
 
     public static Map<DocBookFormatting, String> docbookTagToStyleID = Map.ofEntries();
 
@@ -69,6 +67,10 @@ public enum DocBookFormatting {
         predicateToFormatting = Map.copyOf(predicateToFormatting);
         docbookTagToStyleID = Map.copyOf(docbookTagToStyleID);
         styleIDToDocBookTag = Map.copyOf(styleIDToDocBookTag);
+
+        // Compute the derived maps.
+        formattingToPredicate = predicateToFormatting.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
     private static Predicate<String> tagRecogniser(String tag) {

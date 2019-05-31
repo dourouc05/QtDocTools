@@ -218,6 +218,11 @@ public class DocxOutputImpl extends DefaultHandler {
                     || localName.equalsIgnoreCase("entry");
         }
 
+        private static boolean isProgramListingTag(String qName) {
+            String localName = qNameToTagName(qName);
+            return localName.equalsIgnoreCase("programlisting");
+        }
+
         private static boolean isInlineMediaObjectTag(String qName) {
             String localName = qNameToTagName(qName);
             return localName.equalsIgnoreCase("inlinemediaobject");
@@ -305,6 +310,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private int paragraphNumber = -1;
     private XWPFRun run;
     private String paragraphStyle = "Normal";
+    private boolean isLineFeedImportant = false;
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
@@ -796,6 +802,15 @@ public class DocxOutputImpl extends DefaultHandler {
             throw new DocxException("CALS tables are not handled.");
         }
 
+        // Preformatted areas.
+        else if (SAXHelpers.isProgramListingTag(qName)) {
+            paragraph = doc.createParagraph();
+            paragraph.setStyle("ProgramListing");
+            run = paragraph.createRun();
+
+            isLineFeedImportant = true;
+        }
+
         // Media tags: for now, only images are implemented.
         else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
             warnUnknownAttributes(attributes);
@@ -1009,6 +1024,14 @@ public class DocxOutputImpl extends DefaultHandler {
             throw new DocxException("CALS tables are not handled.");
         }
 
+        // Preformatted areas.
+        else if (SAXHelpers.isProgramListingTag(qName)) {
+            restoreParagraphStyle();
+            ensureNoTextAllowed();
+
+            isLineFeedImportant = false;
+        }
+
         // Media: nothing to do.
         else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
             ensureNoTextAllowed();
@@ -1126,6 +1149,21 @@ public class DocxOutputImpl extends DefaultHandler {
             throw new DocxException("invalid document, text not expected here.");
         }
 
-        run.setText(content);
+        // Line feeds are not well understood by setText: they should be replaced by a series of runs.
+        // This is only done in environments where line feeds must be reflected in DocBook.
+        if (! isLineFeedImportant || ! content.contains("\n")) {
+            run.setText(content);
+        } else {
+            String[] lines = content.split("\n");
+            boolean firstLine = true;
+            for (String line: lines) {
+                if (! firstLine) {
+                    run.addBreak();
+                }
+
+                run.setText(line);
+                firstLine = false;
+            }
+        }
     }
 }
