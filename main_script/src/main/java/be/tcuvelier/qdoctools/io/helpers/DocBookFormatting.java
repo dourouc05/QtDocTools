@@ -19,7 +19,9 @@ public enum DocBookFormatting {
     GUI_BUTTON, GUI_ICON, GUI_LABEL, GUI_MENU, GUI_MENU_ITEM, GUI_SUBMENU, HARDWARE, INTERFACE, INTERFACE_DEFINITION,
     KEY_CODE, KEY_SYMBOL, MOUSE_BUTTON, PACKAGE, PROPERTY, RETURN_VALUE, STRUCTURE_NAME, SYMBOL, TOKEN, TYPE,
     ABBREVIATION, ACRONYM, MARKUP, PRODUCT_NUMBER, POB, STREET, CITY, STATE, POST_CODE, COUNTRY, OTHER_ADDRESS,
-    PHONE, FAX, HONORIFIC, FIRST_NAME, GIVEN_NAME, SURNAME, LINEAGE, OTHER_NAME
+    PHONE, FAX, HONORIFIC, FIRST_NAME, GIVEN_NAME, SURNAME, LINEAGE, OTHER_NAME,
+    // Bold.
+    COMMAND, SHORTCUT
     ;
 
     // For code readability, store in a list all elements that are interesting for formattings:
@@ -94,8 +96,11 @@ public enum DocBookFormatting {
             new Triple<>(GIVEN_NAME, "givenname", "GivenName"),
             new Triple<>(SURNAME, "surname", "Surname"),
             new Triple<>(LINEAGE, "lineage", "Lineage"),
-            new Triple<>(OTHER_NAME, "othername", "OtherName")
+            new Triple<>(OTHER_NAME, "othername", "OtherName"),
             // TODO: What to do with citerefentry, citetitle, quote, lineannotation, trademark, optional, citation, citebiblioid, comment, remark, productname?
+            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: bold style.
+            new Triple<>(COMMAND, "command", "Command"),
+            new Triple<>(SHORTCUT, "shortcut", "Shortcut")
     );
 
     public static Map<Predicate<String>, DocBookFormatting> predicateToFormatting = Map.ofEntries(

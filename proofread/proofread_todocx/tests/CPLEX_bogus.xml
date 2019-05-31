@@ -58,54 +58,46 @@
 IloModel model(env);</programlisting><programlisting language="java">IloCplex cplex = new IloCplex();</programlisting></para>
         <para>De là, il est possible de créer une variable, par exemple entière, qui prend ses
             valeurs entre zéro et quarante-deux, avec un nom <code>"x"</code> (il sera utile pour le
-            débogage).</para>
-        <programlisting language="c++">IloNumVar x(env, 0, 42, IloNumVar::Int, "x");</programlisting>
-        <programlisting language="java">IloNumVar x = cplex.intVar(0, 42, "x");</programlisting>
-        <para>Il est également possible de créer des tableaux de variables, par exemple booléennes, dont
-            les noms sont donnés par un tableau de chaînes de caractères (en Java).</para>
-        <programlisting language="c++">IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);</programlisting>
-        <programlisting language="java">String[] namesY = new String[] { "y1", "y2" };
-IloNumVar[] y = cplex.boolVarArray(2, namesY);</programlisting>
+            débogage).
+            <programlisting language="c++">IloNumVar x(env, 0, 42, IloNumVar::Int, "x");</programlisting><programlisting language="java">IloNumVar x = cplex.intVar(0, 42, "x");</programlisting>Il
+            est également possible de créer des tableaux de variables, par exemple booléennes, dont
+            les noms sont donnés par un tableau de chaînes de caractères (en Java).
+            <programlisting language="c++">IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);</programlisting><programlisting language="java">String[] namesY = new String[] { "y1", "y2" };
+IloNumVar[] y = cplex.boolVarArray(2, namesY);</programlisting></para>
         <para>De là, l'API permet d'exprimer des contraintes entre ces variables, chacune avec un
-            nom donné.</para>
-        <programlisting language="c++">model.add(y[0] &lt;= y[1], "c1");
-model.add(x &lt;= 1000 * y[1], "c2");</programlisting>
-        <programlisting language="java">cplex.addLe(y[0], y[1], "c1");
-cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</programlisting>
-        <para> La dernière étape est de créer un objectif.</para>
-        <programlisting language="c++">model.add(IloMinimize(env, x));</programlisting>
-        <programlisting language="java">cplex.addMinimize(x);</programlisting>
+            nom
+            donné.<programlisting language="c++">model.add(y[0] &lt;= y[1], "c1");
+model.add(x &lt;= 1000 * y[1], "c2");</programlisting><programlisting language="java">cplex.addLe(y[0], y[1], "c1");
+cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</programlisting></para>
+        <para> La dernière étape est de créer un objectif.
+            <programlisting language="c++">model.add(IloMinimize(env, x));</programlisting><programlisting language="java">cplex.addMinimize(x);</programlisting></para>
     </section>
     <section>
         <title>Optimisation d'un modèle</title>
-        <para>La résolution du modèle se réduit ensuite à l'appel d'une fonction.</para>
-        <programlisting language="c++">IloCplex cplex(model);
-cplex.solve();</programlisting>
-        <programlisting language="java">cplex.solve();</programlisting>
-        <para>La méthode <methodname>solve()</methodname> retourne un booléen vrai si l'optimisation
+        <para>La résolution du modèle se réduit ensuite à l'appel d'une fonction.
+            <programlisting language="c++">IloCplex cplex(model);
+cplex.solve();</programlisting><programlisting language="java">cplex.solve();</programlisting>La
+            méthode <methodname>solve()</methodname> retourne un booléen vrai si l'optimisation
             s'est déroulée sans problème (si une solution a été trouvée).
                 <methodname>getStatus()</methodname> donne plus de détail (solution optimale
             trouvée, solution faisable mais non optimale trouvée, modèle infaisable, etc.). </para>
-        <para>La valeur de l'objectif est accessible par la méthode <methodname>getObjValue()</methodname>.</para>
-        <programlisting>double objective = cplex.getObjValue(); </programlisting>
-        <para>La valeur d'une
+        <para>La valeur de l'objectif est accessible par la méthode
+                <methodname>getObjValue()</methodname>.
+            <programlisting>double objective = cplex.getObjValue(); </programlisting>La valeur d'une
             variable particulière s'obtient en passant son objet <classname>IloNumVar</classname> en
-            paramètre à <methodname>getValue()</methodname>.</para>
-        <programlisting>double xV = cplex.getValue(x);</programlisting>
-        <para>Pour récupérer les
+            paramètre à <methodname>getValue()</methodname>.
+            <programlisting>double xV = cplex.getValue(x);</programlisting>Pour récupérer les
             valeurs de plusieurs variables, <methodname>getValues()</methodname> prend en paramètre
-            un tableau.</para>
-        <programlisting language="c++">double yV[] = cplex.getValues(y);</programlisting>
-        <programlisting language="java">double[] yV = cplex.getValues(y);</programlisting>
+            un tableau.
+            <programlisting language="c++">double yV[] = cplex.getValues(y);</programlisting><programlisting language="java">double[] yV = cplex.getValues(y);</programlisting></para>
     </section>
     <section>
         <title>Résolution d'infaisabilité</title>
         <para>En cas de problème dans la résolution (pas de solution faisable, loin de l'optimalité,
             etc.), il est bien souvent utile d'exporter le modèle créé. CPLEX permet de créer très
             facilement des fichiers LP contenant toutes les contraintes et objectifs, contenant
-            notamment leur nom.</para>
-        <programlisting>cplex.exportModel("model.lp");</programlisting>
-        <para>Ce fichier peut alors être chargé dans l'interface interactive, où <link
+            notamment leur nom. <programlisting>cplex.exportModel("model.lp");</programlisting>Ce
+            fichier peut alors être chargé dans l'interface interactive, où <link
                 xlink:href="http://pic.dhe.ibm.com/infocenter/cosinfoc/v12r6/index.jsp?topic=%2Filog.odms.ide.help%2Frefcppopl%2Fhtml%2Fconflict.html"
                 >un outil de détection de conflits</link> peut se révéler précieux (il est également
             accessible par les API CPLEX). </para>
@@ -114,8 +106,8 @@ cplex.solve();</programlisting>
             problème non faisable (<acronym>IIS</acronym>, pour <foreignphrase>irreducible
                 infeasible set</foreignphrase>), qu'il présente grâce à <command>display conflict
                 all</command> sous la forme d'un problème de faisabilité reprenant ces quelques
-            contraintes (souvent assez peu).</para>
-        <screen><prompt>CPLEX> </prompt>read model.lp
+            contraintes (souvent assez peu).
+            <screen><prompt>CPLEX> </prompt>read model.lp
 <computeroutput>Problem 'Problems/model.lp' read.
 Read time = 0.02 sec. (0.55 ticks)</computeroutput>
 <prompt>CPLEX> </prompt>optimize
@@ -157,7 +149,7 @@ Bounds
  0 &lt;= stopping_t0_th4 &lt;= 1
 Binaries
  on_t1_th4  on_t2_th4  starting_t0_th4  off_t1_th4  off_t2_th4
- stopping_t0_th4</computeroutput></screen>
+ stopping_t0_th4</computeroutput></screen></para>
     </section>
     <section>
         <title>Compilation</title>
