@@ -774,6 +774,12 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         }
 
+        // Admonitions.
+        else if (DocBookBlock.isAdmonition(qName)) {
+            paragraphStyle = DocBookBlock.styleIDToDocBookTag.get(qName);
+            warnUnknownAttributes(attributes);
+        }
+
         // Paragraphs: lots of special cases...
         else if (SAXHelpers.isParagraphTag(qName)) {
             // For tables, the paragraph is automatically created within a table cell.
@@ -1079,6 +1085,12 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         else if (SAXHelpers.isAbstractTag(qName) || SAXHelpers.isPartIntroTag(qName)) {
+            ensureNoTextAllowed();
+            restoreParagraphStyle();
+        }
+
+        // Admonitions.
+        else if (DocBookBlock.isAdmonition(qName)) {
             ensureNoTextAllowed();
             restoreParagraphStyle();
         }
