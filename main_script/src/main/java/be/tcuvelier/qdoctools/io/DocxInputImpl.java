@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.io;
 
+import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
@@ -312,17 +313,7 @@ public class DocxInputImpl {
         // Indentation must NOT be increased here: the content of such a tag, in particular the line feeds, must be
         // respected to the letter.
         writeIndent();
-        switch (p.getStyleID()) {
-            case "ProgramListing":
-                xmlStream.writeStartElement(docbookNS, "programlisting");
-                break;
-            case "Screen":
-                xmlStream.writeStartElement(docbookNS, "screen");
-                break;
-            case "Synopsis":
-                xmlStream.writeStartElement(docbookNS, "synopsis");
-                break;
-        }
+        xmlStream.writeStartElement(docbookNS, DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
 
         visitRuns(p.getRuns());
 
