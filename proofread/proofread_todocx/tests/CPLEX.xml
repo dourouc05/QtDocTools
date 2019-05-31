@@ -163,14 +163,13 @@ Binaries
         <title>Compilation</title>
         <para>Pour Java, à la compilation, il suffit d'ajouter le fichier JAR de CPLEX. Par exemple,
             sous Windows, en notant <envar>%CPLEX%</envar> le dossier d'installation de CPLEX (par
-            exemple, <filename>C:\Program Files (x86)\IBM\ILOG\CPLEX_Studio_126</filename>)
-            :<screen><prompt>> </prompt>javac… -classpath "%CPLEX%\cplex\lib"</screen>Lors de
-            l'exécution, il faudra, en plus, spécifier l'emplacement de la bibliothèque partagée
+            exemple, <filename>C:\Program Files (x86)\IBM\ILOG\CPLEX_Studio_126</filename>) :</para>
+        <screen><prompt>> </prompt>javac… -classpath "%CPLEX%\cplex\lib"</screen>
+        <para>Lors de l'exécution, il faudra, en plus, spécifier l'emplacement de la bibliothèque partagée
             native CPLEX. Puisque l'interaction se fait par JNI, la plateforme de CPLEX utilisée
             doit parfaitement correspondre avec celle de la machine virtuelle Java (si la machine
-            virtuelle est en 32 bits, la version 32 bits de CPLEX devra être utilisée). Par exemple
-            :
-            <screen><prompt>> </prompt>java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen></para>
+            virtuelle est en 32 bits, la version 32 bits de CPLEX devra être utilisée). Par exemple :</para>
+        <screen><prompt>> </prompt>java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen>
         <para>En C++, la situation est similaire : il faut indiquer au compilateur le chemin des
             en-têtes (par exemple, <filename>%CPLEX%\cplex\include</filename> et
                 <filename>%CPLEX%\concert\include</filename>) et des fichiers d'import (par exemple,
@@ -188,22 +187,23 @@ Binaries
         <title>Exemple complet</title>
         <para>Soit un problème de sac à dos. Le sac à dos sera un objet (ce qui permettra de
             généraliser le modèle à de l'assignation, par exemple, en imposant que chaque objet est
-            au plus dans un sac à dos), il n'aura comme attribut que sa capacité.
-            <programlisting language="c++">class KnapSack {
+            au plus dans un sac à dos), il n'aura comme attribut que sa capacité.</para>
+        <programlisting language="c++">class KnapSack {
 private: 
     const int capacity; 
 
 public:
     KnapSack(int c) : capacity(c) {}
-};</programlisting><programlisting language="java">public class KnapSack {
+};</programlisting>
+        <programlisting language="java">public class KnapSack {
     private final int capacity;
 
     public KnapSack(int c) {
         capacity = c;
     }
-}</programlisting>Chaque
-            objet sera également un objet, avec son poids, sa valeur et un identifiant.
-            <programlisting language="c++">class Object {
+}</programlisting>
+        <para>Chaque objet sera également un objet, avec son poids, sa valeur et un identifiant.</para>
+        <programlisting language="c++">class Object {
 private:
     const int id, weight, value;
 
@@ -212,7 +212,8 @@ public:
     int getId()      { return id;     }
     int getWeight()  { return weight; }
     int getValue()   { return value;  }
-};</programlisting><programlisting language="java">public class Object {
+};</programlisting>
+        <programlisting language="java">public class Object {
     private final int id, weight, value;
 
     public Object(int i, int w, int v) {
@@ -222,10 +223,10 @@ public:
     public int getId()      { return id;     }
     public int getWeight()  { return weight; }
     public int getValue()   { return value;  }md
-}</programlisting></para>
+}</programlisting>
         <para>Il faut alors créer une variable dans le modèle mathématique par objet. Il est commode
-            d'effectuer cette opération dans une méthode et de stocker la valeur dans l'objet.
-            <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+            d'effectuer cette opération dans une méthode et de stocker la valeur dans l'objet.</para>
+        <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
 
 class Object {
 private:
@@ -237,7 +238,8 @@ public:
     void createVariables(IloEnv&amp; env) {
         x = new IloNumVar(env, 0, 1, IloNumVar::Bool, "x" + id);
     }
-};</programlisting><programlisting language="java">import ilog.concert.IloException;
+};</programlisting>
+        <programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 
@@ -248,10 +250,10 @@ public class Object {
     public void createVariables(IloCplex solver) throws IloException {
         x = solver.boolVar("x" + id);
     }
-}</programlisting>Côté
-            sac à dos, il faudra imposer que les objets pris ne dépassent pas la capacité. Pour ce
-            faire, une méthode imposera cette contrainte, elle prendra en argument tous les objets.
-            <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+}</programlisting>
+        <para>Côté sac à dos, il faudra imposer que les objets pris ne dépassent pas la capacité. Pour ce
+            faire, une méthode imposera cette contrainte, elle prendra en argument tous les objets.</para>
+        <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
 #include &lt;vector>
 
 class KnapSack {
@@ -266,7 +268,8 @@ public:
 
         model.add(IloScalProd(weights, xs) &lt;= capacity);
     }
-};</programlisting><programlisting language="java">import ilog.concert.IloException;
+};</programlisting>
+        <programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 
@@ -281,11 +284,11 @@ public class KnapSack {
 
         solver.addLe(solver.scalProd(weights, xs), capacity);
     }
-}</programlisting></para>
+}</programlisting>
         <para>La fonction principale se chargera de créer ces objets, d'instancier le solveur,
             d'appeler les méthodes pour créer un modèle, puis de le résoudre et d'afficher la
-            solution.
-            <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+            solution.</para>
+        <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
 #include &lt;ilconcert/iloexpression.h>
 #include &lt;ilconcert/ilolinear.h>
 #include &lt;vector>
@@ -333,7 +336,8 @@ int main(int argc, char* argv[]) {
         cout &lt;&lt; "Object " &lt;&lt; object->getId() &lt;&lt; ": " &lt;&lt; ((solver.getValue(object->getX()) > 0.75) ? "taken" : "left");
     }
     cout &lt;&lt; "Value: " &lt;&lt; solver.getObjValue();
-}</programlisting><programlisting language="java">import ilog.concert.IloException;
+}</programlisting>
+        <programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
 
@@ -379,7 +383,7 @@ public class Main {
         }
         System.out.println("Value: " + solver.getObjValue());
     }
-}</programlisting></para>
+}</programlisting>
         <note>
             <para>La méthode <methodname>addMIPStart()</methodname> n'est utile que pour la
                 résolution de problèmes impliquant des nombres entiers (d'où son nom). Elle fournit

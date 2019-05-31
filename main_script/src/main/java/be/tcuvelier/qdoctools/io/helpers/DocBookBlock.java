@@ -10,7 +10,9 @@ import java.util.function.Predicate;
 
 public enum DocBookBlock {
     PROGRAM_LISTING, SCREEN, SYNOPSIS, LITERAL_LAYOUT,
-    ARTICLE, BOOK, PART, CHAPTER;
+    ARTICLE, BOOK, PART, CHAPTER,
+    // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/admon.xsl#L133
+    CAUTION, IMPORTANT, NOTE, TIP, WARNING;
 
     private static final List<Triple<DocBookBlock, String, String>> preformatted = List.of(
             new Triple<>(PROGRAM_LISTING, "programlisting", "ProgramListing"),
@@ -24,6 +26,14 @@ public enum DocBookBlock {
             new Triple<>(BOOK, "book", "Titlebook"),
             new Triple<>(PART, "part", "Titlepart"),
             new Triple<>(CHAPTER, "chapter", "Titlechapter")
+    );
+
+    private static final List<Triple<DocBookBlock, String, String>> admonitions = List.of(
+            new Triple<>(CAUTION, "caution", "Caution"),
+            new Triple<>(IMPORTANT, "important", "Important"),
+            new Triple<>(NOTE, "note", "Note"),
+            new Triple<>(TIP, "tip", "Tip"),
+            new Triple<>(WARNING, "warning", "Warning")
     );
 
     public static Map<DocBookBlock, Predicate<String>> blockToPredicate = Map.ofEntries();
@@ -41,6 +51,7 @@ public enum DocBookBlock {
         // Fill them.
         List<Triple<DocBookBlock, String, String>> whole = new ArrayList<>(preformatted);
         whole.addAll(roots);
+        whole.addAll(admonitions);
 
         for (Triple<DocBookBlock, String, String> t: whole) {
             blockToPredicate.put(t.first, DocBook.tagRecogniser(t.second));
@@ -72,5 +83,11 @@ public enum DocBookBlock {
     public static boolean isPreformatted(String qName) {
         return blockToPredicate.get(PROGRAM_LISTING).test(qName) || blockToPredicate.get(SCREEN).test(qName)
                 || blockToPredicate.get(SYNOPSIS).test(qName) || blockToPredicate.get(LITERAL_LAYOUT).test(qName);
+    }
+
+    public static boolean isAdmonition(String qName) {
+        return blockToPredicate.get(CAUTION).test(qName) || blockToPredicate.get(IMPORTANT).test(qName)
+                || blockToPredicate.get(NOTE).test(qName) || blockToPredicate.get(TIP).test(qName)
+                || blockToPredicate.get(WARNING).test(qName);
     }
 }

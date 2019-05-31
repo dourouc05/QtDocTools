@@ -23,7 +23,7 @@ public enum DocBookFormatting {
     // Bold.
     COMMAND, SHORTCUT,
     // Italic.
-    MEDIA_LABEL, FOREIGN_PHRASE, WORD_AS_WORD
+    MEDIA_LABEL, FOREIGN_PHRASE, WORD_AS_WORD, REPLACEABLE
     ;
 
     // For code readability, store in a list all elements that are interesting for formattings:
@@ -113,7 +113,8 @@ public enum DocBookFormatting {
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: italic style.
             new Triple<>(MEDIA_LABEL, "medialabel", "MediaLabel"),
             new Triple<>(FOREIGN_PHRASE, "foreignphrase", "ForeignPhrase"),
-            new Triple<>(WORD_AS_WORD, "wordasword", "WordAsWord")
+            new Triple<>(WORD_AS_WORD, "wordasword", "WordAsWord"),
+            new Triple<>(REPLACEABLE, "replaceable", "Replaceable")
             // TODO: What to do with citetitle, glossterm?
     );
 
