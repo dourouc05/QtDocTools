@@ -18,24 +18,24 @@ public enum DocBookFormatting {
     // Thus, the maps predicateToFormatting and docbookTagToStyleID (directly useful) are filled with two sources:
     // the list formattings, and special cases.
 
-    public static List<Triplet<DocBookFormatting, String, String>> formattings = List.of(
+    public static final List<Triple<DocBookFormatting, String, String>> formattings = List.of(
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: inline style
-            new Triplet<>(DocBookFormatting.CLASS_NAME, "classname", "ClassName"),
-            new Triplet<>(DocBookFormatting.EXCEPTION_NAME, "exceptionname", "ExceptionName"),
-            new Triplet<>(DocBookFormatting.INTERFACE_NAME, "interfacename", "InterfaceName"),
-            new Triplet<>(DocBookFormatting.METHOD_NAME, "methodname", "MethodName"),
-            new Triplet<>(DocBookFormatting.COMPUTER_OUTPUT, "computeroutput", "ComputerOutput"),
-            new Triplet<>(DocBookFormatting.CONSTANT, "constant", "Constant"),
-            new Triplet<>(DocBookFormatting.ENVIRONMENT_VARIABLE, "envar", "EnvironmentVariable"),
-            new Triplet<>(DocBookFormatting.FILE_NAME, "filename", "FileName"),
-            new Triplet<>(DocBookFormatting.LITERAL, "literal", "Literal"),
-            new Triplet<>(DocBookFormatting.CODE, "code", "Code"),
-            new Triplet<>(DocBookFormatting.OPTION, "option", "Option"),
-            new Triplet<>(DocBookFormatting.PROMPT, "option", "Prompt"),
-            new Triplet<>(DocBookFormatting.SYSTEM_ITEM, "systemitem", "SystemItem"),
-            new Triplet<>(DocBookFormatting.VARIABLE_NAME, "varname", "VariableName"),
-            new Triplet<>(DocBookFormatting.EMAIL, "email", "Email"),
-            new Triplet<>(DocBookFormatting.URI, "uri", "URI")
+            new Triple<>(DocBookFormatting.CLASS_NAME, "classname", "ClassName"),
+            new Triple<>(DocBookFormatting.EXCEPTION_NAME, "exceptionname", "ExceptionName"),
+            new Triple<>(DocBookFormatting.INTERFACE_NAME, "interfacename", "InterfaceName"),
+            new Triple<>(DocBookFormatting.METHOD_NAME, "methodname", "MethodName"),
+            new Triple<>(DocBookFormatting.COMPUTER_OUTPUT, "computeroutput", "ComputerOutput"),
+            new Triple<>(DocBookFormatting.CONSTANT, "constant", "Constant"),
+            new Triple<>(DocBookFormatting.ENVIRONMENT_VARIABLE, "envar", "EnvironmentVariable"),
+            new Triple<>(DocBookFormatting.FILE_NAME, "filename", "FileName"),
+            new Triple<>(DocBookFormatting.LITERAL, "literal", "Literal"),
+            new Triple<>(DocBookFormatting.CODE, "code", "Code"),
+            new Triple<>(DocBookFormatting.OPTION, "option", "Option"),
+            new Triple<>(DocBookFormatting.PROMPT, "option", "Prompt"),
+            new Triple<>(DocBookFormatting.SYSTEM_ITEM, "systemitem", "SystemItem"),
+            new Triple<>(DocBookFormatting.VARIABLE_NAME, "varname", "VariableName"),
+            new Triple<>(DocBookFormatting.EMAIL, "email", "Email"),
+            new Triple<>(DocBookFormatting.URI, "uri", "URI")
     );
 
     public static Map<Predicate<String>, DocBookFormatting> predicateToFormatting = Map.ofEntries(
@@ -57,7 +57,7 @@ public enum DocBookFormatting {
         styleIDToDocBookTag = new HashMap<>(styleIDToDocBookTag);
 
         // Fill them.
-        for (Triplet<DocBookFormatting, String, String> t: formattings) {
+        for (Triple<DocBookFormatting, String, String> t: formattings) {
             predicateToFormatting.put(tagRecogniser(t.second), t.first);
             docbookTagToStyleID.put(t.first, t.third);
             styleIDToDocBookTag.put(t.third, t.second);
@@ -143,7 +143,7 @@ public enum DocBookFormatting {
     public static boolean isInlineFormatting(String qName) {
         // Formattings that require a style.
         // TODO: What to do with function? To be studied further...
-        for (Triplet<DocBookFormatting, String, String> t: formattings) {
+        for (Triple<DocBookFormatting, String, String> t: formattings) {
             if (formattingToPredicate.get(t.first).test(qName)) {
                 return true;
             }

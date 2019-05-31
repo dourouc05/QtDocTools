@@ -1,13 +1,11 @@
 package be.tcuvelier.qdoctools.io.helpers;
 
-public class Triplet<T, U, V> {
+public class Pair<T, U> {
     public final T first;
     public final U second;
-    public final V third;
 
-    Triplet (T t, U u, V v) {
+    Pair(T t, U u) {
         first = t;
         second = u;
-        third = v;
     }
 }
