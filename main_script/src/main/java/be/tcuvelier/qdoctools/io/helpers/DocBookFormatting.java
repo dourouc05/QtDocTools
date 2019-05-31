@@ -193,5 +193,4 @@ public enum DocBookFormatting {
         }
         return false;
     }
-
 }

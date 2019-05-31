@@ -102,6 +102,14 @@ public class DocxOutputImpl extends DefaultHandler {
             return peek() == Level.CHAPTER;
         }
 
+        boolean peekSection() {
+            return peek() == Level.SECTION;
+        }
+
+        boolean peekSectionInfo() {
+            return peek() == Level.SECTION_INFO;
+        }
+
         boolean peekTable() {
             return peek() == Level.TABLE;
         }
@@ -752,7 +760,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 paragraph.setStyle(DocBookBlock.tagToStyleID("part", attributes));
             } else if (currentLevel.peekChapter()) {
                 paragraph.setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
-            } else if (currentLevel.peekRootArticle()) {
+            } else if (currentLevel.peekSection() || currentLevel.peekSectionInfo()) {
                 paragraph.setStyle("Heading" + currentSectionDepth);
             } else {
                 throw new DocxException("title not expected");
@@ -1238,7 +1246,9 @@ public class DocxOutputImpl extends DefaultHandler {
         // Generic case: try to write inside the current run. If there is none open, it means text is not expected
         // here (also see ensureNoTextAllowed method).
         if (run == null) {
-            throw new DocxException("invalid document, text not expected here.");
+            throw new DocxException("invalid document, text not expected here. A likely cause is that you used " +
+                    "block tags within paragraphs. For this tool, paragraphs are not supposed to contain block elements " +
+                    "(such as lists or blocks of code): round-tripping would be very hard to implement in this case.");
         }
 
         // Line feeds are not well understood by setText: they should be replaced by a series of runs.
