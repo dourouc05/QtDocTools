@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.io.helpers;
 
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.xml.sax.Attributes;
 
 import java.util.HashMap;
@@ -133,4 +134,5 @@ public enum DocBookFormatting {
         }
         return false;
     }
+
 }

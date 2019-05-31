@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -100,23 +101,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
         boolean peekVariableList() {
             return peek() == Level.VARIABLE_LIST;
-        }
-    }
-
-    private static class DocBookHelpers {
-        private static ParagraphAlignment attributeToAlignment(String attribute) {
-            // See also DocxInput.paragraphAlignmentToDocBookAttribute.
-            switch (attribute) {
-                case "center":
-                    return ParagraphAlignment.CENTER;
-                case "right":
-                    return ParagraphAlignment.RIGHT;
-                case "justified":
-                    return ParagraphAlignment.BOTH;
-                case "left":
-                default:
-                    return ParagraphAlignment.LEFT;
-            }
         }
     }
 
@@ -834,7 +818,7 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph = doc.createParagraph();
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
-                paragraph.setAlignment(DocBookHelpers.attributeToAlignment(attr.get("align").toLowerCase()));
+                paragraph.setAlignment(DocBookAlignment.docbookAttributeToParagraphAlignment(attr.get("align").toLowerCase()));
             }
             warnUnknownAttributes(attr, Stream.of("align"));
             run = paragraph.createRun();

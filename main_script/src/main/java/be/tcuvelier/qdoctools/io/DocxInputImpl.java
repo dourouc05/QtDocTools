@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.io;
 
+import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.apache.poi.xwpf.usermodel.*;
@@ -321,22 +322,6 @@ public class DocxInputImpl {
         writeNewLine();
     }
 
-    private static String paragraphAlignmentToDocBookAttribute(ParagraphAlignment align) {
-        // See also DocxOutput.attributeToAlignment.
-        switch (align.name()) {
-            case "LEFT":
-                return "left";
-            case "CENTER":
-                return "center";
-            case "RIGHT":
-                return "right";
-            case "BOTH":
-                return "justified";
-            default:
-                return "";
-        }
-    }
-
     private void visitPictureRun(XWPFRun r) throws XMLStreamException {
         // TODO: saner implementation based on
         //  https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java#L361?
@@ -381,7 +366,7 @@ public class DocxInputImpl {
         xmlStream.writeAttribute(docbookNS, "depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
         if (isDisplayedFigure) {
             XWPFParagraph parent = ((XWPFParagraph) r.getParent());
-            String dbAlign = paragraphAlignmentToDocBookAttribute(parent.getAlignment());
+            String dbAlign = DocBookAlignment.paragraphAlignmentToDocBookAttribute(parent.getAlignment());
             if (dbAlign.length() > 0) {
                 xmlStream.writeAttribute(docbookNS, "align", dbAlign);
             }
