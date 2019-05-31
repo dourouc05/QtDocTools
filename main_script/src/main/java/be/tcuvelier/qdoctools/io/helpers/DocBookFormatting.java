@@ -1,8 +1,8 @@
 package be.tcuvelier.qdoctools.io.helpers;
 
-import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.xml.sax.Attributes;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,9 @@ public enum DocBookFormatting {
     ABBREVIATION, ACRONYM, MARKUP, PRODUCT_NUMBER, POB, STREET, CITY, STATE, POST_CODE, COUNTRY, OTHER_ADDRESS,
     PHONE, FAX, HONORIFIC, FIRST_NAME, GIVEN_NAME, SURNAME, LINEAGE, OTHER_NAME,
     // Bold.
-    COMMAND, SHORTCUT
+    COMMAND, SHORTCUT,
+    // Italic.
+    MEDIA_LABEL, FOREIGN_PHRASE, WORD_AS_WORD
     ;
 
     // For code readability, store in a list all elements that are interesting for formattings:
@@ -29,7 +31,7 @@ public enum DocBookFormatting {
     // Thus, the maps predicateToFormatting and docbookTagToStyleID (directly useful) are filled with two sources:
     // the list formattings, and special cases.
 
-    public static final List<Triple<DocBookFormatting, String, String>> formattings = List.of(
+    public static final List<Triple<DocBookFormatting, String, String>> formattingMonospaced = List.of(
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: monospaced style.
             new Triple<>(CLASS_NAME, "classname", "ClassName"),
             new Triple<>(EXCEPTION_NAME, "exceptionname", "ExceptionName"),
@@ -42,12 +44,14 @@ public enum DocBookFormatting {
             new Triple<>(LITERAL, "literal", "Literal"),
             new Triple<>(CODE, "code", "Code"),
             new Triple<>(OPTION, "option", "Option"),
-            new Triple<>(PROMPT, "option", "Prompt"),
+            new Triple<>(PROMPT, "prompt", "Prompt"),
             new Triple<>(SYSTEM_ITEM, "systemitem", "SystemItem"),
             new Triple<>(VARIABLE_NAME, "varname", "VariableName"),
             new Triple<>(EMAIL, "email", "Email"),
-            new Triple<>(URI, "uri", "URI"),
+            new Triple<>(URI, "uri", "URI")
             // TODO: What to do with function?
+    );
+    public static final List<Triple<DocBookFormatting, String, String>> formattingNormal = List.of(
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: normal style.
             new Triple<>(AUTHOR_INITIALS, "authorinitials", "Author Initials"),
             new Triple<>(ACCEL, "accel", "Accel"),
@@ -96,11 +100,21 @@ public enum DocBookFormatting {
             new Triple<>(GIVEN_NAME, "givenname", "GivenName"),
             new Triple<>(SURNAME, "surname", "Surname"),
             new Triple<>(LINEAGE, "lineage", "Lineage"),
-            new Triple<>(OTHER_NAME, "othername", "OtherName"),
+            new Triple<>(OTHER_NAME, "othername", "OtherName")
             // TODO: What to do with citerefentry, citetitle, quote, lineannotation, trademark, optional, citation, citebiblioid, comment, remark, productname?
+    );
+    public static final List<Triple<DocBookFormatting, String, String>> formattingBold = List.of(
             // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: bold style.
             new Triple<>(COMMAND, "command", "Command"),
             new Triple<>(SHORTCUT, "shortcut", "Shortcut")
+            // TODO: What to do with keycap?
+    );
+    public static final List<Triple<DocBookFormatting, String, String>> formattingItalic = List.of(
+            // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/inline.xsl: italic style.
+            new Triple<>(MEDIA_LABEL, "medialabel", "MediaLabel"),
+            new Triple<>(FOREIGN_PHRASE, "foreignphrase", "ForeignPhrase"),
+            new Triple<>(WORD_AS_WORD, "wordasword", "WordAsWord")
+            // TODO: What to do with citetitle, glossterm?
     );
 
     public static Map<Predicate<String>, DocBookFormatting> predicateToFormatting = Map.ofEntries(
@@ -122,7 +136,12 @@ public enum DocBookFormatting {
         styleIDToDocBookTag = new HashMap<>(styleIDToDocBookTag);
 
         // Fill them.
-        for (Triple<DocBookFormatting, String, String> t: formattings) {
+        List<Triple<DocBookFormatting, String, String>> whole = new ArrayList<>(formattingMonospaced);
+        whole.addAll(formattingNormal);
+        whole.addAll(formattingBold);
+        whole.addAll(formattingItalic);
+
+        for (Triple<DocBookFormatting, String, String> t: whole) {
             predicateToFormatting.put(DocBook.tagRecogniser(t.second), t.first);
             docbookTagToStyleID.put(t.first, t.third);
             styleIDToDocBookTag.put(t.third, t.second);
@@ -190,8 +209,12 @@ public enum DocBookFormatting {
 
     public static boolean isInlineFormatting(String qName) {
         // Formattings that require a style.
-        // TODO: What to do with function? To be studied further...
-        for (Triple<DocBookFormatting, String, String> t: formattings) {
+        List<Triple<DocBookFormatting, String, String>> whole = new ArrayList<>(formattingMonospaced);
+        whole.addAll(formattingNormal);
+        whole.addAll(formattingBold);
+        whole.addAll(formattingItalic);
+
+        for (Triple<DocBookFormatting, String, String> t: whole) {
             if (formattingToPredicate.get(t.first).test(qName)) {
                 return true;
             }
