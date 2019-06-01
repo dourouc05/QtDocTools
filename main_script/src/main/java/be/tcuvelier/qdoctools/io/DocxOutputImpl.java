@@ -1239,12 +1239,15 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        String content = new String(ch, start, length);
+        // How to deal with white space? This is a tricky question...
         // Don't trim this string, as the series of runs might require those spaces to be kept. Real-life example
         // (a sequence of runs):
         // - "La méthode " -- useful space at the end
         // - "addMIPStart()" -- DocBook tag
         // - " n'est utile que" -- useful space at the beginning
+        // However, when having line feeds,
+
+        String content = new String(ch, start, length);
 
         // This function is called for anything that is not a tag, including whitespace (nothing to do on it).
         if (content.length() == 0 || content.replaceAll("(\\s|\n)+", "").length() == 0) {
@@ -1270,19 +1273,53 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Line feeds are not well understood by setText: they should be replaced by a series of runs.
         // This is only done in environments where line feeds must be reflected in DocBook.
-        if (! isLineFeedImportant || ! content.contains("\n")) {
-            run.setText(content);
+        if (isLineFeedImportant) {
+            if (content.contains("\n")) {
+                String[] lines = content.split("\n");
+                boolean firstLine = true;
+                for (String line : lines) {
+                    if (!firstLine) {
+                        run.addBreak();
+                    }
+
+                    run.setText(line);
+                    firstLine = false;
+                }
+            } else {
+                run.setText(content);
+            }
         } else {
-            String[] lines = content.split("\n");
-            boolean firstLine = true;
-            for (String line: lines) {
-                if (! firstLine) {
-                    run.addBreak();
+            // White space is not important, get rid of (most of) it.
+            content = content.replace("\n", " ");
+            while (content.contains("  ")) {
+                content = content.replace("  ", " ");
+            }
+
+            // If the previous run ends with white space, as it is not relevant in this run, remove it from
+            // the beginning of this run (i.e. trim left).
+            {
+                // Find the previous run.
+                int pos = -1;
+                List<XWPFRun> runs = paragraph.getRuns();
+                for (int i = 0; i < runs.size(); ++i) {
+                    if (runs.get(i).equals(run)) {
+                        pos = i;
+                        break;
+                    }
                 }
 
-                run.setText(line);
-                firstLine = false;
+                // Apply the condition on the previous run.
+                if (pos >= 0) {
+                    XWPFRun previous = paragraph.getRuns().get(pos);
+                    String prevText = previous.text();
+
+                    if (prevText.endsWith(" ")) {
+                        content = content.replaceAll("^\\s*", "");
+                    }
+                }
             }
+
+            run.setText(content);
         }
     }
 }
