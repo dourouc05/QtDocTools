@@ -31,6 +31,13 @@ public class DocxOutputImpl extends DefaultHandler {
         ITEMIZED_LIST, ORDERED_LIST, SEGMENTED_LIST, SEGMENTED_LIST_TITLE, VARIABLE_LIST
     }
 
+    /**
+     * A few design notes.
+     * - Avoid SDTs. Two reasons: they are not really supported within POI (but you can work around it); they are not
+     *   really supported by LibreOffice, at least with 6.1.3.2 (not shown on screen as different from the rest of
+     *   the code; many bug reports related to loss of information when saving as DOCX).
+     */
+
     private static class LevelStack {
         // Slight interface on top of a stack (internally, a Deque) to provide some facilities when peeking, based on
         // the values of Level.
@@ -670,7 +677,7 @@ public class DocxOutputImpl extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
-        // much harder. TODO at a later point. Maybe use SDT? (Standard way of having controls in Word documents.)
+        // much harder. TODO at a later point.
 
         if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName)) {
             if (currentLevel.peekRootBook()) {
@@ -902,16 +909,35 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph = doc.createParagraph();
             paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
-            // For program listings, add the language as an SDT.
+            // For program listings, add the language as a first paragraph.
             if (SAXHelpers.isProgramListingTag(qName)) {
-                String language = attr.getOrDefault("language", "none");
+                // https://github.com/apache/poi/pull/152
+                CTOnOff on = CTOnOff.Factory.newInstance();
+                on.setVal(STOnOff.ON);
+                paragraph.getCTP().getPPr().setKeepNext(on);
 
-                // https://stackoverflow.com/questions/44516792/how-to-create-combobox-in-word-file-using-apache-word-poi
-                CTSdtRun sdtRun = paragraph.getCTP().addNewSdt(); // http://www.datypic.com/sc/ooxml/e-w_sdt-1.html
-                sdtRun.addNewSdtPr().addNewText(); // http://www.datypic.com/sc/ooxml/e-w_text-1.html
-                sdtRun.addNewSdtContent().addNewR().addNewT().setStringValue(language);
+                String text = "Program listing. ";
+                if (attr.containsKey("language")) {
+                    text += "Language: " + attr.get("language") + ". ";
+                }
+                if (attr.containsKey("continuation")) {
+                    text += "Continuation: " + attr.get("continuation") + ". ";
+                }
+                if (attr.containsKey("linenumbering")) {
+                    text += "Line numbering: " + attr.get("linenumbering") + ". ";
+                }
+                if (attr.containsKey("startinglinenumber")) {
+                    text += "Starting line number: " + attr.get("startinglinenumber") + ". ";
+                }
 
-                warnUnknownAttributes(attr, Stream.of("language"));
+                run = paragraph.createRun();
+                run.setBold(true);
+                run.setText(text);
+
+                paragraph = doc.createParagraph();
+                paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
+
+                warnUnknownAttributes(attr, Stream.of("language", "continuation", "linenumbering", "startinglinenumber"));
             } else {
                 warnUnknownAttributes(attr);
             }
