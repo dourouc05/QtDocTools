@@ -897,12 +897,28 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Preformatted areas.
         else if (DocBookBlock.isPreformatted(qName)) {
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
+
             paragraph = doc.createParagraph();
             paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
+
+            // For program listings, add the language as an SDT.
+            if (SAXHelpers.isProgramListingTag(qName)) {
+                String language = attr.getOrDefault("language", "none");
+
+                // https://stackoverflow.com/questions/44516792/how-to-create-combobox-in-word-file-using-apache-word-poi
+                CTSdtRun sdtRun = paragraph.getCTP().addNewSdt(); // http://www.datypic.com/sc/ooxml/e-w_sdt-1.html
+                sdtRun.addNewSdtPr().addNewText(); // http://www.datypic.com/sc/ooxml/e-w_text-1.html
+                sdtRun.addNewSdtContent().addNewR().addNewT().setStringValue(language);
+
+                warnUnknownAttributes(attr, Stream.of("language"));
+            } else {
+                warnUnknownAttributes(attr);
+            }
+
             run = paragraph.createRun();
 
             isLineFeedImportant = true;
-            warnUnknownAttributes(attributes);
         }
 
         // Media tags: for now, only images are implemented.
