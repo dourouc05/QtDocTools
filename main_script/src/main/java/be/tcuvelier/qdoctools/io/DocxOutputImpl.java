@@ -1239,7 +1239,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        String content = new String(ch, start, length).trim();
+        String content = new String(ch, start, length);
+        // Don't trim this string, as the series of runs might require those spaces to be kept. Real-life example
+        // (a sequence of runs):
+        // - "La méthode " -- useful space at the end
+        // - "addMIPStart()" -- DocBook tag
+        // - " n'est utile que" -- useful space at the beginning
 
         // This function is called for anything that is not a tag, including whitespace (nothing to do on it).
         if (content.length() == 0 || content.replaceAll("(\\s|\n)+", "").length() == 0) {
