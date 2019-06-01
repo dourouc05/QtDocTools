@@ -902,6 +902,7 @@ public class DocxOutputImpl extends DefaultHandler {
             run = paragraph.createRun();
 
             isLineFeedImportant = true;
+            warnUnknownAttributes(attributes);
         }
 
         // Media tags: for now, only images are implemented.
