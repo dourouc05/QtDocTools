@@ -1280,29 +1280,29 @@ public class DocxOutputImpl extends DefaultHandler {
         // There might be return instructions in the long switch.
     }
 
-//    @Override
-//    public void ignorableWhitespace(char[] ch, int start, int length) {
-//        // Line feeds may create problems: if a tag starts on a new line, all the space between the last word and
-//        // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
-//        // but only if the previous run does not end with white space.
-//        if (length > 0 && paragraph != null && run != null) {
-//            // Find the identifier for this run.
-//            int pos = -1;
-//            List<XWPFRun> runs = paragraph.getRuns();
-//            for (int i = 0; i < runs.size(); ++i) {
-//                if (runs.get(i).equals(run)) {
-//                    pos = i;
-//                    break;
-//                }
-//            }
-//
-//            // Conditionally add some white space.
-//            if (pos > 0 && ! runs.get(pos - 1).text().endsWith(" ")) {
-//                run.setText(" ");
-//                run = paragraph.createRun();
-//            }
-//        }
-//    }
+    @Override
+    public void ignorableWhitespace(char[] ch, int start, int length) {
+        // Line feeds may create problems: if a tag starts on a new line, all the space between the last word and
+        // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
+        // but only if the previous run does not end with white space.
+        if (length > 0 && paragraph != null && run != null) {
+            // Find the identifier for this run.
+            int pos = -1;
+            List<XWPFRun> runs = paragraph.getRuns();
+            for (int i = 0; i < runs.size(); ++i) {
+                if (runs.get(i).equals(run)) {
+                    pos = i;
+                    break;
+                }
+            }
+
+            // Conditionally add some white space.
+            if (pos > 0 && ! runs.get(pos - 1).text().endsWith(" ")) {
+                run.setText(" ");
+                run = paragraph.createRun();
+            }
+        }
+    }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
@@ -1400,5 +1400,9 @@ public class DocxOutputImpl extends DefaultHandler {
 
             run.setText(content);
         }
+    }
+
+    public void processingInstruction (String target, String data) {
+        System.err.println("Processing instructions are not taken into account and will not be round-tripped.");
     }
 }

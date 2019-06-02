@@ -56,8 +56,10 @@ public class DocxOutput {
     public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
-        spf.setValidating(true);
-        spf.setSchema(ValidationHandler.loadRNGSchema(MainCommand.docBookRNGPath));
+        spf.setXIncludeAware(true);
+        // Avoid using validation, it seems quite buggy (does not even allow xmlns statements...).
+//        spf.setValidating(true);
+//        spf.setSchema(ValidationHandler.loadRNGSchema(MainCommand.docBookRNGPath));
         SAXParser saxParser = spf.newSAXParser();
 
         DocxOutputImpl handler = new DocxOutputImpl(Paths.get(input).getParent());
