@@ -2,10 +2,7 @@ package be.tcuvelier.qdoctools.io.helpers;
 
 import org.xml.sax.Attributes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -216,6 +213,15 @@ public enum DocBookFormatting {
                 || f == SUPERSCRIPT || f == SUBSCRIPT;
     }
 
+    public static boolean isFormattingInList(String qName, List<Triple<DocBookFormatting, String, String>> haystack) {
+        for (Triple<DocBookFormatting, String, String> t: haystack) {
+            if (formattingToPredicate.get(t.first).test(qName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean isInlineFormatting(String qName) {
         // Formattings that require a style.
         List<Triple<DocBookFormatting, String, String>> whole = new ArrayList<>(formattingMonospaced);
@@ -223,11 +229,14 @@ public enum DocBookFormatting {
         whole.addAll(formattingBold);
         whole.addAll(formattingItalic);
 
-        for (Triple<DocBookFormatting, String, String> t: whole) {
-            if (formattingToPredicate.get(t.first).test(qName)) {
-                return true;
-            }
-        }
-        return false;
+        return isFormattingInList(qName, whole);
+    }
+
+    public static boolean isMonospacedFormatting(String qName) {
+        return isFormattingInList(qName, formattingMonospaced);
+    }
+
+    public static boolean isMonospacedFormatting(DocBookFormatting f) {
+        return formattingMonospaced.stream().anyMatch(t -> t.first == f);
     }
 }

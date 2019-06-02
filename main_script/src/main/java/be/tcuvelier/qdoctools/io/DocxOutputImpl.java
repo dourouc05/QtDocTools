@@ -619,6 +619,11 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private void warnUnknownAttributes(Map<String, String> attr) {
         for (String key: attr.keySet()) {
+            // Ignore XInclude attributes.
+            if (key.equals("base")) {
+                continue;
+            }
+
             System.err.println(getLocationString() + "unknown attribute " + key + ".");
         }
     }
@@ -659,6 +664,15 @@ public class DocxOutputImpl extends DefaultHandler {
                     run.setSubscript(VerticalAlign.SUPERSCRIPT);
                     break;
                 default:
+                    // Special cases.
+                    // Monospaced tag with a replaceable inside: just output the replaceable as italic.
+                    if (currentFormatting.size() > 1 && f == DocBookFormatting.REPLACEABLE
+                            && currentFormatting.stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
+                        run.setItalic(true);
+                        break;
+                    }
+
+                    // General case.
                     if (DocBookFormatting.formattingToStyleID.containsKey(f)) {
                         run.setStyle(DocBookFormatting.formattingToStyleID.get(f));
                     } else {
@@ -1394,13 +1408,13 @@ public class DocxOutputImpl extends DefaultHandler {
             // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
             // but only if the previous run does not end with white space. If validation worked, then
             // ignorableWhitespace could be used to deal with this case, but unfortunately it does not.
-            if (! content.endsWith(" ")) {
-                // Heuristic to decide when to append a space and when to avoid doing this processing.
-                if (! content.endsWith("(")) {
-                    content += " ";
-                    justAddedWhiteSpace = true;
-                }
-            }
+//            if (! content.endsWith(" ")) {
+//                // Heuristic to decide when to append a space and when to avoid doing this processing.
+//                if (! content.endsWith("(")) {
+//                    content += " ";
+//                    justAddedWhiteSpace = true;
+//                }
+//            }
 
             // If the previous run ends with white space, as it is not relevant in this run, remove it from
             // the beginning of this run (i.e. trim left).
@@ -1414,11 +1428,11 @@ public class DocxOutputImpl extends DefaultHandler {
                         content = content.replaceAll("^\\s*", ""); // Trim left.
                     }
 
-                    // Sometimes undo what the previous step did (justAddedWhiteSpace == true).
-                    if (justAddedWhiteSpace && prevText.endsWith(")")) {
-                        prevText = prevText.substring(0, prevText.length() - 2);
-                        previous.setText(prevText);
-                    }
+//                    // Sometimes undo what the previous step did (justAddedWhiteSpace == true).
+//                    if (justAddedWhiteSpace && prevText.endsWith(")")) {
+//                        prevText = prevText.substring(0, prevText.length() - 2);
+//                        previous.setText(prevText);
+//                    }
                 }
             }
 

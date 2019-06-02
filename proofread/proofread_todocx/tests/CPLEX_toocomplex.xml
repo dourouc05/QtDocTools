@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>API CPLEX</title>
+    <para><application>CPLEX</application> est un outil commercial d'optimisation mathématique. Il
+        doit son nom à l'algorithme du simplexe, un algorithme relativement ancien pour les
+        problèmes d'optimisation linéaire, mais il supporte actuellement bien d'autres types de
+        programmes mathématiques (programmes entiers, mais également non linéaires – quadratiques).
+        Il fait partie <link xlink:href="http://scip.zib.de/">des outils les plus performants à ce
+            niveau</link>, de par sa rapidité de traitement. </para>
+    <para>Il dispose d'une interface interactive en ligne de commande (<application>CPLEX
+            Interactive Optimizer</application>), mais également d'interfaces dans divers langages
+        de programmation, dont C++ et Java (<application>Concert Technology</application>). Ce
+        document se focalise sur ces interfaces. </para>
+    <para><link
+            xlink:href="http://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-preview-edition/"
+            >Une version d'évaluation de trois mois</link>, grandement limitée dans la taille des
+        problèmes, est disponible gratuitement ; pour le monde académique, <link
+            xlink:href="http://www-304.ibm.com/ibm/university/academic/pub/page/academic_initiative"
+            >une licence gratuite sans limite</link> est également proposée. </para>
+    <section>
+        <title>Architecture d'une application</title>
+        <para>Une application utilisant CPLEX travaillera principalement avec un objet
+                <classname>IloCplex</classname> ou <classname>IloEnv</classname> : il permet de
+            créer des variables (<classname>IloNumVar</classname>) et des contraintes
+                (<classname>IloConstraint</classname>), mais aussi d'appeler le solveur et de
+            récupérer les solutions. Tous les objets créés ne seront que des interfaces vers la
+            représentation interne du solveur CPLEX de ces variables et contraintes : le
+            fonctionnement interne de CPLEX n'est pas montré, seule une version abstraite est
+            disponible – et largement suffisante pour la plupart des besoins. </para>
+        <para>Une application se déroulera donc en trois phases : <itemizedlist>
+                <listitem>
+                    <para>la création du modèle ; </para>
+                </listitem>
+                <listitem>
+                    <para>sa résolution ; </para>
+                </listitem>
+                <listitem>
+                    <para>l'utilisation de la solution. </para>
+                </listitem>
+            </itemizedlist></para>
+        <para>Pour de petits modèles, il est envisageable de n'utiliser qu'une fonction qui gère
+            l'entièreté du modèle, mais cette solution n'est pas applicable à grande échelle. Pour
+            un modèle de taille plus conséquente, le paradigme objet, utilisé pour la conception de
+            l'API Concert, se révélera souvent utile. Une analyse du problème à modéliser donne une
+            liste de concepts qui y interviennent (par exemple, les ressources disponibles, les
+            machines à utiliser, les objets à fabriquer) : chacun deviendra une classe, dont les
+            instances seront responsables de la création des variables et des contraintes qui leur
+            correspondent (une machine ne gérera que sa propre production). </para>
+    </section>
+    <section>
+        <title>Création d'un modèle</title>
+        <para>La première étape est d'instancier CPLEX. En C++, il s'agira de créer un objet
+                <classname>IloEnv</classname>, puis un modèle <classname>IloModel</classname> ; en
+            Java, une instance de <classname>IloCplex</classname> gère l'entièreté du processus.
+            <programlisting language="c++">IloEnv env;
+IloModel model(env);</programlisting><programlisting language="java">IloCplex cplex = new IloCplex();</programlisting></para>
+        <para>De là, il est possible de créer une variable, par exemple entière, qui prend ses
+            valeurs entre zéro et quarante-deux, avec un nom <code>"x"</code> (il sera utile pour le
+            débogage).</para>
+        <programlisting language="c++">IloNumVar x(env, 0, 42, IloNumVar::Int, "x");</programlisting>
+        <programlisting language="java">IloNumVar x = cplex.intVar(0, 42, "x");</programlisting>
+        <para>Il est également possible de créer des tableaux de variables, par exemple booléennes, dont
+            les noms sont donnés par un tableau de chaînes de caractères (en Java).</para>
+        <programlisting language="c++">IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);</programlisting>
+        <programlisting language="java">String[] namesY = new String[] { "y1", "y2" };
+IloNumVar[] y = cplex.boolVarArray(2, namesY);</programlisting>
+        <para>De là, l'API permet d'exprimer des contraintes entre ces variables, chacune avec un
+            nom donné.</para>
+        <programlisting language="c++">model.add(y[0] &lt;= y[1], "c1");
+model.add(x &lt;= 1000 * y[1], "c2");</programlisting>
+        <programlisting language="java">cplex.addLe(y[0], y[1], "c1");
+cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</programlisting>
+        <para> La dernière étape est de créer un objectif.</para>
+        <programlisting language="c++">model.add(IloMinimize(env, x));</programlisting>
+        <programlisting language="java">cplex.addMinimize(x);</programlisting>
+    </section>
+    <section>
+        <title>Optimisation d'un modèle</title>
+        <para>La résolution du modèle se réduit ensuite à l'appel d'une fonction.</para>
+        <programlisting language="c++">IloCplex cplex(model);
+cplex.solve();</programlisting>
+        <programlisting language="java">cplex.solve();</programlisting>
+        <para>La méthode <methodname>solve()</methodname> retourne un booléen vrai si l'optimisation
+            s'est déroulée sans problème (si une solution a été trouvée).
+                <methodname>getStatus()</methodname> donne plus de détail (solution optimale
+            trouvée, solution faisable mais non optimale trouvée, modèle infaisable, etc.). </para>
+        <para>La valeur de l'objectif est accessible par la méthode <methodname>getObjValue()</methodname>.</para>
+        <programlisting>double objective = cplex.getObjValue(); </programlisting>
+        <para>La valeur d'une
+            variable particulière s'obtient en passant son objet <classname>IloNumVar</classname> en
+            paramètre à <methodname>getValue()</methodname>.</para>
+        <programlisting>double xV = cplex.getValue(x);</programlisting>
+        <para>Pour récupérer les
+            valeurs de plusieurs variables, <methodname>getValues()</methodname> prend en paramètre
+            un tableau.</para>
+        <programlisting language="c++">double yV[] = cplex.getValues(y);</programlisting>
+        <programlisting language="java">double[] yV = cplex.getValues(y);</programlisting>
+    </section>
+    <section>
+        <title>Résolution d'infaisabilité</title>
+        <para>En cas de problème dans la résolution (pas de solution faisable, loin de l'optimalité,
+            etc.), il est bien souvent utile d'exporter le modèle créé. CPLEX permet de créer très
+            facilement des fichiers LP contenant toutes les contraintes et objectifs, contenant
+            notamment leur nom.</para>
+        <programlisting>cplex.exportModel("model.lp");</programlisting>
+        <para>Ce fichier peut alors être chargé dans l'interface interactive, où <link
+                xlink:href="http://pic.dhe.ibm.com/infocenter/cosinfoc/v12r6/index.jsp?topic=%2Filog.odms.ide.help%2Frefcppopl%2Fhtml%2Fconflict.html"
+                >un outil de détection de conflits</link> peut se révéler précieux (il est également
+            accessible par les API CPLEX). </para>
+        <para>Dans la console interactive, une fois le modèle chargé et optimisé, la commande
+                <command>conflict</command> détermine un sous-ensemble d'inégalités rendant le
+            problème non faisable (<acronym>IIS</acronym>, pour <foreignphrase>irreducible
+                infeasible set</foreignphrase>), qu'il présente grâce à <command>display conflict
+                all</command> sous la forme d'un problème de faisabilité reprenant ces quelques
+            contraintes (souvent assez peu).</para>
+        <screen><prompt>CPLEX> </prompt>read model.lp
+<computeroutput>Problem 'Problems/model.lp' read.
+Read time = 0.02 sec. (0.55 ticks)</computeroutput>
+<prompt>CPLEX> </prompt>optimize
+<computeroutput>Row 'c4257' infeasible, all entries at implied bounds.
+Presolve time = 0.00 sec. (0.89 ticks)
+…</computeroutput>
+<prompt>CPLEX> </prompt>conflict
+<computeroutput>Refine conflict on 4884 members...
+
+ Iteration  Max Members  Min Members
+         1         4274            0
+         …
+        37            7            7
+
+Minimal conflict:    7 linear constraint(s)
+                     0 lower bound(s)
+                     0 upper bound(s)
+Conflict computation time =    0.22 sec.  Iterations = 37
+Deterministic time = 38.98 ticks  (177.99 ticks/sec)</computeroutput>
+<prompt>CPLEX> </prompt>display conflict all
+<computeroutput>Minimize
+ obj:
+Subject To
+ off_t1_th4:              on_t1_th4 + off_t1_th4  = 1
+ off_t2_th4:              on_t2_th4 + off_t2_th4  = 1
+ timeToStart_t0_th4:      - starting_t0_th4 + off_t1_th4 >= 0
+ startConjunction_t0_th4: - on_t2_th4 + starting_t0_th4 >= 0
+ stopIfPreviousOn_t0_th4: stopping_t0_th4 &lt;= 0
+ stopConjunction_t2_th4:  - on_t1_th4 - off_t2_th4 + stopping_t0_th4 >= -1
+ c4225:                   - on_t1_th4 &lt;= -1
+\Sum of equality rows in the conflict:
+\ sum_eq: on_t1_th4 + on_t2_th4 + off_t1_th4 + off_t2_th4  = 2
+Bounds
+ 0 &lt;= on_t1_th4 &lt;= 1
+ 0 &lt;= on_t2_th4 &lt;= 1
+ 0 &lt;= starting_t0_th4 &lt;= 1
+ 0 &lt;= off_t1_th4 &lt;= 1
+ 0 &lt;= off_t2_th4 &lt;= 1
+ 0 &lt;= stopping_t0_th4 &lt;= 1
+Binaries
+ on_t1_th4  on_t2_th4  starting_t0_th4  off_t1_th4  off_t2_th4
+ stopping_t0_th4</computeroutput></screen>
+    </section>
+    <section>
+        <title>Compilation</title>
+        <para>Pour Java, à la compilation, il suffit d'ajouter le fichier JAR de CPLEX. Par exemple,
+            sous Windows, en notant <envar>%CPLEX%</envar> le dossier d'installation de CPLEX (par
+            exemple, <filename>C:\Program Files (x86)\IBM\ILOG\CPLEX_Studio_126</filename>) :</para>
+        <screen><prompt>> </prompt>javac… -classpath "%CPLEX%\cplex\lib"</screen>
+        <para>Lors de l'exécution, il faudra, en plus, spécifier l'emplacement de la bibliothèque partagée
+            native CPLEX. Puisque l'interaction se fait par JNI, la plateforme de CPLEX utilisée
+            doit parfaitement correspondre avec celle de la machine virtuelle Java (si la machine
+            virtuelle est en 32 bits, la version 32 bits de CPLEX devra être utilisée). Par exemple :</para>
+        <screen><prompt>> </prompt>java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen>
+        <para>En C++, la situation est similaire : il faut indiquer au compilateur le chemin des
+            en-têtes (par exemple, <filename>%CPLEX%\cplex\include</filename> et
+                <filename>%CPLEX%\concert\include</filename>) et des fichiers d'import (par exemple,
+                <filename>%CPLEX%\cplex\lib\x86_windows_vs2010\stat_mda</filename>) de CPLEX, en
+            plus de lui indiquer de lier avec une série de fichiers d'import (par exemple, pour
+            Visual Studio sous Windows, <filename>ilocplex.lib</filename>,
+                <filename>concert.lib</filename> et
+                <filename>cplex<replaceable>125</replaceable>.lib</filename> – il faut veiller à
+            remplacer les chiffres par la version de CPLEX utilisée). Les bibliothèques partagées
+            devront être disponibles à l'application compilée (par exemple, sous Windows, il faut le
+            fichier <filename>cplex<replaceable>125</replaceable>.dll</filename>, qui peut se situer
+            sous <filename>%CPLEX%\cplex\bin\x86_win32</filename>). </para>
+    </section>
+    <section>
+        <title>Exemple complet</title>
+        <para>Soit un problème de sac à dos. Le sac à dos sera un objet (ce qui permettra de
+            généraliser le modèle à de l'assignation, par exemple, en imposant que chaque objet est
+            au plus dans un sac à dos), il n'aura comme attribut que sa capacité.</para>
+        <programlisting language="c++">class KnapSack {
+private: 
+    const int capacity; 
+
+public:
+    KnapSack(int c) : capacity(c) {}
+};</programlisting>
+        <programlisting language="java">public class KnapSack {
+    private final int capacity;
+
+    public KnapSack(int c) {
+        capacity = c;
+    }
+}</programlisting>
+        <para>Chaque objet sera également un objet, avec son poids, sa valeur et un identifiant.</para>
+        <programlisting language="c++">class Object {
+private:
+    const int id, weight, value;
+
+public:
+    Object(int i, int w, int v) : id(i), weight(w), value(v) {}
+    int getId()      { return id;     }
+    int getWeight()  { return weight; }
+    int getValue()   { return value;  }
+};</programlisting>
+        <programlisting language="java">public class Object {
+    private final int id, weight, value;
+
+    public Object(int i, int w, int v) {
+        id = i;    weight = w;    value = v;
+    }
+
+    public int getId()      { return id;     }
+    public int getWeight()  { return weight; }
+    public int getValue()   { return value;  }md
+}</programlisting>
+        <para>Il faut alors créer une variable dans le modèle mathématique par objet. Il est commode
+            d'effectuer cette opération dans une méthode et de stocker la valeur dans l'objet.</para>
+        <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+
+class Object {
+private:
+    IloNumVar* x;
+
+public:
+    IloNumVar&amp; getX() { return *x; }
+
+    void createVariables(IloEnv&amp; env) {
+        x = new IloNumVar(env, 0, 1, IloNumVar::Bool, "x" + id);
+    }
+};</programlisting>
+        <programlisting language="java">import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
+import ilog.cplex.IloCplex;
+
+public class Object {
+    private IloIntVar x;
+    public IloIntVar getX() { return x; }
+
+    public void createVariables(IloCplex solver) throws IloException {
+        x = solver.boolVar("x" + id);
+    }
+}</programlisting>
+        <para>Côté sac à dos, il faudra imposer que les objets pris ne dépassent pas la capacité. Pour ce
+            faire, une méthode imposera cette contrainte, elle prendra en argument tous les objets.</para>
+        <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+#include &lt;vector>
+
+class KnapSack {
+public:
+    void addConstraints(IloModel&amp; model, vector&lt;Object*> objects) {
+        IloIntVarArray xs;
+        IloIntArray weights;
+        for (auto object : objects) {
+            xs.add(object->getX());
+            weights.add(object->getWeight());
+        }
+
+        model.add(IloScalProd(weights, xs) &lt;= capacity);
+    }
+};</programlisting>
+        <programlisting language="java">import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
+import ilog.cplex.IloCplex;
+
+public class KnapSack {
+    public void addConstraints(IloCplex solver, Object[] objects) throws IloException {
+        IloIntVar[] xs = new IloIntVar[objects.length];
+        int[] weights = new int[objects.length];
+        for(int i = 0; i &lt; objects.length; ++i) {
+            xs[i] = objects[i].getX();
+            weights[i] = objects[i].getWeight();
+        }
+
+        solver.addLe(solver.scalProd(weights, xs), capacity);
+    }
+}</programlisting>
+        <para>La fonction principale se chargera de créer ces objets, d'instancier le solveur,
+            d'appeler les méthodes pour créer un modèle, puis de le résoudre et d'afficher la
+            solution.</para>
+        <programlisting language="c++">#include &lt;ilcplex/ilocplex.h>
+#include &lt;ilconcert/iloexpression.h>
+#include &lt;ilconcert/ilolinear.h>
+#include &lt;vector>
+
+int main(int argc, char* argv[]) {
+    // Create data.
+    vector&lt;Object*> objects;
+    objects[0] = new Object(1, 12, 5);
+    objects[1] = new Object(2, 25, 9);
+    objects[2] = new Object(3, 10, 3);
+
+    KnapSack sack(30);
+
+    // Initialise solver.
+    IloEnv env;
+    IloModel model(env);
+
+
+    // Fill the model.
+    for (auto o : objects) {
+        o->createVariables(env);
+    }
+    sack.addConstraints(model, objects);
+
+    IloNumVarArray xs;
+    IloIntArray values;
+    for (auto object : objects) {
+        xs.add(object->getX());
+        values.add(object->getValue());
+    }
+    model.add(IloMaximize(env, IloScalProd(xs, values)));
+
+    // Solve it.
+    IloCplex solver(model);
+    solver.solve();
+    solver.exportModel("model.lp");
+    solver.setParam(IloCplex::TiLim, 30);
+
+    // Give the solver one feasible solution (useful in large MIP models).
+    IloNumArray start(env, 3, 1., 0., 1.); 
+    solver.addMIPStart(xs, start, IloCplex::MIPStartAuto, "initial solution");
+
+    // Show the solution.
+    for (auto object : objects) {
+        cout &lt;&lt; "Object " &lt;&lt; object->getId() &lt;&lt; ": " &lt;&lt; ((solver.getValue(object->getX()) > 0.75) ? "taken" : "left");
+    }
+    cout &lt;&lt; "Value: " &lt;&lt; solver.getObjValue();
+}</programlisting>
+        <programlisting language="java">import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
+import ilog.cplex.IloCplex;
+
+public class Main {
+    public static void main(String[] args) throws IloException {
+        // Create data.
+        Object[] objects = new Object[3];
+        objects[0] = new Object(1, 12, 5);
+        objects[1] = new Object(2, 25, 9);
+        objects[2] = new Object(3, 10, 3);
+
+        KnapSack sack = new KnapSack(30);
+
+        // Initialise solver.
+        IloCplex solver = new IloCplex();
+
+        // Fill the model.
+        for(Object o : objects) {
+            o.createVariables(solver);
+        }
+        sack.addConstraints(solver, objects);
+
+        IloIntVar[] xs = new IloIntVar[objects.length];
+        int[] values = new int[objects.length];
+        for(int i = 0; i &lt; objects.length; ++i) {
+            xs[i] = objects[i].getX();
+            values[i] = objects[i].getValue();
+        }
+        solver.addMaximize(solver.scalProd(xs, values));
+
+        // Give the solver one feasible solution (useful in large MIP models).
+        solver.addMIPStart(xs, new double[]{1., 0., 1.}, "initial solution");
+
+        // Solve it.
+        solver.exportModel("model.lp");
+        solver.setParam(IloCplex.DoubleParam.TiLim, 30);
+        solver.solve();
+
+        // Show the solution.
+        for (Object object : objects) {
+            String taken = (solver.getValue(object.getX()) > 0.75) ? "taken" : "left";
+            System.out.println("Object " + object.getId() + ": " + taken);
+        }
+        System.out.println("Value: " + solver.getObjValue());
+    }
+}</programlisting>
+        <note>
+            <para>La méthode <methodname>addMIPStart()</methodname> n'est utile que pour la
+                résolution de problèmes impliquant des nombres entiers (d'où son nom). Elle fournit
+                une solution initiale, faisable ou non, complète ou non, qui peut aider le solveur à
+                démarrer, à trouver une première solution faisable, afin d'accélérer le
+                prétraitement et l'algorithme de séparation et évaluation. Le solveur indiquera,
+                lors de son exécution, quelles solutions initiales ont fourni des solutions et ont
+                donné une première indication sur la valeur de l'objectif. </para>
+            <para>Ce jeu de données peut être déterminé par une connaissance du problème (pour une
+                situation à améliorer, l'actuel fonctionne, il donne donc une solution faisable :
+                pour déterminer un meilleur horaire des trains, l'horaire actuel est déjà connu et
+                fonctionne ; lors de l'ajout de nouveaux trains, la solution optimale pour les
+                trains précédents est connue). </para>
+        </note>
+    </section>
+</article>

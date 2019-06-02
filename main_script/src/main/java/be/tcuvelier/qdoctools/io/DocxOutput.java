@@ -33,8 +33,10 @@ public class DocxOutput {
 //        String test = "synthetic/preformatted";
 //        String test = "synthetic/book";
 //        String test = "synthetic/book_abstract";
+//        String test = "synthetic/formatting_filename_replaceable";
+        String test = "synthetic/xinclude_main";
 
-        String test = "CPLEX"; // TODO: File Name with Replaceable inside. "cplex125.lib"
+//        String test = "CPLEX";
 
         new DocxOutput(MainCommand.toDocxTests + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + test + ".docx");
