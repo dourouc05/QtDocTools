@@ -28,7 +28,7 @@ public enum DocBookFormatting {
 
     // For code readability, store in a list all elements that are interesting for formattings:
     // how to recognise one, its Word style ID, etc. Of course, not all of this makes sense for all formattings.
-    // Thus, the maps predicateToFormatting and docbookTagToStyleID (directly useful) are filled with two sources:
+    // Thus, the maps predicateToFormatting and formattingToStyleID (directly useful) are filled with two sources:
     // the list formattings, and special cases.
 
     public static final List<Triple<DocBookFormatting, String, String>> formattingMonospaced = List.of(
@@ -125,15 +125,15 @@ public enum DocBookFormatting {
     );
 
     public static Map<DocBookFormatting, Predicate<String>> formattingToPredicate; // Filled in the static block.
-
-    public static Map<DocBookFormatting, String> docbookTagToStyleID = Map.ofEntries();
-
+    public static Map<DocBookFormatting, String> formattingToStyleID = Map.ofEntries();
+    public static Map<DocBookFormatting, String> formattingToDocBookTag = Map.ofEntries();
     public static Map<String, String> styleIDToDocBookTag = Map.ofEntries();
 
     static {
         // Make the fields mutable temporarily.
         predicateToFormatting = new HashMap<>(predicateToFormatting);
-        docbookTagToStyleID = new HashMap<>(docbookTagToStyleID);
+        formattingToStyleID = new HashMap<>(formattingToStyleID);
+        formattingToDocBookTag = new HashMap<>(formattingToDocBookTag);
         styleIDToDocBookTag = new HashMap<>(styleIDToDocBookTag);
 
         // Fill them.
@@ -144,13 +144,15 @@ public enum DocBookFormatting {
 
         for (Triple<DocBookFormatting, String, String> t: whole) {
             predicateToFormatting.put(DocBook.tagRecogniser(t.second), t.first);
-            docbookTagToStyleID.put(t.first, t.third);
+            formattingToStyleID.put(t.first, t.third);
+            formattingToDocBookTag.put(t.first, t.second);
             styleIDToDocBookTag.put(t.third, t.second);
         }
 
         // Make them immutable again.
         predicateToFormatting = Map.copyOf(predicateToFormatting);
-        docbookTagToStyleID = Map.copyOf(docbookTagToStyleID);
+        formattingToStyleID = Map.copyOf(formattingToStyleID);
+        formattingToDocBookTag = Map.copyOf(formattingToDocBookTag);
         styleIDToDocBookTag = Map.copyOf(styleIDToDocBookTag);
 
         // Compute the derived maps.
@@ -206,6 +208,12 @@ public enum DocBookFormatting {
                 || formattingToPredicate.get(SUBSCRIPT).test(qName)
                 || formattingToPredicate.get(SUPERSCRIPT).test(qName)
                 || isInlineFormatting(qName);
+    }
+
+    public static boolean isRunFormatting(DocBookFormatting f) {
+        // Formattings that are set through run parameters.
+        return f == EMPHASIS || f == EMPHASIS_BOLD || f == EMPHASIS_UNDERLINE || f == EMPHASIS_STRIKETHROUGH
+                || f == SUPERSCRIPT || f == SUBSCRIPT;
     }
 
     public static boolean isInlineFormatting(String qName) {

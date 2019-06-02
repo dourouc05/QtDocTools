@@ -659,8 +659,8 @@ public class DocxOutputImpl extends DefaultHandler {
                     run.setSubscript(VerticalAlign.SUPERSCRIPT);
                     break;
                 default:
-                    if (DocBookFormatting.docbookTagToStyleID.containsKey(f)) {
-                        run.setStyle(DocBookFormatting.docbookTagToStyleID.get(f));
+                    if (DocBookFormatting.formattingToStyleID.containsKey(f)) {
+                        run.setStyle(DocBookFormatting.formattingToStyleID.get(f));
                     } else {
                         throw new DocxException("formatting not recognised by setRunFormatting: " + f);
                     }
@@ -838,9 +838,18 @@ public class DocxOutputImpl extends DefaultHandler {
         // Inline tags.
         else if (SAXHelpers.isFormatting(qName)) {
             if (currentLevel.peekBlockPreformatted()) {
-                System.err.println(getLocationString() + "Formatting within a preformatted block: " +
+                System.err.println(getLocationString() + "formatting (" + qName + ") within a preformatted block: " +
                         "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
                         "it will do its best, but don't complain if some content is lost during round-tripping.");
+            }
+            if (currentFormatting.size() > 0) {
+                DocBookFormatting topFormatting = currentFormatting.get(currentFormatting.size() - 1);
+                if (! DocBookFormatting.isRunFormatting(topFormatting)) {
+                    System.err.println(getLocationString() + "style-based formatting (" + qName + ") " +
+                            "within a formatting (" + DocBookFormatting.formattingToDocBookTag.get(topFormatting) + "): " +
+                            "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
+                            "it will do its best, but don't complain if some content is lost during round-tripping.");
+                }
             }
 
             try {
@@ -917,7 +926,7 @@ public class DocxOutputImpl extends DefaultHandler {
         // Preformatted areas.
         else if (DocBookBlock.isPreformatted(qName)) {
             if (currentLevel.peekBlockPreformatted()) {
-                System.err.println(getLocationString() + "Preformatted block within a preformatted block: " +
+                System.err.println(getLocationString() + "preformatted block (" + qName + ") within a preformatted block: " +
                         "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
                         "it will do its best, but don't complain if some content is lost during round-tripping.");
             }

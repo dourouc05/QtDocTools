@@ -115,15 +115,17 @@ cplex.solve();</programlisting>
                 infeasible set</foreignphrase>), qu'il présente grâce à <command>display conflict
                 all</command> sous la forme d'un problème de faisabilité reprenant ces quelques
             contraintes (souvent assez peu).</para>
-        <screen><prompt>CPLEX> </prompt>read model.lp
-<computeroutput>Problem 'Problems/model.lp' read.
-Read time = 0.02 sec. (0.55 ticks)</computeroutput>
-<prompt>CPLEX> </prompt>optimize
-<computeroutput>Row 'c4257' infeasible, all entries at implied bounds.
+        <screen>CPLEX> read model.lp
+Problem 'Problems/model.lp' read.
+Read time = 0.02 sec. (0.55 ticks)
+
+CPLEX> optimize
+Row 'c4257' infeasible, all entries at implied bounds.
 Presolve time = 0.00 sec. (0.89 ticks)
-…</computeroutput>
-<prompt>CPLEX> </prompt>conflict
-<computeroutput>Refine conflict on 4884 members...
+…
+
+CPLEX> conflict
+Refine conflict on 4884 members...
 
  Iteration  Max Members  Min Members
          1         4274            0
@@ -134,9 +136,10 @@ Minimal conflict:    7 linear constraint(s)
                      0 lower bound(s)
                      0 upper bound(s)
 Conflict computation time =    0.22 sec.  Iterations = 37
-Deterministic time = 38.98 ticks  (177.99 ticks/sec)</computeroutput>
-<prompt>CPLEX> </prompt>display conflict all
-<computeroutput>Minimize
+Deterministic time = 38.98 ticks  (177.99 ticks/sec)
+
+CPLEX> display conflict all
+Minimize
  obj:
 Subject To
  off_t1_th4:              on_t1_th4 + off_t1_th4  = 1
@@ -157,19 +160,19 @@ Bounds
  0 &lt;= stopping_t0_th4 &lt;= 1
 Binaries
  on_t1_th4  on_t2_th4  starting_t0_th4  off_t1_th4  off_t2_th4
- stopping_t0_th4</computeroutput></screen>
+ stopping_t0_th4</screen>
     </section>
     <section>
         <title>Compilation</title>
         <para>Pour Java, à la compilation, il suffit d'ajouter le fichier JAR de CPLEX. Par exemple,
             sous Windows, en notant <envar>%CPLEX%</envar> le dossier d'installation de CPLEX (par
             exemple, <filename>C:\Program Files (x86)\IBM\ILOG\CPLEX_Studio_126</filename>) :</para>
-        <screen><prompt>> </prompt>javac… -classpath "%CPLEX%\cplex\lib"</screen>
+        <screen>> javac… -classpath "%CPLEX%\cplex\lib"</screen>
         <para>Lors de l'exécution, il faudra, en plus, spécifier l'emplacement de la bibliothèque partagée
             native CPLEX. Puisque l'interaction se fait par JNI, la plateforme de CPLEX utilisée
             doit parfaitement correspondre avec celle de la machine virtuelle Java (si la machine
             virtuelle est en 32 bits, la version 32 bits de CPLEX devra être utilisée). Par exemple :</para>
-        <screen><prompt>> </prompt>java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen>
+        <screen>> java… -classpath "%CPLEX%\cplex\lib" -Djava.library.path="%CPLEX%\cplex\bin\x86_win32"</screen>
         <para>En C++, la situation est similaire : il faut indiquer au compilateur le chemin des
             en-têtes (par exemple, <filename>%CPLEX%\cplex\include</filename> et
                 <filename>%CPLEX%\concert\include</filename>) et des fichiers d'import (par exemple,
