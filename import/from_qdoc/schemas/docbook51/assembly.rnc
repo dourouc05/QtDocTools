@@ -8,9 +8,9 @@ namespace s = "http://purl.oclc.org/dsdl/schematron"
 namespace svg = "http://www.w3.org/2000/svg"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of DocBook Assembly V5.1CR3
+# This file is part of DocBook Assembly V5.1
 # 
-# Copyright 2008-2011 HaL Computer Systems, Inc.,
+# Copyright 2008-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
 # Corporation, Norman Walsh, Sun Microsystems, Inc., and the
 # Organization for the Advancement of Structured Information
@@ -30,10 +30,23 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 # for more information.
 # 
 # Please direct all questions, bug reports, or suggestions for changes
-# to the docbook@lists.oasis-open.org mailing list. For more
+# to the docbook-comment@lists.oasis-open.org mailing list. For more
 # information, see http://www.oasis-open.org/docbook/.
 # 
 # ======================================================================
+
+s:ns [ prefix = "rng" uri = "http://relaxng.org/ns/structure/1.0" ]
+s:ns [ prefix = "s" uri = "http://purl.oclc.org/dsdl/schematron" ]
+s:ns [ prefix = "db" uri = "http://docbook.org/ns/docbook" ]
+s:ns [
+  prefix = "a"
+  uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
+]
+s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
+s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
+s:ns [ prefix = "mml" uri = "http://www.w3.org/1998/Math/MathML" ]
+s:ns [ prefix = "svg" uri = "http://www.w3.org/2000/svg" ]
 div {
   db._any.attribute =
     
@@ -952,7 +965,9 @@ div {
     ## A portion of a document that is isolated from the main narrative flow
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1129,7 +1144,9 @@ div {
     ## A footnote
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1147,7 +1164,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1165,7 +1184,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1183,7 +1204,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1201,7 +1224,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1219,7 +1244,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1237,7 +1264,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1255,7 +1284,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1273,7 +1304,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1291,7 +1324,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1309,7 +1344,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1327,7 +1364,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1345,7 +1384,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1559,7 +1600,9 @@ div {
     ## A list item in a segmented list
     [
       s:pattern [
-        name = "Cardinality of segments and titles"
+        "\x{a}" ~
+        "               "
+        s:title [ "Cardinality of segments and titles" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1699,7 +1742,9 @@ div {
     ## A formal example, with a title
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1717,7 +1762,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1735,7 +1782,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1753,7 +1802,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1873,7 +1924,9 @@ div {
     ## A formal figure, generally an illustration, with a title
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1891,7 +1944,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1909,7 +1964,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1927,7 +1984,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2258,7 +2317,9 @@ div {
     ## A caption
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2276,7 +2337,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2294,7 +2357,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2312,7 +2377,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2330,7 +2397,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2348,7 +2417,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2366,7 +2437,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2384,7 +2457,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2402,7 +2477,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2420,7 +2497,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2438,7 +2517,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3835,8 +3916,7 @@ div {
     & db.common.linking.attributes
   db.subscript =
     
-    ## A subscript (as in H2
-    ## O, the molecular formula for water)
+    ## A subscript (as in H₂O, the molecular formula for water)
     element subscript { db.subscript.attlist, db._text }
 }
 div {
@@ -3847,8 +3927,7 @@ div {
     & db.common.linking.attributes
   db.superscript =
     
-    ## A superscript (as in x2
-    ## , the mathematical notation for x multiplied by itself)
+    ## A superscript (as in x², the mathematical notation for x multiplied by itself)
     element superscript { db.superscript.attlist, db._text }
 }
 div {
@@ -3904,7 +3983,9 @@ div {
     ## A cross reference to a footnote (a footnote mark)
     [
       s:pattern [
-        name = "Footnote reference type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Footnote reference type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4036,7 +4117,7 @@ db.component.contentmodel =
   db.navigation.components*
 db.setindex.components = notAllowed | db.setindex
 db.toc.components = notAllowed | db.toc
-db.set.components = (db.set | db.book)+ | db.article+
+db.set.components = db.set | db.book | db.article
 div {
   db.set.status.attribute = db.status.attribute
   db.set.role.attribute = attribute role { text }
@@ -4054,7 +4135,7 @@ div {
       db.set.attlist,
       db.set.info,
       db.toc.components?,
-      db.set.components,
+      db.set.components+,
       db.setindex.components?
     }
 }
@@ -4338,7 +4419,9 @@ div {
     ## An annotation
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4365,7 +4448,9 @@ db.xlink.extended.type.attribute =
   ## Identifies the XLink extended link type
   [
     s:pattern [
-      name = "XLink extended placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink extended placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -4393,7 +4478,9 @@ db.xlink.locator.type.attribute =
   ## Identifies the XLink locator link type
   [
     s:pattern [
-      name = "XLink locator placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink locator placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -4421,7 +4508,9 @@ db.xlink.arc.type.attribute =
   ## Identifies the XLink arc link type
   [
     s:pattern [
-      name = "XLink arc placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink arc placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -4449,7 +4538,9 @@ db.xlink.resource.type.attribute =
   ## Identifies the XLink resource link type
   [
     s:pattern [
-      name = "XLink resource placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink resource placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -4477,7 +4568,9 @@ db.xlink.title.type.attribute =
   ## Identifies the XLink title link type
   [
     s:pattern [
-      name = "XLink title placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink title placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -5062,7 +5155,9 @@ div {
     ##  to another
     [
       s:pattern [
-        name = "Glosssary 'see' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glosssary 'see' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5099,7 +5194,9 @@ div {
     ## A cross-reference from one glossentry to another
     [
       s:pattern [
-        name = "Glossary 'seealso' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'seealso' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5132,7 +5229,9 @@ div {
     ## The first occurrence of a term
     [
       s:pattern [
-        name = "Glossary 'firstterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'firstterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5165,7 +5264,9 @@ div {
     ## The first occurrence of a term, with limited content
     [
       s:pattern [
-        name = "Glossary 'firstterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'firstterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5198,7 +5299,9 @@ div {
     ## A glossary term
     [
       s:pattern [
-        name = "Glossary 'glossterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'glossterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5231,7 +5334,9 @@ div {
     ## A glossary term
     [
       s:pattern [
-        name = "Glossary 'glossterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'glossterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5306,7 +5411,9 @@ div {
     ## An inline definition of a term
     [
       s:pattern [
-        name = "Glossary term definition constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary term definition constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5647,6 +5754,36 @@ div {
   db.indexterm.endofrange =
     
     ## Identifies the end of a range associated with an indexed term
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Indexterm 'startref' type constraint" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:indexterm[@startref]"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test =
+              "local-name(//*[@xml:id=current()/@startref]) = 'indexterm' and namespace-uri(//*[@xml:id=current()/@startref]) = 'http://docbook.org/ns/docbook'"
+            "@startref on indexterm must point to an indexterm."
+          ]
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test =
+              "//*[@xml:id=current()/@startref]/@class='startofrange'"
+            "@startref on indexterm must point to a startofrange indexterm."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
     element indexterm { db.indexterm.endofrange.attlist, empty }
 }
 div {
@@ -5693,7 +5830,17 @@ div {
 }
 div {
   db.see.role.attribute = attribute role { text }
-  db.see.class.attribute = attribute class { "normal" | "under" }
+  db.see.class.attribute =
+    
+    ## Identifies the class of 'see'
+    attribute class {
+      
+      ## Normal
+      "normal"
+      | 
+        ## See 'under'
+        "under"
+    }
   db.see.attlist =
     db.see.role.attribute?
     & db.see.class.attribute?
@@ -5706,7 +5853,17 @@ div {
 }
 div {
   db.seealso.role.attribute = attribute role { text }
-  db.seealso.class.attribute = attribute class { "normal" | "under" }
+  db.seealso.class.attribute =
+    
+    ## Identifies the class of 'seealso'
+    attribute class {
+      
+      ## Normal
+      "normal"
+      | 
+        ## See 'under'
+        "under"
+    }
   db.seealso.attlist =
     db.seealso.role.attribute?
     & db.seealso.class.attribute?
@@ -6651,7 +6808,9 @@ div {
     ## A cell in a table
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6669,7 +6828,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6805,7 +6966,9 @@ div {
     ## A formal table in a document
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6823,7 +6986,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6841,7 +7006,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7140,7 +7307,9 @@ div {
     ## A formal (captioned) HTML table in a document
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7158,7 +7327,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7176,7 +7347,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7222,7 +7395,9 @@ div {
     ## An HTML table caption
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7240,7 +7415,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7258,7 +7435,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7276,7 +7455,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7294,7 +7475,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7312,7 +7495,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7330,7 +7515,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7348,7 +7535,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7366,7 +7555,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7384,7 +7575,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7402,7 +7595,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7820,7 +8015,9 @@ div {
     ## A displayed mathematical equation
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7838,7 +8035,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7856,7 +8055,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7874,7 +8075,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8919,7 +9122,9 @@ div {
     ## A reference to a fragment of a command synopsis
     [
       s:pattern [
-        name = "Synopsis fragment type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Synopsis fragment type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9482,7 +9687,9 @@ div {
     ## A note of caution
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9500,7 +9707,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9518,7 +9727,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9536,7 +9747,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9554,7 +9767,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9585,7 +9800,9 @@ div {
     ## An admonition set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9603,7 +9820,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9621,7 +9840,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9639,7 +9860,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9657,7 +9880,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9690,7 +9915,9 @@ div {
     ## A message set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9708,7 +9935,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9726,7 +9955,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9744,7 +9975,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9762,7 +9995,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9793,7 +10028,9 @@ div {
     ## A suggestion to the user, set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9811,7 +10048,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9829,7 +10068,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9847,7 +10088,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9865,7 +10108,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9896,7 +10141,9 @@ div {
     ## An admonition set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9914,7 +10161,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9932,7 +10181,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9950,7 +10201,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9968,7 +10221,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10213,7 +10468,9 @@ div {
     ## Defines the hierarchy and relationships for a collection of resources
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10253,7 +10510,9 @@ div {
     ## Contains one or more resource objects that are managed by the assembly
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10326,7 +10585,9 @@ div {
     ## Describes the structure of a document
     [
       s:pattern [
-        name = "Specification of renderas"
+        "\x{a}" ~
+        "               "
+        s:title [ "Specification of renderas" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10334,7 +10595,7 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@renderas and db:output/@renderas"
+            test = "not(@renderas and db:output/@renderas)"
             "The renderas attribute can be specified on either the structure or output, but not both."
           ]
           "\x{a}" ~
@@ -10452,7 +10713,9 @@ div {
     ## A modular component within a structure
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10470,7 +10733,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Specification of renderas"
+        "\x{a}" ~
+        "               "
+        s:title [ "Specification of renderas" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10478,7 +10743,7 @@ div {
           "\x{a}" ~
           "                  "
           s:assert [
-            test = "@renderas and db:output/@renderas"
+            test = "not(@renderas and db:output/@renderas)"
             "The renderas attribute can be specified on either the structure or output, but not both."
           ]
           "\x{a}" ~
@@ -10530,7 +10795,9 @@ div {
     ## Groups relationship elements to define associations between resources
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10610,7 +10877,9 @@ div {
     ## List of transforms for converting from non-DocBook schemas
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [

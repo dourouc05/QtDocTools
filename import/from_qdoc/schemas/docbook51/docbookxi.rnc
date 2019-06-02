@@ -10,9 +10,9 @@ namespace svg = "http://www.w3.org/2000/svg"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of DocBook XInclude V5.1CR3
+# This file is part of DocBook XInclude V5.1
 # 
-# Copyright 1992-2011 HaL Computer Systems, Inc.,
+# Copyright 1992-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
 # Corporation, Norman Walsh, Sun Microsystems, Inc., and the
 # Organization for the Advancement of Structured Information
@@ -32,10 +32,24 @@ namespace xlink = "http://www.w3.org/1999/xlink"
 # for more information.
 # 
 # Please direct all questions, bug reports, or suggestions for changes
-# to the docbook@lists.oasis-open.org mailing list. For more
+# to the docbook-comment@lists.oasis-open.org mailing list. For more
 # information, see http://www.oasis-open.org/docbook/.
 # 
 # ======================================================================
+
+s:ns [ prefix = "rng" uri = "http://relaxng.org/ns/structure/1.0" ]
+s:ns [ prefix = "s" uri = "http://purl.oclc.org/dsdl/schematron" ]
+s:ns [ prefix = "db" uri = "http://docbook.org/ns/docbook" ]
+s:ns [
+  prefix = "a"
+  uri = "http://relaxng.org/ns/compatibility/annotations/1.0"
+]
+s:ns [ prefix = "ctrl" uri = "http://nwalsh.com/xmlns/schema-control/" ]
+s:ns [ prefix = "html" uri = "http://www.w3.org/1999/xhtml" ]
+s:ns [ prefix = "xlink" uri = "http://www.w3.org/1999/xlink" ]
+s:ns [ prefix = "xi" uri = "http://www.w3.org/2001/XInclude" ]
+s:ns [ prefix = "mml" uri = "http://www.w3.org/1998/Math/MathML" ]
+s:ns [ prefix = "svg" uri = "http://www.w3.org/2000/svg" ]
 start =
   (db.set
    | db.book
@@ -939,7 +953,9 @@ div {
     ## A list of operations to be performed in a well-defined sequence
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -980,7 +996,9 @@ div {
     ## A unit of action in a procedure
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1022,7 +1040,9 @@ div {
     ## Alternative steps in a procedure
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1081,7 +1101,9 @@ div {
     ## A portion of a document that is isolated from the main narrative flow
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1099,7 +1121,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1133,7 +1157,9 @@ div {
     ## A summary
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1167,7 +1193,9 @@ div {
     ## A short description or note about a person
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1201,7 +1229,9 @@ div {
     ## A quotation set off from the main text
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1315,7 +1345,9 @@ div {
     ## A short inscription at the beginning of a document or component
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1356,7 +1388,9 @@ div {
     ## A footnote
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1374,7 +1408,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1392,7 +1428,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1410,7 +1448,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1428,7 +1468,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1446,7 +1488,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1464,7 +1508,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1482,7 +1528,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1500,7 +1548,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1518,7 +1568,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1536,7 +1588,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1554,7 +1608,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1572,7 +1628,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1604,7 +1662,9 @@ div {
     ## A paragraph with a title
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1641,7 +1701,9 @@ div {
     ## A paragraph
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1677,7 +1739,9 @@ div {
     ## A paragraph that contains only text and inline markup, no block elements
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1717,7 +1781,9 @@ div {
     ## A list in which each entry is marked with a bullet or other dingbat
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1805,7 +1871,9 @@ div {
     ## A list in which each entry is marked with a sequentially incremented label
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1859,7 +1927,9 @@ div {
     ## A segmented list, a list of sets of elements
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1906,7 +1976,9 @@ div {
     ## A list item in a segmented list
     [
       s:pattern [
-        name = "Cardinality of segments and titles"
+        "\x{a}" ~
+        "               "
+        s:title [ "Cardinality of segments and titles" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -1969,7 +2041,9 @@ div {
     ## An undecorated list of single words or short phrases
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2018,7 +2092,9 @@ div {
     ## A list in which each entry is composed of a set of one or more terms and an associated description
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2086,7 +2162,9 @@ div {
     ## A formal example, with a title
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2104,7 +2182,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2122,7 +2202,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2140,7 +2222,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2158,7 +2242,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2198,7 +2284,9 @@ div {
     ## A displayed example without a title
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2250,7 +2338,9 @@ div {
     ## A block of text in which line breaks and white space are to be reproduced faithfully
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2286,7 +2376,9 @@ div {
     ## Text that a user sees or might see on a computer screen
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2318,7 +2410,9 @@ div {
     ## A representation of what the user sees or might see on a computer screen
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2358,7 +2452,9 @@ div {
     ## A formal figure, generally an illustration, with a title
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2376,7 +2472,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2394,7 +2492,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2412,7 +2512,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2430,7 +2532,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2470,7 +2574,9 @@ div {
     ## A untitled figure
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2510,7 +2616,9 @@ div {
     ## A displayed media object (video, audio, image, etc.)
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2548,7 +2656,9 @@ div {
     ## An inline media object (video, audio, image, and so on)
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2585,7 +2695,9 @@ div {
     ## A wrapper for video data and its associated meta-information
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2619,7 +2731,9 @@ div {
     ## A wrapper for audio data and its associated meta-information
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2658,7 +2772,9 @@ div {
     ## A wrapper for image data and its associated meta-information
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2694,7 +2810,9 @@ div {
     ## A wrapper for a text description of an object and its associated meta-information
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2762,7 +2880,9 @@ div {
     ## Pointer to external video data
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2828,7 +2948,9 @@ div {
     ## Pointer to external audio data
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2890,7 +3012,9 @@ div {
     ## Pointer to external image data
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2927,7 +3051,9 @@ div {
     ## Pointer to external text data
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -2984,7 +3110,9 @@ div {
     ## A caption
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3002,7 +3130,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3020,7 +3150,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3038,7 +3170,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3056,7 +3190,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3074,7 +3210,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3092,7 +3230,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3110,7 +3250,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3128,7 +3270,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3146,7 +3290,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3164,7 +3310,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3182,7 +3330,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3216,7 +3366,9 @@ div {
     ## A real-world address, generally a postal address
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -3942,7 +4094,9 @@ div {
     ## A statement of legal obligations or requirements
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4195,7 +4349,9 @@ div {
     ## A history of the revisions to a document
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4640,8 +4796,7 @@ div {
     & db.common.linking.attributes
   db.subscript =
     
-    ## A subscript (as in H2
-    ## O, the molecular formula for water)
+    ## A subscript (as in H₂O, the molecular formula for water)
     element subscript { db.subscript.attlist, db._text }
 }
 div {
@@ -4652,8 +4807,7 @@ div {
     & db.common.linking.attributes
   db.superscript =
     
-    ## A superscript (as in x2
-    ## , the mathematical notation for x multiplied by itself)
+    ## A superscript (as in x², the mathematical notation for x multiplied by itself)
     element superscript { db.superscript.attlist, db._text }
 }
 div {
@@ -4709,7 +4863,9 @@ div {
     ## A cross reference to a footnote (a footnote mark)
     [
       s:pattern [
-        name = "Footnote reference type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Footnote reference type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4849,9 +5005,7 @@ db.component.contentmodel =
   db.navigation.components*
 db.setindex.components = notAllowed | db.setindex
 db.toc.components = notAllowed | db.toc
-db.set.components =
-  ((db.set | db.book)+ | db.article+)
-  | db.xi.include
+db.set.components = (db.set | db.book | db.article) | db.xi.include
 div {
   db.set.status.attribute = db.status.attribute
   db.set.role.attribute = attribute role { text }
@@ -4867,7 +5021,9 @@ div {
     ## A collection of books
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4889,7 +5045,7 @@ div {
       db.set.attlist,
       db.set.info,
       db.toc.components?,
-      db.set.components,
+      db.set.components+,
       db.setindex.components?
     }
 }
@@ -4910,7 +5066,9 @@ div {
     ## A book
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4945,7 +5103,9 @@ div {
     ## The dedication of a book or other component
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -4982,7 +5142,9 @@ div {
     ## Acknowledgements of a book or other component
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5021,7 +5183,9 @@ div {
     ## Text at the back of a book describing facts about its production
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5062,7 +5226,9 @@ div {
     ## An appendix in a book or article
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5100,7 +5266,9 @@ div {
     ## A chapter, as of a book
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5142,7 +5310,9 @@ div {
     ## A division in a book
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5182,7 +5352,9 @@ div {
     ## Introductory matter preceding the first chapter of a book
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5219,7 +5391,9 @@ div {
     ## An introduction to the contents of a part
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5258,7 +5432,9 @@ div {
     ## A recursive section
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5299,7 +5475,9 @@ div {
     ## A section of a document with no subdivisions
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5367,7 +5545,9 @@ div {
     ## An article
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5414,7 +5594,9 @@ div {
     ## An annotation
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5432,7 +5614,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5459,7 +5643,9 @@ db.xlink.extended.type.attribute =
   ## Identifies the XLink extended link type
   [
     s:pattern [
-      name = "XLink extended placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink extended placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -5487,7 +5673,9 @@ db.xlink.locator.type.attribute =
   ## Identifies the XLink locator link type
   [
     s:pattern [
-      name = "XLink locator placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink locator placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -5515,7 +5703,9 @@ db.xlink.arc.type.attribute =
   ## Identifies the XLink arc link type
   [
     s:pattern [
-      name = "XLink arc placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink arc placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -5543,7 +5733,9 @@ db.xlink.resource.type.attribute =
   ## Identifies the XLink resource link type
   [
     s:pattern [
-      name = "XLink resource placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink resource placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -5571,7 +5763,9 @@ db.xlink.title.type.attribute =
   ## Identifies the XLink title link type
   [
     s:pattern [
-      name = "XLink title placement"
+      "\x{a}" ~
+      "            "
+      s:title [ "XLink title placement" ]
       "\x{a}" ~
       "            "
       s:rule [
@@ -5717,7 +5911,9 @@ div {
     ## A top-level section of document
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5761,7 +5957,9 @@ div {
     ## A subsection within a sect1
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5805,7 +6003,9 @@ div {
     ## A subsection within a sect2
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5849,7 +6049,9 @@ div {
     ## A subsection within a sect3
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5891,7 +6093,9 @@ div {
     ## A subsection within a sect4
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5943,7 +6147,9 @@ div {
     ## A collection of reference entries
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -5983,7 +6189,9 @@ div {
     ## A reference page (originally a UNIX man-style reference page)
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6150,7 +6358,9 @@ div {
     ## A syntactic synopsis of the subject of the reference page
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6190,7 +6400,9 @@ div {
     ## A recursive section in a refentry
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6230,7 +6442,9 @@ div {
     ## A major subsection of a reference entry
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6270,7 +6484,9 @@ div {
     ## A subsection of a refsect1
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6309,7 +6525,9 @@ div {
     ## A subsection of a refsect2
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6349,7 +6567,9 @@ div {
     ## A wrapper for a list of glossary entries
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6432,7 +6652,9 @@ div {
     ##  to another
     [
       s:pattern [
-        name = "Glosssary 'see' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glosssary 'see' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6469,7 +6691,9 @@ div {
     ## A cross-reference from one glossentry to another
     [
       s:pattern [
-        name = "Glossary 'seealso' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'seealso' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6502,7 +6726,9 @@ div {
     ## The first occurrence of a term
     [
       s:pattern [
-        name = "Glossary 'firstterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'firstterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6535,7 +6761,9 @@ div {
     ## The first occurrence of a term, with limited content
     [
       s:pattern [
-        name = "Glossary 'firstterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'firstterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6568,7 +6796,9 @@ div {
     ## A glossary term
     [
       s:pattern [
-        name = "Glossary 'glossterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'glossterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6601,7 +6831,9 @@ div {
     ## A glossary term
     [
       s:pattern [
-        name = "Glossary 'glossterm' type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary 'glossterm' type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6637,7 +6869,9 @@ div {
     ## A glossary
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6678,7 +6912,9 @@ div {
     ## A division in a glossary
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6716,7 +6952,9 @@ div {
     ## An inline definition of a term
     [
       s:pattern [
-        name = "Glossary term definition constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Glossary term definition constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6850,7 +7088,9 @@ div {
     ## A bibliography
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6890,7 +7130,9 @@ div {
     ## A section of a bibliography
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -6927,7 +7169,9 @@ div {
     ## A wrapper for a list of bibliography entries
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7117,6 +7361,36 @@ div {
   db.indexterm.endofrange =
     
     ## Identifies the end of a range associated with an indexed term
+    [
+      s:pattern [
+        "\x{a}" ~
+        "               "
+        s:title [ "Indexterm 'startref' type constraint" ]
+        "\x{a}" ~
+        "               "
+        s:rule [
+          context = "db:indexterm[@startref]"
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test =
+              "local-name(//*[@xml:id=current()/@startref]) = 'indexterm' and namespace-uri(//*[@xml:id=current()/@startref]) = 'http://docbook.org/ns/docbook'"
+            "@startref on indexterm must point to an indexterm."
+          ]
+          "\x{a}" ~
+          "                  "
+          s:assert [
+            test =
+              "//*[@xml:id=current()/@startref]/@class='startofrange'"
+            "@startref on indexterm must point to a startofrange indexterm."
+          ]
+          "\x{a}" ~
+          "               "
+        ]
+        "\x{a}" ~
+        "            "
+      ]
+    ]
     element indexterm { db.indexterm.endofrange.attlist, empty }
 }
 div {
@@ -7163,7 +7437,17 @@ div {
 }
 div {
   db.see.role.attribute = attribute role { text }
-  db.see.class.attribute = attribute class { "normal" | "under" }
+  db.see.class.attribute =
+    
+    ## Identifies the class of 'see'
+    attribute class {
+      
+      ## Normal
+      "normal"
+      | 
+        ## See 'under'
+        "under"
+    }
   db.see.attlist =
     db.see.role.attribute?
     & db.see.class.attribute?
@@ -7176,7 +7460,17 @@ div {
 }
 div {
   db.seealso.role.attribute = attribute role { text }
-  db.seealso.class.attribute = attribute class { "normal" | "under" }
+  db.seealso.class.attribute =
+    
+    ## Identifies the class of 'seealso'
+    attribute class {
+      
+      ## Normal
+      "normal"
+      | 
+        ## See 'under'
+        "under"
+    }
   db.seealso.attlist =
     db.seealso.role.attribute?
     & db.seealso.class.attribute?
@@ -7206,7 +7500,9 @@ div {
     ## An index to a book or part of a book
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7247,7 +7543,9 @@ div {
     ## An index to a set of books
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7287,7 +7585,9 @@ div {
     ## A division in an index
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7401,7 +7701,9 @@ div {
     ## A table of contents
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7440,7 +7742,9 @@ div {
     ## A division in a table of contents
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7490,7 +7794,9 @@ div {
     ## A task to be completed
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7530,7 +7836,9 @@ div {
     ## A summary of a task
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7564,7 +7872,9 @@ div {
     ## The prerequisites for a task
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7600,7 +7910,9 @@ div {
     ## Information related to a task
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7672,7 +7984,9 @@ div {
     ## s
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7725,7 +8039,9 @@ div {
     ## A program listing with associated areas used in callouts
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7832,7 +8148,9 @@ div {
     ## A screen with associated areas used in callouts
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7870,7 +8188,9 @@ div {
     ## A wrapper for an image object with callouts
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -7935,7 +8255,9 @@ div {
     ## A set of EBNF productions
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8049,7 +8371,9 @@ div {
     ## The definition of a constraint in an EBNF production
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8421,7 +8745,9 @@ div {
     ## A cell in a table
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8439,7 +8765,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8575,7 +8903,9 @@ div {
     ## A formal table in a document
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8593,7 +8923,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8611,7 +8943,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8629,7 +8963,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8675,7 +9011,9 @@ div {
     ## A table without a title
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8948,7 +9286,9 @@ div {
     ## A formal (captioned) HTML table in a document
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8966,7 +9306,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -8984,7 +9326,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9002,7 +9346,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9039,7 +9385,9 @@ div {
     ## An HTML table without a title
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9068,7 +9416,9 @@ div {
     ## An HTML table caption
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9086,7 +9436,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9104,7 +9456,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9122,7 +9476,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9140,7 +9496,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9158,7 +9516,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9176,7 +9536,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9194,7 +9556,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9212,7 +9576,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9230,7 +9596,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9248,7 +9616,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9266,7 +9636,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9402,7 +9774,9 @@ div {
     ## A detailed set of messages, usually error messages
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9479,7 +9853,9 @@ div {
     ## A message in a message set
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9513,7 +9889,9 @@ div {
     ## The primary component of a message in a message set 
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9545,7 +9923,9 @@ div {
     ## A subcomponent of a message in a message set
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9577,7 +9957,9 @@ div {
     ## A related component of a message in a message set
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9666,7 +10048,9 @@ div {
     ## Explanatory material relating to a message in a message set
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9715,7 +10099,9 @@ div {
     ## A question-and-answer set
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9752,7 +10138,9 @@ div {
     ## A titled division in a qandaset
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9789,7 +10177,9 @@ div {
     ## A question/answer set within a qandaset
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9867,7 +10257,9 @@ div {
     ## A displayed mathematical equation
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9885,7 +10277,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9903,7 +10297,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9921,7 +10317,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9939,7 +10337,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -9979,7 +10379,9 @@ div {
     ## A displayed mathematical equation without a title
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10059,7 +10461,9 @@ div {
     ## A MathML expression in a media object
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10116,7 +10520,9 @@ div {
     ## An SVG drawing in a media object
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -10932,7 +11338,9 @@ div {
     ## A syntax summary for a software command
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11064,7 +11472,9 @@ div {
     ## A reference to a fragment of a command synopsis
     [
       s:pattern [
-        name = "Synopsis fragment type constraint"
+        "\x{a}" ~
+        "               "
+        s:title [ "Synopsis fragment type constraint" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11121,7 +11531,9 @@ div {
     ## A general-purpose element for representing the syntax of commands or functions
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11154,7 +11566,9 @@ div {
     ## The syntax summary for a function definition
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11190,7 +11604,9 @@ div {
     ## Information supplementing the funcdefs of a funcsynopsis
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11358,7 +11774,9 @@ div {
     ## The syntax summary for a class definition
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11398,7 +11816,9 @@ div {
     ## Information supplementing the contents of a classsynopsis
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11529,7 +11949,9 @@ div {
     ## The name of a field in a class definition
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11581,7 +12003,9 @@ div {
     ## A syntax summary for a constructor
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11619,7 +12043,9 @@ div {
     ## A syntax summary for a destructor
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11657,7 +12083,9 @@ div {
     ## A syntax summary for a method
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11791,7 +12219,9 @@ div {
     ## A literal listing of all or part of a program
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11827,7 +12257,9 @@ div {
     ## A note of caution
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11845,7 +12277,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11863,7 +12297,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11881,7 +12317,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11899,7 +12337,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11917,7 +12357,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11948,7 +12390,9 @@ div {
     ## An admonition set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11966,7 +12410,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -11984,7 +12430,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12002,7 +12450,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12020,7 +12470,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12038,7 +12490,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12071,7 +12525,9 @@ div {
     ## A message set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12089,7 +12545,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12107,7 +12565,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12125,7 +12585,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12143,7 +12605,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12161,7 +12625,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12192,7 +12658,9 @@ div {
     ## A suggestion to the user, set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12210,7 +12678,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12228,7 +12698,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12246,7 +12718,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12264,7 +12738,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12282,7 +12758,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12313,7 +12791,9 @@ div {
     ## An admonition set off from the text
     [
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12331,7 +12811,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12349,7 +12831,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12367,7 +12851,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12385,7 +12871,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Element exclusion"
+        "\x{a}" ~
+        "               "
+        s:title [ "Element exclusion" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12403,7 +12891,9 @@ div {
         "            "
       ]
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [
@@ -12622,7 +13112,9 @@ div {
     ## A modular unit of documentation not part of any particular narrative flow
     [
       s:pattern [
-        name = "Root must have version"
+        "\x{a}" ~
+        "               "
+        rng:title [ "Root must have version" ]
         "\x{a}" ~
         "               "
         s:rule [

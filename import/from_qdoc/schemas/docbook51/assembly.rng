@@ -1,20 +1,9 @@
-<grammar xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:rng="http://relaxng.org/ns/structure/1.0"
-         xmlns:s="http://purl.oclc.org/dsdl/schematron"
-         xmlns:db="http://docbook.org/ns/docbook"
-         xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-         xmlns:xlink="http://www.w3.org/1999/xlink"
-         xmlns:html="http://www.w3.org/1999/xhtml"
-         xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/"
-         xmlns:mml="http://www.w3.org/1998/Math/MathML"
-         xmlns:svg="http://www.w3.org/2000/svg"
-         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
-         ns="http://docbook.org/ns/docbook">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0" xmlns:rng="http://relaxng.org/ns/structure/1.0" xmlns:s="http://purl.oclc.org/dsdl/schematron" xmlns:db="http://docbook.org/ns/docbook" xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns:ctrl="http://nwalsh.com/xmlns/schema-control/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:svg="http://www.w3.org/2000/svg" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" ns="http://docbook.org/ns/docbook">
 
 <!--
-This file is part of DocBook Assembly V5.1CR3
+This file is part of DocBook Assembly V5.1
 
-Copyright 2008-2011 HaL Computer Systems, Inc.,
+Copyright 2008-2015 HaL Computer Systems, Inc.,
 O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
 Corporation, Norman Walsh, Sun Microsystems, Inc., and the
 Organization for the Advancement of Structured Information
@@ -34,12 +23,21 @@ variant of DocBook. See the reference documentation
 for more information.
 
 Please direct all questions, bug reports, or suggestions for changes
-to the docbook@lists.oasis-open.org mailing list. For more
+to the docbook-comment@lists.oasis-open.org mailing list. For more
 information, see http://www.oasis-open.org/docbook/.
 
 ======================================================================
 -->
 
+   <s:ns prefix="rng" uri="http://relaxng.org/ns/structure/1.0"/>
+   <s:ns prefix="s" uri="http://purl.oclc.org/dsdl/schematron"/>
+   <s:ns prefix="db" uri="http://docbook.org/ns/docbook"/>
+   <s:ns prefix="a" uri="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+   <s:ns prefix="ctrl" uri="http://nwalsh.com/xmlns/schema-control/"/>
+   <s:ns prefix="html" uri="http://www.w3.org/1999/xhtml"/>
+   <s:ns prefix="xlink" uri="http://www.w3.org/1999/xlink"/>
+   <s:ns prefix="mml" uri="http://www.w3.org/1998/Math/MathML"/>
+   <s:ns prefix="svg" uri="http://www.w3.org/2000/svg"/>
    <div>
       <define name="db._any.attribute">
          <attribute>
@@ -1885,7 +1883,8 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.sidebar">
          <element name="sidebar">
             <a:documentation>A portion of a document that is isolated from the main narrative flow</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:sidebar">
                   <s:assert test="not(.//db:sidebar)">sidebar must not occur among the children or descendants of sidebar</s:assert>
                </s:rule>
@@ -2196,67 +2195,80 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.footnote">
          <element name="footnote">
             <a:documentation>A footnote</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:footnote)">footnote must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:sidebar)">sidebar must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:task)">task must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:epigraph)">epigraph must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:footnote">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of footnote</s:assert>
                </s:rule>
@@ -2638,7 +2650,8 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.seglistitem">
          <element name="seglistitem">
             <a:documentation>A list item in a segmented list</a:documentation>
-            <s:pattern name="Cardinality of segments and titles">
+            <s:pattern>
+               <s:title>Cardinality of segments and titles</s:title>
                <s:rule context="db:seglistitem">
                   <s:assert test="count(db:seg) = count(../db:segtitle)">The number of seg elements must be the same as the number of segtitle elements in the parent segmentedlist</s:assert>
                </s:rule>
@@ -2909,22 +2922,26 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.example">
          <element name="example">
             <a:documentation>A formal example, with a title</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:example">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of example</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:example">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of example</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:example">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of example</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:example">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of example</s:assert>
                </s:rule>
@@ -3164,22 +3181,26 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.figure">
          <element name="figure">
             <a:documentation>A formal figure, generally an illustration, with a title</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:figure">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of figure</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:figure">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of figure</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:figure">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of figure</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:figure">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of figure</s:assert>
                </s:rule>
@@ -3926,57 +3947,68 @@ information, see http://www.oasis-open.org/docbook/.
       <define name="db.caption">
          <element name="caption">
             <a:documentation>A caption</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:sidebar)">sidebar must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:task)">task must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of caption</s:assert>
                </s:rule>
@@ -6662,8 +6694,7 @@ information, see http://www.oasis-open.org/docbook/.
 
       <define name="db.subscript">
          <element name="subscript">
-            <a:documentation>A subscript (as in H2
-O, the molecular formula for water)</a:documentation>
+            <a:documentation>A subscript (as in H₂O, the molecular formula for water)</a:documentation>
             <ref name="db.subscript.attlist"/>
             <ref name="db._text"/>
          </element>
@@ -6687,8 +6718,7 @@ O, the molecular formula for water)</a:documentation>
 
       <define name="db.superscript">
          <element name="superscript">
-            <a:documentation>A superscript (as in x2
-, the mathematical notation for x multiplied by itself)</a:documentation>
+            <a:documentation>A superscript (as in x², the mathematical notation for x multiplied by itself)</a:documentation>
             <ref name="db.superscript.attlist"/>
             <ref name="db._text"/>
          </element>
@@ -6791,7 +6821,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.footnoteref">
          <element name="footnoteref">
             <a:documentation>A cross reference to a footnote (a footnote mark)</a:documentation>
-            <s:pattern name="Footnote reference type constraint">
+            <s:pattern>
+               <s:title>Footnote reference type constraint</s:title>
                <s:rule context="db:footnoteref">
                   <s:assert test="local-name(//*[@xml:id=current()/@linkend]) = 'footnote' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'">@linkend on footnoteref must point to a footnote.</s:assert>
                </s:rule>
@@ -7139,15 +7170,9 @@ O, the molecular formula for water)</a:documentation>
 
    <define name="db.set.components">
       <choice>
-         <oneOrMore>
-            <choice>
-               <ref name="db.set"/>
-               <ref name="db.book"/>
-            </choice>
-         </oneOrMore>
-         <oneOrMore>
-            <ref name="db.article"/>
-         </oneOrMore>
+         <ref name="db.set"/>
+         <ref name="db.book"/>
+         <ref name="db.article"/>
       </choice>
    </define>
 
@@ -7188,7 +7213,9 @@ O, the molecular formula for water)</a:documentation>
             <optional>
                <ref name="db.toc.components"/>
             </optional>
-            <ref name="db.set.components"/>
+            <oneOrMore>
+               <ref name="db.set.components"/>
+            </oneOrMore>
             <optional>
                <ref name="db.setindex.components"/>
             </optional>
@@ -7858,7 +7885,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.annotation">
          <element name="annotation">
             <a:documentation>An annotation</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:annotation">
                   <s:assert test="not(.//db:annotation)">annotation must not occur among the children or descendants of annotation</s:assert>
                </s:rule>
@@ -7875,7 +7903,8 @@ O, the molecular formula for water)</a:documentation>
    <define name="db.xlink.extended.type.attribute">
       <attribute name="xlink:type">
          <a:documentation>Identifies the XLink extended link type</a:documentation>
-         <s:pattern name="XLink extended placement">
+         <s:pattern>
+            <s:title>XLink extended placement</s:title>
             <s:rule context="*[@xlink:type='extended']">
                <s:assert test="not(parent::*[@xlink:type='extended'])">An XLink extended type element may not occur as the direct child of an XLink extended type element.</s:assert>
             </s:rule>
@@ -7888,7 +7917,8 @@ O, the molecular formula for water)</a:documentation>
    <define name="db.xlink.locator.type.attribute">
       <attribute name="xlink:type">
          <a:documentation>Identifies the XLink locator link type</a:documentation>
-         <s:pattern name="XLink locator placement">
+         <s:pattern>
+            <s:title>XLink locator placement</s:title>
             <s:rule context="*[@xlink:type='locator']">
                <s:assert test="parent::*[@xlink:type='extended']">An XLink locator type element must occur as the direct child of an XLink extended type element.</s:assert>
             </s:rule>
@@ -7901,7 +7931,8 @@ O, the molecular formula for water)</a:documentation>
    <define name="db.xlink.arc.type.attribute">
       <attribute name="xlink:type">
          <a:documentation>Identifies the XLink arc link type</a:documentation>
-         <s:pattern name="XLink arc placement">
+         <s:pattern>
+            <s:title>XLink arc placement</s:title>
             <s:rule context="*[@xlink:type='arc']">
                <s:assert test="parent::*[@xlink:type='extended']">An XLink arc type element must occur as the direct child of an XLink extended type element.</s:assert>
             </s:rule>
@@ -7914,7 +7945,8 @@ O, the molecular formula for water)</a:documentation>
    <define name="db.xlink.resource.type.attribute">
       <attribute name="xlink:type">
          <a:documentation>Identifies the XLink resource link type</a:documentation>
-         <s:pattern name="XLink resource placement">
+         <s:pattern>
+            <s:title>XLink resource placement</s:title>
             <s:rule context="*[@xlink:type='resource']">
                <s:assert test="parent::*[@xlink:type='extended']">An XLink resource type element must occur as the direct child of an XLink extended type element.</s:assert>
             </s:rule>
@@ -7927,7 +7959,8 @@ O, the molecular formula for water)</a:documentation>
    <define name="db.xlink.title.type.attribute">
       <attribute name="xlink:type">
          <a:documentation>Identifies the XLink title link type</a:documentation>
-         <s:pattern name="XLink title placement">
+         <s:pattern>
+            <s:title>XLink title placement</s:title>
             <s:rule context="*[@xlink:type='title']">
                <s:assert test="parent::*[@xlink:type='extended'] or parent::*[@xlink:type='locator'] or parent::*[@xlink:type='arc']">An XLink title type element must occur as the direct child of an XLink extended, locator, or arc type element.</s:assert>
             </s:rule>
@@ -9295,7 +9328,8 @@ O, the molecular formula for water)</a:documentation>
          <element name="glosssee">
             <a:documentation>A cross-reference from one glossentry
  to another</a:documentation>
-            <s:pattern name="Glosssary 'see' type constraint">
+            <s:pattern>
+               <s:title>Glosssary 'see' type constraint</s:title>
                <s:rule context="db:glosssee[@otherterm]">
                   <s:assert test="local-name(//*[@xml:id=current()/@otherterm]) = 'glossentry' and namespace-uri(//*[@xml:id=current()/@otherterm]) = 'http://docbook.org/ns/docbook'">@otherterm on glosssee must point to a glossentry.</s:assert>
                </s:rule>
@@ -9336,7 +9370,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.glossseealso">
          <element name="glossseealso">
             <a:documentation>A cross-reference from one glossentry to another</a:documentation>
-            <s:pattern name="Glossary 'seealso' type constraint">
+            <s:pattern>
+               <s:title>Glossary 'seealso' type constraint</s:title>
                <s:rule context="db:glossseealso[@otherterm]">
                   <s:assert test="local-name(//*[@xml:id=current()/@otherterm]) = 'glossentry' and namespace-uri(//*[@xml:id=current()/@otherterm]) = 'http://docbook.org/ns/docbook'">@otherterm on glossseealso must point to a glossentry.</s:assert>
                </s:rule>
@@ -9368,7 +9403,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.firstterm">
          <element name="firstterm">
             <a:documentation>The first occurrence of a term</a:documentation>
-            <s:pattern name="Glossary 'firstterm' type constraint">
+            <s:pattern>
+               <s:title>Glossary 'firstterm' type constraint</s:title>
                <s:rule context="db:firstterm[@linkend]">
                   <s:assert test="local-name(//*[@xml:id=current()/@linkend]) = 'glossentry' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'">@linkend on firstterm must point to a glossentry.</s:assert>
                </s:rule>
@@ -9400,7 +9436,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db._firstterm">
          <element name="firstterm">
             <a:documentation>The first occurrence of a term, with limited content</a:documentation>
-            <s:pattern name="Glossary 'firstterm' type constraint">
+            <s:pattern>
+               <s:title>Glossary 'firstterm' type constraint</s:title>
                <s:rule context="db:firstterm[@linkend]">
                   <s:assert test="local-name(//*[@xml:id=current()/@linkend]) = 'glossentry' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'">@linkend on firstterm must point to a glossentry.</s:assert>
                </s:rule>
@@ -9430,7 +9467,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.glossterm">
          <element name="glossterm">
             <a:documentation>A glossary term</a:documentation>
-            <s:pattern name="Glossary 'glossterm' type constraint">
+            <s:pattern>
+               <s:title>Glossary 'glossterm' type constraint</s:title>
                <s:rule context="db:glossterm[@linkend]">
                   <s:assert test="local-name(//*[@xml:id=current()/@linkend]) = 'glossentry' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'">@linkend on glossterm must point to a glossentry.</s:assert>
                </s:rule>
@@ -9462,7 +9500,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db._glossterm">
          <element name="glossterm">
             <a:documentation>A glossary term</a:documentation>
-            <s:pattern name="Glossary 'glossterm' type constraint">
+            <s:pattern>
+               <s:title>Glossary 'glossterm' type constraint</s:title>
                <s:rule context="db:glossterm[@linkend]">
                   <s:assert test="local-name(//*[@xml:id=current()/@linkend]) = 'glossentry' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'">@linkend on glossterm must point to a glossentry.</s:assert>
                </s:rule>
@@ -9591,7 +9630,8 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.termdef">
          <element name="termdef">
             <a:documentation>An inline definition of a term</a:documentation>
-            <s:pattern name="Glossary term definition constraint">
+            <s:pattern>
+               <s:title>Glossary term definition constraint</s:title>
                <s:rule context="db:termdef">
                   <s:assert test="count(db:firstterm) = 1">A termdef must contain exactly one firstterm</s:assert>
                </s:rule>
@@ -10258,6 +10298,13 @@ O, the molecular formula for water)</a:documentation>
       <define name="db.indexterm.endofrange">
          <element name="indexterm">
             <a:documentation>Identifies the end of a range associated with an indexed term</a:documentation>
+            <s:pattern>
+               <s:title>Indexterm 'startref' type constraint</s:title>
+               <s:rule context="db:indexterm[@startref]">
+                  <s:assert test="local-name(//*[@xml:id=current()/@startref]) = 'indexterm' and namespace-uri(//*[@xml:id=current()/@startref]) = 'http://docbook.org/ns/docbook'">@startref on indexterm must point to an indexterm.</s:assert>
+                  <s:assert test="//*[@xml:id=current()/@startref]/@class='startofrange'">@startref on indexterm must point to a startofrange indexterm.</s:assert>
+               </s:rule>
+            </s:pattern>
             <ref name="db.indexterm.endofrange.attlist"/>
             <empty/>
          </element>
@@ -10368,9 +10415,12 @@ O, the molecular formula for water)</a:documentation>
 
       <define name="db.see.class.attribute">
          <attribute name="class">
+            <a:documentation>Identifies the class of 'see'</a:documentation>
             <choice>
                <value>normal</value>
+               <a:documentation>Normal</a:documentation>
                <value>under</value>
+               <a:documentation>See 'under'</a:documentation>
             </choice>
          </attribute>
       </define>
@@ -10406,9 +10456,12 @@ O, the molecular formula for water)</a:documentation>
 
       <define name="db.seealso.class.attribute">
          <attribute name="class">
+            <a:documentation>Identifies the class of 'seealso'</a:documentation>
             <choice>
                <value>normal</value>
+               <a:documentation>Normal</a:documentation>
                <value>under</value>
+               <a:documentation>See 'under'</a:documentation>
             </choice>
          </attribute>
       </define>
@@ -12303,12 +12356,14 @@ where the nonterminal
       <define name="db.entry">
          <element name="entry">
             <a:documentation>A cell in a table</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:entry">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of entry</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:entry">
                   <s:assert test="not(.//db:informaltable)">informaltable must not occur among the children or descendants of entry</s:assert>
                </s:rule>
@@ -12564,17 +12619,20 @@ where the nonterminal
       <define name="db.cals.table">
          <element name="table">
             <a:documentation>A formal table in a document</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of table</s:assert>
                </s:rule>
@@ -13085,17 +13143,20 @@ where the nonterminal
       <define name="db.html.table">
          <element name="table">
             <a:documentation>A formal (captioned) HTML table in a document</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of table</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:table">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of table</s:assert>
                </s:rule>
@@ -13157,57 +13218,68 @@ where the nonterminal
       <define name="db.html.caption">
          <element name="caption">
             <a:documentation>An HTML table caption</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:sidebar)">sidebar must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:task)">task must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of caption</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caption">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of caption</s:assert>
                </s:rule>
@@ -14116,22 +14188,26 @@ where the nonterminal
       <define name="db.equation">
          <element name="equation">
             <a:documentation>A displayed mathematical equation</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:equation">
                   <s:assert test="not(.//db:example)">example must not occur among the children or descendants of equation</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:equation">
                   <s:assert test="not(.//db:figure)">figure must not occur among the children or descendants of equation</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:equation">
                   <s:assert test="not(.//db:table)">table must not occur among the children or descendants of equation</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:equation">
                   <s:assert test="not(.//db:equation)">equation must not occur among the children or descendants of equation</s:assert>
                </s:rule>
@@ -15965,7 +16041,8 @@ where the nonterminal
       <define name="db.synopfragmentref">
          <element name="synopfragmentref">
             <a:documentation>A reference to a fragment of a command synopsis</a:documentation>
-            <s:pattern name="Synopsis fragment type constraint">
+            <s:pattern>
+               <s:title>Synopsis fragment type constraint</s:title>
                <s:rule context="db:synopfragmentref">
                   <s:assert test="local-name(//*[@xml:id=current()/@linkend]) = 'synopfragment' and namespace-uri(//*[@xml:id=current()/@linkend]) = 'http://docbook.org/ns/docbook'">@linkend on synopfragmentref must point to a synopfragment.</s:assert>
                </s:rule>
@@ -17127,27 +17204,32 @@ where the nonterminal
       <define name="db.caution">
          <element name="caution">
             <a:documentation>A note of caution</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of caution</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of caution</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of caution</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of caution</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:caution">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of caution</s:assert>
                </s:rule>
@@ -17176,27 +17258,32 @@ where the nonterminal
       <define name="db.important">
          <element name="important">
             <a:documentation>An admonition set off from the text</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of important</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of important</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of important</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of important</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:important">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of important</s:assert>
                </s:rule>
@@ -17225,27 +17312,32 @@ where the nonterminal
       <define name="db.note">
          <element name="note">
             <a:documentation>A message set off from the text</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of note</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of note</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of note</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of note</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:note">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of note</s:assert>
                </s:rule>
@@ -17274,27 +17366,32 @@ where the nonterminal
       <define name="db.tip">
          <element name="tip">
             <a:documentation>A suggestion to the user, set off from the text</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of tip</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of tip</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of tip</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of tip</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:tip">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of tip</s:assert>
                </s:rule>
@@ -17323,27 +17420,32 @@ where the nonterminal
       <define name="db.warning">
          <element name="warning">
             <a:documentation>An admonition set off from the text</a:documentation>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:caution)">caution must not occur among the children or descendants of warning</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:important)">important must not occur among the children or descendants of warning</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:note)">note must not occur among the children or descendants of warning</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:tip)">tip must not occur among the children or descendants of warning</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Element exclusion">
+            <s:pattern>
+               <s:title>Element exclusion</s:title>
                <s:rule context="db:warning">
                   <s:assert test="not(.//db:warning)">warning must not occur among the children or descendants of warning</s:assert>
                </s:rule>
@@ -17740,7 +17842,8 @@ where the nonterminal
       <define name="db.assembly">
          <element name="assembly">
             <a:documentation>Defines the hierarchy and relationships for a collection of resources</a:documentation>
-            <s:pattern name="Root must have version">
+            <s:pattern>
+               <title>Root must have version</title>
                <s:rule context="/db:assembly">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
                </s:rule>
@@ -17791,7 +17894,8 @@ where the nonterminal
       <define name="db.resources">
          <element name="resources">
             <a:documentation>Contains one or more resource objects that are managed by the assembly</a:documentation>
-            <s:pattern name="Root must have version">
+            <s:pattern>
+               <title>Root must have version</title>
                <s:rule context="/db:resources">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
                </s:rule>
@@ -17915,9 +18019,10 @@ where the nonterminal
       <define name="db.structure">
          <element name="structure">
             <a:documentation>Describes the structure of a document</a:documentation>
-            <s:pattern name="Specification of renderas">
+            <s:pattern>
+               <s:title>Specification of renderas</s:title>
                <s:rule context="db:structure">
-                  <s:assert test="@renderas and db:output/@renderas">The renderas attribute can be specified on either the structure or output, but not both.</s:assert>
+                  <s:assert test="not(@renderas and db:output/@renderas)">The renderas attribute can be specified on either the structure or output, but not both.</s:assert>
                </s:rule>
             </s:pattern>
             <ref name="db.structure.attlist"/>
@@ -18152,14 +18257,16 @@ where the nonterminal
       <define name="db.module">
          <element name="module">
             <a:documentation>A modular component within a structure</a:documentation>
-            <s:pattern name="Root must have version">
+            <s:pattern>
+               <title>Root must have version</title>
                <s:rule context="/db:module">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
                </s:rule>
             </s:pattern>
-            <s:pattern name="Specification of renderas">
+            <s:pattern>
+               <s:title>Specification of renderas</s:title>
                <s:rule context="db:module">
-                  <s:assert test="@renderas and db:output/@renderas">The renderas attribute can be specified on either the structure or output, but not both.</s:assert>
+                  <s:assert test="not(@renderas and db:output/@renderas)">The renderas attribute can be specified on either the structure or output, but not both.</s:assert>
                </s:rule>
             </s:pattern>
             <ref name="db.module.attlist"/>
@@ -18260,7 +18367,8 @@ where the nonterminal
       <define name="db.relationships">
          <element name="relationships">
             <a:documentation>Groups relationship elements to define associations between resources</a:documentation>
-            <s:pattern name="Root must have version">
+            <s:pattern>
+               <title>Root must have version</title>
                <s:rule context="/db:relationships">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
                </s:rule>
@@ -18399,7 +18507,8 @@ where the nonterminal
       <define name="db.transforms">
          <element name="transforms">
             <a:documentation>List of transforms for converting from non-DocBook schemas</a:documentation>
-            <s:pattern name="Root must have version">
+            <s:pattern>
+               <title>Root must have version</title>
                <s:rule context="/db:transforms">
                   <s:assert test="@version">If this element is the root element, it must have a version attribute.</s:assert>
                </s:rule>
