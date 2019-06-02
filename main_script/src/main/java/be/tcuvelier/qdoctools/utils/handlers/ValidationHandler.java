@@ -1,6 +1,5 @@
 package be.tcuvelier.qdoctools.utils.handlers;
 
-import com.thaiopensource.relaxng.jaxp.CompactSyntaxSchemaFactory;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -41,16 +40,14 @@ public class ValidationHandler {
 
     public static Schema loadRNGSchema(String rng) throws SAXException {
         try {
-            return unsafeLoadRNGSchema(rng);
-        } catch (SAXException e) {
-            // Try a second time, forcing to load Jing.
+            return loadSchema(rng, XMLConstants.RELAXNG_NS_URI);
+        } catch (IllegalArgumentException e) {
+            // Try a second time, forcing to load Jing. In the case it is not possible to load a schema of the asked
+            // format, an IllegalArgumentException is thrown:
+            // No SchemaFactory that implements the schema language specified by: http://relaxng.org/ns/structure/1.0 could be loaded
             loadJing();
-            return unsafeLoadRNGSchema(rng);
+            return loadSchema(rng, XMLConstants.RELAXNG_NS_URI);
         }
-    }
-
-    private static Schema unsafeLoadRNGSchema(String rng) throws SAXException {
-        return loadSchema(rng, XMLConstants.RELAXNG_NS_URI);
     }
 
     public static Schema loadXSDSchema(String xsd) throws SAXException {

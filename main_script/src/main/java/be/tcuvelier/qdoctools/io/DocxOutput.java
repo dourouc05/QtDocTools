@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.utils.handlers.ValidationHandler;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.xml.sax.SAXException;
 
@@ -33,7 +34,7 @@ public class DocxOutput {
 //        String test = "synthetic/book";
 //        String test = "synthetic/book_abstract";
 
-        String test = "CPLEX";
+        String test = "CPLEX"; // TODO: File Name with Replaceable inside. "cplex125.lib"
 
         new DocxOutput(MainCommand.toDocxTests + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + test + ".docx");
@@ -53,7 +54,12 @@ public class DocxOutput {
 
     @SuppressWarnings("WeakerAccess")
     public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException {
-        SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+        SAXParserFactory spf = SAXParserFactory.newInstance();
+        spf.setNamespaceAware(true);
+        spf.setValidating(true);
+        spf.setSchema(ValidationHandler.loadRNGSchema(MainCommand.docBookRNGPath));
+        SAXParser saxParser = spf.newSAXParser();
+
         DocxOutputImpl handler = new DocxOutputImpl(Paths.get(input).getParent());
         saxParser.parse(new File(input), handler);
         return handler.doc;

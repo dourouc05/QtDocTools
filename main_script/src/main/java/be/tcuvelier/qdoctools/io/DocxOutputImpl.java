@@ -1280,6 +1280,30 @@ public class DocxOutputImpl extends DefaultHandler {
         // There might be return instructions in the long switch.
     }
 
+//    @Override
+//    public void ignorableWhitespace(char[] ch, int start, int length) {
+//        // Line feeds may create problems: if a tag starts on a new line, all the space between the last word and
+//        // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
+//        // but only if the previous run does not end with white space.
+//        if (length > 0 && paragraph != null && run != null) {
+//            // Find the identifier for this run.
+//            int pos = -1;
+//            List<XWPFRun> runs = paragraph.getRuns();
+//            for (int i = 0; i < runs.size(); ++i) {
+//                if (runs.get(i).equals(run)) {
+//                    pos = i;
+//                    break;
+//                }
+//            }
+//
+//            // Conditionally add some white space.
+//            if (pos > 0 && ! runs.get(pos - 1).text().endsWith(" ")) {
+//                run.setText(" ");
+//                run = paragraph.createRun();
+//            }
+//        }
+//    }
+
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         // How to deal with white space? This is a tricky question...
@@ -1338,11 +1362,9 @@ public class DocxOutputImpl extends DefaultHandler {
                 content = content.replace("  ", " ");
             }
 
-            // If the previous run ends with white space, as it is not relevant in this run, remove it from
-            // the beginning of this run (i.e. trim left).
+            // Find the identifier for this run.
+            int pos = -1;
             {
-                // Find the previous run.
-                int pos = -1;
                 List<XWPFRun> runs = paragraph.getRuns();
                 for (int i = 0; i < runs.size(); ++i) {
                     if (runs.get(i).equals(run)) {
@@ -1350,14 +1372,28 @@ public class DocxOutputImpl extends DefaultHandler {
                         break;
                     }
                 }
+            }
 
-                // Apply the condition on the previous run.
-                if (pos >= 0) {
-                    XWPFRun previous = paragraph.getRuns().get(pos);
+            // If this is the first run of the paragraph, white space at the beginning is not important.
+            if (pos == 0) {
+                content = content.replaceAll("^\\s*", ""); // Trim left.
+            }
+
+            // Do not test if this is the last run of the paragraph: as it is still being built, it will obviously
+            // always be the last one. Caveat: might leave one white space character at the end of a paragraph.
+            // That's not really a problem, as these spaces do not change the aspect of the document (unlike the first
+            // character of a line).
+
+            // If the previous run ends with white space, as it is not relevant in this run, remove it from
+            // the beginning of this run (i.e. trim left).
+            {
+                int prevPos = pos - 1;
+                if (prevPos >= 0) {
+                    XWPFRun previous = paragraph.getRuns().get(prevPos);
                     String prevText = previous.text();
 
                     if (prevText.endsWith(" ")) {
-                        content = content.replaceAll("^\\s*", "");
+                        content = content.replaceAll("^\\s*", ""); // Trim left.
                     }
                 }
             }
