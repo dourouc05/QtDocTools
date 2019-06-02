@@ -28,7 +28,8 @@ public class DocxOutputImpl extends DefaultHandler {
         ROOT_ARTICLE, ROOT_ARTICLE_INFO, ROOT_BOOK, ROOT_BOOK_INFO, PART, PART_INFO, CHAPTER, CHAPTER_INFO,
         SECTION, SECTION_INFO,
         TABLE,
-        ITEMIZED_LIST, ORDERED_LIST, SEGMENTED_LIST, SEGMENTED_LIST_TITLE, VARIABLE_LIST
+        ITEMIZED_LIST, ORDERED_LIST, SEGMENTED_LIST, SEGMENTED_LIST_TITLE, VARIABLE_LIST,
+        BLOCK_PREFORMATTED
     }
 
     /**
@@ -115,6 +116,10 @@ public class DocxOutputImpl extends DefaultHandler {
 
         boolean peekSectionInfo() {
             return peek() == Level.SECTION_INFO;
+        }
+
+        boolean peekBlockPreformatted() {
+            return peek() == Level.BLOCK_PREFORMATTED;
         }
 
         boolean peekTable() {
@@ -327,6 +332,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private XWPFRun run;
     private String paragraphStyle = "Normal";
     private boolean isLineFeedImportant = false;
+    private boolean justAddedWhiteSpace = false;
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
@@ -598,7 +604,7 @@ public class DocxOutputImpl extends DefaultHandler {
     }
 
     private String getLocationString() {
-        return locator.getSystemId() + " line " + locator.getLineNumber() + ", " +
+        return locator.getSystemId() + ", line " + locator.getLineNumber() + ", " +
                 "column " + locator.getColumnNumber() + ": ";
     }
 
@@ -831,6 +837,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Inline tags.
         else if (SAXHelpers.isFormatting(qName)) {
+            if (currentLevel.peekBlockPreformatted()) {
+                System.err.println(getLocationString() + "Formatting within a preformatted block: " +
+                        "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
+                        "it will do its best, but don't complain if some content is lost during round-tripping.");
+            }
+
             try {
                 currentFormatting.add(DocBookFormatting.tagToFormatting(qName, attributes));
             } catch (IllegalArgumentException e) {
@@ -904,6 +916,14 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Preformatted areas.
         else if (DocBookBlock.isPreformatted(qName)) {
+            if (currentLevel.peekBlockPreformatted()) {
+                System.err.println(getLocationString() + "Preformatted block within a preformatted block: " +
+                        "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
+                        "it will do its best, but don't complain if some content is lost during round-tripping.");
+            }
+
+            currentLevel.push(Level.BLOCK_PREFORMATTED);
+
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
             paragraph = doc.createParagraph();
@@ -1184,10 +1204,11 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Preformatted areas.
-        else if (SAXHelpers.isProgramListingTag(qName) || SAXHelpers.isScreenTag(qName)
-                || SAXHelpers.isSynopsisTag(qName) || SAXHelpers.isLiteralLayoutTag(qName)) {
+        else if (DocBookBlock.isPreformatted(qName)) {
             restoreParagraphStyle();
             ensureNoTextAllowed();
+
+            currentLevel.pop(Level.BLOCK_PREFORMATTED);
 
             isLineFeedImportant = false;
         }
@@ -1281,30 +1302,6 @@ public class DocxOutputImpl extends DefaultHandler {
     }
 
     @Override
-    public void ignorableWhitespace(char[] ch, int start, int length) {
-        // Line feeds may create problems: if a tag starts on a new line, all the space between the last word and
-        // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
-        // but only if the previous run does not end with white space.
-        if (length > 0 && paragraph != null && run != null) {
-            // Find the identifier for this run.
-            int pos = -1;
-            List<XWPFRun> runs = paragraph.getRuns();
-            for (int i = 0; i < runs.size(); ++i) {
-                if (runs.get(i).equals(run)) {
-                    pos = i;
-                    break;
-                }
-            }
-
-            // Conditionally add some white space.
-            if (pos > 0 && ! runs.get(pos - 1).text().endsWith(" ")) {
-                run.setText(" ");
-                run = paragraph.createRun();
-            }
-        }
-    }
-
-    @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         // How to deal with white space? This is a tricky question...
         // Don't trim this string, as the series of runs might require those spaces to be kept. Real-life example
@@ -1384,6 +1381,18 @@ public class DocxOutputImpl extends DefaultHandler {
             // That's not really a problem, as these spaces do not change the aspect of the document (unlike the first
             // character of a line).
 
+            // Line feeds may create problems: if a tag starts on a new line, all the space between the last word and
+            // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
+            // but only if the previous run does not end with white space. If validation worked, then
+            // ignorableWhitespace could be used to deal with this case, but unfortunately it does not.
+            if (! content.endsWith(" ")) {
+                // Heuristic to decide when to append a space and when to avoid doing this processing.
+                if (! content.endsWith("(")) {
+                    content += " ";
+                    justAddedWhiteSpace = true;
+                }
+            }
+
             // If the previous run ends with white space, as it is not relevant in this run, remove it from
             // the beginning of this run (i.e. trim left).
             {
@@ -1394,6 +1403,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
                     if (prevText.endsWith(" ")) {
                         content = content.replaceAll("^\\s*", ""); // Trim left.
+                    }
+
+                    // Sometimes undo what the previous step did (justAddedWhiteSpace == true).
+                    if (justAddedWhiteSpace && prevText.endsWith(")")) {
+                        prevText = prevText.substring(0, prevText.length() - 2);
+                        previous.setText(prevText);
                     }
                 }
             }
