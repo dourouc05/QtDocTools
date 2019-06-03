@@ -33,8 +33,8 @@ public class DocxOutput {
 //        String test = "synthetic/preformatted";
 //        String test = "synthetic/book";
 //        String test = "synthetic/book_abstract";
-//        String test = "synthetic/formatting_filename_replaceable";
-        String test = "synthetic/xinclude_main";
+        String test = "synthetic/formatting_filename_replaceable";
+//        String test = "synthetic/xinclude_main";
 
 //        String test = "CPLEX";
 

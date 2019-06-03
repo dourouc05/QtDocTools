@@ -858,7 +858,10 @@ public class DocxOutputImpl extends DefaultHandler {
             }
             if (currentFormatting.size() > 0) {
                 DocBookFormatting topFormatting = currentFormatting.get(currentFormatting.size() - 1);
-                if (! DocBookFormatting.isRunFormatting(topFormatting)) {
+                if (! DocBookFormatting.isRunFormatting(topFormatting)
+                        && ! (topFormatting.equals(DocBookFormatting.FILE_NAME) // Exception: filename + replaceable.
+                            && DocBookFormatting.formattingToPredicate.get(DocBookFormatting.REPLACEABLE).test(qName))
+                ) {
                     System.err.println(getLocationString() + "style-based formatting (" + qName + ") " +
                             "within a formatting (" + DocBookFormatting.formattingToDocBookTag.get(topFormatting) + "): " +
                             "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
@@ -1318,7 +1321,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Catch-all.
         else {
-            throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek());
+            throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek() + ".");
         }
 
         // There might be return instructions in the long switch.
@@ -1334,6 +1337,12 @@ public class DocxOutputImpl extends DefaultHandler {
         // - " n'est utile que" -- useful space at the beginning
         // However, when having line feeds,
 
+        // Some consistency checks.
+        if (run != null && currentFormatting.size() == 0 && run.getCTR().getRPr() == null) {
+            throw new DocxException("assertion failed: this run should have some formatting, but has no RPr.");
+        }
+
+        // Start processing the characters.
         String content = new String(ch, start, length);
 
         // This function is called for anything that is not a tag, including whitespace (nothing to do on it).
