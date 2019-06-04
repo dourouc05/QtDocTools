@@ -1199,6 +1199,7 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (DocBookFormatting.isRunFormatting(qName)) {
             currentFormatting.remove(currentFormatting.size() - 1);
             run = paragraph.createRun();
+            setRunFormatting();
         } else if (SAXHelpers.isLinkTag(qName)) {
             // Create a new run, so that the new text is not within the same run.
             run = paragraph.createRun();
@@ -1338,7 +1339,7 @@ public class DocxOutputImpl extends DefaultHandler {
         // However, when having line feeds,
 
         // Some consistency checks.
-        if (run != null && currentFormatting.size() == 0 && run.getCTR().getRPr() == null) {
+        if (run != null && currentFormatting.size() > 0 && run.getCTR().getRPr() == null) {
             throw new DocxException("assertion failed: this run should have some formatting, but has no RPr.");
         }
 
