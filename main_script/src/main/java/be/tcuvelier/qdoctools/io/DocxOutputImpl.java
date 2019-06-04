@@ -454,15 +454,21 @@ public class DocxOutputImpl extends DefaultHandler {
 
         private XWPFHyperlinkRun createHyperlinkRun(String uri) {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
+            // https://github.com/apache/poi/pull/153
+            // Create a relationship ID for this link.
             String rId = paragraph.getPart().getPackagePart().addExternalRelationship(
                     uri, XWPFRelation.HYPERLINK.getRelation()
             ).getId();
 
+            // Create the run.
             CTHyperlink ctHyperLink = paragraph.getCTP().addNewHyperlink();
             ctHyperLink.setId(rId);
             ctHyperLink.addNewR();
 
-            return new XWPFHyperlinkRun(ctHyperLink, ctHyperLink.getRArray(0), paragraph);
+            // Append this run to the paragraph.
+            XWPFHyperlinkRun link = new XWPFHyperlinkRun(ctHyperLink, ctHyperLink.getRArray(0), paragraph);
+            paragraph.addRun(link);
+            return link;
         }
 
         private void createImage(Attributes attributes) throws SAXException {
