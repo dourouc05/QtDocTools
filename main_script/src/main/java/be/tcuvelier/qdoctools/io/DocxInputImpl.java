@@ -140,7 +140,8 @@ public class DocxInputImpl {
 
             // First, handle numbered paragraphs. They mostly indicate lists (or this is an external document, and no
             // assumption should be made -- it could very well be a heading).
-            if (p.getNumID() != null && (p.getStyleID() == null || p.getStyleID().equals("Normal"))) {
+            if (p.getNumID() != null &&
+                    (p.getStyleID() == null || p.getStyleID().equals("Normal") || p.getStyleID().equals("ListParagraph"))) {
                 visitListItem(p);
                 return;
             }
@@ -188,6 +189,8 @@ public class DocxInputImpl {
                 case "Normal": // The case with no style ID is already handled.
                     visitNormalParagraph(p);
                     return;
+                case "ListParagraph":
+                    throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
                 default:
                     // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
                     System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
@@ -435,7 +438,7 @@ public class DocxInputImpl {
         List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
 
         boolean isLastItem = false;
-        if (pos >= paragraphs.size()) {
+        if (pos + 1 >= paragraphs.size()) {
             isLastItem = true;
         } else {
             XWPFParagraph nextP = paragraphs.get(pos + 1);
