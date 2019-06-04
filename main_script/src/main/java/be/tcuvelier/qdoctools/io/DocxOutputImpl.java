@@ -352,8 +352,6 @@ public class DocxOutputImpl extends DefaultHandler {
     private int paragraphNumber = -1;
     private XWPFRun run;
     private String paragraphStyle = "Normal";
-    private boolean isLineFeedImportant = false;
-    private boolean justAddedWhiteSpace = false;
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
@@ -1017,7 +1015,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
             run = paragraph.createRun();
 
-            isLineFeedImportant = true;
         }
 
         // Media tags: for now, only images are implemented.
@@ -1276,7 +1273,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
             currentLevel.pop(Level.BLOCK_PREFORMATTED);
 
-            isLineFeedImportant = false;
         }
 
         // Media: nothing to do.
@@ -1381,7 +1377,7 @@ public class DocxOutputImpl extends DefaultHandler {
         String content = new String(ch, start, length);
 
         // This function is called for anything that is not a tag, including whitespace (nothing to do on it).
-        if (content.length() == 0 || content.replaceAll("(\\s|\n)+", "").length() == 0) {
+        if (content.length() == 0 || content.replaceAll("(\\s|\r|\n)+", "").length() == 0) {
             return;
         }
 
@@ -1404,12 +1400,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Line feeds are not well understood by setText: they should be replaced by a series of runs.
         // This is only done in environments where line feeds must be reflected in DocBook.
-        if (isLineFeedImportant) {
-            if (content.contains("\n")) {
-                String[] lines = content.split("\n");
+        if (currentLevel.peekBlockPreformatted()) {
+            if (content.contains("\n") || content.contains("\r")) {
+                String[] lines = content.split("([\n\r])+");
                 boolean firstLine = true;
                 for (String line : lines) {
-                    if (!firstLine) {
+                    if (! firstLine) {
                         run.addBreak();
                     }
 
@@ -1421,7 +1417,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
         } else {
             // White space is not important, get rid of (most of) it.
-            content = content.replace("\n", " ");
+            content = content.replaceAll("[\n\r]", " ");
             while (content.contains("  ")) {
                 content = content.replace("  ", " ");
             }

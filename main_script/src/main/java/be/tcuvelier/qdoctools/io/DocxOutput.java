@@ -1,7 +1,6 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
-import be.tcuvelier.qdoctools.utils.handlers.ValidationHandler;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.xml.sax.SAXException;
 
@@ -36,9 +35,9 @@ public class DocxOutput {
 //        String test = "synthetic/book_abstract";
 //        String test = "synthetic/formatting_filename_replaceable";
 //        String test = "synthetic/xinclude_main";
-        String test = "synthetic/link_spacing";
+//        String test = "synthetic/link_spacing";
 
-//        String test = "CPLEX";
+        String test = "CPLEX";
 
         new DocxOutput(MainCommand.toDocxTests + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + test + ".docx");
