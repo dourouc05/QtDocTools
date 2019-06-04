@@ -44,13 +44,22 @@ public class DocxOutputImpl extends DefaultHandler {
         // the values of Level.
 
         private Deque<Level> levels = new ArrayDeque<>();
+        private int listDepth = 0;
 
         void push(Level l) {
             levels.push(l);
+
+            if (l == Level.ITEMIZED_LIST || l == Level.ORDERED_LIST) {
+                listDepth += 1;
+            }
         }
 
         private void pop() {
-            levels.pop();
+            Level l = levels.pop();
+
+            if (l == Level.ITEMIZED_LIST || l == Level.ORDERED_LIST) {
+                listDepth -= 1;
+            }
         }
 
         boolean pop(Level l) {
@@ -127,7 +136,19 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         boolean peekList() {
-            return peek() == Level.ITEMIZED_LIST || peek() == Level.ORDERED_LIST;
+            return peekItemizedList() || peekOrderedList();
+        }
+
+        boolean peekItemizedList() {
+            return peek() == Level.ITEMIZED_LIST;
+        }
+
+        boolean peekOrderedList() {
+            return peek() == Level.ORDERED_LIST;
+        }
+
+        int countListDepth() {
+            return listDepth;
         }
 
         @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -336,7 +357,6 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
-    private int numberingItemNumber = -1; // TODO: remove this field? Is it really useful? Or keep it "just in case"?
     private int numberingItemParagraphNumber = -1;
     private List<String> segmentedListHeaders; // TODO: Limitation for ease of implementation: no styling stored in this list, just raw headers.
     private int segmentNumber = -1;
@@ -827,9 +847,10 @@ public class DocxOutputImpl extends DefaultHandler {
 
                 if (currentLevel.peekList()) {
                     paragraph.setNumID(numbering);
-                    CTDecimalNumber zero = CTDecimalNumber.Factory.newInstance();
-                    zero.setVal(BigInteger.ZERO);
-                    paragraph.getCTP().getPPr().getNumPr().setIlvl(zero);
+
+                    CTDecimalNumber depth = CTDecimalNumber.Factory.newInstance();
+                    depth.setVal(BigInteger.valueOf(currentLevel.countListDepth() - 1));
+                    paragraph.getCTP().getPPr().getNumPr().setIlvl(depth);
                     // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on GitHub too?
 
                     // If within a list, this must be a new item (only one paragraph allowed per item).
@@ -1020,17 +1041,33 @@ public class DocxOutputImpl extends DefaultHandler {
         // Standard lists: same treatment, except for creating the abstract numbering.
         else if (SAXHelpers.isItemizedListTag(qName) || SAXHelpers.isOrderedListTag(qName)) {
             if (currentLevel.peekList()) {
-                throw new DocxException("list within list not yet implemented.");
+                if ((currentLevel.peekOrderedList() && SAXHelpers.isItemizedListTag(qName))
+                        || (currentLevel.peekItemizedList() && SAXHelpers.isOrderedListTag(qName))) {
+                    throw new DocxException("mixing list types not yet implemented (itemized only within itemized, " +
+                            "ordered only within ordered).");
+                }
             }
 
-            numbering = h.createNumbering(SAXHelpers.isOrderedListTag(qName));
+            // Create a numbering only if one does not already exists.
+            if (! currentLevel.peekList()) {
+                numbering = h.createNumbering(SAXHelpers.isOrderedListTag(qName));
+                // For now, only able to create homogeneous numberings: only bullets OR only numbers.
+                // To do better, would need to look ahead in the SAX stream, or store information along the way
+                // before creating the numbering. To be done in a later iteration.
+            }
+
+            // Push the new list onto the stack.
             if (SAXHelpers.isItemizedListTag(qName)) {
                 currentLevel.push(Level.ITEMIZED_LIST);
             } else if (SAXHelpers.isOrderedListTag(qName)) {
                 currentLevel.push(Level.ORDERED_LIST);
             }
 
-            numberingItemNumber = 0;
+            if (currentLevel.countListDepth() > 9) {
+                // No numbering is created with more than 9 levels (Word does not allow it either).
+                throw new DocxException("list depth of more than 9 is not supported.");
+            }
+
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
@@ -1040,7 +1077,6 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
 
             // listitem is just a container for para, so barely nothing to do here.
-            numberingItemNumber += 1;
             numberingItemParagraphNumber = 0;
         }
 
@@ -1051,7 +1087,6 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isSegmentedListTag(qName)) {
             currentLevel.push(Level.SEGMENTED_LIST);
 
-            numberingItemNumber = 0;
             numberingItemParagraphNumber = -1;
             segmentedListHeaders = new ArrayList<>();
             segmentNumber = -1;
@@ -1103,7 +1138,6 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isVariableListTag(qName)) {
             currentLevel.push(Level.VARIABLE_LIST);
 
-            numberingItemNumber = 0;
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
@@ -1131,7 +1165,6 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
 
             // listitem is just a container for para, so barely nothing to do here.
-            numberingItemNumber += 1;
             numberingItemParagraphNumber = 0;
 
             paragraphStyle = "VariableListItem";
@@ -1254,12 +1287,10 @@ public class DocxOutputImpl extends DefaultHandler {
             currentLevel.pop(Stream.of(Level.ORDERED_LIST, Level.ITEMIZED_LIST),
                     new DocxException("unexpected end of list"));
 
-            numberingItemNumber = -1;
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
         } else if (SAXHelpers.isListItemTag(qName) && currentLevel.peekList()) {
-            numberingItemNumber += 1;
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
@@ -1269,7 +1300,6 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isSegmentedListTag(qName)) {
             currentLevel.pop(Level.SEGMENTED_LIST, new DocxException("unexpected end of segmented list"));
 
-            numberingItemNumber = -1;
             numberingItemParagraphNumber = -1;
             segmentedListHeaders = null;
 
@@ -1296,7 +1326,6 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isVariableListTag(qName)) {
             currentLevel.pop(Level.VARIABLE_LIST, new DocxException("unexpected end of variable list"));
 
-            numberingItemNumber = -1;
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
@@ -1316,7 +1345,6 @@ public class DocxOutputImpl extends DefaultHandler {
             restoreParagraphStyle();
 
             // listitem is just a container for para, so barely nothing to do here.
-            numberingItemNumber += 1;
             numberingItemParagraphNumber = 0;
         }
 

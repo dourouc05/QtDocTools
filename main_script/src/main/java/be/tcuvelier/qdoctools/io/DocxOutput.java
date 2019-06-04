@@ -30,10 +30,11 @@ public class DocxOutput {
 //        String test = "synthetic/sections";
 //        String test = "synthetic/images";
 //        String test = "synthetic/lists";
+        String test = "synthetic/lists_nested";
 //        String test = "synthetic/preformatted";
 //        String test = "synthetic/book";
 //        String test = "synthetic/book_abstract";
-        String test = "synthetic/formatting_filename_replaceable";
+//        String test = "synthetic/formatting_filename_replaceable";
 //        String test = "synthetic/xinclude_main";
 
 //        String test = "CPLEX";
