@@ -25,9 +25,10 @@ public class DocxInput {
 //        String test = "sections";
 //        String test = "sections_bogus";
 //        String test = "images";
-//        String test = "lists";
-        String test = "lists_medium";
+        String test = "lists";
+//        String test = "lists_medium";
 //        String test = "lists_nested";
+//        String test = "lists_hard";
 //        String test = "lists_horror";
 //        String test = "preformatted";
 
