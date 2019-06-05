@@ -146,6 +146,10 @@ public class DocxInputImpl {
                 return;
             }
 
+            if (isWithinList) {
+                throw new XMLStreamException("Assertion error: paragraph detected as within list while it has no numbering.");
+            }
+
             // Then, dispatch along the style.
             if (p.getStyleID() == null) {
                 visitNormalParagraph(p);
@@ -472,6 +476,7 @@ public class DocxInputImpl {
 
             // If the next paragraph is not within *this* list (compare their numbering ID), close it right now.
             if (nextP.getNumID() == null || ! nextP.getNumID().equals(p.getNumID())) {
+                closeOneBlock();
                 closeOneBlock();
                 isWithinList = false;
             }
