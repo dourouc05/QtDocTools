@@ -443,7 +443,7 @@ public class DocxInputImpl {
         if (pos + 1 < paragraphs.size()) {
             XWPFParagraph nextP = paragraphs.get(pos + 1);
 
-            if (nextP.getNumIlvl().intValue() <= depth) {
+            if (nextP.getNumIlvl() != null && nextP.getNumIlvl().intValue() <= depth) {
                 closeOneBlock(); // </db:listitem>
             }
         } else {
@@ -465,7 +465,7 @@ public class DocxInputImpl {
 
             // If the depth decreases, close one level of list, but keep isWithinList to true.
             // Also close the listitem where this list was.
-            if (nextP.getNumIlvl().intValue() < depth) {
+            if (nextP.getNumIlvl() != null && nextP.getNumIlvl().intValue() < depth) {
                 closeOneBlock(); // </db:orderedlist> or </db:itemizedlist>
                 closeOneBlock(); // </db:listitem>
             }

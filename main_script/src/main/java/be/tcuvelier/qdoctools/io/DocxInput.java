@@ -26,8 +26,8 @@ public class DocxInput {
 //        String test = "sections_bogus";
 //        String test = "images";
 //        String test = "lists";
-        String test = "lists_nested";
-//        String test = "lists_horror";
+//        String test = "lists_nested";
+        String test = "lists_horror";
 //        String test = "preformatted";
 
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
