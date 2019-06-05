@@ -392,11 +392,20 @@ public class DocxInputImpl {
     /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
 
     private void visitListItem(XWPFParagraph p) throws XMLStreamException {
+        int depth = p.getNumIlvl().intValue(); // 0: one list to close; 1: two lists to close; etc.
+        int pos = p.getDocument().getPosOfParagraph(p);
+        List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
+
+        if (depth > 0 && ! isWithinList) {
+            throw new XMLStreamException("Assertion error: not at the first level of a list that has never started.");
+        }
+
         boolean isOrderedList = false;
         {
             // What would be best to write...
 //            if (p.getNumFmt() != null) {
-//                isOrderedList = p.getNumFmt().matches("%\\d");
+//                isOrderedList = p.getNumFmt()...;
+//            }
 
             // Instead, we have to dig deeper (have a look at what is done in DocxOutputImpl::createNumbering).
             XWPFNumbering numbering = p.getDocument().getNumbering();
@@ -404,14 +413,16 @@ public class DocxInputImpl {
             XWPFAbstractNum abstractNum = numbering.getAbstractNum(abstractNumID);
             CTAbstractNum ctAbstractNum = abstractNum.getCTAbstractNum();
 
-            if (ctAbstractNum.getLvlList().get(0).getNumFmt() != null) {
-                CTNumFmt ctNumFmt = ctAbstractNum.getLvlList().get(0).getNumFmt();
+            if (ctAbstractNum.getLvlList().get(depth).getNumFmt() != null) {
+                CTNumFmt ctNumFmt = ctAbstractNum.getLvlList().get(depth).getNumFmt();
                 isOrderedList = ! ctNumFmt.getVal().equals(STNumberFormat.BULLET);
             }
         }
 
         // At the beginning of the list (i.e. if not within a list right now), write the begin tag.
-        if (! isWithinList) {
+        // Also do it when the depth increases.
+        if (! isWithinList
+                || (pos > 0 && depth > paragraphs.get(pos - 1).getNumIlvl().intValue())) {
             writeIndent();
             xmlStream.writeStartElement(docbookNS, isOrderedList? "orderedlist" : "itemizedlist");
             writeNewLine();
@@ -428,34 +439,50 @@ public class DocxInputImpl {
 
         visitNormalParagraph(p);
 
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // <db:listitem>
-        writeNewLine();
+        // Close the list item only if the next paragraph is not a list with more indentation.
+        if (pos + 1 < paragraphs.size()) {
+            XWPFParagraph nextP = paragraphs.get(pos + 1);
 
-        // If the next paragraph is not within *this* list (compare their numbering ID), close it right now.
-        int pos = p.getDocument().getPosOfParagraph(p);
-        List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
+            if (nextP.getNumIlvl().intValue() <= depth) {
+                closeOneBlock(); // </db:listitem>
+            }
+        } else {
+            closeOneBlock(); // </db:listitem>
+        }
 
-        boolean isLastItem = false;
+        // Close the list.
         if (pos + 1 >= paragraphs.size()) {
-            isLastItem = true;
+            // If this is the last paragraph, close the list.
+            int nCloses = 2 * depth; // </db:orderedlist> or </db:itemizedlist>, then </db:listitem> (except for
+            // outermost list, where there is no listitem to close)
+            while (nCloses >= 0) {
+                closeOneBlock();
+                nCloses -= 1;
+            }
+            isWithinList = false;
         } else {
             XWPFParagraph nextP = paragraphs.get(pos + 1);
 
+            // If the depth decreases, close one level of list, but keep isWithinList to true.
+            // Also close the listitem where this list was.
+            if (nextP.getNumIlvl().intValue() < depth) {
+                closeOneBlock(); // </db:orderedlist> or </db:itemizedlist>
+                closeOneBlock(); // </db:listitem>
+            }
+
+            // If the next paragraph is not within *this* list (compare their numbering ID), close it right now.
             if (nextP.getNumID() == null || ! nextP.getNumID().equals(p.getNumID())) {
-                isLastItem = true;
+                closeOneBlock();
+                isWithinList = false;
             }
         }
+    }
 
-        if (isLastItem) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:orderedlist> or </db:itemizedlist>
-            writeNewLine();
-
-            isWithinList = false;
-        }
+    private void closeOneBlock() throws XMLStreamException {
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement();
+        writeNewLine();
     }
 
     /** Definition lists. **/
