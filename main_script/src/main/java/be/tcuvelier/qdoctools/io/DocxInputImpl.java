@@ -399,43 +399,72 @@ public class DocxInputImpl {
 
     /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
 
+    private boolean isListOrdered(XWPFParagraph p) {
+        // What would be best to write...
+//            if (p.getNumFmt() != null) {
+//                isOrderedList = p.getNumFmt()...;
+//            }
+
+        // Instead, we have to dig deeper (have a look at what is done in DocxOutputImpl::createNumbering).
+        int depth = p.getNumIlvl() == null? 0 : p.getNumIlvl().intValue();
+
+        XWPFNumbering numbering = p.getDocument().getNumbering();
+        BigInteger abstractNumID = numbering.getAbstractNumID(p.getNumID());
+        XWPFAbstractNum abstractNum = numbering.getAbstractNum(abstractNumID);
+        CTAbstractNum ctAbstractNum = abstractNum.getCTAbstractNum();
+
+        if (ctAbstractNum.getLvlList().get(depth).getNumFmt() != null) {
+            CTNumFmt ctNumFmt = ctAbstractNum.getLvlList().get(depth).getNumFmt();
+            return ! ctNumFmt.getVal().equals(STNumberFormat.BULLET);
+        } else {
+            return false;
+        }
+    }
+
     private void visitListItem(XWPFParagraph p) throws XMLStreamException {
+        BigInteger numbering = p.getNumID();
         int depth = p.getNumIlvl() == null? 0 : p.getNumIlvl().intValue(); // 0: one list to close; 1: two lists to close; etc.
         int pos = p.getDocument().getPosOfParagraph(p);
         List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
+        Optional<XWPFParagraph> nextPara = (pos + 1) < paragraphs.size() ? Optional.of(paragraphs.get(pos + 1)) : Optional.empty();
 
         if (depth > 0 && ! isWithinList) {
             throw new XMLStreamException("Assertion error: not at the first level of a list that has never started.");
         }
 
-        boolean isOrderedList = false;
-        {
-            // What would be best to write...
-//            if (p.getNumFmt() != null) {
-//                isOrderedList = p.getNumFmt()...;
+        { // At the beginning of the list (i.e. if not within a list right now), write the begin tag.
+            boolean openList = false;
+//            if (! isWithinList) {
+                if (pos == 0) { // The first paragraph of the document is already within a list: open one.
+                    openList = true;
+                } else { // Otherwise, this paragraph has a previous one; check numbering differences between them.
+                    XWPFParagraph prevP = paragraphs.get(pos - 1);
+                    if (prevP.getNumID() == null) { // Previous paragraph was not within a list: open one.
+                        openList = true;
+                    } else { // Previous paragraph was already in a list: is there any meaningful difference between them?
+                        // Two things to compare: the numbering and the depth.
+                        BigInteger prevNumbering = prevP.getNumID();
+                        int prevDepth = prevP.getNumIlvl() == null ? 0 : prevP.getNumIlvl().intValue();
+
+                        if (! prevNumbering.equals(numbering)) { // Different numbering, hence different list: open one.
+                            openList = true;
+                        } else if (depth > prevDepth) { // Getting deeper in lists: open one.
+                            openList = true;
+
+                            // When increasing depth, only allow one level (otherwise, will get troubles when
+                            // closing lists). Another solution would be to keep an internal level, but round-tripping
+                            // would not be possible (this strange pattern in list depths would be lost).
+                            if (depth != prevDepth + 1) {
+                                throw new XMLStreamException("Difference in list depth larger than one: ");
+                            }
+                        }
+                    }
+                }
 //            }
 
-            // Instead, we have to dig deeper (have a look at what is done in DocxOutputImpl::createNumbering).
-            XWPFNumbering numbering = p.getDocument().getNumbering();
-            BigInteger abstractNumID = numbering.getAbstractNumID(p.getNumID());
-            XWPFAbstractNum abstractNum = numbering.getAbstractNum(abstractNumID);
-            CTAbstractNum ctAbstractNum = abstractNum.getCTAbstractNum();
-
-            if (ctAbstractNum.getLvlList().get(depth).getNumFmt() != null) {
-                CTNumFmt ctNumFmt = ctAbstractNum.getLvlList().get(depth).getNumFmt();
-                isOrderedList = ! ctNumFmt.getVal().equals(STNumberFormat.BULLET);
-            }
-        }
-
-        // At the beginning of the list (i.e. if not within a list right now), write the begin tag.
-        // Also do it when the depth increases.
-        if (! isWithinList && pos > 0) {
-            XWPFParagraph prevP = paragraphs.get(pos - 1);
-            int prevPos = prevP.getNumIlvl() == null? 0 : prevP.getNumIlvl().intValue();
-
-            if (depth > prevPos) {
+            if (openList) { // Implement the previous decision.
                 writeIndent();
-                xmlStream.writeStartElement(docbookNS, isOrderedList ? "orderedlist" : "itemizedlist");
+                xmlStream.writeStartElement(docbookNS, isListOrdered(p) ? "orderedlist" : "itemizedlist");
                 writeNewLine();
                 increaseIndent();
 
@@ -443,61 +472,50 @@ public class DocxInputImpl {
             }
         }
 
-        // Write the list item (wrapped in a paragraph).
+        // Write the list item.
         writeIndent();
         xmlStream.writeStartElement(docbookNS, "listitem");
         writeNewLine();
         increaseIndent();
 
+        // Write the content of the list item (and wrap it into a <para>). s
         visitNormalParagraph(p);
 
-        // Close the list item only if the next paragraph is not a list with more indentation.
-        if (pos + 1 < paragraphs.size()) { // Has a next paragraph.
-            XWPFParagraph nextP = paragraphs.get(pos + 1);
-
-            if (nextP.getNumIlvl() == null) {
+        // Deal with the last paragraph of the document: end the list item and all opened lists if required.
+        if (nextPara.isEmpty()) {
+            // Close the opened lists. If depth is 0, just end the current list item and the list. Otherwise,
+            // also close the containing lists.
+            int levelsToClose = depth + 1;
+            while (levelsToClose > 0) {
                 closeOneBlock(); // </db:listitem>
-            } else if (nextP.getNumIlvl() != null && nextP.getNumIlvl().intValue() <= depth) {
-                closeOneBlock(); // </db:listitem>
-            }
-        } else { // Last paragraph of the document.
-            closeOneBlock(); // </db:listitem>
-        }
-
-        // Close the list.
-        if (pos + 1 >= paragraphs.size()) { // No next paragraph.
-            // If this is the last paragraph, close the list.
-            int nCloses = 2 * depth; // </db:orderedlist> or </db:itemizedlist>, then </db:listitem> (except for
-            // outermost list, where there is no listitem to close).
-            while (nCloses >= 0) {
-                closeOneBlock();
-                nCloses -= 1;
+                closeOneBlock(); // </db:orderedlist> or </db:itemizedlist>
+                levelsToClose -= 1;
             }
             isWithinList = false;
-        } else { // Has a next paragraph.
-            XWPFParagraph nextP = paragraphs.get(pos + 1);
+        }
+        // There is a next paragraph, and things can get very complicated.
+        else {
+            XWPFParagraph nextP = nextPara.get();
+            int nextDepth = nextP.getNumIlvl() == null? 0 : nextP.getNumIlvl().intValue();
+            BigInteger nextNumbering = nextP.getNumID();
 
-            // If the depth decreases, close one level of list, but keep isWithinList to true.
-            // Also close the listitem where this list was.
-            if (nextP.getNumIlvl() != null && nextP.getNumIlvl().intValue() < depth) {
-                closeOneBlock(); // </db:orderedlist> or </db:itemizedlist>
-                closeOneBlock(); // </db:listitem>
+            int nCloses = 0;
+
+            // Should this list/list item be closed? That's gory.
+            if (! numbering.equals(nextNumbering)) { // Is the next paragraph not in a list (its numbering is null)
+                // or in a different list (indicated by a different numbering)? Close it.
+                nCloses = 2 * (depth + 1); // </db:listitem>, then </db:orderedlist> or </db:itemizedlist>, for each level.
+                isWithinList = false;
+            } else if (nextDepth == depth) { // If staying at the same level, close this item, and that's it.
+                nCloses = 1; // </db:listitem>
+            } else if (nextDepth < depth) { // Going less deep: must close a few things (a list item and a list per
+                // difference in depth, plus a list item).
+                nCloses = 2 * (depth - nextDepth) + 1;
             }
 
-            // If the next paragraph is not within *this* list (compare their numbering ID), close it right now.
-            else if (nextP.getNumID() == null || ! nextP.getNumID().equals(p.getNumID())) {
-//                closeOneBlock(); // </db:orderedlist> or </db:itemizedlist>
-//                closeOneBlock(); // </db:listitem>
-//                closeOneBlock(); // </db:orderedlist> or </db:itemizedlist>
-
-                // If this is the last paragraph, close the list.
-                int nCloses = 2 * depth; // </db:orderedlist> or </db:itemizedlist>, then </db:listitem> (except for
-                // outermost list, where there is no listitem to close).
-                while (nCloses >= 0) {
-                    closeOneBlock();
-                    nCloses -= 1;
-                }
-                isWithinList = false;
+            // Implement the required closes.
+            for (int i = 0; i < nCloses; ++i) {
+                closeOneBlock();
             }
         }
     }
