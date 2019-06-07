@@ -3,6 +3,7 @@ package be.tcuvelier.qdoctools.io;
 import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
+import be.tcuvelier.qdoctools.io.helpers.Tuple;
 import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
@@ -21,6 +22,7 @@ public class DocxInputImpl {
     private XMLStreamWriter xmlStream;
     private Map<String, byte[]> images = new HashMap<>();
 
+    private FormattingStack currentFormatting;
     private int currentDepth;
     private int currentSectionLevel;
     private boolean isDisplayedFigure = false;
@@ -784,6 +786,7 @@ public class DocxInputImpl {
     /** Inline elements (runs, in Word parlance). **/
 
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
+        currentFormatting = new FormattingStack();
         for (XWPFRun r: runs) {
             if (r instanceof XWPFHyperlinkRun) {
                 visitHyperlinkRun((XWPFHyperlinkRun) r);
@@ -793,6 +796,7 @@ public class DocxInputImpl {
                 visitRun(r);
             }
         }
+        currentFormatting = null;
     }
 
     private static String getStyle(XWPFRun r) {
@@ -810,8 +814,51 @@ public class DocxInputImpl {
         return style.getVal();
     }
 
+    private static class FormattingStack {
+        private Deque<DocBookFormatting> stack;
+        private Deque<DocBookFormatting> addedInRun;
+        private Deque<DocBookFormatting> removedInRun;
+
+        private void unstackUntilAndRemove(DocBookFormatting f) {
+            // Example stack: BOLD, EMPHASIS, STRIKE.
+            // Close EMPHASIS. Should unstack both STRIKE and EMPHASIS, then stack again STRIKE.
+            // (Could do something better by storing the full paragraph before outputting the formattings, but the
+            // added complexity is not worth it, as this case will probably not happen often.)
+
+            // Unstack the tags until you reach the required formatting.
+            while (stack.peek() != f) {
+                DocBookFormatting current = stack.pop();
+                removedInRun.push(current);
+            }
+
+            // Pop the formatting you're looking for.
+            stack.pop();
+
+            // Push the untouched formattings.
+            // TODO: without killing removedInRun! Build a standard (and indexable!) list in the loop, then build here removedInRun?
+        }
+
+        void startRun(XWPFRun r) {
+            addedInRun = new ArrayDeque<>();
+            removedInRun = new ArrayDeque<>();
+
+            if (r.isBold() && ! stack.contains(DocBookFormatting.EMPHASIS_BOLD)) {
+                addedInRun.add(DocBookFormatting.EMPHASIS_BOLD);
+                stack.remove(DocBookFormatting.EMPHASIS_BOLD);
+            } else if (! r.isBold() && stack.contains(DocBookFormatting.EMPHASIS_BOLD)) {
+                removedInRun.add(DocBookFormatting.EMPHASIS_BOLD);
+                stack.add(DocBookFormatting.EMPHASIS_BOLD);
+            }
+        }
+
+        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> endRun() {
+            return new Tuple<>(addedInRun, removedInRun);
+        }
+    }
+
     private void visitRun(XWPFRun run) throws XMLStreamException {
         // TODO: maybe implement simplifications if two runs have the same set of formattings (compute the difference between sets of formatting).
+        currentFormatting.startRun(run);
 
         // Copied from STVerticalAlignRun.Enum. TODO: Better way to have these constants?
         int INT_SUPERSCRIPT = 2;
