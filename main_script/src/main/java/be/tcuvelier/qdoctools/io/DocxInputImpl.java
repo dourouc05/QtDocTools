@@ -335,7 +335,8 @@ public class DocxInputImpl {
         writeNewLine();
     }
 
-    private void visitPictureRun(XWPFRun r) throws XMLStreamException {
+    private void visitPictureRun(XWPFRun r, @SuppressWarnings("unused") XWPFRun prevRun,
+                                 @SuppressWarnings("unused") boolean isLastRun) throws XMLStreamException {
         // TODO: saner implementation based on
         //  https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java#L361?
         // TODO: the current implementation might miss some images, it seems:
@@ -787,14 +788,18 @@ public class DocxInputImpl {
 
     private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
         currentFormatting = new FormattingStack();
-        for (XWPFRun r: runs) {
+        XWPFRun prevRun = null;
+
+        for (Iterator<XWPFRun> iterator = runs.iterator(); iterator.hasNext(); ) {
+            XWPFRun r = iterator.next();
             if (r instanceof XWPFHyperlinkRun) {
-                visitHyperlinkRun((XWPFHyperlinkRun) r);
+                visitHyperlinkRun((XWPFHyperlinkRun) r, prevRun, iterator.hasNext());
             } else if (r.getEmbeddedPictures().size() >= 1) {
-                visitPictureRun(r);
+                visitPictureRun(r, prevRun, iterator.hasNext());
             } else {
-                visitRun(r);
+                visitRun(r, prevRun, iterator.hasNext());
             }
+            prevRun = r;
         }
         currentFormatting = null;
     }
@@ -814,134 +819,184 @@ public class DocxInputImpl {
         return style.getVal();
     }
 
+    private static class IndexableStack {
+        private List<DocBookFormatting> stack;
+
+        private void push(DocBookFormatting f) {
+            stack.add(stack.size(), f);
+        }
+
+        private DocBookFormatting peek() {
+            return stack.get(stack.size() - 1);
+        }
+
+        private DocBookFormatting pop() {
+            DocBookFormatting val = stack.get(stack.size() - 1);
+            stack.remove(stack.size() - 1);
+            return val;
+        }
+
+        private DocBookFormatting get(int index) {
+            return stack.get(index);
+        }
+
+        private int size() {
+            return stack.size();
+        }
+    }
+
     private static class FormattingStack {
-        private Deque<DocBookFormatting> stack;
+        private Deque<DocBookFormatting> stack = new ArrayDeque<>();
         private Deque<DocBookFormatting> addedInRun;
         private Deque<DocBookFormatting> removedInRun;
 
-        private void unstackUntilAndRemove(DocBookFormatting f) {
+        private void unstackUntilAndRemove(DocBookFormatting f) throws XMLStreamException {
             // Example stack: BOLD, EMPHASIS, STRIKE.
             // Close EMPHASIS. Should unstack both STRIKE and EMPHASIS, then stack again STRIKE.
             // (Could do something better by storing the full paragraph before outputting the formattings, but the
             // added complexity is not worth it, as this case will probably not happen often.)
 
             // Unstack the tags until you reach the required formatting.
+            Deque<DocBookFormatting> removed = new ArrayDeque<>();
             while (stack.peek() != f) {
                 DocBookFormatting current = stack.pop();
-                removedInRun.push(current);
+                removed.push(current);
             }
 
             // Pop the formatting you're looking for.
-            stack.pop();
+            if (! stack.pop().equals(f)) {
+                throw new XMLStreamException();
+            }
 
-            // Push the untouched formattings.
-            // TODO: without killing removedInRun! Build a standard (and indexable!) list in the loop, then build here removedInRun?
-        }
-
-        void startRun(XWPFRun r) {
-            addedInRun = new ArrayDeque<>();
-            removedInRun = new ArrayDeque<>();
-
-            if (r.isBold() && ! stack.contains(DocBookFormatting.EMPHASIS_BOLD)) {
-                addedInRun.add(DocBookFormatting.EMPHASIS_BOLD);
-                stack.remove(DocBookFormatting.EMPHASIS_BOLD);
-            } else if (! r.isBold() && stack.contains(DocBookFormatting.EMPHASIS_BOLD)) {
-                removedInRun.add(DocBookFormatting.EMPHASIS_BOLD);
-                stack.add(DocBookFormatting.EMPHASIS_BOLD);
+            // Push the untouched formattings. This destroys removed.
+            Iterator<DocBookFormatting> itr = removed.descendingIterator();
+            while (itr.hasNext()) {
+                DocBookFormatting elt = itr.next();
+                addedInRun.push(elt);
+                removedInRun.push(elt);
             }
         }
 
-        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> endRun() {
+        private void dealWith(boolean isFormattingEnabled, DocBookFormatting f) throws XMLStreamException {
+            if (isFormattingEnabled && ! stack.contains(f)) { // If this formatting is new, add it.
+                addedInRun.add(f);
+            } else if (! isFormattingEnabled && stack.contains(f)) { // If this formatting is not enabled but was there
+                // before, remove it.
+                unstackUntilAndRemove(f);
+            } // Otherwise, nothing going on (two cases: not enabled and not pending; enabled and opened previously).
+        }
+
+        private void unrecognisedStyle(XWPFRun run) throws XMLStreamException {
+            String styleID = getStyle(run);
+            if (! styleID.equals("")) {
+                throw new XMLStreamException("Unrecognised run style: " + styleID);
+            } else {
+                // No style, but maybe the user wants to tell the software something.
+
+                if (run.getFontName() != null) {
+                    // Cannot make a test on the font family, as it does not support monospaced information:
+                    // https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.fontfamily?view=openxml-2.8.1
+                    if (run.getFontName().equals("Consolas") || run.getFontName().equals("Courier New")) {
+                        System.out.println("Error: text in a monospaced font (" + run.getFontName() + ") but not marked " +
+                                "with a style to indicate its meaning.");
+                        // TODO: default to <code>.
+                    }
+                }
+            }
+        }
+
+        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> processRun(XWPFRun run, XWPFRun prevRun) throws XMLStreamException {
+            // Copied from STVerticalAlignRun.Enum. TODO: Better way to have these constants?
+            int INT_SUPERSCRIPT = 2;
+            int INT_SUBSCRIPT = 3;
+
+            // Start dealing with this run: iterate through the formattings, translate them into DocBookFormatting
+            // instances, and call dealWith.
+            addedInRun = new ArrayDeque<>();
+            removedInRun = new ArrayDeque<>();
+
+            // Formattings encoded as run attributes.
+            dealWith(run.isBold(), DocBookFormatting.EMPHASIS_BOLD);
+            dealWith(run.isItalic(), DocBookFormatting.EMPHASIS);
+            dealWith(run.getUnderline() != UnderlinePatterns.NONE, DocBookFormatting.EMPHASIS_UNDERLINE);
+            dealWith(run.isStrikeThrough() || run.isDoubleStrikeThrough(), DocBookFormatting.EMPHASIS);
+            dealWith(run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT, DocBookFormatting.SUPERSCRIPT);
+            dealWith(run.getVerticalAlignment().intValue() == INT_SUBSCRIPT, DocBookFormatting.SUPERSCRIPT);
+
+            // Formattings encoded as styles.
+            String styleID = getStyle(run);
+            String prevStyleID = getStyle(prevRun);
+            if (DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)
+                    && DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
+                // If both styles are equal, nothing to do. Otherwise...
+                if (! prevStyleID.equals(styleID)) {
+                    if (prevStyleID.equals("Normal")) {
+                        addedInRun.add(DocBookFormatting.styleIDToFormatting.get(styleID));
+                    } else if (styleID.equals("Normal")) {
+                        unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(styleID));
+                    } else {
+                        unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(prevStyleID));
+                        addedInRun.add(DocBookFormatting.styleIDToFormatting.get(styleID));
+                    }
+                }
+            } else {
+                if (! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
+                    unrecognisedStyle(run);
+                }
+                if (! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
+                    unrecognisedStyle(prevRun);
+                }
+            }
+
             return new Tuple<>(addedInRun, removedInRun);
+        }
+
+        Deque<DocBookFormatting> formattings() {
+            return stack;
         }
     }
 
-    private void visitRun(XWPFRun run) throws XMLStreamException {
-        // TODO: maybe implement simplifications if two runs have the same set of formattings (compute the difference between sets of formatting).
-        currentFormatting.startRun(run);
+    private void visitRun(XWPFRun run, XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
 
-        // Copied from STVerticalAlignRun.Enum. TODO: Better way to have these constants?
-        int INT_SUPERSCRIPT = 2;
-        int INT_SUBSCRIPT = 3;
-
-        // Formatting tags (maybe several ones to add!).
-        if (run.isBold()) {
-            xmlStream.writeStartElement(docbookNS, "emphasis");
-            xmlStream.writeAttribute(docbookNS, "role", "bold"); // TODO: Check if bold is used
-            // everywhere else (or is strong preferred in other parts of the tool suite like QDoc import?).
-            // Also adapt DocxOutput.Formatting.tagToFormatting().
+        // Deal with changes of formattings between the previous run and the current one.
+        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings = currentFormatting.processRun(run, prevRun);
+        for (DocBookFormatting f: formattings.second) {
+            xmlStream.writeEndElement();
         }
-        if (run.isItalic()) {
-            xmlStream.writeStartElement(docbookNS, "emphasis");
-        }
-        if (run.getUnderline() != UnderlinePatterns.NONE) {
-            xmlStream.writeStartElement(docbookNS, "emphasis");
-            xmlStream.writeAttribute(docbookNS, "role", "underline");
-        }
-        if (run.isStrikeThrough() || run.isDoubleStrikeThrough()) {
-            xmlStream.writeStartElement(docbookNS, "emphasis");
-            xmlStream.writeAttribute(docbookNS, "role", "strikethrough");
-        }
-        if (run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
-            xmlStream.writeStartElement(docbookNS, "superscript");
-        }
-        if (run.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
-            xmlStream.writeStartElement(docbookNS, "subscript");
-        }
-
-        String styleID = getStyle(run);
-        if (DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
-            xmlStream.writeStartElement(docbookNS, DocBookFormatting.styleIDToDocBookTag.get(styleID));
-        } else if (! styleID.equals("")) {
-            throw new XMLStreamException("Unrecognised run style: " + styleID);
-        } else {
-            // No style, but maybe the user wants to tell the software something.
-
-            if (run.getFontName() != null) {
-                // Cannot make a test on the font family, as it does not support monospaced information:
-                // https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.fontfamily?view=openxml-2.8.1
-                if (run.getFontName().equals("Consolas") || run.getFontName().equals("Courier New")) {
-                    System.out.println("Warning: text in a monospaced font (" + run.getFontName() + ") but not marked " +
-                            "with a style to indicate its meaning. By default, it will be wrapped in <code>.");
-                    xmlStream.writeStartElement(docbookNS, "code");
-                }
+        for (DocBookFormatting f: formattings.first) {
+            if (f == DocBookFormatting.EMPHASIS) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+            } else if (f == DocBookFormatting.EMPHASIS_BOLD) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+                xmlStream.writeAttribute(docbookNS, "role", "bold");
+            } else if (f == DocBookFormatting.EMPHASIS_STRIKETHROUGH) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+                xmlStream.writeAttribute(docbookNS, "role", "strikethrough");
+            } else if (f == DocBookFormatting.EMPHASIS_UNDERLINE) {
+                xmlStream.writeStartElement(docbookNS, "emphasis");
+                xmlStream.writeAttribute(docbookNS, "role", "underline");
+            } else {
+                xmlStream.writeStartElement(docbookNS, DocBookFormatting.formattingToDocBookTag.get(f));
             }
         }
 
         // Actual text for this run.
         xmlStream.writeCharacters(run.text());
 
-        // Close the tags if needed (strictly the reverse order from opening tags).
-        // No need to respect order in the tests, as every thing here is just closing a DocBook tag.
-        if (run.getUnderline() != UnderlinePatterns.NONE) {
-            xmlStream.writeEndElement(); // </db:emphasis> for underline
-        }
-        if (run.isItalic()) {
-            xmlStream.writeEndElement(); // </db:emphasis> for italics
-        }
-        if (run.isBold()) {
-            xmlStream.writeEndElement(); // </db:emphasis> for bold
-        }
-        if (run.isStrikeThrough() || run.isDoubleStrikeThrough()) {
-            xmlStream.writeEndElement(); // </db:emphasis> for strikethrough
-        }
-        if (run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT) {
-            xmlStream.writeEndElement(); // </db:superscript>
-        }
-        if (run.getVerticalAlignment().intValue() == INT_SUBSCRIPT) {
-            xmlStream.writeEndElement(); // </db:subscript>
-        }
-        if (! styleID.equals("")) {
-            xmlStream.writeEndElement(); // </db:something in the switch above>
+        // Close the tags at the end of the paragraph.
+        if (isLastRun && currentFormatting.formattings().size() > 0) {
+            for (DocBookFormatting f: currentFormatting.formattings()) {
+                xmlStream.writeEndElement();
+            }
         }
     }
 
-    private void visitHyperlinkRun(XWPFHyperlinkRun r) throws XMLStreamException {
+    private void visitHyperlinkRun(XWPFHyperlinkRun r, XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
         XWPFHyperlink link = r.getHyperlink(doc);
 
         xmlStream.writeStartElement(docbookNS, "link");
         xmlStream.writeAttribute(xlinkNS, "href", link.getURL());
-        visitRun(r); // Text and formatting attributes are inherited for XWPFHyperlinkRun.
+        visitRun(r, prevRun, isLastRun); // Text and formatting attributes are inherited for XWPFHyperlinkRun.
         xmlStream.writeEndElement(); // </db:link>
     }
 }

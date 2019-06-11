@@ -125,6 +125,7 @@ public enum DocBookFormatting {
     public static Map<DocBookFormatting, String> formattingToStyleID = Map.ofEntries();
     public static Map<DocBookFormatting, String> formattingToDocBookTag = Map.ofEntries();
     public static Map<String, String> styleIDToDocBookTag = Map.ofEntries();
+    public static Map<String, DocBookFormatting> styleIDToFormatting = Map.ofEntries();
 
     static {
         // Make the fields mutable temporarily.
@@ -154,6 +155,8 @@ public enum DocBookFormatting {
 
         // Compute the derived maps.
         formattingToPredicate = predicateToFormatting.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+        styleIDToFormatting = formattingToStyleID.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
     }
 
