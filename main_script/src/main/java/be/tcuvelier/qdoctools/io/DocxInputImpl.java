@@ -5,6 +5,8 @@ import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import be.tcuvelier.qdoctools.io.helpers.Tuple;
 import org.apache.poi.xwpf.usermodel.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import javax.xml.stream.XMLOutputFactory;
@@ -819,32 +821,6 @@ public class DocxInputImpl {
         return style.getVal();
     }
 
-    private static class IndexableStack {
-        private List<DocBookFormatting> stack;
-
-        private void push(DocBookFormatting f) {
-            stack.add(stack.size(), f);
-        }
-
-        private DocBookFormatting peek() {
-            return stack.get(stack.size() - 1);
-        }
-
-        private DocBookFormatting pop() {
-            DocBookFormatting val = stack.get(stack.size() - 1);
-            stack.remove(stack.size() - 1);
-            return val;
-        }
-
-        private DocBookFormatting get(int index) {
-            return stack.get(index);
-        }
-
-        private int size() {
-            return stack.size();
-        }
-    }
-
     private static class FormattingStack {
         private Deque<DocBookFormatting> stack = new ArrayDeque<>();
         private Deque<DocBookFormatting> addedInRun;
@@ -858,14 +834,16 @@ public class DocxInputImpl {
 
             // Unstack the tags until you reach the required formatting.
             Deque<DocBookFormatting> removed = new ArrayDeque<>();
-            while (stack.peek() != f) {
-                DocBookFormatting current = stack.pop();
+            while (stack.getLast() != f) {
+                DocBookFormatting current = stack.removeLast();
                 removed.push(current);
             }
 
             // Pop the formatting you're looking for.
-            if (! stack.pop().equals(f)) {
-                throw new XMLStreamException();
+            removedInRun.add(f);
+            stack.removeLast();
+            if (stack.size() > 0 && stack.getLast().equals(f)) {
+                throw new XMLStreamException("Assertion failed.");
             }
 
             // Push the untouched formattings. This destroys removed.
@@ -887,7 +865,7 @@ public class DocxInputImpl {
             } // Otherwise, nothing going on (two cases: not enabled and not pending; enabled and opened previously).
         }
 
-        private void unrecognisedStyle(XWPFRun run) throws XMLStreamException {
+        private void unrecognisedStyle(@NotNull XWPFRun run) throws XMLStreamException {
             String styleID = getStyle(run);
             if (! styleID.equals("")) {
                 throw new XMLStreamException("Unrecognised run style: " + styleID);
@@ -906,7 +884,8 @@ public class DocxInputImpl {
             }
         }
 
-        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> processRun(XWPFRun run, XWPFRun prevRun) throws XMLStreamException {
+        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> processRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun)
+                throws XMLStreamException {
             // Copied from STVerticalAlignRun.Enum. TODO: Better way to have these constants?
             int INT_SUPERSCRIPT = 2;
             int INT_SUBSCRIPT = 3;
@@ -958,7 +937,7 @@ public class DocxInputImpl {
         }
     }
 
-    private void visitRun(XWPFRun run, XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
+    private void visitRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
 
         // Deal with changes of formattings between the previous run and the current one.
         Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings = currentFormatting.processRun(run, prevRun);
@@ -993,7 +972,8 @@ public class DocxInputImpl {
         }
     }
 
-    private void visitHyperlinkRun(XWPFHyperlinkRun r, XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
+    private void visitHyperlinkRun(@NotNull XWPFHyperlinkRun r, @Nullable XWPFRun prevRun, boolean isLastRun)
+            throws XMLStreamException {
         XWPFHyperlink link = r.getHyperlink(doc);
 
         xmlStream.writeStartElement(docbookNS, "link");
