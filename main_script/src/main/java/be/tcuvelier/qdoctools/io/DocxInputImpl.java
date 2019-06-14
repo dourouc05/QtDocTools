@@ -159,7 +159,7 @@ public class DocxInputImpl {
             }
 
             // Then, dispatch along the style.
-            if (p.getStyleID() == null) {
+            if (p.getStyleID() == null || p.getStyleID().equals("")) {
                 visitNormalParagraph(p);
                 return;
             }
@@ -803,6 +803,11 @@ public class DocxInputImpl {
             }
             prevRun = r;
         }
+
+        if (currentFormatting.formattings().size() > 0) {
+            throw new XMLStreamException("Assertion error: some styles remain open at the end of a paragraph.");
+        }
+
         currentFormatting = null;
     }
 
@@ -826,31 +831,39 @@ public class DocxInputImpl {
         private Deque<DocBookFormatting> addedInRun;
         private Deque<DocBookFormatting> removedInRun;
 
-        private void unstackUntilAndRemove(DocBookFormatting f) throws XMLStreamException {
+        private void unstackUntilAndRemove(@Nullable DocBookFormatting f) throws XMLStreamException {
             // Example stack: BOLD, EMPHASIS, STRIKE.
             // Close EMPHASIS. Should unstack both STRIKE and EMPHASIS, then stack again STRIKE.
             // (Could do something better by storing the full paragraph before outputting the formattings, but the
             // added complexity is not worth it, as this case will probably not happen often.)
 
-            // Unstack the tags until you reach the required formatting.
+            // Unstack the tags until you reach the required formatting (or no formatting at all).
             Deque<DocBookFormatting> removed = new ArrayDeque<>();
-            while (stack.getLast() != f) {
-                DocBookFormatting current = stack.removeLast();
-                removed.push(current);
+            if (f != null) {
+                while (stack.getLast() != f) {
+                    DocBookFormatting current = stack.removeLast();
+                    removed.push(current);
+                }
+            } else {
+                while (stack.size() > 0) {
+                    DocBookFormatting current = stack.removeLast();
+                    removed.push(current);
+                }
             }
 
             // Pop the formatting you're looking for.
-            removedInRun.add(f);
-            stack.removeLast();
-            if (stack.size() > 0 && stack.getLast().equals(f)) {
-                throw new XMLStreamException("Assertion failed.");
+            if (f != null) {
+                removedInRun.add(f);
+                stack.removeLast();
+                if (stack.size() > 0 && stack.getLast().equals(f)) {
+                    throw new XMLStreamException("Assertion failed.");
+                }
             }
 
             // Push the untouched formattings. This destroys removed.
             Iterator<DocBookFormatting> itr = removed.descendingIterator();
             while (itr.hasNext()) {
                 DocBookFormatting elt = itr.next();
-                addedInRun.push(elt);
                 removedInRun.push(elt);
             }
         }
@@ -906,17 +919,21 @@ public class DocxInputImpl {
             // Formattings encoded as styles.
             String styleID = getStyle(run);
             String prevStyleID = prevRun == null? "" : getStyle(prevRun);
-            if (DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)
+            if ((DocBookFormatting.styleIDToDocBookTag.containsKey(styleID) || styleID.equals(""))
                     && (prevRun == null || prevStyleID.equals("") || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
                 // If both styles are equal, nothing to do. Otherwise...
                 if (! prevStyleID.equals(styleID)) {
                     if (prevStyleID.equals("Normal") || prevStyleID.equals("")) {
-                        addedInRun.add(DocBookFormatting.styleIDToFormatting.get(styleID));
+                        DocBookFormatting f = DocBookFormatting.styleIDToFormatting.get(styleID);
+                        addedInRun.add(f);
+                        stack.add(f);
                     } else if (styleID.equals("Normal") || styleID.equals("")) {
                         unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(styleID));
                     } else {
-                        unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(prevStyleID));
-                        addedInRun.add(DocBookFormatting.styleIDToFormatting.get(styleID));
+                        DocBookFormatting f = DocBookFormatting.styleIDToFormatting.get(prevStyleID);
+                        unstackUntilAndRemove(f);
+                        addedInRun.add(f);
+                        stack.add(f);
                     }
                 }
             } else {
@@ -938,13 +955,13 @@ public class DocxInputImpl {
     }
 
     private void visitRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
-
         // Deal with changes of formattings between the previous run and the current one.
         Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings = currentFormatting.processRun(run, prevRun);
-        for (DocBookFormatting f: formattings.second) {
+        for (DocBookFormatting ignored : formattings.second) {
             xmlStream.writeEndElement();
         }
         for (DocBookFormatting f: formattings.first) {
+            // Emphasis and its variants.
             if (f == DocBookFormatting.EMPHASIS) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
             } else if (f == DocBookFormatting.EMPHASIS_BOLD) {
@@ -956,7 +973,9 @@ public class DocxInputImpl {
             } else if (f == DocBookFormatting.EMPHASIS_UNDERLINE) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
                 xmlStream.writeAttribute(docbookNS, "role", "underline");
-            } else {
+            }
+            // Full-blown tags.
+            else {
                 xmlStream.writeStartElement(docbookNS, DocBookFormatting.formattingToDocBookTag.get(f));
             }
         }
@@ -966,7 +985,7 @@ public class DocxInputImpl {
 
         // Close the tags at the end of the paragraph.
         if (isLastRun && currentFormatting.formattings().size() > 0) {
-            for (DocBookFormatting f: currentFormatting.formattings()) {
+            for (DocBookFormatting ignored: currentFormatting.formattings()) {
                 xmlStream.writeEndElement();
             }
         }

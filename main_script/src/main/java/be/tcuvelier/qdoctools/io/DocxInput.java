@@ -21,25 +21,28 @@ import java.util.stream.Collectors;
 
 public class DocxInput {
     public static void main(String[] args) throws IOException, XMLStreamException {
-//        String test = "basic";
-//        String test = "sections";
-//        String test = "sections_bogus";
-//        String test = "images";
-//        String test = "lists";
-//        String test = "lists_medium";
-//        String test = "lists_nested";
-//        String test = "lists_hard";
-//        String test = "lists_horror";
-//        String test = "preformatted";
-//        String test = "formatting_stack_minimum";
-//        String test = "formatting_stack";
-        String test = "formatting_filename_replaceable";
+//        String test = "synthetic/basic";
+//        String test = "synthetic/sections";
+//        String test = "synthetic/sections_bogus";
+//        String test = "synthetic/images";
+//        String test = "synthetic/lists";
+//        String test = "synthetic/lists_medium";
+//        String test = "synthetic/lists_nested";
+//        String test = "synthetic/lists_hard";
+//        String test = "synthetic/lists_horror";
+//        String test = "synthetic/preformatted";
+//        String test = "synthetic/formatting_stack_minimum";
+//        String test = "synthetic/formatting_stack";
+//        String test = "synthetic/formatting_filename_replaceable";
+//        String test = "synthetic/formatting_stack_styleid";
+
+        String test = "CPLEX";
 
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 //        System.out.println(docBook);
 ////        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
 
-        new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook(MainCommand.fromDocxTests + "synthetic/" + test + ".xml");
+        new DocxInput(MainCommand.fromDocxTests + test + ".docx").toDocBook(MainCommand.fromDocxTests + test + ".xml");
     }
 
     private final DocxInputImpl impl;
