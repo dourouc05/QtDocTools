@@ -806,6 +806,10 @@ public class DocxInputImpl {
 
     private static String getStyle(XWPFRun r) {
         // https://github.com/apache/poi/pull/151
+        if (r == null) {
+            throw new RuntimeException();
+        }
+
         CTRPr pr = r.getCTR().getRPr();
         if (pr == null) {
             return "";
@@ -925,9 +929,9 @@ public class DocxInputImpl {
 
             // Formattings encoded as styles.
             String styleID = getStyle(run);
-            String prevStyleID = getStyle(prevRun);
+            String prevStyleID = prevRun == null? "" : getStyle(prevRun);
             if (DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)
-                    && DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
+                    && (prevRun == null || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
                 // If both styles are equal, nothing to do. Otherwise...
                 if (! prevStyleID.equals(styleID)) {
                     if (prevStyleID.equals("Normal")) {
@@ -940,10 +944,11 @@ public class DocxInputImpl {
                     }
                 }
             } else {
+                // It's not because the previous condition was not met that an error should be shown.
                 if (! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
                     unrecognisedStyle(run);
                 }
-                if (! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
+                if (prevRun != null && ! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
                     unrecognisedStyle(prevRun);
                 }
             }

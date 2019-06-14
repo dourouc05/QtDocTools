@@ -4,7 +4,7 @@ public class Tuple<T, U> {
     public final T first;
     public final U second;
 
-    Tuple(T t, U u) {
+    public Tuple(T t, U u) {
         first = t;
         second = u;
     }
