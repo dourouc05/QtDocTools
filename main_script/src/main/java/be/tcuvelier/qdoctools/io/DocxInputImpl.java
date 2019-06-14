@@ -793,11 +793,11 @@ public class DocxInputImpl {
         for (Iterator<XWPFRun> iterator = runs.iterator(); iterator.hasNext(); ) {
             XWPFRun r = iterator.next();
             if (r instanceof XWPFHyperlinkRun) {
-                visitHyperlinkRun((XWPFHyperlinkRun) r, prevRun, iterator.hasNext());
+                visitHyperlinkRun((XWPFHyperlinkRun) r, prevRun, ! iterator.hasNext());
             } else if (r.getEmbeddedPictures().size() >= 1) {
-                visitPictureRun(r, prevRun, iterator.hasNext());
+                visitPictureRun(r, prevRun, ! iterator.hasNext());
             } else {
-                visitRun(r, prevRun, iterator.hasNext());
+                visitRun(r, prevRun, ! iterator.hasNext());
             }
             prevRun = r;
         }
@@ -806,10 +806,6 @@ public class DocxInputImpl {
 
     private static String getStyle(XWPFRun r) {
         // https://github.com/apache/poi/pull/151
-        if (r == null) {
-            throw new RuntimeException();
-        }
-
         CTRPr pr = r.getCTR().getRPr();
         if (pr == null) {
             return "";
@@ -884,6 +880,7 @@ public class DocxInputImpl {
         private void dealWith(boolean isFormattingEnabled, DocBookFormatting f) throws XMLStreamException {
             if (isFormattingEnabled && ! stack.contains(f)) { // If this formatting is new, add it.
                 addedInRun.add(f);
+                stack.add(f);
             } else if (! isFormattingEnabled && stack.contains(f)) { // If this formatting is not enabled but was there
                 // before, remove it.
                 unstackUntilAndRemove(f);
@@ -923,7 +920,7 @@ public class DocxInputImpl {
             dealWith(run.isBold(), DocBookFormatting.EMPHASIS_BOLD);
             dealWith(run.isItalic(), DocBookFormatting.EMPHASIS);
             dealWith(run.getUnderline() != UnderlinePatterns.NONE, DocBookFormatting.EMPHASIS_UNDERLINE);
-            dealWith(run.isStrikeThrough() || run.isDoubleStrikeThrough(), DocBookFormatting.EMPHASIS);
+            dealWith(run.isStrikeThrough() || run.isDoubleStrikeThrough(), DocBookFormatting.EMPHASIS_STRIKETHROUGH);
             dealWith(run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT, DocBookFormatting.SUPERSCRIPT);
             dealWith(run.getVerticalAlignment().intValue() == INT_SUBSCRIPT, DocBookFormatting.SUPERSCRIPT);
 
