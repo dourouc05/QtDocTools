@@ -37,16 +37,16 @@ public enum DocBookBlock {
     );
 
     public static Map<DocBookBlock, Predicate<String>> blockToPredicate = Map.ofEntries();
-
     public static Map<Predicate<String>, String> predicateToStyleID = Map.ofEntries();
-
     public static Map<String, String> styleIDToDocBookTag = Map.ofEntries();
+    public static Map<String, DocBookBlock> styleIDToBlock = Map.ofEntries();
 
     static {
         // Make the fields mutable temporarily.
         blockToPredicate = new HashMap<>(blockToPredicate);
         predicateToStyleID = new HashMap<>(predicateToStyleID);
         styleIDToDocBookTag = new HashMap<>(styleIDToDocBookTag);
+        styleIDToBlock = new HashMap<>(styleIDToBlock);
 
         // Fill them.
         List<Triple<DocBookBlock, String, String>> whole = new ArrayList<>(preformatted);
@@ -57,12 +57,14 @@ public enum DocBookBlock {
             blockToPredicate.put(t.first, DocBook.tagRecogniser(t.second));
             predicateToStyleID.put(DocBook.tagRecogniser(t.second), t.third);
             styleIDToDocBookTag.put(t.third, t.second);
+            styleIDToBlock.put(t.third, t.first);
         }
 
         // Make them immutable again.
         blockToPredicate = Map.copyOf(blockToPredicate);
         predicateToStyleID = Map.copyOf(predicateToStyleID);
         styleIDToDocBookTag = Map.copyOf(styleIDToDocBookTag);
+        styleIDToBlock = Map.copyOf(styleIDToBlock);
     }
 
     public static String tagToStyleID(String localName, Attributes attributes) {

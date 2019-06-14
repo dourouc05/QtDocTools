@@ -4,6 +4,7 @@ import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import be.tcuvelier.qdoctools.io.helpers.Tuple;
+import org.apache.poi.wp.usermodel.Paragraph;
 import org.apache.poi.xwpf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +16,9 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.*;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SuppressWarnings("WeakerAccess")
 public class DocxInputImpl {
@@ -27,6 +30,7 @@ public class DocxInputImpl {
     private FormattingStack currentFormatting;
     private int currentDepth;
     private int currentSectionLevel;
+    private PreformattedMetadata preformattedMetadata;
     private boolean isDisplayedFigure = false;
     private boolean isWithinList = false; // TODO: Introduce a stack, like DocxOutput? Could merge in isWithinVariableList.
 
@@ -276,7 +280,7 @@ public class DocxInputImpl {
 
     /** Paragraphs. **/
 
-    private void visitNormalParagraph(XWPFParagraph p) throws XMLStreamException {
+    private void visitNormalParagraph(@NotNull XWPFParagraph p) throws XMLStreamException {
         // Ignore captions, as they are handled directly within mediaobjects/tables.
         if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
             if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
@@ -325,11 +329,90 @@ public class DocxInputImpl {
         }
     }
 
-    private void visitPreformatted(XWPFParagraph p) throws XMLStreamException {
+    private static class PreformattedMetadata {
+        final DocBookBlock type;
+        Optional<String> language;
+        Optional<Boolean> continuation;
+        Optional<Integer> linenumbering;
+        Optional<Integer> startinglinenumber;
+
+        PreformattedMetadata(@NotNull String p) throws XMLStreamException {
+            String[] options = Arrays.stream(p.split("\\.")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
+
+            // Parse the type.
+            if (options[0].equals("Program listing")) {
+                type = DocBookBlock.PROGRAM_LISTING;
+            } else {
+                throw new XMLStreamException("Unrecognised preformatted metadata block: " + options[0]);
+            }
+
+            // Prefill all fields.
+            language = Optional.empty();
+            continuation = Optional.empty();
+            linenumbering = Optional.empty();
+            startinglinenumber = Optional.empty();
+
+            // Parse the rests, if there is anything left.
+            for (int i = 1; i < options.length; ++i) {
+                String[] option = Arrays.stream(options[i].split(":")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
+
+                if (option[0].equalsIgnoreCase("Language")) {
+                    language = Optional.of(option[1]);
+                } else if (option[0].equalsIgnoreCase("Continuation")) {
+                    continuation = Optional.of(Boolean.valueOf(option[1]));
+                } else if (option[0].equalsIgnoreCase("Line numbering")) {
+                    linenumbering = Optional.of(Integer.parseInt(option[1]));
+                } else if (option[0].equalsIgnoreCase("Starting line number")) {
+                    startinglinenumber = Optional.of(Integer.parseInt(option[1]));
+                } else {
+                    throw new XMLStreamException("Unrecognised preformatted option: " + option[0]);
+                }
+            }
+        }
+
+        PreformattedMetadata(@NotNull XWPFParagraph p) throws XMLStreamException {
+            this(p.getText());
+        }
+    }
+
+    private void visitPreformatted(@NotNull XWPFParagraph p) throws XMLStreamException {
+        // The first paragraph of a program listing can give metadata about the listing that comes after.
+        // Conditions: the whole paragraph must be in bold; the next paragraph must have the same style.
+        if (p.getRuns().stream().allMatch(XWPFRun::isBold)) {
+            int pos = p.getDocument().getPosOfParagraph(p);
+            List<XWPFParagraph> lp = p.getDocument().getParagraphs();
+
+            if (pos + 1 < lp.size()) {
+                preformattedMetadata = new PreformattedMetadata(p);
+                return;
+            }
+        }
+
         // Indentation must NOT be increased here: the content of such a tag, in particular the line feeds, must be
         // respected to the letter.
         writeIndent();
         xmlStream.writeStartElement(docbookNS, DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
+
+        if (preformattedMetadata != null) {
+            if (preformattedMetadata.type != DocBookBlock.styleIDToBlock.get(p.getStyleID())) {
+                throw new XMLStreamException("Preformatted metadata style does not correspond to the style of the next paragraph.");
+            }
+
+            if (preformattedMetadata.language.isPresent()) {
+                xmlStream.writeAttribute(docbookNS, "language", preformattedMetadata.language.get());
+            }
+            if (preformattedMetadata.continuation.isPresent()) {
+                xmlStream.writeAttribute(docbookNS, "continuation", preformattedMetadata.continuation.get().toString());
+            }
+            if (preformattedMetadata.linenumbering.isPresent()) {
+                xmlStream.writeAttribute(docbookNS, "linenumbering", preformattedMetadata.linenumbering.get().toString());
+            }
+            if (preformattedMetadata.startinglinenumber.isPresent()) {
+                xmlStream.writeAttribute(docbookNS, "startinglinenumber", preformattedMetadata.startinglinenumber.get().toString());
+            }
+
+            preformattedMetadata = null;
+        }
 
         visitRuns(p.getRuns());
 
@@ -337,7 +420,7 @@ public class DocxInputImpl {
         writeNewLine();
     }
 
-    private void visitPictureRun(XWPFRun r, @SuppressWarnings("unused") XWPFRun prevRun,
+    private void visitPictureRun(@NotNull XWPFRun r, @Nullable @SuppressWarnings("unused") XWPFRun prevRun,
                                  @SuppressWarnings("unused") boolean isLastRun) throws XMLStreamException {
         // TODO: saner implementation based on
         //  https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java#L361?
@@ -804,10 +887,6 @@ public class DocxInputImpl {
             prevRun = r;
         }
 
-        if (currentFormatting.formattings().size() > 0) {
-            throw new XMLStreamException("Assertion error: some styles remain open at the end of a paragraph.");
-        }
-
         currentFormatting = null;
     }
 
@@ -963,7 +1042,7 @@ public class DocxInputImpl {
         for (DocBookFormatting f: formattings.first) {
             // Emphasis and its variants.
             if (f == DocBookFormatting.EMPHASIS) {
-                // Replaceable special case. 
+                // Replaceable special case.
                 if (currentFormatting.formattings().stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
                     xmlStream.writeStartElement(docbookNS, "replaceable");
                 } else {
