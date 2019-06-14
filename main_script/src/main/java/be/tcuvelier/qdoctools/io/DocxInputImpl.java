@@ -963,7 +963,12 @@ public class DocxInputImpl {
         for (DocBookFormatting f: formattings.first) {
             // Emphasis and its variants.
             if (f == DocBookFormatting.EMPHASIS) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
+                // Replaceable special case. 
+                if (currentFormatting.formattings().stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
+                    xmlStream.writeStartElement(docbookNS, "replaceable");
+                } else {
+                    xmlStream.writeStartElement(docbookNS, "emphasis");
+                }
             } else if (f == DocBookFormatting.EMPHASIS_BOLD) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
                 xmlStream.writeAttribute(docbookNS, "role", "bold");

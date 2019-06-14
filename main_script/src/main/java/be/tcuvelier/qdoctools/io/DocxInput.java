@@ -33,10 +33,10 @@ public class DocxInput {
 //        String test = "synthetic/preformatted";
 //        String test = "synthetic/formatting_stack_minimum";
 //        String test = "synthetic/formatting_stack";
-//        String test = "synthetic/formatting_filename_replaceable";
+        String test = "synthetic/formatting_filename_replaceable";
 //        String test = "synthetic/formatting_stack_styleid";
 
-        String test = "CPLEX";
+//        String test = "CPLEX";
 
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 //        System.out.println(docBook);
