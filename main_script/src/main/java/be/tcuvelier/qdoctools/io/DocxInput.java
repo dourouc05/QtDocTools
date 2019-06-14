@@ -31,9 +31,9 @@ public class DocxInput {
 //        String test = "lists_hard";
 //        String test = "lists_horror";
 //        String test = "preformatted";
+//        String test = "formatting_stack_minimum";
 //        String test = "formatting_stack";
-        String test = "formatting_stack_minimum";
-//        String test = "formatting_filename_replaceable";
+        String test = "formatting_filename_replaceable";
 
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 //        System.out.println(docBook);

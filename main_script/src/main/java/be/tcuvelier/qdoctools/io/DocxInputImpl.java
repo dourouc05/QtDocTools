@@ -907,12 +907,12 @@ public class DocxInputImpl {
             String styleID = getStyle(run);
             String prevStyleID = prevRun == null? "" : getStyle(prevRun);
             if (DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)
-                    && (prevRun == null || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
+                    && (prevRun == null || prevStyleID.equals("") || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
                 // If both styles are equal, nothing to do. Otherwise...
                 if (! prevStyleID.equals(styleID)) {
-                    if (prevStyleID.equals("Normal")) {
+                    if (prevStyleID.equals("Normal") || prevStyleID.equals("")) {
                         addedInRun.add(DocBookFormatting.styleIDToFormatting.get(styleID));
-                    } else if (styleID.equals("Normal")) {
+                    } else if (styleID.equals("Normal") || styleID.equals("")) {
                         unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(styleID));
                     } else {
                         unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(prevStyleID));
