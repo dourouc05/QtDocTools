@@ -37,8 +37,9 @@ public class DocxOutput {
 //        String test = "synthetic/formatting_filename_replaceable";
 //        String test = "synthetic/xinclude_main";
 //        String test = "synthetic/link_spacing";
+        String test = "synthetic/admonitions";
 
-        String test = "CPLEX";
+//        String test = "CPLEX";
 
         new DocxOutput(MainCommand.toDocxTests + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + test + ".docx");

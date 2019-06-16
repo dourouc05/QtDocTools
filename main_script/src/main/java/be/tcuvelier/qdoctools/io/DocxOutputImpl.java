@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.imageio.ImageIO;
+import javax.xml.stream.XMLStreamException;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -827,7 +828,11 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Admonitions.
         else if (DocBookBlock.isAdmonition(qName)) {
-            paragraphStyle = DocBookBlock.styleIDToDocBookTag.get(qName);
+            paragraphStyle = DocBookBlock.docbookTagToStyleID.get(qName);
+            if (paragraphStyle == null) {
+                throw new DocxException("admonition " + qName + " not found in docbookTagToStyleID.");
+            }
+
             warnUnknownAttributes(attributes);
         }
 
