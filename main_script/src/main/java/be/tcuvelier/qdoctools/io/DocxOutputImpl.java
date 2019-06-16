@@ -353,6 +353,8 @@ public class DocxOutputImpl extends DefaultHandler {
     private int paragraphNumber = -1;
     private XWPFRun run;
     private String paragraphStyle = "Normal";
+    private int runNumber = -1;
+    private int runCharactersNumber = -1;
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
@@ -711,6 +713,8 @@ public class DocxOutputImpl extends DefaultHandler {
     private void ensureNoTextAllowed() {
         paragraph = null;
         run = null;
+        runNumber = -1;
+        runCharactersNumber = -1;
     }
 
     private void restoreParagraphStyle() {
@@ -796,6 +800,8 @@ public class DocxOutputImpl extends DefaultHandler {
 
         else if (SAXHelpers.isTitleTag(qName)) {
             paragraph = doc.createParagraph();
+            runNumber = 0;
+
             if (currentSectionDepth == 0) {
                 if (currentLevel.peekRootArticle() || currentLevel.peekRootArticleInfo()) {
                     paragraph.setStyle(DocBookBlock.tagToStyleID("article", attributes));
@@ -817,7 +823,9 @@ public class DocxOutputImpl extends DefaultHandler {
             } else {
                 throw new DocxException("title not expected");
             }
+
             run = paragraph.createRun();
+            runCharactersNumber = 0;
             warnUnknownAttributes(attributes);
         }
 
@@ -850,9 +858,12 @@ public class DocxOutputImpl extends DefaultHandler {
             if (currentLevel.peekTable()) {
                 // In tables, add the new paragraph to the current cell.
                 paragraph = tableCell.addParagraph();
+                runNumber = 0;
+                runCharactersNumber = 0;
             } else {
                 // Otherwise, create a new paragraph at the end of the document.
                 paragraph = doc.createParagraph();
+                runNumber = 0;
 
                 if (currentLevel.peekList()) {
                     paragraph.setNumID(numbering);
@@ -876,6 +887,7 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph.setStyle(paragraphStyle);
 
             run = paragraph.createRun();
+            runCharactersNumber += 1;
             warnUnknownAttributes(attributes);
         }
 
@@ -908,6 +920,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // Create a new run if this one is already started.
             if (run.text().length() > 0) {
                 run = paragraph.createRun();
+                runNumber += 1;
             }
 
             setRunFormatting();
@@ -918,6 +931,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // Always create a new run, as it is much easier than to replace a run within the paragraph.
             run = h.createHyperlinkRun(attr.get("href"));
+            runNumber += 1;
 
             // Set formatting for the link.
             run.setUnderline(UnderlinePatterns.SINGLE);
@@ -962,7 +976,9 @@ public class DocxOutputImpl extends DefaultHandler {
                 tableCell = tableRow.createCell();
             }
             paragraph = tableCell.getParagraphs().get(0);
+            runNumber = 0;
             run = paragraph.createRun();
+            runCharactersNumber = 0;
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
             throw new DocxException("table headers/footers are not handled.");
@@ -983,6 +999,7 @@ public class DocxOutputImpl extends DefaultHandler {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
             paragraph = doc.createParagraph();
+            runNumber = 0;
             paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
             // For program listings, add the language as a first paragraph.
@@ -1011,14 +1028,19 @@ public class DocxOutputImpl extends DefaultHandler {
                 run.setText(text);
 
                 paragraph = doc.createParagraph();
+                runNumber = 0;
+                runCharactersNumber = 0;
                 paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
                 warnUnknownAttributes(attr, Stream.of("language", "continuation", "linenumbering", "startinglinenumber"));
+                return;
             } else {
                 warnUnknownAttributes(attr);
             }
 
             run = paragraph.createRun();
+            runNumber = 0;
+            runCharactersNumber = 0;
         }
 
         // Media tags: for now, only images are implemented.
@@ -1026,12 +1048,17 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName)) {
             paragraph = doc.createParagraph();
+            runNumber = 0;
+
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
                 paragraph.setAlignment(DocBookAlignment.docbookAttributeToParagraphAlignment(attr.get("align").toLowerCase()));
             }
             warnUnknownAttributes(attr, Stream.of("align"));
+
             run = paragraph.createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
         } else if (SAXHelpers.isImageDataTag(qName)) {
             h.createImage(attributes); // Already warns about unknown attributes.
         } else if (SAXHelpers.isImageObjectTag(qName)) {
@@ -1040,8 +1067,14 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isCaptionTag(qName)) { // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
             paragraph = doc.createParagraph();
+            runNumber = 0;
+
             paragraph.setStyle("Caption");
+
             run = paragraph.createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
+
             warnUnknownAttributes(attributes);
         }
 
@@ -1137,8 +1170,10 @@ public class DocxOutputImpl extends DefaultHandler {
             run.setText(segmentedListHeaders.get(segmentNumber));
 
             paragraph = doc.createParagraph();
+            runNumber = 0;
             paragraph.setStyle("DefinitionListItem");
             run = paragraph.createRun();
+            runCharactersNumber = 0;
         }
 
         // Variable lists: quite similar to segmented lists, but a completely different content model.
@@ -1162,8 +1197,11 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             paragraph = doc.createParagraph();
+            runNumber = 0;
             paragraph.setStyle("VariableListTitle");
             run = paragraph.createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
             // Then directly inline content.
 
             warnUnknownAttributes(attributes);
@@ -1239,10 +1277,14 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (DocBookFormatting.isRunFormatting(qName)) {
             currentFormatting.remove(currentFormatting.size() - 1);
             run = paragraph.createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
             setRunFormatting();
         } else if (SAXHelpers.isLinkTag(qName)) {
             // Create a new run, so that the new text is not within the same run.
             run = paragraph.createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
         }
 
         // Tables: update counters.
@@ -1418,25 +1460,13 @@ public class DocxOutputImpl extends DefaultHandler {
             }
         } else {
             // White space is not important, get rid of (most of) it.
-            content = content.replaceAll("[\n\r]", " ");
+            content = content.replaceAll("[\r\n\t]", " ");
             while (content.contains("  ")) {
                 content = content.replace("  ", " ");
             }
 
-            // Find the identifier for this run.
-            int pos = -1;
-            {
-                List<XWPFRun> runs = paragraph.getRuns();
-                for (int i = 0; i < runs.size(); ++i) {
-                    if (runs.get(i).equals(run)) {
-                        pos = i;
-                        break;
-                    }
-                }
-            }
-
             // If this is the first run of the paragraph, white space at the beginning is not important.
-            if (pos == 0) {
+            if (runCharactersNumber == 0) {
                 content = content.replaceAll("^\\s*", ""); // Trim left.
             }
 
@@ -1459,25 +1489,23 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // If the previous run ends with white space, as it is not relevant in this run, remove it from
             // the beginning of this run (i.e. trim left).
-            {
-                int prevPos = pos - 1;
-                if (prevPos >= 0) {
-                    XWPFRun previous = paragraph.getRuns().get(prevPos);
-                    String prevText = previous.text();
+            if (runNumber > 0) {
+                XWPFRun previous = paragraph.getRuns().get(runNumber - 1);
+                String prevText = previous.text();
 
-                    if (prevText.endsWith(" ")) {
-                        content = content.replaceAll("^\\s*", ""); // Trim left.
-                    }
-
-//                    // Sometimes undo what the previous step did (justAddedWhiteSpace == true).
-//                    if (justAddedWhiteSpace && prevText.endsWith(")")) {
-//                        prevText = prevText.substring(0, prevText.length() - 2);
-//                        previous.setText(prevText);
-//                    }
+                if (prevText.endsWith(" ")) {
+                    content = content.replaceAll("^\\s+", ""); // Trim left.
                 }
+
+//                // Sometimes undo what the previous step did (justAddedWhiteSpace == true).
+//                if (justAddedWhiteSpace && prevText.endsWith(")")) {
+//                    prevText = prevText.substring(0, prevText.length() - 2);
+//                    previous.setText(prevText);
+//                }
             }
 
             run.setText(content);
+            runCharactersNumber += 1;
         }
     }
 
