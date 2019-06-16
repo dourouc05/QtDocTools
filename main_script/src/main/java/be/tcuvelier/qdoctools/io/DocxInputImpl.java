@@ -989,9 +989,10 @@ public class DocxInputImpl {
             removedInRun = new ArrayDeque<>();
 
             // Formattings encoded as run attributes.
+            boolean isLink = run instanceof XWPFHyperlinkRun;
             dealWith(run.isBold(), DocBookFormatting.EMPHASIS_BOLD);
             dealWith(run.isItalic(), DocBookFormatting.EMPHASIS);
-            dealWith(run.getUnderline() != UnderlinePatterns.NONE, DocBookFormatting.EMPHASIS_UNDERLINE);
+            dealWith(! isLink && run.getUnderline() != UnderlinePatterns.NONE, DocBookFormatting.EMPHASIS_UNDERLINE);
             dealWith(run.isStrikeThrough() || run.isDoubleStrikeThrough(), DocBookFormatting.EMPHASIS_STRIKETHROUGH);
             dealWith(run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT, DocBookFormatting.SUPERSCRIPT);
             dealWith(run.getVerticalAlignment().intValue() == INT_SUBSCRIPT, DocBookFormatting.SUPERSCRIPT);
