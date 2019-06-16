@@ -921,6 +921,7 @@ public class DocxOutputImpl extends DefaultHandler {
             if (run.text().length() > 0) {
                 run = paragraph.createRun();
                 runNumber += 1;
+                runCharactersNumber = 0;
             }
 
             setRunFormatting();
@@ -932,6 +933,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // Always create a new run, as it is much easier than to replace a run within the paragraph.
             run = h.createHyperlinkRun(attr.get("href"));
             runNumber += 1;
+            runCharactersNumber = 0;
 
             // Set formatting for the link.
             run.setUnderline(UnderlinePatterns.SINGLE);
@@ -1466,7 +1468,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // If this is the first run of the paragraph, white space at the beginning is not important.
-            if (runCharactersNumber == 0) {
+            if (runNumber == 0 && runCharactersNumber == 0) {
                 content = content.replaceAll("^\\s*", ""); // Trim left.
             }
 
