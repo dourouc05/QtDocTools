@@ -329,6 +329,7 @@ public class DocxInputImpl {
         }
     }
 
+    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private static class PreformattedMetadata {
         final DocBookBlock type;
         Optional<String> language;
