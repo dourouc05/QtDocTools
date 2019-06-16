@@ -69,21 +69,26 @@ cplex.solve();</db:programlisting>
     <db:screen>CPLEX&gt; read model.lp
 Problem 'Problems/model.lp' read.
 Read time = 0.02 sec. (0.55 ticks)
+
 CPLEX&gt; optimize
 Row 'c4257' infeasible, all entries at implied bounds.
 Presolve time = 0.00 sec. (0.89 ticks)
 …
+
 CPLEX&gt; conflict
 Refine conflict on 4884 members...
+
  Iteration  Max Members  Min Members
          1         4274            0
          …
         37            7            7
+
 Minimal conflict:    7 linear constraint(s)
                      0 lower bound(s)
                      0 upper bound(s)
 Conflict computation time =    0.22 sec.  Iterations = 37
 Deterministic time = 38.98 ticks  (177.99 ticks/sec)
+
 CPLEX&gt; display conflict all
 Minimize
  obj:
@@ -122,11 +127,13 @@ Binaries
     <db:programlisting language="c++">class KnapSack {
 private: 
     const int capacity; 
+
 public:
     KnapSack(int c) : capacity(c) {}
 };</db:programlisting>
     <db:programlisting language="java">public class KnapSack {
     private final int capacity;
+
     public KnapSack(int c) {
         capacity = c;
     }
@@ -135,6 +142,7 @@ public:
     <db:programlisting language="c++">class Object {
 private:
     const int id, weight, value;
+
 public:
     Object(int i, int w, int v) : id(i), weight(w), value(v) {}
     int getId()      { return id;     }
@@ -143,20 +151,25 @@ public:
 };</db:programlisting>
     <db:programlisting language="java">public class Object {
     private final int id, weight, value;
+
     public Object(int i, int w, int v) {
         id = i;    weight = w;    value = v;
     }
+
     public int getId()      { return id;     }
     public int getWeight()  { return weight; }
     public int getValue()   { return value;  }md
 }</db:programlisting>
     <db:para>Il faut alors créer une variable dans le modèle mathématique par objet. Il est commode d'effectuer cette opération dans une méthode et de stocker la valeur dans l'objet.</db:para>
     <db:programlisting language="c++">#include &lt;ilcplex/ilocplex.h&gt;
+
 class Object {
 private:
     IloNumVar* x;
+
 public:
     IloNumVar&amp; getX() { return *x; }
+
     void createVariables(IloEnv&amp; env) {
         x = new IloNumVar(env, 0, 1, IloNumVar::Bool, "x" + id);
     }
@@ -164,9 +177,11 @@ public:
     <db:programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
+
 public class Object {
     private IloIntVar x;
     public IloIntVar getX() { return x; }
+
     public void createVariables(IloCplex solver) throws IloException {
         x = solver.boolVar("x" + id);
     }
@@ -174,6 +189,7 @@ public class Object {
     <db:para>Côté sac à dos, il faudra imposer que les objets pris ne dépassent pas la capacité. Pour ce faire, une méthode imposera cette contrainte, elle prendra en argument tous les objets.</db:para>
     <db:programlisting language="c++">#include &lt;ilcplex/ilocplex.h&gt;
 #include &lt;vector&gt;
+
 class KnapSack {
 public:
     void addConstraints(IloModel&amp; model, vector&lt;Object*&gt; objects) {
@@ -183,12 +199,14 @@ public:
             xs.add(object-&gt;getX());
             weights.add(object-&gt;getWeight());
         }
+
         model.add(IloScalProd(weights, xs) &lt;= capacity);
     }
 };</db:programlisting>
     <db:programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
+
 public class KnapSack {
     public void addConstraints(IloCplex solver, Object[] objects) throws IloException {
         IloIntVar[] xs = new IloIntVar[objects.length];
@@ -197,6 +215,7 @@ public class KnapSack {
             xs[i] = objects[i].getX();
             weights[i] = objects[i].getWeight();
         }
+
         solver.addLe(solver.scalProd(weights, xs), capacity);
     }
 }</db:programlisting>
@@ -205,21 +224,27 @@ public class KnapSack {
 #include &lt;ilconcert/iloexpression.h&gt;
 #include &lt;ilconcert/ilolinear.h&gt;
 #include &lt;vector&gt;
+
 int main(int argc, char* argv[]) {
     // Create data.
     vector&lt;Object*&gt; objects;
     objects[0] = new Object(1, 12, 5);
     objects[1] = new Object(2, 25, 9);
     objects[2] = new Object(3, 10, 3);
+
     KnapSack sack(30);
+
     // Initialise solver.
     IloEnv env;
     IloModel model(env);
+
+
     // Fill the model.
     for (auto o : objects) {
         o-&gt;createVariables(env);
     }
     sack.addConstraints(model, objects);
+
     IloNumVarArray xs;
     IloIntArray values;
     for (auto object : objects) {
@@ -227,14 +252,17 @@ int main(int argc, char* argv[]) {
         values.add(object-&gt;getValue());
     }
     model.add(IloMaximize(env, IloScalProd(xs, values)));
+
     // Solve it.
     IloCplex solver(model);
     solver.solve();
     solver.exportModel("model.lp");
     solver.setParam(IloCplex::TiLim, 30);
+
     // Give the solver one feasible solution (useful in large MIP models).
     IloNumArray start(env, 3, 1., 0., 1.); 
     solver.addMIPStart(xs, start, IloCplex::MIPStartAuto, "initial solution");
+
     // Show the solution.
     for (auto object : objects) {
         cout &lt;&lt; "Object " &lt;&lt; object-&gt;getId() &lt;&lt; ": " &lt;&lt; ((solver.getValue(object-&gt;getX()) &gt; 0.75) ? "taken" : "left");
@@ -244,6 +272,7 @@ int main(int argc, char* argv[]) {
     <db:programlisting language="java">import ilog.concert.IloException;
 import ilog.concert.IloIntVar;
 import ilog.cplex.IloCplex;
+
 public class Main {
     public static void main(String[] args) throws IloException {
         // Create data.
@@ -251,14 +280,18 @@ public class Main {
         objects[0] = new Object(1, 12, 5);
         objects[1] = new Object(2, 25, 9);
         objects[2] = new Object(3, 10, 3);
+
         KnapSack sack = new KnapSack(30);
+
         // Initialise solver.
         IloCplex solver = new IloCplex();
+
         // Fill the model.
         for(Object o : objects) {
             o.createVariables(solver);
         }
         sack.addConstraints(solver, objects);
+
         IloIntVar[] xs = new IloIntVar[objects.length];
         int[] values = new int[objects.length];
         for(int i = 0; i &lt; objects.length; ++i) {
@@ -266,12 +299,15 @@ public class Main {
             values[i] = objects[i].getValue();
         }
         solver.addMaximize(solver.scalProd(xs, values));
+
         // Give the solver one feasible solution (useful in large MIP models).
         solver.addMIPStart(xs, new double[]{1., 0., 1.}, "initial solution");
+
         // Solve it.
         solver.exportModel("model.lp");
         solver.setParam(IloCplex.DoubleParam.TiLim, 30);
         solver.solve();
+
         // Show the solution.
         for (Object object : objects) {
             String taken = (solver.getValue(object.getX()) &gt; 0.75) ? "taken" : "left";
