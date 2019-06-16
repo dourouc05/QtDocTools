@@ -97,6 +97,7 @@ public class DocxInputImpl {
         xmlStream.writeNamespace("db", docbookNS);
         xmlStream.setPrefix("xlink", xlinkNS);
         xmlStream.writeNamespace("xlink", xlinkNS);
+        xmlStream.writeAttribute("version", "5.1");
         increaseIndent();
 
         writeNewLine();
@@ -400,16 +401,16 @@ public class DocxInputImpl {
             }
 
             if (preformattedMetadata.language.isPresent()) {
-                xmlStream.writeAttribute(docbookNS, "language", preformattedMetadata.language.get());
+                xmlStream.writeAttribute("language", preformattedMetadata.language.get());
             }
             if (preformattedMetadata.continuation.isPresent()) {
-                xmlStream.writeAttribute(docbookNS, "continuation", preformattedMetadata.continuation.get().toString());
+                xmlStream.writeAttribute("continuation", preformattedMetadata.continuation.get().toString());
             }
             if (preformattedMetadata.linenumbering.isPresent()) {
-                xmlStream.writeAttribute(docbookNS, "linenumbering", preformattedMetadata.linenumbering.get().toString());
+                xmlStream.writeAttribute("linenumbering", preformattedMetadata.linenumbering.get().toString());
             }
             if (preformattedMetadata.startinglinenumber.isPresent()) {
-                xmlStream.writeAttribute(docbookNS, "startinglinenumber", preformattedMetadata.startinglinenumber.get().toString());
+                xmlStream.writeAttribute("startinglinenumber", preformattedMetadata.startinglinenumber.get().toString());
             }
 
             preformattedMetadata = null;
@@ -458,17 +459,17 @@ public class DocxInputImpl {
 
         writeIndent();
         xmlStream.writeEmptyElement(docbookNS, "imagedata");
-        xmlStream.writeAttribute(docbookNS, "fileref", imageName);
+        xmlStream.writeAttribute("fileref", imageName);
         // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
         // Cx/Cx return values in EMUs (very different from EM).
 //        https://github.com/apache/poi/pull/150
-        xmlStream.writeAttribute(docbookNS, "width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in");
-        xmlStream.writeAttribute(docbookNS, "depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
+        xmlStream.writeAttribute("width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in");
+        xmlStream.writeAttribute("depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
         if (isDisplayedFigure) {
             XWPFParagraph parent = ((XWPFParagraph) r.getParent());
             String dbAlign = DocBookAlignment.paragraphAlignmentToDocBookAttribute(parent.getAlignment());
             if (dbAlign.length() > 0) {
-                xmlStream.writeAttribute(docbookNS, "align", dbAlign);
+                xmlStream.writeAttribute("align", dbAlign);
             }
         }
         writeNewLine();
@@ -1052,13 +1053,13 @@ public class DocxInputImpl {
                 }
             } else if (f == DocBookFormatting.EMPHASIS_BOLD) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "bold");
+                xmlStream.writeAttribute("role", "bold");
             } else if (f == DocBookFormatting.EMPHASIS_STRIKETHROUGH) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "strikethrough");
+                xmlStream.writeAttribute("role", "strikethrough");
             } else if (f == DocBookFormatting.EMPHASIS_UNDERLINE) {
                 xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute(docbookNS, "role", "underline");
+                xmlStream.writeAttribute("role", "underline");
             }
             // Full-blown tags.
             else {
