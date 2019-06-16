@@ -31,13 +31,14 @@ public class DocxOutput {
 //        String test = "synthetic/lists";
 //        String test = "synthetic/lists_nested";
 //        String test = "synthetic/preformatted";
+        String test = "synthetic/preformatted_lines";
 //        String test = "synthetic/book";
 //        String test = "synthetic/book_abstract";
 //        String test = "synthetic/formatting_filename_replaceable";
 //        String test = "synthetic/xinclude_main";
 //        String test = "synthetic/link_spacing";
 
-        String test = "CPLEX";
+//        String test = "CPLEX";
 
         new DocxOutput(MainCommand.toDocxTests + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + test + ".docx");

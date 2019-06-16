@@ -1014,7 +1014,6 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             run = paragraph.createRun();
-
         }
 
         // Media tags: for now, only images are implemented.
@@ -1272,7 +1271,6 @@ public class DocxOutputImpl extends DefaultHandler {
             ensureNoTextAllowed();
 
             currentLevel.pop(Level.BLOCK_PREFORMATTED);
-
         }
 
         // Media: nothing to do.
@@ -1402,15 +1400,13 @@ public class DocxOutputImpl extends DefaultHandler {
         // This is only done in environments where line feeds must be reflected in DocBook.
         if (currentLevel.peekBlockPreformatted()) {
             if (content.contains("\n") || content.contains("\r")) {
-                String[] lines = content.split("([\n\r])+");
-                boolean firstLine = true;
-                for (String line : lines) {
-                    if (! firstLine) {
+                String[] lines = content.split("(\n|\r\n)");
+                for (int i = 0; i < lines.length; i++) {
+                    String line = lines[i];
+                    run.setText(line);
+                    if (i != lines.length - 1) {
                         run.addBreak();
                     }
-
-                    run.setText(line);
-                    firstLine = false;
                 }
             } else {
                 run.setText(content);

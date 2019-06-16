@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>API CPLEX</title>
+	<screen>CPLEX> read model.lp
+Problem 'Problems/model.lp' read.
+Read time = 0.02 sec. (0.55 ticks)
+
+CPLEX> optimize
+Row 'c4257' infeasible, all entries at implied bounds.
+Presolve time = 0.00 sec. (0.89 ticks)
+…
+
+CPLEX> conflict
+Refine conflict on 4884 members...
+
+ Iteration  Max Members  Min Members
+         1         4274            0
+         …
+        37            7            7
+
+Minimal conflict:    7 linear constraint(s)
+                     0 lower bound(s)
+                     0 upper bound(s)
+Conflict computation time =    0.22 sec.  Iterations = 37
+Deterministic time = 38.98 ticks  (177.99 ticks/sec)
+
+CPLEX> display conflict all
+Minimize
+ obj:
+Subject To
+ off_t1_th4:              on_t1_th4 + off_t1_th4  = 1
+ off_t2_th4:              on_t2_th4 + off_t2_th4  = 1
+ timeToStart_t0_th4:      - starting_t0_th4 + off_t1_th4 >= 0
+ startConjunction_t0_th4: - on_t2_th4 + starting_t0_th4 >= 0
+ stopIfPreviousOn_t0_th4: stopping_t0_th4 &lt;= 0
+ stopConjunction_t2_th4:  - on_t1_th4 - off_t2_th4 + stopping_t0_th4 >= -1
+ c4225:                   - on_t1_th4 &lt;= -1
+\Sum of equality rows in the conflict:
+\ sum_eq: on_t1_th4 + on_t2_th4 + off_t1_th4 + off_t2_th4  = 2
+Bounds
+ 0 &lt;= on_t1_th4 &lt;= 1
+ 0 &lt;= on_t2_th4 &lt;= 1
+ 0 &lt;= starting_t0_th4 &lt;= 1
+ 0 &lt;= off_t1_th4 &lt;= 1
+ 0 &lt;= off_t2_th4 &lt;= 1
+ 0 &lt;= stopping_t0_th4 &lt;= 1
+Binaries
+ on_t1_th4  on_t2_th4  starting_t0_th4  off_t1_th4  off_t2_th4
+ stopping_t0_th4</screen>
+</article>
