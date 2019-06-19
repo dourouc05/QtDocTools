@@ -4,7 +4,6 @@ import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import be.tcuvelier.qdoctools.io.helpers.Tuple;
-import org.apache.poi.wp.usermodel.Paragraph;
 import org.apache.poi.xwpf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,12 +12,14 @@ import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @SuppressWarnings("WeakerAccess")
 public class DocxInputImpl {
@@ -30,9 +31,11 @@ public class DocxInputImpl {
     private FormattingStack currentFormatting;
     private int currentDepth;
     private int currentSectionLevel;
+
     private PreformattedMetadata preformattedMetadata;
     private boolean isDisplayedFigure = false;
-    private boolean isWithinList = false; // TODO: Introduce a stack, like DocxOutput? Could merge in isWithinVariableList.
+    private boolean isWithinAdmonition = false;
+    private boolean isWithinList = false; // TODO: Introduce a stack, like DocxOutput? Could merge in isWithinVariableList. Would help deal with nested lists.
 
     private int currentDefinitionListItemNumber = -1;
     private int currentDefinitionListItemSegmentNumber = -1;
@@ -208,6 +211,13 @@ public class DocxInputImpl {
                     return;
                 case "ListParagraph":
                     throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
+                case "Caution":
+                case "Important":
+                case "Note":
+                case "Tip":
+                case "Warning":
+                    visitAdmonition(p);
+                    return;
                 default:
                     // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
                     System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
@@ -484,6 +494,43 @@ public class DocxInputImpl {
             writeIndent();
             xmlStream.writeEndElement(); // </db:inlinemediaobject>
             // No line feed as within a paragraph.
+        }
+    }
+
+    private void visitAdmonition(XWPFParagraph p) throws XMLStreamException {
+        // Open the admonition if this is the first paragraph with this kind of style.
+        if (! isWithinAdmonition) {
+            isWithinAdmonition = true;
+
+            writeIndent();
+            xmlStream.writeStartElement(docbookNS, DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
+            writeNewLine();
+            increaseIndent();
+        }
+
+        visitNormalParagraph(p);
+
+        // Close the admonition if the next paragraph does not have the same style.
+        {
+            int pos = p.getDocument().getPosOfParagraph(p);
+            List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
+
+            boolean close;
+            if (pos >= paragraphs.size() - 1) {
+                close = true;
+            } else {
+                XWPFParagraph nextP = paragraphs.get(pos + 1);
+                close = ! p.getStyleID().equals(nextP.getStyleID());
+            }
+
+            if (close) {
+                decreaseIndent();
+                writeIndent();
+                xmlStream.writeEndElement(); // </db:admonition tag>
+                writeNewLine();
+
+                isWithinAdmonition = false;
+            }
         }
     }
 

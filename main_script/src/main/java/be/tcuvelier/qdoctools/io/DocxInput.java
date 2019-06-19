@@ -38,6 +38,8 @@ public class DocxInput {
 //        String test = "synthetic/formatting_link_underline";
 //        String test = "synthetic/programlisting_one";
 //        String test = "synthetic/programlisting_many";
+//        String test = "synthetic/admonitions";
+//        String test = "synthetic/admonitions_many";
 
         String test = "CPLEX";
 
