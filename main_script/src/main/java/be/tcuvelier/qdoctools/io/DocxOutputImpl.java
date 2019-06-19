@@ -1030,6 +1030,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 run.setText(text);
 
                 paragraph = doc.createParagraph();
+                run = paragraph.createRun();
                 runNumber = 0;
                 runCharactersNumber = 0;
                 paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
