@@ -51,7 +51,7 @@ cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</db:programlisting>
     <db:programlisting language="c++">IloCplex cplex(model);
 cplex.solve();</db:programlisting>
     <db:programlisting language="java">cplex.solve();</db:programlisting>
-    <db:para>La méthode <db:methodname>solve()</db:methodname> retourne un booléen vrai si l'optimisation s'est déroulée sans problème (si une solution a été trouvée).<db:methodname>getStatus()</db:methodname> donne plus de détail (solution optimale trouvée, solution faisable mais non optimale trouvée, modèle infaisable, etc.). </db:para>
+    <db:para>La méthode <db:methodname>solve()</db:methodname> retourne un booléen vrai si l'optimisation s'est déroulée sans problème (si une solution a été trouvée). <db:methodname>getStatus()</db:methodname> donne plus de détail (solution optimale trouvée, solution faisable mais non optimale trouvée, modèle infaisable, etc.). </db:para>
     <db:para>La valeur de l'objectif est accessible par la méthode <db:methodname>getObjValue()</db:methodname>.</db:para>
     <db:programlisting>double objective = cplex.getObjValue(); </db:programlisting>
     <db:para>La valeur d'une variable particulière s'obtient en passant son objet <db:classname>IloNumVar</db:classname> en paramètre à <db:methodname>getValue()</db:methodname>.</db:para>
@@ -65,7 +65,7 @@ cplex.solve();</db:programlisting>
     <db:para>En cas de problème dans la résolution (pas de solution faisable, loin de l'optimalité, etc.), il est bien souvent utile d'exporter le modèle créé. CPLEX permet de créer très facilement des fichiers LP contenant toutes les contraintes et objectifs, contenant notamment leur nom.</db:para>
     <db:programlisting>cplex.exportModel("model.lp");</db:programlisting>
     <db:para>Ce fichier peut alors être chargé dans l'interface interactive, où <db:link xlink:href="http://pic.dhe.ibm.com/infocenter/cosinfoc/v12r6/index.jsp?topic=%2Filog.odms.ide.help%2Frefcppopl%2Fhtml%2Fconflict.html">un outil de détection de conflits</db:link> peut se révéler précieux (il est également accessible par les API CPLEX). </db:para>
-    <db:para>Dans la console interactive, une fois le modèle chargé et optimisé, la commande<db:command>conflict</db:command> détermine un sous-ensemble d'inégalités rendant le problème non faisable (<db:acronym>IIS</db:acronym>, pour <db:foreignphrase>irreducible infeasible set</db:foreignphrase>), qu'il présente grâce à <db:command>display conflict all</db:command> sous la forme d'un problème de faisabilité reprenant ces quelques contraintes (souvent assez peu).</db:para>
+    <db:para>Dans la console interactive, une fois le modèle chargé et optimisé, la commande <db:command>conflict</db:command> détermine un sous-ensemble d'inégalités rendant le problème non faisable (<db:acronym>IIS</db:acronym>, pour <db:foreignphrase>irreducible infeasible set</db:foreignphrase>), qu'il présente grâce à <db:command>display conflict all</db:command> sous la forme d'un problème de faisabilité reprenant ces quelques contraintes (souvent assez peu).</db:para>
     <db:screen>CPLEX&gt; read model.lp
 Problem 'Problems/model.lp' read.
 Read time = 0.02 sec. (0.55 ticks)

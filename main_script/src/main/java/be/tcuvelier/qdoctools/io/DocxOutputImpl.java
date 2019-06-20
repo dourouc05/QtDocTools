@@ -1498,23 +1498,6 @@ public class DocxOutputImpl extends DefaultHandler {
                 content = content.replaceAll("^\\s*", ""); // Trim left.
             }
 
-            // Do not test if this is the last run of the paragraph: as it is still being built, it will obviously
-            // always be the last one. Caveat: might leave one white space character at the end of a paragraph.
-            // That's not really a problem, as these spaces do not change the aspect of the document (unlike the first
-            // character of a line).
-
-            // Line feeds may create problems: if a tag starts on a new line, all the space between the last word and
-            // the new tag is considered as "ignorable white space". Create a run with only white space in this case,
-            // but only if the previous run does not end with white space. If validation worked, then
-            // ignorableWhitespace could be used to deal with this case, but unfortunately it does not.
-//            if (! content.endsWith(" ")) {
-//                // Heuristic to decide when to append a space and when to avoid doing this processing.
-//                if (! content.endsWith("(")) {
-//                    content += " ";
-//                    justAddedWhiteSpace = true;
-//                }
-//            }
-
             // If the previous run ends with white space, as it is not relevant in this run, remove it from
             // the beginning of this run (i.e. trim left).
             if (runNumber > 0) {
@@ -1524,12 +1507,6 @@ public class DocxOutputImpl extends DefaultHandler {
                 if (prevText.endsWith(" ")) {
                     content = content.replaceAll("^\\s+", ""); // Trim left.
                 }
-
-//                // Sometimes undo what the previous step did (justAddedWhiteSpace == true).
-//                if (justAddedWhiteSpace && prevText.endsWith(")")) {
-//                    prevText = prevText.substring(0, prevText.length() - 2);
-//                    previous.setText(prevText);
-//                }
             }
 
             run.setText(content);
