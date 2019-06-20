@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="5.0">
+    <title>API CPLEX</title>
+    <para><application>CPLEX</application> est un outil commercial d'optimisation mathématique. Il
+        doit son nom à l'algorithme du simplexe, un algorithme relativement ancien pour les
+        problèmes d'optimisation linéaire, mais il supporte actuellement bien d'autres types de
+        programmes mathématiques (programmes entiers, mais également non linéaires – quadratiques).
+        Il fait partie <link xlink:href="http://scip.zib.de/">des outils les plus performants à ce
+            niveau</link>, de par sa rapidité de traitement. </para>
+    <para>Il dispose d'une interface interactive en ligne de commande (<application>CPLEX
+            Interactive Optimizer</application>), mais également d'interfaces dans divers langages
+        de programmation, dont C++ et Java (<application>Concert Technology</application>). Ce
+        document se focalise sur ces interfaces. </para>
+    <para><link
+            xlink:href="http://www-01.ibm.com/software/websphere/products/optimization/cplex-studio-preview-edition/"
+            >Une version d'évaluation de trois mois</link>, grandement limitée dans la taille des
+        problèmes, est disponible gratuitement ; pour le monde académique, <link
+            xlink:href="http://www-304.ibm.com/ibm/university/academic/pub/page/academic_initiative"
+            >une licence gratuite sans limite</link> est également proposée. </para>
+    <section>
+        <title>Architecture d'une application</title>
+        <para>Une application utilisant CPLEX travaillera principalement avec un objet
+                <classname>IloCplex</classname> ou <classname>IloEnv</classname> : il permet de
+            créer des variables (<classname>IloNumVar</classname>) et des contraintes
+                (<classname>IloConstraint</classname>), mais aussi d'appeler le solveur et de
+            récupérer les solutions. Tous les objets créés ne seront que des interfaces vers la
+            représentation interne du solveur CPLEX de ces variables et contraintes : le
+            fonctionnement interne de CPLEX n'est pas montré, seule une version abstraite est
+            disponible – et largement suffisante pour la plupart des besoins. </para>
+        <para>Une application se déroulera donc en trois phases : <itemizedlist>
+                <listitem>
+                    <para>la création du modèle ; </para>
+                </listitem>
+                <listitem>
+                    <para>sa résolution ; </para>
+                </listitem>
+                <listitem>
+                    <para>l'utilisation de la solution. </para>
+                </listitem>
+            </itemizedlist></para>
+        <para>Pour de petits modèles, il est envisageable de n'utiliser qu'une fonction qui gère
+            l'entièreté du modèle, mais cette solution n'est pas applicable à grande échelle. Pour
+            un modèle de taille plus conséquente, le paradigme objet, utilisé pour la conception de
+            l'API Concert, se révélera souvent utile. Une analyse du problème à modéliser donne une
+            liste de concepts qui y interviennent (par exemple, les ressources disponibles, les
+            machines à utiliser, les objets à fabriquer) : chacun deviendra une classe, dont les
+            instances seront responsables de la création des variables et des contraintes qui leur
+            correspondent (une machine ne gérera que sa propre production). </para>
+    </section>
+    <section>
+        <title>Création d'un modèle</title>
+        <para>La première étape est d'instancier CPLEX. En C++, il s'agira de créer un objet
+                <classname>IloEnv</classname>, puis un modèle <classname>IloModel</classname> ; en
+            Java, une instance de <classname>IloCplex</classname> gère l'entièreté du processus.
+            <programlisting language="c++">IloEnv env;
+IloModel model(env);</programlisting><programlisting language="java">IloCplex cplex = new IloCplex();</programlisting></para>
+        <para>De là, il est possible de créer une variable, par exemple entière, qui prend ses
+            valeurs entre zéro et quarante-deux, avec un nom <code>"x"</code> (il sera utile pour le
+            débogage).</para>
+        <programlisting language="c++">IloNumVar x(env, 0, 42, IloNumVar::Int, "x");</programlisting>
+        <programlisting language="java">IloNumVar x = cplex.intVar(0, 42, "x");</programlisting>
+        <para>Il est également possible de créer des tableaux de variables, par exemple booléennes, dont
+            les noms sont donnés par un tableau de chaînes de caractères (en Java).</para>
+        <programlisting language="c++">IloNumVarArray y(env, 2, 0, 1, IloNumVar::Bool);</programlisting>
+        <programlisting language="java">String[] namesY = new String[] { "y1", "y2" };
+IloNumVar[] y = cplex.boolVarArray(2, namesY);</programlisting>
+        <para>De là, l'API permet d'exprimer des contraintes entre ces variables, chacune avec un
+            nom donné.</para>
+        <programlisting language="c++">model.add(y[0] &lt;= y[1], "c1");
+model.add(x &lt;= 1000 * y[1], "c2");</programlisting>
+        <programlisting language="java">cplex.addLe(y[0], y[1], "c1");
+cplex.addLe(y[0], cplex.prod(1000, y[1]), "c2");</programlisting>
+        <para> La dernière étape est de créer un objectif.</para>
+        <programlisting language="c++">model.add(IloMinimize(env, x));</programlisting>
+        <programlisting language="java">cplex.addMinimize(x);</programlisting>
+    </section>
+    <section>
+        <title>Optimisation d'un modèle</title>
+        <para>La résolution du modèle se réduit ensuite à l'appel d'une fonction.</para>
+        <programlisting language="c++">IloCplex cplex(model);
+cplex.solve();</programlisting>
+        <programlisting language="java">cplex.solve();</programlisting>
+        <para>La méthode <methodname>solve()</methodname> retourne un booléen vrai si l'optimisation
+            s'est déroulée sans problème (si une solution a été trouvée).
+                <methodname>getStatus()</methodname> donne plus de détail (solution optimale
+            trouvée, solution faisable mais non optimale trouvée, modèle infaisable, etc.). </para>
+        <para>La valeur de l'objectif est accessible par la méthode <methodname>getObjValue()</methodname>.</para>
+        <programlisting>double objective = cplex.getObjValue(); </programlisting>
+        <para>La valeur d'une
+            variable particulière s'obtient en passant son objet <classname>IloNumVar</classname> en
+            paramètre à <methodname>getValue()</methodname>.</para>
+        <programlisting>double xV = cplex.getValue(x);</programlisting>
+        <para>Pour récupérer les
+            valeurs de plusieurs variables, <methodname>getValues()</methodname> prend en paramètre
+            un tableau.</para>
+        <programlisting language="c++">double yV[] = cplex.getValues(y);</programlisting>
+        <programlisting language="java">double[] yV = cplex.getValues(y);</programlisting>
+    </section>
+    <section>
+        <title>Résolution d'infaisabilité</title>
+        <para>En cas de problème dans la résolution (pas de solution faisable, loin de l'optimalité,
+            etc.), il est bien souvent utile d'exporter le modèle créé. CPLEX permet de créer très
+            facilement des fichiers LP contenant toutes les contraintes et objectifs, contenant
+            notamment leur nom.</para>
+        <programlisting>cplex.exportModel("model.lp");</programlisting>
+        <para>Ce fichier peut alors être chargé dans l'interface interactive, où <link
+                xlink:href="http://pic.dhe.ibm.com/infocenter/cosinfoc/v12r6/index.jsp?topic=%2Filog.odms.ide.help%2Frefcppopl%2Fhtml%2Fconflict.html"
+                >un outil de détection de conflits</link> peut se révéler précieux (il est également
+            accessible par les API CPLEX). </para>
+        <para>Dans la console interactive, une fois le modèle chargé et optimisé, la commande
+                <command>conflict</command></para>
+	</section>
+</article>

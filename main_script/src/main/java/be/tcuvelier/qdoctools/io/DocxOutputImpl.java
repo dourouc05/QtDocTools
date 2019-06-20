@@ -881,6 +881,8 @@ public class DocxOutputImpl extends DefaultHandler {
                         // something based on https://stackoverflow.com/a/43164999/1066843.
                         // However, easy to do for variable list: new items are indicated with a title.
                     }
+                } else {
+                    numbering = null;
                 }
             }
 
@@ -1424,9 +1426,32 @@ public class DocxOutputImpl extends DefaultHandler {
         // Start processing the characters.
         String content = new String(ch, start, length);
 
-        // This function is called for anything that is not a tag, including whitespace (nothing to do on it).
-        if (content.length() == 0 || content.replaceAll("(\\s|\r|\n)+", "").length() == 0) {
+        // This function is called for anything that is not a tag, including whitespace. In most cases, this whitespace
+        // can be ignored, but it may also be important (the previous run has no space at the end and the next one
+        // starts a new style).
+        if (content.length() == 0) {
             return;
+        }
+
+        if (content.replaceAll("(\\s|\r|\n)+", "").length() == 0) {
+            if (run == null) {
+                return;
+            }
+
+            List<XWPFRun> runs = paragraph.getRuns();
+            XWPFRun previous = runs.get(runs.size() - 1);
+            String prevText = previous.text();
+
+            if (! prevText.endsWith(" ")) {
+                content = " ";
+            } else {
+                return;
+            }
+        }
+
+        // More consistency checks, now that many cases have been excluded.
+        if (run == null || runNumber < 0 || runCharactersNumber < 0) {
+            throw new DocxException("no text allowed here");
         }
 
         // Special cases: the text should not be written in the current run.
