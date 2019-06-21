@@ -24,7 +24,8 @@ public class DocxInput {
 //        String test = "synthetic/basic";
 //        String test = "synthetic/sections";
 //        String test = "synthetic/sections_bogus";
-        String test = "synthetic/images";
+        String test = "synthetic/images_captioned";
+//        String test = "synthetic/images";
 //        String test = "synthetic/lists";
 //        String test = "synthetic/lists_medium";
 //        String test = "synthetic/lists_nested";

@@ -87,31 +87,36 @@ public class DocxInputImpl {
         xmlStream.writeCharacters("\n");
     }
 
+    private void closeBlockTag() throws XMLStreamException {
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement();
+        writeNewLine();
+    }
+
+    private String detectDocumentType() throws XMLStreamException {
+        switch (doc.getParagraphs().get(0).getStyleID()) {
+            case "Title":
+                return "article";
+            case "Titlebook":
+                return "book";
+            default:
+                throw new XMLStreamException("Unrecognised document type. Is the first paragraph a Title or a Title (book)?");
+        }
+    }
+
     @SuppressWarnings("WeakerAccess")
     public String toDocBook() throws XMLStreamException, IOException {
         // Initialise counters.
         currentDepth = 0;
         currentSectionLevel = 0;
 
-        // Detect the type of document: either an article or a book.
-        String type;
-        switch (doc.getParagraphs().get(0).getStyleID()) {
-            case "Title":
-                type = "article";
-                break;
-            case "Titlebook":
-                type = "book";
-                break;
-            default:
-                throw new XMLStreamException("Unrecognised document type. Is the first paragraph a Title or a Title (book)?");
-        }
-
         // Generate the document: root, prefixes, content, then close the sections that should be.
         xmlStream.writeStartDocument("UTF-8", "1.0");
 
         writeNewLine();
         writeIndent();
-        xmlStream.writeStartElement("db", type, docbookNS);
+        xmlStream.writeStartElement("db", detectDocumentType(), docbookNS);
         xmlStream.setPrefix("db", docbookNS);
         xmlStream.writeNamespace("db", docbookNS);
         xmlStream.setPrefix("xlink", xlinkNS);
@@ -135,10 +140,7 @@ public class DocxInputImpl {
         }
 
         for (int i = 0; i < nCloses; ++i) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement();
-            writeNewLine();
+            closeBlockTag();
         }
 
         decreaseIndent(); // For consistency: this has no impact on the produced XML.
@@ -173,7 +175,11 @@ public class DocxInputImpl {
 
     private void visitParagraph(XWPFParagraph p) throws XMLStreamException {
         // Only deal with paragraphs having some content (i.e. at least one non-empty run).
-        if (p.getRuns().size() > 0 && p.getRuns().stream().anyMatch(r -> r.text().length() > 0)) {
+        if (p.getRuns().size() == 0) {
+            return;
+        }
+
+        if (p.getRuns().stream().anyMatch(r -> r.text().length() > 0 || r.getEmbeddedPictures().size() > 0)) {
             // Once a paragraph has found its visitor, return from this function. This way, if a paragraph only
             // partially matches the conditions for a visitor, it can be handled by the generic ones.
             // (Just for robustness and ability to import external Word documents into the system.)
@@ -191,7 +197,7 @@ public class DocxInputImpl {
             }
 
             // Then, dispatch along the style.
-            if (p.getStyleID() == null || p.getStyleID().equals("")) {
+            if (p.getStyleID() == null || p.getStyleID().equals("") || p.getStyleID().equals("Caption")) {
                 visitNormalParagraph(p);
                 return;
             }
@@ -259,13 +265,6 @@ public class DocxInputImpl {
     }
 
     /** Structure elements. **/
-
-    private void closeBlockTag() throws XMLStreamException {
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement();
-        writeNewLine();
-    }
 
     private void visitDocumentTitle(XWPFParagraph p) throws XMLStreamException {
         // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
@@ -364,15 +363,21 @@ public class DocxInputImpl {
         // Ignore captions, as they are handled directly within mediaobjects/tables.
         if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
             if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
-                throw new XMLStreamException("Caption not expected.");
+                return;
+//                throw new XMLStreamException("Caption not expected.");
             } else {
                 return;
             }
         }
 
-        if (p.getRuns().size() == 1 && p.getRuns().get(0).getEmbeddedPictures().size() == 1) { // TODO: Several pictures per run? Seems unlikely.
+        if (p.getRuns().stream().anyMatch(r -> r.getEmbeddedPictures().size() >= 1)) {
+            if (p.getRuns().stream().anyMatch(r -> r.getEmbeddedPictures().size() > 1)) {
+                throw new XMLStreamException("Not yet implemented: multiple images per run."); // TODO: Several pictures per run? Seems unlikely.
+            }
+
             // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
-            isDisplayedFigure = true;
+            // TODO: to be adapted if there are multiple pictures per run!
+            isDisplayedFigure = p.getRuns().size() == 1;
 
             writeIndent();
             xmlStream.writeStartElement(docbookNS, "mediaobject");
