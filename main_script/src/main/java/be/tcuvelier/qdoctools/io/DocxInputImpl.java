@@ -31,6 +31,8 @@ public class DocxInputImpl {
     private FormattingStack currentFormatting;
     private int currentDepth;
     private int currentSectionLevel;
+    private boolean isWithinPart = false;
+    private boolean isWithinChapter = false;
 
     private PreformattedMetadata preformattedMetadata;
     private boolean isDisplayedFigure = false;
@@ -91,11 +93,25 @@ public class DocxInputImpl {
         currentDepth = 0;
         currentSectionLevel = 0;
 
+        // Detect the type of document: either an article or a book.
+        String type;
+        switch (doc.getParagraphs().get(0).getStyleID()) {
+            case "Title":
+                type = "article";
+                break;
+            case "Titlebook":
+                type = "book";
+                break;
+            default:
+                throw new XMLStreamException("Unrecognised document type. Is the first paragraph a Title or a Title (book)?");
+        }
+
         // Generate the document: root, prefixes, content, then close the sections that should be.
         xmlStream.writeStartDocument("UTF-8", "1.0");
 
-        writeNewLine(); writeIndent();
-        xmlStream.writeStartElement("db", "article", docbookNS);
+        writeNewLine();
+        writeIndent();
+        xmlStream.writeStartElement("db", type, docbookNS);
         xmlStream.setPrefix("db", docbookNS);
         xmlStream.writeNamespace("db", docbookNS);
         xmlStream.setPrefix("xlink", xlinkNS);
@@ -109,12 +125,26 @@ public class DocxInputImpl {
             visit(b);
         }
 
-        while (0 < currentSectionLevel) {
+        while (currentSectionLevel > 0) {
             decreaseIndent();
             writeIndent();
             xmlStream.writeEndElement(); // </db:section>
             writeNewLine();
             currentSectionLevel -= 1;
+        }
+
+        if (isWithinChapter) {
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:chapter>
+            writeNewLine();
+        }
+
+        if (isWithinPart) {
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:part>
+            writeNewLine();
         }
 
         decreaseIndent(); // For consistency: this has no impact on the produced XML.
@@ -174,6 +204,7 @@ public class DocxInputImpl {
 
             switch (p.getStyleID()) {
                 case "Title":
+                case "Titlebook":
                     visitDocumentTitle(p);
                     return;
                 case "Heading1":
@@ -185,8 +216,13 @@ public class DocxInputImpl {
                 case "Heading7":
                 case "Heading8":
                 case "Heading9":
-                    // TODO: Part, Chapter?
                     visitSectionTitle(p);
+                    return;
+                case "Titlepart":
+                    visitPartTitle(p);
+                    return;
+                case "Titlechapter":
+                    visitChapterTitle(p);
                     return;
                 case "ProgramListing":
                 case "Screen":
@@ -253,6 +289,50 @@ public class DocxInputImpl {
         writeIndent();
         xmlStream.writeEndElement(); // </db:info>
         writeNewLine();
+    }
+
+    private void visitChapterTitle(XWPFParagraph p) throws XMLStreamException {
+        if (isWithinChapter) {
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:chapter>
+            writeNewLine();
+        }
+        isWithinChapter = true;
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "chapter");
+        increaseIndent();
+        writeNewLine();
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "title");
+        visitRuns(p.getRuns());
+        xmlStream.writeEndElement(); // </db:title>
+        writeNewLine();
+    }
+
+    private void visitPartTitle(XWPFParagraph p) throws XMLStreamException {
+        if (isWithinPart) {
+            decreaseIndent();
+            writeIndent();
+            xmlStream.writeEndElement(); // </db:part>
+            writeNewLine();
+        }
+        isWithinPart = true;
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "part");
+        increaseIndent();
+        writeNewLine();
+
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, "title");
+        visitRuns(p.getRuns());
+        xmlStream.writeEndElement(); // </db:title>
+        writeNewLine();
+
+        // TODO: Part intro?
     }
 
     private void visitSectionTitle(XWPFParagraph p) throws XMLStreamException {

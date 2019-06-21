@@ -40,8 +40,9 @@ public class DocxInput {
 //        String test = "synthetic/programlisting_many";
 //        String test = "synthetic/admonitions";
 //        String test = "synthetic/admonitions_many";
+        String test = "synthetic/book";
 
-        String test = "CPLEX";
+//        String test = "CPLEX";
 
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 //        System.out.println(docBook);
