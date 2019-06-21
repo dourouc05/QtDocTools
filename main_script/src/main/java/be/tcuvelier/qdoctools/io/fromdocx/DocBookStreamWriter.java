@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.io.fromdocx;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -11,14 +13,14 @@ import java.util.Map;
 
 public class DocBookStreamWriter {
     private final OutputStream writer;
-    public XMLStreamWriter xmlStream; // TODO: !
+    private XMLStreamWriter xmlStream;
     private int currentDepth;
 
     @SuppressWarnings("FieldCanBeLocal")
     private static String indentation = "  ";
-    public static String docbookNS = "http://docbook.org/ns/docbook"; // TODO: !
+    private static String docbookNS = "http://docbook.org/ns/docbook";
     @SuppressWarnings("FieldCanBeLocal")
-    private static String xlinkNS = "http://www.w3.org/1999/xlink"; // TODO: !
+    private static String xlinkNS = "http://www.w3.org/1999/xlink";
 
     public DocBookStreamWriter() throws XMLStreamException {
         writer = new ByteArrayOutputStream();
@@ -30,7 +32,7 @@ public class DocBookStreamWriter {
         return currentDepth;
     }
 
-    public void startDocument(String root, @SuppressWarnings("SameParameterValue") String version) throws XMLStreamException {
+    public void startDocument(@NotNull String root, @SuppressWarnings("SameParameterValue") @NotNull String version) throws XMLStreamException {
         xmlStream.writeStartDocument("UTF-8", "1.0");
 
         writeNewLine();
@@ -47,6 +49,7 @@ public class DocBookStreamWriter {
     }
 
     public void endDocument() throws XMLStreamException {
+        decreaseIndent();
         xmlStream.writeEndElement();
         xmlStream.writeEndDocument();
     }
@@ -57,15 +60,15 @@ public class DocBookStreamWriter {
         return xmlString;
     }
 
-    public void writeIndent() throws XMLStreamException { // TODO: !
+    private void writeIndent() throws XMLStreamException {
         xmlStream.writeCharacters(indentation.repeat(currentDepth));
     }
 
-    public void increaseIndent() { // TODO: !
+    private void increaseIndent() {
         currentDepth += 1;
     }
 
-    public void decreaseIndent() throws XMLStreamException { // TODO: !
+    private void decreaseIndent() throws XMLStreamException {
         if (currentDepth == 0) {
             throw new XMLStreamException("Cannot decrease indent when it is already zero.");
         }
@@ -73,15 +76,15 @@ public class DocBookStreamWriter {
         currentDepth -= 1;
     }
 
-    public void writeNewLine() throws XMLStreamException { // TODO: !
+    private void writeNewLine() throws XMLStreamException {
         xmlStream.writeCharacters("\n");
     }
 
-    public void openParagraphTag(String tag) throws XMLStreamException { // Paragraphs start on a new line, but contain inline elements on the same line. Examples: paragraphs, titles.
+    public void openParagraphTag(@NotNull String tag) throws XMLStreamException { // Paragraphs start on a new line, but contain inline elements on the same line. Examples: paragraphs, titles.
         openParagraphTag(tag, Collections.emptyMap());
     }
 
-    public void openParagraphTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+    public void openParagraphTag(@NotNull String tag, @NotNull Map<String, String> attributes) throws XMLStreamException {
         writeIndent();
         xmlStream.writeStartElement(docbookNS, tag);
 
@@ -95,11 +98,11 @@ public class DocBookStreamWriter {
         writeNewLine();
     }
 
-    public void openInlineTag(String tag) throws XMLStreamException { // Inline elements are on the same line.
+    public void openInlineTag(@NotNull String tag) throws XMLStreamException { // Inline elements are on the same line.
         openInlineTag(tag, Collections.emptyMap());
     }
 
-    public void openInlineTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+    public void openInlineTag(@NotNull String tag, @NotNull Map<String, String> attributes) throws XMLStreamException {
         xmlStream.writeStartElement(docbookNS, tag);
 
         for (Map.Entry<String, String> attribute: attributes.entrySet()) {
@@ -111,11 +114,23 @@ public class DocBookStreamWriter {
         xmlStream.writeEndElement();
     }
 
-    public void openBlockTag(String tag) throws XMLStreamException { // Blocks start on a new line, and have nothing else on the same line.
+    public void openBlockInlineTag(@NotNull String tag) throws XMLStreamException { // Inline block elements start on the same line, but have nothing else to their right.
+        openInlineTag(tag);
+        writeNewLine();
+        increaseIndent();
+    }
+
+    public void closeBlockInlineTag() throws XMLStreamException {
+        writeIndent();
+        closeInlineTag();
+    }
+
+    public void openBlockTag(@NotNull String tag) throws XMLStreamException { // Blocks start on a new line, and have nothing else on the same line.
         openBlockTag(tag, Collections.emptyMap());
     }
 
-    public void openBlockTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+    @SuppressWarnings("WeakerAccess")
+    public void openBlockTag(@NotNull String tag, @NotNull Map<String, String> attributes) throws XMLStreamException {
         writeIndent();
         xmlStream.writeStartElement(docbookNS, tag);
 
@@ -134,11 +149,11 @@ public class DocBookStreamWriter {
         writeNewLine();
     }
 
-    public void emptyBlockTag(String tag) throws XMLStreamException {
+    public void emptyBlockTag(@NotNull String tag) throws XMLStreamException {
         emptyBlockTag(tag, Collections.emptyMap());
     }
 
-    public void emptyBlockTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+    public void emptyBlockTag(@NotNull String tag, @NotNull Map<String, String> attributes) throws XMLStreamException {
         writeIndent();
         xmlStream.writeEmptyElement(docbookNS, tag);
 
@@ -149,7 +164,7 @@ public class DocBookStreamWriter {
         writeNewLine();
     }
 
-    public void writeCharacters(String text) throws XMLStreamException { // Characters.
+    public void writeCharacters(@NotNull String text) throws XMLStreamException { // Characters.
         xmlStream.writeCharacters(text);
     }
 }

@@ -93,7 +93,6 @@ public class DocxInputImpl {
             dbStream.closeBlockTag();
         }
 
-        dbStream.decreaseIndent(); // For consistency: this has no impact on the produced XML, but helps detect potential errors.
         dbStream.endDocument();
 
         if (dbStream.getCurrentDepth() != 0) {
@@ -306,38 +305,28 @@ public class DocxInputImpl {
             // TODO: to be adapted if there are multiple pictures per run!
             isDisplayedFigure = p.getRuns().size() == 1;
 
-            dbStream.writeIndent();
-            dbStream.xmlStream.writeStartElement(DocBookStreamWriter.docbookNS, "mediaobject");
-
+            dbStream.openBlockTag("mediaobject");
             visitRuns(p.getRuns());
 
             // Write the caption (if it corresponds to the next paragraph).
             if (! isLastParagraph(p) && hasFollowingParagraphWithStyle(p, "Caption")) {
                 int pos = doc.getPosOfParagraph(p);
 
-                dbStream.increaseIndent();
-                dbStream.writeIndent();
-                dbStream.decreaseIndent();
-                dbStream.xmlStream.writeStartElement(DocBookStreamWriter.docbookNS, "caption");
+                dbStream.openParagraphTag("caption");
                 visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
-                dbStream.xmlStream.writeEndElement(); // <db:caption>
-                dbStream.writeNewLine();
+                dbStream.closeParagraphTag();
 
                 captionPositions.add(pos + 1);
             }
 
-            dbStream.writeIndent();
-            dbStream.xmlStream.writeEndElement(); // </db:mediaobject> must be indented.
-            dbStream.writeNewLine();
+            dbStream.closeBlockTag(); // </db:mediaobject>
 
             isDisplayedFigure = false;
         } else {
             // Normal case for a paragraph.
-            dbStream.writeIndent();
-            dbStream.xmlStream.writeStartElement(DocBookStreamWriter.docbookNS, "para");
+            dbStream.openParagraphTag("para");
             visitRuns(p.getRuns());
-            dbStream.xmlStream.writeEndElement(); // </db:para> should not be indented.
-            dbStream.writeNewLine();
+            dbStream.closeParagraphTag();
         }
     }
 
@@ -394,14 +383,10 @@ public class DocxInputImpl {
         String imageName = picture.getPictureData().getFileName();
         images.put(imageName, image);
 
-        // Do the XML part: output a <db:inlinemediaobject> (whose beginning is on the same line as the rest
-        // of the text; the inside part is indented normally; the closing tag is directly followed by the rest
-        // of the text, if any).
+        // Do the XML part: output a <db:inlinemediaobject> if there is no block-level equivalent, then imageobject.
         if (! isDisplayedFigure) {
-            dbStream.xmlStream.writeStartElement(DocBookStreamWriter.docbookNS, "inlinemediaobject");
+            dbStream.openBlockInlineTag("inlinemediaobject");
         }
-        dbStream.writeNewLine();
-        dbStream.increaseIndent();
 
         dbStream.openBlockTag("imageobject");
 
@@ -423,12 +408,8 @@ public class DocxInputImpl {
         dbStream.emptyBlockTag("imagedata", attrs);
 
         dbStream.closeBlockTag(); // </db:imageobject>
-        dbStream.decreaseIndent(); // TODO: ?
-
         if (! isDisplayedFigure) {
-            dbStream.writeIndent();
-            dbStream.xmlStream.writeEndElement(); // </db:inlinemediaobject>
-            // No line feed as within a paragraph.
+            dbStream.closeBlockInlineTag(); // </db:inlinemediaobject>
         }
     }
 
