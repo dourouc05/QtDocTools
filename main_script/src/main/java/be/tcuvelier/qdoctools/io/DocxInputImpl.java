@@ -1,5 +1,8 @@
 package be.tcuvelier.qdoctools.io;
 
+import be.tcuvelier.qdoctools.io.fromdocx.DocBookStreamWriter;
+import be.tcuvelier.qdoctools.io.fromdocx.FormattingStack;
+import be.tcuvelier.qdoctools.io.fromdocx.PreformattedMetadata;
 import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
@@ -9,16 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
-import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigInteger;
 import java.util.*;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
@@ -57,142 +55,6 @@ public class DocxInputImpl {
     @SuppressWarnings("WeakerAccess")
     public Map<String, byte[]> getImages() {
         return images;
-    }
-
-    private static class DocBookStreamWriter {
-        private final OutputStream writer;
-        private XMLStreamWriter xmlStream;
-        private int currentDepth;
-
-        @SuppressWarnings("FieldCanBeLocal")
-        private static String indentation = "  ";
-        private static String docbookNS = "http://docbook.org/ns/docbook";
-        @SuppressWarnings("FieldCanBeLocal")
-        private static String xlinkNS = "http://www.w3.org/1999/xlink";
-
-        DocBookStreamWriter() throws XMLStreamException {
-            writer = new ByteArrayOutputStream();
-            xmlStream = XMLOutputFactory.newInstance().createXMLStreamWriter(writer, "UTF-8");
-            currentDepth = 0;
-        }
-
-        int getCurrentDepth() {
-            return currentDepth;
-        }
-
-        void startDocument(String root, @SuppressWarnings("SameParameterValue") String version) throws XMLStreamException {
-            xmlStream.writeStartDocument("UTF-8", "1.0");
-
-            writeNewLine();
-            writeIndent();
-            xmlStream.writeStartElement("db", root, docbookNS);
-            xmlStream.setPrefix("db", docbookNS);
-            xmlStream.writeNamespace("db", docbookNS);
-            xmlStream.setPrefix("xlink", xlinkNS);
-            xmlStream.writeNamespace("xlink", xlinkNS);
-            xmlStream.writeAttribute("version", version);
-            increaseIndent();
-
-            writeNewLine();
-        }
-
-        void endDocument() throws XMLStreamException {
-            xmlStream.writeEndElement();
-            xmlStream.writeEndDocument();
-        }
-
-        String write() throws IOException {
-            String xmlString = writer.toString();
-            writer.close();
-            return xmlString;
-        }
-
-        void writeIndent() throws XMLStreamException {
-            xmlStream.writeCharacters(indentation.repeat(currentDepth));
-        }
-
-        void increaseIndent() {
-            currentDepth += 1;
-        }
-
-        void decreaseIndent() throws XMLStreamException {
-            if (currentDepth == 0) {
-                throw new XMLStreamException("Cannot decrease indent when it is already zero.");
-            }
-
-            currentDepth -= 1;
-        }
-
-        void writeNewLine() throws XMLStreamException {
-            xmlStream.writeCharacters("\n");
-        }
-
-        void openParagraphTag(String tag) throws XMLStreamException { // Paragraphs start on a new line, but contain inline elements on the same line. Examples: paragraphs, titles.
-            openParagraphTag(tag, Collections.emptyMap());
-        }
-
-        void openParagraphTag(String tag, Map<String, String> attributes) throws XMLStreamException {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, tag);
-
-            for (Map.Entry<String, String> attribute: attributes.entrySet()) {
-                xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
-            }
-        }
-
-        void closeParagraphTag() throws XMLStreamException {
-            xmlStream.writeEndElement();
-            writeNewLine();
-        }
-
-        void openInlineTag(String tag) throws XMLStreamException { // Inline elements are on the same line.
-            openInlineTag(tag, Collections.emptyMap());
-        }
-
-        void openInlineTag(String tag, Map<String, String> attributes) throws XMLStreamException {
-            xmlStream.writeStartElement(docbookNS, tag);
-
-            for (Map.Entry<String, String> attribute: attributes.entrySet()) {
-                xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
-            }
-        }
-
-        void closeInlineTag() throws XMLStreamException {
-            xmlStream.writeEndElement();
-        }
-
-        void openBlockTag(String tag) throws XMLStreamException { // Blocks start on a new line, and have nothing else on the same line.
-            openBlockTag(tag, Collections.emptyMap());
-        }
-
-        void openBlockTag(String tag, Map<String, String> attributes) throws XMLStreamException {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, tag);
-
-            for (Map.Entry<String, String> attribute: attributes.entrySet()) {
-                xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
-            }
-
-            increaseIndent();
-            writeNewLine();
-        }
-
-        void closeBlockTag() throws XMLStreamException {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement();
-            writeNewLine();
-        }
-
-        void emptyBlockTag(String tag) throws XMLStreamException {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, tag);
-            writeNewLine();
-        }
-
-        void writeCharacters(String text) throws XMLStreamException {
-            xmlStream.writeCharacters(text);
-        }
     }
 
     private String detectDocumentType() throws XMLStreamException {
@@ -326,7 +188,6 @@ public class DocxInputImpl {
                 case "VariableListItem":
                     visitVariableListItem(p);
                     return;
-                // TODO: Note, etc.?
                 case "Normal": // The case with no style ID is already handled.
                     visitNormalParagraph(p);
                     return;
@@ -477,64 +338,6 @@ public class DocxInputImpl {
         }
     }
 
-    @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-    private static class PreformattedMetadata {
-        final DocBookBlock type;
-        Optional<String> language;
-        Optional<Boolean> continuation;
-        Optional<Integer> linenumbering;
-        Optional<Integer> startinglinenumber;
-
-        PreformattedMetadata(@NotNull String p) throws XMLStreamException {
-            String[] options = Arrays.stream(p.split("\\.")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
-
-            // Parse the type.
-            if (options[0].equals("Program listing")) {
-                type = DocBookBlock.PROGRAM_LISTING;
-            } else {
-                throw new XMLStreamException("Unrecognised preformatted metadata block: " + options[0]);
-            }
-
-            // Prefill all fields.
-            language = Optional.empty();
-            continuation = Optional.empty();
-            linenumbering = Optional.empty();
-            startinglinenumber = Optional.empty();
-
-            // Parse the rests, if there is anything left.
-            for (int i = 1; i < options.length; ++i) {
-                String[] option = Arrays.stream(options[i].split(":")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
-
-                if (option[0].equalsIgnoreCase("Language")) {
-                    language = Optional.of(option[1]);
-                } else if (option[0].equalsIgnoreCase("Continuation")) {
-                    continuation = Optional.of(Boolean.valueOf(option[1]));
-                } else if (option[0].equalsIgnoreCase("Line numbering")) {
-                    linenumbering = Optional.of(Integer.parseInt(option[1]));
-                } else if (option[0].equalsIgnoreCase("Starting line number")) {
-                    startinglinenumber = Optional.of(Integer.parseInt(option[1]));
-                } else {
-                    throw new XMLStreamException("Unrecognised preformatted option: " + option[0]);
-                }
-            }
-        }
-
-        PreformattedMetadata(@NotNull XWPFParagraph p) throws XMLStreamException {
-            this(p.getText());
-        }
-
-        Map<String, String> toMap() {
-            Map<String, String> map = new HashMap<>();
-
-            language.ifPresent(s -> map.put("language", s));
-            continuation.ifPresent(b -> map.put("continuation", b.toString()));
-            linenumbering.ifPresent(i -> map.put("linenumbering", i.toString()));
-            startinglinenumber.ifPresent(i -> map.put("startinglinenumber", i.toString()));
-
-            return Map.copyOf(map);
-        }
-    }
-
     private void visitPreformatted(@NotNull XWPFParagraph p) throws XMLStreamException {
         // The first paragraph of a program listing can give metadata about the listing that comes after.
         // Conditions: the whole paragraph must be in bold; the next paragraph must have the same style.
@@ -552,7 +355,7 @@ public class DocxInputImpl {
         // respected to the letter.
 
         if (preformattedMetadata != null) {
-            if (preformattedMetadata.type != DocBookBlock.styleIDToBlock.get(p.getStyleID())) {
+            if (preformattedMetadata.getType() != DocBookBlock.styleIDToBlock.get(p.getStyleID())) {
                 throw new XMLStreamException("Preformatted metadata style does not correspond to the style of the next paragraph.");
             }
 
@@ -971,152 +774,6 @@ public class DocxInputImpl {
         }
 
         currentFormatting = null;
-    }
-
-    private static String getStyle(XWPFRun r) {
-        // https://github.com/apache/poi/pull/151
-        CTRPr pr = r.getCTR().getRPr();
-        if (pr == null) {
-            return "";
-        }
-
-        CTString style = pr.getRStyle();
-        if (style == null) {
-            return "";
-        }
-
-        return style.getVal();
-    }
-
-    private static class FormattingStack {
-        private Deque<DocBookFormatting> stack = new ArrayDeque<>();
-        private Deque<DocBookFormatting> addedInRun;
-        private Deque<DocBookFormatting> removedInRun;
-
-        private void unstackUntilAndRemove(@Nullable DocBookFormatting f) throws XMLStreamException {
-            // Example stack: BOLD, EMPHASIS, STRIKE.
-            // Close EMPHASIS. Should unstack both STRIKE and EMPHASIS, then stack again STRIKE.
-            // (Could do something better by storing the full paragraph before outputting the formattings, but the
-            // added complexity is not worth it, as this case will probably not happen often.)
-
-            // Unstack the tags until you reach the required formatting (or no formatting at all).
-            Deque<DocBookFormatting> removed = new ArrayDeque<>();
-            if (f != null) {
-                while (stack.getLast() != f) {
-                    DocBookFormatting current = stack.removeLast();
-                    removed.push(current);
-                }
-            } else {
-                while (stack.size() > 0) {
-                    DocBookFormatting current = stack.removeLast();
-                    removed.push(current);
-                }
-            }
-
-            // Pop the formatting you're looking for.
-            if (f != null) {
-                removedInRun.add(f);
-                stack.removeLast();
-                if (stack.size() > 0 && stack.getLast().equals(f)) {
-                    throw new XMLStreamException("Assertion failed.");
-                }
-            }
-
-            // Push the untouched formattings. This destroys removed.
-            Iterator<DocBookFormatting> itr = removed.descendingIterator();
-            while (itr.hasNext()) {
-                DocBookFormatting elt = itr.next();
-                removedInRun.push(elt);
-            }
-        }
-
-        private void dealWith(boolean isFormattingEnabled, DocBookFormatting f) throws XMLStreamException {
-            if (isFormattingEnabled && ! stack.contains(f)) { // If this formatting is new, add it.
-                addedInRun.add(f);
-                stack.add(f);
-            } else if (! isFormattingEnabled && stack.contains(f)) { // If this formatting is not enabled but was there
-                // before, remove it.
-                unstackUntilAndRemove(f);
-            } // Otherwise, nothing going on (two cases: not enabled and not pending; enabled and opened previously).
-        }
-
-        private void unrecognisedStyle(@NotNull XWPFRun run) throws XMLStreamException {
-            String styleID = getStyle(run);
-            if (! styleID.equals("")) {
-                throw new XMLStreamException("Unrecognised run style: " + styleID);
-            } else {
-                // No style, but maybe the user wants to tell the software something.
-
-                if (run.getFontName() != null) {
-                    // Cannot make a test on the font family, as it does not support monospaced information:
-                    // https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.fontfamily?view=openxml-2.8.1
-                    if (run.getFontName().equals("Consolas") || run.getFontName().equals("Courier New")) {
-                        System.out.println("Error: text in a monospaced font (" + run.getFontName() + ") but not marked " +
-                                "with a style to indicate its meaning.");
-                        // TODO: default to <code>.
-                    }
-                }
-            }
-        }
-
-        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> processRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun)
-                throws XMLStreamException {
-            // Copied from STVerticalAlignRun.Enum. TODO: Better way to have these constants?
-            int INT_SUPERSCRIPT = 2;
-            int INT_SUBSCRIPT = 3;
-
-            // Start dealing with this run: iterate through the formattings, translate them into DocBookFormatting
-            // instances, and call dealWith.
-            addedInRun = new ArrayDeque<>();
-            removedInRun = new ArrayDeque<>();
-
-            // Formattings encoded as run attributes.
-            boolean isLink = run instanceof XWPFHyperlinkRun;
-            dealWith(run.isBold(), DocBookFormatting.EMPHASIS_BOLD);
-            dealWith(run.isItalic(), DocBookFormatting.EMPHASIS);
-            dealWith(! isLink && run.getUnderline() != UnderlinePatterns.NONE, DocBookFormatting.EMPHASIS_UNDERLINE);
-            dealWith(run.isStrikeThrough() || run.isDoubleStrikeThrough(), DocBookFormatting.EMPHASIS_STRIKETHROUGH);
-            dealWith(run.getVerticalAlignment().intValue() == INT_SUPERSCRIPT, DocBookFormatting.SUPERSCRIPT);
-            dealWith(run.getVerticalAlignment().intValue() == INT_SUBSCRIPT, DocBookFormatting.SUPERSCRIPT);
-
-            // Formattings encoded as styles.
-            String styleID = getStyle(run);
-            String prevStyleID = prevRun == null? "" : getStyle(prevRun);
-            if ((DocBookFormatting.styleIDToDocBookTag.containsKey(styleID) || styleID.equals(""))
-                    && (prevRun == null || prevStyleID.equals("") || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
-                // If both styles are equal, nothing to do. Otherwise...
-                if (! prevStyleID.equals(styleID)) {
-                    if (prevStyleID.equals("Normal") || prevStyleID.equals("")) {
-                        DocBookFormatting f = DocBookFormatting.styleIDToFormatting.get(styleID);
-                        addedInRun.add(f);
-                        stack.add(f);
-                    } else if (styleID.equals("Normal") || styleID.equals("")) {
-                        unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(styleID));
-                    } else {
-                        DocBookFormatting f = DocBookFormatting.styleIDToFormatting.get(prevStyleID);
-                        unstackUntilAndRemove(f);
-                        addedInRun.add(f);
-                        stack.add(f);
-                    }
-                }
-            } else {
-                // It's not because the previous condition was not met that an error should be shown.
-                // Ignore the style Hyperlink, used for links: this is properly handled elsewhere, not using the
-                // standard style mechanism (links have a special run type: XWPFHyperlinkRun).
-                if (! styleID.equals("Hyperlink") && ! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
-                    unrecognisedStyle(run);
-                }
-                if (prevRun != null && ! prevStyleID.equals("Hyperlink") && ! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
-                    unrecognisedStyle(prevRun);
-                }
-            }
-
-            return new Tuple<>(addedInRun, removedInRun);
-        }
-
-        Deque<DocBookFormatting> formattings() {
-            return stack;
-        }
     }
 
     private void visitRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
