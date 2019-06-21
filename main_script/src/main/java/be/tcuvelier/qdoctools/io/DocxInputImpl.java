@@ -1139,10 +1139,12 @@ public class DocxInputImpl {
                 }
             } else {
                 // It's not because the previous condition was not met that an error should be shown.
-                if (! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
+                // Ignore the style Hyperlink, used for links: this is properly handled elsewhere, not using the
+                // standard style mechanism (links have a special run type: XWPFHyperlinkRun).
+                if (! styleID.equals("Hyperlink") && ! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
                     unrecognisedStyle(run);
                 }
-                if (prevRun != null && ! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
+                if (prevRun != null && ! prevStyleID.equals("Hyperlink") && ! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
                     unrecognisedStyle(prevRun);
                 }
             }
