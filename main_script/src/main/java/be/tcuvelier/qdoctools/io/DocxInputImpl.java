@@ -256,30 +256,35 @@ public class DocxInputImpl {
         return abstractParagraphs;
     }
 
-    private void visitDocumentTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
-        // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
-        // <db:info> tag.
-        currentSectionLevel = 0;
-
-        dbStream.openBlockTag("info");
-
-        dbStream.openParagraphTag("title");
-        visitRuns(p.getRuns());
-        dbStream.closeParagraphTag(); // </db:title>
-
+    private void visitTitleAndAbstract(@NotNull XWPFParagraph p) throws XMLStreamException {
         List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
-        if (abstractParagraphs.size() > 0) {
+        if (abstractParagraphs.size() == 0) {
+            dbStream.openParagraphTag("title");
+            visitRuns(p.getRuns());
+            dbStream.closeParagraphTag();
+        } else {
+            dbStream.openBlockTag("info");
+
+            dbStream.openParagraphTag("title");
+            visitRuns(p.getRuns());
+            dbStream.closeParagraphTag();
+
             dbStream.openBlockTag("abstract");
-            for (XWPFParagraph ap: abstractParagraphs) {
+            for (XWPFParagraph ap : abstractParagraphs) {
                 visitNormalParagraph(ap);
                 abstractPositions.add(doc.getPosOfParagraph(ap));
             }
             dbStream.closeBlockTag();
+
+            dbStream.closeBlockTag(); // </db:info>
         }
+    }
 
-        // TODO: What about the abstract?
-
-        dbStream.closeBlockTag(); // </db:info>
+    private void visitDocumentTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
+        // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
+        // <db:info> tag.
+        currentSectionLevel = 0;
+        visitTitleAndAbstract(p);
     }
 
     private void visitChapterTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
@@ -289,10 +294,7 @@ public class DocxInputImpl {
         isWithinChapter = true;
 
         dbStream.openBlockTag("chapter");
-
-        dbStream.openParagraphTag("title");
-        visitRuns(p.getRuns());
-        dbStream.closeParagraphTag(); // </db:title>
+        visitTitleAndAbstract(p);
     }
 
     private void visitPartTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
@@ -307,7 +309,15 @@ public class DocxInputImpl {
         visitRuns(p.getRuns());
         dbStream.closeParagraphTag(); // </db:title>
 
-        // TODO: Part intro?
+        List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
+        if (abstractParagraphs.size() > 0) {
+            dbStream.openBlockTag("partintro");
+            for (XWPFParagraph ap: abstractParagraphs) {
+                visitNormalParagraph(ap);
+                abstractPositions.add(doc.getPosOfParagraph(ap));
+            }
+            dbStream.closeBlockTag();
+        }
     }
 
     private void visitSectionTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
