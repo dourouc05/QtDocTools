@@ -24,6 +24,7 @@ public class DocxInputImpl {
     private final XWPFDocument doc;
     private final DocBookStreamWriter dbStream;
 
+    private String documentType;
     private Map<String, byte[]> images = new HashMap<>();
     private FormattingStack currentFormatting;
     private int currentSectionLevel;
@@ -47,7 +48,7 @@ public class DocxInputImpl {
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
 
     @SuppressWarnings("WeakerAccess")
-    public DocxInputImpl(String filename) throws IOException, XMLStreamException {
+    public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
         doc = new XWPFDocument(new FileInputStream(filename));
         dbStream = new DocBookStreamWriter();
     }
@@ -74,12 +75,14 @@ public class DocxInputImpl {
         // Initialise counters.
         currentSectionLevel = 0;
 
-        // Generate the document: root, prefixes, content, then close the sections that should be.
-        dbStream.startDocument(detectDocumentType(), "5.1");
+        // Generate the document.
+        documentType = detectDocumentType();
+        dbStream.startDocument(documentType, "5.1");
         for (IBodyElement b: doc.getBodyElements()) {
             visit(b);
         }
 
+        // Close block-level tags that have not yet been closed.
         int nCloses = currentSectionLevel; // </db:section>, as many times as required
         currentSectionLevel = 0;
         if (isWithinChapter) {
@@ -93,8 +96,10 @@ public class DocxInputImpl {
             dbStream.closeBlockTag();
         }
 
+        // Finally done with writing the document!
         dbStream.endDocument();
 
+        // Perform final consistency checks.
         if (dbStream.getCurrentDepth() != 0) {
             System.err.println("Reached the end of the document, but the indentation depth is not zero: " +
                     "there is a bug! Current depth: " + dbStream.getCurrentDepth());
@@ -104,7 +109,7 @@ public class DocxInputImpl {
         return dbStream.write();
     }
 
-    private void visit(IBodyElement b) throws XMLStreamException {
+    private void visit(@NotNull IBodyElement b) throws XMLStreamException {
         // As the XWPF hierarchy is not made for visitors, and as it is not possible to alter it, use reflection...
         if (b instanceof XWPFParagraph) {
             visitParagraph((XWPFParagraph) b);
@@ -119,7 +124,7 @@ public class DocxInputImpl {
 
     /** Dispatcher code, when information available in the body element is not enough. **/
 
-    private void visitParagraph(XWPFParagraph p) throws XMLStreamException {
+    private void visitParagraph(@NotNull XWPFParagraph p) throws XMLStreamException {
         // Only deal with paragraphs having some content (i.e. at least one non-empty run).
         if (p.getRuns().size() == 0) {
             return;
@@ -211,7 +216,28 @@ public class DocxInputImpl {
 
     /** Structure elements. **/
 
-    private void visitDocumentTitle(XWPFParagraph p) throws XMLStreamException {
+    private List<XWPFParagraph> gatherAbstractFollowing(@NotNull XWPFParagraph p) {
+        int pos = p.getDocument().getPosOfParagraph(p);
+        List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
+        List<XWPFParagraph> abstractParagraphs = new ArrayList<>();
+
+        if (pos + 1 >= paragraphs.size()) {
+            return abstractParagraphs;
+        }
+
+        for (int i = pos + 1; i < paragraphs.size(); ++i) {
+            String style = paragraphs.get(i).getStyleID();
+            if (style != null && style.equals("Abstract")) {
+                abstractParagraphs.add(paragraphs.get(i));
+            } else {
+                break;
+            }
+        }
+
+        return abstractParagraphs;
+    }
+
+    private void visitDocumentTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
         // <db:info> tag.
         currentSectionLevel = 0;
@@ -222,12 +248,23 @@ public class DocxInputImpl {
         visitRuns(p.getRuns());
         dbStream.closeParagraphTag(); // </db:title>
 
+        {
+            List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
+            if (abstractParagraphs.size() > 0) {
+                dbStream.openBlockTag("abstract");
+                for (XWPFParagraph ap: abstractParagraphs) {
+                    visitNormalParagraph(ap);
+                }
+                dbStream.closeBlockTag();
+            }
+        }
+
         // TODO: What about the abstract?
 
         dbStream.closeBlockTag(); // </db:info>
     }
 
-    private void visitChapterTitle(XWPFParagraph p) throws XMLStreamException {
+    private void visitChapterTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (isWithinChapter) {
             dbStream.closeBlockTag(); // </db:chapter>
         }
@@ -240,7 +277,7 @@ public class DocxInputImpl {
         dbStream.closeParagraphTag(); // </db:title>
     }
 
-    private void visitPartTitle(XWPFParagraph p) throws XMLStreamException {
+    private void visitPartTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (isWithinPart) {
             dbStream.closeBlockTag(); // </db:part>
         }
@@ -255,7 +292,7 @@ public class DocxInputImpl {
         // TODO: Part intro?
     }
 
-    private void visitSectionTitle(XWPFParagraph p) throws XMLStreamException {
+    private void visitSectionTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         // Pop sections until the current level is reached.
         int level = Integer.parseInt(p.getStyleID().replace("Heading", ""));
         if (level > currentSectionLevel + 1) {
@@ -413,7 +450,7 @@ public class DocxInputImpl {
         }
     }
 
-    private void visitAdmonition(XWPFParagraph p) throws XMLStreamException {
+    private void visitAdmonition(@NotNull XWPFParagraph p) throws XMLStreamException {
         // Open the admonition if this is the first paragraph with this kind of style.
         if (! isWithinAdmonition) {
             isWithinAdmonition = true;
@@ -444,7 +481,7 @@ public class DocxInputImpl {
 
     /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
 
-    private boolean isListOrdered(XWPFParagraph p) {
+    private boolean isListOrdered(@NotNull XWPFParagraph p) {
         // What would be best to write...
 //            if (p.getNumFmt() != null) {
 //                isOrderedList = p.getNumFmt()...;
@@ -466,7 +503,7 @@ public class DocxInputImpl {
         }
     }
 
-    private void visitListItem(XWPFParagraph p) throws XMLStreamException {
+    private void visitListItem(@NotNull XWPFParagraph p) throws XMLStreamException {
         int depth = p.getNumIlvl() == null? 0 : p.getNumIlvl().intValue(); // 0: one list to close; 1: two lists to close; etc.
         Optional<XWPFParagraph> prevPara;
         Optional<XWPFParagraph> nextPara;
@@ -549,11 +586,11 @@ public class DocxInputImpl {
 
     /** Definition lists. **/
 
-    private static String toString(List<XWPFRun> r) {
-        return r.stream().map(XWPFRun::text).collect(Collectors.joining(""));
+    private static String toString(@NotNull List<XWPFRun> runs) {
+        return runs.stream().map(XWPFRun::text).collect(Collectors.joining(""));
     }
 
-    private void visitDefinitionListTitle(XWPFParagraph p) throws XMLStreamException {
+    private void visitDefinitionListTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         // If a list is not being treated, initialise what is required.
         // currentDefinitionListTitles: store all the titles that have been found so far, so that the we can check
         // for each item whether it still uses exactly the same segtitle; otherwise, report an error.
@@ -598,7 +635,7 @@ public class DocxInputImpl {
         // currentDefinitionListItemSegmentNumber increased when the item is seen.
     }
 
-    private void visitDefinitionListItem(XWPFParagraph p) throws XMLStreamException {
+    private void visitDefinitionListItem(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (currentDefinitionListTitles == null) {
             throw new XMLStreamException("Unexpected definition list item; at least one title line must be present " +
                     "beforehand.");
@@ -651,7 +688,7 @@ public class DocxInputImpl {
 
     /** Variable lists. **/
 
-    private void visitVariableListTitle(XWPFParagraph p) throws XMLStreamException {
+    private void visitVariableListTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (! isWithinVariableList) {
             dbStream.openBlockTag("variablelist");
             isWithinVariableList = true;
@@ -667,7 +704,7 @@ public class DocxInputImpl {
         dbStream.closeParagraphTag();
     }
 
-    private void visitVariableListItem(XWPFParagraph p) throws XMLStreamException {
+    private void visitVariableListItem(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (! isWithinVariableList) {
             throw new XMLStreamException("Unexpected variable list item: must have a variable list title beforehand.");
         }
@@ -692,12 +729,12 @@ public class DocxInputImpl {
         }
     }
 
-    private boolean isLastParagraph(XWPFParagraph p) {
+    private boolean isLastParagraph(@NotNull XWPFParagraph p) {
         int pos = doc.getPosOfParagraph(p);
         return pos == doc.getParagraphs().size() - 1;
     }
 
-    private boolean hasFollowingParagraphWithStyle(XWPFParagraph p, String styleID) {
+    private boolean hasFollowingParagraphWithStyle(@NotNull XWPFParagraph p, @NotNull String styleID) {
         int pos = doc.getPosOfParagraph(p);
 
         if (isLastParagraph(p)) {
@@ -710,7 +747,7 @@ public class DocxInputImpl {
 
     /** Tables. **/
 
-    private void visitTable(XWPFTable t) throws XMLStreamException {
+    private void visitTable(@NotNull XWPFTable t) throws XMLStreamException {
         dbStream.openBlockTag("informaltable");
 
         // Output the table row per row, in HTML format.
@@ -741,7 +778,7 @@ public class DocxInputImpl {
 
     /** Inline elements (runs, in Word parlance). **/
 
-    private void visitRuns(List<XWPFRun> runs) throws XMLStreamException {
+    private void visitRuns(@NotNull List<XWPFRun> runs) throws XMLStreamException {
         currentFormatting = new FormattingStack();
         XWPFRun prevRun = null;
 
