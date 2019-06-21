@@ -135,12 +135,21 @@ public class DocBookStreamWriter {
     }
 
     public void emptyBlockTag(String tag) throws XMLStreamException {
+        emptyBlockTag(tag, Collections.emptyMap());
+    }
+
+    public void emptyBlockTag(String tag, Map<String, String> attributes) throws XMLStreamException {
         writeIndent();
-        xmlStream.writeStartElement(docbookNS, tag);
+        xmlStream.writeEmptyElement(docbookNS, tag);
+
+        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+            xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
+        }
+
         writeNewLine();
     }
 
-    public void writeCharacters(String text) throws XMLStreamException {
+    public void writeCharacters(String text) throws XMLStreamException { // Characters.
         xmlStream.writeCharacters(text);
     }
 }

@@ -3,21 +3,21 @@
   <db:info>
     <db:title>Document title</db:title>
   </db:info>
-  <db:mediaobject>The following image has no caption and is inline. <db:inlinemediaobject>
+  <db:para>The following image has no caption and is inline. <db:inlinemediaobject>
     <db:imageobject>
-      <db:imagedata fileref="image1.jpeg" width="6in" depth="4in"/>
+      <db:imagedata fileref="image1.jpeg" depth="4in" width="6in"/>
     </db:imageobject>
-  </db:inlinemediaobject>  </db:mediaobject>
+  </db:inlinemediaobject></db:para>
   <db:para>The following image has no caption and lives in its own paragraph. </db:para>
   <db:mediaobject>
     <db:imageobject>
-      <db:imagedata fileref="image1.jpeg" width="6in" depth="4in" align="left"/>
+      <db:imagedata fileref="image1.jpeg" depth="4in" width="6in" align="left"/>
     </db:imageobject>
   </db:mediaobject>
   <db:para>The following image has a caption. </db:para>
   <db:mediaobject>
     <db:imageobject>
-      <db:imagedata fileref="image1.jpeg" width="6in" depth="4in" align="left"/>
+      <db:imagedata fileref="image1.jpeg" depth="4in" width="6in" align="left"/>
     </db:imageobject>
     <db:caption>Figure 1This image comes from <db:link xlink:href="https://pixabay.com/photos/image-statue-brass-child-art-1465348/">https://pixabay.com/photos/image-statue-brass-child-art-1465348/</db:link> and is free to use, even for commercial purposes, even without attribution. <db:link xlink:href="https://pixabay.com/photos/image-statue-brass-child-art-1465348/">Another link</db:link>.</db:caption>
   </db:mediaobject>

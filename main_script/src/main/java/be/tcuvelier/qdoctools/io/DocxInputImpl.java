@@ -294,7 +294,10 @@ public class DocxInputImpl {
             }
         }
 
-        if (p.getRuns().stream().anyMatch(r -> r.getEmbeddedPictures().size() >= 1)) {
+
+        if (p.getRuns().stream().allMatch(r -> r.getEmbeddedPictures().size() >= 1)) {
+            // Special case: only images in this paragraph.
+
             if (p.getRuns().stream().anyMatch(r -> r.getEmbeddedPictures().size() > 1)) {
                 throw new XMLStreamException("Not yet implemented: multiple images per run."); // TODO: Several pictures per run? Seems unlikely.
             }
@@ -402,7 +405,7 @@ public class DocxInputImpl {
 
         dbStream.openBlockTag("imageobject");
 
-        Map<String, String> attrs = new HashMap<>(Map.ofEntries(
+        Map<String, String> attrs = new LinkedHashMap<>(Map.ofEntries(
                 Map.entry("fileref", imageName),
                 // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
                 // Cx/Cx return values in EMUs (very different from EM).
@@ -417,7 +420,7 @@ public class DocxInputImpl {
                 attrs.put("align", dbAlign);
             }
         }
-        dbStream.openBlockTag("imagedata", attrs);
+        dbStream.emptyBlockTag("imagedata", attrs);
 
         dbStream.closeBlockTag(); // </db:imageobject>
         dbStream.decreaseIndent(); // TODO: ?
@@ -819,7 +822,7 @@ public class DocxInputImpl {
             throws XMLStreamException {
         XWPFHyperlink link = r.getHyperlink(doc);
 
-        dbStream.openInlineTag("link", Map.of("href", link.getURL()));
+        dbStream.openInlineTag("link", Map.of("xlink:href", link.getURL()));
         visitRun(r, prevRun, isLastRun); // Text and formatting attributes are inherited for XWPFHyperlinkRun.
         dbStream.closeInlineTag();
     }
