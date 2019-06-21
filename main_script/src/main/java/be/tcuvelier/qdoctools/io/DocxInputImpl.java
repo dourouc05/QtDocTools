@@ -46,6 +46,7 @@ public class DocxInputImpl {
 
     private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
+    private Set<Integer> abstractPositions = new HashSet<>();
 
     @SuppressWarnings("WeakerAccess")
     public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
@@ -147,9 +148,24 @@ public class DocxInputImpl {
                 throw new XMLStreamException("Assertion error: paragraph detected as within list while it has no numbering.");
             }
 
-            // Then, dispatch along the style.
-            if (p.getStyleID() == null || p.getStyleID().equals("") || p.getStyleID().equals("Caption")) {
+            // Then, dispatch along the style. Captions and abstracts have special treatment (eaten by the relevant tags,
+            // which then registers the ones that have already been output).
+            if (p.getStyleID() == null || p.getStyleID().equals("")) {
                 visitNormalParagraph(p);
+                return;
+            }
+
+            if (p.getStyleID().equals("Caption")) {
+                if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
+                    throw new XMLStreamException("Caption not expected.");
+                }
+                return;
+            }
+
+            if (p.getStyleID().equals("Abstract")) {
+                if (! abstractPositions.contains(doc.getPosOfParagraph(p))) {
+                    throw new XMLStreamException("Abstract not expected.");
+                }
                 return;
             }
 
@@ -221,10 +237,13 @@ public class DocxInputImpl {
         List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
         List<XWPFParagraph> abstractParagraphs = new ArrayList<>();
 
+        // No next paragraph? No possible abstract.
         if (pos + 1 >= paragraphs.size()) {
             return abstractParagraphs;
         }
 
+        // Abstract is made of a sequence of paragraphs with the Abstract style, which implies that there is
+        // no paragraph of another style in between.
         for (int i = pos + 1; i < paragraphs.size(); ++i) {
             String style = paragraphs.get(i).getStyleID();
             if (style != null && style.equals("Abstract")) {
@@ -248,15 +267,14 @@ public class DocxInputImpl {
         visitRuns(p.getRuns());
         dbStream.closeParagraphTag(); // </db:title>
 
-        {
-            List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
-            if (abstractParagraphs.size() > 0) {
-                dbStream.openBlockTag("abstract");
-                for (XWPFParagraph ap: abstractParagraphs) {
-                    visitNormalParagraph(ap);
-                }
-                dbStream.closeBlockTag();
+        List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
+        if (abstractParagraphs.size() > 0) {
+            dbStream.openBlockTag("abstract");
+            for (XWPFParagraph ap: abstractParagraphs) {
+                visitNormalParagraph(ap);
+                abstractPositions.add(doc.getPosOfParagraph(ap));
             }
+            dbStream.closeBlockTag();
         }
 
         // TODO: What about the abstract?
@@ -321,16 +339,6 @@ public class DocxInputImpl {
     /** Paragraphs. **/
 
     private void visitNormalParagraph(@NotNull XWPFParagraph p) throws XMLStreamException {
-        // Ignore captions, as they are handled directly within mediaobjects/tables.
-        if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
-            if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
-                throw new XMLStreamException("Caption not expected.");
-            } else {
-                return;
-            }
-        }
-
-
         if (p.getRuns().stream().allMatch(r -> r.getEmbeddedPictures().size() >= 1)) {
             // Special case: only images in this paragraph.
 
