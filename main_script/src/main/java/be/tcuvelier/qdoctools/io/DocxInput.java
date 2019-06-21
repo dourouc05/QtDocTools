@@ -24,7 +24,7 @@ public class DocxInput {
 //        String test = "synthetic/basic";
 //        String test = "synthetic/sections";
 //        String test = "synthetic/sections_bogus";
-//        String test = "synthetic/images";
+        String test = "synthetic/images";
 //        String test = "synthetic/lists";
 //        String test = "synthetic/lists_medium";
 //        String test = "synthetic/lists_nested";
@@ -40,7 +40,7 @@ public class DocxInput {
 //        String test = "synthetic/programlisting_many";
 //        String test = "synthetic/admonitions";
 //        String test = "synthetic/admonitions_many";
-        String test = "synthetic/book";
+//        String test = "synthetic/book";
 
 //        String test = "CPLEX";
 

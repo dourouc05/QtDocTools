@@ -125,25 +125,19 @@ public class DocxInputImpl {
             visit(b);
         }
 
-        while (currentSectionLevel > 0) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:section>
-            writeNewLine();
-            currentSectionLevel -= 1;
-        }
-
+        int nCloses = currentSectionLevel; // </db:section>
+        currentSectionLevel = 0;
         if (isWithinChapter) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:chapter>
-            writeNewLine();
+            nCloses += 1; // </db:chapter>
+        }
+        if (isWithinPart) { // </db:part>
+            nCloses += 1;
         }
 
-        if (isWithinPart) {
+        for (int i = 0; i < nCloses; ++i) {
             decreaseIndent();
             writeIndent();
-            xmlStream.writeEndElement(); // </db:part>
+            xmlStream.writeEndElement();
             writeNewLine();
         }
 
@@ -266,6 +260,13 @@ public class DocxInputImpl {
 
     /** Structure elements. **/
 
+    private void closeBlockTag() throws XMLStreamException {
+        decreaseIndent();
+        writeIndent();
+        xmlStream.writeEndElement();
+        writeNewLine();
+    }
+
     private void visitDocumentTitle(XWPFParagraph p) throws XMLStreamException {
         // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
         // <db:info> tag.
@@ -285,18 +286,12 @@ public class DocxInputImpl {
 
         // TODO: What about the abstract?
 
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:info>
-        writeNewLine();
+        closeBlockTag(); // </db:info>
     }
 
     private void visitChapterTitle(XWPFParagraph p) throws XMLStreamException {
         if (isWithinChapter) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:chapter>
-            writeNewLine();
+            closeBlockTag(); // </db:chapter>
         }
         isWithinChapter = true;
 
@@ -314,10 +309,7 @@ public class DocxInputImpl {
 
     private void visitPartTitle(XWPFParagraph p) throws XMLStreamException {
         if (isWithinPart) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:part>
-            writeNewLine();
+            closeBlockTag(); // </db:part>
         }
         isWithinPart = true;
 
@@ -345,10 +337,7 @@ public class DocxInputImpl {
                     "You could get a bad output (invalid XML and/or exceptions) in some cases.");
         }
         while (level <= currentSectionLevel) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:section>
-            writeNewLine();
+            closeBlockTag(); // </db:section>
             currentSectionLevel -= 1;
         }
 
@@ -565,10 +554,7 @@ public class DocxInputImpl {
         writeNewLine();
         decreaseIndent();
 
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:imageobject>
-        writeNewLine();
-        decreaseIndent();
+        closeBlockTag(); // </db:imageobject>
 
         if (! isDisplayedFigure) {
             writeIndent();
