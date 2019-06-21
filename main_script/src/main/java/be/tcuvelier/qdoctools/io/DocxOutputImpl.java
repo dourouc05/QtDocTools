@@ -4,9 +4,13 @@ import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
+import be.tcuvelier.qdoctools.io.todocx.Level;
+import be.tcuvelier.qdoctools.io.todocx.LevelStack;
+import be.tcuvelier.qdoctools.io.todocx.SAXHelpers;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.jetbrains.annotations.NotNull;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -14,7 +18,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import javax.imageio.ImageIO;
-import javax.xml.stream.XMLStreamException;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,323 +28,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DocxOutputImpl extends DefaultHandler {
-    private enum Level {
-        ROOT_ARTICLE, ROOT_ARTICLE_INFO, ROOT_BOOK, ROOT_BOOK_INFO, PART, PART_INFO, CHAPTER, CHAPTER_INFO,
-        SECTION, SECTION_INFO,
-        TABLE,
-        ITEMIZED_LIST, ORDERED_LIST, SEGMENTED_LIST, SEGMENTED_LIST_TITLE, VARIABLE_LIST,
-        BLOCK_PREFORMATTED
-    }
-
-    /**
-     * A few design notes.
-     * - Avoid SDTs. Two reasons: they are not really supported within POI (but you can work around it); they are not
-     *   really supported by LibreOffice, at least with 6.1.3.2 (not shown on screen as different from the rest of
-     *   the code; many bug reports related to loss of information when saving as DOCX).
-     */
-
-    private static class LevelStack {
-        // Slight interface on top of a stack (internally, a Deque) to provide some facilities when peeking, based on
-        // the values of Level.
-
-        private Deque<Level> levels = new ArrayDeque<>();
-        private int listDepth = 0;
-
-        void push(Level l) {
-            levels.push(l);
-
-            if (l == Level.ITEMIZED_LIST || l == Level.ORDERED_LIST) {
-                listDepth += 1;
-            }
-        }
-
-        private void pop() {
-            Level l = levels.pop();
-
-            if (l == Level.ITEMIZED_LIST || l == Level.ORDERED_LIST) {
-                listDepth -= 1;
-            }
-        }
-
-        boolean pop(Level l) {
-            return pop(Stream.of(l));
-        }
-
-        boolean pop(Stream<Level> ls) {
-            return pop(ls.collect(Collectors.toSet()));
-        }
-
-        boolean pop(Set<Level> ls) {
-            if (! ls.contains(levels.peek())) {
-                return false;
-            }
-
-            pop();
-            return true;
-        }
-
-        void pop(Level l, SAXException t) throws SAXException {
-            if (! pop(l)) {
-                throw t;
-            }
-        }
-
-        void pop(Stream<Level> l, SAXException t) throws SAXException {
-            if (! pop(l)) {
-                throw t;
-            }
-        }
-
-        Level peek() {
-            return levels.peek();
-        }
-
-        boolean peekRootArticle() {
-            return peek() == Level.ROOT_ARTICLE;
-        }
-
-        boolean peekRootArticleInfo() {
-            return peek() == Level.ROOT_ARTICLE_INFO;
-        }
-
-        boolean peekRootBook() {
-            return peek() == Level.ROOT_BOOK;
-        }
-
-        boolean peekRootBookInfo() {
-            return peek() == Level.ROOT_BOOK_INFO;
-        }
-
-        boolean peekPart() {
-            return peek() == Level.PART;
-        }
-
-        boolean peekChapter() {
-            return peek() == Level.CHAPTER;
-        }
-
-        boolean peekSection() {
-            return peek() == Level.SECTION;
-        }
-
-        boolean peekSectionInfo() {
-            return peek() == Level.SECTION_INFO;
-        }
-
-        boolean peekBlockPreformatted() {
-            return peek() == Level.BLOCK_PREFORMATTED;
-        }
-
-        boolean peekTable() {
-            return peek() == Level.TABLE;
-        }
-
-        boolean peekList() {
-            return peekItemizedList() || peekOrderedList();
-        }
-
-        boolean peekItemizedList() {
-            return peek() == Level.ITEMIZED_LIST;
-        }
-
-        boolean peekOrderedList() {
-            return peek() == Level.ORDERED_LIST;
-        }
-
-        int countListDepth() {
-            return listDepth;
-        }
-
-        @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-        boolean peekSegmentedList() {
-            return peek() == Level.SEGMENTED_LIST;
-        }
-
-        boolean peekSegmentedListTitle() {
-            return peek() == Level.SEGMENTED_LIST_TITLE;
-        }
-
-        boolean peekVariableList() {
-            return peek() == Level.VARIABLE_LIST;
-        }
-    }
-
-    private static class SAXHelpers {
-        private static Map<String, String> attributes(Attributes attributes) {
-            Map<String, String> d = new HashMap<>();
-            for (int i = 0; i < attributes.getLength(); ++i) {
-                d.put(SAXHelpers.qNameToTagName(attributes.getLocalName(i)), attributes.getValue(i));
-            }
-            return d;
-        }
-
-        private static String qNameToTagName(String qName) {
-            // SAX returns a localName that is zero-length... Hence this function: go from db:article to article.
-            // But maybe a specific DocBook document has no defined namespace, or DocBook is the default namespace.
-            if (! qName.contains(":")) {
-                return qName;
-            } else {
-                return qName.split(":")[1];
-            }
-        }
-
-        private static boolean compare(String qName, String reference) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase(reference);
-        }
-
-        private static boolean isInfoTag(String qName) {
-            return compare(qName, "info");
-        }
-
-        private static boolean isAbstractTag(String qName) {
-            return compare(qName, "abstract");
-        }
-
-        private static boolean isPartIntroTag(String qName) {
-            return compare(qName, "partintro");
-        }
-
-        private static boolean isTitleTag(String qName) {
-            return compare(qName, "title");
-        }
-
-        private static boolean isSectionTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("section")
-                    || localName.equalsIgnoreCase("sect1")
-                    || localName.equalsIgnoreCase("sect2")
-                    || localName.equalsIgnoreCase("sect3")
-                    || localName.equalsIgnoreCase("sect4")
-                    || localName.equalsIgnoreCase("sect5")
-                    || localName.equalsIgnoreCase("sect6");
-        }
-
-        private static boolean isParagraphTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("para")
-                    || localName.equalsIgnoreCase("simpara");
-        }
-
-        private static boolean isFormatting(String qName) {
-            return DocBookFormatting.isRunFormatting(qName) || DocBookFormatting.isInlineFormatting(qName);
-        }
-
-        private static boolean isLinkTag(String qName) {
-            return compare(qName, "link");
-        }
-
-        private static boolean isTableTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("informaltable")
-                    || localName.equalsIgnoreCase("table");
-        }
-
-        private static boolean isTableHeaderTag(String qName) {
-            return compare(qName, "thead");
-        }
-
-        private static boolean isTableBodyTag(String qName) {
-            return compare(qName, "tbody");
-        }
-
-        private static boolean isTableFooterTag(String qName) {
-            return compare(qName, "tfoot");
-        }
-
-        private static boolean isTableRowTag(String qName) {
-            return compare(qName, "tr");
-        }
-
-        private static boolean isTableColumnTag(String qName) {
-            return compare(qName, "td");
-        }
-
-        private static boolean isCALSTag(String qName) {
-            String localName = qNameToTagName(qName);
-            return localName.equalsIgnoreCase("tgroup")
-                    || localName.equalsIgnoreCase("colspec")
-                    || localName.equalsIgnoreCase("row")
-                    || localName.equalsIgnoreCase("entry");
-        }
-
-        private static boolean isProgramListingTag(String qName) {
-            return compare(qName, "programlisting");
-        }
-
-        private static boolean isScreenTag(String qName) {
-            return compare(qName, "screen");
-        }
-
-        private static boolean isSynopsisTag(String qName) {
-            return compare(qName, "synopsis");
-        }
-
-        private static boolean isLiteralLayoutTag(String qName) {
-            return compare(qName, "literallayout");
-        }
-
-        private static boolean isInlineMediaObjectTag(String qName) {
-            return compare(qName, "inlinemediaobject");
-        }
-
-        private static boolean isMediaObjectTag(String qName) {
-            return compare(qName, "mediaobject");
-        }
-
-        private static boolean isImageDataTag(String qName) {
-            return compare(qName, "imagedata");
-        }
-
-        private static boolean isImageObjectTag(String qName) {
-            return compare(qName, "imageobject");
-        }
-
-        private static boolean isCaptionTag(String qName) {
-            return compare(qName, "caption");
-        }
-
-        private static boolean isItemizedListTag(String qName) {
-            return compare(qName, "itemizedlist");
-        }
-
-        private static boolean isOrderedListTag(String qName) {
-            return compare(qName, "orderedlist");
-        }
-
-        private static boolean isListItemTag(String qName) {
-            return compare(qName, "listitem");
-        }
-
-        private static boolean isSegmentedListTag(String qName) {
-            return compare(qName, "segmentedlist");
-        }
-
-        private static boolean isSegmentedListTitleTag(String qName) {
-            return compare(qName, "segtitle");
-        }
-
-        private static boolean isSegmentedListItemTag(String qName) {
-            return compare(qName, "seglistitem");
-        }
-
-        private static boolean isSegmentedListItemValueTag(String qName) {
-            return compare(qName, "seg");
-        }
-
-        private static boolean isVariableListTag(String qName) {
-            return compare(qName, "variablelist");
-        }
-
-        private static boolean isVariableListItemTag(String qName) {
-            return compare(qName, "varlistentry");
-        }
-
-        private static boolean isVariableListItemDefinitionTag(String qName) {
-            return compare(qName, "term");
-        }
-    }
-
     /** Internal variables. **/
 
     private Locator locator;
@@ -392,7 +78,7 @@ public class DocxOutputImpl extends DefaultHandler {
     // Cannot be a static class, as some methods require access to the current document.
 
     private class POIHelpers {
-        private int filenameToWordFormat(String filename) {
+        private int filenameToWordFormat(@NotNull String filename) {
             // See org.apache.poi.xwpf.usermodel.Document.
             String[] parts = filename.split("\\.");
             String extension = parts[parts.length - 1].toLowerCase();

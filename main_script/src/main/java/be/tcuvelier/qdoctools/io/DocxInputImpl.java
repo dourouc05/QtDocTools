@@ -24,7 +24,6 @@ public class DocxInputImpl {
     private final XWPFDocument doc;
     private final DocBookStreamWriter dbStream;
 
-    private String documentType;
     private Map<String, byte[]> images = new HashMap<>();
     private FormattingStack currentFormatting;
     private int currentSectionLevel;
@@ -34,7 +33,7 @@ public class DocxInputImpl {
     private PreformattedMetadata preformattedMetadata;
     private boolean isDisplayedFigure = false;
     private boolean isWithinAdmonition = false;
-    private boolean isWithinList = false; // TODO: Introduce a stack, like DocxOutput? Could merge in isWithinVariableList. Would help deal with nested lists.
+    private boolean isWithinList = false;
 
     private int currentDefinitionListItemNumber = -1;
     private int currentDefinitionListItemSegmentNumber = -1;
@@ -77,7 +76,7 @@ public class DocxInputImpl {
         currentSectionLevel = 0;
 
         // Generate the document.
-        documentType = detectDocumentType();
+        String documentType = detectDocumentType();
         dbStream.startDocument(documentType, "5.1");
         for (IBodyElement b: doc.getBodyElements()) {
             visit(b);
