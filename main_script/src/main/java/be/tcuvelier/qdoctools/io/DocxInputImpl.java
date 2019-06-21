@@ -101,6 +101,7 @@ public class DocxInputImpl {
             case "Titlebook":
                 return "book";
             default:
+                // TODO: Should this rather default to article? But how would the title field be filled (it is necessary per the RNG)?
                 throw new XMLStreamException("Unrecognised document type. Is the first paragraph a Title or a Title (book)?");
         }
     }
@@ -130,7 +131,7 @@ public class DocxInputImpl {
             visit(b);
         }
 
-        int nCloses = currentSectionLevel; // </db:section>
+        int nCloses = currentSectionLevel; // </db:section>, as many times as required
         currentSectionLevel = 0;
         if (isWithinChapter) {
             nCloses += 1; // </db:chapter>
@@ -143,7 +144,7 @@ public class DocxInputImpl {
             closeBlockTag();
         }
 
-        decreaseIndent(); // For consistency: this has no impact on the produced XML.
+        decreaseIndent(); // For consistency: this has no impact on the produced XML, but helps detect potential errors.
         xmlStream.writeEndElement();
         xmlStream.writeEndDocument();
 
@@ -557,9 +558,9 @@ public class DocxInputImpl {
             }
         }
         writeNewLine();
-        decreaseIndent();
 
         closeBlockTag(); // </db:imageobject>
+        decreaseIndent();
 
         if (! isDisplayedFigure) {
             writeIndent();
