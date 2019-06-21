@@ -87,6 +87,56 @@ public class DocxInputImpl {
         xmlStream.writeCharacters("\n");
     }
 
+    private void openParagraphTag(String tag) throws XMLStreamException { // Paragraphs start on a new line, but contain inline elements on the same line. Examples: paragraphs, titles.
+        openParagraphTag(tag, Collections.emptyMap());
+    }
+
+    private void openParagraphTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, tag);
+
+        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+            xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
+        }
+    }
+
+    private void closeParagraphTag() throws XMLStreamException {
+        xmlStream.writeEndElement();
+        writeNewLine();
+    }
+
+    private void openInlineTag(String tag) throws XMLStreamException { // Inline elements are on the same line.
+        openInlineTag(tag, Collections.emptyMap());
+    }
+
+    private void openInlineTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+        xmlStream.writeStartElement(docbookNS, tag);
+
+        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+            xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
+        }
+    }
+
+    private void closeInlineTag() throws XMLStreamException {
+        xmlStream.writeEndElement();
+    }
+
+    private void openBlockTag(String tag) throws XMLStreamException { // Blocks start on a new line, and have nothing else on the same line.
+        openBlockTag(tag, Collections.emptyMap());
+    }
+
+    private void openBlockTag(String tag, Map<String, String> attributes) throws XMLStreamException {
+        writeIndent();
+        xmlStream.writeStartElement(docbookNS, tag);
+
+        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+            xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
+        }
+
+        increaseIndent();
+        writeNewLine();
+    }
+
     private void closeBlockTag() throws XMLStreamException {
         decreaseIndent();
         writeIndent();
@@ -272,17 +322,11 @@ public class DocxInputImpl {
         // <db:info> tag.
         currentSectionLevel = 0;
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "info");
-        increaseIndent();
+        openBlockTag("info");
 
-        writeNewLine();
-        writeIndent();
-
-        xmlStream.writeStartElement(docbookNS, "title");
+        openParagraphTag("title");
         visitRuns(p.getRuns());
-        xmlStream.writeEndElement(); // </db:title>
-        writeNewLine();
+        closeParagraphTag(); // </db:title>
 
         // TODO: What about the abstract?
 
@@ -295,16 +339,11 @@ public class DocxInputImpl {
         }
         isWithinChapter = true;
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "chapter");
-        increaseIndent();
-        writeNewLine();
+        openBlockTag("chapter");
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "title");
+        openParagraphTag("title");
         visitRuns(p.getRuns());
-        xmlStream.writeEndElement(); // </db:title>
-        writeNewLine();
+        closeParagraphTag(); // </db:title>
     }
 
     private void visitPartTitle(XWPFParagraph p) throws XMLStreamException {
@@ -313,16 +352,11 @@ public class DocxInputImpl {
         }
         isWithinPart = true;
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "part");
-        increaseIndent();
-        writeNewLine();
+        openBlockTag("part");
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "title");
+        openParagraphTag("title");
         visitRuns(p.getRuns());
-        xmlStream.writeEndElement(); // </db:title>
-        writeNewLine();
+        closeParagraphTag(); // </db:title>
 
         // TODO: Part intro?
     }
@@ -344,16 +378,11 @@ public class DocxInputImpl {
         // Deal with this section.
         currentSectionLevel += 1;
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "section");
-        increaseIndent();
-        writeNewLine();
+        openBlockTag("section");
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "title");
+        openParagraphTag("title");
         visitRuns(p.getRuns());
-        xmlStream.writeEndElement(); // </db:title>
-        writeNewLine();
+        closeParagraphTag(); // </db:title>
 
         // TODO: Implement a check on the currentSectionLevel and the level (in case someone missed a level in the headings).
     }
@@ -364,8 +393,7 @@ public class DocxInputImpl {
         // Ignore captions, as they are handled directly within mediaobjects/tables.
         if (p.getStyleID() != null && p.getStyleID().equals("Caption")) {
             if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
-                return;
-//                throw new XMLStreamException("Caption not expected.");
+                throw new XMLStreamException("Caption not expected.");
             } else {
                 return;
             }
@@ -460,6 +488,17 @@ public class DocxInputImpl {
         PreformattedMetadata(@NotNull XWPFParagraph p) throws XMLStreamException {
             this(p.getText());
         }
+
+        Map<String, String> toMap() {
+            Map<String, String> map = new HashMap<>();
+
+            language.ifPresent(s -> map.put("language", s));
+            continuation.ifPresent(b -> map.put("continuation", b.toString()));
+            linenumbering.ifPresent(i -> map.put("linenumbering", i.toString()));
+            startinglinenumber.ifPresent(i -> map.put("startinglinenumber", i.toString()));
+
+            return Map.copyOf(map);
+        }
     }
 
     private void visitPreformatted(@NotNull XWPFParagraph p) throws XMLStreamException {
@@ -477,34 +516,21 @@ public class DocxInputImpl {
 
         // Indentation must NOT be increased here: the content of such a tag, in particular the line feeds, must be
         // respected to the letter.
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
 
         if (preformattedMetadata != null) {
             if (preformattedMetadata.type != DocBookBlock.styleIDToBlock.get(p.getStyleID())) {
                 throw new XMLStreamException("Preformatted metadata style does not correspond to the style of the next paragraph.");
             }
 
-            if (preformattedMetadata.language.isPresent()) {
-                xmlStream.writeAttribute("language", preformattedMetadata.language.get());
-            }
-            if (preformattedMetadata.continuation.isPresent()) {
-                xmlStream.writeAttribute("continuation", preformattedMetadata.continuation.get().toString());
-            }
-            if (preformattedMetadata.linenumbering.isPresent()) {
-                xmlStream.writeAttribute("linenumbering", preformattedMetadata.linenumbering.get().toString());
-            }
-            if (preformattedMetadata.startinglinenumber.isPresent()) {
-                xmlStream.writeAttribute("startinglinenumber", preformattedMetadata.startinglinenumber.get().toString());
-            }
-
+            openParagraphTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()), preformattedMetadata.toMap());
             preformattedMetadata = null;
+        } else {
+            openParagraphTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
         }
 
         visitRuns(p.getRuns());
 
-        xmlStream.writeEndElement(); // </db:programlisting> or something else.
-        writeNewLine();
+        closeParagraphTag(); // </db:programlisting> or something else.
     }
 
     private void visitPictureRun(@NotNull XWPFRun r, @Nullable @SuppressWarnings("unused") XWPFRun prevRun,
@@ -537,30 +563,27 @@ public class DocxInputImpl {
         writeNewLine();
         increaseIndent();
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "imageobject");
-        writeNewLine();
-        increaseIndent();
+        openBlockTag("imageobject");
 
-        writeIndent();
-        xmlStream.writeEmptyElement(docbookNS, "imagedata");
-        xmlStream.writeAttribute("fileref", imageName);
-        // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
-        // Cx/Cx return values in EMUs (very different from EM).
-//        https://github.com/apache/poi/pull/150
-        xmlStream.writeAttribute("width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in");
-        xmlStream.writeAttribute("depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in");
+        Map<String, String> attrs = new HashMap<>(Map.ofEntries(
+                Map.entry("fileref", imageName),
+                // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
+                // Cx/Cx return values in EMUs (very different from EM).
+                // https://github.com/apache/poi/pull/150
+                Map.entry("width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in"),
+                Map.entry("depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in")
+        ));
         if (isDisplayedFigure) {
             XWPFParagraph parent = ((XWPFParagraph) r.getParent());
             String dbAlign = DocBookAlignment.paragraphAlignmentToDocBookAttribute(parent.getAlignment());
             if (dbAlign.length() > 0) {
-                xmlStream.writeAttribute("align", dbAlign);
+                attrs.put("align", dbAlign);
             }
         }
-        writeNewLine();
+        openBlockTag("imagedata", attrs);
 
         closeBlockTag(); // </db:imageobject>
-        decreaseIndent();
+        decreaseIndent(); // TODO: ?
 
         if (! isDisplayedFigure) {
             writeIndent();
@@ -573,11 +596,7 @@ public class DocxInputImpl {
         // Open the admonition if this is the first paragraph with this kind of style.
         if (! isWithinAdmonition) {
             isWithinAdmonition = true;
-
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
-            writeNewLine();
-            increaseIndent();
+            openBlockTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
         }
 
         visitNormalParagraph(p);
@@ -596,11 +615,7 @@ public class DocxInputImpl {
             }
 
             if (close) {
-                decreaseIndent();
-                writeIndent();
-                xmlStream.writeEndElement(); // </db:admonition tag>
-                writeNewLine();
-
+                closeBlockTag(); // </db:admonition tag>
                 isWithinAdmonition = false;
             }
         }
@@ -672,22 +687,13 @@ public class DocxInputImpl {
             }
 
             if (openList) { // Implement the previous decision.
-                writeIndent();
-                xmlStream.writeStartElement(docbookNS, isListOrdered(p) ? "orderedlist" : "itemizedlist");
-                writeNewLine();
-                increaseIndent();
-
+                openBlockTag(isListOrdered(p) ? "orderedlist" : "itemizedlist");
                 isWithinList = true;
             }
         }
 
-        // Write the list item.
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "listitem");
-        writeNewLine();
-        increaseIndent();
-
-        // Write the content of the list item (and wrap it into a <para>). s
+        // Write the content of the list item (and wrap it into a <para>).
+        openBlockTag("listitem");
         visitNormalParagraph(p);
 
         // Deal with the last paragraph of the document: end the list item and all opened lists if required.
@@ -716,10 +722,7 @@ public class DocxInputImpl {
 
         // Implement the required closes.
         for (int i = 0; i < nCloses; ++i) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement();
-            writeNewLine();
+            closeBlockTag();
         }
     }
 
@@ -804,80 +807,43 @@ public class DocxInputImpl {
     private void serialiseDefinitionList() throws XMLStreamException {
         // Once the whole definition list is built in currentDefinitionListTitles and currentDefinitionListContents,
         // serialise it as DocBook.
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "segmentedlist");
-        increaseIndent();
-        writeNewLine();
+        openBlockTag("segmentedlist");
 
         for (XWPFParagraph title: currentDefinitionListTitles) {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "segtitle");
-
-            // No indentation, inline content.
+            openParagraphTag("segtitle");
             visitRuns(title.getRuns());
-
-            xmlStream.writeEndElement(); // </db:segtitle>
-            writeNewLine();
+            closeParagraphTag();
         }
 
         for (List<XWPFParagraph> item: currentDefinitionListContents) {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "seglistitem");
-            increaseIndent();
-            writeNewLine();
-
+            openBlockTag("seglistitem");
             for (XWPFParagraph value: item) {
-                writeIndent();
-                xmlStream.writeStartElement(docbookNS, "seg");
-
-                // No indentation, inline content.
+                openParagraphTag("seg");
                 visitRuns(value.getRuns());
-
-                xmlStream.writeEndElement(); // </db:seg>
-                writeNewLine();
+                closeParagraphTag();
             }
-
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:seglistitem>
-            writeNewLine();
+            closeBlockTag(); // </db:seglistitem>
         }
 
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:segmentedlist>
-        writeNewLine();
+        closeBlockTag(); // </db:segmentedlist>
     }
 
     /** Variable lists. **/
 
     private void visitVariableListTitle(XWPFParagraph p) throws XMLStreamException {
         if (! isWithinVariableList) {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "variablelist");
-            increaseIndent();
-            writeNewLine();
-
+            openBlockTag("variablelist");
             isWithinVariableList = true;
         }
 
         if (! isWithinVariableListEntry) {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "varlistentry");
-            increaseIndent();
-            writeNewLine();
-
+            openBlockTag("varlistentry");
             isWithinVariableListEntry = true;
         }
 
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "term");
-
-        // Inline content!
+        openParagraphTag("term");
         visitRuns(p.getRuns());
-
-        xmlStream.writeEndElement(); // </db:term>
-        writeNewLine();
+        closeParagraphTag();
     }
 
     private void visitVariableListItem(XWPFParagraph p) throws XMLStreamException {
@@ -890,32 +856,17 @@ public class DocxInputImpl {
         }
 
         isWithinVariableListEntry = false;
-
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "listitem");
-        increaseIndent();
-        writeNewLine();
+        openBlockTag("listitem");
 
         // Container for paragraphs.
         visitNormalParagraph(p);
 
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:listitem>
-        writeNewLine();
-
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:varlistentry>
-        writeNewLine();
+        closeBlockTag(); // </db:listitem>
+        closeBlockTag(); // </db:varlistentry>
 
         // If the next item is no more within a variable list, end the fight.
         if (isLastParagraph(p) || ! hasFollowingParagraphWithStyle(p, "VariableListTitle")) {
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:variablelist>
-            writeNewLine();
-
+            closeBlockTag(); // </db:variablelist>
             isWithinVariableList = false;
         }
     }
@@ -939,17 +890,11 @@ public class DocxInputImpl {
     /** Tables. **/
 
     private void visitTable(XWPFTable t) throws XMLStreamException {
-        writeIndent();
-        xmlStream.writeStartElement(docbookNS, "informaltable");
-        increaseIndent();
-        writeNewLine();
+        openBlockTag("informaltable");
 
         // Output the table row per row, in HTML format.
         for (XWPFTableRow row: t.getRows()) {
-            writeIndent();
-            xmlStream.writeStartElement(docbookNS, "tr");
-            increaseIndent();
-            writeNewLine();
+            openBlockTag("tr");
 
             for (XWPFTableCell cell: row.getTableCells()) {
                 // Special case: an empty cell. One paragraph with zero runs.
@@ -963,31 +908,17 @@ public class DocxInputImpl {
                 }
 
                 // Normal case.
-                writeIndent();
-                xmlStream.writeStartElement(docbookNS, "td");
-                increaseIndent();
-                writeNewLine();
-
+                openBlockTag("td");
                 for (XWPFParagraph p: cell.getParagraphs()){
                     visitParagraph(p);
                 }
-
-                decreaseIndent();
-                writeIndent();
-                xmlStream.writeEndElement(); // </db:td>
-                writeNewLine();
+                closeBlockTag(); // </db:td>
             }
 
-            decreaseIndent();
-            writeIndent();
-            xmlStream.writeEndElement(); // </db:tr>
-            writeNewLine();
+            closeBlockTag(); // </db:tr>
         }
 
-        decreaseIndent();
-        writeIndent();
-        xmlStream.writeEndElement(); // </db:informaltable>
-        writeNewLine();
+        closeBlockTag(); // </db:informaltable>
     }
 
     /** Inline elements (runs, in Word parlance). **/
@@ -1168,23 +1099,20 @@ public class DocxInputImpl {
             if (f == DocBookFormatting.EMPHASIS) {
                 // Replaceable special case.
                 if (currentFormatting.formattings().stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
-                    xmlStream.writeStartElement(docbookNS, "replaceable");
+                    openInlineTag("replaceable");
                 } else {
-                    xmlStream.writeStartElement(docbookNS, "emphasis");
+                    openInlineTag("emphasis");
                 }
             } else if (f == DocBookFormatting.EMPHASIS_BOLD) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute("role", "bold");
+                openInlineTag("emphasis", Map.of("role", "bold"));
             } else if (f == DocBookFormatting.EMPHASIS_STRIKETHROUGH) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute("role", "strikethrough");
+                openInlineTag("emphasis", Map.of("role", "strikethrough"));
             } else if (f == DocBookFormatting.EMPHASIS_UNDERLINE) {
-                xmlStream.writeStartElement(docbookNS, "emphasis");
-                xmlStream.writeAttribute("role", "underline");
+                openInlineTag("emphasis", Map.of("role", "underline"));
             }
             // Full-blown tags.
             else {
-                xmlStream.writeStartElement(docbookNS, DocBookFormatting.formattingToDocBookTag.get(f));
+                openInlineTag(DocBookFormatting.formattingToDocBookTag.get(f));
             }
         }
 
@@ -1194,7 +1122,7 @@ public class DocxInputImpl {
         // Close the tags at the end of the paragraph.
         if (isLastRun && currentFormatting.formattings().size() > 0) {
             for (DocBookFormatting ignored: currentFormatting.formattings()) {
-                xmlStream.writeEndElement();
+                closeInlineTag();
             }
         }
     }
