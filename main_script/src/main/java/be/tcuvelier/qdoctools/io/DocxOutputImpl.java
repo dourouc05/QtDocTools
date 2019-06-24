@@ -39,6 +39,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private Deque<XWPFParagraph> paragraph;
     private int paragraphNumber = -1;
     private XWPFRun run;
+    private boolean footnotesInitialised = false;
     private XWPFFootnote footnote;
     private String paragraphStyle = "Normal";
     private int runNumber = -1;
@@ -443,6 +444,33 @@ public class DocxOutputImpl extends DefaultHandler {
 
     /** Actual SAX handler. **/
 
+    private void initialiseFootnotes() {
+        if (! footnotesInitialised) {
+            footnotesInitialised = true;
+            doc.createFootnotes();
+
+            // Create the first two "dummy" footnotes.
+
+            // <w:footnote w:type="separator" w:id="-1"><w:p><w:r><w:separator/></w:r></w:p></w:footnote>
+            footnote = doc.createFootnote();
+            footnote.getCTFtnEdn().setId(BigInteger.ZERO.subtract(BigInteger.ONE)); // -1
+            footnote.getCTFtnEdn().setType(STFtnEdn.SEPARATOR);
+            footnote.getCTFtnEdn().addNewP();
+            footnote.getCTFtnEdn().getPArray(0).addNewR();
+            footnote.getCTFtnEdn().getPArray(0).getRArray(0).addNewSeparator();
+
+            // <w:footnote w:type="continuationSeparator" w:id="0"><w:p><w:r><w:continuationSeparator/></w:r></w:p></w:footnote>
+            footnote = doc.createFootnote();
+            footnote.getCTFtnEdn().setId(BigInteger.ZERO);
+            footnote.getCTFtnEdn().setType(STFtnEdn.CONTINUATION_SEPARATOR);
+            footnote.getCTFtnEdn().addNewP();
+            footnote.getCTFtnEdn().getPArray(0).addNewR();
+            footnote.getCTFtnEdn().getPArray(0).getRArray(0).addNewContinuationSeparator();
+
+            footnote = null;
+        }
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
@@ -566,17 +594,23 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Paragraphs: lots of special cases...
         else if (SAXHelpers.isParagraphTag(qName)) {
-            // For tables, the paragraph is automatically created within a table cell.
+            // For tables, the paragraph is automatically created within a table cell. Same for a footnote.
             if (currentLevel.peekTable() && paragraphNumber == 0) {
                 return;
             }
+            if (footnote != null && paragraphNumber >= -1) { // TODO: Second part of the condition wrong, but will do for now. Would need to check if this is the first paragraph OF THE FOOTNOTE, not more globally.
+                return;
+            }
 
+            // Consistency checks.
             if (footnote == null && ((paragraph != null && paragraph.size() > 0) || run != null)) {
                 throw new DocxException("tried to create a new paragraph, but one was already being filled.");
             }
 
+            // Create the new paragraph.
             allocateNewParagraph();
 
+            // If within a list, number correctly this paragraph.
             if (currentLevel.peekList()) {
                 paragraph.getLast().setNumID(numbering);
 
@@ -597,8 +631,10 @@ public class DocxOutputImpl extends DefaultHandler {
                 numbering = null;
             }
 
+            // Apply styling.
             paragraph.getLast().setStyle(paragraphStyle);
 
+            // Prepare a first run to receive text.
             run = paragraph.getLast().createRun();
             runCharactersNumber += 1;
             warnUnknownAttributes(attributes);
@@ -657,18 +693,21 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unexpected end of footnote");
             }
 
+            initialiseFootnotes();
+
             // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
-            doc.createFootnotes();
             footnote = doc.createFootnote();
             paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
 
             CTP ctp = footnote.getCTFtnEdn().addNewP();
             paragraph.addLast(new XWPFParagraph(ctp, footnote));
+            paragraph.getLast().setStyle("FootnoteText");
+            paragraphStyle = "FootnoteText";
 
             run = paragraph.getLast().createRun();
             run.setStyle("FootnoteReference");
             CTFtnEdnRef ref = run.getCTR().addNewFootnoteReference();
-            ref.setId(footnote.getId());
+//            ref.setId(footnote.getId());
 
             // Create a new run, so that the new text is not within the same run.
             run = paragraph.getLast().createRun();
@@ -1251,10 +1290,12 @@ public class DocxOutputImpl extends DefaultHandler {
             // the beginning of this run (i.e. trim left).
             if (runNumber > 0) {
                 XWPFRun previous = paragraph.getLast().getRuns().get(runNumber - 1);
-                String prevText = previous.text();
+                if (previous.getCTR().getFootnoteReferenceList().size() == 0) {
+                    String prevText = previous.text();
 
-                if (prevText.endsWith(" ")) {
-                    content = content.replaceAll("^\\s+", ""); // Trim left.
+                    if (prevText.endsWith(" ")) {
+                        content = content.replaceAll("^\\s+", ""); // Trim left.
+                    }
                 }
             }
 
