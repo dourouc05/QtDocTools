@@ -10,6 +10,7 @@ import be.tcuvelier.qdoctools.io.todocx.SAXHelpers;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.xml.sax.Attributes;
@@ -38,6 +39,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private XWPFParagraph paragraph;
     private int paragraphNumber = -1;
     private XWPFRun run;
+    private XWPFFootnote footnote;
     private String paragraphStyle = "Normal";
     private int runNumber = -1;
     private int runCharactersNumber = -1;
@@ -67,10 +69,16 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // The template always contains empty paragraphs, remove them (just to have a clean output).
         // Either it is just an empty document, or these paragraphs are used so that Word has no latent style.
-        int nParagraphsToRemove = doc.getBodyElements().size();
-        while (nParagraphsToRemove >= 0) {
+        int nParagraphs = doc.getBodyElements().size();
+        while (nParagraphs > 0) {
             doc.removeBodyElement(0);
-            nParagraphsToRemove -= 1;
+            nParagraphs -= 1;
+        }
+
+        int nFootnotes = doc.getFootnotes().size();
+        while (nFootnotes > 0) {
+            doc.removeFootnote(0);
+            nFootnotes -= 1;
         }
     }
 
@@ -101,6 +109,7 @@ public class DocxOutputImpl extends DefaultHandler {
             return -1;
         }
 
+        @Contract("null -> fail")
         private int parseMeasurementAsEMU(String m) throws SAXException {
             if (m == null) {
                 throw new DocxException("invalid measured quantity.");
@@ -121,13 +130,13 @@ public class DocxOutputImpl extends DefaultHandler {
             }
         }
 
-        private CTLevelText createText(String t) {
+        private CTLevelText createText(@NotNull String t) {
             CTLevelText ct = CTLevelText.Factory.newInstance();
             ct.setVal(t);
             return ct;
         }
 
-        private CTRPr createFont(String name) {
+        private CTRPr createFont(@NotNull String name) {
             CTFonts fonts = CTFonts.Factory.newInstance();
             fonts.setAscii(name);
             fonts.setHAnsi(name);
@@ -139,7 +148,7 @@ public class DocxOutputImpl extends DefaultHandler {
             return font;
         }
 
-        private XWPFHyperlinkRun createHyperlinkRun(String uri) {
+        private XWPFHyperlinkRun createHyperlinkRun(@NotNull String uri) {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
             // https://github.com/apache/poi/pull/153
             // Create a relationship ID for this link.
@@ -537,9 +546,10 @@ public class DocxOutputImpl extends DefaultHandler {
                 return;
             }
 
-            if (paragraph != null || run != null) {
+            if (footnote == null && (paragraph != null || run != null)) {
                 throw new DocxException("tried to create a new paragraph, but one was already being filled.");
             }
+//            if (footnote != null && run != null)
 
             if (currentLevel.peekTable()) {
                 // In tables, add the new paragraph to the current cell.
@@ -624,8 +634,20 @@ public class DocxOutputImpl extends DefaultHandler {
             runCharactersNumber = 0;
 
             // Set formatting for the link.
+            // TODO: Rather use the Hyperlink style?
             run.setUnderline(UnderlinePatterns.SINGLE);
             run.setColor("0563c1");
+        } else if (SAXHelpers.isFootnoteTag(qName)) {
+            // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
+            doc.createFootnotes();
+            footnote = doc.createFootnote();
+            paragraph.addFootnoteReference(footnote); // Creates a new run in the current paragraph.
+
+
+//            // Create a new run, so that the new text is not within the same run.
+//            run = paragraph.createRun();
+//            runNumber += 1;
+//            runCharactersNumber = 0;
         }
 
         // Tables: only HTML implemented.
@@ -973,6 +995,11 @@ public class DocxOutputImpl extends DefaultHandler {
             setRunFormatting();
         } else if (SAXHelpers.isLinkTag(qName)) {
             // Create a new run, so that the new text is not within the same run.
+            run = paragraph.createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
+        } else if (SAXHelpers.isFootnoteTag(qName)) {
+            // Create a new run, so that the new text is not within the footnote.
             run = paragraph.createRun();
             runNumber += 1;
             runCharactersNumber = 0;

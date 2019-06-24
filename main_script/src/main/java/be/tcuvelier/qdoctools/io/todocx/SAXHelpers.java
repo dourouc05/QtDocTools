@@ -1,6 +1,5 @@
 package be.tcuvelier.qdoctools.io.todocx;
 
-import be.tcuvelier.qdoctools.io.DocxOutputImpl;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import org.xml.sax.Attributes;
 
@@ -16,7 +15,7 @@ public class SAXHelpers {
         return d;
     }
 
-    public static String qNameToTagName(String qName) {
+    private static String qNameToTagName(String qName) {
         // SAX returns a localName that is zero-length... Hence this function: go from db:article to article.
         // But maybe a specific DocBook document has no defined namespace, or DocBook is the default namespace.
         if (! qName.contains(":")) {
@@ -26,7 +25,7 @@ public class SAXHelpers {
         }
     }
 
-    public static boolean compare(String qName, String reference) {
+    private static boolean compare(String qName, String reference) {
         String localName = qNameToTagName(qName);
         return localName.equalsIgnoreCase(reference);
     }
@@ -72,6 +71,10 @@ public class SAXHelpers {
         return compare(qName, "link");
     }
 
+    public static boolean isFootnoteTag(String qName) {
+        return compare(qName, "footnote");
+    }
+
     public static boolean isTableTag(String qName) {
         String localName = qNameToTagName(qName);
         return localName.equalsIgnoreCase("informaltable")
@@ -108,18 +111,6 @@ public class SAXHelpers {
 
     public static boolean isProgramListingTag(String qName) {
         return compare(qName, "programlisting");
-    }
-
-    public static boolean isScreenTag(String qName) {
-        return compare(qName, "screen");
-    }
-
-    public static boolean isSynopsisTag(String qName) {
-        return compare(qName, "synopsis");
-    }
-
-    public static boolean isLiteralLayoutTag(String qName) {
-        return compare(qName, "literallayout");
     }
 
     public static boolean isInlineMediaObjectTag(String qName) {

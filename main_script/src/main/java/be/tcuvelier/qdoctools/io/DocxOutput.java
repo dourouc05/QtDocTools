@@ -40,9 +40,9 @@ public class DocxOutput {
 //        String test = "synthetic/admonitions";
 //        String test = "synthetic/admonitions_many";
 //        String test = "synthetic/spacing";
-//        String test = "synthetic/spacing_strange";
+        String test = "synthetic/footnote";
 
-        String test = "CPLEX";
+//        String test = "CPLEX";
 
         new DocxOutput(MainCommand.toDocxTests + test + ".xml")
                 .toDocx(MainCommand.toDocxTests + test + ".docx");
