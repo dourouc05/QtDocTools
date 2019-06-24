@@ -36,7 +36,7 @@ public class DocxOutputImpl extends DefaultHandler {
     XWPFDocument doc;
     private POIHelpers h = new POIHelpers();
 
-    private XWPFParagraph paragraph;
+    private Deque<XWPFParagraph> paragraph;
     private int paragraphNumber = -1;
     private XWPFRun run;
     private XWPFFootnote footnote;
@@ -152,18 +152,18 @@ public class DocxOutputImpl extends DefaultHandler {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
             // https://github.com/apache/poi/pull/153
             // Create a relationship ID for this link.
-            String rId = paragraph.getPart().getPackagePart().addExternalRelationship(
+            String rId = paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
                     uri, XWPFRelation.HYPERLINK.getRelation()
             ).getId();
 
             // Create the run.
-            CTHyperlink ctHyperLink = paragraph.getCTP().addNewHyperlink();
+            CTHyperlink ctHyperLink = paragraph.getLast().getCTP().addNewHyperlink();
             ctHyperLink.setId(rId);
             ctHyperLink.addNewR();
 
             // Append this run to the paragraph.
-            XWPFHyperlinkRun link = new XWPFHyperlinkRun(ctHyperLink, ctHyperLink.getRArray(0), paragraph);
-            paragraph.addRun(link);
+            XWPFHyperlinkRun link = new XWPFHyperlinkRun(ctHyperLink, ctHyperLink.getRArray(0), paragraph.getLast());
+            paragraph.getLast().addRun(link);
             return link;
         }
 
@@ -494,32 +494,32 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         else if (SAXHelpers.isTitleTag(qName)) {
-            paragraph = doc.createParagraph();
+            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
             runNumber = 0;
 
             if (currentSectionDepth == 0) {
                 if (currentLevel.peekRootArticle() || currentLevel.peekRootArticleInfo()) {
-                    paragraph.setStyle(DocBookBlock.tagToStyleID("article", attributes));
+                    paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("article", attributes));
                 } else if (currentLevel.peekRootBook() || currentLevel.peekRootBookInfo()) {
-                    paragraph.setStyle(DocBookBlock.tagToStyleID("book", attributes));
+                    paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("book", attributes));
                 } else if (currentLevel.peekPart()) {
-                    paragraph.setStyle(DocBookBlock.tagToStyleID("part", attributes));
+                    paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("part", attributes));
                 } else if (currentLevel.peekChapter()) {
-                    paragraph.setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
+                    paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
                 } else {
                     throw new DocxException("unexpected root title");
                 }
             } else if (currentLevel.peekPart()) {
-                paragraph.setStyle(DocBookBlock.tagToStyleID("part", attributes));
+                paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("part", attributes));
             } else if (currentLevel.peekChapter()) {
-                paragraph.setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
+                paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("chapter", attributes));
             } else if (currentLevel.peekSection() || currentLevel.peekSectionInfo()) {
-                paragraph.setStyle("Heading" + currentSectionDepth);
+                paragraph.getLast().setStyle("Heading" + currentSectionDepth);
             } else {
                 throw new DocxException("title not expected");
             }
 
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runCharactersNumber = 0;
             warnUnknownAttributes(attributes);
         }
@@ -553,20 +553,21 @@ public class DocxOutputImpl extends DefaultHandler {
 
             if (currentLevel.peekTable()) {
                 // In tables, add the new paragraph to the current cell.
-                paragraph = tableCell.addParagraph();
+                paragraph.push(tableCell.addParagraph());
                 runNumber = 0;
                 runCharactersNumber = 0;
             } else {
                 // Otherwise, create a new paragraph at the end of the document.
-                paragraph = doc.createParagraph();
+                paragraph.removeLast();
+                paragraph.push(doc.createParagraph());
                 runNumber = 0;
 
                 if (currentLevel.peekList()) {
-                    paragraph.setNumID(numbering);
+                    paragraph.getLast().setNumID(numbering);
 
                     CTDecimalNumber depth = CTDecimalNumber.Factory.newInstance();
                     depth.setVal(BigInteger.valueOf(currentLevel.countListDepth() - 1));
-                    paragraph.getCTP().getPPr().getNumPr().setIlvl(depth);
+                    paragraph.getLast().getCTP().getPPr().getNumPr().setIlvl(depth);
                     // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on GitHub too?
 
                     // If within a list, this must be a new item (only one paragraph allowed per item).
@@ -582,9 +583,9 @@ public class DocxOutputImpl extends DefaultHandler {
                 }
             }
 
-            paragraph.setStyle(paragraphStyle);
+            paragraph.getLast().setStyle(paragraphStyle);
 
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runCharactersNumber += 1;
             warnUnknownAttributes(attributes);
         }
@@ -617,7 +618,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // Create a new run if this one is already started.
             if (run.text().length() > 0) {
-                run = paragraph.createRun();
+                run = paragraph.getLast().createRun();
                 runNumber += 1;
                 runCharactersNumber = 0;
             }
@@ -641,7 +642,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
             doc.createFootnotes();
             footnote = doc.createFootnote();
-            paragraph.addFootnoteReference(footnote); // Creates a new run in the current paragraph.
+            paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
 
 
 //            // Create a new run, so that the new text is not within the same run.
@@ -687,9 +688,9 @@ public class DocxOutputImpl extends DefaultHandler {
             } else {
                 tableCell = tableRow.createCell();
             }
-            paragraph = tableCell.getParagraphs().get(0);
+            paragraph.push(tableCell.getParagraphs().get(0));
             runNumber = 0;
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runCharactersNumber = 0;
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
@@ -710,16 +711,17 @@ public class DocxOutputImpl extends DefaultHandler {
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
-            paragraph = doc.createParagraph();
+            paragraph.removeLast();
+            paragraph.push(doc.createParagraph());
             runNumber = 0;
-            paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
+            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
             // For program listings, add the language as a first paragraph.
             if (SAXHelpers.isProgramListingTag(qName)) {
                 // https://github.com/apache/poi/pull/152
                 CTOnOff on = CTOnOff.Factory.newInstance();
                 on.setVal(STOnOff.ON);
-                paragraph.getCTP().getPPr().setKeepNext(on);
+                paragraph.getLast().getCTP().getPPr().setKeepNext(on);
 
                 String text = "Program listing. ";
                 if (attr.containsKey("language")) {
@@ -735,15 +737,16 @@ public class DocxOutputImpl extends DefaultHandler {
                     text += "Starting line number: " + attr.get("startinglinenumber") + ". ";
                 }
 
-                run = paragraph.createRun();
+                run = paragraph.getLast().createRun();
                 run.setBold(true);
                 run.setText(text);
 
-                paragraph = doc.createParagraph();
-                run = paragraph.createRun();
+                paragraph.removeLast();
+                paragraph.push(doc.createParagraph());
+                run = paragraph.getLast().createRun();
                 runNumber = 0;
                 runCharactersNumber = 0;
-                paragraph.setStyle(DocBookBlock.tagToStyleID(qName, attributes));
+                paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
                 warnUnknownAttributes(attr, Stream.of("language", "continuation", "linenumbering", "startinglinenumber"));
                 return;
@@ -751,7 +754,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 warnUnknownAttributes(attr);
             }
 
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runNumber = 0;
             runCharactersNumber = 0;
         }
@@ -760,16 +763,17 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName)) {
-            paragraph = doc.createParagraph();
+            paragraph.removeLast();
+            paragraph.push(doc.createParagraph());
             runNumber = 0;
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
-                paragraph.setAlignment(DocBookAlignment.docbookAttributeToParagraphAlignment(attr.get("align").toLowerCase()));
+                paragraph.getLast().setAlignment(DocBookAlignment.docbookAttributeToParagraphAlignment(attr.get("align").toLowerCase()));
             }
             warnUnknownAttributes(attr, Stream.of("align"));
 
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runNumber += 1;
             runCharactersNumber = 0;
         } else if (SAXHelpers.isImageDataTag(qName)) {
@@ -779,12 +783,13 @@ public class DocxOutputImpl extends DefaultHandler {
             // TODO: check if there is only one imagedata per imageobject?
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isCaptionTag(qName)) { // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
-            paragraph = doc.createParagraph();
+            paragraph.removeLast();
+            paragraph.push(doc.createParagraph());
             runNumber = 0;
 
-            paragraph.setStyle("Caption");
+            paragraph.getLast().setStyle("Caption");
 
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runNumber += 1;
             runCharactersNumber = 0;
 
@@ -877,15 +882,17 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Print the header for this segment, then prepare for the value.
-            paragraph = doc.createParagraph();
-            paragraph.setStyle("DefinitionListTitle");
-            run = paragraph.createRun();
+            paragraph.removeLast();
+            paragraph.push(doc.createParagraph());
+            paragraph.getLast().setStyle("DefinitionListTitle");
+            run = paragraph.getLast().createRun();
             run.setText(segmentedListHeaders.get(segmentNumber));
 
-            paragraph = doc.createParagraph();
+            paragraph.removeLast();
+            paragraph.push(doc.createParagraph());
             runNumber = 0;
-            paragraph.setStyle("DefinitionListItem");
-            run = paragraph.createRun();
+            paragraph.getLast().setStyle("DefinitionListItem");
+            run = paragraph.getLast().createRun();
             runCharactersNumber = 0;
         }
 
@@ -909,10 +916,11 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unexpected segmented list content");
             }
 
-            paragraph = doc.createParagraph();
+            paragraph.removeLast();
+            paragraph.push(doc.createParagraph());
             runNumber = 0;
-            paragraph.setStyle("VariableListTitle");
-            run = paragraph.createRun();
+            paragraph.getLast().setStyle("VariableListTitle");
+            run = paragraph.getLast().createRun();
             runNumber += 1;
             runCharactersNumber = 0;
             // Then directly inline content.
@@ -979,6 +987,9 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isParagraphTag(qName)) {
             paragraphNumber += 1;
 
+            if (currentLevel.peekTable()) {
+                paragraph.removeLast();
+            }
             if (currentLevel.peekList()) {
                 numberingItemParagraphNumber += 1;
             }
@@ -989,20 +1000,23 @@ public class DocxOutputImpl extends DefaultHandler {
         // Inline tags: ensure the formatting is no more included in the next runs.
         else if (DocBookFormatting.isRunFormatting(qName)) {
             currentFormatting.remove(currentFormatting.size() - 1);
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runNumber += 1;
             runCharactersNumber = 0;
             setRunFormatting();
         } else if (SAXHelpers.isLinkTag(qName)) {
             // Create a new run, so that the new text is not within the same run.
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runNumber += 1;
             runCharactersNumber = 0;
         } else if (SAXHelpers.isFootnoteTag(qName)) {
             // Create a new run, so that the new text is not within the footnote.
-            run = paragraph.createRun();
+            run = paragraph.getLast().createRun();
             runNumber += 1;
             runCharactersNumber = 0;
+
+            // Pop the footnote paragraphs.
+            paragraph.removeLast();
         }
 
         // Tables: update counters.
@@ -1151,7 +1165,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 return;
             }
 
-            List<XWPFRun> runs = paragraph.getRuns();
+            List<XWPFRun> runs = paragraph.getLast().getRuns();
             XWPFRun previous = runs.get(runs.size() - 1);
             String prevText = previous.text();
 
@@ -1214,7 +1228,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // If the previous run ends with white space, as it is not relevant in this run, remove it from
             // the beginning of this run (i.e. trim left).
             if (runNumber > 0) {
-                XWPFRun previous = paragraph.getRuns().get(runNumber - 1);
+                XWPFRun previous = paragraph.getLast().getRuns().get(runNumber - 1);
                 String prevText = previous.text();
 
                 if (prevText.endsWith(" ")) {
