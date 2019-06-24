@@ -406,7 +406,9 @@ public class DocxOutputImpl extends DefaultHandler {
     }
 
     private void ensureNoTextAllowed() {
-        paragraph = null;
+        if (paragraph != null && paragraph.size() > 0) {
+            paragraph.removeLast();
+        }
         run = null;
         runNumber = -1;
         runCharactersNumber = -1;
@@ -414,6 +416,29 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private void restoreParagraphStyle() {
         paragraphStyle = "Normal";
+    }
+
+    private void allocateNewParagraph() {
+        if (paragraph == null) {
+            paragraph = new ArrayDeque<>();
+        } else if (paragraph.size() > 0) {
+            paragraph.removeLast();
+        }
+
+        if (currentLevel.peekTable()) {
+            // In tables, add the new paragraph to the current cell.
+            paragraph.addLast(tableCell.addParagraph());
+        } else if (footnote != null) {
+            // In footnotes, must trick the system...
+            CTP ctp = footnote.getCTFtnEdn().addNewP();
+            paragraph.addLast(new XWPFParagraph(ctp, footnote));
+        } else {
+            // Otherwise, create a new paragraph at the end of the document.
+            paragraph.addLast(doc.createParagraph());
+        }
+        run = paragraph.getLast().createRun();
+        runNumber = 0;
+        runCharactersNumber = 0;
     }
 
     /** Actual SAX handler. **/
@@ -546,41 +571,30 @@ public class DocxOutputImpl extends DefaultHandler {
                 return;
             }
 
-            if (footnote == null && (paragraph != null || run != null)) {
+            if (footnote == null && ((paragraph != null && paragraph.size() > 0) || run != null)) {
                 throw new DocxException("tried to create a new paragraph, but one was already being filled.");
             }
-//            if (footnote != null && run != null)
 
-            if (currentLevel.peekTable()) {
-                // In tables, add the new paragraph to the current cell.
-                paragraph.push(tableCell.addParagraph());
-                runNumber = 0;
-                runCharactersNumber = 0;
-            } else {
-                // Otherwise, create a new paragraph at the end of the document.
-                paragraph.removeLast();
-                paragraph.push(doc.createParagraph());
-                runNumber = 0;
+            allocateNewParagraph();
 
-                if (currentLevel.peekList()) {
-                    paragraph.getLast().setNumID(numbering);
+            if (currentLevel.peekList()) {
+                paragraph.getLast().setNumID(numbering);
 
-                    CTDecimalNumber depth = CTDecimalNumber.Factory.newInstance();
-                    depth.setVal(BigInteger.valueOf(currentLevel.countListDepth() - 1));
-                    paragraph.getLast().getCTP().getPPr().getNumPr().setIlvl(depth);
-                    // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on GitHub too?
+                CTDecimalNumber depth = CTDecimalNumber.Factory.newInstance();
+                depth.setVal(BigInteger.valueOf(currentLevel.countListDepth() - 1));
+                paragraph.getLast().getCTP().getPPr().getNumPr().setIlvl(depth);
+                // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on GitHub too?
 
-                    // If within a list, this must be a new item (only one paragraph allowed per item).
-                    // This is just allowed for variable lists.
-                    if (numberingItemParagraphNumber > 0) {
-                        throw new DocxException("more than one paragraph in a list item, this is not supported.");
-                        // How to make the difference when decoding this back? For implementation, maybe hack
-                        // something based on https://stackoverflow.com/a/43164999/1066843.
-                        // However, easy to do for variable list: new items are indicated with a title.
-                    }
-                } else {
-                    numbering = null;
+                // If within a list, this must be a new item (only one paragraph allowed per item).
+                // This is just allowed for variable lists.
+                if (numberingItemParagraphNumber > 0) {
+                    throw new DocxException("more than one paragraph in a list item, this is not supported.");
+                    // How to make the difference when decoding this back? For implementation, maybe hack
+                    // something based on https://stackoverflow.com/a/43164999/1066843.
+                    // However, easy to do for variable list: new items are indicated with a title.
                 }
+            } else {
+                numbering = null;
             }
 
             paragraph.getLast().setStyle(paragraphStyle);
@@ -639,16 +653,27 @@ public class DocxOutputImpl extends DefaultHandler {
             run.setUnderline(UnderlinePatterns.SINGLE);
             run.setColor("0563c1");
         } else if (SAXHelpers.isFootnoteTag(qName)) {
+            if (paragraph.size() < 1) {
+                throw new DocxException("unexpected end of footnote");
+            }
+
             // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
             doc.createFootnotes();
             footnote = doc.createFootnote();
             paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
 
+            CTP ctp = footnote.getCTFtnEdn().addNewP();
+            paragraph.addLast(new XWPFParagraph(ctp, footnote));
 
-//            // Create a new run, so that the new text is not within the same run.
-//            run = paragraph.createRun();
-//            runNumber += 1;
-//            runCharactersNumber = 0;
+            run = paragraph.getLast().createRun();
+            run.setStyle("FootnoteReference");
+            CTFtnEdnRef ref = run.getCTR().addNewFootnoteReference();
+            ref.setId(footnote.getId());
+
+            // Create a new run, so that the new text is not within the same run.
+            run = paragraph.getLast().createRun();
+            runNumber += 1;
+            runCharactersNumber = 0;
         }
 
         // Tables: only HTML implemented.
@@ -688,7 +713,7 @@ public class DocxOutputImpl extends DefaultHandler {
             } else {
                 tableCell = tableRow.createCell();
             }
-            paragraph.push(tableCell.getParagraphs().get(0));
+            paragraph.addLast(tableCell.getParagraphs().get(0));
             runNumber = 0;
             run = paragraph.getLast().createRun();
             runCharactersNumber = 0;
@@ -712,7 +737,7 @@ public class DocxOutputImpl extends DefaultHandler {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
             paragraph.removeLast();
-            paragraph.push(doc.createParagraph());
+            paragraph.addLast(doc.createParagraph());
             runNumber = 0;
             paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
@@ -742,7 +767,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 run.setText(text);
 
                 paragraph.removeLast();
-                paragraph.push(doc.createParagraph());
+                paragraph.addLast(doc.createParagraph());
                 run = paragraph.getLast().createRun();
                 runNumber = 0;
                 runCharactersNumber = 0;
@@ -764,7 +789,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName)) {
             paragraph.removeLast();
-            paragraph.push(doc.createParagraph());
+            paragraph.addLast(doc.createParagraph());
             runNumber = 0;
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
@@ -784,7 +809,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isCaptionTag(qName)) { // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
             paragraph.removeLast();
-            paragraph.push(doc.createParagraph());
+            paragraph.addLast(doc.createParagraph());
             runNumber = 0;
 
             paragraph.getLast().setStyle("Caption");
@@ -883,13 +908,13 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // Print the header for this segment, then prepare for the value.
             paragraph.removeLast();
-            paragraph.push(doc.createParagraph());
+            paragraph.addLast(doc.createParagraph());
             paragraph.getLast().setStyle("DefinitionListTitle");
             run = paragraph.getLast().createRun();
             run.setText(segmentedListHeaders.get(segmentNumber));
 
             paragraph.removeLast();
-            paragraph.push(doc.createParagraph());
+            paragraph.addLast(doc.createParagraph());
             runNumber = 0;
             paragraph.getLast().setStyle("DefinitionListItem");
             run = paragraph.getLast().createRun();
@@ -917,7 +942,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             paragraph.removeLast();
-            paragraph.push(doc.createParagraph());
+            paragraph.addLast(doc.createParagraph());
             runNumber = 0;
             paragraph.getLast().setStyle("VariableListTitle");
             run = paragraph.getLast().createRun();
@@ -1010,13 +1035,10 @@ public class DocxOutputImpl extends DefaultHandler {
             runNumber += 1;
             runCharactersNumber = 0;
         } else if (SAXHelpers.isFootnoteTag(qName)) {
-            // Create a new run, so that the new text is not within the footnote.
+            footnote = null;
             run = paragraph.getLast().createRun();
-            runNumber += 1;
+            runNumber = paragraph.getLast().getRuns().size();
             runCharactersNumber = 0;
-
-            // Pop the footnote paragraphs.
-            paragraph.removeLast();
         }
 
         // Tables: update counters.
