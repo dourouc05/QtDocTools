@@ -7,11 +7,13 @@ import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import be.tcuvelier.qdoctools.io.todocx.Level;
 import be.tcuvelier.qdoctools.io.todocx.LevelStack;
 import be.tcuvelier.qdoctools.io.todocx.SAXHelpers;
+import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.openxmlformats.schemas.officeDocument.x2006.extendedProperties.CTProperties;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -62,7 +64,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
 
-    DocxOutputImpl(Path folder) throws IOException {
+    DocxOutputImpl(Path folder) throws IOException, InvalidFormatException {
         this.folder = folder;
 
         // Start a document with the template that defines all needed styles.
@@ -81,6 +83,30 @@ public class DocxOutputImpl extends DefaultHandler {
             doc.removeFootnote(0);
             nFootnotes -= 1;
         }
+
+        // Reset the properties.
+        POIXMLProperties props = doc.getProperties();
+        POIXMLProperties.CoreProperties coreProps = props.getCoreProperties();
+        coreProps.setCreated(Optional.of(new Date()));
+        coreProps.setCreator("");
+        coreProps.setModified(Optional.of(new Date()));
+        coreProps.setLastModifiedByUser("QtDocTools");
+        coreProps.setLastPrinted(Optional.empty());
+        coreProps.setTitle("");
+        coreProps.getUnderlyingProperties().setCreatorProperty(Optional.empty());
+
+        // https://github.com/apache/poi/pull/157
+        CTProperties extendedProps = props.getExtendedProperties().getUnderlyingProperties();
+        extendedProps.unsetApplication();
+        extendedProps.unsetAppVersion();
+        extendedProps.unsetCharacters();
+        extendedProps.unsetCharactersWithSpaces();
+        extendedProps.unsetPages();
+        extendedProps.unsetParagraphs();
+        extendedProps.unsetLines();
+        extendedProps.unsetWords();
+        extendedProps.unsetTotalTime();
+        extendedProps.setTemplate("QtDocTools.docm");
     }
 
     /** POI-level helpers. These functions are not really specific to this project and could be upstreamed. **/
@@ -699,15 +725,17 @@ public class DocxOutputImpl extends DefaultHandler {
             footnote = doc.createFootnote();
             paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
 
-            CTP ctp = footnote.getCTFtnEdn().addNewP();
+            CTP ctp = footnote.getCTFtnEdn().addNewP(); // https://github.com/apache/poi/pull/156
             paragraph.addLast(new XWPFParagraph(ctp, footnote));
             paragraph.getLast().setStyle("FootnoteText");
             paragraphStyle = "FootnoteText";
 
             run = paragraph.getLast().createRun();
             run.setStyle("FootnoteReference");
-            CTFtnEdnRef ref = run.getCTR().addNewFootnoteReference();
-//            ref.setId(footnote.getId());
+            run.getCTR().addNewFootnoteRef(); // Not addNewFootnoteReference, this is not recognised by Word.
+
+            run = paragraph.getLast().createRun();
+            run.setText(" ");
 
             // Create a new run, so that the new text is not within the same run.
             run = paragraph.getLast().createRun();

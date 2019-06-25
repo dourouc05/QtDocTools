@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.xml.sax.SAXException;
 
@@ -54,14 +55,14 @@ public class DocxOutput {
         this.input = input;
     }
 
-    public void toDocx(String output) throws IOException, ParserConfigurationException, SAXException {
+    public void toDocx(String output) throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
         try (FileOutputStream out = new FileOutputStream(output)) {
             toDocx().write(out);
         }
     }
 
     @SuppressWarnings("WeakerAccess")
-    public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException {
+    public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         spf.setXIncludeAware(true);
