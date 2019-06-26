@@ -35,6 +35,8 @@ public class QtModules {
                 Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
                         new Pair<>("dialogs", "qtquickdialogs"),
                         new Pair<>("extras", "qtquickextras")),
+                "qtlottie",
+                Collections.singletonList(new Pair<>("", "qtlottieanimation")),
                 "qtwayland", Collections.singletonList(new Pair<>("compositor", "qtwaylandcompositor")),
                 "qtbase",
                 Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),

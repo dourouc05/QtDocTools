@@ -121,7 +121,7 @@ public class DocBookStreamWriter {
     }
 
     public void closeBlockInlineTag() throws XMLStreamException {
-        writeIndent(); // Write it indented, as inline. 
+        writeIndent(); // Write it indented, as inline.
         closeInlineTag();
         decreaseIndent();
     }

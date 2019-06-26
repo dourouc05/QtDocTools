@@ -23,17 +23,17 @@ import picocli.CommandLine;
 public class Main {
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.1\\Src", "-o", "D:\\Qt\\Doc512v2", "--qt-version", "5.12", "--no-rewrite-qdocconf", "--no-convert-webxml"};
-//        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.1\\Src", "-o", "D:\\Qt\\Doc512v2", "--qt-version", "5.12"};
+        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13"};
 
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
 //        String doc = "16-qdoc-commands-status";
-        String doc = "qmodbusrequest";
+//        String doc = "qmodbusrequest";
 
-        String[] argv = {"merge",
-                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_before.xml",
-                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_after.xml",
-                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_merged.xml"};
+//        String[] argv = {"merge",
+//                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_before.xml",
+//                "-r", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_after.xml",
+//                "-m", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_merged.xml"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};

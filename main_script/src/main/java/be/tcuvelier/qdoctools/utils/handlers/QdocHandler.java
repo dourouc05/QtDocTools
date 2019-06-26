@@ -90,14 +90,16 @@ public class QdocHandler {
                             modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"), // Qt Doc.
                             srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"), // Qt Speech.
                             docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"), // Qt Quick modules like Controls 2.
+                            docImportsDirectoryPath.resolve(submodule.second.substring(0, submodule.second.length() - 1) + ".qdocconf"),
                             srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"), // Qt Quick modules.
+                            docDirectoryPath.resolve(submodule.second + "1.qdocconf"), // Qt Quick Controls 1.
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
 
                     Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
-                    if (! qdocconfOptionalPath.isPresent()) {
+                    if (qdocconfOptionalPath.isEmpty()) {
                         System.out.println("Skipped module: " + directory + " / " + submodule.first);
                         continue;
                     }
@@ -126,7 +128,7 @@ public class QdocHandler {
 
                 Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
-                if (! qdocconfOptionalPath.isPresent()) {
+                if (qdocconfOptionalPath.isEmpty()) {
                     System.out.println("Skipped module: " + directory);
                     continue;
                 }
@@ -163,7 +165,7 @@ public class QdocHandler {
             Path docDirectoryPath = qtDocPath.resolve("doc").resolve("config");
             Path qdocconfPath = docDirectoryPath.resolve("qmake.qdocconf");
 
-            if (!qdocconfPath.toFile().isFile()) {
+            if (! qdocconfPath.toFile().isFile()) {
                 System.out.println("Skipped submodule: qtdoc / qmake (old Qt 5 only)");
             } else {
                 System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath.toString());
