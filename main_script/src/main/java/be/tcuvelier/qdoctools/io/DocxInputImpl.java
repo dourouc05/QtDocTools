@@ -25,7 +25,7 @@ public class DocxInputImpl {
     private final DocBookStreamWriter dbStream;
 
     private Map<String, byte[]> images = new HashMap<>();
-    private FormattingStack currentFormatting;
+    private Deque<FormattingStack> currentFormatting = new ArrayDeque<>();
     private int currentSectionLevel;
     private boolean isWithinPart = false;
     private boolean isWithinChapter = false;
@@ -208,6 +208,7 @@ public class DocxInputImpl {
                     visitVariableListItem(p);
                     return;
                 case "Normal": // The case with no style ID is already handled.
+                case "FootnoteText":
                     visitNormalParagraph(p);
                     return;
                 case "ListParagraph":
@@ -796,7 +797,7 @@ public class DocxInputImpl {
     /** Inline elements (runs, in Word parlance). **/
 
     private void visitRuns(@NotNull List<XWPFRun> runs) throws XMLStreamException {
-        currentFormatting = new FormattingStack();
+        currentFormatting.addLast(new FormattingStack());
         XWPFRun prevRun = null;
 
         for (Iterator<XWPFRun> iterator = runs.iterator(); iterator.hasNext(); ) {
@@ -805,18 +806,32 @@ public class DocxInputImpl {
                 visitHyperlinkRun((XWPFHyperlinkRun) r, prevRun, ! iterator.hasNext());
             } else if (r.getEmbeddedPictures().size() >= 1) {
                 visitPictureRun(r, prevRun, ! iterator.hasNext());
+            } else if (r.getCTR().getFootnoteReferenceList().size() > 0) {
+                visitFootNote(r, prevRun, ! iterator.hasNext());
             } else {
                 visitRun(r, prevRun, ! iterator.hasNext());
             }
             prevRun = r;
         }
 
-        currentFormatting = null;
+        currentFormatting.removeLast();
+    }
+
+    private void visitFootNote(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
+        BigInteger soughtId = run.getCTR().getFootnoteReferenceList().get(0).getId();
+        List<XWPFFootnote> lfn = doc.getFootnotes().stream().filter(f -> f.getId().equals(soughtId)).collect(Collectors.toUnmodifiableList());
+        for (XWPFFootnote fn: lfn) {
+            dbStream.openBlockInlineTag("footnote");
+            for (IBodyElement b: fn.getBodyElements()) {
+                visit(b);
+            }
+            dbStream.closeBlockInlineTag();
+        }
     }
 
     private void visitRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
         // Deal with changes of formattings between the previous run and the current one.
-        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings = currentFormatting.processRun(run, prevRun);
+        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings = currentFormatting.getLast().processRun(run, prevRun);
         for (DocBookFormatting ignored : formattings.second) {
             dbStream.closeInlineTag();
         }
@@ -824,7 +839,7 @@ public class DocxInputImpl {
             // Emphasis and its variants.
             if (f == DocBookFormatting.EMPHASIS) {
                 // Replaceable special case.
-                if (currentFormatting.formattings().stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
+                if (currentFormatting.getLast().formattings().stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
                     dbStream.openInlineTag("replaceable");
                 } else {
                     dbStream.openInlineTag("emphasis");
@@ -846,8 +861,8 @@ public class DocxInputImpl {
         dbStream.writeCharacters(run.text());
 
         // Close the tags at the end of the paragraph.
-        if (isLastRun && currentFormatting.formattings().size() > 0) {
-            for (DocBookFormatting ignored: currentFormatting.formattings()) {
+        if (isLastRun && currentFormatting.getLast().formattings().size() > 0) {
+            for (DocBookFormatting ignored: currentFormatting.getLast().formattings()) {
                 dbStream.closeInlineTag();
             }
         }

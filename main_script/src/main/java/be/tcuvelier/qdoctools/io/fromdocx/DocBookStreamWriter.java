@@ -121,8 +121,9 @@ public class DocBookStreamWriter {
     }
 
     public void closeBlockInlineTag() throws XMLStreamException {
-        writeIndent();
+        writeIndent(); // Write it indented, as inline. 
         closeInlineTag();
+        decreaseIndent();
     }
 
     public void openBlockTag(@NotNull String tag) throws XMLStreamException { // Blocks start on a new line, and have nothing else on the same line.

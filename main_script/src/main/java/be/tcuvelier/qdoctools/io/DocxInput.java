@@ -42,7 +42,8 @@ public class DocxInput {
 //        String test = "synthetic/admonitions";
 //        String test = "synthetic/admonitions_many";
 //        String test = "synthetic/book";
-        String test = "synthetic/book_abstract";
+//        String test = "synthetic/book_abstract";
+        String test = "synthetic/footnote";
 
 //        String test = "CPLEX";
 

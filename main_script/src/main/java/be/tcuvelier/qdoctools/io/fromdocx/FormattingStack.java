@@ -6,6 +6,7 @@ import be.tcuvelier.qdoctools.io.helpers.Tuple;
 import org.apache.poi.xwpf.usermodel.UnderlinePatterns;
 import org.apache.poi.xwpf.usermodel.XWPFHyperlinkRun;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,7 +69,7 @@ public class FormattingStack {
 
     private void unrecognisedStyle(@NotNull XWPFRun run) throws XMLStreamException {
         String styleID = POIHelpers.getStyle(run);
-        if (! styleID.equals("")) {
+        if (! isStyleIDIgnored(styleID)) {
             throw new XMLStreamException("Unrecognised run style: " + styleID);
         } else {
             // No style, but maybe the user wants to tell the software something.
@@ -83,6 +84,22 @@ public class FormattingStack {
                 }
             }
         }
+    }
+
+    @Contract("null -> false")
+    private boolean isStyleIDNormal(String styleID) {
+        if (styleID == null) {
+            return false;
+        }
+        return styleID.equals("Normal") || styleID.equals("FootnoteText") || styleID.equals("");
+    }
+
+    @Contract("null -> false")
+    private boolean isStyleIDIgnored(String styleID) {
+        if (styleID == null) {
+            return false;
+        }
+        return styleID.equals("Hyperlink") || styleID.equals("FootnoteReference") || styleID.equals("");
     }
 
     public Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> processRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun)
@@ -112,11 +129,11 @@ public class FormattingStack {
                 && (prevRun == null || prevStyleID.equals("") || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
             // If both styles are equal, nothing to do. Otherwise...
             if (! prevStyleID.equals(styleID)) {
-                if (prevStyleID.equals("Normal") || prevStyleID.equals("")) {
+                if (isStyleIDNormal(prevStyleID)) {
                     DocBookFormatting f = DocBookFormatting.styleIDToFormatting.get(styleID);
                     addedInRun.add(f);
                     stack.add(f);
-                } else if (styleID.equals("Normal") || styleID.equals("")) {
+                } else if (isStyleIDNormal(styleID)) {
                     unstackUntilAndRemove(DocBookFormatting.styleIDToFormatting.get(styleID));
                 } else {
                     DocBookFormatting f = DocBookFormatting.styleIDToFormatting.get(prevStyleID);
@@ -129,10 +146,10 @@ public class FormattingStack {
             // It's not because the previous condition was not met that an error should be shown.
             // Ignore the style Hyperlink, used for links: this is properly handled elsewhere, not using the
             // standard style mechanism (links have a special run type: XWPFHyperlinkRun).
-            if (! styleID.equals("Hyperlink") && ! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
+            if (! isStyleIDIgnored(styleID) && ! DocBookFormatting.styleIDToDocBookTag.containsKey(styleID)) {
                 unrecognisedStyle(run);
             }
-            if (prevRun != null && ! prevStyleID.equals("Hyperlink") && ! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
+            if (prevRun != null && ! isStyleIDIgnored(styleID) && ! DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID)) {
                 unrecognisedStyle(prevRun);
             }
         }
