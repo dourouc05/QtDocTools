@@ -147,7 +147,7 @@ public class QdocHandler {
                 Path docDirectoryPath = qtBasePath.resolve(entry.getValue().first);
                 Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
-                if (!qdocconfPath.toFile().isFile()) {
+                if (! qdocconfPath.toFile().isFile()) {
                     if (modules.stream().noneMatch(stringPathPair -> stringPathPair.second.toFile().getName().contains(entry.getKey() + ".qdocconf"))) {
                         System.out.println("Skipped module: qtbase / " + entry.getKey());
                     }

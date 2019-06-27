@@ -66,12 +66,12 @@ public class QtModules {
         );
         qtTools = Map.of(
                 "assistant", new Pair<>(Paths.get("src/assistant/assistant/doc/"), "qtassistant"),
-                // TODO: What to do about Src\qttools\src\assistant\assistant\doc\internal\assistant.qdocconf?
                 "help", new Pair<>(Paths.get("src/assistant/help/doc/"), "qthelp"),
                 "designer", new Pair<>(Paths.get("src/designer/src/designer/doc/"), "qtdesigner"),
                 "uitools", new Pair<>(Paths.get("src/designer/src/uitools/doc/"), "qtuitools"),
                 "linguist", new Pair<>(Paths.get("src/linguist/linguist/doc/"), "qtlinguist"),
-                "qdoc", new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc")
+                "qdoc", new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc"),
+                "qtdistancefieldgenerator", new Pair<>(Paths.get("src/distancefieldgenerator/doc/"), "distancefieldgenerator")
         );
         qtBaseTools = Map.of(
                 "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr"),
