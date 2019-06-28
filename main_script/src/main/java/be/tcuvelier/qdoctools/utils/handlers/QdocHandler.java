@@ -14,6 +14,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class QdocHandler {
@@ -277,6 +279,20 @@ public class QdocHandler {
         }
     }
 
+    private int countString(String haystack, String needle) {
+        int count = 0;
+
+        Pattern p = Pattern.compile(needle, Pattern.LITERAL);
+        Matcher m = p.matcher(haystack);
+        int startIndex = 0;
+        while (m.find(startIndex)) {
+            count++;
+            startIndex = m.start() + 1;
+        }
+
+        return count;
+    }
+
     public void runQdoc() throws IOException, InterruptedException {
         if (! new File(qdocPath).exists()){
             throw new IOException("Path to qdoc wrong: file " + qdocPath + " does not exist!");
@@ -317,19 +333,31 @@ public class QdocHandler {
         env.put("QT_VER", qtVersion.QT_VER());
         env.put("QT_VERSION", qtVersion.QT_VERSION());
 
-        // Let qdoc write to this process' stdout.
-//        pb.inheritIO();
-
         // Run qdoc and wait until it is done.
         Process qdoc = pb.start();
-//        InputStream stdout = qdoc.getInputStream();
-//        InputStream stderr = qdoc.getErrorStream();
-        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), System.out::println);
-        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), System.out::println);
-        // TODO: parse the output from qdoc, find count errors, especially highlight errors like "fatal error: 'QtGui/QtGuiDepends' file not found"
+        @SuppressWarnings("StringBufferMayBeStringBuilder") StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence StringBuffer instead of StringBuilder.
+//        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(System.out::println, sb::append));
+        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), sb::append);
+//        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(System.err::println, sb::append));
+        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), sb::append);
         new Thread(outputGobbler).start();
         new Thread(errorGobbler).start();
         qdoc.waitFor();
+
+        // Parse the results from qdoc to find errors.
+        String errors = sb.toString();
+        int nErrors = countString(errors, "error:");
+        int nFatalErrors = countString(errors, "fatal error:");
+        int nMissingDepends = countString(errors, "fatal error: '(.*)/(.*)Depends' file not found");
+
+        if (nErrors > 0) {
+            System.out.println("::> Qdoc ran into issues: ");
+            System.out.println("::>   - " + nErrors + " errors");
+            System.out.println("::>   - " + nFatalErrors + " fatal errors");
+            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
+        } else {
+            System.out.println("::> Qdoc ended with no errors.");
+        }
     }
 
     private List<Path> findWithExtension(String extension) {

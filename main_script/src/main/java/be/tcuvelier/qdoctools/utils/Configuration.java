@@ -33,7 +33,7 @@ public class Configuration {
         JsonArray array = node.getAsJsonArray();
         List<String> list = new ArrayList<>(array.size());
         for (int i = 0; i < array.size(); ++i) {
-            list.set(i, array.get(i).getAsString());
+            list.add(array.get(i).getAsString());
         }
         return list;
     }
