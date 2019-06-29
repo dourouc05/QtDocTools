@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -305,8 +306,13 @@ public class QdocHandler {
         // Run qdoc and wait until it is done.
         Process qdoc = pb.start();
         @SuppressWarnings("StringBufferMayBeStringBuilder") StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence StringBuffer instead of StringBuilder.
-        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(System.out::println, sb::append));
-        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(System.err::println, sb::append));
+        Consumer<String> errOutput = s -> {
+            if (! s.contains("warning: ") && ! s.contains("note: ")) {
+                System.err.println(s);
+            }
+        };
+        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput, sb::append));
+        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput, sb::append));
         new Thread(outputGobbler).start();
         new Thread(errorGobbler).start();
         qdoc.waitFor();
