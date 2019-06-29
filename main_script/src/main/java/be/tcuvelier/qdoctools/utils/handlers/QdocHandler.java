@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
+    private final Path installedFolder; // Containing a compiled and installed version of Qt.
     private Path outputFolder; // Where all the generated files should be put. Not final, can be updated when looking
     // for WebXML files (qdoc may also output in a subfolder).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
@@ -28,8 +29,9 @@ public class QdocHandler {
     private final QtVersion qtVersion;
     private final List<String> cppCompilerIncludes;
 
-    public QdocHandler(String input, String output, String qdocPath, QtVersion qtVersion, List<String> cppCompilerIncludes) {
-        sourceFolder = Paths.get(input);
+    public QdocHandler(String source, String installed, String output, String qdocPath, QtVersion qtVersion, List<String> cppCompilerIncludes) {
+        sourceFolder = Paths.get(source);
+        installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
@@ -185,22 +187,57 @@ public class QdocHandler {
     }
 
     private List<String> findIncludes() {
-        List<String> includeDirs = new ArrayList<>();
+        // Accumulate the include folders. Base case: just the include folder of an installed Qt.
+        List<String> includeDirs = new ArrayList<>(List.of(installedFolder.resolve("include").toString()));
 
-        String[] directories = sourceFolder.toFile().list((current, name) ->
-                name.startsWith("q")
-                        && new File(current, name).isDirectory()
-                        && QtModules.ignoredModules.stream().noneMatch(name::equals)
-        );
-        if (directories == null || directories.length == 0) {
+        // Find all modules within the include folder, to capture all private folders.
+        File[] containedFiles = installedFolder.resolve("include").toFile().listFiles();
+        if (containedFiles == null || containedFiles.length == 0) {
+            return includeDirs;
+        }
+        List<Path> directories = Arrays.stream(containedFiles)
+                .filter(f -> f.isDirectory() && QtModules.ignoredModules.stream().noneMatch(i -> f.toString().equals(i)))
+                .map(File::toPath)
+                .collect(Collectors.toList());
+
+        if (directories.size() == 0) {
             return includeDirs;
         }
 
-        for (String directory: directories) {
-            Path modulePath = sourceFolder.resolve(directory);
-            Path tentative = modulePath.resolve("include");
-            if (tentative.toFile().exists()) {
-                includeDirs.add(tentative.toString());
+        // Up to now: Qt/5.13.0/include.
+        // Add paths: Qt/5.13.0/include/MODULE and Qt/5.13.0/include/MODULE/VERSION
+        // and Qt/5.13.0/include/MODULE/VERSION/MODULE and Qt/5.13.0/include/MODULE/VERSION/MODULE/private.
+        for (Path directory: directories) {
+            File[] subDirs = directory.toFile().listFiles();
+            if (subDirs == null || subDirs.length == 0) {
+                continue;
+            }
+
+            if (directory.toFile().exists()) {
+                includeDirs.add(directory.toString());
+            } else {
+                continue;
+            }
+
+            List<Path> subDirectories = Arrays.stream(subDirs)
+                    .filter(File::isDirectory)
+                    .filter(f -> f.getName().split("\\.").length == 3)
+                    .map(File::toPath)
+                    .collect(Collectors.toList());
+            for (Path sd: subDirectories) {
+                includeDirs.add(sd.toString());
+
+                String moduleName = sd.getParent().toFile().getName();
+                Path ssd = sd.resolve(moduleName);
+                if (ssd.toFile().exists()) {
+                    includeDirs.add(ssd.toString());
+                } else {
+                    continue;
+                }
+
+                if (ssd.resolve("private").toFile().exists()) {
+                    includeDirs.add(ssd.resolve("private").toString());
+                }
             }
         }
 
@@ -274,6 +311,8 @@ public class QdocHandler {
                 "--single-exec",
                 "--log-progress"));
         for (String includePath: cppCompilerIncludes) {
+            // https://bugreports.qt.io/browse/QTCREATORBUG-20903
+            // Clang includes must come before GCC includes.
             params.add("-I");
             params.add(includePath);
         }

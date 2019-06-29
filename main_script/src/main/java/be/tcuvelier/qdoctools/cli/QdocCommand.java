@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
@@ -27,11 +26,16 @@ import java.util.concurrent.Callable;
 
 @Command(name = "qdoc", description = "Run qdoc and the associated transformations")
 public class QdocCommand implements Callable<Void> {
-    @Option(names = { "-i", "--input-file", "--input-folder" },
-            description = "Folder to process", required = true)
-    private String input;
+    @Option(names = { "-i", "--source-folder" },
+            description = "Folder to process (source code of Qt)", required = true)
+    private String source;
 
-    @Option(names = { "-o", "--output-file", "--output-folder" },
+    @Option(names = { "-s", "--installed-folder" },
+            description = "Folder with a complete Qt installation " +
+                    "(either precompiled or built from scratch and installed)", required = true)
+    private String installed;
+
+    @Option(names = { "-o", "--output-folder" },
             description = "Output folder", required = true)
     private String output;
 
@@ -80,7 +84,7 @@ public class QdocCommand implements Callable<Void> {
             return null;
         }
 
-        QdocHandler q = new QdocHandler(input, output, config.getQdocLocation(), qtVersion, config.getCppCompilerIncludes());
+        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, config.getCppCompilerIncludes());
         q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
