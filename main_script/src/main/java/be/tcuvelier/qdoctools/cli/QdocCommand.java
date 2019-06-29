@@ -28,11 +28,11 @@ import java.util.concurrent.Callable;
 @Command(name = "qdoc", description = "Run qdoc and the associated transformations")
 public class QdocCommand implements Callable<Void> {
     @Option(names = { "-i", "--input-file", "--input-folder" },
-            description = "File (normal mode) or folder (qdoc mode) to process", required = true)
+            description = "Folder to process", required = true)
     private String input;
 
     @Option(names = { "-o", "--output-file", "--output-folder" },
-            description = "Output file (normal mode) or folder (qdoc mode)", required = true)
+            description = "Output folder", required = true)
     private String output;
 
     @Option(names = { "-c", "--configuration-file" },
@@ -40,30 +40,30 @@ public class QdocCommand implements Callable<Void> {
     private String configurationFile = "config.json";
 
     @Option(names = "--qt-version",
-            description = "[Qdoc only] Version of Qt that is being processed")
+            description = "Version of Qt that is being processed")
     private QtVersion qtVersion = new QtVersion("1.0");
 
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG")
     private boolean validate = true;
 
-    @Option(names = "--no-rewrite-qdocconf", description = "[Qdoc only] Disables the rewriting of the .qdocconf files " +
+    @Option(names = "--no-rewrite-qdocconf", description = "Disables the rewriting of the .qdocconf files " +
             "(the new ones have already been generated)")
     private boolean rewriteQdocconf = true;
 
-    @Option(names = "--no-convert-webxml", description = "[Qdoc only] Disables the generation of the WebXML files. " +
+    @Option(names = "--no-convert-webxml", description = "Disables the generation of the WebXML files. " +
             "This operation is time-consuming, as it relies on qdoc, and requires the prior generation of the qdocconf files")
     private boolean convertToWebXML = true;
 
-    @Option(names = "--no-convert-docbook", description = "[Qdoc only] Disables the generation of the DocBook files. " +
+    @Option(names = "--no-convert-docbook", description = "Disables the generation of the DocBook files. " +
             "This operation requires the prior generation of the WebXML files")
     private boolean convertToDocBook = true;
 
-    @Option(names = "--no-convert-dvpml", description = "[Qdoc only] Disables the generation of the DvpML files. " +
+    @Option(names = "--no-convert-dvpml", description = "Disables the generation of the DvpML files. " +
             "This operation requires the prior generation of the DocBook files")
     private boolean convertToDvpML = true;
 
-    @Option(names = "--no-consistency-checks", description = "[Qdoc only] Disables advanced consistency checks. " +
+    @Option(names = "--no-consistency-checks", description = "Disables advanced consistency checks. " +
             "They require an Internet connection")
     private boolean consistencyChecks = true;
 

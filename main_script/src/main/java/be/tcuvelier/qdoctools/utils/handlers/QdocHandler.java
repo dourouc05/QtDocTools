@@ -328,11 +328,6 @@ public class QdocHandler {
             System.out.println("::>   - " + nErrors + " errors");
             System.out.println("::>   - " + nFatalErrors + " fatal errors");
 //            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
-            System.out.println("::>   Did you forget to configure and build Qt in the source folder? (Linking Qt libraries should not be needed, though.)");
-            System.out.println("::>   Are the C and C++ standard libraries configured properly within config.json (cpp_compiler_includes)?");
-            System.out.println("::>   If on Windows, install LLVM including llvm-config when building Qt, available for instance from https://github.com/CRogers/LLVM-Windows-Binaries (set LLVM_INSTALL_DIR=C:\\Program Files\\LLVM)");
-            System.out.println("::>   Is OpenGL ES used for building (EGL/egl.h should be available) or explicitly disabled (-opengl desktop)? ");
-            System.out.println("::>   If on Windows, did you include DBus (configure -dbus-runtime)? ");
         } else {
             System.out.println("::> Qdoc ended with no errors.");
         }
