@@ -47,6 +47,8 @@ public class Configuration {
     }
 
     public List<String> getCppCompilerIncludes() throws BadConfigurationFile {
+        // g++ -E -x c++ - -v
+        // clang++ -E -x c++ - -v
         return getListStringAttribute("cpp_compiler_includes");
     }
 }

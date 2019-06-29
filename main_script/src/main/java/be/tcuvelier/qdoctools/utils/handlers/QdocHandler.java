@@ -282,8 +282,7 @@ public class QdocHandler {
     private int countString(String haystack, String needle) {
         int count = 0;
 
-        Pattern p = Pattern.compile(needle, Pattern.LITERAL);
-        Matcher m = p.matcher(haystack);
+        Matcher m = Pattern.compile(needle).matcher(haystack);
         int startIndex = 0;
         while (m.find(startIndex)) {
             count++;
@@ -304,14 +303,15 @@ public class QdocHandler {
                 mainQdocconfPath.toString(),
                 "--single-exec",
                 "--log-progress"));
-        for (String includePath: findIncludes()) {
-            params.add("-I");
-            params.add(includePath);
-        }
         for (String includePath: cppCompilerIncludes) {
             params.add("-I");
             params.add(includePath);
         }
+        for (String includePath: findIncludes()) {
+            params.add("-I");
+            params.add(includePath);
+        }
+        // TODO: --outputformat to get rid of qdocconf rewriting?
         ProcessBuilder pb = new ProcessBuilder(params);
 
         System.out.println("::> Running qdoc with the following arguments: ");
@@ -336,10 +336,8 @@ public class QdocHandler {
         // Run qdoc and wait until it is done.
         Process qdoc = pb.start();
         @SuppressWarnings("StringBufferMayBeStringBuilder") StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence StringBuffer instead of StringBuilder.
-//        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(System.out::println, sb::append));
-        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), sb::append);
-//        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(System.err::println, sb::append));
-        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), sb::append);
+        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(System.out::println, sb::append));
+        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(System.err::println, sb::append));
         new Thread(outputGobbler).start();
         new Thread(errorGobbler).start();
         qdoc.waitFor();
@@ -348,13 +346,18 @@ public class QdocHandler {
         String errors = sb.toString();
         int nErrors = countString(errors, "error:");
         int nFatalErrors = countString(errors, "fatal error:");
-        int nMissingDepends = countString(errors, "fatal error: '(.*)/(.*)Depends' file not found");
+//        int nMissingDepends = countString(errors, "fatal error: '[a-zA-Z]+/[a-zA-Z]+Depends' file not found"); // Takes too long to compute.
 
         if (nErrors > 0) {
             System.out.println("::> Qdoc ran into issues: ");
             System.out.println("::>   - " + nErrors + " errors");
             System.out.println("::>   - " + nFatalErrors + " fatal errors");
-            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
+//            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
+            System.out.println("::>   Did you forget to configure and build Qt in the source folder? (Linking Qt libraries should not be needed, though.)");
+            System.out.println("::>   Are the C and C++ standard libraries configured properly within config.json (cpp_compiler_includes)?");
+            System.out.println("::>   If on Windows, install LLVM including llvm-config when building Qt, available for instance from https://github.com/CRogers/LLVM-Windows-Binaries (set LLVM_INSTALL_DIR=C:\\Program Files\\LLVM)");
+            System.out.println("::>   Is OpenGL ES used for building (EGL/egl.h should be available) or explicitly disabled (-opengl desktop)? ");
+            System.out.println("::>   If on Windows, did you include DBus (configure -dbus-runtime)? ");
         } else {
             System.out.println("::> Qdoc ended with no errors.");
         }
