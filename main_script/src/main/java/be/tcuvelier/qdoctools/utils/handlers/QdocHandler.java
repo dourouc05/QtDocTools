@@ -44,6 +44,9 @@ public class QdocHandler {
         if (! outputFolder.toFile().isDirectory()) {
             Files.createDirectories(outputFolder);
         }
+        if (! outputFolder.resolve("images").toFile().isDirectory()) {
+            Files.createDirectories(outputFolder.resolve("images"));
+        }
     }
 
     public Path getOutputFolder() {

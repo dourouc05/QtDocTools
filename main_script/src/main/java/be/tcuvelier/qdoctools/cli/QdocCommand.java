@@ -1,28 +1,33 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.utils.helpers.ValidationHelper;
-import be.tcuvelier.qdoctools.utils.*;
+import be.tcuvelier.qdoctools.utils.Configuration;
+import be.tcuvelier.qdoctools.utils.Pair;
+import be.tcuvelier.qdoctools.utils.QdocConsistencyChecks;
+import be.tcuvelier.qdoctools.utils.QtVersion;
 import be.tcuvelier.qdoctools.utils.handlers.QdocHandler;
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
+import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.utils.helpers.ValidationHelper;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XsltTransformer;
 import org.xml.sax.SAXException;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 @Command(name = "qdoc", description = "Run qdoc and the associated transformations")
 public class QdocCommand implements Callable<Void> {
@@ -97,7 +102,6 @@ public class QdocCommand implements Callable<Void> {
             System.out.println("++> Running qdoc.");
             q.runQdoc();
             System.out.println("++> Qdoc done.");
-            System.exit(0);
 
             // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             Path normalPath = new File(output).toPath();
@@ -117,6 +121,59 @@ public class QdocCommand implements Callable<Void> {
 
                     if (! abnormalPath.resolve("images").toFile().renameTo(normalPath.resolve("images").toFile())) {
                         System.out.println("++> Moving the images folder was not possible!");
+                    }
+                }
+            }
+
+            // Or even in one folder per module.
+            File[] fs = normalPath.toFile().listFiles();
+            if (fs == null || fs.length == 0) {
+                System.out.println("++> No generated file or folder!");
+                System.exit(0);
+            }
+            List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
+            for (File subfolder: subfolders) {
+                File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
+                if (files == null || files.length == 0) {
+                    continue;
+                }
+
+                System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
+                for (File f: files) {
+                    String name = f.getName();
+                    if (name.equals("search-results.webxml")) {
+                        continue;
+                    }
+                    if (name.equals("qtypeinfo.webxml") || name.equals("qmetatypeid.webxml") || name.equals("qmetatypeid2.webxml")) {
+                        continue;
+                    }
+
+                    try {
+                        Files.move(f.toPath(), normalPath.resolve(name));
+                    } catch (FileAlreadyExistsException e) {
+                        System.out.println("++> File already exists: " + normalPath.resolve(name) + ". Tried to copy from: " + f.toString());
+                    }
+                }
+
+                File[] folders = subfolder.listFiles((f, name) -> f.isDirectory());
+                if (folders == null || folders.length == 0) {
+                    continue;
+                }
+                for (File f: folders) {
+                    if (f.getName().equals("images")) {
+                        File[] images = f.listFiles();
+                        if (images == null || images.length == 0) {
+                            continue;
+                        }
+
+                        for (File i: images) {
+                            String name = i.getName();
+                            try {
+                                Files.move(i.toPath(), normalPath.resolve("images").resolve(name));
+                            } catch (FileAlreadyExistsException e) {
+                                System.out.println("++> File already exists: " + normalPath.resolve("images").resolve(name) + ". Tried to copy from: " + i.toString());
+                            }
+                        }
                     }
                 }
             }
