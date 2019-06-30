@@ -253,12 +253,12 @@ public class QdocHandler {
     }
 
     public Path makeMainQdocconf(@NotNull List<Pair<String, Path>> modules) throws WriteQdocconfException {
-//        modules.sort(Comparator.comparing(a -> a.first));
-//        try {
-//            Files.write(mainQdocconfPath, modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n")).getBytes());
-//        } catch (IOException e) {
-//            throw new WriteQdocconfException(mainQdocconfPath, e);
-//        }
+        modules.sort(Comparator.comparing(a -> a.first));
+        try {
+            Files.write(mainQdocconfPath, modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n")).getBytes());
+        } catch (IOException e) {
+            throw new WriteQdocconfException(mainQdocconfPath, e);
+        }
 
         return mainQdocconfPath;
     }
@@ -288,8 +288,11 @@ public class QdocHandler {
                 "--outputformat", "WebXML",
                 "--single-exec",
                 "--log-progress",
-                "--timestamps",
-                "--debug"));
+                "--timestamps"));
+        //noinspection ConstantConditions
+        if (true) {
+            params.add("--debug");
+        }
         for (String includePath: cppCompilerIncludes) {
             // https://bugreports.qt.io/browse/QTCREATORBUG-20903
             // Clang includes must come before GCC includes.
@@ -304,14 +307,19 @@ public class QdocHandler {
         ProcessBuilder pb = new ProcessBuilder(params);
 
         System.out.println("::> Running qdoc with the following arguments: ");
-        boolean firstLine = true;
-        for (String command : pb.command()) {
-            if (firstLine) {
-                System.out.println("        " + command);
-            } else {
-                System.out.println("            " + command);
+        List<String> commands = pb.command();
+        System.out.println("        " + commands.get(0));
+        List<String> strings = pb.command();
+        for (int i = 1; i < strings.size(); i++) {
+            String command = strings.get(i);
+            System.out.print("            " + command);
+
+            if (i + 1 < strings.size() && ! commands.get(i + 1).startsWith("-")) {
+                System.out.print(" " + commands.get(i + 1));
+                i += 1;
             }
-            firstLine = false;
+
+            System.out.println();
         }
 
         // Qdoc requires a series of environment variables.
