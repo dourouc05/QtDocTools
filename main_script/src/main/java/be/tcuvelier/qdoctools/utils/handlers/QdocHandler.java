@@ -6,6 +6,7 @@ import be.tcuvelier.qdoctools.utils.StreamGobbler;
 import be.tcuvelier.qdoctools.utils.helpers.QtModules;
 import be.tcuvelier.qdoctools.utils.Pair;
 import be.tcuvelier.qdoctools.utils.QtVersion;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -194,6 +195,9 @@ public class QdocHandler {
         // Accumulate the include folders. Base case: just the include folder of an installed Qt.
         List<String> includeDirs = new ArrayList<>(List.of(installedFolder.resolve("include").toString()));
 
+        // Special cases.
+        includeDirs.add(sourceFolder.resolve("qtbase").resolve("qmake").toString());
+
         // Find all modules within the include folder, to capture all private folders.
         File[] containedFiles = installedFolder.resolve("include").toFile().listFiles();
         if (containedFiles == null || containedFiles.length == 0) {
@@ -248,18 +252,18 @@ public class QdocHandler {
         return includeDirs;
     }
 
-    public Path makeMainQdocconf(List<Pair<String, Path>> modules) throws WriteQdocconfException {
-        modules.sort(Comparator.comparing(a -> a.first));
-        try {
-            Files.write(mainQdocconfPath, modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n")).getBytes());
-        } catch (IOException e) {
-            throw new WriteQdocconfException(mainQdocconfPath, e);
-        }
+    public Path makeMainQdocconf(@NotNull List<Pair<String, Path>> modules) throws WriteQdocconfException {
+//        modules.sort(Comparator.comparing(a -> a.first));
+//        try {
+//            Files.write(mainQdocconfPath, modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n")).getBytes());
+//        } catch (IOException e) {
+//            throw new WriteQdocconfException(mainQdocconfPath, e);
+//        }
 
         return mainQdocconfPath;
     }
 
-    private int countString(String haystack, String needle) {
+    private int countString(@NotNull String haystack, @NotNull String needle) {
         int count = 0;
 
         Matcher m = Pattern.compile(needle).matcher(haystack);
@@ -283,7 +287,9 @@ public class QdocHandler {
                 mainQdocconfPath.toString(),
                 "--outputformat", "WebXML",
                 "--single-exec",
-                "--log-progress"));
+                "--log-progress",
+                "--timestamps",
+                "--debug"));
         for (String includePath: cppCompilerIncludes) {
             // https://bugreports.qt.io/browse/QTCREATORBUG-20903
             // Clang includes must come before GCC includes.
