@@ -245,27 +245,27 @@ public class QdocHandler {
     }
 
     public void rewriteQdocconf(String module, Path originalFile) throws ReadQdocconfException, WriteQdocconfException {
-        // Read the existing qdocconf file.
-        String qdocconf;
-        try {
-            qdocconf = new String(Files.readAllBytes(originalFile));
-        } catch (IOException e) {
-            throw new ReadQdocconfException(module, originalFile, e);
-        }
-
-        // Rewrite a more suitable qdocconf file (i.e. generate WebXML output instead of HTML).
-        qdocconf += "\n\n";
-        qdocconf += "outputdir                 = " + outputFolder.toString() + "\n";
-        qdocconf += "outputformats             = WebXML\n";
-        qdocconf += "WebXML.quotinginformation = true\n";
-        qdocconf += "WebXML.nosubdirs          = true\n";
-
-        Path destinationFile = originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf");
-        try {
-            Files.write(originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf"), qdocconf.getBytes());
-        } catch (IOException e) {
-            throw new WriteQdocconfException(module, originalFile, destinationFile, e);
-        }
+//        // Read the existing qdocconf file.
+//        String qdocconf;
+//        try {
+//            qdocconf = new String(Files.readAllBytes(originalFile));
+//        } catch (IOException e) {
+//            throw new ReadQdocconfException(module, originalFile, e);
+//        }
+//
+//        // Rewrite a more suitable qdocconf file (i.e. generate WebXML output instead of HTML).
+//        qdocconf += "\n\n";
+//        qdocconf += "outputdir                 = " + outputFolder.toString() + "\n";
+//        qdocconf += "outputformats             = WebXML\n";
+//        qdocconf += "WebXML.quotinginformation = true\n";
+//        qdocconf += "WebXML.nosubdirs          = true\n";
+//
+//        Path destinationFile = originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf");
+//        try {
+//            Files.write(originalFile.getParent().resolve("qtdoctools-" + module + ".qdocconf"), qdocconf.getBytes());
+//        } catch (IOException e) {
+//            throw new WriteQdocconfException(module, originalFile, destinationFile, e);
+//        }
     }
 
     public Path makeMainQdocconf(List<Pair<String, Path>> modules) throws WriteQdocconfException {
@@ -273,7 +273,17 @@ public class QdocHandler {
 
         StringBuilder b = new StringBuilder();
         for (Pair<String, Path> module : modules) {
-            b.append(module.second.getParent().resolve("qtdoctools-" + module.first + ".qdocconf").toString());
+            Path tentative = module.second.getParent().resolve(module.first + ".qdocconf");
+            if (! tentative.toFile().exists()) {
+                tentative = module.second.getParent().resolve(module.first.substring(2) + ".qdocconf"); // Remove the qt prefix.
+            }
+            if (! tentative.toFile().exists()) {
+                System.out.println(tentative.toString());
+                continue;
+            }
+
+            b.append(tentative.toString());
+//            b.append(module.second.getParent().resolve("qtdoctools-" + module.first + ".qdocconf").toString());
             b.append('\n');
         }
 
@@ -308,6 +318,7 @@ public class QdocHandler {
                 "--outputdir", outputFolder.toString(),
                 "--installdir", outputFolder.toString(),
                 mainQdocconfPath.toString(),
+                "--outputformat", "WebXML",
                 "--single-exec",
                 "--log-progress"));
         for (String includePath: cppCompilerIncludes) {

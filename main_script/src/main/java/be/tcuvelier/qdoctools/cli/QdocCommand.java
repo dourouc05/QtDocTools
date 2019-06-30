@@ -99,6 +99,7 @@ public class QdocCommand implements Callable<Void> {
             }
 
             Path mainQdocconfPath = q.makeMainQdocconf(modules);
+
             System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
         }
 
@@ -107,6 +108,7 @@ public class QdocCommand implements Callable<Void> {
             System.out.println("++> Running qdoc.");
             q.runQdoc();
             System.out.println("++> Qdoc done.");
+            System.exit(0);
 
             // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             Path normalPath = new File(output).toPath();
