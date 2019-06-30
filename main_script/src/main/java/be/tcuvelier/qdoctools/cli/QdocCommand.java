@@ -85,7 +85,9 @@ public class QdocCommand implements Callable<Void> {
             return null;
         }
 
-        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, config.getCppCompilerIncludes());
+        List<String> includes = config.getCppCompilerIncludes();
+        includes.addAll(config.getNdkIncludes());
+        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, includes);
         q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
@@ -95,8 +97,8 @@ public class QdocCommand implements Callable<Void> {
         // Run qdoc to get the WebXML output.
         if (convertToWebXML) {
             // Rewrite the list of qdocconf files (one per module, may be multiple times per folder).
-            Path mainQdocconfPath = q.makeMainQdocconf(modules);
-            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+//            Path mainQdocconfPath = q.makeMainQdocconf(modules);
+//            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
@@ -105,6 +107,10 @@ public class QdocCommand implements Callable<Void> {
 
             // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             q.moveGeneratedFiles();
+        }
+
+        if (true) {
+            throw new RuntimeException();
         }
 
         // Run Saxon to get the DocBook output.

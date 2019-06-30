@@ -197,6 +197,7 @@ public class QdocHandler {
 
         // Special cases.
         includeDirs.add(sourceFolder.resolve("qtbase").resolve("qmake").toString());
+        includeDirs.add(sourceFolder.resolve("qtandroidextras").resolve("src").resolve("androidextras").resolve("doc").resolve("QtAndroidExtras").toString());
 
         // Find all modules within the include folder, to capture all private folders.
         File[] containedFiles = installedFolder.resolve("include").toFile().listFiles();
@@ -303,7 +304,6 @@ public class QdocHandler {
             params.add("-I");
             params.add(includePath);
         }
-        // TODO: --outputformat to get rid of qdocconf rewriting?
         ProcessBuilder pb = new ProcessBuilder(params);
 
         System.out.println("::> Running qdoc with the following arguments: ");

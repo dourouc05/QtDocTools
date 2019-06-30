@@ -51,4 +51,8 @@ public class Configuration {
         // clang++ -E -x c++ - -v
         return getListStringAttribute("cpp_compiler_includes");
     }
+
+    public List<String> getNdkIncludes() throws BadConfigurationFile {
+        return getListStringAttribute("ndk_includes");
+    }
 }
