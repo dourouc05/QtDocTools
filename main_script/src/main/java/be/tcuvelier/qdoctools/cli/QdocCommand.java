@@ -51,10 +51,6 @@ public class QdocCommand implements Callable<Void> {
             description = "Disables the validation of the output against a known XSD or RNG")
     private boolean validate = true;
 
-    @Option(names = "--no-rewrite-qdocconf", description = "Disables the rewriting of the .qdocconf files " +
-            "(the new ones have already been generated)")
-    private boolean rewriteQdocconf = true;
-
     @Option(names = "--no-convert-webxml", description = "Disables the generation of the WebXML files. " +
             "This operation is time-consuming, as it relies on qdoc, and requires the prior generation of the qdocconf files")
     private boolean convertToWebXML = true;
@@ -91,20 +87,13 @@ public class QdocCommand implements Callable<Void> {
         List<Pair<String, Path>> modules = q.findModules();
         System.out.println("++> " + modules.size() + " modules found");
 
-        // Rewrite the needed qdocconf files (one per module, may be multiple times per folder).
-        if (rewriteQdocconf) {
-            for (Pair<String, Path> module : modules) {
-                q.rewriteQdocconf(module.first, module.second);
-                System.out.println("++> Module qdocconf rewritten: " + module.first);
-            }
-
-            Path mainQdocconfPath = q.makeMainQdocconf(modules);
-
-            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
-        }
-
         // Run qdoc to get the WebXML output.
         if (convertToWebXML) {
+            // Rewrite the list of qdocconf files (one per module, may be multiple times per folder).
+            Path mainQdocconfPath = q.makeMainQdocconf(modules);
+            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+
+            // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
             q.runQdoc();
             System.out.println("++> Qdoc done.");
