@@ -10,6 +10,7 @@ import be.tcuvelier.qdoctools.utils.QtVersion;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -342,6 +343,83 @@ public class QdocHandler {
 //            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
         } else {
             System.out.println("::> Qdoc ended with no errors.");
+        }
+    }
+
+    public void moveGeneratedFiles() throws IOException {
+        // Maybe everything under the html folder.
+        Path abnormalPath = outputFolder.resolve("html");
+        if (Files.exists(abnormalPath)) {
+            String[] webxmlFiles = abnormalPath.toFile().list((dir, name) -> name.endsWith(".webxml"));
+            if (webxmlFiles != null && webxmlFiles.length > 0) {
+                System.out.println("++> Moving qdoc's result to the expected folder");
+
+                if (Arrays.stream(webxmlFiles)
+                        .map(abnormalPath::resolve)
+                        .map(Path::toFile)
+                        .map(file -> file.renameTo(outputFolder.resolve(file.getName()).toFile()))
+                        .anyMatch(val -> ! val)) {
+                    System.out.println("++> Moving some files was not possible!");
+                }
+
+                if (! abnormalPath.resolve("images").toFile().renameTo(outputFolder.resolve("images").toFile())) {
+                    System.out.println("++> Moving the images folder was not possible!");
+                }
+            }
+        }
+
+        // Or even in one folder per module.
+        File[] fs = outputFolder.toFile().listFiles();
+        if (fs == null || fs.length == 0) {
+            System.out.println("++> No generated file or folder!");
+            System.exit(0);
+        }
+        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
+        for (File subfolder: subfolders) { // For each module...
+            File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
+            if (files == null || files.length == 0) { // If there are no WebXML files: maybe everything already at the right place.
+                continue;
+            }
+
+            System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
+            for (File f: files) { // For each WebXML file...
+                String name = f.getName();
+                if (name.equals("search-results.webxml")) {
+                    continue;
+                }
+                if (name.equals("qtypeinfo.webxml") || name.equals("qmetatypeid.webxml") || name.equals("qmetatypeid2.webxml")) {
+                    continue;
+                }
+
+                try {
+                    Files.move(f.toPath(), outputFolder.resolve(name));
+                } catch (FileAlreadyExistsException e) {
+                    System.out.println("++> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f.toString());
+                }
+            }
+
+            // Maybe there is an images folder to move one level up.
+            File[] folders = subfolder.listFiles((f, name) -> f.isDirectory());
+            if (folders == null || folders.length == 0) {
+                continue;
+            }
+            for (File f: folders) {
+                if (f.getName().equals("images")) {
+                    File[] images = f.listFiles();
+                    if (images == null || images.length == 0) {
+                        continue;
+                    }
+
+                    for (File i: images) {
+                        String name = i.getName();
+                        try {
+                            Files.move(i.toPath(), outputFolder.resolve("images").resolve(name));
+                        } catch (FileAlreadyExistsException e) {
+                            System.out.println("++> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i.toString());
+                        }
+                    }
+                }
+            }
         }
     }
 
