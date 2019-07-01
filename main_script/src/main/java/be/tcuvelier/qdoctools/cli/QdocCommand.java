@@ -97,8 +97,8 @@ public class QdocCommand implements Callable<Void> {
         // Run qdoc to get the WebXML output.
         if (convertToWebXML) {
             // Rewrite the list of qdocconf files (one per module, may be multiple times per folder).
-//            Path mainQdocconfPath = q.makeMainQdocconf(modules);
-//            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+            Path mainQdocconfPath = q.makeMainQdocconf(modules);
+            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
