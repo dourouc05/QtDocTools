@@ -19,7 +19,7 @@
   
   <xsl:param name="qt-version" as="xs:string" select="'1.2'"/>
   <!--<xsl:param name="qt-version" as="xs:string" required="true"/>-->
-  <xsl:param name="local-folder" as="xs:string" select="'file:///D:/Qt/Doc512v2/'"/>
+  <xsl:param name="local-folder" as="xs:string" select="'file:///C:/Qt/Doc513/'"/>
   <!--<xsl:param name="local-folder" as="xs:string" required="true"/>-->
   <xsl:variable name="list-classes" as="node()+" select="document(concat($local-folder, '/qdt_classes.xml'))/classes"/>
   
@@ -42,7 +42,12 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template match="document">
+  
+  <xsl:template match="document[count(child::*) = 0]">
+    <db:article version="5.2" xml:lang="en"/>
+  </xsl:template>
+  
+  <xsl:template match="document[count(child::*) > 0]">
     <xsl:variable name="mainTag" select="child::node()[1]" as="node()"/>
     
     <db:article version="5.2" xml:lang="en">
