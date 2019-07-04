@@ -1,16 +1,20 @@
 package be.tcuvelier.qdoctools.utils.handlers;
 
-import be.tcuvelier.qdoctools.exceptions.ReadQdocconfException;
 import be.tcuvelier.qdoctools.exceptions.WriteQdocconfException;
-import be.tcuvelier.qdoctools.utils.StreamGobbler;
-import be.tcuvelier.qdoctools.utils.helpers.QtModules;
 import be.tcuvelier.qdoctools.utils.Pair;
 import be.tcuvelier.qdoctools.utils.QtVersion;
+import be.tcuvelier.qdoctools.utils.StreamGobbler;
+import be.tcuvelier.qdoctools.utils.helpers.QtModules;
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,9 +33,11 @@ public class QdocHandler {
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
     private final QtVersion qtVersion;
+    private final boolean qdocDebug;
     private final List<String> cppCompilerIncludes;
 
-    public QdocHandler(String source, String installed, String output, String qdocPath, QtVersion qtVersion, List<String> cppCompilerIncludes) {
+    public QdocHandler(String source, String installed, String output, String qdocPath, QtVersion qtVersion,
+                       boolean qdocDebug, List<String> cppCompilerIncludes) {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
@@ -39,6 +45,7 @@ public class QdocHandler {
 
         this.qdocPath = qdocPath;
         this.qtVersion = qtVersion;
+        this.qdocDebug = qdocDebug;
         this.cppCompilerIncludes = cppCompilerIncludes;
     }
 
@@ -290,8 +297,7 @@ public class QdocHandler {
                 "--single-exec",
                 "--log-progress",
                 "--timestamps"));
-        //noinspection ConstantConditions
-        if (true) {
+        if (qdocDebug) { // TODO: isn't this required to get all the needed information for later stages (like which file should be used within included examples)?
             params.add("--debug");
         }
         for (String includePath: cppCompilerIncludes) {
@@ -344,8 +350,16 @@ public class QdocHandler {
         new Thread(errorGobbler).start();
         qdoc.waitFor();
 
-        // Parse the results from qdoc to find errors.
+        // Write down the log.
         String errors = sb.toString();
+
+        if (outputFolder.resolve("qtdoctools-qdoc-log").toFile().exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            outputFolder.resolve("qtdoctools-qdoc-log").toFile().delete();
+        }
+        Files.write(outputFolder.resolve("qtdoctools-qdoc-log"), errors.getBytes());
+
+        // Parse the results from qdoc to find errors.
         int nErrors = countString(errors, "error:");
         int nFatalErrors = countString(errors, "fatal error:");
 //        int nMissingDepends = countString(errors, "fatal error: '[a-zA-Z]+/[a-zA-Z]+Depends' file not found"); // Takes too long to compute.
@@ -357,6 +371,52 @@ public class QdocHandler {
 //            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
         } else {
             System.out.println("::> Qdoc ended with no errors.");
+        }
+    }
+
+    public void checkUngeneratedFiles() throws ParserConfigurationException, IOException, SAXException {
+        // Not always working, just catching some errors, that's already a good improvement on top of not using this function.
+        File[] fs = outputFolder.toFile().listFiles();
+        if (fs == null || fs.length == 0) {
+            return;
+        }
+        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
+        for (File subfolder: subfolders) { // For each module...
+            // Find the index file.
+            File[] potentialIndices = subfolder.listFiles((dir, name) -> name.endsWith(".index"));
+            if (potentialIndices == null || potentialIndices.length != 1) {
+                continue;
+            }
+
+            File index = potentialIndices[0];
+            if (! index.exists()) {
+                continue;
+            }
+
+            // Find all WebXML files in this folder.
+            File[] webxmlFiles = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
+            if (webxmlFiles == null) {
+                continue;
+            }
+            Set<String> webxml = Arrays.stream(webxmlFiles).map(File::getName).collect(Collectors.toSet());
+
+            // Iterate through the folder and find missing files.
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(index);
+            Node root = doc.getDocumentElement().getElementsByTagName("namespace").item(0);
+            NodeList children = root.getChildNodes();
+            for (int i = 0; i < children.getLength(); ++i) {
+                Node page = children.item(i);
+                if (! page.getNodeName().equals("page")) {
+                    continue;
+                }
+
+                String pageName = page.getAttributes().getNamedItem("href").getNodeValue().replace(".html", ".webxml");
+                if (! webxml.contains(pageName) && ! pageName.equals("nolink") && !
+                        (pageName.startsWith("http://") || pageName.startsWith("https://") || pageName.startsWith("ftp://"))
+                ) {
+                    System.out.println("Missing file: " + pageName + "; module: " + subfolder);
+                }
+            }
         }
     }
 
@@ -373,11 +433,11 @@ public class QdocHandler {
                         .map(Path::toFile)
                         .map(file -> file.renameTo(outputFolder.resolve(file.getName()).toFile()))
                         .anyMatch(val -> ! val)) {
-                    System.out.println("++> Moving some files was not possible!");
+                    System.out.println("!!> Moving some files was not possible!");
                 }
 
                 if (! abnormalPath.resolve("images").toFile().renameTo(outputFolder.resolve("images").toFile())) {
-                    System.out.println("++> Moving the images folder was not possible!");
+                    System.out.println("!!> Moving the images folder was not possible!");
                 }
             }
         }
@@ -385,7 +445,7 @@ public class QdocHandler {
         // Or even in one folder per module.
         File[] fs = outputFolder.toFile().listFiles();
         if (fs == null || fs.length == 0) {
-            System.out.println("++> No generated file or folder!");
+            System.out.println("!!> No generated file or folder!");
             System.exit(0);
         }
         List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
@@ -406,9 +466,9 @@ public class QdocHandler {
                 }
 
                 try {
-                    Files.move(f.toPath(), outputFolder.resolve(name));
+                    Files.copy(f.toPath(), outputFolder.resolve(name));
                 } catch (FileAlreadyExistsException e) {
-                    System.out.println("++> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f.toString());
+                    System.out.println("!!> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f.toString());
                 }
             }
 
@@ -429,7 +489,7 @@ public class QdocHandler {
                         try {
                             Files.move(i.toPath(), outputFolder.resolve("images").resolve(name));
                         } catch (FileAlreadyExistsException e) {
-                            System.out.println("++> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i.toString());
+                            System.out.println("!!> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i.toString());
                         }
                     }
                 }

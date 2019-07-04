@@ -16,18 +16,14 @@ import org.xml.sax.SAXException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.stream.Collectors;
 
 @Command(name = "qdoc", description = "Run qdoc and the associated transformations")
 public class QdocCommand implements Callable<Void> {
@@ -52,6 +48,10 @@ public class QdocCommand implements Callable<Void> {
             description = "Version of Qt that is being processed")
     private QtVersion qtVersion = new QtVersion("1.0");
 
+    @Option(names = "--qdoc-debug",
+            description = "Run qdoc in debug mode")
+    private boolean qdocDebug = false;
+
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG")
     private boolean validate = true;
@@ -73,7 +73,7 @@ public class QdocCommand implements Callable<Void> {
     private boolean consistencyChecks = true;
 
     @Override
-    public Void call() throws SaxonApiException, IOException, InterruptedException {
+    public Void call() throws SaxonApiException, IOException, InterruptedException, ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
 
         // First, initialise global objects.
@@ -87,7 +87,7 @@ public class QdocCommand implements Callable<Void> {
 
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
-        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, includes);
+        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, qdocDebug, includes);
         q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
@@ -107,10 +107,10 @@ public class QdocCommand implements Callable<Void> {
 
             // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             q.moveGeneratedFiles();
-        }
 
-        if (true) {
-            throw new RuntimeException();
+            System.out.println("++> Checking whether all indexed files are present.");
+            q.checkUngeneratedFiles();
+            System.out.println("++> Checked!");
         }
 
         // Run Saxon to get the DocBook output.

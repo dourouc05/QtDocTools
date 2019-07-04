@@ -22,8 +22,8 @@ import picocli.CommandLine;
 
 public class Main {
     public static void main(String[] args) {
-//        String[] argv = {"qdoc", "-i", "D:\\Qt\\5.12.1\\Src", "-o", "D:\\Qt\\Doc512v2", "--qt-version", "5.12", "--no-rewrite-qdocconf", "--no-convert-webxml"};
-        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13"};
+//        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13"};
+        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13", "--no-convert-webxml"};
 
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
