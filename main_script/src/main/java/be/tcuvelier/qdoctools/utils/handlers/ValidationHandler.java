@@ -1,8 +1,11 @@
 package be.tcuvelier.qdoctools.utils.handlers;
 
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -17,9 +20,17 @@ public class ValidationHandler {
 
     private static boolean subValidate(File file, Validator validator) throws IOException {
         try {
+            // First, check if the document is not empty.
+            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file);
+            if (doc.getDocumentElement().getChildNodes().item(0) == null) {
+                System.err.println("Document is empty!");
+                return false;
+            }
+
+            // If there is real content, do a proper validation.
             validator.validate(new StreamSource(file)); // SAXException when validation error.
             return true;
-        } catch (SAXException e) {
+        } catch (ParserConfigurationException | SAXException e) {
             e.printStackTrace();
             return false;
         }
