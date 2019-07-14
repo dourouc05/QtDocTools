@@ -282,11 +282,19 @@
       <xsl:value-of select="$isInternal or $isObsolete"/>
     </xsl:variable>
     
+    <!-- Other things that were retro-engineered. -->
+    <xsl:variable name="shouldSkipForBizarreReasons" as="xs:boolean" >
+      <xsl:variable name="isRelated" select="boolean($currentNode/@related and $currentNode/@related='true')" as="xs:boolean"/>
+      <xsl:variable name="isOtherClassNoInheritance" select="false()"/> <!-- Quite impossible to write in a robust way, forgive me... -->
+      <xsl:value-of select="$isRelated or $isOtherClassNoInheritance"/>
+    </xsl:variable>
+    
     <!-- Merge the blocks. -->
-    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery) and not($shouldSkipForQObject) and not($shouldSkipForOtherReasons)"/>
+    <xsl:variable name="shouldInclude" select="not($shouldSkip) and not($shouldSkipForQuery) and not($shouldSkipForQObject) and not($shouldSkipForOtherReasons) and not($shouldSkipForBizarreReasons)"/>
     
     <!-- Check whether there is text and the previous code fails. (100% sure it is a mistake.) -->
-    <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0 and $currentNode/@status != 'obsolete'">
+    <!-- Exception: if $shouldSkipForBizarreReasons, then still some content. -->
+    <xsl:if test="not($shouldInclude) and count($currentNode/description/*) > 0 and $currentNode/@status != 'obsolete' and not($shouldSkipForBizarreReasons)">
       <xsl:message>WARNING: The description of <xsl:value-of select="$currentNode/@name"/> is skipped while it has some content.</xsl:message>
     </xsl:if>
     
@@ -547,16 +555,24 @@
     <xsl:if test="tc:is-element-included(.)">
       <db:section>
         <xsl:attribute name="xml:id">
-          <xsl:variable name="baseAnchor" select="tokenize(@href, '#')[2]" as="xs:string"/>
+          <xsl:variable name="baseAnchor" select="if (contains(@href, '#')) then tokenize(@href, '#')[2] else ''" as="xs:string"/>
           <xsl:choose>
-            <!-- Likely a bug in qdoc: some property-related methods (signals, mostly) -->
-            <!-- have the anchor of the property, and not their own, albeit they should -->
-            <!-- (these methods have their own section in the official doc). -->
-            <xsl:when test="not(ends-with($baseAnchor, '-prop'))">
-              <xsl:value-of select="$baseAnchor"/>
+            <xsl:when test="$baseAnchor = ''">
+              <!-- Bug in qdoc: sometimes, there is not @href field, so make up something -->
+              <!-- so that the IDs don't overlap. -->
+              <xsl:variable name="normalisedName" as="xs:string" 
+                select="replace(replace(@name, '&lt;', '-lt'), '&gt;', '-gt')"/>
+              <xsl:variable name="someNumber" as="xs:integer" select="count(./preceding::node())"/>
+              <xsl:value-of select="concat($normalisedName, '-rnd-', string($someNumber))"/>
+            </xsl:when>
+            <xsl:when test="ends-with($baseAnchor, '-prop')">
+              <!-- Likely a bug in qdoc: some property-related methods (signals, mostly) -->
+              <!-- have the anchor of the property, and not their own, albeit they should -->
+              <!-- (these methods have their own section in the official doc). -->
+              <xsl:value-of select="@name"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:value-of select="@name"/>
+              <xsl:value-of select="$baseAnchor"/>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
