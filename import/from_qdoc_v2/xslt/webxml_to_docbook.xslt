@@ -1638,7 +1638,9 @@
             <xsl:variable name="namespaces" as="map(xs:string, xs:string)">
               <xsl:map>
                 <xsl:for-each select="collection(concat($local-folder, '?select=*.webxml'))">
-                  <xsl:if test="./WebXML/document/namespace">
+                  <!-- If this file is a namespace and not something too strange... -->
+                  <!-- Example: qt-sub-qtgui.webxml -->
+                  <xsl:if test="./WebXML/document/namespace and not(starts-with(./WebXML/document/namespace/@href, 'qt-sub-'))">
                     <xsl:variable name="root" select="./WebXML/document/namespace" as="element(namespace)"/>
                     <xsl:variable name="nsName" select="if ($root/@fullname) then $root/@fullname else $root/@name" as="xs:string"/>
                     <xsl:map-entry key="$nsName" select="string($root/@brief)"/>
@@ -2678,7 +2680,17 @@
         </db:code>
       </xsl:when>
       <xsl:otherwise><!-- @type='page' -->
-        <db:link xlink:href="{@href}" xrefstyle="{@type}" annotations="{@raw}">
+        <xsl:variable name="normalisedHref" as="xs:string">
+          <xsl:choose>
+            <xsl:when test="contains(@href, '#') and ends-with(@href, '#')">
+              <!-- Remove the last #, as there may be multiple ones. -->
+              <xsl:value-of select="substring(@href, 0, string-length(@href))"/>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="@href"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        
+        <db:link xlink:href="{$normalisedHref}" xrefstyle="{@type}" annotations="{@raw}">
           <xsl:apply-templates mode="content_para"/>
         </db:link>
       </xsl:otherwise>

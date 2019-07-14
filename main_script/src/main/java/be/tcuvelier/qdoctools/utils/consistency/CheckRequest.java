@@ -28,7 +28,7 @@ public class CheckRequest {
         compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
 
         String otherFile = fileName.getFileName().toString().replace(".qdt", "") + ".html";
-        html = Jsoup.connect("http://doc.qt.io/qt-" + qtVersion.QT_VER() + "/" + otherFile).get();
+        html = Jsoup.connect("https://doc.qt.io/qt-" + qtVersion.QT_VER() + "/" + otherFile).get();
     }
 
     XdmValue xpath(String expression) throws SaxonApiException {
