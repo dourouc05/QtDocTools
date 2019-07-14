@@ -1,0 +1,1829 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<db:article xmlns:db="http://docbook.org/ns/docbook"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            version="5.2"
+            xml:lang="en">
+   <db:info>
+      <db:title>QApplication</db:title>
+      <db:abstract>
+         <db:para>Manages the GUI application's control flow and main settings</db:para>
+      </db:abstract>
+      <db:pubdate>2019-07-14+02:00</db:pubdate>
+      <db:date>2019-07-14+02:00</db:date>
+      <db:productname>Qt</db:productname>
+      <db:productnumber>1.2</db:productnumber>
+   </db:info>
+   <db:classsynopsis>
+      <db:ooclass>
+         <db:classname>QApplication</db:classname>
+      </db:ooclass>
+      <db:classsynopsisinfo role="threadsafety"/>
+      <db:classsynopsisinfo role="module">QtWidgets</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="headers">#include &lt;QApplication&gt;</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="definedin">QtWidgets\qapplication.h</db:classsynopsisinfo>
+      <db:classsynopsisinfo role="inherits">QGuiApplication</db:classsynopsisinfo>
+   </db:classsynopsis>
+   <db:section xml:id="details">
+      <db:title>Detailed Description</db:title>
+      <db:para>The <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> class manages the GUI application's control flow and main settings.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> specializes <db:code><db:link xlink:href="../qtgui/qguiapplication.html" xrefstyle="class" annotations="QGuiApplication">QGuiApplication</db:link></db:code> with some functionality needed for <db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code>-based applications. It handles widget specific initialization, finalization.</db:para>
+      <db:para>For any GUI application using Qt, there is precisely <db:emphasis role="bold">one</db:emphasis>
+         <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object, no matter whether the application has 0, 1, 2 or more windows at any given time. For non-<db:code><db:link xlink:href="qwidget.html" xrefstyle="class" annotations="QWidget">QWidget</db:link></db:code> based Qt applications, use <db:code><db:link xlink:href="../qtgui/qguiapplication.html" xrefstyle="class" annotations="QGuiApplication">QGuiApplication</db:link></db:code> instead, as it does not depend on the <db:link xlink:href="qtwidgets-module.html" xrefstyle="module" annotations="QtWidgets">QtWidgets</db:link> library.</db:para>
+      <db:para>Some GUI applications provide a special batch mode ie. provide command line arguments for executing tasks without manual intervention. In such non-GUI mode, it is often sufficient to instantiate a plain <db:code><db:link xlink:href="../qtcore/qcoreapplication.html" xrefstyle="class" annotations="QCoreApplication">QCoreApplication</db:link></db:code> to avoid unnecessarily initializing resources needed for a graphical user interface. The following example shows how to dynamically create an appropriate type of application instance:</db:para>
+      <db:programlisting language="other">QCoreApplication* createApplication(int &amp;argc, char *argv[])
+{
+    for (int i = 1; i &lt; argc; ++i)
+        if (!qstrcmp(argv[i], "-no-gui"))
+            return new QCoreApplication(argc, argv);
+    return new QApplication(argc, argv);
+}
+
+int main(int argc, char* argv[])
+{
+    QScopedPointer&lt;QCoreApplication&gt; app(createApplication(argc, argv));
+
+    if (qobject_cast&lt;QApplication *&gt;(app.data())) {
+       // start GUI version...
+    } else {
+       // start non-GUI version...
+    }
+
+    return app-&gt;exec();
+}</db:programlisting>
+      <db:para>The <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object is accessible through the <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#instance" xrefstyle="function" annotations="instance()">instance()</db:link></db:code> function that returns a pointer equivalent to the global <db:code><db:link xlink:href="qapplication.html#qApp" xrefstyle="function" annotations="qApp">qApp</db:link></db:code> pointer.</db:para>
+      <db:para>
+         <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code>'s main areas of responsibility are:</db:para>
+      <db:itemizedlist>
+         <db:listitem>
+            <db:para>It initializes the application with the user's desktop settings such as <db:code><db:link xlink:href="qapplication.html#palette" xrefstyle="function" annotations="palette()">palette()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#font" xrefstyle="function" annotations="font()">font()</db:link></db:code> and <db:code><db:link xlink:href="qapplication.html#doubleClickInterval-prop" xrefstyle="function" annotations="doubleClickInterval()">doubleClickInterval()</db:link></db:code>. It keeps track of these properties in case the user changes the desktop globally, for example through some kind of control panel.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It performs event handling, meaning that it receives events from the underlying window system and dispatches them to the relevant widgets. By using <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#sendEvent" xrefstyle="function" annotations="sendEvent()">sendEvent()</db:link></db:code> and <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#postEvent" xrefstyle="function" annotations="postEvent()">postEvent()</db:link></db:code> you can send your own events to widgets.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It parses common command line arguments and sets its internal state accordingly. See the <db:code><db:link xlink:href="qapplication.html#QApplication" xrefstyle="function" annotations="QApplication::QApplication()">constructor documentation</db:link></db:code> below for more details.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It defines the application's look and feel, which is encapsulated in a <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code> object. This can be changed at runtime with <db:code><db:link xlink:href="qapplication.html#setStyle" xrefstyle="function" annotations="setStyle()">setStyle()</db:link></db:code>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It specifies how the application is to allocate colors. See <db:code><db:link xlink:href="qapplication-obsolete.html#setColorSpec" xrefstyle="function" annotations="setColorSpec()">setColorSpec()</db:link></db:code> for details.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It provides localization of strings that are visible to the user via <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#translate" xrefstyle="function" annotations="translate()">translate()</db:link></db:code>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It provides some magical objects like the <db:code><db:link xlink:href="qapplication.html#desktop" xrefstyle="function" annotations="desktop()">desktop()</db:link></db:code> and the <db:code><db:link xlink:href="../qtgui/qguiapplication.html#clipboard" xrefstyle="function" annotations="clipboard()">clipboard()</db:link></db:code>.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It knows about the application's windows. You can ask which widget is at a certain position using <db:code><db:link xlink:href="qapplication.html#widgetAt" xrefstyle="function" annotations="widgetAt()">widgetAt()</db:link></db:code>, get a list of <db:code><db:link xlink:href="qapplication.html#topLevelWidgets" xrefstyle="function" annotations="topLevelWidgets()">topLevelWidgets()</db:link></db:code> and <db:code><db:link xlink:href="qapplication.html#closeAllWindows" xrefstyle="function" annotations="closeAllWindows()">closeAllWindows()</db:link></db:code>, etc.</db:para>
+         </db:listitem>
+         <db:listitem>
+            <db:para>It manages the application's mouse cursor handling, see <db:code><db:link xlink:href="../qtgui/qguiapplication.html#setOverrideCursor" xrefstyle="function" annotations="setOverrideCursor()">setOverrideCursor()</db:link></db:code>
+            </db:para>
+         </db:listitem>
+      </db:itemizedlist>
+      <db:para>Since the <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object does so much initialization, it <db:emphasis>must</db:emphasis> be created before any other objects related to the user interface are created. <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> also deals with common command line arguments. Hence, it is usually a good idea to create it <db:emphasis>before</db:emphasis> any interpretation or modification of <db:code>argv</db:code> is done in the application itself.</db:para>
+      <db:informaltable>
+         <db:thead>
+            <db:tr>
+               <db:th colspan="2">
+                  <db:para>Groups of functions</db:para>
+               </db:th>
+            </db:tr>
+         </db:thead>
+         <db:tr>
+            <db:td>
+               <db:para>System settings</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#desktopSettingsAware" xrefstyle="function" annotations="desktopSettingsAware()">desktopSettingsAware()</db:link></db:code>, <db:code><db:link xlink:href="../qtgui/qguiapplication.html#setDesktopSettingsAware" xrefstyle="function" annotations="setDesktopSettingsAware()">setDesktopSettingsAware()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#cursorFlashTime-prop" xrefstyle="function" annotations="cursorFlashTime()">cursorFlashTime()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#cursorFlashTime-prop" xrefstyle="function" annotations="setCursorFlashTime()">setCursorFlashTime()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#doubleClickInterval-prop" xrefstyle="function" annotations="doubleClickInterval()">doubleClickInterval()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#doubleClickInterval-prop" xrefstyle="function" annotations="setDoubleClickInterval()">setDoubleClickInterval()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#keyboardInputInterval-prop" xrefstyle="function" annotations="setKeyboardInputInterval()">setKeyboardInputInterval()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#wheelScrollLines-prop" xrefstyle="function" annotations="wheelScrollLines()">wheelScrollLines()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#wheelScrollLines-prop" xrefstyle="function" annotations="setWheelScrollLines()">setWheelScrollLines()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#palette" xrefstyle="function" annotations="palette()">palette()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#setPalette" xrefstyle="function" annotations="setPalette()">setPalette()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#font" xrefstyle="function" annotations="font()">font()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#setFont" xrefstyle="function" annotations="setFont()">setFont()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#fontMetrics" xrefstyle="function" annotations="fontMetrics()">fontMetrics()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Event handling</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qapplication.html#exec" xrefstyle="function" annotations="exec()">exec()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#processEvents" xrefstyle="function" annotations="processEvents()">processEvents()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#exit" xrefstyle="function" annotations="exit()">exit()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#quit" xrefstyle="function" annotations="quit()">quit()</db:link></db:code>. <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#sendEvent" xrefstyle="function" annotations="sendEvent()">sendEvent()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#postEvent" xrefstyle="function" annotations="postEvent()">postEvent()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#sendPostedEvents" xrefstyle="function" annotations="sendPostedEvents()">sendPostedEvents()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#removePostedEvents" xrefstyle="function" annotations="removePostedEvents()">removePostedEvents()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication-obsolete.html#hasPendingEvents" xrefstyle="function" annotations="hasPendingEvents()">hasPendingEvents()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#notify" xrefstyle="function" annotations="notify()">notify()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>GUI Styles</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qapplication.html#style" xrefstyle="function" annotations="style()">style()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#setStyle" xrefstyle="function" annotations="setStyle()">setStyle()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Color usage</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qapplication-obsolete.html#colorSpec" xrefstyle="function" annotations="colorSpec()">colorSpec()</db:link></db:code>, <db:code><db:link xlink:href="qapplication-obsolete.html#setColorSpec" xrefstyle="function" annotations="setColorSpec()">setColorSpec()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Text handling</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#installTranslator" xrefstyle="function" annotations="installTranslator()">installTranslator()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#removeTranslator" xrefstyle="function" annotations="removeTranslator()">removeTranslator()</db:link></db:code>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#translate" xrefstyle="function" annotations="translate()">translate()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Widgets</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qapplication.html#allWidgets" xrefstyle="function" annotations="allWidgets()">allWidgets()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#topLevelWidgets" xrefstyle="function" annotations="topLevelWidgets()">topLevelWidgets()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#desktop" xrefstyle="function" annotations="desktop()">desktop()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#activePopupWidget" xrefstyle="function" annotations="activePopupWidget()">activePopupWidget()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#activeModalWidget" xrefstyle="function" annotations="activeModalWidget()">activeModalWidget()</db:link></db:code>, <db:code><db:link xlink:href="../qtgui/qguiapplication.html#clipboard" xrefstyle="function" annotations="clipboard()">clipboard()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#focusWidget" xrefstyle="function" annotations="focusWidget()">focusWidget()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#activeWindow" xrefstyle="function" annotations="activeWindow()">activeWindow()</db:link></db:code>, <db:code><db:link xlink:href="qapplication.html#widgetAt" xrefstyle="function" annotations="widgetAt()">widgetAt()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Advanced cursor handling</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#overrideCursor" xrefstyle="function" annotations="overrideCursor()">overrideCursor()</db:link></db:code>, <db:code><db:link xlink:href="../qtgui/qguiapplication.html#setOverrideCursor" xrefstyle="function" annotations="setOverrideCursor()">setOverrideCursor()</db:link></db:code>, <db:code><db:link xlink:href="../qtgui/qguiapplication.html#restoreOverrideCursor" xrefstyle="function" annotations="restoreOverrideCursor()">restoreOverrideCursor()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+         <db:tr>
+            <db:td>
+               <db:para>Miscellaneous</db:para>
+            </db:td>
+            <db:td>
+               <db:para>
+                  <db:code><db:link xlink:href="qapplication.html#closeAllWindows" xrefstyle="function" annotations="closeAllWindows()">closeAllWindows()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#startingUp" xrefstyle="function" annotations="startingUp()">startingUp()</db:link></db:code>, <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#closingDown" xrefstyle="function" annotations="closingDown()">closingDown()</db:link></db:code>.</db:para>
+            </db:td>
+         </db:tr>
+      </db:informaltable>
+      <db:para>
+         <db:emphasis role="bold">See Also:</db:emphasis>
+         <db:simplelist type="vert" role="see-also">
+            <db:member>
+               <db:code><db:link xlink:href="../qtcore/qcoreapplication.html" xrefstyle="class" annotations="QCoreApplication">QCoreApplication</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="../qtcore/qabstracteventdispatcher.html" xrefstyle="class" annotations="QAbstractEventDispatcher">QAbstractEventDispatcher</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="../qtcore/qeventloop.html" xrefstyle="class" annotations="QEventLoop">QEventLoop</db:link></db:code>
+            </db:member>
+            <db:member>
+               <db:code><db:link xlink:href="../qtcore/qsettings.html" xrefstyle="class" annotations="QSettings">QSettings</db:link></db:code>
+            </db:member>
+         </db:simplelist>
+      </db:para>
+   </db:section>
+   <db:section>
+      <db:title>Properties</db:title>
+      <db:section xml:id="autoSipEnabled-prop">
+         <db:title>autoSipEnabled : bool</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>bool</db:type>
+            <db:varname>autoSipEnabled</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>bool</db:type>
+            <db:methodname>autoSipEnabled</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setAutoSipEnabled</db:methodname>
+            <db:methodparam>
+               <db:type>const bool &amp;</db:type>
+               <db:parameter>autoSipEnabled</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds toggles automatic SIP (software input panel) visibility.</db:para>
+         <db:para>Set this property to <db:code>true</db:code> to automatically display the SIP when entering widgets that accept keyboard input. This property only affects widgets with the WA_InputMethodEnabled attribute set, and is typically used to launch a virtual keyboard on devices which have very few or no keys.</db:para>
+         <db:para>
+            <db:emphasis role="bold"> The property only has an effect on platforms that use software input panels.</db:emphasis>
+         </db:para>
+         <db:para>The default is platform dependent.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>bool</db:td>
+                     <db:td>autoSipEnabled() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setAutoSipEnabled(const bool &amp; autoSipEnabled)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.5.</db:para>
+      </db:section>
+      <db:section xml:id="cursorFlashTime-prop">
+         <db:title>cursorFlashTime : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>cursorFlashTime</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>cursorFlashTime</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setCursorFlashTime</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>cursorFlashTime</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the text cursor's flash (blink) time in milliseconds.</db:para>
+         <db:para>The flash time is the time required to display, invert and restore the caret display. Usually the text cursor is displayed for half the cursor flash time, then hidden for the same amount of time, but this may vary.</db:para>
+         <db:para>The default value on X11 is 1000 milliseconds. On Windows, the Control Panel value is used and setting this property sets the cursor flash time for all applications.</db:para>
+         <db:para>We recommend that widgets do not cache this value as it may change at any time if the user changes the global desktop settings.</db:para>
+         <db:note>
+            <db:para> This property may hold a negative value, for instance if cursor blinking is disabled.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>cursorFlashTime() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setCursorFlashTime(const int &amp; cursorFlashTime)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section xml:id="doubleClickInterval-prop">
+         <db:title>doubleClickInterval : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>doubleClickInterval</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>doubleClickInterval</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setDoubleClickInterval</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>doubleClickInterval</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the time limit in milliseconds that distinguishes a double click from two consecutive mouse clicks.</db:para>
+         <db:para>The default value on X11 is 400 milliseconds. On Windows and Mac OS, the operating system's value is used.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>doubleClickInterval() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setDoubleClickInterval(const int &amp; doubleClickInterval)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section xml:id="globalStrut-prop">
+         <db:title>globalStrut : QSize</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QSize</db:type>
+            <db:varname>globalStrut</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QSize</db:type>
+            <db:methodname>globalStrut</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setGlobalStrut</db:methodname>
+            <db:methodparam>
+               <db:type>const QSize &amp;</db:type>
+               <db:parameter>globalStrut</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the minimum size that any GUI element that the user can interact with should have.</db:para>
+         <db:para>For example, no button should be resized to be smaller than the global strut size. The strut size should be considered when reimplementing GUI controls that may be used on touch-screens or similar I/O devices.</db:para>
+         <db:para>Example:</db:para>
+         <db:programlisting language="other">QSize MyWidget::sizeHint() const
+{
+    return QSize(80, 25).expandedTo(QApplication::globalStrut());
+}</db:programlisting>
+         <db:para>By default, this property contains a <db:code><db:link xlink:href="../qtcore/qsize.html" xrefstyle="class" annotations="QSize">QSize</db:link></db:code> object with zero width and height.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QSize</db:td>
+                     <db:td>globalStrut() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setGlobalStrut(const QSize &amp; globalStrut)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section xml:id="keyboardInputInterval-prop">
+         <db:title>keyboardInputInterval : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>keyboardInputInterval</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>keyboardInputInterval</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setKeyboardInputInterval</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>keyboardInputInterval</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the time limit in milliseconds that distinguishes a key press from two consecutive key presses.</db:para>
+         <db:para>The default value on X11 is 400 milliseconds. On Windows and Mac OS, the operating system's value is used.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>keyboardInputInterval() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setKeyboardInputInterval(const int &amp; keyboardInputInterval)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section xml:id="startDragDistance-prop">
+         <db:title>startDragDistance : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>startDragDistance</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>startDragDistance</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStartDragDistance</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>startDragDistance</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If you support drag and drop in your application, and want to start a drag and drop operation after the user has moved the cursor a certain distance with a button held down, you should use this property's value as the minimum distance required.</db:para>
+         <db:para>For example, if the mouse position of the click is stored in <db:code>startPos</db:code> and the current position (e.g. in the mouse move event) is <db:code>currentPos</db:code>, you can find out if a drag should be started with code like this:</db:para>
+         <db:programlisting language="other">if ((startPos - currentPos).manhattanLength() &gt;=
+        QApplication::startDragDistance())
+    startTheDrag();</db:programlisting>
+         <db:para>Qt uses this value internally, e.g. in <db:code><db:link xlink:href="qfiledialog.html" xrefstyle="class" annotations="QFileDialog">QFileDialog</db:link></db:code>.</db:para>
+         <db:para>The default value (if the platform doesn't provide a different default) is 10 pixels.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#startDragTime-prop" xrefstyle="function" annotations="startDragTime()">startDragTime()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qpoint.html#manhattanLength" xrefstyle="function" annotations="QPoint::manhattanLength()">QPoint::manhattanLength()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="graphicsview.html#drag-and-drop" xrefstyle="page" annotations="Drag and Drop">Drag and Drop</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>startDragDistance() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setStartDragDistance(const int &amp; startDragDistance)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section xml:id="startDragTime-prop">
+         <db:title>startDragTime : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>startDragTime</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>startDragTime</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStartDragTime</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>startDragTime</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the time in milliseconds that a mouse button must be held down before a drag and drop operation will begin.</db:para>
+         <db:para>If you support drag and drop in your application, and want to start a drag and drop operation after the user has held down a mouse button for a certain amount of time, you should use this property's value as the delay.</db:para>
+         <db:para>Qt also uses this delay internally, e.g. in <db:code><db:link xlink:href="qtextedit.html" xrefstyle="class" annotations="QTextEdit">QTextEdit</db:link></db:code> and <db:code><db:link xlink:href="qlineedit.html" xrefstyle="class" annotations="QLineEdit">QLineEdit</db:link></db:code>, for starting a drag.</db:para>
+         <db:para>The default value is 500 ms.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#startDragDistance-prop" xrefstyle="function" annotations="startDragDistance()">startDragDistance()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="graphicsview.html#drag-and-drop" xrefstyle="page" annotations="Drag and Drop">Drag and Drop</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>startDragTime() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setStartDragTime(const int &amp; startDragTime)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section xml:id="styleSheet-prop">
+         <db:title>styleSheet : QString</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QString</db:type>
+            <db:varname>styleSheet</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QString</db:type>
+            <db:methodname>styleSheet</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setStyleSheet</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>styleSheet</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the application style sheet.</db:para>
+         <db:para>By default, this property returns an empty string unless the user specifies the <db:code>-stylesheet</db:code> option on the command line when running the application.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#setStyle" xrefstyle="function" annotations="QWidget::setStyle()">QWidget::setStyle()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="stylesheet.html" xrefstyle="page" annotations="Qt Style Sheets">Qt Style Sheets</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QString</db:td>
+                     <db:td>styleSheet() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setStyleSheet(const QString &amp; styleSheet)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.2.</db:para>
+      </db:section>
+      <db:section xml:id="wheelScrollLines-prop">
+         <db:title>wheelScrollLines : int</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>int</db:type>
+            <db:varname>wheelScrollLines</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>int</db:type>
+            <db:methodname>wheelScrollLines</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setWheelScrollLines</db:methodname>
+            <db:methodparam>
+               <db:type>const int &amp;</db:type>
+               <db:parameter>wheelScrollLines</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the number of lines to scroll a widget, when the mouse wheel is rotated..</db:para>
+         <db:para>If the value exceeds the widget's number of visible lines, the widget should interpret the scroll operation as a single <db:emphasis>page up</db:emphasis> or <db:emphasis>page down</db:emphasis>. If the widget is an <db:code><db:link xlink:href="qabstractitemview.html" xrefstyle="class" annotations="QAbstractItemView">item view class</db:link></db:code>, then the result of scrolling one <db:emphasis>line</db:emphasis> depends on the setting of the widget's <db:code><db:link xlink:href="qabstractitemview.html#verticalScrollMode-prop" xrefstyle="function" annotations="QAbstractItemView::verticalScrollMode()">scroll mode</db:link></db:code>. Scroll one <db:emphasis>line</db:emphasis> can mean <db:code><db:link xlink:href="qabstractitemview.html#ScrollMode-enum" xrefstyle="enum" annotations="QAbstractItemView::ScrollPerItem">scroll one item</db:link></db:code> or <db:code><db:link xlink:href="qabstractitemview.html#ScrollMode-enum" xrefstyle="enum" annotations="QAbstractItemView::ScrollPerPixel">scroll one pixel</db:link></db:code>.</db:para>
+         <db:para>By default, this property has a value of 3.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qstylehints.html#wheelScrollLines-prop" xrefstyle="function" annotations="QStyleHints::wheelScrollLines()">QStyleHints::wheelScrollLines()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>int</db:td>
+                     <db:td>wheelScrollLines() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setWheelScrollLines(const int &amp; wheelScrollLines)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+      <db:section xml:id="windowIcon-prop">
+         <db:title>windowIcon : QIcon</db:title>
+         <db:fieldsynopsis>
+            <db:modifier>(Qt property)</db:modifier>
+            <db:type>QIcon</db:type>
+            <db:varname>windowIcon</db:varname>
+         </db:fieldsynopsis>
+         <db:methodsynopsis>
+            <db:type>QIcon</db:type>
+            <db:methodname>windowIcon windowIcon</db:methodname>
+            <db:void/>
+            <db:modifier>const</db:modifier>
+         </db:methodsynopsis>
+         <db:methodsynopsis>
+            <db:void/>
+            <db:methodname>setWindowIcon setWindowIcon</db:methodname>
+            <db:methodparam>
+               <db:type>const QIcon &amp;</db:type>
+               <db:parameter>windowIcon</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This property holds the default window icon.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#windowIcon-prop" xrefstyle="function" annotations="QWidget::setWindowIcon()">QWidget::setWindowIcon()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:link xlink:href="../qtdoc/appicon.html" xrefstyle="page" annotations="Setting the Application Icon">Setting the Application Icon</db:link>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>
+            <db:emphasis role="bold">Access function:</db:emphasis>
+            <db:informaltable>
+               <db:tbody>
+                  <db:tr>
+                     <db:td>QIcon</db:td>
+                     <db:td>windowIcon() const</db:td>
+                  </db:tr>
+                  <db:tr>
+                     <db:td>void</db:td>
+                     <db:td>setWindowIcon(const QIcon &amp; windowIcon)</db:td>
+                  </db:tr>
+               </db:tbody>
+            </db:informaltable>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Member Function Documentation</db:title>
+      <db:section xml:id="QApplication">
+         <db:title>QApplication(int &amp;argc, char **argv)</db:title>
+         <db:constructorsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:methodname>QApplication</db:methodname>
+            <db:methodparam>
+               <db:type>int &amp;</db:type>
+               <db:parameter>argc</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>char **</db:type>
+               <db:parameter>argv</db:parameter>
+            </db:methodparam>
+         </db:constructorsynopsis>
+         <db:para>Initializes the window system and constructs an application object with <db:code role="argument">argc</db:code> command line arguments in <db:code role="argument">argv</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> The data referred to by <db:code role="argument">argc</db:code> and <db:code role="argument">argv</db:code> must stay valid for the entire lifetime of the <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> object. In addition, <db:code role="argument">argc</db:code> must be greater than zero and <db:code role="argument">argv</db:code> must contain at least one valid character string.</db:para>
+         <db:para>The global <db:code>qApp</db:code> pointer refers to this application object. Only one application object should be created.</db:para>
+         <db:para>This application object must be constructed before any <db:code><db:link xlink:href="../qtgui/qpaintdevice.html" xrefstyle="class" annotations="QPaintDevice">paint devices</db:link></db:code> (including widgets, pixmaps, bitmaps etc.).</db:para>
+         <db:note>
+            <db:para>
+               <db:code role="argument">argc</db:code> and <db:code role="argument">argv</db:code> might be changed as Qt removes command line arguments that it recognizes.</db:para>
+         </db:note>
+         <db:para>All Qt programs automatically support the following command line options:</db:para>
+         <db:itemizedlist>
+            <db:listitem>
+               <db:para>-style= <db:emphasis>style</db:emphasis>, sets the application GUI style. Possible values depend on your system configuration. If you compiled Qt with additional styles or have additional styles as plugins these will be available to the <db:code>-style</db:code> command line option. You can also set the style for all Qt applications by setting the <db:code>QT_STYLE_OVERRIDE</db:code> environment variable.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>-style <db:emphasis>style</db:emphasis>, is the same as listed above.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>-stylesheet= <db:emphasis>stylesheet</db:emphasis>, sets the application <db:link xlink:href="stylesheet.html" xrefstyle="page" annotations="styleSheet">styleSheet</db:link>. The value must be a path to a file that contains the Style Sheet.</db:para>
+               <db:note>
+                  <db:para> Relative URLs in the Style Sheet file are relative to the Style Sheet file's path.</db:para>
+               </db:note>
+            </db:listitem>
+            <db:listitem>
+               <db:para>-stylesheet <db:emphasis>stylesheet</db:emphasis>, is the same as listed above.</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>-widgetcount, prints debug message at the end about number of widgets left undestroyed and maximum number of widgets existed at the same time</db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>-reverse, sets the application's layout direction to <db:code><db:link xlink:href="../qtcore/qt.html#LayoutDirection-enum" xrefstyle="enum" annotations="Qt::RightToLeft">Qt::RightToLeft</db:link></db:code>
+               </db:para>
+            </db:listitem>
+            <db:listitem>
+               <db:para>-qmljsdebugger=, activates the QML/JS debugger with a specified port. The value must be of format port:1234[,block], where block is optional and will make the application wait until a debugger connects to it.</db:para>
+            </db:listitem>
+         </db:itemizedlist>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#arguments" xrefstyle="function" annotations="QCoreApplication::arguments()">QCoreApplication::arguments()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="dtor.QApplication">
+         <db:title>~QApplication()</db:title>
+         <db:destructorsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>virtual</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:methodname>~QApplication</db:methodname>
+            <db:void/>
+         </db:destructorsynopsis>
+         <db:para>Cleans up any window system resources that were allocated by this application. Sets the global variable <db:code>qApp</db:code> to <db:code>nullptr</db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="desktop">
+         <db:title>QDesktopWidget * desktop()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QDesktopWidget *</db:type>
+            <db:methodname>desktop</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the desktop widget (also called the root window).</db:para>
+         <db:para>The desktop may be composed of multiple screens, so it would be incorrect, for example, to attempt to <db:emphasis>center</db:emphasis> some widget in the desktop's geometry. <db:code><db:link xlink:href="qdesktopwidget.html" xrefstyle="class" annotations="QDesktopWidget">QDesktopWidget</db:link></db:code> has various functions for obtaining useful geometries upon the desktop, such as <db:code><db:link xlink:href="qdesktopwidget-obsolete.html#screenGeometry" xrefstyle="function" annotations="QDesktopWidget::screenGeometry()">QDesktopWidget::screenGeometry()</db:link></db:code> and <db:code><db:link xlink:href="qdesktopwidget-obsolete.html#availableGeometry" xrefstyle="function" annotations="QDesktopWidget::availableGeometry()">QDesktopWidget::availableGeometry()</db:link></db:code>.</db:para>
+         <db:para>On X11, it is also possible to draw on the desktop.</db:para>
+      </db:section>
+      <db:section xml:id="font">
+         <db:title>QFont font()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QFont</db:type>
+            <db:methodname>font</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the default application font.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setFont" xrefstyle="function" annotations="setFont()">setFont()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#fontMetrics" xrefstyle="function" annotations="fontMetrics()">fontMetrics()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#font-prop" xrefstyle="function" annotations="QWidget::font()">QWidget::font()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="font-1">
+         <db:title>QFont font(const QWidget *widget)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QFont</db:type>
+            <db:methodname>font</db:methodname>
+            <db:methodparam>
+               <db:type>const QWidget *</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns the default font for the <db:code role="argument">widget</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#fontMetrics" xrefstyle="function" annotations="fontMetrics()">fontMetrics()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#font-prop" xrefstyle="function" annotations="QWidget::setFont()">QWidget::setFont()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="font-2">
+         <db:title>QFont font(const char *className)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QFont</db:type>
+            <db:methodname>font</db:methodname>
+            <db:methodparam>
+               <db:type>const char *</db:type>
+               <db:parameter>className</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns the font for widgets of the given <db:code role="argument">className</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setFont" xrefstyle="function" annotations="setFont()">setFont()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#font-prop" xrefstyle="function" annotations="QWidget::font()">QWidget::font()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="fontMetrics">
+         <db:title>QFontMetrics fontMetrics()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QFontMetrics</db:type>
+            <db:methodname>fontMetrics</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns display (screen) font metrics for the application font.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#font" xrefstyle="function" annotations="font()">font()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setFont" xrefstyle="function" annotations="setFont()">setFont()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#fontMetrics" xrefstyle="function" annotations="QWidget::fontMetrics()">QWidget::fontMetrics()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qpainter.html#fontMetrics" xrefstyle="function" annotations="QPainter::fontMetrics()">QPainter::fontMetrics()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="palette">
+         <db:title>QPalette palette(const QWidget *widget)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QPalette</db:type>
+            <db:methodname>palette</db:methodname>
+            <db:methodparam>
+               <db:type>const QWidget *</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>If a <db:code role="argument">widget</db:code> is passed, the default palette for the widget's class is returned. This may or may not be the application palette. In most cases there is no special palette for certain types of widgets, but one notable exception is the popup menu under Windows, if the user has defined a special background color for menus in the display settings.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setPalette" xrefstyle="function" annotations="setPalette()">setPalette()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#palette-prop" xrefstyle="function" annotations="QWidget::palette()">QWidget::palette()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="palette-1">
+         <db:title>QPalette palette(const char *className)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QPalette</db:type>
+            <db:methodname>palette</db:methodname>
+            <db:methodparam>
+               <db:type>const char *</db:type>
+               <db:parameter>className</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns the palette for widgets of the given <db:code role="argument">className</db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setPalette" xrefstyle="function" annotations="setPalette()">setPalette()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#palette-prop" xrefstyle="function" annotations="QWidget::palette()">QWidget::palette()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="setStyle-1">
+         <db:title>QStyle * setStyle(const QString &amp;style)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QStyle *</db:type>
+            <db:methodname>setStyle</db:methodname>
+            <db:methodparam>
+               <db:type>const QString &amp;</db:type>
+               <db:parameter>style</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Requests a <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code> object for <db:code role="argument">style</db:code> from the <db:code><db:link xlink:href="qstylefactory.html" xrefstyle="class" annotations="QStyleFactory">QStyleFactory</db:link></db:code>.</db:para>
+         <db:para>The string must be one of the <db:code><db:link xlink:href="qstylefactory.html#keys" xrefstyle="function" annotations="QStyleFactory::keys()">QStyleFactory::keys()</db:link></db:code>, typically one of "windows", "windowsvista", "fusion", or "macintosh". Style names are case insensitive.</db:para>
+         <db:para>Returns <db:code>nullptr</db:code> if an unknown <db:code role="argument">style</db:code> is passed, otherwise the <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code> object returned is set as the application's GUI style.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> To ensure that the application's style is set correctly, it is best to call this function before the <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> constructor, if possible.</db:para>
+      </db:section>
+      <db:section xml:id="style">
+         <db:title>QStyle * style()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QStyle *</db:type>
+            <db:methodname>style</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the application's style object.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setStyle" xrefstyle="function" annotations="setStyle()">setStyle()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="activeModalWidget">
+         <db:title>QWidget * activeModalWidget()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>activeModalWidget</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the active modal widget.</db:para>
+         <db:para>A modal widget is a special top-level widget which is a subclass of <db:code><db:link xlink:href="qdialog.html" xrefstyle="class" annotations="QDialog">QDialog</db:link></db:code> that specifies the modal parameter of the constructor as true. A modal widget must be closed before the user can continue with other parts of the program.</db:para>
+         <db:para>Modal widgets are organized in a stack. This function returns the active modal widget at the top of the stack.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#activePopupWidget" xrefstyle="function" annotations="activePopupWidget()">activePopupWidget()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#topLevelWidgets" xrefstyle="function" annotations="topLevelWidgets()">topLevelWidgets()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="activePopupWidget">
+         <db:title>QWidget * activePopupWidget()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>activePopupWidget</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the active popup widget.</db:para>
+         <db:para>A popup widget is a special top-level widget that sets the <db:code>Qt::WType_Popup</db:code> widget flag, e.g. the <db:code><db:link xlink:href="qmenu.html" xrefstyle="class" annotations="QMenu">QMenu</db:link></db:code> widget. When the application opens a popup widget, all events are sent to the popup. Normal widgets and modal widgets cannot be accessed before the popup widget is closed.</db:para>
+         <db:para>Only other popup widgets may be opened when a popup widget is shown. The popup widgets are organized in a stack. This function returns the active popup widget at the top of the stack.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#activeModalWidget" xrefstyle="function" annotations="activeModalWidget()">activeModalWidget()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#topLevelWidgets" xrefstyle="function" annotations="topLevelWidgets()">topLevelWidgets()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="activeWindow">
+         <db:title>QWidget * activeWindow()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>activeWindow</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the application top-level window that has the keyboard input focus, or <db:code>nullptr</db:code> if no application window has the focus. There might be an  even if there is no <db:code><db:link xlink:href="qapplication.html#focusWidget" xrefstyle="function" annotations="focusWidget()">focusWidget()</db:link></db:code>, for example if no widget in that window accepts key events.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setActiveWindow" xrefstyle="function" annotations="setActiveWindow()">setActiveWindow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#setFocus-1" xrefstyle="function" annotations="QWidget::setFocus()">QWidget::setFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#focus-prop" xrefstyle="function" annotations="QWidget::hasFocus()">QWidget::hasFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#focusWidget" xrefstyle="function" annotations="focusWidget()">focusWidget()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="focusWidget">
+         <db:title>QWidget * focusWidget()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>focusWidget</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns the application widget that has the keyboard input focus, or <db:code>nullptr</db:code> if no widget in this application has the focus.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#setFocus-1" xrefstyle="function" annotations="QWidget::setFocus()">QWidget::setFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#focus-prop" xrefstyle="function" annotations="QWidget::hasFocus()">QWidget::hasFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#activeWindow" xrefstyle="function" annotations="activeWindow()">activeWindow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#focusChanged" xrefstyle="function" annotations="focusChanged()">focusChanged()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="topLevelAt">
+         <db:title>QWidget * topLevelAt(const QPoint &amp;point)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>topLevelAt</db:methodname>
+            <db:methodparam>
+               <db:type>const QPoint &amp;</db:type>
+               <db:parameter>point</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the top-level widget at the given <db:code role="argument">point</db:code>; returns <db:code>nullptr</db:code> if there is no such widget.</db:para>
+      </db:section>
+      <db:section xml:id="topLevelAt-1">
+         <db:title>QWidget * topLevelAt(int x, int y)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>topLevelAt</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>x</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>y</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns the top-level widget at the point (<db:code role="argument">x</db:code>, <db:code role="argument">y</db:code>); returns 0 if there is no such widget.</db:para>
+      </db:section>
+      <db:section xml:id="widgetAt">
+         <db:title>QWidget * widgetAt(const QPoint &amp;point)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>widgetAt</db:methodname>
+            <db:methodparam>
+               <db:type>const QPoint &amp;</db:type>
+               <db:parameter>point</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns the widget at global screen position <db:code role="argument">point</db:code>, or <db:code>nullptr</db:code> if there is no Qt widget there.</db:para>
+         <db:para>This function can be slow.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qcursor.html#pos" xrefstyle="function" annotations="QCursor::pos()">QCursor::pos()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#grabMouse" xrefstyle="function" annotations="QWidget::grabMouse()">QWidget::grabMouse()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#grabKeyboard" xrefstyle="function" annotations="QWidget::grabKeyboard()">QWidget::grabKeyboard()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="widgetAt-1">
+         <db:title>QWidget * widgetAt(int x, int y)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidget *</db:type>
+            <db:methodname>widgetAt</db:methodname>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>x</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>y</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This is an overloaded function.</db:para>
+         <db:para>Returns the widget at global screen position (<db:code role="argument">x</db:code>, <db:code role="argument">y</db:code>), or <db:code>nullptr</db:code> if there is no Qt widget there.</db:para>
+      </db:section>
+      <db:section xml:id="allWidgets">
+         <db:title>QWidgetList allWidgets()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidgetList</db:type>
+            <db:methodname>allWidgets</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns a list of all the widgets in the application.</db:para>
+         <db:para>The list is empty (<db:code><db:link xlink:href="../qtcore/qlist.html#isEmpty" xrefstyle="function" annotations="QList::isEmpty()">QList::isEmpty()</db:link></db:code>) if there are no widgets.</db:para>
+         <db:note>
+            <db:para> Some of the widgets may be hidden.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting language="other">void updateAllWidgets()
+{
+    const QWidgetList allWidgets = QApplication::allWidgets();
+    for (QWidget *widget : allWidgets)
+        widget-&gt;update();
+}</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#topLevelWidgets" xrefstyle="function" annotations="topLevelWidgets()">topLevelWidgets()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#visible-prop" xrefstyle="function" annotations="QWidget::isVisible()">QWidget::isVisible()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="topLevelWidgets">
+         <db:title>QWidgetList topLevelWidgets()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>QWidgetList</db:type>
+            <db:methodname>topLevelWidgets</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns a list of the top-level widgets (windows) in the application.</db:para>
+         <db:note>
+            <db:para> Some of the top-level widgets may be hidden, for example a tooltip if no tooltip is currently shown.</db:para>
+         </db:note>
+         <db:para>Example:</db:para>
+         <db:programlisting language="other">void showAllHiddenTopLevelWidgets()
+{
+    const QWidgetList topLevelWidgets = QApplication::topLevelWidgets();
+    for (QWidget *widget : topLevelWidgets) {
+        if (widget-&gt;isHidden())
+            widget-&gt;show();
+    }
+}</db:programlisting>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#allWidgets" xrefstyle="function" annotations="allWidgets()">allWidgets()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#isWindow" xrefstyle="function" annotations="QWidget::isWindow()">QWidget::isWindow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#isHidden" xrefstyle="function" annotations="QWidget::isHidden()">QWidget::isHidden()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="navigationMode">
+         <db:title>Qt::NavigationMode navigationMode()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>Qt::NavigationMode</db:type>
+            <db:methodname>navigationMode</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Returns what kind of focus navigation Qt is using.</db:para>
+         <db:para>This feature is available in Qt for Embedded Linux only.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setNavigationMode" xrefstyle="function" annotations="setNavigationMode()">setNavigationMode()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication-obsolete.html#keypadNavigationEnabled" xrefstyle="function" annotations="keypadNavigationEnabled()">keypadNavigationEnabled()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.6.</db:para>
+      </db:section>
+      <db:section xml:id="event">
+         <db:title>bool event(QEvent *e) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>protected</db:modifier>
+            <db:modifier>virtual</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>event</db:methodname>
+            <db:methodparam>
+               <db:type>QEvent *</db:type>
+               <db:parameter>e</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+      </db:section>
+      <db:section xml:id="isEffectEnabled">
+         <db:title>bool isEffectEnabled(Qt::UIEffect effect)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>isEffectEnabled</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::UIEffect</db:type>
+               <db:parameter>effect</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Returns <db:code>true</db:code> if <db:code role="argument">effect</db:code> is enabled; otherwise returns <db:code>false</db:code>.</db:para>
+         <db:para>By default, Qt will try to use the desktop settings. To prevent this, call <db:code><db:link xlink:href="../qtgui/qguiapplication.html#setDesktopSettingsAware" xrefstyle="function" annotations="setDesktopSettingsAware">setDesktopSettingsAware</db:link></db:code>(false).</db:para>
+         <db:note>
+            <db:para> All effects are disabled on screens running at less than 16-bit color depth.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setEffectEnabled" xrefstyle="function" annotations="setEffectEnabled()">setEffectEnabled()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qt.html#UIEffect-enum" xrefstyle="enum" annotations="Qt::UIEffect">Qt::UIEffect</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="notify">
+         <db:title>bool notify(QObject *receiver, QEvent *e) override</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>virtual</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>override</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>bool</db:type>
+            <db:methodname>notify</db:methodname>
+            <db:methodparam>
+               <db:type>QObject *</db:type>
+               <db:parameter>receiver</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QEvent *</db:type>
+               <db:parameter>e</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+      </db:section>
+      <db:section xml:id="exec">
+         <db:title>int exec()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:type>int</db:type>
+            <db:methodname>exec</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Enters the main event loop and waits until <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#exit" xrefstyle="function" annotations="exit()">exit()</db:link></db:code> is called, then returns the value that was set to <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#exit" xrefstyle="function" annotations="exit()">exit()</db:link></db:code> (which is 0 if <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#exit" xrefstyle="function" annotations="exit()">exit()</db:link></db:code> is called via <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#quit" xrefstyle="function" annotations="quit()">quit()</db:link></db:code>).</db:para>
+         <db:para>It is necessary to call this function to start event handling. The main event loop receives events from the window system and dispatches these to the application widgets.</db:para>
+         <db:para>Generally, no user interaction can take place before calling . As a special case, modal widgets like <db:code><db:link xlink:href="qmessagebox.html" xrefstyle="class" annotations="QMessageBox">QMessageBox</db:link></db:code> can be used before calling , because modal widgets call  to start a local event loop.</db:para>
+         <db:para>To make your application perform idle processing, i.e., executing a special function whenever there are no pending events, use a <db:code><db:link xlink:href="../qtcore/qtimer.html" xrefstyle="class" annotations="QTimer">QTimer</db:link></db:code> with 0 timeout. More advanced idle processing schemes can be achieved using <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#processEvents" xrefstyle="function" annotations="processEvents()">processEvents()</db:link></db:code>.</db:para>
+         <db:para>We recommend that you connect clean-up code to the <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#aboutToQuit" xrefstyle="function" annotations="QCoreApplication::aboutToQuit()">aboutToQuit()</db:link></db:code> signal, instead of putting it in your application's <db:code>main()</db:code> function. This is because, on some platforms the  call may not return. For example, on the Windows platform, when the user logs off, the system terminates the process after Qt closes all top-level windows. Hence, there is <db:emphasis>no guarantee</db:emphasis> that the application will have time to exit its event loop and execute code at the end of the <db:code>main()</db:code> function, after the  call.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#quitOnLastWindowClosed-prop" xrefstyle="function" annotations="quitOnLastWindowClosed">quitOnLastWindowClosed</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#quit" xrefstyle="function" annotations="QCoreApplication::quit()">QCoreApplication::quit()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#exit" xrefstyle="function" annotations="QCoreApplication::exit()">QCoreApplication::exit()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#processEvents" xrefstyle="function" annotations="QCoreApplication::processEvents()">QCoreApplication::processEvents()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#exec" xrefstyle="function" annotations="QCoreApplication::exec()">QCoreApplication::exec()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="aboutQt">
+         <db:title>void aboutQt()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>aboutQt</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Displays a simple message box about Qt. The message includes the version number of Qt being used by the application.</db:para>
+         <db:para>This is useful for inclusion in the Help menu of an application, as shown in the <db:link xlink:href="qtwidgets-mainwindows-menus-example.html" xrefstyle="" annotations="mainwindows/menus">Menus</db:link> example.</db:para>
+         <db:para>This function is a convenience slot for <db:code><db:link xlink:href="qmessagebox.html#aboutQt" xrefstyle="function" annotations="QMessageBox::aboutQt()">QMessageBox::aboutQt()</db:link></db:code>.</db:para>
+      </db:section>
+      <db:section xml:id="alert">
+         <db:title>void alert(QWidget *widget, int msec)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>alert</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>widget</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>int</db:type>
+               <db:parameter>msec</db:parameter>
+               <db:initializer>0</db:initializer>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Causes an alert to be shown for <db:code role="argument">widget</db:code> if the window is not the active window. The alert is shown for <db:code role="argument">msec</db:code> miliseconds. If <db:code role="argument">msec</db:code> is zero (the default), then the alert is shown indefinitely until the window becomes active again.</db:para>
+         <db:para>Currently this function does nothing on Qt for Embedded Linux.</db:para>
+         <db:para>On , this works more at the application level and will cause the application icon to bounce in the dock.</db:para>
+         <db:para>On Windows, this causes the window's taskbar entry to flash for a time. If <db:code role="argument">msec</db:code> is zero, the flashing will stop and the taskbar entry will turn a different color (currently orange).</db:para>
+         <db:para>On X11, this will cause the window to be marked as "demands attention", the window must not be hidden (i.e. not have hide() called on it, but be visible in some sort of way) in order for this to work.</db:para>
+         <db:para>This property was introduced in Qt 4.3.</db:para>
+      </db:section>
+      <db:section xml:id="beep">
+         <db:title>void beep()</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>beep</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Sounds the bell, using the default volume and sound. The function is <db:emphasis>not</db:emphasis> available in Qt for Embedded Linux.</db:para>
+      </db:section>
+      <db:section xml:id="closeAllWindows">
+         <db:title>void closeAllWindows()</db:title>
+         <db:methodsynopsis>
+            <db:modifier>slot</db:modifier>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>closeAllWindows</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>Closes all top-level windows.</db:para>
+         <db:para>This function is particularly useful for applications with many top-level windows. It could, for example, be connected to a Exit entry in the File menu:</db:para>
+         <db:programlisting language="other">    const QIcon exitIcon = QIcon::fromTheme("application-exit");
+    QAction *exitAct = fileMenu-&gt;addAction(exitIcon, tr("E&amp;xit"), qApp, &amp;QApplication::closeAllWindows);
+    exitAct-&gt;setShortcuts(QKeySequence::Quit);
+    exitAct-&gt;setStatusTip(tr("Exit the application"));
+    fileMenu-&gt;addAction(exitAct);</db:programlisting>
+         <db:para>The windows are closed in random order, until one window does not accept the close event. The application quits when the last window was successfully closed; this can be turned off by setting <db:code><db:link xlink:href="../qtgui/qguiapplication.html#quitOnLastWindowClosed-prop" xrefstyle="function" annotations="quitOnLastWindowClosed">quitOnLastWindowClosed</db:link></db:code> to false.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#quitOnLastWindowClosed-prop" xrefstyle="function" annotations="quitOnLastWindowClosed">quitOnLastWindowClosed</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#lastWindowClosed" xrefstyle="function" annotations="lastWindowClosed()">lastWindowClosed()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#close" xrefstyle="function" annotations="QWidget::close()">QWidget::close()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#closeEvent" xrefstyle="function" annotations="QWidget::closeEvent()">QWidget::closeEvent()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#lastWindowClosed" xrefstyle="function" annotations="lastWindowClosed()">lastWindowClosed()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#quit" xrefstyle="function" annotations="QCoreApplication::quit()">QCoreApplication::quit()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#topLevelWidgets" xrefstyle="function" annotations="topLevelWidgets()">topLevelWidgets()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#isWindow" xrefstyle="function" annotations="QWidget::isWindow()">QWidget::isWindow()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="focusChanged">
+         <db:title>void focusChanged(QWidget *old, QWidget *now)</db:title>
+         <db:methodsynopsis>
+            <db:modifier>signal</db:modifier>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>focusChanged</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>old</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>now</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>This signal is emitted when the widget that has keyboard focus changed from <db:code role="argument">old</db:code> to <db:code role="argument">now</db:code>, i.e., because the user pressed the tab-key, clicked into a widget or changed the active window. Both <db:code role="argument">old</db:code> and <db:code role="argument">now</db:code> can be the null-pointer.</db:para>
+         <db:para>The signal is emitted after both widget have been notified about the change through <db:code><db:link xlink:href="../qtgui/qfocusevent.html" xrefstyle="class" annotations="QFocusEvent">QFocusEvent</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#setFocus-1" xrefstyle="function" annotations="QWidget::setFocus()">QWidget::setFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#clearFocus" xrefstyle="function" annotations="QWidget::clearFocus()">QWidget::clearFocus()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qt.html#FocusReason-enum" xrefstyle="enum" annotations="Qt::FocusReason">Qt::FocusReason</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.1.</db:para>
+      </db:section>
+      <db:section xml:id="setActiveWindow">
+         <db:title>void setActiveWindow(QWidget *active)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>setActiveWindow</db:methodname>
+            <db:methodparam>
+               <db:type>QWidget *</db:type>
+               <db:parameter>active</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the active window to the <db:code role="argument">active</db:code> widget in response to a system event. The function is called from the platform specific event handlers.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> This function does <db:emphasis>not</db:emphasis> set the keyboard focus to the active widget. Call <db:code><db:link xlink:href="qwidget.html#activateWindow" xrefstyle="function" annotations="QWidget::activateWindow()">QWidget::activateWindow()</db:link></db:code> instead.</db:para>
+         <db:para>It sets the <db:code><db:link xlink:href="qapplication.html#activeWindow" xrefstyle="function" annotations="activeWindow()">activeWindow()</db:link></db:code> and <db:code><db:link xlink:href="qapplication.html#focusWidget" xrefstyle="function" annotations="focusWidget()">focusWidget()</db:link></db:code> attributes and sends proper <db:code><db:link xlink:href="../qtcore/qevent.html#Type-enum" xrefstyle="enum" annotations="QEvent::WindowActivate">WindowActivate</db:link></db:code>/<db:code><db:link xlink:href="../qtcore/qevent.html#Type-enum" xrefstyle="enum" annotations="QEvent::WindowDeactivate">WindowDeactivate</db:link></db:code> and <db:code><db:link xlink:href="../qtcore/qevent.html#Type-enum" xrefstyle="enum" annotations="QEvent::FocusIn">FocusIn</db:link></db:code>/<db:code><db:link xlink:href="../qtcore/qevent.html#Type-enum" xrefstyle="enum" annotations="QEvent::FocusOut">FocusOut</db:link></db:code> events to all appropriate widgets. The window will then be painted in active state (e.g. cursors in line edits will blink), and it will have tool tips enabled.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#activeWindow" xrefstyle="function" annotations="activeWindow()">activeWindow()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#activateWindow" xrefstyle="function" annotations="QWidget::activateWindow()">QWidget::activateWindow()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="setEffectEnabled">
+         <db:title>void setEffectEnabled(Qt::UIEffect effect, bool enable)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>setEffectEnabled</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::UIEffect</db:type>
+               <db:parameter>effect</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>bool</db:type>
+               <db:parameter>enable</db:parameter>
+               <db:initializer>true</db:initializer>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Enables the UI effect <db:code role="argument">effect</db:code> if <db:code role="argument">enable</db:code> is true, otherwise the effect will not be used.</db:para>
+         <db:note>
+            <db:para> All effects are disabled on screens running at less than 16-bit color depth.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#isEffectEnabled" xrefstyle="function" annotations="isEffectEnabled()">isEffectEnabled()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qt.html#UIEffect-enum" xrefstyle="enum" annotations="Qt::UIEffect">Qt::UIEffect</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#setDesktopSettingsAware" xrefstyle="function" annotations="setDesktopSettingsAware()">setDesktopSettingsAware()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="setFont">
+         <db:title>void setFont(const QFont &amp;font, const char *className)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>setFont</db:methodname>
+            <db:methodparam>
+               <db:type>const QFont &amp;</db:type>
+               <db:parameter>font</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const char *</db:type>
+               <db:parameter>className</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Changes the default application font to <db:code role="argument">font</db:code>. If <db:code role="argument">className</db:code> is passed, the change applies only to classes that inherit <db:code role="argument">className</db:code> (as reported by <db:code><db:link xlink:href="../qtcore/qobject.html#inherits" xrefstyle="function" annotations="QObject::inherits()">QObject::inherits()</db:link></db:code>).</db:para>
+         <db:para>On application start-up, the default font depends on the window system. It can vary depending on both the window system version and the locale. This function lets you override the default font; but overriding may be a bad idea because, for example, some locales need extra large fonts to support their special characters.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> Do not use this function in conjunction with <db:link xlink:href="stylesheet.html" xrefstyle="page" annotations="Qt Style Sheets">Qt Style Sheets</db:link>. The font of an application can be customized using the "font" style sheet property. To set a bold font for all QPushButtons, set the application <db:code><db:link xlink:href="qapplication.html#styleSheet-prop" xrefstyle="function" annotations="styleSheet()">styleSheet()</db:link></db:code> as "<db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> { font: bold }"</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#font" xrefstyle="function" annotations="font()">font()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#fontMetrics" xrefstyle="function" annotations="fontMetrics()">fontMetrics()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#font-prop" xrefstyle="function" annotations="QWidget::setFont()">QWidget::setFont()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="setNavigationMode">
+         <db:title>void setNavigationMode(Qt::NavigationMode mode)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>setNavigationMode</db:methodname>
+            <db:methodparam>
+               <db:type>Qt::NavigationMode</db:type>
+               <db:parameter>mode</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the kind of focus navigation Qt should use to <db:code role="argument">mode</db:code>.</db:para>
+         <db:para>This feature is available in Qt for Embedded Linux only.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#navigationMode" xrefstyle="function" annotations="navigationMode()">navigationMode()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication-obsolete.html#keypadNavigationEnabled" xrefstyle="function" annotations="keypadNavigationEnabled()">keypadNavigationEnabled()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+         <db:para>This property was introduced in Qt 4.6.</db:para>
+      </db:section>
+      <db:section xml:id="setPalette">
+         <db:title>void setPalette(const QPalette &amp;palette, const char *className)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>setPalette</db:methodname>
+            <db:methodparam>
+               <db:type>const QPalette &amp;</db:type>
+               <db:parameter>palette</db:parameter>
+            </db:methodparam>
+            <db:methodparam>
+               <db:type>const char *</db:type>
+               <db:parameter>className</db:parameter>
+               <db:initializer>nullptr</db:initializer>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Changes the default application palette to <db:code role="argument">palette</db:code>.</db:para>
+         <db:para>If <db:code role="argument">className</db:code> is passed, the change applies only to widgets that inherit <db:code role="argument">className</db:code> (as reported by <db:code><db:link xlink:href="../qtcore/qobject.html#inherits" xrefstyle="function" annotations="QObject::inherits()">QObject::inherits()</db:link></db:code>). If <db:code role="argument">className</db:code> is left 0, the change affects all widgets, thus overriding any previously set class specific palettes.</db:para>
+         <db:para>The palette may be changed according to the current GUI style in <db:code><db:link xlink:href="qstyle.html#polish" xrefstyle="function" annotations="QStyle::polish()">QStyle::polish()</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> Do not use this function in conjunction with <db:link xlink:href="stylesheet.html" xrefstyle="page" annotations="Qt Style Sheets">Qt Style Sheets</db:link>. When using style sheets, the palette of a widget can be customized using the "color", "background-color", "selection-color", "selection-background-color" and "alternate-background-color".</db:para>
+         <db:note>
+            <db:para> Some styles do not use the palette for all drawing, for instance, if they make use of native theme engines. This is the case for the Windows Vista and  styles.</db:para>
+         </db:note>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qwidget.html#palette-prop" xrefstyle="function" annotations="QWidget::setPalette()">QWidget::setPalette()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#palette" xrefstyle="function" annotations="palette()">palette()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qstyle.html#polish" xrefstyle="function" annotations="QStyle::polish()">QStyle::polish()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+      <db:section xml:id="setStyle">
+         <db:title>void setStyle(QStyle *style)</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>static</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:void/>
+            <db:methodname>setStyle</db:methodname>
+            <db:methodparam>
+               <db:type>QStyle *</db:type>
+               <db:parameter>style</db:parameter>
+            </db:methodparam>
+         </db:methodsynopsis>
+         <db:para>Sets the application's GUI style to <db:code role="argument">style</db:code>. Ownership of the style object is transferred to <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code>, so <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> will delete the style object on application exit or when a new style is set and the old style is still the parent of the application object.</db:para>
+         <db:para>Example usage:</db:para>
+         <db:programlisting language="other">QApplication::setStyle(QStyleFactory::create("Fusion"));</db:programlisting>
+         <db:para>When switching application styles, the color palette is set back to the initial colors or the system defaults. This is necessary since certain styles have to adapt the color palette to be fully style-guide compliant.</db:para>
+         <db:para>Setting the style before a palette has been set, i.e., before creating <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code>, will cause the application to use <db:code><db:link xlink:href="qstyle.html#standardPalette" xrefstyle="function" annotations="QStyle::standardPalette()">QStyle::standardPalette()</db:link></db:code> for the palette.</db:para>
+         <db:para>
+            <db:emphasis role="bold">Warning:</db:emphasis> Qt style sheets are currently not supported for custom <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code> subclasses. We plan to address this in some future release.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#style" xrefstyle="function" annotations="style()">style()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qstyle.html" xrefstyle="class" annotations="QStyle">QStyle</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="qapplication.html#setPalette" xrefstyle="function" annotations="setPalette()">setPalette()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#desktopSettingsAware" xrefstyle="function" annotations="desktopSettingsAware()">desktopSettingsAware()</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+   <db:section>
+      <db:title>Macro Documentation</db:title>
+      <db:section xml:id="qApp">
+         <db:title>qApp</db:title>
+         <db:methodsynopsis>
+            <db:modifier/>
+            <db:modifier>public</db:modifier>
+            <db:modifier>delete</db:modifier>
+            <db:modifier>default</db:modifier>
+            <db:modifier>overload</db:modifier>
+            <db:methodname>qApp</db:methodname>
+            <db:void/>
+         </db:methodsynopsis>
+         <db:para>A global pointer referring to the unique application object. It is equivalent to <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#instance" xrefstyle="function" annotations="QCoreApplication::instance()">QCoreApplication::instance()</db:link></db:code>, but cast as a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code> pointer, so only valid when the unique application object is a <db:code><db:link xlink:href="qapplication.html" xrefstyle="class" annotations="QApplication">QApplication</db:link></db:code>.</db:para>
+         <db:para>
+            <db:emphasis role="bold">See Also:</db:emphasis>
+            <db:simplelist type="vert" role="see-also">
+               <db:member>
+                  <db:code><db:link xlink:href="../qtcore/qcoreapplication.html#instance" xrefstyle="function" annotations="QCoreApplication::instance()">QCoreApplication::instance()</db:link></db:code>
+               </db:member>
+               <db:member>
+                  <db:code><db:link xlink:href="../qtgui/qguiapplication.html#qGuiApp" xrefstyle="function" annotations="qGuiApp">qGuiApp</db:link></db:code>
+               </db:member>
+            </db:simplelist>
+         </db:para>
+      </db:section>
+   </db:section>
+</db:article>

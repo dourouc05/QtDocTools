@@ -821,20 +821,32 @@
                 <xsl:if test="getter">
                   <db:tr>
                     <db:td><xsl:value-of select="@type"/></db:td>
-                    <db:td><xsl:value-of select="getter/@name"/>() const</db:td>
+                    <db:td><xsl:value-of select="getter[1]/@name"/>() const</db:td>
                   </db:tr>
+                  
+                  <xsl:if test="count(getter) > 1 and count(distinct-values(getter/@name)) = count(getter/@name)">
+                    <xsl:message>WARNING: several getters for a property, but different names. Only one is output.</xsl:message>
+                  </xsl:if>
                 </xsl:if>
                 <xsl:if test="setter">
                   <db:tr>
                     <db:td>void</db:td>
-                    <db:td><xsl:value-of select="concat(setter/@name, '(const ', @type, ' &amp; ', @name, ')')"/></db:td>
+                    <db:td><xsl:value-of select="concat(setter[1]/@name, '(const ', @type, ' &amp; ', @name, ')')"/></db:td>
                   </db:tr>
+                  
+                  <xsl:if test="count(setter) > 1 and count(distinct-values(setter/@name)) = count(setter/@name)">
+                    <xsl:message>WARNING: several setters for a property, but different names. Only one is output.</xsl:message>
+                  </xsl:if>
                 </xsl:if>
                 <xsl:if test="resetter">
                   <db:tr>
                     <db:td>void</db:td>
-                    <db:td><xsl:value-of select="setter/@name"/>()</db:td>
+                    <db:td><xsl:value-of select="resetter[1]/@name"/>()</db:td>
                   </db:tr>
+                  
+                  <xsl:if test="count(resetter) > 1 and count(distinct-values(resetter/@name)) = count(resetter/@name)">
+                    <xsl:message>WARNING: several resetters for a property, but different names. Only one is output.</xsl:message>
+                  </xsl:if>
                 </xsl:if>
               </db:tbody>
             </db:informaltable>
@@ -849,7 +861,7 @@
               <db:tbody>
                 <db:tr>
                   <db:td>void</db:td>
-                  <db:td><xsl:value-of select="concat(notifier/@name, '(const ', @type, ' &amp; ', @name, ')')"/></db:td>
+                  <db:td><xsl:value-of select="concat(notifier[1]/@name, '(const ', @type, ' &amp; ', @name, ')')"/></db:td>
                 </db:tr>
               </db:tbody>
             </db:informaltable>
