@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @SuppressWarnings("WeakerAccess")
 public class DocxInputImpl {
@@ -421,7 +422,8 @@ public class DocxInputImpl {
     private void visitPreformatted(@NotNull XWPFParagraph p) throws XMLStreamException {
         // The first paragraph of a program listing can give metadata about the listing that comes after.
         // Conditions: the whole paragraph must be in bold; the next paragraph must have the same style.
-        if (p.getRuns().stream().allMatch(XWPFRun::isBold)) {
+        Stream<XWPFRun> usefulRuns = p.getRuns().stream().filter(r -> r.text().replaceAll("\\s+", "").length() > 0);
+        if (usefulRuns.allMatch(XWPFRun::isBold)) {
             int pos = p.getDocument().getPosOfParagraph(p);
             List<XWPFParagraph> lp = p.getDocument().getParagraphs();
 

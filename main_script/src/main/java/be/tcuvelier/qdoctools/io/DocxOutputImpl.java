@@ -923,7 +923,6 @@ public class DocxOutputImpl extends DefaultHandler {
                     text += "Starting line number: " + attr.get("startinglinenumber") + ". ";
                 }
 
-                run = paragraph.getLast().createRun();
                 run.setBold(true);
                 run.setText(text);
 
