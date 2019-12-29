@@ -14,7 +14,7 @@ public class Configuration {
     private JsonElement config;
 
     public Configuration(String file) throws FileNotFoundException {
-        config = new JsonParser().parse(new FileReader(file));
+        config = JsonParser.parseReader(new FileReader(file));
     }
 
     private String getStringAttribute(String field) throws BadConfigurationFile {
