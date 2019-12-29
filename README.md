@@ -33,3 +33,11 @@ The QDoc automation is also available as a stand-alone script in
 stand-alone script in `import/from_qdoc/html2xml`. The XSL transformations is performed 
 with the stylesheets in `import/from_qdoc/xslt`, whilst the C++ parsing is done with 
 the executable in `import/from_qdoc/postprocessor`.
+
+Notes
+=====
+
+Very useful tool to debug OOXML documents: the tools from 
+[the official SDK, v2.5](https://www.microsoft.com/en-us/download/details.aspx?id=30425)
+or [the up-to-date SDK](https://github.com/OfficeDev/Open-XML-SDK) 
+(validation only in C#, no desktop application)
